@@ -1,0 +1,865 @@
+---
+title: "EDA"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(ggjoy)
+library(ggthemes)
+library(psych)
+```
+
+
+## Data summary
+
+We start by summary statistics, which summarise data into a few numbers.These are 
+1. measures of central tendency (or average) - mean, median, etc.
+2. measures of variation - sd, mad, etc.
+3. measures of correlation
+
+**mean and sd assume normal model** - if the data is normal then mean points to the most likely calue and 1 sd covers 68% of the variation, 2 SD covers 96% of variation and 3 SD covers 99% of the variation. If we have normal data, then the likelihood of encountering a data point falls sharply as we get farther from the mean. Also, outliers greatly skew the sd calculation (and to a lesser extent calculation of the mean). 
+
+**If N is small (<10), then SD will be under-estimated.** If N=3, then sd is under-estimated by about 1/5. 
+
+If you encounter data, where negative values are impossible, and your data sd/mean > 0.5, then negative values are likely under your model. As negative values are impossible, your normal model is useless (to say the least). Now you have 2 choises: 
+
+a) transform data (usually by logarithming) and work and interpret the data at the transformed level, or 
+
+b) calculate the median and the mad (median absulute deviation). Median and mad go together- they are insensitive to outliers and do not assume normal data.
+
+```{r, eval=FALSE}
+mean(x)
+median(x)
+sd(x)
+mad(x)
+```
+
+Firstly, str() gives the structure (not a summary) of the tibble 
+```{r}
+str(iris)
+```
+
+
+
+base::summary() output is not very nice, and you cannot easily convert it into tibble.
+```{r}
+iris<-iris
+summary(iris)
+```
+
+
+psych::describe() is better - output is class "table"
+
+```{r}
+psych::describe(iris)
+
+```
+
+This output can be easiliy converted into tibble and thus incorporated into your workflow:
+```{r, eval=FALSE}
+iris_summary <- as_tibble(psych::describe(iris)) %>% rownames_to_column(var="Column") 
+```
+
+
+## Correlation
+
+
+Correlation is a blunt tool for looking for linear covariation between variables. You can do correlation analysis when you have a number of paired observations from two variables (like sepal length and sepal width measurements of 150 iris plants) and you want to know to which extent these variables vary together. Correlation is symmetric: if sepal length is correlated with sepal width then sepal width is as much correlated with sepal length.
+
+**NB! there are many instances of co-variation that are not linear and cannot be discovered by linear correlation!**
+
+
+There are both parametric and non-parametric ways to calculate correlations. The usual outputs are (1) r - the correlation qoefficient, (2) the p value (H0: r=0), and/or (3) the confidence interval. R varies from -1 (perfect anti-correlation) to 1 (perfect correlation), but what is actually interpreted is r squared. R squared gives the relative amount of variation in one variable that is explained by the variation in the other variable. For instance, R square 0.4 means that you can explain 40% of the variation in the 1st variable by the variation in the 2nd variable, and vice versa.
+
+If you have >2 variables, you can calculate a pairwise correlation matrix. If you do this, r squared, p values, and CI-s should usually be corrected for multiple testing. 
+
+
+
+```{r}
+cor(iris$Sepal.Length, iris$Sepal.Width, use="complete.obs") 
+```
+
+```{r}
+correlation<-cor.test(iris$Sepal.Length, iris$Sepal.Width, na.rm=T, method = "pearson") # a list of 9
+
+#names(correlation)
+str(correlation)
+```
+
+
+
+```{r}
+#correlation$estimate
+#correlation$p.value
+correlation
+```
+
+Exercise: extract the lower CI
+```{r}
+correlation$conf.int[1]
+#correlation[[9]][1] #equivalent
+```
+
+
+psych package corr.test gives a correlation matrix and p values adjusted for multiple testing.
+
+```{r}
+#numeric columns only!
+print(psych::corr.test(iris[-5], use="complete"), short = FALSE)
+```
+
+
+For bootstrapped correlation coefficients (with CI) use
+
+```{r}
+aa<-cor.ci(iris[-5]) #aa is a list of 8
+```
+
+```{r}
+aa$rho
+```
+
+
+```{r}
+aa$ci
+```
+lower - lower normal
+low.e - lower empirical
+
+
+To test the significance of the difference between correlations  
+```{r}
+psych::r.test(30, 0.4, 0.75) #test the difference between two independent correlations. 1st argument (30) is the sample size.
+```
+
+```{r}
+psych::r.test(30, 0.4) #tests significance of a single correlation
+```
+
+###An indispensable tool is pairwise plotting of all (interesting) variables
+```{r, warning=FALSE}
+car::scatterplotMatrix(iris)
+#pairs(iris)
+```
+
+
+
+Lets take a step further and do a pairwise correlation matrix
+```{r}
+library(corrgram) #PCA for ordering
+corrgram(iris, order=TRUE, 
+         lower.panel = panel.ellipse,
+         upper.panel = panel.pie,
+         diag.panel = panel.density,
+         main="Correlogram of diamond dataset")
+
+corrgram(iris, order=TRUE, 
+         lower.panel = panel.pts,
+         upper.panel = panel.ellipse,
+         diag.panel = panel.density,
+         main="Correlogram of diamond dataset")
+```
+
+
+
+
+###Correlations for relational datasets --- advanced
+
+The usual methods of calculating correlation fail on relational data. For example, if you compare 2 RNA-seq experiments, each having 10M sequences obtained from a mix of 100 different species of bacteria, then if 1 species goes up, by definition the relative number of sequences for the other 99 species must go down. For these kind of situations, use the sparCC method (Sparse Correlation for Compositional data)
+
+*The function is sparcc(x), where x is counts matrix, where columns are different bacterial species (objects of observation) and each row corresponds to a distinct experiment or sequencing run (variable). If you run the following chunk of code the sparcc() function should appear in your Enviroment tab under Functions (upper right panel).*
+
+```{r, echo=FALSE}
+require(gtools)
+
+
+## NB
+##------------------------------
+## count matrix x should be samples on the rows and OTUs on the colums,
+## assuming dim(x) -> samples by OTUs
+
+sparcc <- function(x, max.iter=20, th=0.1, exiter=10){
+  xdim <- dim(x)
+  Vlist <- matrix(NA,nrow=xdim[2],ncol=max.iter)
+  Corlist <- array(,dim=c(max.iter, xdim[2], xdim[2]))
+  Covlist <- array(,dim=c(max.iter, xdim[2], xdim[2]))
+
+  ## Cycle max.iter times for variability in variance estimation
+  for (i in 1:max.iter){
+    cat("Iteration: %d\n",i)
+    tmpres <- compute.corr(x, iter=exiter, th=th)
+    Vlist[,i] <- tmpres[["Vbase"]]
+    Corlist[i,,] <- tmpres[["Cor.mat"]]
+    Covlist[i,,] <- tmpres[["Cov.mat"]]
+  }
+
+  ## Compute variance basis and correlation
+  vdef <- apply(Vlist,1,median)
+  cor.def <- apply(Corlist,2:3,median)
+
+  ## Square root variances
+  vdefsq <- vdef**0.5
+
+  ## Compute covariance
+  ttmp <- cor.def * vdefsq
+  cov.def <- t(ttmp) * vdefsq
+  
+  ## Uncomment following lines for an alternative method
+  ## x <- matrix(vdefsq,ncol=50,nrow=50, byrow=TRUE)
+  ## y <- t(x)
+  ## cov.def <- cor.def * x * y
+  
+  return(list(CORR=cor.def, COV=cov.def, VBASIS=vdef))
+}
+
+
+compute.corr <- function(x, iter=10, th=0.1){
+
+  ## Compute relative fraction from dirichlet distribution
+  ## NB think on different normalization for improvements
+  fracs <- counts2frac(x)
+
+  ## Compute the variation matrix
+  V <- variation.mat(fracs)
+  
+  ## Compute the Sparcc correlation
+  ##----------------------------------------
+
+  ## Initialize matrices
+  ll1 <- basis.var(fracs, V)
+  ll2 <- cor.from.basis(V, ll1[["Vbase"]])
+  excluded <- NULL
+  
+  for (i in 1:iter){
+    ## Search for excluded pairs
+    ## ll2[[1]] -> Cor.mat
+    ll3 <- exclude.pairs(ll2[["Cor.mat"]], ll1[["M"]], th = th, excluded = excluded)
+    excluded <- ll3[["excluded"]]
+    if (!ll3[["flag"]]){
+      ll1 <- basis.var(fracs, V, M=ll3[["M"]], excluded=excluded)
+      ll2 <- cor.from.basis(V, ll1[["Vbase"]])
+    }
+  }
+  
+  return(list(Vbase=ll1[["Vbase"]], Cor.mat=ll2[["Cor.mat"]], Cov.mat=ll2[["Cov.mat"]]))
+}
+
+
+counts2frac <- function(x, method="dirichlet"){
+  xsize <- dim(x)
+  fracs <- matrix(1/xsize[2], nrow=xsize[1], ncol=xsize[2])
+  if (method=="dirichlet"){
+    fracs.t <- apply(x,1,function(y){rdirichlet(1,y + 1)})
+    fracs <- t(fracs.t)
+  }
+  return(fracs)
+}
+
+variation.mat <- function(fracs){
+  ## Initialize variation matrix
+  V <- matrix(NA, ncol=dim(fracs)[2], nrow=dim(fracs)[2])
+  ## Compute log for each OTU
+  tmplog <- apply(fracs,2,log)
+  idx <- combn(1:dim(fracs)[2],2)
+
+  ## create matrix Ti,j
+  ttmp <- tmplog[,idx[1,]] -   tmplog[,idx[2,]]
+
+  ## Compute Variance
+  vartmp <- apply(ttmp,2, var)
+  
+  ## Fill the variance matrix
+  for (i in 1:length(vartmp)){
+    V[idx[1,i],idx[2,i]] <- V[idx[2,i],idx[1,i]] <- vartmp[i]
+  }
+  diag(V) <- 1
+  return(V)
+}
+
+basis.var <- function(fracs, V, Vmin=1e-4, excluded=NULL, Covmat=NULL, M=NULL){
+
+  Vsize <- dim(V)
+  Vvec <- apply(V,1,sum)
+
+  ## Initialize Covmat matrix
+  if (is.null(Covmat))
+    Covmat <- matrix(0, nrow=Vsize[1], ncol=Vsize[2])
+
+  Covvec <- apply(Covmat - diag(Covmat),1,sum)
+  ## Initialize M matrix 
+  if (is.null(M)){
+    M <- matrix(1, nrow=Vsize[1], ncol=Vsize[2])
+    diag(M) <- Vsize[1] - 1
+  }
+  Minv <- solve(M)
+  Vbase <- Minv %*% (Vvec + 2*Covvec)
+  Vbase[Vbase<0] <- Vmin
+  return(list(Vbase=Vbase, M=M))
+}
+
+cor.from.basis <- function(V, Vbase){
+  ## Compute the correlation from variation matrix and basis variations
+
+  p <- dim(Vbase)[1]
+  Cor.mat <- diag(rep(1,p))
+  Cov.mat <- diag(Vbase[,1])
+  
+  idx <- combn(p,2)
+  
+  for (i in 1:(p-1)){
+    idxslice <- idx[1,]==i
+    cov.tmp <- .5 * (Vbase[i] + Vbase[idx[2,idxslice]] - V[i,idx[2,idxslice]])
+    denom <- sqrt(Vbase[i]) * sqrt(Vbase[idx[2,idxslice]])
+    cor.tmp <- cov.tmp / denom
+    abscor <- abs(cor.tmp)
+    if (any(abscor > 1)){
+      idxthr <- abscor > 1
+      
+      ## Set the max correlation to -1,1
+      cor.tmp[idxthr] <- sign(cor.tmp[idxthr])
+      
+      ## Compute the covariance basis
+      cov.tmp[idxthr] <- cor.tmp[idxthr] * denom[idxthr] 
+    }
+
+    ## Fill the cor and cov matrix
+    Cor.mat[i,idx[2,idxslice]] <- Cor.mat[idx[2,idxslice],i] <- cor.tmp
+    Cov.mat[i,idx[2,idxslice]] <- Cov.mat[idx[2,idxslice],i] <- cov.tmp
+  }
+  return(list(Cor.mat=Cor.mat, Cov.mat=Cov.mat))
+}
+
+
+exclude.pairs <- function(Cor.mat, M, th=0.1, excluded=NULL){
+
+  flag <- FALSE
+  
+  ## Remove autocorrelation
+  cor.tmp <- abs(Cor.mat)
+  diag(cor.tmp) <- diag(cor.tmp) - diag(Cor.mat)
+
+  if (!is.null(excluded))
+    cor.tmp[excluded,] <- 0
+
+  ## Search highly correlated pairs
+  mm <- max(cor.tmp)
+  idxtorm <- which(cor.tmp==mm, arr.ind=TRUE)
+
+  if (mm > th){
+    ## Subtract 1 in in the M matrix where found highly correlated pairs
+    for (i in 1:dim(idxtorm)[1]){
+      M[idxtorm[i,1],idxtorm[i,2]] <- M[idxtorm[i,1],idxtorm[i,2]] - 1
+    }
+
+    ## Subtract one to the diagonal
+    dd <- diag(M)[unique(c(idxtorm))]
+    diag(M)[unique(c(idxtorm))] <- dd - 1
+    excluded <- rbind(excluded, idxtorm)
+  } else {
+    excluded <- excluded
+    flag <- TRUE
+  }
+  return(list(M=M, excluded=excluded, flag=flag))
+}
+
+
+
+
+
+normalize.matrix <- function(x){
+  # Normalize by total count
+  x <- apply(x,2,function(y){
+    y/sum(y)})
+  
+  return(x)
+}
+
+```
+
+
+
+## Graphics help you to
+
+* spot outliers
+* do data transformations
+* spot trends & raise new hypotheses
+* summarise data
+* assess the quality of experiment
+* compare large datasets  
+
+**The 1st rule of analysis - look at the data as a whole**
+
+What sort of graphing to do depends on what sort of data we have on our hands:
+
+* a single categorical variable - bar graph to count the number of occurences of each level, or cleveland plot
+
+* a single continious variable - histogram and co.
+
+* two categorical variables - use geom_count to draw differently sized circles (number of occurences at each combination of the variables)
+
+* categorical + continious variable - histogram or violin plot
+
+* 2+ continious variables - scatterplot 
+
+* 2+ continious variables and x variable is directional (time, concentrations, or similar) - line plot. line plot assumes that between your measured data points there are meaningful values. 
+
+##Categorical variables - counting the numbers
+
+A categorical variable has a set of unique values. Categorical variables are usually saved as factors, integers, or character strings. 
+
+**You can count the number of occurences of a categorical variable**
+
+```{r}
+mytable <- with(iris, table(Species))
+mytable
+
+```
+
+```{r}
+
+prop.table(mytable) #this turns counts into proportions from the whole
+prop.table(mytable)*100 #this turns counts into percentages
+
+```
+
+###Use barplots for counts
+
+```{r}
+str(diamonds)
+```
+
+
+counts the number of occurences of each cut
+```{r}
+ggplot(diamonds) + 
+  geom_bar(aes(x = cut, fill = cut)) + 
+  theme(legend.position="none")
+```
+
+On the y-axis it displays count, but count is not a variable in diamonds!
+
+Many graphs, like scatterplots, plot the raw values of your dataset. Other graphs, like bar charts, calculate new values to plot: bar charts, histograms, and frequency polygons bin your data and then plot bin counts, the number of points that fall in each bin. 
+  
+
+
+Anyway, you might want to display a bar chart of proportion, rather than count:
+  
+```{r, eval=FALSE}
+ggplot(diamonds) + 
+  geom_bar(aes(x = cut, y = ..prop.., group = 1))
+```
+
+now each colored rectangle represents a combination of cut and clarity. Colored boxes of different clarity/cut combinations are stacked on top of each other so that the height of the bars remains unchanged. 
+
+```{r}
+ggplot(diamonds) + 
+  geom_bar(aes(x = cut, fill = clarity))
+```
+
+This graph is hard to read - instead use position = "identity". Now the boxes are "inside each other" (compare the Y axis numbers). Each color height gives the number of occurences of a particular clarity class diamonds within a given cut.
+
+```{r}
+ggplot(diamonds, aes(x = cut, fill = clarity)) + 
+  geom_bar(alpha = 0.6, position = "identity")
+```
+
+it might be better to "dodge" the clarity classes - easier to read.
+
+```{r}
+ggplot(data = diamonds, aes(x = cut, fill = clarity)) + 
+  geom_bar(position = "dodge")
+```
+
+
+position="fill" normalizes "identity" to 1, so proportions of clarities in each column are easily comparable.
+
+```{r}
+ggplot(data = diamonds, aes(x = cut, fill = clarity)) + 
+  geom_bar(position = "fill")
+```
+
+
+####A nicer, barless, barchart is the Cleveland plot.   
+Use this if you have a single number per row, which you want to plot.
+
+```{r}
+dd <- diamonds %>% group_by(clarity) %>% summarise(number_of_diamonds=n())
+dd %>% ggplot(aes(x=number_of_diamonds, 
+                  y=reorder(clarity, number_of_diamonds))) +
+  geom_point(size=3) +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_line(colour="grey60", linetype="dashed")) +
+  labs(y="clarity")
+```
+
+
+This is it, as far as bar graphs are concerned. Putting error bars on bar graphs is usually a bad idea (albeit a popular one). bar +/- sd (or +/- CI) uses a silent assumption of normality - box-plot is non-parametric and gives a better understanding of variation. 
+
+bar +/- SEM is almost uninterpretable.
+
+bar +/- CI: when the means of two groups are compared, then the bar should represent the mean effect size (ES = mean_group_1 - mean_group_2) and the CI should be the confidence interval of the effect size (not two separate CI-s for 2 mean values, as is the case in nearly all instances of use found in biological literature).
+
+
+
+
+##A single continious variable: histogram/dotplot/frequency polygon/density plot
+
+When before we showed data summaries as single points, now we become interested in the variation in the level of our actual data. If we are dealing with a single variable, histogram is our workhorse. But note that the shape of histogram will depend on the number of bins, which means that we better try a couple of bin sizes to see if anything interesting pops out. There are two ways of defining bins: bins and binwidth. binwidth works more consistently.
+
+###How to visualize data depends on the amount of data:
+
+1) N < 20 - plot the individual data points (stripchart(), plot(), or similar) and the median or mean
+2) 20 > N > 100 use geom_dotplot()
+3) N > 100 use geom_histogram()
+4) if you want to compare, side-by-side, several data distributions of N > 15, consider geom_boxplot() or, when N > 50, geom_violin() 
+
+```{r}
+ggplot(iris, aes(Sepal.Length)) + geom_dotplot()
+```
+
+```{r}
+ggplot(iris, aes(Sepal.Length)) + geom_histogram() 
+```
+
+ggplot says: `stat_bin()` using `bins = 30`. Pick better value with `binwidth`, 
+```{r}
+ggplot(iris, aes(Sepal.Length)) + geom_histogram(binwidth = 0.5) 
+```
+
+Alternatively, you can specify the number of bins 
+```{r}
+ggplot(iris, aes(Sepal.Length)) + 
+  geom_histogram(bins = 10, color="white", fill = "navyblue") 
+```
+
+
+**To compare distributions** we can overlay histograms. To demonstrate this, let's create dummy dataset of two normal distributions:
+```{r}
+df2 <- tibble(pop = rep(c("N", "S"), each = 1000), 
+              value = c(rnorm(1000, 20, 3), rnorm(1000, 25, 3)))
+
+```
+
+When overlaying histograms in ggplot, default action is to 'stack' them one to another, making comparison difficult. We have to specify `position = "identity"` to place them directly onto x-axis (each bar starts from y = 0). Also we specify `alpha =` for transparency:
+```{r}
+p1 <- df2 %>% ggplot(aes(value, fill = pop)) 
+p1 + geom_histogram(position = "identity", alpha = 0.7, binwidth = 0.6)
+```
+
+If you want to compare more than 2 histograms, put them in defferent panels on top of each other.
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width)) +
+  geom_histogram(bins=10, color="white") +
+  facet_grid(Species~.)
+ 
+```
+
+It helps if you add grey background histogram of the full data set
+```{r}
+library(ggthemes)
+d <- iris        # Full data set
+d_bg <- d[, -5]  # Background Data - full without the 5th column (Species)
+
+ggplot(data = d, aes(x = Sepal.Width, fill = Species)) +
+  geom_histogram(data = d_bg, fill = "grey", alpha=0.8, bins=10) +
+  geom_histogram(colour = "black", bins=10) +
+  facet_grid(Species~.) +
+  guides(fill = FALSE) +  # to remove the legend
+  theme_tufte()          # for clean look overall
+
+```
+
+geom_freqpoly() makes a line that connects the tops of the bars that would appear in a histogram. Use arg binwidth as you would on a histogram.
+
+```{r}
+iris%>%ggplot()+
+  geom_freqpoly(aes(Sepal.Width, color=Species), binwidth=0.3)+
+  theme_tufte()
+```
+
+
+**geom_density()** is a smooth version of the histogram. Control the smoothness of the density with adjust. The area under each curve is normalized to one, which makes it easier to compare subgroups.
+
+geom density() places a little normal distribution at each data point and sums up all the curves. It is more difficult than the frequency plot to relate back to the data. Use a density plot when you know that the underlying density is smooth, continuous and unbounded. The density is the count divided by the total count multiplied by the bin width, and is useful when you want to compare the shape of the distributions, not the overall size. 
+
+```{r}
+iris%>%ggplot()+
+  geom_density(aes(Sepal.Width, fill=Species, color=Species, alpha=0.5))+
+  theme_tufte()
+
+iris%>%ggplot()+
+  geom_density(aes(Sepal.Width, color=Species), adjust=0.7)+
+  theme_tufte()
+```
+
+Joy plots for many densities side-by-side
+
+```{r}
+library(ggjoy)
+ggplot(iris, aes(x=Sepal.Length, y=Species, fill=Species)) + 
+  geom_joy(scale=4, rel_min_height=0.01, alpha=0.9) +
+  theme_joy(font_size = 13, grid=TRUE)
+```
+
+```{r}
+library(tidyverse)
+ggplot(diamonds, aes(x = price, y = cut, fill = cut, height = ..density..)) +
+  geom_joy(scale = 4, stat = "density") +
+  scale_fill_brewer(palette = 4) +
+  theme_joy() + 
+  theme(legend.position = "none")
+```
+
+
+We can also superimpose a normal distribution to our histogram. But first, as a comparison, we draw a density plot: 
+```{r}
+iris%>%ggplot()+
+  geom_density(aes(Sepal.Width), adjust=0.7)+
+  theme_tufte()
+```
+
+Note that we will have to change the y axis of histogram to density, less the normal curve and histogram frequency were in totally different scales.
+
+```{r}
+iris %>% ggplot(aes(x=Sepal.Width)) +
+  geom_histogram(bins=10,color="white",fill="grey", aes(y=..density..)) + 
+  stat_function(fun=dnorm, args=list(mean=mean(iris$Sepal.Width), 
+                   sd=sd(iris$Sepal.Width)), colour="red") +
+  theme_tufte()
+```
+
+##Covariation between two categorical vars can be visualized by geom_count
+```{r}
+
+(diamonds) 
+ggplot(data=diamonds)+
+  geom_count(aes(cut, color))
+```
+
+##  Boxplots
+**Boxplots** are created using `geom_boxplot`:
+```{r}
+ggplot(iris, aes(Species, Sepal.Width, fill=Species)) + geom_boxplot()
+```
+
+
+ Let's add original data points to the boxplot:
+```{r}
+ggplot(iris, aes(Species, Sepal.Width, fill=Species)) + 
+  geom_boxplot() + 
+  geom_jitter(width = 0.2, alpha=0.4, size=0.5)
+```
+
+If you have many boxplots side-by-side:
+```{r}
+ggplot(iris, aes(Species, Sepal.Width)) + 
+  geom_tufteboxplot(stat="boxplot", outlier.size = 1, outlier.shape = 3) + 
+  theme_tufte()
+```
+
+
+```{r}
+ggplot(iris, aes(Species, Sepal.Width)) + geom_violin(aes(fill=Species)) +
+  geom_jitter(width = 0.1, alpha=0.4, size=0.5)
+```
+
+**TIP!** with geom_boxplot and geom_violin you can also use continuous var in x by cutting it to discrete bins of constant width. See `?cut_interval`.
+
+```{r eval=FALSE}
+	ggplot(diamonds, aes(carat, depth)) +
+	     geom_tufteboxplot(aes(group = cut_width(carat, 0.2)), stat="boxplot", outlier.size = 0.1) +
+	     xlim(NA, 2.5) + theme_tufte()
+  
+```
+
+**IMPORTANT!** If N is small (less than 20, say), it makes more sense to show individual data points and mean, than boxplot or sd. 
+
+```{r}
+library(ggthemes)
+df2 <- tibble(pop = rep(c("male", "female"), each = 1000), 
+              value = c(rnorm(1000, mean = 1), rnorm(1000, mean = 1.8)))
+p <- df2 %>% sample_n(20) 
+
+p %>% ggplot(aes(pop, value)) + geom_jitter(width = 0.1) + 
+  stat_summary(fun.y = median, geom = "point", shape = 95, 
+               color = "red", size = 15) +
+  theme_tufte()
+```
+
+
+## Plotting means and error bars
+
+Summaries and e.g. errorbars can be calculated. To illustrate this, we take first a smaller sample from our dataset in order to have larger errorbars. 
+
+In the following code %>% means "pipe" - you take the output on the left of %>% and pipe it into the function right of the %>%. Thus you can create long linear pipelines of code that are easy to read. here we take the df2 and pipe it into the function sample_n(), whose output - a new df - is then piped into the function ggplot()
+
+Here we add bootstrapped 99% confidence intervals of the mean:
+```{r}
+p4 <- iris %>% ggplot(aes(Species, Sepal.Length)) + 
+  geom_jitter(color = "gray", width =0.1, size=1) 
+ 
+p4 + stat_summary(fun.data = "mean_cl_boot", 
+                  fun.args = list(conf.int = .99), 
+                  geom = "pointrange")
+
+```
+
+Here we add parametric CI:
+```{r}
+p4 + stat_summary(fun.y = mean, 
+                  geom = "point", 
+                  shape = 95, 
+                  color = "red", 
+                  size = 10) + 
+  stat_summary(fun.data = mean_cl_normal, 
+               fun.args = list(conf.int = .99),
+               geom = "errorbar", 
+               width = 0.1) 
+```
+
+```{r}
+p4 + stat_summary(fun.y = median, 
+                  geom = "point", 
+                  shape = 95, 
+                  color = "red", 
+                  size = 14) + 
+  stat_summary(fun.data = "median_hilow") 
+```
+95% of sample data remains inside the interval - this is not the interval for the median, but for the actual data!
+
+##Covariation between two continuous variables: geom_point 
+
+
+you can increase opacity by passing alpha argument.
+```{r}
+  
+ggplot(data=diamonds)+
+  geom_point(aes(depth, price), size=0.6, alpha=0.1)
+```
+
+Or use geom_bin2d
+```{r}
+ggplot(data = diamonds) +
+  geom_bin2d(aes(depth, price))
+```
+
+Or add to points another layer: geom_density2d
+```{r}
+ggplot(data = diamonds, aes(x = depth, y = price)) +
+  geom_point(size=0.1, alpha=0.1) +
+  geom_density2d()
+```
+
+Again, its nice to do faceting and add a layer of total information to each facet:
+```{r}
+d <- iris        # Full data set
+d_bg <- d[, -5]  # Background Data - without the 5th column (Species)
+ggplot(d, aes(x = Sepal.Width, y = Sepal.Length, colour = Species)) +
+  geom_point(data = d_bg, colour = "grey", alpha = .4) +
+  geom_point() + 
+  facet_wrap(~ Species, ncol=1) +
+  guides(colour = FALSE) +
+  theme_tufte()
+```
+
+or you can add different fits to the data
+
+
+```{r}
+fit<-lm(Petal.Width~Sepal.Width, iris) #fits a linear model
+coef(fit) #showes the fitted model coefficients
+```
+
+*intercept 3.1 means that the model line intersects the Y axis at 3.1 Sepal width -0.64 means that as the sepal width (X) increases by 1 unit, then the model expects the petal width (Y) to decrease (hence the minus sign) by 0.64 units. Slope equals -0.64. Together the slope and the intercept fully define the fitted line - they are the two coefficients of this linear model, whose values were estimated from the data using the function lm(). This process is called "model fitting".* 
+
+```{r}
+ggplot(data=iris, aes(Sepal.Width, Petal.Width))+
+  geom_point()+
+  geom_smooth(color="red")+ #a non-linear smooth
+  geom_abline(intercept=coef(fit)["(Intercept)"],
+              slope=coef(fit)["Sepal.Width"],
+              color="black", 
+              lwd=1) #linear fit (there are easier ways to do this step)
+```
+
+If we have a directional variable in x dimension (like time or concentration), we should use line graphs.
+
+## Linegraphs
+
+```{r}
+chks <- filter(ChickWeight, as.integer(Chick) < 10)
+ggplot(chks, aes(Time, weight, colour = Chick)) +
+  geom_point() +
+  geom_line()
+
+```
+
+
+fct_reorder2 is useful for time series - it reorders the factor levels so that the graph is easier to read:
+```{r}
+library(forcats)
+ggplot(chks, aes(Time, weight, colour = fct_reorder2(Chick, Time, weight))) +
+  geom_point() +
+  geom_line() +
+  labs(colour = "Chick")
+```
+
+
+Now we create line graphs with errorbars, we use `mpg` data. We calculate mean and standard error of the mean for highway fuel consumption (hwy) per year and per number of cylinders (cyl):
+```{r}
+mpg_sum <- mpg %>% 
+  filter(cyl %in% c(4,6,8)) %>%  # to include only comparable values
+  group_by(year, cyl) %>% # to compare two years
+  summarise(mean_hwy = mean(hwy), # to calculate mean
+            sd_hwy = sd(cty)) # standard deviation
+mpg_sum
+```
+
+`geom_line()` is used to create linegraphs in ggplot. We want two distinct colors for year variable, therefore we coerce year to factor:
+```{r}
+p5 <- mpg_sum %>% ggplot(aes(cyl, mean_hwy, color = factor(year))) 
+#Standard deviations can be added by using `geom_errorbar`, which needs arguments `ymin` and `ymax`:
+p5 + geom_point() + 
+  geom_line() +
+  geom_errorbar(data= mpg_sum, 
+                aes(ymin = mean_hwy + sd_hwy, ymax = mean_hwy - sd_hwy), 
+                width = 0.25)
+```
+
+When the errorbars overlap, use `position_dodge` to move them horizontally.
+```{r}
+pd <- position_dodge(0.7) 
+p5 + geom_point(position = pd) + 
+  geom_line(position = pd) +
+  geom_errorbar(aes(ymin = mean_hwy + sd_hwy, ymax = mean_hwy - sd_hwy), 
+                   width = 0.25, 
+                   position = pd)
+```
+
+
+##What if we have more dimensions in our data?
+```{r}
+diam<-dplyr::sample_n(diamonds, 200, replace = F) 
+ggplot(data = diam, aes(x = depth, y = price)) +
+  geom_point(aes(color= clarity, shape=cut, size=carat), alpha=0.8)+
+  theme_tufte()
+```
+
+Here we have a 5-dimensional visualization: 3 continious (depth in x, price in y, carat in size) and 2 discrete (clarity as color and cut as shape) vars. We could add a sixth dimension by using alpha on a continious variable.  
+
+
+
+
+
+

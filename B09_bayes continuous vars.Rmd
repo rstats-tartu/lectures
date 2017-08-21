@@ -1,0 +1,1519 @@
+---
+title: "Continuous vars Bayes"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+#Continuous variables
+
+
+Lets estimate the mean population Petal.Length form the iris tabel
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE, warning = FALSE)
+```
+
+
+```{r }
+library(rethinking)
+library(tidyverse)
+library(modelr)
+library(broom)
+library(car)
+#library(caret)
+library(plotly)
+library(gapminder)
+summary(iris)
+```
+
+our Bayesian model:
+
+Petal.Length ~ dnorm(mu, sigma) ,  # normal likelihood
+        mu ~ dnorm(5,10), # normal prior for mean
+        sigma ~ dcauchy(0,2) #half-cauchy prior from sd 
+        
+Remember: two parameters in the likelihood means that we have to specify two priors.
+
+
+Its always a good idea to visualize your priors before doing the Bayesian calculation.
+
+
+```{r}
+x <- -50:50
+y <- dnorm(x, 0, 10)
+plot(x,y)
+```
+
+our normal prior for mean is centered at 0 - pulls the posterior gently towards 0.
+Note that negative means are possible - we dont care about it for now. 
+
+Exercise: write the above in one line of code. use seq() in defining x.
+
+Our weakly informative prior for sigma (the standard deviation):
+
+```{r }
+
+x <- seq(from = 1, to = 10, by = 0.01)
+y <- dcauchy(x, 0, 1)
+plot(x, y)
+```
+
+This means that you expect the true sd to be no more than 4-5 units. NB! SD is in the same units as your data. Be sure to change the prior accordingly
+
+
+```{r, warning=FALSE}
+
+x <- seq(1, 50, by = 0.1)
+y<-dcauchy(x,4,10)
+plot(x,y)
+```
+
+```{r, warning=FALSE}
+
+x <- seq(1, 500, by = 1)
+y<-dcauchy(x, 50, 100)
+plot(x, y)
+```
+
+
+
+
+We now use MCMC sampling (Stan - Hamiltonian Monte Carlo). This is actually not needed here (both grid approximation and map would work), but we do it anyway for pedagogical reasons.
+
+Now we have 2 parameters to estimate (mean and sd) and the posterior gives us the probabilities of all possible combinations of theses parameters. NB! bayesian method tries to estimate posterior probabilities of all possible combinations of all parameters. Actually Stan by default draws about 4000 such combinations from the posterior. 
+
+**Stan samples directly from the posterior**
+
+
+```{r, warning=FALSE, message=FALSE, error=FALSE}
+m <- map2stan(
+    alist(
+        Petal.Length ~ dnorm(mu, sigma) ,  # normal likelihood
+        mu ~ dnorm(0,10), # normal prior for mean
+        sigma ~ dcauchy(0,2) #half-cauchy prior from sd 
+), data=iris )
+
+precis( m )
+```
+
+```{r}
+s<-extract.samples(m)
+dens(s$mu)
+```
+
+```{r}
+PI(s$mu)
+HPDI(s$mu)
+```
+
+##Linear regression
+
+## Glossary
+
++	The **predictors, independent variables, or descriptors** are the data used as input for the prediction equation. 
++	 **Response, outcome, dependent variable, predicted variable** refers to what is being predicted. 
++	 **Continuous data** have natural, numeric scales. Blood pressure, the cost of an item, or the number of bathrooms are all continuous. 
++	 **Categorical data, nominal, attribute, or discrete data** take on specific values that have no scale. In R factors have levels. 
++	 **Model fitting, model training, and parameter estimation** - using data to determine values of model equations. Algorithms that do the fitting: least squares, likelihoods, Bayes, etc.
+ 
+
+## Model formulae in R
+Anova, linear model and many others use formulas to specify the variables to be included in the analysis. The formula determines the model that will be built and fitted by R. The basic format is:  
+
+> response (dependent) variable ~ explanatory (independent) variables 
+
+The "~" _tilde_ symbol between the response and explanatory variables should be read "is modeled by". There are multiple ways to specify how the explanatory variables are used.
+
+A basic regression analysis would be formulated this way:
+
+> y ~ x 
+
+Here, "x" is the explanatory variable, and "y" is the response variable. Additional explanatory variables would be added in as follows: 
+
+> y ~ x + z 
+> y ~ x + z + x*z or y ~ x : z 
+
+```{r, echo=FALSE}
+fo <- read.csv(textConnection('"Symbol",	"Example",	"Meaning"
+"+",	"+ x",	"include this variable"
+"-",	"-", "x	delete this variable"
+":", "x : z",	"include the interaction between these variables"
+"*",	"x * z",	"include these variables and the interactions between them"
+"/",	"x / z",	"nesting: include z nested within x"
+"|",	"x | z",	"conditioning: include x given z"
+"^",	"(u + v + w + z)^3",	"include these variables and all interactions up to three way"
+"poly",	"poly(x,3)",	"polynomial regression: orthogonal polynomials"
+"Error",	"Error(a/b)",	"specify an error term"
+"I",	"I(x*z)",	"as is: include a new variable consisting of these variables multiplied. (x^2) means include this variable squared, etc. In other words I( ) isolates the mathematic operations inside it."
+"1",	"- 1",	"intercept: delete the intercept (regress through the origin)"'))
+knitr::kable(fo)
+```
+
+### It is time to start modelling
+
+
+First lets use the ordinary least square method 
+
+If all I need is point estimates for regression coefficients, then I naturally use the lm() function or equivalent, which is much quicker and more painless than Bayesian estimation. Arguably, for simple linear regression, Bayes is usually not worth the extra trouble. However, for pedagogical resons, we do next both lm and Bayes estimation. 
+
+We will start with a gapminder dataset to do simple linear modelling. We will look at the **relationship between GDP (per person) and life expectancy accross countries and continents during the 21st century**.
+We use an educational gapminder package, which has no data for Estonia. In the main gapminder dataset Estonia is nicely present.
+
+Load gapminder mini dataset:
+```{r}
+library(gapminder)
+gapminder <- gapminder
+```
+
+
+We select only data from year 2007:
+```{r}
+g2007 <- gapminder %>% filter(year==2007)
+```
+
+
+Lets do the actual model fitting:
+```{r}
+fit.g2007 <- lm(lifeExp ~ gdpPercap, data = g2007)
+```
+
+Lets look at the fitted object. Fist classical summary:
+```{r}
+summary(fit.g2007)
+```
+
+Fit object as a data.frame, using `tidy` from library `broom`:
+
+```{r}
+library(broom)
+tidy(fit.g2007) # tidy turns model object into data frame
+```
+
+
+Now, lets do the usual QC plot:
+
+```{r}
+opar <- par(mfrow=c(2,2)) 
+plot(fit.g2007)  
+par(mfrow=c(1,1))
+```
+
+Note, that we can see problems with normality and linearity (upper left facet). This is no good. We better plot the data:
+
+```{r}
+p <- ggplot(g2007, aes(gdpPercap, lifeExp)) + geom_point() + geom_smooth()
+p
+car::scatterplot(lifeExp ~ gdpPercap, data=g2007, 
+                  legend.coords="topleft", boxplots="xy", lwd=2)
+```
+We can see that relationship between gdp and life expectancy is not linear. How would the fit look if we logarithm of the x var?
+
+We can visualise log of x variable using ggplot scale_x_log10() function:
+```{r}
+p + scale_x_log10() + geom_smooth(method="lm", col="red", se=FALSE)
+```
+
+Looks much better!
+
+An interactive plot using `plotly` library where country names pop up:
+```{r message=FALSE}
+library(plotly)
+g2007 %>% plot_ly(x = ~log10(gdpPercap), 
+               y = ~lifeExp, 
+               mode = "markers",
+               color = ~country)
+```
+
+
+
+We can see that Africa has lower intercept, compared to other continents. What does that mean?
+
+So, lets use the log transform in a new model fit:
+
+```{r}
+fit.g2007.l <- lm(lifeExp ~ log10(gdpPercap), data = g2007)
+```
+
+
+```{r}
+tidy(fit.g2007.l)
+```
+
+We can use `glance` function from broom package to look at the summary statistics computed for the regression:
+```{r}
+glance(fit.g2007.l)
+```
+
+
+Diagnostic plots:
+```{r}
+par(mfrow=c(2,2)) 
+plot(fit.g2007.l)
+par(mfrow=c(1,1))
+```
+
+> A tidy way of splitting coefficients by continent (using broom and dplyr).
+
+How does sit look like if we split data per continent:
+```{r}
+library(ggthemes) # to use colorblind pallette
+ggplot(g2007, aes(gdpPercap, lifeExp, colour = continent)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)+
+  scale_x_log10() +
+  scale_color_colorblind()
+```
+
+
+tidy gives model parameters and glance quality control measures
+```{r}
+g2007 <- g2007 %>%  mutate(log_GDP = log10(gdpPercap))
+g2007 %>% 
+  group_by(continent)  %>% 
+  do(tidy(lm(lifeExp ~ log_GDP, data = .)))
+```
+
+```{r}
+g2007 %>% 
+  group_by(continent)  %>% 
+  do(glance(lm(lifeExp ~ log_GDP, data = .)))
+```
+
+
+AIC allows to directly compare the models (they do not have to be nested, but the models that are compared must have been fitted on exactly the same data). Smaller AIC wins. The actual AIC value cannot be interpreted.
+```{r}
+AIC(fit.g2007, fit.g2007.l)
+```
+
+
+We can add population size (which is again in log scale) to our model:
+```{r}
+ggplot(g2007, aes(pop, lifeExp)) + geom_point() + geom_smooth(method = "lm") + scale_x_log10()
+```
+
+Is life expectancy related to the population size:
+```{r}
+tidy(lm(lifeExp ~ log10(pop), data = g2007))
+```
+
+
+
+```{r}
+fit2 <- lm(lifeExp ~ log_GDP + log10(pop), data = g2007) # + log10(pop)
+tidy(fit2)
+```
+
+```{r}
+par(mfrow=c(2,2)) 
+plot(fit2)
+par(mfrow=c(1,1))
+```
+
+
+`augment` command from `broom` package augments each row of the original table with fitted values, residual, hat, cooks D, studentized residual. We can sort data by standardized residuals, hat value, cook's distance and so on to identify countries that either don't fit the model or have outsize influence on the model.
+```{r}
+(af <- augment(fit.g2007, g2007))
+#tbl_df(af)
+```
+
+Compare actual values with fitted values from linear GDP values:
+```{r}
+ggplot(af, aes(.resid)) + geom_histogram()
+```
+
+Where our model overestimates life expectancy:
+```{r}
+af %>% filter(.resid <= -15) # overestimated by more tahn 15 years
+```
+
+Underestimated by model:
+```{r}
+af.cuba <- af %>% filter(country=="Cuba")
+af.cuba
+```
+The model predicts 65.2 years life expectancy, while the actual number is 78.3 years. So in this one dimension Cuba is perhaps doing better than expected.
+**Question: why "perhaps"?**
+
+Lets look at the better log model
+```{r}
+af_l <- augment(fit.g2007.l, g2007)
+```
+
+Compare actual values with fitted values from log-transformed GDP values:
+```{r}
+ggplot(af_l, aes(.resid)) + geom_histogram()
+```
+Distribution of residuals looks better!
+
+Where our model overestimates life expectancy:
+```{r}
+af_l %>% filter(.resid <= -15) # overestimated by more than 15 years
+```
+Well, list is shorter...
+
+And Cuba is predicted by our model little bit better:
+```{r}
+af_l %>% filter(country=="Cuba")
+```
+
+Now the prediction for Cuba is 70.4 years and the actual number is still 78.3 years. Now, what do you think of Cubas success in public health relative to other countries? **Homework: do the same analysis for Estonia, and repeat for Cuba at 1997, 1977 and so on.**
+
+
+a nice residual plot: we see very clearly that linear model does not capture all the pattern(s). (And that the log model isnt perfect either, although the residuals do not show an obvious pattern here.)
+
+```{r}
+ggplot(af, aes(log10(gdpPercap), .resid)) + 
+  geom_ref_line(h = 0) +
+  geom_point() + ggtitle("linear fit")
+
+ggplot(af_l, aes(log_GDP, .resid)) + 
+  geom_ref_line(h = 0) +
+  geom_point() + ggtitle("log fit")
+```
+
+In both cases the x axis is in log scale, the difference being that in the upper graph the fitting was done using linear-scale data.
+
+
+a nice QQ plot
+```{r}
+library(car)
+qqPlot(fit.g2007.l)
+```
+
+draw the distribution of residuals by frequency polygon:
+```{r}
+library(modelr) # tidyverse library
+g2007 <- g2007 %>% add_residuals(fit.g2007.l)
+ggplot(g2007, aes(resid)) + 
+  geom_freqpoly(binwidth = 3, color= "red", size=1)
+
+```
+
+```{r eval=FALSE}
+predict(fit.g2007.l)
+```
+
+
+
+
+
+
+###and now Bayesian version
+
+**NB! For a linear model the likelihood must be normal or t distribution**
+
+```{r, warning=FALSE}
+
+#g<-glimmer(lifeExp~log_GDP, data= g2007) #gives a suggested model structure
+g2007 <- as.data.frame(g2007)
+
+m <- map2stan(
+    alist(
+        lifeExp ~ dnorm(mu, sigma) , #likelihood
+        mu <- intercept + slope * log10(gdpPercap), #redefine mu
+        intercept ~ dnorm(0, 10),
+        slope ~ dnorm(0, 20),
+        sigma ~ dcauchy(0, 1) #half-cauchy prior from sd 
+), data=g2007 )
+
+precis( m )
+```
+
+
+Here we estimated 3 parameters, because we redifined the mean life expectancy as a + b * log10(gdpPercap). We do not determine mu directly, but it can be calculated from the other parameters. The third parameter is sigma as before. Note the three priors. The points estimates are identical to least squares method (both this and bayes theorem are optimal ways of calculating them), but the bayesian approach contains more information about variation and adds to the picture the posterior to the sigma variable. While the slope works at aggregate level (mean), the sigma works at the level of original observations. The slope tells you what the mean lifeExp is expected to be at a given GDP. In contrast, sigma tells you that at each GDP the standard deviation of individual lifeExp is 7.12 years.
+
+```{r}
+plot(m)
+```
+
+
+Always plot out your Bayesian model:
+
+```{r}
+cf<-coef(m)
+cf
+g2007 %>% ggplot(aes(log_GDP, lifeExp) ) + 
+  geom_point() +
+  geom_abline(intercept=cf["intercept"] , slope=cf["slope"] ) + 
+  coord_cartesian(ylim = c(min(g2007$lifeExp), max(g2007$lifeExp) ) )
+```
+
+This shows that our Bayesian model works. Always plot to make sure! Remember, you are using fancy computations to fit the model - a lot more can go wrong than with lm().
+
+link() works at the aggregate (mean) level, it enables to plot the uncertainty around the placement of the regression line.
+```{r}
+linked<-link(m)
+linked <- as_tibble(linked)
+```
+
+here we have 1000 predicted life expectance mean values (rows) for each of the 142 observed log_GDP values (columns).
+
+We can do better: lets get the table for a few evenly spaced log_GDP values:
+
+```{r}
+width <- seq( from=200 , to=50000 , by=5000 )
+# use link to compute mu
+# for each sample from posterior
+# and for each width in weight.seq
+mu1 <- as_tibble(link( m , data=data.frame(gdpPercap=width) ) )
+
+```
+
+Now we have 10 petal gdpPercap values, each with 1000 predictions of the mean life expectancy.
+
+```{r}
+mu.mean <- apply( mu1 , 2 , mean ) #applies the FUN mean() to each column
+mu.HPDI <- apply( mu1 , 2 , HPDI , prob=0.95 )
+
+# plot raw data
+# fading out points to make line and interval more visible
+plot( lifeExp ~ gdpPercap  , data= g2007 , col=col.alpha(rangi2, 0.5) )
+# plot the MAP line, aka the mean mu for each weight
+lines( width , mu.mean )
+# plot a shaded region for 89% HPDI
+shade( mu.HPDI , width )
+
+```
+
+How about in addition estimating the range of expected data (individual life expectancies) at each GDP? use the sim() function.
+
+```{r}
+sim.length <- as_tibble(sim( m , data=list(gdpPercap=width) ) )
+
+height.PI <- apply( sim.length , 2 , PI , prob=0.95 )
+
+plot( lifeExp ~ gdpPercap  , data= g2007 , col=col.alpha(rangi2, 0.5) )
+# plot the MAP line, aka the mean mu for each weight
+lines( width , mu.mean )
+shade( mu.HPDI , width )
+# draw PI region for simulated heights
+shade( height.PI , width )
+
+```
+
+This is the actual range of life expectancies that you expect to be able to observe 95% of the time at each GDP. According to the linear model, that is. You need the sigma posterior to do this prediction right (and this is not availbale from the classical lm() calculation). Note that the model assumes that the sd is equal at each GDP.
+
+This model seems to work wery well.
+
+For instance, V10 corresponds to GDP = 50 000 USD
+These are the expected values of individual life expectancies at this GDP
+```{r}
+dens(sim.length$V10)
+HPDI(sim.length$V10, prob = 0.95)
+```
+
+##Polynomial fits --- for independent study
+
+There is an alternative to transforming GDP. We can fit a line that is not straight. We can even do this using linear regression and least squares methods, and, theorethically, by this method we can obtain the best fit for any conceivable collection of data points.
+
+NB! NAs are not tolerated. 
+
+Polynomial fit 1: lifeExp~gdpPercap + gdpPercap**2 +...+ gdpPercap**5 
+
+```{r}
+fit.poly1 <- lm(lifeExp~poly(gdpPercap ,5), data=g2007) 
+tidy(fit.poly1) 
+```
+
+According to the p values works up to 5th order.
+
+
+Next we will visualize this:
+
+```{r}
+mod_e1 <- lm(lifeExp ~ gdpPercap, data = g2007)
+mod_e2 <- lm(lifeExp ~ poly(gdpPercap, 2), data = g2007)
+mod_e3 <- lm(lifeExp ~ poly(gdpPercap, 3), data = g2007)
+mod_e4 <- lm(lifeExp ~ poly(gdpPercap, 4), data = g2007)
+mod_e5 <- lm(lifeExp ~ poly(gdpPercap, 5), data = g2007)
+
+g2007 %>% 
+  expand(g2007) %>% 
+  gather_predictions(mod_e1, mod_e2, mod_e3, mod_e4, mod_e5) %>% 
+  ggplot(aes(gdpPercap, pred, colour = model)) +
+  geom_line() +
+  geom_point(aes(gdpPercap, lifeExp), color="black", size=0.2) +
+  ylab("predicted Life expectancy by linear x scale")
+```
+
+
+Alternative notation, this is the same as mod_e3:
+
+```{r eval=FALSE}
+fit.alt <- lm(lifeExp ~ gdpPercap + I(gdpPercap**2) + I(gdpPercap**3), data = g2007) # note I()
+```
+
+And for log data:
+```{r eval= FALSE}
+fit.poly2 <- lm(lifeExp~poly(log_GDP ,5), data=g2007) 
+tidy(fit.poly2) 
+```
+
+Fitting these models is easy. Interpreting them can be hard. Care must be taken when interpreting the linear component, that is, the slope. The slope is only meaningful in the context of adding the quadratic component. Also, the introduction of the curvature parameter makes the slope parameter less certain - this is a form of penalizing complexity. In this regard standardized X variable may behave better.
+
+   The first thing to do is to standardize the predictor variable. this means to first center the variable and then divide it by its standard deviation: (x – mean(x))/sd(x). leaves the mean=0, sd=1. this is helpful for two reasons: 
+(1) a change of one unit is equivalent to a change of one standard deviation. In many contexts, this is more revealing. If more than one kind of predictor, standardizing all of them makes it easier to compare their relative influence on the outcome. With a little practice, though, you can quickly convert back and forth between natural and standard scales. 
+
+(2) More important though are the advantages for fitting the model to the data. When predictor variables have very large values in them, there are sometimes numerical glitches. these problems are very common for polynomial regression, because the square or cube of a large number can be truly massive. Standardizing largely resolves this issue. 
+ 
+hi ∼ Normal(μi, σ) 
+μi = α + β1xi + β2x2i 
+α ∼ Normal(178, 100) 
+β1 ∼ Normal(0, 10)
+
+β2 ∼ Normal(0, 10) 
+σ ∼ Uniform(0, 50) 
+
+```{r}
+df <- g2007 %>% mutate(gdp_s = (gdpPercap - mean(gdpPercap))/sd(gdpPercap), 
+                       gdp_s2 = gdp_s**2, gdp_s3 = gdp_s**3, gdp_s4 = gdp_s**4)
+#mean(df$gdp_s)
+#sd(df$gdp_s)
+	
+m <- map2stan(
+	    alist(
+	        lifeExp ~ dnorm( mu , sigma ) ,
+	        mu <- a + b1*gdp_s + b2*gdp_s2 + b3*gdp_s3 + b4*gdp_s4 ,
+	        a ~ dnorm( 0 , 10 ) ,
+	        b1 ~ dnorm( 0 , 10 ) ,
+	        b2 ~ dnorm( 0 , 10 ) ,
+	        b3 ~ dnorm( 0 , 10 ) ,
+	        b4 ~ dnorm( 0 , 10 ) ,
+	        sigma ~ dunif( 0 , 50 )
+	), data=df ) 
+
+width.seq <- seq( from=-3 , to=3.5 , length.out=30 )
+pred_dat <- list( gdp_s=width.seq , 
+                  gdp_s2=width.seq^2, 
+                  gdp_s3=width.seq**3, 
+                  gdp_s4=width.seq**4 )
+	mu <- link( m , data=pred_dat )
+	mu.mean <- apply( mu , 2 , mean )
+	mu.PI <- apply( mu , 2 , PI , prob=0.89 )
+	sim.height <- sim( m , data=pred_dat )
+	height.PI <- apply( sim.height , 2 , PI , prob=0.89 )
+	
+	plot( lifeExp ~ gdp_s , df , col=col.alpha(rangi2,0.5) )
+	lines( width.seq , mu.mean )
+	shade( mu.PI , width.seq )
+	shade( height.PI , width.seq )
+
+```
+Quite a few points outside the interval - not a very good model of the data.
+
+
+Taavi - kuidas panna peale regressiooni X telg tagasi originaalskaalasse?
+Kas sa oskad selle ggplotti viia?
+
+##Multivariate models
+
+Reasons for multivariate models: 
+
+1. Statistical “control” for confounding variables. A confounding variable may be correlated with another variable of interest. Confounds can hide real important variables just as easily as they can produce false ones. the entire direction of an apparent association between a predictor and outcome can be reversed by considering a confound. 
+2.	Multiple causation. 
+3.	Interactions. Even when variables are completely uncorrelated, the importance of each may still depend upon the other. For example, plants benefit from both light and water. But in the absence of either, the other is no benefit at all. 
+
+ the rate at which adults marry is a great predictor of divorce rate. But does marriage cause divorce? Another predictor associated with divorce is the median age at marriage.
+
+
+####OLS multiple regression
+
+```{r message=FALSE, warning=FALSE, error=FALSE}
+library(rethinking)
+data(WaffleDivorce)
+d <- WaffleDivorce
+scatterplotMatrix(~ Population + MedianAgeMarriage + Divorce + WaffleHouses + PropSlaves1860 | South, 
+                  transform=FALSE, spread=FALSE, data= d)
+```
+
+```{r}
+f1 <- lm(Divorce~WaffleHouses, d)
+summary(f1)
+```
+
+
+####Do we have collinearity? 
+(assuming that we want to predict ldl from all other vars)
+
+```{r message=FALSE, error=FALSE, warning=FALSE}
+fit.all<-lm(Divorce~Population + MedianAgeMarriage +  WaffleHouses + PropSlaves1860 + Slaves1860 + Population1860 + South, data=d)
+vif(fit.all)
+```
+
+You can see that Slaves and PropSlaves are collinear - no surprise there since one was used to calculate the other. Ineterestingly, Population1860 shows no collinearity.
+
+## best subset selection
+
+```{r}
+library(leaps)
+regfit.full<- regsubsets(Divorce~Population + MedianAgeMarriage +  WaffleHouses + South , data=d, nvmax=19, method="backward") 
+reg.summary<-summary(regfit.full) 
+par(mfrow=c(1,2)) 
+plot(reg.summary$rss , xlab="Number of Variables ", ylab="RSS", type="l") 
+plot(reg.summary$adjr2, xlab="Number of Variables ", ylab="Adjusted RSq", type="l")
+par(mfrow=c(1,1))
+```
+
+From the vector of adjusted r squares you can see that after the first 4 or 5 vars, the adj r is stable or declining
+```{r}
+reg.summary$adjr2
+```
+
+This is a graphical summary of which Vars to include
+```{r}
+summary(regfit.full)
+```
+
+We will include 3 vars: Population, MedianAgeMarriage, and WaffleHouses
+```{r}
+fit.5var<-lm(Divorce~Population + MedianAgeMarriage +  South + WaffleHouses, data=d)
+tidy(fit.5var)
+```
+
+```{r}
+fit.6var<-lm(Divorce~Population + MedianAgeMarriage +  WaffleHouses, data=d)
+tidy(fit.6var)
+```
+
+```{r}
+fit.7var<-lm(Divorce~Population + MedianAgeMarriage +  South, data=d)
+tidy(fit.7var)
+```
+
+
+###Relative weights of vars (numeric predictors only)
+
+Relaimpo package (should also work with glm() output objects). Takes factors as well as numeric vars. Gives relative importance for response var (% of R2).
+
+```{r}
+relimp <- relaimpo::calc.relimp(fit.7var, rela = TRUE, type=c("lmg"))
+plot(relimp)
+```
+##Model selection
+
+By AIC
+```{r}
+
+AIC(f1, fit.all, fit.5var, fit.6var, fit.7var)
+```
+Fot7 is the best model, f1(one var) and fit.all are the worst.
+
+###And now Bayesian multpile regression
+
+```{r}
+library(rethinking)
+data(WaffleDivorce)
+d <- WaffleDivorce
+# standardize predictor
+d <- d %>% mutate(MedianAgeMarriage_s= (MedianAgeMarriage-mean(MedianAgeMarriage))/
+    sd(MedianAgeMarriage)) 
+# fit model
+m5.1 <- map2stan(
+    alist(
+        Divorce ~ dnorm( mu , sigma ) ,
+        mu <- a + bA * MedianAgeMarriage_s ,
+        a ~ dnorm( 10 , 10 ) ,
+        bA ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+) , data = d )
+
+MAM.seq <- seq( from=-3 , to=3.5 , length.out=30 )
+mu <- link( m5.1 , data=data.frame(MedianAgeMarriage_s=MAM.seq) )
+
+mu.PI <- apply( mu , 2 , PI )
+
+plot( Divorce ~ MedianAgeMarriage_s , data=d , col=rangi2 )
+abline( m5.1 )
+shade( mu.PI , MAM.seq )
+```
+
+You can  fit a similar regression for the relationship between divorce rate and marriage rate:
+
+```{r, eval=FALSE}
+d<- d %>% mutate(Marriage_s= (Marriage - mean(Marriage))/sd(Marriage))
+m5.2 <- map2stan(
+    alist(
+        Divorce ~ dnorm( mu , sigma ) ,
+        mu <- a + bR * Marriage_s ,
+        a ~ dnorm( 10 , 10 ) ,
+        bR ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+) , data = d )
+precis(m5.2)
+```
+
+this shows an increase of 0.6 divorces for every additional standard deviation of marriage rate. this relationship isn’t as strong as the previous one, but merely comparing parameter means between different bivariate regressions is no way to decide which predictor is better. Both of these predictors could provide independent value, or they could be redundant, or one could eliminate the value of the other. So we’ll build a multivariate model. 
+
+The question we want answered is: **What is the predictive value of a variable, once I already know all of the other predictor variables?**
+
+once you  fit a multivariate regression to predict divorce using both marriage rate and age at marriage, the model answers the questions:
+
+(1) After I already know marriage rate, what additional value is there in also knowing age at marriage?
+(2) After I already know age at marriage, what additional value is there in also knowing marriage rate?
+ 
+ it might help to read the + symbols as “or” and then say: A State’s divorce rate can be a function of its marriage rate or its median age at marriage.  the “or” indicates independent associations, which may be purely statistical or rather causal.
+ 
+```{r}
+m5.3 <- map2stan(
+    alist(
+        Divorce ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*Marriage_s + bA*MedianAgeMarriage_s ,
+        a ~ dnorm( 10 , 10 ) ,
+        bR ~ dnorm( 0 , 1 ) ,
+        bA ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+),
+    data = d )
+precis( m5.3 )
+```
+
+
+```{r}
+plot( precis(m5.3) )
+```
+
+interpretation: Once we know median age at marriage for a State, there is little or no additional predictive power in also knowing the rate of marriage in that State.
+
+###three types of interpretive plots:
+
+(1) Predictor residual plots show the outcome against residual predictor values.
+(2) Counterfactual plots show the implied predictions for imaginary experiments in which the different predictor variables can be changed independently of one another.
+(3) Posterior prediction plots show model-based predictions against raw data, or otherwise display the error in prediction.
+
+####Predictor residual plots. 
+
+once plotted against the outcome, we have a bivariate regression of sorts that has already “controlled” for all of the other predictor variables. It just leaves in the variation that is not expected by the model of the mean as a function of the other predictors.
+
+```{r}
+m5.4 <- map2stan(
+    alist(
+        Marriage_s ~ dnorm( mu , sigma ) ,
+        mu <- a + b*MedianAgeMarriage_s ,
+        a ~ dnorm( 0 , 10 ) ,
+        b ~ dnorm( 0 , 1 ) ,
+sigma ~ dunif( 0 , 10 ) ),
+data = d )
+
+# compute expected value at MAP, for each State
+mu <- coef(m5.4)['a'] + coef(m5.4)['b']*d$MedianAgeMarriage_s
+# compute residual for each State
+m.resid <- d$Marriage_s - mu
+
+plot( Marriage_s ~ MedianAgeMarriage_s , d , col=rangi2 )
+abline( m5.4 )
+# loop over States
+for ( i in 1:length(m.resid) ) {
+    x <- d$MedianAgeMarriage_s[i] # x location of line segment
+    y <- d$Marriage_s[i] # observed endpoint of line segment
+    # draw the line segment
+    lines( c(x,x) , c(mu[i],y) , lwd=0.5 , col=col.alpha("black",0.7) )
+}
+```
+
+
+
+```{r}
+d$m.resid<-m.resid
+plot(m.resid, d$Divorce)
+abline(lm(Divorce~m.resid, data=d))
+abline(v=0, lty=3)
+```
+
+think of this plot as displaying the linear relationship between divorce and marriage rates, having statistically “controlled” for median age of marriage. the vertical dashed line indicates marriage rate that exactly matches the expectation from median age at marriage.
+
+Linear regression models do all of this with a very specific additive model of how the predictors relate to one another. But predictor variables can be related to one another in non-additive ways.  the basic logic does not change in those cases, but these residual plots do not in general work the same way. Luckily there are more general ways to plumb the mysteries of a model.
+
+####Counterfactual plots display the implied predictions of the model.
+
+a plot showing the impact of changes in Marriage.s on predictions:
+
+```{r}
+# prepare new counterfactual data
+A.avg <- mean( d$MedianAgeMarriage_s )
+R.seq <- seq( from=-3 , to=3 , length.out=30 )
+pred.data <- tibble(
+    Marriage_s=R.seq,
+    MedianAgeMarriage_s=A.avg
+)
+# compute counterfactual mean divorce (mu)
+mu <- link( m5.3 , data=pred.data )
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+# simulate counterfactual divorce outcomes
+R.sim <- sim( m5.3 , data=pred.data , n=1e4 )
+
+R.sim <- na.omit(R.sim)
+R.PI <- apply( R.sim , 2 , PI)
+# display predictions, hiding raw data with type="n"
+plot( Divorce ~ Marriage_s , data=d , type="n" )
+mtext( "MedianAgeMarriage.s = 0" )
+lines( R.seq , mu.mean )
+shade( mu.PI , R.seq )
+shade( R.PI , R.seq )
+```
+
+
+ the strategy is to build a new list (pred.data) of data that describe the counterfactual cases we wish to simulate predictions for. the observed values for MedianAgeMarriage.s are not used, instead we compute the average value and then use this average inside the linear model. So Marriage.s changes across the values in MR.seq, while the other predictor is held constant at its mean, MAM.avg. the average value of MedianAgeMarriage.s is of course zero, because it is a centered variable.  this means you could omit it from the linear model and get the same predictions. But if you want to make a counterfactual plot for some other constant value of MedianAgeMarriage.s, or if you are working with un-centered variables, then you need the full linear model again.
+ 
+  this plot has the same slope as the residual plot. But no data, raw or residual, because it is counterfactual. it also shows percentile intervals on the scale of the data, instead of on that weird residual scale. As a result, it is a direct display of the impact on prediction of a change in each variable.
+  
+In the small world of the model, it is possible to change median age of marriage without also changing the marriage rate. But is this also possible in the large world of reality? Probably not. in many problems more than one predictor variable has a sizable impact on the outcome. In that case, while these counterfactual plots always help in understanding the model, they may also mislead by displaying predictions for impossible combinations of predictor values.
+
+###Posterior prediction plots check the model fit against the observed data.
+
+(1) Did the model fit correctly? compare implied predictions to the raw data. Some caution is required, because not all models try to exactly match the sample. But even then, you’ll know what to expect from a successful fit. 
+(2) How does the model fail? often, a model predicts well in some respects, but not in others. By inspecting the individual cases where the model makes poor predictions, you might get an idea of how to improve the model.
+
+plot predictions against observed and add a line to show perfect prediction and line segments for the confidence interval of each prediction.
+```{r}
+# call link without specifying new data
+# so it uses original data
+mu <- link( m5.3 )
+# summarize samples across cases
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+# simulate observations
+# again no new data, so uses original data
+divorce.sim <- sim( m5.3 , n=1e4 )
+divorce.sim <- na.omit(divorce.sim)
+divorce.PI <- apply( divorce.sim , 2 , PI )
+
+plot( mu.mean ~ d$Divorce , col=rangi2 , ylim=range(mu.PI) ,
+    xlab="Observed divorce" , ylab="Predicted divorce" )
+abline( a=0 , b=1 , lty=2 )
+for ( i in 1:nrow(d) )
+    lines( rep(d$Divorce[i],2) , c(mu.PI[1,i],mu.PI[2,i]) ,
+        col=rangi2 )
+
+```
+
+the model under-predicts for States with very high divorce rates while it over-predicts for States with very low divorce rates.
+
+ this plot makes it hard to see the amount of prediction error, in many cases. residual plots show the mean prediction error for each row. 
+ 
+```{r}
+# compute residuals
+divorce.resid <- d$Divorce - mu.mean
+# get ordering by divorce rate
+o <- order(divorce.resid)
+# make the plot
+dotchart( divorce.resid[o] , labels=d$Loc[o] , xlim=c(-6,5) , cex=0.6 )
+abline( v=0 , col=col.alpha("black",0.2) )
+for ( i in 1:nrow(d) ) {
+    j <- o[i] # which State in order
+    lines( d$Divorce[j]-c(mu.PI[1,j],mu.PI[2,j]) , rep(i,2) )
+    points( d$Divorce[j]-c(divorce.PI[1,j],divorce.PI[2,j]) , rep(i,2),
+
+pch=3 , cex=0.6 , col="gray" )
+}
+```
+
+####Masked relationship
+
+A second reason to use more than one predictor variable is to measure the direct influences of multiple factors on an outcome, when none of those influences is apparent from bivariate relationships.  this kind of problem tends to arise when there are two predictor variables that are correlated with one another, while one of these is positively correlated with the outcome and the other is negatively correlated with it.
+
+a new data context, the composition of milk across primate species. 
+
+```{r}
+data(milk)
+d <- milk
+str(d)
+```
+
+
+ the question is to what extent energy content of milk (kcal), is related to the percent of the brain mass that is neocortex. 
+ 
+ 
+```{r}
+dcc <- na.omit(d)
+m5.5 <- map2stan(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bn*neocortex.perc ,
+        a ~ dnorm( 0 , 100 ) ,
+        bn ~ dnorm( 0 , 1 ) ,
+sigma ~ dunif( 0 , 1 ) ),
+data=dcc)
+
+precis( m5.5 , digits=3 )
+
+```
+
+a change from the smallest neocortex percent in the data, 55%, to the largest, 76%, would result in an expected change of only:
+```{r}
+coef(m5.5)["bn"] * ( 76 - 55 )
+```
+Let’s use the logarithm of mass, log(mass), as a predictor as well. Why the logarithm of mass instead of the raw mass in kilograms? It is o en true that scaling measurements like body mass are related by magnitudes to other variables. 
+
+```{r message=FALSE, error=FALSE, warning=FALSE}
+dcc <- dcc %>% mutate(log.mass=log10(mass))
+m5.6 <- map2stan(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bm*log.mass ,
+        a ~ dnorm( 0 , 100 ) ,
+        bm ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 1 ) ),
+    data=dcc )
+precis(m5.6)
+```
+
+log-mass is negatively correlated with kilocalories.  this influence does seem stronger than that of neocortex percent, although in the opposite direction.
+
+what happens when we add both predictor variables
+
+```{r}
+m5.7 <- map2stan(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bn*neocortex.perc + bm*log.mass ,
+        a ~ dnorm( 0 , 100 ) ,
+        bn ~ dnorm( 0 , 1 ) ,
+        bm ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 1 )
+), 
+data=dcc )
+precis(m5.7)
+```
+
+the estimated association of both with the outcome has increased.  the posterior mean for the association of neocortex percent has increased more than sixfold, and its 89% interval is now entirely above zero.  the posterior mean for log body mass is more strongly negative. this is a context in which there are two variables correlated with the outcome, but one is positively correlated with it and the other is negatively correlated with it. In addition, both of the explanatory variables are positively correlated with one another. As a result, they tend to cancel one another out. 
+ 
+####When adding variables hurts
+
+ the first is multicollinearity, a nasty word for a simple phenomenon: it’s easy to spot and cope with.  
+ the second is post-treatment bias, which means statistically controlling for consequences of a causal factor.  
+ the third is overfitting.
+ 
+ Multicollinearity means very strong correlation between two or more predictor variables.  the consequence is that the posterior distribution will say that a very large range of parameter values are plausible, from tiny associations to massive ones, even if all of the variables are in reality strongly associated with the outcome variable. 
+ 
+ we have the variables perc.fat (percent fat) and perc.lactose (percent lactose) that we might use to model the total energy content, kcal.per.g: a natural case of multicollinearity.
+ 
+ 
+ 
+```{r, eval=FALSE}
+# kcal.per.g regressed on perc.fat
+m5.10 <- map(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bf*perc.fat ,
+        a ~ dnorm( 0.6 , 10 ) ,
+        bf ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+),data=d )
+# kcal.per.g regressed on perc.lactose
+m5.11 <- map(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bl*perc.lactose ,
+        a ~ dnorm( 0.6 , 10 ) ,
+        bl ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+), data=d )
+precis( m5.10 , digits=3 )
+precis( m5.11 , digits=3 )
+```
+
+ the posterior mean for bf, the association of percent fat with milk energy, is 0.01. the posterior mean in the second model for percent lactose is −0.01. essentially mirror images of one another. Both are narrow posterior distributions that lie almost entirely on one side or the other of zero.
+ 
+ note the parameter values for the slopes bf and bl are small in absolute value. So you might wonder whether these associations really have much in uence on the outcome, milk energy.  they do. Remember that both predictors are percents, so are potentially large numbers.  the absolute magnitude of regression slopes is not always meaningful, because the influence on prediction depends upon the product of the parameter and the data. You have to compute or plot predictions, unless you decide to standardize all of your predictors. And even then you are probably better off  always plotting implied predictions than trusting your intuition.
+ 
+```{r, eval=FALSE}
+m5.12 <- map(
+    alist(kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bf*perc.fat + bl*perc.lactose ,
+        a ~ dnorm( 0.6 , 10 ) ,
+        bf ~ dnorm( 0 , 1 ) ,
+        bl ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+),
+    data=d )
+precis( m5.12 , digits=3 )
+```
+
+Now the posterior means of both bf and bl are closer to zero. And the standard deviations for both parameters are twice as large as in the bivariate models 
+What has happened is that the variables perc.fat and perc.lactose contain much of the same information.  they are substitutes for one another. As a result, when you include both in a regression, the posterior distribution ends up describing a long ridge of combinations of bf and bl that are equally plausible.
+```{r}
+pairs( ~ kcal.per.g + perc.fat + perc.lactose ,
+    data=d , col=rangi2 )
+```
+
+How strong does a correlation have to get, before you should start worrying about multicollinearity?  there’s no easy answer to that question. Correlations do have to get pretty high before this problem interferes with your analysis. And what matters isn’t just the correlation between a pair of variables. Rather, what matters is the correlation that remains after accounting for any other predictors.
+
+A popular defensive approach is to show that models using any one member from a cluster of highly correlated variables will produce the same inferences and predictions. 
+
+In general, there’s no guarantee that the available data contain much information about a parameter of interest. When that’s true, your Bayesian machine will return a very wide posterior distribution.  that doesn’t mean anything is wrong—you got the right answer to the question you asked. But it might lead you to ask a better question. 
+
+ worry about mistaken inferences arising from including variables that are consequences of other variables. We’ll call this **post-treatment bias**.
+ 
+###Categorical vars
+
+interpreting estimates for categorical variables can be harder than for regular continuous variables. Knowing how the machine works removes a lot of this difficulty.
+
+```{r, eval=FALSE}
+
+m5.15 <- map(
+    alist(
+        height ~ dnorm( mu , sigma ) ,
+        mu <- a + bm*male ,
+        a ~ dnorm( 178 , 100 ) ,
+        bm ~ dnorm( 0 , 10 ) , #bm influences prediction only for cases where male = 1.
+sigma ~ dunif( 0 , 50 ) ),
+    data=  )
+
+```
+
+ the parameter (a) is the mean height of females, because when male = 0, indicating a female, the predicted mean height is just μi = α + βm(0) = α. the parameter bm = the average difference between males and females.
+ 
+to derive a percentile interval for average male height is just to sample from the posterior.  then you can just add samples of a and bm together to get the posterior distribution of their sum.
+
+```{r, eval=FALSE}
+post <- extract.samples(m5.15)
+mu.male <- post$a + post$bm
+PI(mu.male)
+```
+
+**Working with samples automatically handles the problem that a and bm are correlated with one another.**
+
+ To include k categories in a linear model, you require k − 1 dummy variables. Each dummy variable indicates, with the value 1, a unique category.  the category with no dummy variable assigned to it ends up again as the “intercept” category.
+ 
+ **Unique intercepts**: Another way to conceptualize categorical variables is to construct a vector of intercept parameters, one parameter for each category.  then you can create an index variable in your data frame that says which parameter goes with each case. 
+ 
+```{r}
+library(rethinking)
+d$clade_id <- coerce_index(d$clade) 
+m5.16_alt <- map(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a[clade_id] ,
+        a[clade_id] ~ dnorm( 0.6 , 10 ) ,
+        sigma ~ dcauchy( 0 , 2 )
+),
+    data=d )
+precis( m5.16_alt , depth=2 )
+
+```
+
+
+
+
+Against **overfitting** - regularizing prior on beta. for standardized data β ∼ Normal(0, 1). you can interpret this as meaning that a change of 1 standard deviation in x is very unlikely to produce 2 units of change in the outcome.
+
+as the prior gets more skeptical, the harm done by an overly complex model is greatly reduced.
+
+Regularizing priors are great, because they reduce overfitting. But if they are too skeptical, they prevent the model from learning from the data. So to use them most effectively, you need some way to tune them. Tuning them isn’t always easy. If you have enough data, you can split into “train” and “test” samples and then try different priors and select the one that provides the smallest deviance on the test sample.  that is the essence of cross-validation, a common technique for reducing over-fitting.
+
+Multilevel models as adaptive regularization: their central device is to learn the strength of the prior from the data itself. you can think of multilevel models as adaptive regularization, where the model itself tries to learn how skeptical it should be.
+
+###Model Comparison
+
+compared models must be fitted with exactly the same data
+
+```{r, eval=FALSE}
+WAIC(m1, m2, m3)
+coeftab(m1, m2, m3)
+plot(coeftab(m1, m2, m3))
+```
+
+
+**model averaging**:  the ensemble()  works a lot like link and sim: it calls those functions, for each model you give it, and then combines the results according to Akaike weights. So to build an ensemble according to WAIC weight.
+
+```{r, eval=FALSE}
+milk.ensemble <- ensemble( m6.11 , m6.12 , m6.13 , m6.14 , data=d.predict )
+mu <- apply( milk.ensemble$link , 2 , mean )
+mu.PI <- apply( milk.ensemble$link , 2 , PI )
+lines( nc.seq , mu )
+shade( mu.PI , nc.seq )
+```
+
+Sometimes model averaging has no practical impact on predictions. Sometimes it has a massive impact. But it is always a conservative procedure that helps to communicate model uncertainty.
+
+##Interactions
+
+Simple linear models frequently fail to provide enough **conditioning**. Models assume that each predictor has an independent association with the mean of the outcome. What if we want to allow the association to be conditional? To model deeper conditionality — where the importance of one predictor depends upon another predictor — we need interaction. 
+
+Common sorts of multilevel models are essentially massive interaction models, in which estimates (intercepts and slopes) are conditional on clusters in the data. Multilevel interaction effects are complex. 
+
+ there are two basic reasons to be wary of interpreting tables of posterior means and standard deviations as a way to understanding interactions.
+ 
+(1) When you add an interaction to a model, this changes the meanings of the parameters. A “main effect” coefficient in an interaction model does not mean the same thing as a coefficient of the same name in a model without an interaction.  their distributions cannot usually be directly compared.
+
+(2) Tables of numbers don’t make it easy to fully incorporate uncertainty in our thinking, since covariance among parameters isn’t usually shown. And this gets much harder once the influence of a predictor depends upon multiple parameters.
+
+Parameters change meaning. In a simple linear regression, each coefficient says how much the average outcome, μ, changes when the predictor changes by one unit. there’s no trouble in interpreting each parameter separately. Interaction models ruin this paradise.
+
+###Least squares
+
+lets see the influence of age on ldl by gender 
+
+```{r}
+diabetes <- read.table(file = '/Users/ulomaivali/Dropbox/loengud/2017 R course/data/diabetes.csv', header = TRUE, sep = ';', dec = ',')
+```
+
+
+Here the intercepts differ, but model slopes are identical for females and males
+
+```{r}
+
+h1 <- lm(hdl ~ age + gender, data = diabetes)
+grid <- diabetes %>% 
+  tidyr::expand(age, gender) %>% 
+  add_predictions(h1, "hdl")
+
+ggplot(diabetes, aes(age, hdl)) + 
+  geom_point() + 
+  geom_line(data = grid) +
+  facet_wrap(~gender)
+
+```
+
+When we use the interaction term *, we will get different slopes, as well as intercepts - now it is allowed that ldl levels start at different baselines and increase with different rates for men and women.
+```{r}
+h2 <- lm(hdl ~ age * gender, data = diabetes)
+grid <- diabetes %>% 
+  tidyr::expand(age, gender) %>% 
+  add_predictions(h2, "hdl")
+
+ggplot(diabetes, aes(age, hdl)) + 
+  geom_point() + 
+  geom_line(data = grid) +
+  facet_wrap(~gender)
+```
+
+```{r}
+grid <- diabetes %>% 
+  tidyr::expand(age, gender) %>% 
+  gather_predictions(h1, h2)
+
+ggplot(grid, aes(age, pred, colour = gender)) + 
+  geom_line() +
+  facet_wrap(~model)
+```
+
+Predict relationship of hdl on waist for people with different ages
+
+```{r}
+mod1 <- lm(hdl ~ age + waist, data = diabetes)
+mod2 <- lm(hdl ~ age * waist, data = diabetes)
+grid <- diabetes %>% 
+  data_grid(
+    age = seq_range(age, 5, pretty=T, trim=0.1), 
+    waist = seq_range(waist, 5, pretty=T, trim=0.1) 
+  ) %>% 
+  gather_predictions(mod1, mod2)
+
+ggplot(grid, aes(age, pred, colour = waist, group = waist)) + 
+  geom_line() +
+  facet_wrap(~ model) + ylab("predicted hdl level")
+
+ggplot(grid, aes(waist, pred, colour = age, group = age)) + 
+  geom_line() +
+  facet_wrap(~ model)+ ylab("predicted hdl level")
+```
+
+
+###STAN
+
+```{r}
+d1 <- diabetes %>% select(hdl, age, waist) %>% na.omit()
+m8.1stan <- map2stan(
+    alist(
+        hdl ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*age + bA*waist + bAR*age*waist ,
+        a ~ dnorm(0,100),
+        bR ~ dnorm(0,60),
+        bA ~ dnorm(0,40),
+        bAR ~ dnorm(0,40),
+        sigma ~ dcauchy(0,2)
+), data=d1, chains=1 , cores=1 )
+precis(m8.1stan)
+post <- extract.samples( m8.1stan )
+#pairs(post)
+pairs(m8.1stan)
+```
+
+We can see that the interaction variable is strongly correlated with both predictors. Therefore, we know that there will be strong trade-offs among the regression coeficients, and the marginal distributions of single regression coeficients might be much wider than when there was no interaction included.
+
+```{r}
+m8.2stan <- map2stan(
+    alist(
+        hdl ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*age + bA*waist,
+        a ~ dnorm(0,100),
+        bR ~ dnorm(0,60),
+        bA ~ dnorm(0,40),
+        sigma ~ dcauchy(0,2)
+), data=d1, chains=1 , cores=1 )
+precis(m8.2stan)
+compare(m8.1stan, m8.2stan)
+AIC(m8.1stan, m8.2stan)
+coeftab(m8.1stan, m8.2stan)
+```
+
+These coefs are in themselves very hard to interpret. Things get better when we center the predictor variables so that mean(Var)==0; or standardize them so that mean==0 and sd==1.
+
+```{r}
+d2 <- d1 %>% mutate(age_st=(age - mean(age))/sd(age), 
+                    waist_st=(waist - mean(waist))/sd(waist))
+#mean(d2$waist_st); sd(d2$waist_st)
+
+m8.3 <- map2stan(
+    alist(
+        hdl ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*age_st + bA*waist_st + bAR*age_st*waist_st,
+        a ~ dnorm(0,100),
+        bR ~ dnorm(0,2),
+        bA ~ dnorm(0,2),
+        bAR~ dnorm(0,2),
+        sigma ~ dcauchy(0,1)
+), data=d2, chains=1 , cores=1 )
+coeftab(m8.1stan, m8.3)
+```
+
+Now: a - expected average value of hdl when both waist and age are at their average values
+bR - expected change in hdl when age increases by one unit and waist is at its average level
+bA - expected change in hdl when waist increases by one unit and age is at its average level
+bAR - 2 equivalent interpretations: 1) the expected change in the influence of age on hdl when increasing waist by one unit. 2) the expected change in the influence of waist on hdl when increasing age by one unit. 
+ the negative interaction estimate (bAR) means that X1 and X2 have opposite effects on Y, but each also makes the other more important to the Y.
+ 
+ 
+
+ 
+```{r}
+plot(d2$waist_st, d2$hdl)
+plot(d2$age_st, d2$hdl)
+```
+
+```{r}
+summary(mod2)
+summary(mod1)
+AIC(mod1, mod2)
+coeftab(mod1, mod2)
+```
+
+When considering the inclusion of interaction terms, and the goal of the analysis is explanation, then the main criterion is whether it is theoretically meaningful that the effect of one predictor should depend on the level of another predictor. Inclusion of an interaction term can cause loss of precision in the estimates of the lower-order terms, especially when the interaction variable is correlated with component variables.
+
+When there is interaction, then the influence of the individual predictors can not be summarized by their individual regression coeffcients alone, because those coeffcients only describe the in uence when the other variables are at zero. A careful analyst considers credible slopes across a variety of values for the other predictors. This is true even if its marginal posterior distribution includes zero.
+
+When interaction terms are included in a model that also has hierarchical shrinkage on regression coeffcients, the interaction coefficients should not be put under the same higher-level prior distribution as the individual component coefficients, because interaction coeficients are conceptually from a different class of variables than individual components. For example, when the individual variables are truly additive, then there will be very small magnitude interaction coeficients, even with large magnitude individual regression coeficients.
+
+Whenever an interaction term is included in a model, it is important also to include all lower-order terms. When the lower-order terms are omitted, this is artificially setting their regression coeficients to zero, and thereby distorting the posterior estimates on the other terms. 
+
+
+
+
+
+You can control the number of samples from the chain by using the iter and warmup parameters.  the defaults are 2000 for iter and warmup is set to iter/2, which gives you 1000 warmup samples and 1000 real samples
+
+If all you want are posterior means, it doesn’t take many samples at all to get very good estimates. Even a couple hundred samples will do. But if you care about the exact shape in the extreme tails of the posterior, the 99th percentile or so, then you’ll need many many more. 
+
+ When n_eff is much lower than the actual number of iterations of your chains, it means the chains are inefficient, but possibly still okay. When Rhat is above 1.00, it usually indicates that the chain has not yet converged, and probably you shouldn’t trust the samples. If you draw more iterations, it could be  fine, or it could never converge.
+ 
+ 
+ 
+ 
+#Hierarchical models
+
+four reasons to use multilevel models: 
+
+(1) To adjust estimates for repeat sampling. When more than one observation arises from the same individual, location, or time, then traditional, single-level models may mislead us. 
+(2) To adjust estimates for imbalance in sampling. When some individuals, locations, or times are sampled more than others, we may also be misled by single-level models. 
+(3) To study variation. multilevel models model variation explicitly. 
+(4) To avoid averaging. averaging removes variation. Multilevel models allow us to preserve the uncertainty in the original, pre-averaged values, while still using the average to make predictions. 
+
+It means learning simultaneously about each cluster while learning about the population of clusters. Doing both estimation tasks at the same time allows us to transfer information across clusters, and that transfer improves accuracy. 
+
+How does a Bayesian analysis address the problem of false alarms? By incorporating prior knowledge into the structure of the model. if we know that different groups have some overarching commonality, even if their specific treatments are different, we can nevertheless describe the different group parameters as having been drawn from an overarching distribution that expresses the commonality. If several of the groups yield similar data, this similarity informs the overarching distribution, which in turn implies that any outlying groups should be estimated to be a little more similar than they would be otherwise. In other words, just as there can be shrinkage of individual estimates toward the group central tendency, there can be shrinkage of group estimates toward the overall central tendency. The shrinkage pulls in the estimates of accidental outliers and reduces false alarms. This shrinkage is not an arbitrary “correction” like those applied in NHST;it is a rational consequence of the prior knowledge expressed in the model structure. 
+
+
+If we ignore the clusters (schools), assigning the same intercept to each of them, then we risk ignoring important variation in baseline ability. If we instead estimate a unique intercept for each cluster, we instead practice anterograde amnesia. Schools are different but each one does help us estimate scores in the other schools A multilevel model, in which we simultaneously estimate both an intercept for each school and the variation among schools, is what we want.  this will be a varying intercepts model. Varying intercepts are the simplest kind of varying effects. For each cluster, we use a unique intercept parameter.  we also adaptively learn the prior that is common to all of these intercepts. When what we learn about each cluster informs all the other clusters, we learn the prior simultaneous to learning the intercepts. 
+
+
+The data contain GCSE exam scores on a science subject. Two components of the exam were chosen as outcome variables: written paper and course work. There are 1,905 students from 73 schools in England. Five fields are as follows.
+
+Missing values are coded as -1.
+
+1. School ID
+2. Student ID
+3. Gender of student
+0 = boy
+1 = girl
+4. Total score of written paper
+5. Total score of coursework paper
+```{r}
+df <- read.table(file = "/Users/ulomaivali/Downloads/datasets/Gcsemv.txt", sep = " ", dec = ".", header = FALSE) 
+
+df$V4[df$V4==-1] <- NA
+df$V5[df$V5==-1] <- NA
+colnames(df) <- c("school", "student", "sex", "score1", "score2")
+
+df$school <- as.factor(df$school)
+df$student <- as.factor(df$student)
+write.csv(df, "schools.csv")
+```
+
+First a non-hierarchical model for score1 in each school
+```{r}
+df1 <- na.omit(df)
+df2 <- df %>% filter(score1>0) #muide, see mudel tqqtab ka df-ga, imputeerides NAd
+glimmer(score1~  (1|school), data=df1)
+m1 <- map2stan(
+    alist(
+        score1~ dnorm( mu , sigma ) ,
+        mu <- a + a_school[school] ,
+        a ~ dnorm(50, 30),
+        a_school[school] ~ dnorm( 0 , 20 ),
+        sigma ~ dcauchy(0,1)
+), data=df2 )
+precis(m1, depth = 2)
+
+m2 <- map2stan(
+    alist(
+        score1~ dnorm( mu , sigma ) ,
+        mu <- a_school[school],
+        a_school[school]  ~ dnorm(50, 30),
+        sigma ~ dcauchy(0,1)
+), data=df2 )
+precis(m2, depth = 2)
+
+```
+
+Each school has its own estimate that does not know about the other schools.
+
+
+Now a hierarchical version that knows about variation accross schools:
+
+```{r}
+m3 <- map2stan(
+    alist(
+        score1~ dnorm( mu , sigma ) ,
+        mu <- a_school[school],
+        a_school[school]  ~ dnorm(50, sigma_school),
+        sigma_school~ dcauchy(0,1),
+        sigma ~ dcauchy(0,1)
+), data=df2 )
+precis(m3, depth = 2)
+```
+
+and a herarchical model that knows about means and variation accross the scgools.
+```{r}
+m4 <- map2stan(
+    alist(
+        score1~ dnorm( mu , sigma ) ,
+        mu <- a_school[school],
+        a_school[school]  ~ dnorm(mu_school, sigma_school),
+        mu_school~ dnorm(50, 30),
+        sigma_school~ dcauchy(0,1),
+        sigma ~ dcauchy(0,1)
+), data=df2 )
+precis(m4, depth = 2)
+```
+
+```{r}
+compare(m1, m2, m3, m4)
+```
+m4 is best, but m3 and m4 have practically the same weigth!
+
+```{r}
+coeftab(m2, m3, m4)
+plot(coeftab(m2, m3, m4))
+```
+
+This is essentially a principled analogue to multiple testing correction (ANOVA).
+
+
+Now lets try to compare 2 groups (like in a t test)
+
+```{r}
+df3 <- df %>% filter(school=="20920" | school=="22520")
+
+#adaptive mu_school and sigma_school
+m5 <- map2stan(
+    alist(
+        score1~ dnorm( mu , sigma ) ,
+        mu <- a_school[school],
+        a_school[school]  ~ dnorm(mu_school, sigma_school),
+        mu_school~ dnorm(50, 30),
+        sigma_school~ dcauchy(0,1),
+        sigma ~ dcauchy(0,1)
+), data=df3 )
+precis(m5, depth = 2)
+```
+
+```{r}
+#no shrinkage
+m6 <- map2stan(
+    alist(
+        score1~ dnorm( mu , sigma ) ,
+        mu <- a_school[school],
+        a_school[school]  ~ dnorm(50, 30),
+        sigma ~ dcauchy(0,1)
+), data=df3 )
+
+#adaptive sigma_school
+m7 <- map2stan(
+    alist(
+        score1~ dnorm( mu , sigma ) ,
+        mu <- a_school[school],
+        a_school[school]  ~ dnorm(50, sigma_school),
+        sigma_school~ dcauchy(0,1),
+        sigma ~ dcauchy(0,1)
+), data=df3 )
+plot(coeftab(m6, m7, m5))
+```
+School2 is similar to average school (mu_school), and its coefs do not change. School1 is below average and it is pulled strongly toward the average. I would prefer model m6 here (no shrinkage)
+
+
+Lets turn this into a t test analogue
+```{r}
+
+m6 <- as.data.frame(m6@stanfit)
+es <- m6 %>% transmute(es=`a_school[2]` - `a_school[1]`)
+median(es$es)
+hist(es$es)
+
+sum(es$es>0)/1000 #80% of posterior >0
+HPDI(es$es, prob=0.95)
+```
+
+```{r}
+
+m7 <- as.data.frame(m7@stanfit)
+es.m7 <- m7 %>% transmute(es=`a_school[2]` - `a_school[1]`)
+median(es.m7$es)
+hist(es.m7$es)
+
+sum(es.m7$es>0)/1000 #80% of posterior >0
+HPDI(es.m7$es, prob=0.95)
+```
+
+```{r}
+t.test(df3$score1[df3$school== "22520"], df3$score1[df3$school=="20920"], na.rm=TRUE)
+```
+
+Bayesian first aid uses t distribution for likelihood (robust) and JAGS (not Stan).
+
+```{r}
+library(BayesianFirstAid)
+m <- bayes.t.test(df3$score1[df3$school== "22520"], df3$score1[df3$school=="20920"])
+plot(m)
+```
+
+```{r}
+m8 <- map2stan(
+    alist(
+        score1~ student_t( nu, mu , sigma ) ,
+        mu <- a_school[school],
+        a_school[school]  ~ dnorm(50, 30),
+        nu~dunif(1, 100),
+        sigma ~ dcauchy(0,1)
+), data=df3 )
+
+m8 <- m8@stanfit %>% as.data.frame()
+es_m8 <- m8 %>% transmute(es=`a_school[2]` - `a_school[1]`)
+HPDI(es_m8$es, prob=0.95)
+mean(es_m8$es)
+sum(es_m8$es>0)/1000 
+```
+

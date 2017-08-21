@@ -1,0 +1,306 @@
+---
+title: "Bayes tests"
+output: html_notebook
+---
+
+#mean and sd of normal data
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE, warning = FALSE)
+```
+
+```{r}
+library(rethinking)
+
+curve(dcauchy(x, 15, 15), from=0, to=30)
+```
+
+IQ should have a mean 100 and sd 15, so the prior for sd is dcauchy(15, 15)
+
+```{r}
+df<-data.frame(IQ=rnorm(50, 70, 15)) #see vastab Aafrika neegrite IQ-le. Aga kui me ei usu, et neegrite IQ on madalam kui valgetel? Seda kajastab prior.
+mean(df$IQ) #72
+
+m <- map2stan(alist(
+    IQ ~ dnorm( mu , sigma ), 
+    mu ~ dnorm( 100 , 15 ),
+    sigma ~ dcauchy(15,15) #iq has sd 15
+
+  ),
+  data=df, chains = 4, cores = 4)
+
+precis(m) #IQ mean now 76, thanks to prior.
+plot(m)
+```
+
+ok, so far, so good.
+```{r}
+s<-as.data.frame(extract.samples(m))
+sum(s$mu>80)/4000 #2% of posterior > 80
+dens(s$mu)
+HPDI(s$mu, prob = 0.95)
+```
+
+```{r}
+mean(df$IQ)
+sd(df$IQ)
+```
+
+
+Relatively strong prior had almost no influence on the posterior - N=50!
+
+What if N=10?
+
+```{r}
+df<-data.frame(IQ=rnorm(10, 70, 15))
+m1 <- map2stan(alist(
+    IQ ~ dnorm( mu , sigma ), 
+    mu ~ dnorm( 100 , 15 ),
+    sigma ~ dcauchy(15,15) #iq has sd 15
+
+  ),
+  data=df, chains = 4, cores = 4)
+precis(m1)
+mean(df$IQ)
+```
+
+
+
+####lets try t likelihood - this is robust to outliers:
+
+here is a possible prior for nu - the shape factor
+```{r}
+curve(dcauchy(x,5,10), from=0, to=10)
+```
+
+if nu is small (min = 1), then the tails of the t distribution are high and outliers have little effect on sigma (here sigma takes in 68% of the middle of the distribution). 
+
+```{r}
+x <- seq(-5, 5, by=0.01)
+y <- dt(x, 1)
+y1 <- dt(x, Inf)
+plot(x,y, type="l", col="red", ylim=c(0, 0.4))
+lines(x,y1)
+add=TRUE
+
+```
+
+
+```{r}
+m4 <- map2stan(
+  alist(
+    IQ ~ student_t( nu , mu, sigma ), 
+    mu ~  dnorm( 100 , 15 ),
+    nu ~  dunif(1,100),
+    sigma ~  dcauchy(15,10) #iq has sd 15
+
+  ),
+  data=df)
+precis(m4)
+```
+
+dcauchy nu
+Mean StdDev lower 0.89 upper 0.89 n_eff Rhat
+mu    71.44   2.46      67.54      75.34   226 1.00
+nu    28.41  64.44       1.92      51.04    30 1.04
+sigma 15.42   2.07      12.23      18.70   192 1.01
+
+#t test
+
+the marginal distributions of two parameters do not reveal whether or not the two parameter values are different. a case in which the posterior distribution for two parameter values has a strong positive correlation. The two marginal distributions suggest that there is a lot of overlap between the two parameters values. Does this overlap imply that we should not believe that they are very different? No! - real difference = groupA - groupB. This takes correlations into account (extract.samples)
+
+
+
+```{r}
+library(tidyverse)
+library(rethinking)
+
+df <- data.frame(A=rep(c("A", "B"), each=10), B = c(rnorm(10, 100, 15), rnorm(10, 80, 15)))
+df$clade_id <- coerce_index(df$A) 
+df$A<-as.character(df$A)
+
+t.test(df$B[df$clade_id==1], df$B[df$clade_id==2])
+```
+
+
+here we have both independent mu and sd
+```{r, eval=FALSE}
+m <- map2stan(
+  alist(
+    B ~ dnorm( mu , sigma ), 
+    mu <- a[clade_id],
+    a[clade_id] ~ dnorm( 0 , 100 ) ,
+    sigma ~ dcauchy( 0 , 1 )
+  ),
+  data=df)
+precis( m , depth=2 )
+#NB! see töötab!!!!
+```
+
+```{r}
+m <- map2stan(
+  alist(
+    B ~ dnorm( mu , sigma ), 
+    mu <- a[clade_id],
+    sigma <- b[clade_id],
+    a[clade_id] ~ dnorm( 0 , 100 ) ,
+    b[clade_id]~dcauchy(0,2)
+  ),
+  data=df)
+precis( m , depth=2 )
+```
+
+```{r}
+m <- map2stan(
+  alist(
+    B ~ dnorm( mu , sigma ), 
+    sigma <- b[clade_id],
+    mu ~ dnorm( 0 , 100 ) ,
+    b[clade_id]~dcauchy(0,2)
+  ),
+  data=df)
+precis( m , depth=2 )
+```
+
+
+curve(dexp())
+```{r}
+curve(dcauchy(x, 15,5), from=0, to=30)
+```
+
+Here we get means of both groups. variation of both groups is taken to be equal. This way we use the variation of both groups to calculate sigma. 
+In addition, we use t distribution for robustness.
+```{r}
+mu = c( mean(df$B[df$clade_id ==1]) , mean(df$B[df$clade_id ==2]) )
+sigma = sd(df$B)
+
+model5<- alist(
+  B ~ student_t(nu, mu, sigma),
+  mu<- mu1[A],
+  nu ~ dunif(1, 100),
+  mu1[A] ~ normal(100, 15),
+  sigma ~ dcauchy(15, 5)
+)
+m5 <- map2stan( model5 , data=df, start = list(mu1 = mu , sigma=sigma, nu = 5) )
+
+precis(m5, depth = 2)
+```
+
+```{r}
+m5s <- extract.samples(m5)
+es <- m5s$mu1[,1] - m5s$mu1[,2]
+median(es)
+HPDI(es)
+```
+ES = 22.6
+
+```{r}
+dens(es)
+```
+
+
+separate means and sd-s
+```{r}
+
+mu = c( mean(df$B[df$clade_id ==1]) , mean(df$B[df$clade_id ==2]) )
+sigma = c( sd(df$B[df$clade_id ==1]) , sd(df$B[df$clade_id ==2]) )
+  # Regarding initial values: (1) sigma will tend to be too big if 
+  # the data have outliers, and (2) nu starts at 5 as a moderate value. These
+  # initial values keep the burn-in period moderate.
+  
+m <- map2stan(
+  alist(
+    B ~ student_t( nu, mu , sigma ),
+    mu <- a[clade_id],
+    sigma <- b[clade_id],
+    a[clade_id] ~ dnorm( 100 , 115 ) ,
+    b[clade_id] ~ dcauchy(15  , 10 ),
+    nu~dunif(1,100)
+  ),
+  data=df,  start = list(a = mu , b = sigma , nu = 5))
+precis( m , depth=2 )
+
+```
+
+##Pooling of information
+
+No pooling of information accross the 3 species: all the info about the mean and sd comes from only one Species. 
+```{r}
+mu = c( mean(iris$Sepal.Length[iris$clade_id ==1]) , mean(iris$Sepal.Length[iris$clade_id ==2]), mean(iris$Sepal.Length[iris$clade_id ==3]) )
+sigma = c( sd(iris$Sepal.Length[iris$clade_id ==1]) , sd(iris$Sepal.Length[iris$clade_id ==2]), sd(iris$Sepal.Length[iris$clade_id ==3]) )
+
+m1 <- map2stan(
+  alist(
+    Sepal.Length~ dnorm( mu , sigma ), 
+    mu <- a[clade_id],
+    sigma <- b[clade_id],
+    a[clade_id] ~ dnorm( 0 , 2 ) ,
+    b[clade_id] ~ dnorm( 0 , 0.3)
+  ),
+  data=iris, start = list(a=mu, b=sigma))
+precis( m1 , depth=2 )
+```
+
+here we have complete pooling of information accross Species
+
+```{r}
+
+mu = c( mean(iris$Sepal.Length[iris$clade_id ==1]) , mean(iris$Sepal.Length[iris$clade_id ==2]), mean(iris$Sepal.Length[iris$clade_id ==3]) )
+sigma = sd(iris$Sepal.Length)
+m1 <- map2stan(
+  alist(
+    Sepal.Length ~ dnorm( mu , sigma ), 
+    mu <- a[clade_id],
+    a[clade_id]~dnorm(0,10),
+    sigma ~ dcauchy( 0 , 1 )
+  ),
+  data=iris, start=list(a=mu, sigma=sigma))
+pr <- precis( m1 , depth=2 )
+pr
+#rstan::plot(pr)
+```
+
+This model partially pools information accross species by SD. For this we use a higher-level prior *sigma1*.
+The result is practically the same as before (with complete pooling)
+
+```{r}
+library(rethinking)
+mu = c( mean(iris$Petal.Width[iris$clade_id ==1]) , mean(iris$Petal.Width[iris$clade_id ==2]), mean(iris$Petal.Width[iris$clade_id ==3]) )
+sigma = sd(iris$Petal.Width)
+m5 <- map2stan(
+  alist(
+    Sepal.Length ~ dnorm( mu , sigma ), 
+    mu <- a[clade_id],
+    a[clade_id]~dnorm(0, sigma1),
+    sigma1~dcauchy(0, 1),
+    sigma ~ dcauchy( 0 , 1 )
+  ),
+  data=iris, start=list(a=mu, sigma=sigma))
+pr <- precis( m5 , depth=2 )
+pr
+#rstan::plot(pr)
+```
+
+But we do see that between-species varition (sigma1) is a lot bigger than intra-species variation.
+
+
+Partial pooling over both mean and sigma
+```{r}
+#this works badly - start values!
+
+m5 <- map2stan(
+  alist(
+    Sepal.Length ~ dnorm( mu , sigma ), 
+    mu <- a[clade_id],
+    a[clade_id]~dnorm(mu1, sigma1),
+    mu1~dnorm(0, 10),
+    sigma1~dcauchy(0, 1),
+    sigma ~ dcauchy( 0 , 1 )
+  ),
+  data=iris, start=list(mu1=5.6, sigma1=6.36, sigma=0.52))
+pr <- precis( m5 , depth=2 )
+pr
+
+```

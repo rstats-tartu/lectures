@@ -1,0 +1,316 @@
+---
+title: 'Inferential statistics: bootstrapping'
+output:
+  html_document: default
+  html_notebook: default
+---
+
+##Glossary
+
+**Parameter** - an unknown quantity, whose true value we would like to know, based on our data. For example, we may have some measurements of heights and the two parameters, which we are interested in, are mean height and standard deviation of heights. 
+
+**data** - parameters, whose value we treat as fixed by observation or experiment. But what if we have some paired measurements of heights and weights and we have a heigth missing? Then this datum becomes a parameter, whose value can be estimated. There is no fixed boundary between data and parameters. 
+
+**statistical population** all units of measurements that we can potentially measure. For example, all relevant patients (past, present, and future), or all possible variations of an experiment. This is a highly abstract concept.
+
+**sample** the units of measurements that we actually measured. 
+
+**statistical inference** the process of algorithmically guessing from sample data (and often also from prior information) at the population value(s) of a parameter. Typical result: a point value plus credible interval. 
+
+##Simulating data
+
+We start with a simulation excercise where we draw many virtual datasets from a single statistical population. The big advantage of simulating data is that we know the true population value(s) and the true assumptions behind the fictional data - something that we almost never know in our practical scientific work. This means that we can directly check, how well our statistical methods work. Running a simulation with parameters that we think might be close to the situaltion in the real world shows us the minimal amount of variation that we should expect to find in our future data, as well as the match between statistical inference and true parameter values. Having this knowledge is often very useful in designing experiments - but also in interpreting the results. 
+
+   Lets suppose that we have a population of peakocks with average tail length of 100 units and standard deviation of 20 units; and that the tail lengths are normally distributed. Now we draw randomly and independently a sample of three peackocks and measure their tails.
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(bayesboot)
+library(boot)
+library(rethinking) #HPDI() and PI(). Requires Stan.
+```
+
+
+```{r}
+set.seed(1) #makes random number generation reproducible
+(Sample <- rnorm(n = 3, mean = 100, sd = 20)) #extra parentheses work as print()
+mean(Sample)
+sd(Sample)
+```
+
+We see that in our sample the mean is slightly under-estimated and the sd is almost 2-fold under-estimated. 
+
+What if we draw 10 000 fictional samples from the population and calculate 10 000 sample means? Then, as a second step, we calculate a single mean of these 10 000 means. will the this mean sample value (or, alternatively, the median sample value, or the most common sample value - the mode) equal the true value? 
+
+```{r}
+N <- 3
+N_simulations <- 10000
+df <- tibble(a = rnorm(N * N_simulations, 100, 20), b = rep(1:N_simulations, each = N) )
+Summary <-  df %>% group_by(b) %>% summarise(Mean=mean(a), SD= sd(a) ) 
+
+Summary %>% ggplot(aes(Mean) ) + geom_histogram()
+```
+
+How do we interpret this histogram? If, for a moment, we pretend that we do not know the true population value (which is 100, by the way) then we can think of the histogram as being proportional (having the same shape) as a **posterior probability distribution**. This means that when a mean value that we are interested in appears under a high part of the histogram, then we place correspondingly more trust in it being the true population value than into another mean value that is under a lower part of the histogram. Thus, we place more trust in the true mean being somewhere between 80 and 120, say, than being higher than 130. If we calculate nr_of_values_between_80_and_120 / nr_of_values_>130, we get exactly how many times more trust we should put in the proposition that the true value lies between 80 and 120 than its being > 130. 
+
+Moreover, we can easily find the interval under the curve that contains any percentage of total values - this gives us a credible interval where we expect the true value to lie with the probability that equals to this percentage. There are two alternative ways to get credible intervals:
+
+```{r}
+HPDI(Summary$Mean, prob=0.9) #non-symmetric Highest Density Probability Interval - starts from the peak of the distribution and takes 90% of the probability density from the middle
+PI(Summary$Mean, prob=0.9) #symmetric Probability Interval, takes 5% of the probability density from each end of the distribution and puts the rest (90%) inside the PI.
+quantile(Summary$Mean, c(0.05, 0.95)) #identical result to PI()
+```
+HPDI is a better measure, but it is harder to calculate than PI (which can be calculated by `quantile(Summary$Mean, c(0.05, 0.95)`). As a rule of thumb, if HPDI and PI are very different, then publish the whole damn posterior distribution and let the reader make sense of it.
+
+*calculate your own 90% PI simply by counting the ordered Mean values and compare with the above. Use arrange()* 
+
+
+Now we plot the 10 000 SD-s.
+
+```{r}
+Summary %>% ggplot(aes(SD)) + geom_histogram()
+```
+
+Note that the distribution of SD-s is not normal and that the mode (most likely value) < 15. The SD is underestimated because the SD equation is biased with small samples. So with small samples (N<10) you are likely to underestimate your SD, while there is also a substantial chance of grossly overestiating the SD (the fat tail on the right of the histogram).
+
+Try the above code with N= 5, N=10, and N= 100.
+
+```{r}
+median(Summary$Mean)
+median(Summary$SD)
+```
+
+```{r}
+HPDI(Summary$SD, prob = 0.9)
+PI(Summary$SD, prob=0.9)
+```
+Here HPDI definitely makes more sense.
+
+*conclusion: with normal data the median and mean sample value from 10 000 simulated samples is very close to population mean or median. Even when the sample size is small. In contrast, with small samples the median sample variation systematically under-estimates the true population variation.*
+
+**With normal data the mean and sd vary independently!** This means that there is a 1 in 4 chance that the population mean is over-estimated by your sample AND the population sd is under-estimated.  
+
+##inferential statistics infers population values from sample values
+
+If all that you know is your sample values, then there is no choice but to assume that your sample accurately reflects the population. For this to be true, the sample has to be 
+(1) randomly and 
+(2) independently drawn, 
+(3) large enough, and 
+(4) you have to be reasonably lucky. 
+
+
+**But what if the data are not normally distributed?**
+A lot of biological data is lognormal. 
+If you take a logarithm of lognormal data, you will get normal data.
+
+```{r}
+N <- 3
+N_simulations <- 10000
+df <- tibble(a = rlnorm(N * N_simulations), b = rep(1:N_simulations, each = N) )
+Summary <-  df %>% group_by(b) %>% summarise(Mean=mean(a), SD= sd(a) ) 
+
+Summary %>% ggplot(aes(Mean) ) + geom_histogram(binwidth = 0.05) + xlim(0,5)
+```
+
+
+
+```{r}
+Summary %>% ggplot(aes(SD)) + geom_histogram(binwidth = 0.05) + xlim(0,5)
+```
+
+
+```{r}
+median(Summary$Mean)
+mean(Summary$SD)
+```
+
+If the most likely value for the SD or Mean is the most common value, then we are interested in the mode. There is no inbuilt function for  calculating the mode, so we create our own rudimentary function called Mode(): 
+
+```{r}
+Mode <- function(x) {
+     ux <- unique(x)
+     ux[which.max(tabulate(match(x, ux)))]
+ }
+Mode(Summary$Mean)
+```
+WARNING: this function can give grossly misleading results - always check the histogram!
+So the most likely value is ...
+In the simulation we actually know, what the population value is --- 1.00. 
+
+Our most likely value is not far from the true value, but they are not identical. We obviously need a measure of uncertainty around our best guess estimate. This we get as an interval around the peak of the histogram (the mode) that encompasses an arbitrary percentage of the data. Lets take the interval that contains 90% of the 10 000 sample SD-s:
+
+```{r}
+HPDI(Summary$SD, prob=0.9)
+PI(Summary$SD, prob=0.9)
+```
+
+Here we found that 90% of the SD values are inside this interval. This is in effect a range of the highest density values around the peak of the histogram, which is not necessarily symmetrical. Anyhow, we can make a guess (inference) that the true population value lies somwhere in this range. Our range estimate happens to be accurate (it contains the true value), but not very precise (it is wide).
+
+This is how it works in principle - usually we want a point estimate of a parameter value plus some measure of uncertainty around this estimate (often given as a range of probable values). 
+
+Ok, but how to proceed when we dont have 10 000 samples from the population, but just one?
+The simplest way is called bootstrapping.
+
+#Bootstrapping
+
+In bootstrapping, instead of drawing 10 000 independent samples, we take a single sample and resample it 10 000 times with replacement. This is simply a way of substituting the effort of collecting many actual samples with a easy-to-do computer simulation. This method assumes no pre-knowledge of the distribution of data, only that data is collected randomly and independently.
+
+**The bootstrap workflow, starting from an experimental sample sized n:**
+1) draw 4000 virtual samples, each sized n
+2) calculate the mean, median, sd, or any function you like from each of these 4000 samples. You will end up with 4000 slightly different values based on 4000 sligthly different samples.
+3) draw a histogram of these 4000 values
+4) calculate the median, mean, sd, mad, HPDI, CI, or anything you like from these values
+
+What is the mean height of American presidents? We have a sample of ten.
+
+```{r}
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) #the vector of values
+heights <- as_tibble(heights) #convert into tibble
+n <- 10 #sample size
+nr_boot_samples <- 4000 #the nr of bootstrap samples
+a <- sample_n(heights, n * nr_boot_samples, replace=TRUE)  #create random sample with replacement
+b <- rep(1:nr_boot_samples, each = n) #create a factor column that cuts the sample into slices of size n
+a$key <- b #append b to tibble
+a$key <- as.factor(a$key) #convert numbers into unordered factor levels 
+a1 <- a %>% group_by(key) %>% summarise(Value= mean(value)) #calculate the mean for each slice of n values
+hist(a1$Value)
+HPDI(a1$Value, prob=0.95) #highest probability density interval - non-symmetric
+quantile(a1$Value) #median and quantiles (25%, 75%, 2.5%, 97.5%)
+```
+
+
+We use here a slightly more advanced method called Bayesian bootstrap, but the details don't matter. It is supposedly better at small n (gives identical results when n is large).
+
+
+```{r}
+library(bayesboot)
+# Heights of the last ten American presidents in cm (Kennedy to Obama).
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185);
+b1 <- bayesboot(heights, mean)
+plot(b1)
+summary(b1)
+#hist(b1)
+HPDI(b1$V1, prob=0.95)
+```
+
+
+```{r, eval=FALSE}
+# it's more efficient to use the a weighted statistic (but you can use a normal statistic like mean() or median() as well - as above).
+b2 <- bayesboot(heights, weighted.mean, use.weights = TRUE)
+```
+
+It can also be easily post processed.
+```{r}
+# the probability that the mean is > 182 cm.
+mean( b1[,1] > 182)
+```
+
+the difference between 2 means (a measure of effect size):
+```{r}
+df <- tibble(a=rnorm(10), b=rnorm(10,1,1))
+m1 <- bayesboot(df$a, mean)
+m2 <- bayesboot(df$b, mean)
+m12 <- bind_cols(m1, m2) 
+m12 <- m12 %>% mutate(value=m12[,2] - m12[,1])
+hist(m12$value)
+median(m12$value)
+HPDI(m12$value)
+
+#library(BayesianFirstAid); bayes.t.test(m1, m2) 
+#will give a similar, but fully Bayesian, result
+#requires JAGS.
+```
+
+**A Bayesian bootstrap analysis of a SD.**
+When use.weights = FALSE it is important that the summary statistics does not change as a function of sample size. This is the case with the sample standard deviation, so here we have to implement a function calculating the population standard deviation.
+
+```{r}
+pop.sd <- function(x) {
+  n <- length(x)
+  sd(x) * sqrt( (n - 1) / n)
+}
+
+b3 <- bayesboot(heights, pop.sd)
+summary(b3)
+```
+
+A Bayesian bootstrap analysis of a correlation coefficient
+```{r}
+#Data comparing two methods of measuring blood flow.
+blood.flow <- data.frame(
+  dye = c(1.15, 1.7, 1.42, 1.38, 2.80, 4.7, 4.8, 1.41, 3.9),
+  efp = c(1.38, 1.72, 1.59, 1.47, 1.66, 3.45, 3.87, 1.31, 3.75))
+
+# Using the weighted correlation (corr) from the boot package.
+library(boot)
+b4 <- bayesboot(blood.flow, corr, R = 1000, use.weights = TRUE)
+plot(b4)
+
+```
+
+A Bayesian bootstrap analysis of lm coefficients 
+
+```{r}
+# A custom function that returns the coefficients of
+# a weighted linear regression on the blood.flow data
+lm.coefs <- function(d, w) {
+  coef( lm(efp ~ dye, data = d, weights = w) )
+}
+
+b5 <- bayesboot(blood.flow, lm.coefs, R = 1000, use.weights = TRUE)
+plot(b5)
+
+```
+
+Bootstrapping is a remarkably good method, but do not use it with very small samples (below 5, say). 
+
+##Small samples
+
+Because small samples contain less information than large ones, you could benefit by adding some extra information to the mix. The smaller the sample, the more this additional information matters - and the more it can skew your estimates. This extra information comes in two levels. Firstly, you can add a model of data distribution (like a normal distribution). When this is done, you are said to be using *parametric statistics*. And secondly, on top of the data model, you can incorporate a model of prior knowledge into your inference. This is done using Bayes theorem and then you will be using *Bayesian statistics*. 
+
+We will be looking at both levels in the Bayesian paradigm (where we usually use weak prior information, which will emphasize the importance on the inference of the data model). The Bayesian paradigm not only enables adding useful information into estimation, but it can also help to correct bias and to reduce the chance of surreptitious findings. In addition, hierarchial Bayesian models better reflect some experimental designs, and therefore lead to better inference.
+
+##A Bayesian version of correlation.
+
+We will introduce the Bayesian motor and models later, here we concern ourselves solely with interpretation of Bayesian results. We will use the very simple BayesianFirstAid package, which emulates some of the most heavily-used R functions of classical statistics (t.test, binom.test, cor.test, poisson.test, and prop.test). The output, however, if different. It contains no p values and instead of *confidence intervals* we have Bayesian *credible intervals*. 
+
+In Bayes we end up with posterior probability distributions for each and every parameter in our model. For corr.test these parameters include mu1 (the mean of 1st group), mu2 (same for the 2nd group), sigma1 (sd for the 1st group), sigma2, rho (the correlation coefficient), and some others. So we have (at least) 5 informative posterior probability distributions. 
+
+Interpretation of bayesian correlation comes from the posterior distribution of the parameter value: rho (correlation). Lets consider every possible rho value from -1 to 1. Some of these values are more likely than others, given our data and our model. Of course, having limited data and a model that is by definition never exactly true, we cannot hope to pinpoint the exact true correlation value. What remains is a question of belief: which rho values are reasonably likely to contain the true rho value among them? This belief is higher where the posterior distribution is higher, and it is lower where the posterior is lower. The beauty of Bayes is that we can get the posteriors of all the parameters as a numeric table and do any conceivable analysis on it. Therefore, we won't need much mathematics - just number crunching - to find anwers to our questions! 
+
+For example, we can easily calculate the probability with which the true value lies in any interval of rho values. Inveresely, we can find the interval of rho values, for which we believe with a given probability that the true value lies in that interval. For instance, we believe with 95% certainty that the true rho value resides in the interval where we have 95% of the highest posterior density (here: 95% HDI = -0.28 to 0.04). 
+
+The mode of the posterior gives the most likely rho value, but because the mode is difficult to calculate precisely, we usually take the median or the mean of the posterior as the most likely parameter value.
+
+bayes.cor.test() takes the same arguments as base::cor.test. For more information regarding the model assumptions see: http://sumsar.net/blog/2014/03/bayesian-first-aid-pearson-correlation-test/
+
+```{r}
+library(BayesianFirstAid)
+model<-bayes.cor.test(iris$Sepal.Length, iris$Sepal.Width)
+plot(model)
+```
+
+Note that Bayesian version is more informative than the ordinary correlation test. We have posterior probability distributions for r, means and sd for both groups, and some other parameters.
+Here we also see that the probability that r>0 is 6.3%.
+```{r}
+summary(model)
+```
+
+**Important!** Bayesian models are generative - you can fit the model on your data, and then, using the model that you just fitted, generate some new data. If the new data do not resemble your original data then, usually, there is something wrong with the model. xy_pred does this diagnostic trick, so we can decide from the similarity to actual data that the model is good and working properly.
+
+```{r, eval=FALSE}
+model.code(model)
+diagnostics(model)
+```
+
+Here we have the calculated parameter values, from which we can construct posterior distributions, or which we can manipulate in any which way.
+```{r}
+#names(model)
+m<-as_tibble(as.matrix(model$mcmc_samples))
+dim(m)
+psych::describe(m)
+```
+
+
+
+

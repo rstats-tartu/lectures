@@ -1,0 +1,460 @@
+---
+title: "Bayes intro"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+
+```{r setup, include=FALSE, message=FALSE, error=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE, warning = FALSE)
+```
+
+```{r}
+library(rethinking)
+
+```
+
+##Bayes theorem takes the likelihood and prior, and from these calculates the posterior.
+
+
+**Parameter** - an unknown quantity, whose true value we would like to know, based on our data. For example, we may have some measurements of boys heights and the two parameters, which we are interested in, are mean height and standard deviation of heights. Because truth is unattainable, the absolute best we can do is a posterior probability density over all parameter values. This is much more informative than a point estimate of the parameter.
+
+**data** - parameters, whose value we treat as fixed by observation or experiment. But what happens if we have some paired measurements of heights and weights and we have a heigth missing? Then this datum becomes a parameter, whose posterior distribution can be calculated. There is no fixed boundary between data and parameters. 
+
+**likelihood** - the probability of encountering your data, if x is the true parameter value.
+
+**likelihood function** - likelihoods at every possible parameter value.
+
+**prior (function)** - prior probabilities of every possible parameter value being true.
+
+**posterior (function)** is the product of likelihood and prior, normalized to unit probability.
+
+We have (1) some data, (2) a probabilistic model called *the likelihood*, which contains both the data and the parameter(s) that we wish to calculate, and (3) another model called *the prior*. 
+
+For each parameter, whose value we wish to know, there must be a prior. 
+
+Then we calculate ideally every possible combination of the values of every parameter, given our data and our priors. The result is a posterior probability distribution for each parameter.
+
+###example 1
+
+data: We know that mortality rate from a disease is 50% and we have in our ward 3 patients (so we have 2 pieces of data).
+
+question: how many of our patients are likely to die? 
+
+Lets assume that this is all that we know, exept that the patients are assumed to be independent of each other (not relatives, for example). This makes it a typical coin tossing experiment. 
+
+We start by enumerating all possible events that could happen.
+
+We toss the coin 3 times: H - head T- tail
+
+The possible sequences are:
+
+HHH,
+HTH,
+THH,
+HHT,
+HTT,
+TTH,
+THT,
+TTT,
+
+If Pr(H) = 0.5, and H = alive and T = dead, then
+
++ 0 H - 1,
++ 1 H - 3,
++ 2 H - 3,
++ 3 H - 1,
+
+This means that Pr(0 H) = 1/8, Pr(1 H) = 3/8, Pr(1 or 2 H) = 6/8 and so on.
+
+We can convert this into likelihood function:
+```{r}
+x<-seq(from= 0, to=3)
+y<-c(1,3,3,1)
+plot(x,y, ylab="number of possibilities", xlab="number of deaths", type="b", main="likelihood")
+```
+
+We can see that one death and two deaths are equally likely, and that 1 death (or two deaths) is three times more likely than no deaths (or three deaths).
+
+If we want to estimate the true value of a parameter (like the number of deaths), then the likelihood is defined as the probability of our data for each possible parameter value. In our case the likelihood function gives the probability Pr(mortality=0.5 & N=3) for each possible number of deaths (from 0 to 3). 
+
+Using the binomial distribution we get the same result:
+```{r}
+x<-seq(0, 3)
+y <- dbinom(x,3, 0.5)
+plot(x, y, type="b", xlab="nr of deaths", ylab="probability of x deaths", main="probability of x deaths out of 3 patients if Pr(Heads)=0.5")
+```
+
+Ok, what if we have 9 patients and the mortality rate is 0.67?
+```{r}
+x<-seq(0, 9)
+y <- dbinom(x,9, 0.67)
+plot(x, y, type="b", xlab="nr of deaths", ylab="probability of x deaths", main="probability of x out of 9 deaths if Pr(Heads)=0.67")
+```
+
+
+####Now we calculate the posterior using the Bayes Theorem.
+
+for each parameter value, likelihood * prior is proportional to posterior probability of true mortality being at this value. This will be further standardized to make posterior probabilities sum to 1. We take on the x axis a grid of 10 integer values between 0 and 9 deaths (min possible nr of deaths is 0 and max is 9 --- this defines the parameter space) and calculate the likelihoods for each of these values, thus exhausting the possibilities.
+```{r}
+# define grid
+p_grid <- seq( from=0 , to=9 )
+# define flat prior
+prior <- rep( 1 , 10 )
+# compute likelihood at each value in grid
+likelihood <- dbinom( p_grid , size=9 , prob=0.67 )
+
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior 
+
+# standardize the posterior, so that it sums to 1
+posterior <- unstd.posterior/sum(unstd.posterior)
+# sum(posterior) == 1 #[1] TRUE
+
+plot( x = p_grid , y = posterior , type="b" ,
+    xlab="nr of deaths" , ylab="posterior probability", main="posterior distribution" )
+
+```
+
+This was the full Bayesian treatment of the problem of how many caskets to order if you have 9 patients.
+
+
+###Example 2: redifine the problem
+
+Lets suppose that we don't know the mortality rate, but would like to estimate it. What we do know is that six patients out of nine died. What should we believe about the true mortality rate, if this is the only information that we have?
+
+Now the data is the morbidity info of 9 patients (the estimated parameter in the previous example) and the parameter that varies is the Pr(dead) or mortality rate (data in the previous example).
+
+Here we have:
+1. parameter space from 0% to 100% mortality (0 to 1) --- now an infinite list of numerical values.
+2. two possible outcomes, binomial likelihood again. As we already know, the dbinom() takes 3 parameters: the nr of deaths, the total nr of patients (size), and the probability of death (mortality rate). Now we know the first two and want to estimate the value of the third.
+3. a flat prior from 0 to 1 (to keep things simple) - NB! flat does not equate non-informative.
+
+**likelihood at parameter value x is the probability of encountering your data, if x happens to be the true parameter value.** In our case the likelihood function is comprised of the probabilities that 6 out of 9 patients died at each and every possible mortality rate (between 0 and 1). Since we do not have infinite time to calculate this, we pick 20 evenly spaced points on the probability grid and calculate likelihoods for those. 
+
+A technical point: the likelihood function for your data as a whole is really agregated from the individual likelihood functions for each individual data point. Thus, Bayes looks at each data point separately (the sequence of data points does not matter).
+
+
+```{r}
+# define grid (mortality at 20 evenly spaced probabilities from 0 to 1)
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+# define prior
+prior <- rep( 1 , 20 )
+# compute likelihood at each value in grid
+likelihood <- dbinom( 6 , size=9 , prob=p_grid )
+# compute product of likelihood and prior
+
+plot(p_grid, prior, type="b", main="prior")
+
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+likelihood <- dbinom( 6 , size=9 , prob=p_grid )
+plot(p_grid, likelihood, type="b", main="the likelihood function")
+
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so that it sums to 1
+posterior <- unstd.posterior / sum(unstd.posterior)
+
+plot( x = p_grid , y = posterior , type="b" ,
+    xlab="mortality" , ylab="posterior probability", main="posterior distribution" )
+```
+
+As our prior is constant at 1, the shape of our posterior = the shape of the likelihood.
+
+
+In this exapmle the unknown parameter was probability of death and data was nr of deaths and N.
+
+
+
+
+####What if N=1?
+
+Bayes has an advantage here, because its estimates for small N are logically as valid as for large N. In contrast, the ordinary frequentist tests were created under the assumption of infinite N and tend to fall apart at small N-s.
+
+OK, we want to know the mortality rate again
+
+Bayes works data point by data point (the fact that we give it all our data together is just a matter of convenience).
+```{r}
+# define grid
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+# define prior
+prior <- rep( 1 , 20 )
+# compute likelihood at each value in grid
+likelihood <- dbinom( 1 , size=1 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so that it sums to 1
+posterior <- unstd.posterior / sum(unstd.posterior)
+
+plot( x = p_grid , y = posterior , type="b" ,
+    xlab="mortality" , ylab="posterior probability" )
+```
+
+first patient died - 0 mortality is now an impossibility
+
+
+```{r}
+# define grid
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+# define prior
+prior <- posterior
+# compute likelihood at each value in grid
+likelihood <- dbinom( 1 , size=1 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so that it sums to 1
+posterior1 <- unstd.posterior / sum(unstd.posterior)
+
+plot( x = p_grid , y = posterior1 , type="b" ,
+    xlab="mortality" , ylab="posterior probability" )
+```
+
+ second patient died
+
+
+```{r}
+# define grid
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+# define prior
+prior <- posterior1
+# compute likelihood at each value in grid
+likelihood <- dbinom( 0 , size=1 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so that it sums to 1
+posterior2 <- unstd.posterior / sum(unstd.posterior)
+
+plot( x = p_grid , y = posterior2 , type="b" ,
+    xlab="mortality" , ylab="posterior probability" )
+```
+
+the third patient survived - 0 mortality and 100% mortality are now impossibilities.
+
+
+**Lets try the same with a more informative prior** - this is to show that if N is small, then the prior dominates the posterior
+
+```{r}
+# define grid
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+# define prior
+prior <- c( seq(1:10), seq(from= 10, to= 1) )
+# compute likelihood at each value in grid
+likelihood <- dbinom( 1 , size=1 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so that it sums to 1
+posterior <- unstd.posterior / sum(unstd.posterior)
+
+plot(x=1:20, y=prior, type="b", main="prior")
+plot( x = p_grid , y = posterior , type="b" ,
+    xlab="mortality" , ylab="posterior probability", main="posterior")
+```
+
+
+```{r}
+# define grid
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+# define prior
+prior <- posterior
+# compute likelihood at each value in grid
+likelihood <- dbinom( 1 , size=1 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so it sums to 1
+posterior1 <- unstd.posterior / sum(unstd.posterior)
+
+plot(x=1:20, y=prior, type="b", main="prior")
+
+plot( p_grid , posterior1 , type="b" ,
+    xlab="mortality" , ylab="posterior probability", main="posterior" )
+```
+
+```{r}
+# define grid
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+# define prior
+prior <- posterior1
+# compute likelihood at each value in grid
+likelihood <- dbinom( 0 , size=1 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so that it sums to 1
+posterior2 <- unstd.posterior / sum(unstd.posterior)
+plot(x=1:20, y=prior, type="b", main="prior")
+plot( x = p_grid , y = posterior2 , type="b" ,
+    xlab="mortality" , ylab="posterior probability", main="posterior"  )
+```
+
+
+ 
+####With grid we can do any starnge prior we like
+
+
+```{r}
+# define grid
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+# define prior
+prior <- c( 3 , 3, 4, 5, 10, 6, 6 , 5, 4, 4, 3, 3, 2, 2, 1, 1, 13, 1, 1, 1 )
+# compute likelihood at each value in grid
+likelihood <- dbinom( 6 , size=9 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so it sums to 1
+posterior <- unstd.posterior / sum(unstd.posterior)
+
+plot(x=1:20, y=prior, type="b", main="strange prior")
+
+plot( p_grid , posterior , type="b" ,
+    xlab="mortality" , ylab="posterior probability", main="strange posterior" )
+```
+
+
+With enough data, we can survive even strange priors 
+
+```{r}
+# define grid
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+# define prior
+prior <- c( 3 , 3, 4, 5, 10, 6, 6 , 5, 4, 4, 3, 3, 2, 2, 1, 1, 13, 1, 1, 1 )
+# compute likelihood at each value in grid
+likelihood <- dbinom( 60 , size=90 , prob=p_grid )
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+# standardize the posterior, so it sums to 1
+posterior <- unstd.posterior / sum(unstd.posterior)
+
+plot(x=1:20, y=prior, type="b", main="strange prior")
+
+plot( p_grid , posterior , type="b" ,
+    xlab="mortality" , ylab="posterior probability", main="OK posterior" )
+```
+
+
+####map() finds the peak of the posterior distribution and calculates sd from the slope near the peak.
+
+
+map seems to need at least 2 data points and well defined start values (where chains are starting their random walk). It assumes normal posteriors. **If the prior and the likelihood are both normal, then the posterior is always normal.**
+
+```{r}
+library(rethinking)
+globe.qa <- map(
+    alist(
+        w ~ dbinom(9,p) ,  # binomial likelihood
+        p ~ dunif(0,1)     # uniform prior
+), data=list(w=6) )
+# display summary of quadratic approximation
+precis( globe.qa )
+```
+
+```{r}
+samples<-extract.samples(globe.qa)
+hist(samples$p)
+dens(samples$p)
+PI(samples$p, prob = 0.95) #leaves out equal 2.5% at both sides
+HPDI(samples$p, prob = 0.95) #highest density 95% at the center
+```
+
+Well, 6 out of 9 patients died and we now believe that true mortality rate could be as low as 37% and as high as 97%. To improve things we need either more data, or to incorporate high quality background information.
+
+
+```{r}
+library(rethinking)
+globe.qa <- map(
+    alist(
+        w ~ dbinom(45,p) ,  # binomial likelihood
+        p ~ dunif(0,1)     # uniform prior
+), data=list(w=30) )
+# display summary of quadratic approximation
+precis( globe.qa )
+```
+
+```{r}
+samples<-extract.samples(globe.qa)
+dens(samples$p)
+PI(samples$p, prob = 0.95) #leaves out equal 2.5% at both sides
+HPDI(samples$p, prob = 0.95) #highest density 95% at the center
+```
+
+10-fold more data: now the mortality is more bounded (57% ... 76%)
+
+Lets use a more sensible beta prior for the probability.
+
+###beta prior ranges from 0 to 1. It has two parameters: a and b. 
+
+Some betas
+```{r}
+x <- seq(0, 1, length = 1000)
+plot(x, dbeta(x, 0.2, 0.2))
+plot(x, dbeta(x, 1, 0.2))
+plot(x, dbeta(x, 1, 1))
+plot(x, dbeta(x, 2, 1))
+plot(x, dbeta(x, 4, 1))
+plot(x, dbeta(x, 2, 2))
+plot(x, dbeta(x, 4, 4))
+plot(x, dbeta(x, 2, 4))
+```
+
+the central tendency and spread of the beta distribution are expressed in terms of a and b. 
+
+the mean of the beta(θ|a, b) distribution is *μ = a/(a + b)* and the mode is *ω = (a − 1)/(a + b − 2)* for *a > 1* and *b > 1*. Thus, when a = b, the mean and mode are 0.5. When a > b, the mean and mode are greater than 0.5, and when a < b, the mean and mode are less than 0.5. 
+
+The spread of the beta distribution is related to the “concentration” *κ = a + b*. 
+as κ gets larger, the beta distribution gets narrower. 
+
+*a=μκ*  
+*b=(1−μ)κ*
+
+*a=ω(κ−2)+1* 
+*b=(1−ω)(κ−2)+1* for *κ>2* 
+
+
+The value we choose for the prior κ can be thought of this way: It is the number of new  flips of the coin that we would need to make us teeter between the new data and the prior belief about μ. If we would only need a few new  flips to sway our beliefs, then our prior beliefs should be represented by a small κ. If we would need a large number of new  flips to sway us away from our prior beliefs about μ, then our prior beliefs are worth a very large κ. For example, suppose that I think the coin is fair, so μ = 0.5, but I’m not highly confident about it, so maybe I imagine I’ve seen only κ = 8 previous flips. Then, a = μκ = 4 and b = (1 − μ)κ = 4, which is a beta distribution peaked at θ = 0.5. The mode can be more intuitive than the mean, especially for skewed distributions, because the mode is where the distribution reaches its tallest height.
+suppose we want to create a beta distribution that has its mode at ω = 0.80, with a concentration corresponding to κ = 12. Then a = 9 and b = 3.
+
+
+```{r}
+library(rethinking)
+globe.qa <- map(
+    alist(
+        w ~ dbinom(9,p) ,  # binomial likelihood
+        p ~ dbeta(2,6)     # beta prior
+), data=list(w=6) )
+# display summary of quadratic approximation
+precis( globe.qa )
+
+```
+
+
+We can extract samples from the posterior and study those numerically - very convenient since the alternative is higher math.
+
+```{r}
+samples<-extract.samples(globe.qa)
+dens(samples$p)
+PI(samples$p, prob = 0.95) #leaves out equal 2.5% at both sides
+HPDI(samples$p, prob = 0.95) #highest density 95% at the center
+```
+
+Lets shift the prior and see what happens to the posterior
+```{r}
+library(rethinking)
+globe.qa <- map(
+    alist(
+        w ~ dbinom(9,p) ,  # binomial likelihood
+        p ~ dbeta(6,2)     
+), data=list(w=6) )
+# display summary of quadratic approximation
+precis( globe.qa )
+
+```
+
+
+```{r}
+samples<-extract.samples(globe.qa)
+dens(samples$p)
+PI(samples$p, prob = 0.95) #leaves out equal 2.5% at both sides
+HPDI(samples$p, prob = 0.95) #highest density 95% at the center
+```
+
+Flat prior - the mortality could be as low as 38%. If strong prior that agrees with data - lower bound is 50%. Its about as useful as increasing N 5-fold from 9 to 45.
+
+
