@@ -1,57 +1,51 @@
 ---
-title: "tidyverse"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+## Tidyverse
+
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE)
 ```
 
-```{r echo=FALSE, error=FALSE, message=FALSE}
-
-library(ggplot2)
+```{r}
+library(tidyverse)
 library(ggthemes)
-library(tidyr)
-library(tibble)
-library(reshape2)
-library(dplyr)
 library(readr)
-
 ```
-# Tidy data
+
+### Tidy data
 
 To standardize data analysis, you must start by standardizing data structure.
 Tidy data arranges values so that the relationships between variables in a data set will parallel the relationship between vectors in R???s storage objects. R stores tabular data as a data frame, a list of atomic vectors arranged to look like a table. Each column in the table is a vector. 
 
-   In tidy data, each variable in the data set is assigned to its own column, i.e., its own vector in the data frame. As a result, you can extract all the values of a variable  by extracting the column vector that contains the variable, i.e. table1$cases. Because R does vector calculations element by element, it is fastest when you compare vectors directly side-by-side.
+In tidy data, each variable in the data set is assigned to its own column, i.e., its own vector in the data frame. As a result, you can extract all the values of a variable  by extracting the column vector that contains the variable, i.e. table1$cases. Because R does vector calculations element by element, it is fastest when you compare vectors directly side-by-side.
 
-*	value is the result of a single measurement (167 cm). = cell
-*	variable is what you measure (length, height), or a factor (sex, treatment).  = column
-*	observation or data point is a set of measurements that made under similar conditions (John???s height and weight measured on 23.04.2012). = row
-*	Observational unit (who or what was measured): subject no. 1, etc. = 1st column
-*	Type of observational unit: humans, mice, cell lysates, etc. = table
+-	value is the result of a single measurement (167 cm). = cell
+-	variable is what you measure (length, height), or a factor (sex, treatment).  = column
+-	observation or data point is a set of measurements that made under similar conditions (John???s height and weight measured on 23.04.2012). = row
+-	Observational unit (who or what was measured): subject no. 1, etc. = 1st column
+-	Type of observational unit: humans, mice, cell lysates, etc. = table
 
-Tidy data: each value is in its own ???cell???, each variable in its own column, each observation in its own row, and each type of observational unit in its own table - useful for grouping, summarizing, filtering, and plotting. In a tidy table the order of columns is: 1. Observational unit 2. Factors & everything that was not measured (values fixed at experimental planning stage) 3. Measured Vars. 
+> Tidy data: each value is in its own ???cell???, each variable in its own column, each observation in its own row, and each type of observational unit in its own table - useful for grouping, summarizing, filtering, and plotting. In a tidy table the order of columns is: 1. Observational unit 2. Factors & everything that was not measured (values fixed at experimental planning stage) 3. Measured Vars. 
 
 Keeping the data in this form allows multiple tools to be used in sequence. 
 
 NB! There are always more possible Vars in your data than were measured ??? do weight and height and get BMI as a bonus.
 
-##melt data into the long format
-
+### Melt data into the long format
 
 reshape2::melt(df) - treats the variables that contain factors or strings as 'id.vars', which remain fixed; and melts all numeric columns.
 We start by making a mock table:
 
 ```{r }
-subject<-c("Tim", "Ann", "Jill")
-sex<-c("M", "F", "F")
-control<-c(23, 31, 30)
-experiment_1<-c(34, 38, 36)
-experiment_2<-c(40, 42, 44)
+subject <- c("Tim", "Ann", "Jill")
+sex <- c("M", "F", "F")
+control <- c(23, 31, 30)
+experiment_1 <- c(34, 38, 36)
+experiment_2 <- c(40, 42, 44)
 df<-tibble(subject, sex, control, experiment_1, experiment_2)
 df
-
 ```
 
 Next we melt it by providing the df as the only argument to reshape2::melt
@@ -60,24 +54,23 @@ df_melted <- melt(df) %>% as_data_frame() #this gives identical result.
 Wether to use piping or not is entirely up to you.
 
 ```{r}
-df_melted<-df %>% melt() %>% as_tibble()
+df_melted <- df %>% melt() %>% as_tibble()
 df_melted
 ```
 
 Here we are more explicit about arguments to melt(). If you provide only id.vars or measure.vars, R will assume that all other variables belong to the argument that was not provided. 
 
 ```{r}
-df_melted2<-df %>% melt(id.vars=c("subject","sex"), # the variables not to split  
-                        measure.vars=c("control", "experiment_1", "experiment_2"),
-                     variable.name="experiment", # Name of the destination column for factors that are taken from names of melted columns
-                     value.name="nr.of.counts" # name of the newly made column which contains the values
+df_melted2 <- df %>% melt(id.vars=c("subject","sex"), # the variables not to split  
+                          measure.vars=c("control", "experiment_1", "experiment_2"),
+                          variable.name="experiment", # Name of the destination column for factors that are taken from names of melted columns
+                          value.name="nr.of.counts" # name of the newly made column which contains the values
 )
 df_melted2
-
 ```
 
 
-alternatively we can use tidyr::gather to melt tables. Here you must provide three parameter values.
+Alternatively we can use tidyr::gather to melt tables. Here you must provide three parameter values.
 The 1st argument (here *key=experiment*) names the key factor or character column, whose values will be the names of the columns, which are melted into a single column. 
 The 2nd argument (here *value=value*) is the name of the resultant single column, which contains the values. 
 The third argument (here *3:ncol(df)*) specifies the columns that are melted into a single column; in the version *c(-subject, -sex)* every column except these 2 is melted. 
@@ -87,28 +80,25 @@ df_melted3<-df %>% gather(key=experiment, value=value, 3:ncol(df))
 # df_melted3<-df %>% gather(experiment, value, 3:ncol(df)) works as well.
 df_melted4<-df %>% gather(experiment, value, c(-subject, -sex))
 df_melted3
-
 ```
 
 
-### And now we cast our melted table back into the wide format
-
-
+And now we cast our melted table back into the wide format.
 Here *variable* is the factor or character column, whose values will be transformed into column names and *value* is the name of the column, which contains all the values that are spread into the new columns.
 
 ```{r}
-df_w3<-df_melted %>% spread(key=variable, value=value)
+df_w3 <- df_melted %>% spread(key=variable, value=value)
 df_w3
 ```
 
 
 
 
-#the 5 verbs of dplyr: select, filter, group_by, summarise, mutate
+### The 5 verbs of dplyr: select, filter, group_by, summarise, mutate
 
 NB! Check the data wrangling cheatsheet and dplyr help for further details
 
-## select() columns
+#### select() columns
 
 Select selects, renames, and re-orders columns
 
@@ -171,7 +161,7 @@ rename(iris, petal_length = Petal.Length)
 See ?select for more details.
 
 
-## filter
+#### filter()
 
 Filter filters rows
 
@@ -210,7 +200,7 @@ flights %>% filter(!is.na(dep_delay), !is.na(arr_delay))
 ```
 
 
-## summarise
+#### summarise()
 
 Summarise does just that - many rows summarised to a single value
 
@@ -221,7 +211,7 @@ df_melted %>% summarise(MEAN= mean(value), SD= sd(value), MAD=mad(value), N= n()
 
 To do something more exiting we must first group our observations by some factor(s) levels.
 
-## group_by
+#### group_by()
 
 Groups values for summarising or mutating
 
@@ -250,7 +240,7 @@ df_melted %>% group_by(sex, variable) %>% summarise(MEAN= mean(value), SD= sd(va
 df_melted %>% group_by(sex, variable) %>% mutate(MEAN= mean(value), SD= sd(value))
 ```
 
-## mutate
+#### mutate()
 
 However, the main use of the mutate() verb is for creating a new column for your table while taking information row-wise. The number of rows does not change while the number of columns increases. For example, if in your data frame called 'df' you have a column called 'value', you can create a new log2 transformed value value column called log_value by `df %>% mutate(log_value = log2(value))`. Or you can create a new column where a constant is substracted from the value column likel this: `df %>% mutate(centered_value = value - mean(value) ) `. Here the mean value is substracted from each individual value.
 
@@ -356,7 +346,7 @@ not_cancelled %>%
 ```
 
 
-###Grouped filters
+### Grouped filters
 
 Find all groups bigger than a threshold:
 ```{r, eval=FALSE}
@@ -373,7 +363,7 @@ daily %>%
 ```
 
 
-##str_replace_all() helps to deal with unruly labelling inside columns containing strings
+`str_replace_all()` helps to deal with unruly labelling inside columns containing strings
 
 The idea is to find a pattern in a collection of strings and replace it with something else. 
 String == character vector.
@@ -399,7 +389,13 @@ or
 
 Here we did the same thing more elegantly by directly parsing numbers from a character string.
 
-## Separate() one column into several
+### gather()
+
+
+### spread()
+
+
+### separate() one column into several
 
 ```{r}
 (df<-tibble(country=c("Albania"), disease.cases=c("80/1000")))
@@ -411,13 +407,11 @@ Here we did the same thing more elegantly by directly parsing numbers from a cha
 (df<-tibble(index=c(1,2), taxon=c("Procaryota; Bacteria; Alpha-Proteobacteria; Escharichia", "Eukaryota; Chordata")))
 (d1 <- df %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '; ', extra = "merge", fill="right")) 
 
-
-#some special cases:
+# some special cases:
 (df<-tibble(index=c(1,2), taxon=c("Prokaryota || Bacteria || Alpha-Proteobacteria || Escharichia", "Eukaryota || Chordata")))
 (d1 <- df %>% separate(taxon, c("riik", "hmk", "klass", "perekond"), sep= "\\|\\|", extra = "merge", fill="right")) 
 
-
-df<-tibble(index=c(1,2), taxon=c("Prokaryota.Bacteria.Alpha-Proteobacteria.Escharichia", "Eukaryota.Chordata"))
+df <- tibble(index=c(1,2), taxon=c("Prokaryota.Bacteria.Alpha-Proteobacteria.Escharichia", "Eukaryota.Chordata"))
 (d1 <- df %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[.]', extra = "merge", fill="right")) 
 #[] for points only.
 

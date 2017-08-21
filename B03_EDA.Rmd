@@ -1,11 +1,11 @@
 ---
-title: "EDA"
 output:
   html_document: default
 ---
 
+## EDA -- exploratory data analysis
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE)
 ```
 
@@ -17,7 +17,7 @@ library(psych)
 ```
 
 
-## Data summary
+### Data summary
 
 We start by summary statistics, which summarise data into a few numbers.These are 
 1. measures of central tendency (or average) - mean, median, etc.
@@ -31,7 +31,6 @@ We start by summary statistics, which summarise data into a few numbers.These ar
 If you encounter data, where negative values are impossible, and your data sd/mean > 0.5, then negative values are likely under your model. As negative values are impossible, your normal model is useless (to say the least). Now you have 2 choises: 
 
 a) transform data (usually by logarithming) and work and interpret the data at the transformed level, or 
-
 b) calculate the median and the mad (median absulute deviation). Median and mad go together- they are insensitive to outliers and do not assume normal data.
 
 ```{r, eval=FALSE}
@@ -41,12 +40,10 @@ sd(x)
 mad(x)
 ```
 
-Firstly, str() gives the structure (not a summary) of the tibble 
+Firstly, `str()` gives the structure (not a summary) of the tibble.
 ```{r}
 str(iris)
 ```
-
-
 
 base::summary() output is not very nice, and you cannot easily convert it into tibble.
 ```{r}

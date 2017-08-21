@@ -1,10 +1,11 @@
 ---
-title: 'Inferential statistics: bootstrapping'
 output:
   html_document: default
 ---
 
-##Glossary
+## Inferential statistics: bootstrapping
+
+### Glossary
 
 **Parameter** - an unknown quantity, whose true value we would like to know, based on our data. For example, we may have some measurements of heights and the two parameters, which we are interested in, are mean height and standard deviation of heights. 
 
