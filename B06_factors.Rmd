@@ -1,6 +1,6 @@
 ---
 title: "Factors"
-output: html_notebook
+output: html_document
 ---
 
 > factors are used to work with categorical variables, which have a fixed and known set of possible values. They are also useful when you want to display character vectors in a non-alphabetical order.
