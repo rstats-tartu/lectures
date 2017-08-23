@@ -54,6 +54,9 @@ coplot(iris$Sepal.Length ~ iris$Sepal.Width | iris$Petal.Length)
 coplot(iris$Sepal.Length ~ iris$Sepal.Width | iris$Species + iris$Petal.Length)
 
 ```
+
+
+
 ```{r}
 plot(iris$Sepal.Length, iris$Sepal.Width, 
      col = iris$Species, # dots are colored by species
@@ -63,7 +66,7 @@ plot(iris$Sepal.Length, iris$Sepal.Width,
      main = "Iris" #graph label
 )
       
-palette()
+palette() #you can change the color scheme by inputting a vector of colornames
 legend("topright", # we place legend to the top right corner of the plot
        legend = levels(iris$Species), # species names in the legend
        pch = 16, # dot shape
@@ -103,10 +106,6 @@ hist(iris$Sepal.Length, breaks = seq(4, 9, by = 0.25))
 see: ?seq
 
 
-
-
-
-
 ###Plot all variable pairs into a matrix of scatterplots
 
 iris[,1:4] means the columns 1 to 4 of the iris table. In R [,] means index, where  the numbers left of the comma specify table rows and the numbers right of the comma specify columns. If there is no number, this simply means "all rows" or "all columns". So iris[1,2] selects a single cell (first row, second column), iris[c(1,3), 2:4] selects the first and third rows of columns 2 to 4, and so on.
@@ -138,21 +137,19 @@ To compose plots, you have to supply minimally:
 3. then you say, which kind of graph or graphs do you want to draw on these axes
 4. then you say, which continuous variables will be split by which factor levels
 5. and finally you modify the appearance of your graph
-
                     
-1.                    
 ```{r}
 iris %>% ggplot()
 ```
  draws empty plot
  
- 2
+
 ```{r}
 iris %>% ggplot(aes(x=Sepal.Length, y=Sepal.Width))
 ```
 adds x and y axes
 
-3
+
 ```{r}
 iris %>% ggplot(aes(x=Sepal.Length, y=Sepal.Width)) + 
   geom_point() + 
@@ -160,7 +157,6 @@ iris %>% ggplot(aes(x=Sepal.Length, y=Sepal.Width)) +
 ```
 adds the graphing elements (points and a regression line with standard error)
 
-4
 ```{r}
 iris %>% ggplot(aes(x=Sepal.Length, y=Sepal.Width)) +
   geom_point(aes(color=Species)) + 
@@ -190,7 +186,7 @@ You can further adjust your plot:
 ```{r}
 ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width)) +
   geom_point() +
-  geom_smooth(data=filter(iris, Species =="setosa"), method = lm) 
+  geom_smooth(data=filter(iris, Species =="setosa"), method = lm) +
   theme_classic()
 ```
 
@@ -269,6 +265,63 @@ ggplot(mpg, aes(displ, hwy)) +
 
 ```
 
+##Add lines to plots
+
+```{r}
+# Simple scatter plot
+sp <- ggplot(data=mtcars, aes(x=wt, y=mpg)) + geom_point()
+# Add horizontal line at y = 2O
+sp + geom_hline(yintercept=20)
+# Change line type and color
+sp + geom_hline(yintercept=20, linetype="dashed", color = "red")
+# Change line size
+sp + geom_hline(yintercept=20, linetype="dashed", 
+                color = "red", size=2)
+```
+
+```{r}
+# Add a vertical line at x = 3
+sp + geom_vline(xintercept = 3, linetype="dotted", 
+                color = "blue", size=1.5)
+```
+
+**geom_abline** : Add regression lines
+geom_abline(intercept, slope, linetype, color, size)
+
+```{r}
+reg<-lm(mpg ~ wt, data = mtcars)
+reg
+coeff=coefficients(reg)
+# Equation of the line : 
+sp + geom_abline(intercept = coeff[1], slope = coeff[2], color="red", 
+                 linetype="dashed", size=1.5)
+```
+
+
+
+
+
+**geom_segment** : Add a line segment
+
+geom_segment(aes(x, y, xend, yend))
+
+```{r}
+# Add a vertical line segment
+sp + geom_segment(aes(x = 4, y = 15, xend = 4, yend = 27))
+# Add horizontal line segment
+sp + geom_segment(aes(x = 2, y = 15, xend = 3, yend = 15))
+```
+
+**arrow**
+
+```{r}
+library(grid)
+sp + geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                  arrow = arrow(length = unit(0.5, "cm")))
+```
+
+
+
 
 ##Faceting
 
@@ -319,11 +372,103 @@ ggplot(mpg, aes(displ, hwy)) +
   facet_grid(drv ~ .)
 ```
 
+```{r eval=FALSE}
+library(ggforce)
+ggplot(iris, aes(Petal.Length, Petal.Width, colour = Species)) +
+    geom_point() +
+    facet_zoom(x = Species == "versicolor")
+```
 
 
-####Coordinate systems 
+    
+##Zooming
+
+There are three ways to control the plot limits:
+
+1. Adjusting what data are plotted
+2. Setting the limits in each scale
+3. Setting xlim and ylim in coord_cartesian()
+
+To zoom in on a region of the plot: coord_cartesian().
+
+*coord_cartesian(xlim = c(5, 7), ylim = c(10, 30))*
+
+**You can also set the limits on individual scales.** Reducing the limits is like subsetting the data. It is more useful if you want expand the limits, for example, to match scales across different plots. 
+  For example, if we extract two classes of cars and plot them separately, it’s difficult to compare the plots because all three scales (the x-axis, the y-axis, and the colour aesthetic) have different ranges.
+
+*scale_x_continuous(limits = range(mpg$displ))*
+
+*scale_y_continuous(limits = range(mpg$hwy))*
+
+*scale_colour_discrete(limits = unique(mpg$drv))*
+
+##log scales
+
+you can replace the scale altogether. There are two types of scales you’re mostly likely to want to switch out: continuous position scales and colour scales. 
 
 ```{r}
+ggplot(diamonds, aes(log10(carat), log10(price))) +
+  geom_bin2d()
+```
+
+the disadvantage of this transformation is that the axes are now labelled with the transformed values, making it hard to interpret the plot. Instead of doing the transformation in the aesthetic mapping, we can instead do it with the scale. This is visually identical, except the axes are labelled on the original data scale.
+
+```{r}
+ggplot(diamonds, aes(carat, price)) +
+  geom_bin2d() + 
+  scale_x_log10() + 
+  scale_y_log10()
+```
+
+
+```{r}
+sp <- ggplot(cars, aes(x = speed, y = dist)) + geom_point()
+sp
+#data and scale are linear
+
+sp + scale_x_continuous(trans='log2') + scale_y_continuous(trans='log2')
+#data and scale are both logarithmic
+
+sp + coord_trans(x="log2", y="log2") #data is log transformed but the scale is linear
+```
+
+reverse the y axis and take the square root of x axis (2 layers)
+```{r, eval=FALSE}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = class))+
+  scale_y_reverse() + 
+  scale_x_sqrt()
+
+```
+
+ggplot2 automatically adds default scales behind the scenes:
+
+```{r, eval=FALSE}
+  scale_x_continuous() +
+  scale_y_continuous() +
+  scale_colour_discrete()
+``` 
+  
+You can make them explicit and add arguments:
+```{r}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  scale_y_continuous(breaks = seq(15, 40, by = 5))
+```
+
+You can use labels in the same way (a character vector the same length as breaks), but you can also set it to NULL to suppress the labels altogether. 
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  scale_x_continuous(labels = NULL) +
+  scale_y_continuous(labels = NULL)
+```
+
+
+##Coordinate systems 
+
+```{r eval=FALSE}
 ggplot(iris, mapping = aes(x = Species, y = Sepal.Length)) + 
   geom_boxplot()
 ```
@@ -352,7 +497,7 @@ ggplot(mpg, aes(displ, hwy)) +
 ```
 
 
-###titles and  axes labels 
+##titles and  axes labels 
 
 ```{r}
 a1 <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + 
@@ -408,43 +553,12 @@ base + theme(legend.position = c(1, 0), legend.justification = c(1, 0))
 ```
 
 
-ggplot2 automatically adds default scales behind the scenes:
 
-```{r, eval=FALSE}
-  scale_x_continuous() +
-  scale_y_continuous() +
-  scale_colour_discrete()
-``` 
-  
-You can make them explicit and add arguments:
-```{r}
-ggplot(mpg, aes(displ, hwy)) +
-  geom_point() +
-  scale_y_continuous(breaks = seq(15, 40, by = 5))
-```
-
-You can use labels in the same way (a character vector the same length as breaks), but you can also set it to NULL to suppress the labels altogether. 
-
-```{r}
-ggplot(mpg, aes(displ, hwy)) +
-  geom_point() +
-  scale_x_continuous(labels = NULL) +
-  scale_y_continuous(labels = NULL)
-```
 
 **the angle of axis labels**
 
 ```{r, eval=FALSE}
 theme(axis.text.x = element_text(angle=90, hjust=1, vjust=0.5))
-```
-
-**reverse the y axis and take the square root of x axis (2 layers)**
-```{r, eval=FALSE}
-ggplot(mpg, aes(displ, hwy)) +
-  geom_point(aes(colour = class))+
-  scale_y_reverse() + 
-  scale_x_sqrt()
-
 ```
 
 
@@ -465,23 +579,9 @@ ggplot(mpg, aes(displ, hwy)) +
 ```
 
 
-you can replace the scale altogether. There are two types of scales you’re mostly likely to want to switch out: continuous position scales and colour scales. 
 
-```{r}
-ggplot(diamonds, aes(log10(carat), log10(price))) +
-  geom_bin2d()
-```
 
-the disadvantage of this transformation is that the axes are now labelled with the transformed values, making it hard to interpret the plot. Instead of doing the transformation in the aesthetic mapping, we can instead do it with the scale. This is visually identical, except the axes are labelled on the original data scale.
-
-```{r}
-ggplot(diamonds, aes(carat, price)) +
-  geom_bin2d() + 
-  scale_x_log10() + 
-  scale_y_log10()
-```
-
-##Color scale
+##Color scale 
 
 Another scale that is frequently customised is colour.
 ColorBrewer scales work better for people with colour blindness. 
@@ -491,15 +591,9 @@ ggplot(mpg, aes(displ, hwy)) +
   scale_colour_brewer(palette = "Set1")
 ```
 
-The ColorBrewer scales are documented online at http://colorbrewer2.org/ and made available in R via the RColorBrewer package. When you have a predefined mapping between values and colours, use scale_colour_manual(). 
 
-scale_colour_manual(values = c(factor_level_1 = "red", factor_level_2 = "blue")
 
-scale_colour_viridis() provided by the viridis package is a continuous analog of the categorical ColorBrewer scales.
-
-For continuous colour, you can use the built-in scale_colour_gradient() or scale_fill_gradient(). If you have a diverging scale, you can use scale_colour_gradient2(). That allows you to give, for example, positive and negative values different colours. That’s sometimes also useful if you want to distinguish points above or below the mean.
-
-####colors for continuos vars
+####colours for continuous vars
 ```{r}
 df <- data.frame(x = 1, y = 1:5, z = c(1, 3, 2, NA, 5))
 p <- ggplot(df, aes(x, y)) + geom_tile(aes(fill = z), size = 5)
@@ -508,13 +602,77 @@ p
 p + scale_fill_gradient(na.value = NA)
 # Customise on a black and white scale
 p + scale_fill_gradient(low =  "black" , high =  "white" , na.value =  "red" )
+
+#gradient between n colours
+p+scale_color_gradientn(colours = rainbow(5))
 ```
 
-####colors for discrete data
+
+###colours for discrete data
 There are four colour scales for discrete data. We illustrate them with a barchart that encodes both position and fill to the same variable.    
-The default colour scheme, scale colour hue(), picks evenly spaced hues around the HCL colour wheel. This works well for up to about eight colours, but after that it becomes hard to tell the di↵erent colours apart. You can control the default chroma and luminance, and the range of hues, with the h, c and l arguments:
+The default colour scheme, scale colour hue(), picks evenly spaced hues around the HCL colour wheel. This works well for up to about eight colours, but after that it becomes hard to tell the different colours apart. You can control the default chroma and luminance, and the range of hues, with the h, c and l arguments:
 
 ```{r}
+ToothGrowth <- ToothGrowth
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+mtcars <- mtcars
+mtcars$cyl <- as.factor(mtcars$cyl)
+
+#bp for discrete color scales
+bp<-ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
+  geom_boxplot()
+bp
+
+#sp for continuous scales
+sp<-ggplot(mtcars, aes(x=wt, y=mpg, color=cyl)) + geom_point()
+sp
+
+#The lightness (l) and the chroma (c, intensity of color) 
+#of the default (hue) colors can be modified
+bp + scale_fill_hue(l=40, c=35) #boxplot
+sp + scale_color_hue(l=40, c=35) #scatterplot
+
+#manual color
+bp + scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+sp + scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+
+#install.packages("wesanderson")
+#library(wesanderson)
+#bp+scale_fill_manual(values=wes_palette(n=3, name="GrandBudapest"))
+
+```
+
+The argument breaks can be used to control the appearance of the legend. This holds true also for the other scale_xx() functions.
+
+```{r}
+# Box plot
+bp + scale_fill_manual(breaks = c("2", "1", "0.5"), 
+                       values=c("red", "blue", "green"))
+# Scatter plot
+#sp + scale_color_manual(breaks = c("8", "6", "4"),
+#                        values=c("red", "blue", "green"))
+
+
+# color palettes
+bp + scale_fill_brewer(palette="Dark2") 
+#sp + scale_color_brewer(palette="Dark2") 
+
+#use graysacle
+#Change the gray value at the low and the high ends of the palette :
+bp + scale_fill_grey(start=0.8, end=0.2) + theme_classic() 
+#sp + scale_color_grey(start=0.8, end=0.2) + theme_classic() 
+```
+
+
+
+The ColorBrewer scales are documented online at http://colorbrewer2.org/ and made available in R via the RColorBrewer package. When you have a predefined mapping between values and colours, use scale_colour_manual(). 
+
+scale_colour_manual(values = c(factor_level_1 = "red", factor_level_2 = "blue")
+
+scale_colour_viridis() provided by the viridis package is a continuous analog of the categorical ColorBrewer scales.
+
+For continuous colour, you can use the built-in scale_colour_gradient() or scale_fill_gradient(). If you have a diverging scale, you can use scale_colour_gradient2(). That allows you to give, for example, positive and negative values different colours. That’s sometimes also useful if you want to distinguish points above or below the mean.
+```{r eval=FALSE}
 df <- data.frame(x = c( "a" ,  "b" ,  "c" ,  "d" ), y = c(3, 4, 1, 2))
 bars <- ggplot(df, aes(x, y, fill = x)) +
   geom_bar(stat =  "identity" ) +
@@ -533,26 +691,68 @@ bars + scale_fill_grey(start = 0, end = 0.5)
 ```
 
 
-##Zooming
+###A complex ggplot
 
-There are three ways to control the plot limits:
+ Let's pretend that we are measuring the same quantity by immunoassay at baseline and after 1 year of storage at -80 degrees. We'll add some heteroscedastic error and create some apparent degradation of about 20%:
+ 
+ 
 
-1. Adjusting what data are plotted
-2. Setting the limits in each scale
-3. Setting xlim and ylim in coord_cartesian()
+```{r}
 
-To zoom in on a region of the plot: coord_cartesian().
+set.seed(10) #make predictable random data
+baseline <- rlnorm(100, 0, 1)
+post <- 0.8*baseline + rnorm(100, 0, 0.10*baseline)
+my.data <- data.frame(baseline, post)
+ggplot(my.data, aes(x=baseline, y=post)) +
+    theme_bw() + 
+    geom_point(shape=1) +    # Use hollow circles
+    geom_smooth(method=lm) +  # Add linear regression line 
+    geom_abline(slope = 1, intercept = 0, linetype = 2, colour = "red")
+```
 
-*coord_cartesian(xlim = c(5, 7), ylim = c(10, 30))*
+Now we will prepare the difference data:
+```{r}
+diff <- (post - baseline)
+diffp <- (post - baseline)/baseline*100
+sd.diff <- sd(diff)
+sd.diffp <- sd(diffp)
+my.data <- data.frame(baseline, post, diff, diffp)
+```
 
-**You can also set the limits on individual scales.** Reducing the limits is like subsetting the data. It is more useful if you want expand the limits, for example, to match scales across different plots. 
-  For example, if we extract two classes of cars and plot them separately, it’s difficult to compare the plots because all three scales (the x-axis, the y-axis, and the colour aesthetic) have different ranges.
+In standard Bland Altman plots, one plots the difference between methods against the average of the methods, but in this case, the x-axis should be the baseline result, because that is the closest thing we have to the truth.
 
-*scale_x_continuous(limits = range(mpg$displ))*
+```{r eval=FALSE}
+library(ggExtra)
+diffplot <- ggplot(my.data, aes(baseline, diff)) + 
+  geom_point(size=2, colour = rgb(0,0,0, alpha = 0.5)) + 
+  theme_bw() + 
+  #when the +/- 2SD lines will fall outside the default plot limits 
+  #they need to be pre-stated explicitly to make the histogram line up properly. 
+  ylim(mean(my.data$diff) - 3*sd.diff, mean(my.data$diff) + 3*sd.diff) +
+  geom_hline(yintercept = 0, linetype = 3) +
+  geom_hline(yintercept = mean(my.data$diff)) +
+  geom_hline(yintercept = mean(my.data$diff) + 2*sd.diff, linetype = 2) +
+  geom_hline(yintercept = mean(my.data$diff) - 2*sd.diff, linetype = 2) +
+  ylab("Difference pre and post Storage (mg/L)") +
+  xlab("Baseline Concentration (mg/L)")
+ 
+#And now for the magic - we'll use 25 bins
+ggMarginal(diffplot, type="histogram", bins = 25)
+```
 
-*scale_y_continuous(limits = range(mpg$hwy))*
+ We can also obviously do the percent difference.
+ 
+```{r eval=FALSE}
+diffplotp <- ggplot(my.data, aes(baseline, diffp)) + 
+  geom_point(size=2, colour = rgb(0,0,0, alpha = 0.5)) + 
+  theme_bw() + 
+  geom_hline(yintercept = 0, linetype = 3) +
+  geom_hline(yintercept = mean(my.data$diffp)) +
+  geom_hline(yintercept = mean(my.data$diffp) + 2*sd.diffp, linetype = 2) +
+  geom_hline(yintercept = mean(my.data$diffp) - 2*sd.diffp, linetype = 2) +
+  ylab("Difference pre and post Storage (%)") +
+  xlab("Baseline Concentration (mg/L)")
 
-*scale_colour_discrete(limits = unique(mpg$drv))*
-
-
+ggMarginal(diffplotp, type="histogram", bins = 25)
+```
 

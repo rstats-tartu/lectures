@@ -9,7 +9,7 @@ library(tidyverse)
 library(bayesboot)
 library(boot)
 library(rethinking) #HPDI() and PI(). Requires Stan.
-source("R/")
+#source("R/")
 ```
 
 
@@ -103,18 +103,37 @@ Bootstrap empiirilisele valimile suurusega n töötab nii:
 Mis on USA presidentide keskmine pikkus? Meil on valim 10 presidendi pikkusega.
 
 ```{r}
-heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) #the vector of values
-heights <- as_tibble(heights) #convert into tibble
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble(heights) 
 n <- 10 #sample size
 nr_boot_samples <- 4000 #the nr of bootstrap samples
 a <- sample_n(heights, n * nr_boot_samples, replace=TRUE)  #create random sample with replacement
-b <- rep(1:nr_boot_samples, each = n) #create a column that cuts the sample into slices of size n
-a$key <- b #append b to tibble
-a$key <- as.factor(a$key) #convert numbers into unordered factor levels 
+a$key <- rep(1:nr_boot_samples, each = n) #create a column "key" that cuts the sample into slices of size n
 a1 <- a %>% group_by(key) %>% summarise(Value= mean(value)) #calculate the mean for each slice of n values
-#hist(a1$Value)
 dens(a1$Value)
 ```
+
+Alternatiivne ja aeglasem kood, mis kasutab mosaic::do(). 
+
+```{r}
+library(mosaic)
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble(heights) 
+sample_means <- mosaic::do(4000) *
+    (heights %>% sample_n(size = 10, replace = TRUE)) 
+#võta heigths andmeraamist 10-ne valim (tagasi panekuga) ja tee seda 4000 korda järjest. tulemuseks on tidy tibble, kus on veerg .index, mille järgi saab grupeerida.
+
+sample_means1 <- sample_means %>% group_by(.index) %>% summarise(Mean=mean(value))
+    
+ggplot(data = sample_means1, aes(x = Mean)) +
+  geom_histogram(color = "white", bins = 20)
+```
+
+Nii saab do() abil 2 veeruga tibble, mille igas veerus on 3 juhuslikku arvu. NB! kuna ka tidyverse/dplyr sisaldab do() nimelist funktsiooni, on kasulik seda siin eksplitsiitselt mosaic::do() kaudu esile manada.
+```{r}
+mosaic::do(3)* rnorm(2)
+
+```
+
+
 
 Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muid relevantseid andmeid, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.   
 
@@ -410,7 +429,7 @@ plot( x = p_grid , y = posterior , type="b" ,
     xlab="mortality" , ylab="posterior probability" )
 ```
 
-esimene patsient suri - 0 mortaalsus ei ole enam loogiliselt võimalik (välja arvatud siis kui prior selle koha peal = 0).
+esimene patsient suri - 0 mortaalsus ei ole enam loogiliselt võimalik (välja arvatud siis kui prior selle koha peal = 0) ja mortaalsus 100% on andmetega (tegelikult andmega) parimini kooskõlas. Posteerior on nulli ja 100% vahel sirge sest vähene sissepandud informatsioon lihtsalt ei võimalda enamat.
 
 
 ```{r}
@@ -429,7 +448,7 @@ plot( x = p_grid , y = posterior1 , type="b" ,
     xlab="mortality" , ylab="posterior probability" )
 ```
 
- Teine patsient suri
+ Teine patsient suri. Nüüd ei ole 0 ja 1 vahel enam sirge posteerior. Posteerior on kaldu 100 protsendi poole, mis on ikka kõige tõenäolisem väärtus.
 
 
 ```{r}
@@ -448,7 +467,7 @@ plot( x = p_grid , y = posterior2 , type="b" ,
     xlab="mortality" , ylab="posterior probability" )
 ```
 
-Kolmas patsient jäi ellu - 0 ja 100% mortaalsus on võimaluste nimekirjast maas.
+Kolmas patsient jäi ellu - 0 ja 100% mortaalsus on seega võimaluste nimekirjast maas ning suremus on ikka kaldu valimi keskmise poole (75%).
 
 Teeme sedasama prioriga, mis ei ole tasane. See illustreerib tõsiasja, et kui N on väike siis domineerib prior posteerior jaotust. (Suure N korral on vastupidi, priori kuju on sageli vähetähtis.)
 
@@ -469,7 +488,7 @@ plot(x=1:20, y=prior, type="b", main="prior")
 plot( x = p_grid , y = posterior , type="b" ,
     xlab="mortality" , ylab="posterior probability", main="posterior")
 ```
-
+1. patsient suri
 
 ```{r}
 # define grid
@@ -489,6 +508,8 @@ plot( p_grid , posterior1 , type="b" ,
     xlab="mortality" , ylab="posterior probability", main="posterior" )
 ```
 
+Teine patsient suri
+
 ```{r}
 # define grid
 p_grid <- seq( from=0 , to=1 , length.out=20 )
@@ -504,11 +525,11 @@ plot(x=1:20, y=prior, type="b", main="prior")
 plot( x = p_grid , y = posterior2 , type="b" ,
     xlab="mortality" , ylab="posterior probability", main="posterior"  )
 ```
-
+3. patsient jäi ellu. Nüüd on posteeriori tipp mitte 75% juures nagu ennist, vaid kuskil 50% juures --- tänu priorile.
 
 ##2.3. Mudelite keel
 
-Siin vaatame kuidas kirjeldada mudelit nii, et masin selle ära tunneb. Meie mudelid töötavad läbi rethinking() paketi. See paket pakub kaks võimalust kuidas mudelit arvutada, mõlemad kasutavad sama notatsiooni. Mõlemad võimalused arvutavad posteeriori mitte Bayesi teoreemi kasutades (nagu me ennist tegime), vaid kasutades stohhastilisi meetodeid, mis iseloomustavad posteeriori umbkaudu (aga piisavalt täpselt). Põhjuseks on, et keerulisemate mudelite korral on Bayesi teoreem liialt arvutusmahukas. 
+Siin vaatame kuidas kirjeldada mudelit nii, et masin selle ära tunneb. Meie mudelid töötavad läbi rethinking() paketi. See raamatukogu pakub kaks võimalust, kuidas mudelit arvutada, mis mõlemad kasutavad sama notatsiooni. Mõlemad võimalused arvutavad posteeriori mitte Bayesi teoreemi kasutades (nagu me ennist tegime), vaid kasutades stohhastilisi meetodeid, mis iseloomustavad posteeriori umbkaudu (aga piisavalt täpselt). Põhjuseks on, et keerulisemate mudelite korral on Bayesi teoreemi kasutamine liialt arvutusmahukas. 
 
 Esiteks rethinking::map() leiab posteeriori tipu ja selle lähedal funktsiooni tõusunurga. Siin on eelduseks, et posteerior on normaaljaotus. See eeldus kehtib alati, kui nii prior kui tõepära on modelleeritud normaaljaotusena (ja ka paljudel muudel juhtudel). 
 
@@ -517,10 +538,11 @@ Teine võimalus on rethinking::map2stan(), mis suunab teie kirjutatud mudeli Sta
 Me võime sama mudeli kirjelduse sõõta mõlemasse funktsiooni.
 
 Lihtne mudel näeb välja niimodi:
-alist(
-        dead ~ dbinom(9, p) ,  # binomial likelihood
-        p ~ dunif(0, 1)     # uniform prior
-        )
+
+   dead ~ dbinom(9, p) ,  # binomial likelihood
+   
+   p ~ dunif(0, 1)     # uniform prior
+        
 
 Tõepärafunktsioon on modeleeritud binoomjaotusena. Parameeter, mille väärtust määratakse on p, ehk suremus. See on ainus parameeter, mille väärtust me siin krutime.
 NB! igale parameetrile peab vastama oma prior. Meil on selles mudelis täpselt 1 parameeter ja 1 prior. Vastuseks saame selle ainsa parameetri posterioorse jaotuse. Hiljem näeme, et kui meil on näiteks 452 parameetrit, mille väärtusi me koos arvutame, siis on meil ka 452 priorit ja 452 posterioorset jaotust.
