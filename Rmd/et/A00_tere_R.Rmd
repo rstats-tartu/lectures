@@ -1,9 +1,11 @@
 ---
 title: "Tere R"
-output: html_notebook
+output:
+  html_document: default
+  html_notebook: default
 ---
 
-```{r}
+```{r echo=FALSE, error=FALSE, message=FALSE}
 library(tidyverse)
 library(stringr)
 ```
@@ -12,7 +14,7 @@ library(stringr)
 
 1. googelda "install R" ja installi viimane versioon
 2. googelda "install RStudio" ja installi viimane versioon (mõlemad on väga lihtsad installid)
-3. ava RStudio (R ise töötab taustal)
+3. ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)
 4. ava "File/New File/R script"
 5. ava "File/Save as" ja nimeta/salvesta oma skript kataloogi, mille sa selle kursuse jaoks tegid.
 
@@ -26,11 +28,11 @@ library(stringr)
 
 Nüüd peaks su RStudio konsoolis olema 4 akent, mille suurusi saad hõlpsalt muuta. Proovi seda teha.
 
-Üleval vasakul on sinu poolt nimega varustatud r script (laiend .R). Sinna kirjutad oma koodi ja kommentaarid sellele. Leia selle kohalt nupp Run. Kirjuta scripti aknasse 2 + 2, jäta kursor sellele reale ja vajuta Run nuppu. Leia output alt vasakult konsoolist. Nüüd kirjuta 2 + 3, jäta kursor sellele reale ja vajuta cmd + Enter. Leia konsoolist output.
+Üleval vasakul on sinu poolt nimega varustatud tekstieditor r script (laiend .R). Sinna kirjutad oma koodi ja kommentaarid sellele. Leia selle kohalt valge/roheline nupp Run. Kirjuta scripti aknasse 2 + 2, jäta kursor sellele reale ja vajuta Run nuppu. Leia output alt vasakult konsoolist. Nüüd kirjuta 2 + 3, jäta kursor sellele reale ja vajuta cmd + Enter (PC-l cntr + Enter). Leia konsoolist output.
 
 All vasakul on konsool. Seal jookseb su kood sinna ja sinna tekib osaliselt output.
 
-Üleval paremal on Environment. Seal on näha R-i objektid, mis on sulle worspaces kättesaadavad ja millega sa saad töötada. Kohe varsti õpime, kuidas objekte juurde tekitada ja Environmenti saata.
+Üleval paremal on Environment. Seal on näha R-i objektid, mis on sulle workspaces kättesaadavad ja millega sa saad töötada. Kohe varsti õpime, kuidas objekte juurde tekitada ja Environmenti saata.
 
 All paremal on paneel mitme tab-ga. 
 
@@ -44,7 +46,6 @@ All paremal on paneel mitme tab-ga.
 
 ####Nüüd proovime, kuidas töötab moodsam tekstieditor (R Notebook)
 
-Sulge oma script.
 
 Ava File/New File/R Notebook.
 
