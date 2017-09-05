@@ -1,16 +1,9 @@
 ---
-title: "Graphics 2017"
-output:
-  html_document: default
+title: "R graphics"
 ---
 
-
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE, warning = FALSE)
-```
-
 We are looking at the Iris dataset
+
 ```{r }
 library(tidyverse)
 library(ggthemes)

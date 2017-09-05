@@ -5,9 +5,6 @@ output:
 
 ## EDA -- exploratory data analysis
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE)
-```
 
 ```{r}
 library(tidyverse)

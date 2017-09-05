@@ -1,0 +1,39 @@
+
+name: "Reproducible data analysis using R"
+output_dir: "_site"
+navbar:
+  title: "Reproducible data analysis using R"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - text: "Introduction to R"
+      href: B01_intro_to_R.html
+    - text: "Graphics"
+      href: B02_graphics.html
+    - text: "Exploratory data analysis"
+      href: B03_EDA.html
+    - text: "Regular expressions"
+      href: B04_regular_expressions.html
+    - text: "Tidy data"
+      href: B05_tidy_data.html
+    - text: "Factors"
+      href: B06_factors.html
+    - text: "Bootstrapping"
+      href: B07_bootstrapping.html
+    - text: "Introduction to Bayesian data analysis"
+      href: B08_bayes_intro.html
+    - text: "Bayes continuous variables"
+      href: B09_bayes_continuous_vars.html
+    - text: "Bayesian statistical tests"
+      href: Bayes_tests.html
+      
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
+
+exclude: ["*.R", "*.csv", "Rmd/"]
+
+    

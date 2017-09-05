@@ -1,8 +1,6 @@
 ---
-title: "Regular expression"
-  output: html_document
+title: "Regular expressions"
 ---
-
 
 A pattern that we use to search in strings can be strict (like a nucleotide string "ACAGC") or "fuzzy" ("ACNGY" where N is any nucleotide and Y is C or T). To create fuzzy search patterns we use a system called **regular expression**. As regular expression is both hugely flexible and insanely complicated, we can only scratch the surface here.
 

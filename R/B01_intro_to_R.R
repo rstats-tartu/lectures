@@ -1,29 +1,33 @@
-#In R, one works in an area called the “workspace.” 
-#The workspace is a working environment where objects are created and manipulated. 
-#Objects commonly kept in the workspace are (a) entire data sets (i.e. tibbles) 
-#and (b) the output of statistical analyses. 
-#It is also relatively common to keep programs (i.e., functions) that do 
-#special project-related tasks within the workspace.
-ls() #display the names of the objects in the workspace.
-#Within the workspace, one removes objects using the rm function:  
-#rm(x, y, ink, temp, foo)
-#if you fail to save the workspace after adding or modifying objects you create 
-#in the current session, they will NOT be there next time you start R and load the specific workspace.
-#to save current objects, use the “Save Workspace” option from the File menu to 
-#specify where to save the workspace. 
+---
 
-#To get more information on any specific named function, for example solve, the command is
-# help(solve)
-#Searches of help files can be conducted using the help.search function. 
-#For instance, to find functions related to regression one would type:
-# help.search("regression")
+---
+  
+In R, one works in an area called the “workspace.”
+The workspace is a working environment where objects are created and manipulated.
+Objects commonly kept in the workspace are (a) entire data sets (i.e. tibbles)
+and (b) the output of statistical analyses.
+It is also relatively common to keep programs (i.e., functions) that do
+special project-related tasks within the workspace.
+Use `ls()` to display the names of the objects in the workspace.
+Within the workspace, one removes objects using the rm function:
+rm(x, y, ink, temp, foo)
+if you fail to save the workspace after adding or modifying objects you create
+in the current session, they will NOT be there next time you start R and load the specific workspace.
+to save current objects, use the “Save Workspace” option from the File menu to
+specify where to save the workspace.
 
-2+2 # use Cntr/Cmd + Enter to evaluate the code 
-#or click the Run button
-2-2 #2 minus 2
-2*3 #2 times 3
+To get more information on any specific named function, for example solve, the command is
+help(solve)
+Searches of help files can be conducted using the help.search function.
+For instance, to find functions related to regression one would type:
+help.search("regression")
+
+2+2  use Cntr/Cmd + Enter to evaluate the code 
+or click the Run button
+2-2 2 minus 2
+2*3 2 times 3
 2/3
-2**3 #2 in the order of 3 
+2**3 2 in the order of 3 
 
 sqrt(2)
 2**(1/2)
@@ -65,82 +69,87 @@ sum() #returns the sum of all the values present in its arguments.
 ?sum()#default argument value - na.rm=FALSE, you can change it!
 sd #shows the function code, but does not run it
 
-#a collection of similar functions - package
-#you can download many thousands of packages 
-#from repositories (CRAN, bioconductor): install.packages("packagename")
-#takes directly from CRAN repository
-#tidyverse is a package that is itself a 
-#collection of packages that work well together
-#in order to use the functions in a package 
-#you have to first load the package: library(packagename)
-#each fun has a help page, most packages have tutorials and such.
+a collection of similar functions - package
+you can download many thousands of packages
+from repositories (CRAN, bioconductor): install.packages("packagename")
+takes directly from CRAN repository
+tidyverse is a package that is itself a
+collection of packages that work well together
+in order to use the functions in a package
+you have to first load the package: library(packagename)
+each fun has a help page, most packages have tutorials and such.
 
-#next code helps you to install all your packages to a new machine or R version.
-#this is very useful
+next code helps you to install all your packages to a new machine or R version.
+this is very useful
 
-#in the old version/machine run:
+in the old version/machine run:
 installed <- as.data.frame(installed.packages())
 write.csv(installed, "installed_previously.csv")
 
-#and in the new one:
+and in the new one:
 installedPreviously <- read.csv("installed_previously.csv")
 baseR <- as.data.frame(installed.packages())
 toInstall <- setdiff(installedPreviously$Package, baseR$Package)
 install.packages(toInstall) 
 
 ###############################################names
-#We can assign values to names, thus creating objects 
-# <- does the assigning, shortcut: Alt + - (the minus sign)
-#All statements where you create objects have the same form: object_name <- value
-#When reading that code say ???object name gets value???.
+We can assign values to names, thus creating objects
+<- does the assigning, shortcut: Alt + - (the minus sign)
+All statements where you create objects have the same form: object_name <- value
+When reading that code say ???object name gets value???.
 
-#Object names must start with a letter, and 
-#can only contain letters, numbers, _, and . 
-#no spaces
-#case-sensitive
-#a long name: this_is_a_long_name_01
-#use TAB to autocomplete
+Object names must start with a letter, and
+can only contain letters, numbers, _, and .
+no spaces
+case-sensitive
+a long name: this_is_a_long_name_01
+use TAB to autocomplete
 
 apples <- 2 #two apples
 oranges <- 3 #three oranges
 inventory <- apples + oranges
 inventory #inspect the object
 
-#or you can use the function sum()
+or you can use the function sum()
 inventory <- sum(apples, oranges)
 
 apelsinid<-oranges #here we changed the name 
-#(or, more accurately, created a new name for 
-#the same object, thus cloning the object) 
+(or, more accurately, created a new name for
+the same object, thus cloning the object)
 
-#we can also change the object behind a name. 
-#The last change stands.
+we can also change the object behind a name.
+The last change stands.
+
 apples <- apples + 4
 inventory<- apples + oranges
 inventory
 ########################################################fun
-#as we get more apples and oranges, 
-#we want a way to reduce typing.
-#for this we write functions, 
-#which hide the code from the user
+as we get more apples and oranges,
+we want a way to reduce typing.
+for this we write functions,
+which hide the code from the user
 
 inventory <- function(apples, oranges) {
   inventory <- apples + oranges
   inventory
 }
-#run this code and see how the new 
-#fun appears in the Global Enviroment
-#lets use our new function
+
+run this code and see how the new
+fun appears in the Global Enviroment
+lets use our new function
+
 inventory(3,4)
-#or equivalently
+
+or equivalently
+
 inventory(apples = 3, oranges = 4)
 
-#OK, write a function that calculates standard error 
-#from standard deviation (sd)
-#sd() is a native R fun for standard deviation - 
-#look it up in help! it has 2 arguments.
-#SEM=SD/sqrt(N)
-#N - length(x)
+OK, write a function that calculates standard error
+from standard deviation (sd)
+sd() is a native R fun for standard deviation -
+look it up in help! it has 2 arguments.
+SEM=SD/sqrt(N)
+N - length(x)
 
 SEM0<- function(x) {
   SD<- sd(x) 
@@ -148,8 +157,8 @@ SEM0<- function(x) {
   SEM
 }
 
-#x is just a placeholder for any object we want to insert
-#so lets input a vector of numbers to SEM()
+x is just a placeholder for any object we want to insert
+so lets input a vector of numbers to SEM()
 numbers<- c(2, 3.4, 54, NA, 3) #c() means "combine", NA means "any number" or "not available"
 
 SEM0(numbers)
@@ -234,18 +243,18 @@ gap
 install.packages("devtools")
 devtools::install_github("Stan125/GREA")
 
-#when reading in csv files saved from Excel use read_csv2() or read.csv2() and 
-#for writing in Excel friendly format (columns separated by ;) use write.csv2()
+when reading in csv files saved from Excel use read_csv2() or read.csv2() and
+for writing in Excel friendly format (columns separated by ;) use write.csv2()
 
-#When reading in a file, always check for type of data in the columns, 
-#on the NAs, on the unique values.
+When reading in a file, always check for type of data in the columns,
+on the NAs, on the unique values.
 
 library(VIM) # võib olla ajaraisk!
 diabetes <- read.table(file = "data/diabetes.csv", sep = ";", dec = ",", header = TRUE)
 str(diabetes)
 aggr(diabetes, prop=FALSE, numbers=T)
 
-#how many non-NA-containing rows we actually have (#377)
+how many non-NA-containing rows we actually have (#377)
   
   nrows <- nrow(diabetes)
   ncomplete <- sum(complete.cases(diabetes))
@@ -255,7 +264,7 @@ aggr(diabetes, prop=FALSE, numbers=T)
   #How many NAs in each Var?
  sapply(diabetes, function(x) sum(is.na(x))) 
   
-#set arbitrary rules and check how many cells, rows, or columns pass and fail each rule
+set arbitrary rules and check how many cells, rows, or columns pass and fail each rule
  
  library(validate)
  diabetes %>% check_that(
@@ -264,9 +273,10 @@ aggr(diabetes, prop=FALSE, numbers=T)
    chol > 180 | glyhb < 8 
  ) %>% summary()
  
-#plot the NA-s side-by-side for the variables in the diabetes dataset
+plot the NA-s side-by-side for the variables in the diabetes dataset
   VIM::matrixplot(diabetes) 
-#plot the NAs of 2 Vars  
+
+  plot the NAs of 2 Vars
   VIM::marginplot(diabetes[c("glyhb","bp.2s")], 
                   pch=c(20), alpha=0.5, 
                   col=c("darkgray", "red", "blue"))
@@ -336,31 +346,31 @@ all.equal(df_ti, df_dp)
 is.tibble(df_dp)
 
 #########################################################types of objects
-#R operates on named data structures. The simplest such structure is the numeric
-#vector, which is a single entity consisting of an ordered collection of numbers.
+R operates on named data structures. The simplest such structure is the numeric
+vector, which is a single entity consisting of an ordered collection of numbers.
 
-#types of r objects: vector, list, data frame, matrix
-#vector: a directional collection of numbers, characters, etc: v <- c(1, 3, "s", NA)
-#df: a list of equal length vectors
-#matrix: a list of equal length numeric vectors
-#list: a collection of r objects (including other lists --- lists within lists).
+types of r objects: vector, list, data frame, matrix
+vector: a directional collection of numbers, characters, etc: v <- c(1, 3, "s", NA)
+df: a list of equal length vectors
+matrix: a list of equal length numeric vectors
+list: a collection of r objects (including other lists --- lists within lists).
 
 
-#types of data inside r objects: numeric, integer, logical, character, factor (ordered and unordered)
-#coercing between data types:
-#matrix()
-#as.matrix()
-#as.vector()
-#as.factor()
-#as.character()
+types of data inside r objects: numeric, integer, logical, character, factor (ordered and unordered)
+coercing between data types:
+matrix()
+as.matrix()
+as.vector()
+as.factor()
+as.character()
 
-#types of missing data: NA - unknown value; NaN - not a number (no value is possible)
+types of missing data: NA - unknown value; NaN - not a number (no value is possible)
 
-#NA + 3 = NA
+NA + 3 = NA
 #######################################
-##indexing --- extracting parts of tables, vectors, lists
+indexing --- extracting parts of tables, vectors, lists
 
-#vector indexing in one dimension: counts positions inside the vector
+vector indexing in one dimension: counts positions inside the vector
 my_vector <- 2:5
 my_vector[c(1,3)]
 my_vector[-1]
@@ -405,13 +415,13 @@ my_list$a[2,] #class is df
 my_list[[1]][1,] #the first list object extracted, 
 #and then the first row of that is extracted --- class: df
 
-#For lists, one generally uses [[ to select any single element, 
-#whereas [ returns a list of the selected elements. 
-#The [[ form allows only a single element to be selected using integer or 
-#character indices, whereas [ allows indexing by vectors. 
-#Note though that for a list, the index can be a vector and each element 
-#of the vector is applied in turn to the list, the selected component, the 
-#selected component of that component, and so on. 
-#The result is still a single element.
+For lists, one generally uses [[ to select any single element,
+whereas [ returns a list of the selected elements.
+The [[ form allows only a single element to be selected using integer or
+character indices, whereas [ allows indexing by vectors.
+Note though that for a list, the index can be a vector and each element
+of the vector is applied in turn to the list, the selected component, the
+selected component of that component, and so on.
+The result is still a single element.
 
 
