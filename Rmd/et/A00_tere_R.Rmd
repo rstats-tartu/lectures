@@ -1055,24 +1055,24 @@ Need tuleb teil omale pähe ajada sest nende 5 verbiga (pluss gather ja spread) 
 Select selects, renames, and re-orders columns
 
 Select columns from sex to value:
-```{r}
-df_l1
-df_l1 %>% select(sex:value)
-select(df_melted, -(sex:value)) #selects everything, except cols from sex to value
+```{r eval=FALSE}
+iris
+iris %>% select(Petal.Length:Species)
+iris %>% select(-(Petal.Length:Species)) #selects everything, except those cols
 
 ```
 
 
-To select 3 columns and rename *subject* to *SUBJ*:
+To select 3 columns and rename *subject* to *SUBJ* and put liik as the 1st col:
 ```{r}
-df_l1 %>% select(sex, value, SUBJ=subject)
+iris %>% select(liik=Species, Sepal.Length, Sepal.Width )
 ```
 
 
 To select all cols, except sex and value, and rename the *subject* col:
 ```{r eval=FALSE}
 
-df_melted %>% select(-sex, -value, SUBJ=subject)
+iris %>% select(-Sepal.Length, -Sepal.Width, liik=Species)
 ```
 
 **helper functions you can use within select():**
