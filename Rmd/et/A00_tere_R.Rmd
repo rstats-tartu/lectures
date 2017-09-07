@@ -31,24 +31,42 @@ RStudio infolehekülg R projekti loomise kohta: [Using Projects](https://support
 ###Sinu kataloogi minimaalne struktuur:
 
 **R_kursus2017/data; /R; /figs**
-
-**data** kataloogi lähevad ainult algandmed (.csv või .xlsx laiendiga meie puhul).
-
-**R** kataloogi läheb sinu kirjutatud kood .R laienditega failides.
-
-**figs** kataloogi lähevad koodi abil genereeritud joonised.
+- **data** kataloogi lähevad ainult algandmed (.csv või .xlsx laiendiga meie puhul).
+- **R** kataloogi läheb sinu kirjutatud kood .R laienditega failides.
+- **figs** kataloogi lähevad koodi abil genereeritud joonised.
 
 Nüüd peaks su RStudio konsoolis olema 4 akent, mille suurusi saad hõlpsalt muuta. Proovi seda teha.
 
-Üleval vasakul on sinu poolt nimega varustatud tekstieditor R script (laiend .R). Sinna kirjutad oma koodi ja kommentaarid sellele. Leia selle kohalt valge/roheline nupp Run. Kirjuta scripti aknasse 2 + 2, jäta kursor sellele reale ja vajuta Run nuppu. Leia output alt vasakult konsoolist. Nüüd kirjuta 2 + 3, jäta kursor sellele reale ja vajuta cmd + Enter (PC-l cntr + Enter). Leia konsoolist output.
+Üleval vasakul on sinu poolt nimega varustatud tekstieditor kuhu kirjutad R skripti (laiend .R).
+**Salvesta R skriptid projekti alamkataloogi R/**.
 
-All vasakul on konsool. Seal jookseb su kood sinna ja sinna tekib osaliselt output.
+Sinna kirjutad oma koodi ja kommentaarid sellele. 
+Leia selle kohalt valge/roheline nupp Run. 
+Kirjuta scripti aknasse `2 + 2`, jäta kursor sellele reale ja vajuta Run nuppu. 
+Leia tulemus alt vasakult konsoolist. 
+Nüüd kirjuta `2 + 3`, jäta kursor sellele reale ja vajuta 
+(PC-l Cntr + Enter). 
+Leia konsoolist tulemus.
 
-Üleval paremal on Environment. Seal on näha R-i objektid, mis on sulle workspaces kättesaadavad ja millega sa saad töötada. Kohe varsti õpime, kuidas objekte juurde tekitada ja Environmenti saata.
+All vasakul on konsool. 
+Sinna sisestatakse su R (skripti) kood ja sinna trükitakse väljund.
 
-All paremal on paneel mitme tab-ga. 
+Üleval paremal on Environment. 
+Seal on näha R-i objektid, mis on sulle workspaces kättesaadavad ja millega sa saad töötada. 
+Kohe varsti õpime, kuidas objekte juurde tekitada ja Environmenti saata.
 
-1. Files tab töötab nagu failihaldur. Leia sealt paneel, kus on nupud New Folder, Delete, Rename ja More. More/Set As Working Directory võimaldab määrata Folderi, kust R automaatselt faile otsib, kui sa nime järgi faili R-i keskkonda sisse loed. Töökataloog võiks olla ".../R_kursus2017/data". More/Go To Working Directory viib sind sinna. Sinna folderisse kirjutati ka sinu poolt nimetatud .R laiendiga fail. Leia see.
+All paremal on paneel mitme sakiga (tab-ga). 
+
+1. Files tab töötab nagu failihaldur. 
+Leia sealt paneel, kus on nupud New Folder, Delete, Rename ja More. 
+More/Set As Working Directory võimaldab määrata Folderi, kust R automaatselt faile otsib, kui sa nime järgi faili R-i keskkonda sisse loed. 
+More/Go To Working Directory viib sind sinna. 
+R konsoolist töökataloogi teada saamiseks ja seadistamiseks kasutatakse vastavalt käskusid `getwd()` ja `setwd()`.
+
+**Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada.**
+Seega, töökataloog võiks olla vaikimisi seatud "R_kursus2017/". 
+Sinna kataloogi kirjutati ka sinu poolt nimetatud .R laiendiga fail. 
+Leia see.
 
 2. Plots paneelile ilmuvad joonised, mille sa teed. Neid saab sealt salvestada nupu Export/Save as image või Export/Save as pdf alt.
 
@@ -56,11 +74,11 @@ All paremal on paneel mitme tab-ga.
 
 4. Help. Seal on ka otsinguaken, aga see tõõtab halvemini kui scripti või konsooli kirjutada ?paketi_nimi. Seal avanevad kõik help failid (ka need, mida konsooli kaudu otsitakse). 
 
-####Nüüd proovime, kuidas töötab moodsam tekstieditor (R Notebook)
+###Nüüd proovime, kuidas töötab moodsam tekstieditor (R Notebook)
 
+[R Notebook](http://rmarkdown.rstudio.com/r_notebooks.html) on R markdown dokument mis sisaldab R skripte ja teksti. 
 
 Ava File/New File/R Notebook.
-
 Anna sellele nimi (nagu enne).
 
 Kohe dokumendi alguses on tekst: title: "R Notebook". 
@@ -74,9 +92,9 @@ Notebookis saab hästi kirjutada teksti, teksti vahele panna koodijuppe ja nende
 
 ##R on kalkulaator
 
-Liidame 2 + 2. 
+Liidame `2 + 2`. 
 
-    Selleks, et R aru saaks, et tegu on temale mõeldud käsuga, tuleb see kirjutada Insert --> R abil (vt kohe ülesse rohelisele nupule "Insert") ja kood evalueeritakse siis, kui vajutad tekinud hallis koodialas rohelisele nupule või alternatiivselt, kui soovid jooksutada ainult osa koodi või üht koodirida, siis pane kursor soovitud reale või võta osa koodi blokki ja vajuta klaviatuuril cmd + enter.
+Selleks, et R aru saaks, et tegu on temale mõeldud käsuga, tuleb see kirjutada Insert --> R abil (vt kohe ülesse rohelisele nupule "Insert") ja kood evalueeritakse siis, kui vajutad tekinud hallis koodialas rohelisele nupule või alternatiivselt, kui soovid jooksutada ainult osa koodi või üht koodirida, siis pane kursor soovitud reale või võta osa koodi blokki ja vajuta klaviatuuril cmd + enter.
    
 
 ```{r}
