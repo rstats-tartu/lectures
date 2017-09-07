@@ -45,7 +45,11 @@ Sageduslikud statistikud usuvad, et selline tõenäosuse tõlgendus on ebateadus
 meil on 2 gruppi, katse ja kontroll, millest kummagis n mõõtmist ja me soovime teada, kas katsetingimus mõjutab mõõtmistulemust piisavalt, et olla teaduslikult huvitav. Me eeldame, et andmed on normaaljaotusega ja et n ei ole väga väike.
 
 ####Bayesiaan 
-Statistiline küsimus on Bayesiaanil ja sageduslikul statistikul sama: kas ja kui palju erinevad kahe grupi keskväärtused? Bayesiaan alustab sellest, et ehitab kaks mudelit: andmete mudel ja taustateadmiste mudel. Kui andmed on normaaljaotusega siis on ka andmemudel normaaljaotus. Täpsemalt, andmemudel modeleerib, kui tõenäoline oleks kohata just seda valimit kõikvõimalike. See mudel on normaaljaotus, mille keskväärtus võrdub valimiandmete keskväärtusega ja standardhälve võrdub valimi standardhälvega, mis on jagatud ruutjuurega n-st (SEM = sd(valim)/sqrt(n)). 
+Statistiline küsimus on Bayesiaanil ja sageduslikul statistikul sama: kas ja kui palju erinevad kahe grupi keskväärtused? 
+Bayesiaan alustab sellest, et ehitab kaks mudelit: andmete mudel ja taustateadmiste mudel. 
+Kui andmed on normaaljaotusega siis on ka andmemudel normaaljaotus. 
+Täpsemalt, andmemudel modeleerib, kui tõenäoline oleks kohata just seda valimi keskmist kõikvõimalikel populatsiooni väärtustel. 
+See mudel on normaaljaotus, mille keskväärtus võrdub valimiandmete keskväärtusega ja standardhälve võrdub valimi standardhälvega, mis on jagatud ruutjuurega n-st (SEM = sd(valim)/sqrt(n)). 
 
 Taustateadmiste mudel on sageli samuti normaaljaotus. Kui meil on palju taustateadmisi, siis on see jaotus kõrge ja kitsas, kui meil on vähe taustateadmisi, siis on see madal ja lai. Igal juhul järgmise sammuna korrutab bayesiaan selle jaotuse andmejaotusega, saades tulemuseks kolmanda normaaljaotuse, mille ta seejärel normaliseerib nii, et jaotuse alune pindala = 1. 
 
