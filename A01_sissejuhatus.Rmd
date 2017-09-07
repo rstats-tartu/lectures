@@ -48,7 +48,7 @@ meil on 2 gruppi, katse ja kontroll, millest kummagis n mõõtmist ja me soovime
 Statistiline küsimus on Bayesiaanil ja sageduslikul statistikul sama: kas ja kui palju erinevad kahe grupi keskväärtused? 
 Bayesiaan alustab sellest, et ehitab kaks mudelit: andmete mudel ja taustateadmiste mudel. 
 Kui andmed on normaaljaotusega siis on ka andmemudel normaaljaotus. 
-Täpsemalt, andmemudel modeleerib, kui tõenäoline oleks kohata just seda valimi keskmist kõikvõimalikel populatsiooni väärtustel. 
+Täpsemalt, andmemudel modeleerib, kui tõenäoline oleks kohata just selle valimi keskmist kõikvõimalikel populatsiooni väärtustel. 
 See mudel on normaaljaotus, mille keskväärtus võrdub valimiandmete keskväärtusega ja standardhälve võrdub valimi standardhälvega, mis on jagatud ruutjuurega n-st (SEM = sd(valim)/sqrt(n)). 
 
 Taustateadmiste mudel on sageli samuti normaaljaotus. Kui meil on palju taustateadmisi, siis on see jaotus kõrge ja kitsas, kui meil on vähe taustateadmisi, siis on see madal ja lai. Igal juhul järgmise sammuna korrutab bayesiaan selle jaotuse andmejaotusega, saades tulemuseks kolmanda normaaljaotuse, mille ta seejärel normaliseerib nii, et jaotuse alune pindala = 1. 
@@ -56,10 +56,22 @@ Taustateadmiste mudel on sageli samuti normaaljaotus. Kui meil on palju taustate
 See kolmas jaotus on posterioorne tõenäosusjaotus, mis sisaldab kogu infot, millest saab arvutada kõige tõenäolisema katseefekti suuruse koos ebakindluse määraga selle ümber (mida rohkem andmeid, seda väiksem ebakindlus) ja tõenäosused, et tegelik katseefekt jääb ükskõik milllisesse meid huvitavasse vahemikku.
 
 ####Sageduslik statistik 
-Sageduslik lähenemine seevastu sisaldab ainult ühte mudelit, mida võrreldakse valimi andmetega. Sageduslik statistik alustab selles lihtsas näites täpselt samamoodi nagu bayesiaan, tekitades eelmisega identse andmemudeli, mis on keskendatud valimi keskväärtusele. Seejärel nihutab ta oma andmemudelit niipalju, et normaaljaotuse tipp ei ole enam valimi keskväärtuse kohal vaid hoopis 0-väärtuse kohal (näiteks 0-efekti kohal). Samas jaotuse laius nihutamise käigus ei muutu. Seda nullile tsentreeritud mudelit kutsutakse null-hüpoteesiks (H0). Nüüd võrreldakse oma valimi keskväärtust H0 jaotusega. Kui valimi keskväärtuse kohal on H0 jaotus kõrge, siis on andmete tõenäosus H0 kehtimise korral suur. Ja vastupidi, kui valimi keskväärtuse kohal on H0 madal, siis on andmete esinemise tõenäosus H0 all madal. Seda tõenäosust kutsutakse p väärtuseks. Mida väiksem on p väärtus, seda vähem tõenäolised on teie andmed juhul, kui H0 on tõene ja katseefekt võrdub nulliga. Tehniliselt on p defineeritud kui "teie andmete või 0-st veel kaugemal asuvate andmete esinemise pikaajaline suhteline sagedus tingimusel, et H0 kehtib". 
+Sageduslik lähenemine seevastu sisaldab ainult ühte mudelit, mida võrreldakse valimi andmetega. 
+Sageduslik statistik alustab selles lihtsas näites täpselt samamoodi nagu bayesiaan, tekitades eelmisega identse andmemudeli, mis on keskendatud valimi keskväärtusele. 
+Seejärel nihutab ta oma andmemudelit niipalju, et normaaljaotuse tipp ei ole enam valimi keskväärtuse kohal vaid hoopis 0-väärtuse kohal (näiteks 0-efekti kohal). 
+Samas jaotuse laius nihutamise käigus ei muutu. Seda nullile tsentreeritud mudelit kutsutakse null-hüpoteesiks (H0). 
+Nüüd võrreldakse oma valimi keskväärtust H0 jaotusega. Kui valimi keskväärtuse kohal on H0 jaotus kõrge, siis on andmete tõenäosus H0 kehtimise korral suur. 
+Ja vastupidi, kui valimi keskväärtuse kohal on H0 madal, siis on andmete esinemise tõenäosus H0 all madal. 
+Seda tõenäosust kutsutakse p väärtuseks. Mida väiksem on p väärtus, seda vähem tõenäolised on teie andmed juhul, kui H0 on tõene ja katseefekt võrdub nulliga. 
+Tehniliselt on p defineeritud kui "teie andmete või 0-st veel kaugemal asuvate andmete esinemise pikaajaline suhteline sagedus tingimusel, et H0 kehtib". 
 
 ####tulemuste tõlgendamine
-Kui sageduslik statistik kirjutab oma artiklites, et tema "efekti suurus on statistiliselt oluline 0.05 olulisusnivool" siis ta ütleb sellega, et tema poolt arvutatud p < 0.05. Selle korrektne tõlgendus on, et juhul kui statistik pika aja jooksul võtab omaks "statistiliselt olulistena" kõik tulemused, millega kaasnev p  < 0.05 ja lükkab tagasi kõik tulemused, mille p > 0.05, siis sooritab ta 5% sagedusega tüüp 1 vigu. See tähendab, et igast sajast tõesest H0-st, mida ta testib, võtab ta keskeltläbi 5 vastu kui statistiliselt olulised. Sellisel kujul töötab sageduslik statistika väga hästi --- see on parim viis tüüp 1 vigade sageduse pikaajaliseks fikseerimiseks. Aga kuna me ei tea ühegi üksiku testi kohta ette, kas see testib kehtivat või mittekehtivat H0-i, siis on selle kasutegur katseseeriate ühekaupa tõlgendamisel vaieldav. Tuletame meelde, et sageduslikus statistikas ei saa rääkida H0 kehtimise tõenäosusest vaid peab rääkima andmete tõenäosusest (= andmete esinemise sagedusest) tingimusel, et H0 kehtib. 
+Kui sageduslik statistik kirjutab, et tema "efekti suurus on statistiliselt oluline 0.05 olulisusnivool" siis ta ütleb sellega, et tema poolt arvutatud p < 0.05. 
+Selle väite korrektne tõlgendus on, et juhul kui statistik pika aja jooksul võtab omaks "statistiliselt olulistena" kõik tulemused, millega kaasnev p  < 0.05 ja lükkab tagasi kõik tulemused, mille p > 0.05, siis sooritab ta 5% sagedusega tüüp 1 vigu. 
+See tähendab, et igast sajast tõesest H0-st, mida ta testib, võtab ta keskeltläbi 5 vastu kui statistiliselt olulised. 
+Sellisel kujul töötab sageduslik statistika väga hästi --- see on parim viis tüüp 1 vigade sageduse pikaajaliseks fikseerimiseks. 
+Paraku ei tea me ühegi üksiku testi kohta ette, kas see testib kehtivat või mittekehtivat H0-i, mis raskeks katseseeriate ühekaupa tõlgendamise. 
+Tuletame meelde, et sageduslikus statistikas ei saa rääkida H0 kehtimise tõenäosusest vaid peab rääkima andmete tõenäosusest (ehk andmete esinemise sagedusest) tingimusel, et H0 kehtib. 
 
 Kas p väärtusi saab tõlgendada ühekaupa kui hinnangut tõendusmaterjali hulgale, mida teie valim pakub H0 vastu? Selle üle on vaieldud üle 80 aasta, kuid tundub, et ainus viis seda teha, kas või umbkaudu, on bayesiaanlik. Kui te mõtlete p väärtuse definitsioonile, siis peaksite mõistma, miks p väärtust, mis on defineeritud pikaajalise sagedusena, on raske rakendada üksiksündmusele. Bayesiaanliku p väärtuste tõlgendamiskalkulaatori leiate aadressilt ...  
 
