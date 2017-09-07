@@ -13,7 +13,10 @@ library(rethinking) #HPDI() and PI(). Requires Stan.
 
 ### 3.1. Simulatsiooni jõud
 
-Järeldav statistika püüab valimi põhjal teha järeldusi statistilise populatsiooni kohta, millest see valim pärineb. Sellisel tegevusel on mõtet ainult siis, kui ühest küljest valim peegeldab populatsiooni ja teisest küljest valim ei ole sama asi, mis populatsioon. Seega on statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. Aga kõigepealt illustreerime valimi ja populatsiooni erinevust.
+Järeldav statistika püüab valimi põhjal teha järeldusi statistilise populatsiooni kohta, millest see valim pärineb. 
+Sellisel tegevusel on mõtet ainult siis, kui ühest küljest valim peegeldab populatsiooni ja teisest küljest valim ei ole sama asi, mis populatsioon. 
+Seega on statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. 
+Aga kõigepealt illustreerime valimi ja populatsiooni erinevust.
 
 ###3.1.1. Valim ei ole sama, mis populatsioon
 
