@@ -20,7 +20,7 @@ Kursus eeldab töötavate R, RStudio ja git programmide olemasolu sinu arvutist.
 
 ###Loo uus R projekt
 
-> NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta alakriipsu "\_". 
+     NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta alakriipsu "\_". 
 
 4. Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)
 5. Ava RStudio akna paremalt ülevalt nurgast "Project" menüüst "New Project" dialoog.
@@ -94,7 +94,7 @@ Notebookis saab hästi kirjutada teksti, teksti vahele panna koodijuppe ja nende
 
 Liidame `2 + 2`. 
 
-Selleks, et R aru saaks, et tegu on temale mõeldud käsuga, tuleb see kirjutada Insert --> R abil (vt kohe ülesse rohelisele nupule "Insert") ja kood evalueeritakse siis, kui vajutad tekinud hallis koodialas rohelisele nupule või alternatiivselt, kui soovid jooksutada ainult osa koodi või üht koodirida, siis pane kursor soovitud reale või võta osa koodi blokki ja vajuta klaviatuuril cmd + enter.
+     Selleks, et R aru saaks, et tegu on temale mõeldud käsuga, tuleb see kirjutada Insert --> R abil (vt kohe ülesse rohelisele nupule "Insert") ja kood evalueeritakse siis, kui vajutad tekinud hallis koodialas rohelisele nupule või alternatiivselt, kui soovid jooksutada ainult osa koodi või üht koodirida, siis pane kursor soovitud reale või võta osa koodi blokki ja vajuta klaviatuuril cmd + enter.
    
 
 ```{r}
