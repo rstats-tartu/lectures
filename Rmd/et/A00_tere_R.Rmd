@@ -20,21 +20,27 @@ Kursus eeldab töötavate R, RStudio ja git programmide olemasolu sinu arvutist.
 
 ###Loo uus R projekt
 
+> NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta alakriipsu "\_". 
+
 4. Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)
 5. Ava RStudio akna paremalt ülevalt nurgast "Project" menüüst "New Project" dialoog.
-6. Ava "New Directory" > "Empty Project" > vali projekti nimi (uue projekti kataloogi nimi) ja alamkataloog kus see projekti kataloog asuma hakkab.
+6. Ava "New Directory" > "Empty Project" > vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks "R_kursus2017".
 
-###Sinu kataloogi struktuur:
+RStudio infolehekülg R projekti loomise kohta: [Using Projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
 
-**R_kursus2017/data; /scripts; /figs; /misc**
+###Sinu kataloogi minimaalne struktuur:
 
-**data** folderisse lähevad ainult algandmed (.csv või .xlsx laiendiga meie puhul).
+**R_kursus2017/data; /R; /figs**
 
-**scripts** folderisse läheb sinu kirjutatud kood .R või .Rmd laienditega failides.
+**data** kataloogi lähevad ainult algandmed (.csv või .xlsx laiendiga meie puhul).
+
+**R** kataloogi läheb sinu kirjutatud kood .R laienditega failides.
+
+**figs** kataloogi lähevad koodi abil genereeritud joonised.
 
 Nüüd peaks su RStudio konsoolis olema 4 akent, mille suurusi saad hõlpsalt muuta. Proovi seda teha.
 
-Üleval vasakul on sinu poolt nimega varustatud tekstieditor r script (laiend .R). Sinna kirjutad oma koodi ja kommentaarid sellele. Leia selle kohalt valge/roheline nupp Run. Kirjuta scripti aknasse 2 + 2, jäta kursor sellele reale ja vajuta Run nuppu. Leia output alt vasakult konsoolist. Nüüd kirjuta 2 + 3, jäta kursor sellele reale ja vajuta cmd + Enter (PC-l cntr + Enter). Leia konsoolist output.
+Üleval vasakul on sinu poolt nimega varustatud tekstieditor R script (laiend .R). Sinna kirjutad oma koodi ja kommentaarid sellele. Leia selle kohalt valge/roheline nupp Run. Kirjuta scripti aknasse 2 + 2, jäta kursor sellele reale ja vajuta Run nuppu. Leia output alt vasakult konsoolist. Nüüd kirjuta 2 + 3, jäta kursor sellele reale ja vajuta cmd + Enter (PC-l cntr + Enter). Leia konsoolist output.
 
 All vasakul on konsool. Seal jookseb su kood sinna ja sinna tekib osaliselt output.
 
