@@ -755,7 +755,15 @@ nrows <- nrow(diabetes)
 VIM::matrixplot(diabetes) 
 ```
 
-  
+
+kuidas rekodeerida NA-d näiteks 0-ks
+```{r eval=FALSE}
+df[is.na(df)] <- 0
+df[is.na(df)] <- "other"
+df[df == 0] <- NA #teeb vastupidi 0-d NA-deks
+```
+
+Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud is.na() funktsiooniga.
 
 ### 4. Matrix - numbriraam
 

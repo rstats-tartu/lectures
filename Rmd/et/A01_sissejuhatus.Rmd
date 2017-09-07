@@ -59,6 +59,8 @@ Kui sageduslik statistik kirjutab oma artiklites, et tema "efekti suurus on stat
 
 Kas p väärtusi saab tõlgendada ühekaupa kui hinnangut tõendusmaterjali hulgale, mida teie valim pakub H0 vastu? Selle üle on vaieldud üle 80 aasta, kuid tundub, et ainus viis seda kas või umbkaudu teha on bayesiaanlik. Kui te mõtlete p väärtuse definitsioonile, siis peaksite mõistma, miks p väärtust, mis on defineeritud pikaajalise sagedusena, on raske rakendada üksiksündmustele. Bayesiaanliku p väärtuste tõlgendamiskalkulaatori leiate aadressilt ...  
 
+Kujutlege katset, kus mõõdame 2000 valgu tasemeid katse-kontroll skeemis (igat katset korratakse n korda). Sageduslik statistik kasutab adjusteeritud p väärtusi (või q väärtusi), et tõmmata piir, kus ühele poole jäävad statistiliselt olulised tulemused (efektid) ja teisele poole mitteolulised null-efektid. Edasi tõlgendab ta vaikimisi mitteolulisi efekte kui ebaolulisi ja diskuteerib vaid nn olulisi efekte (ja sageli neidki valikuliselt). Paraku, kuna p väärtuste arvutamine ja adjusteerimine saab toimida mitmel erineval moel ja usalduspiiri panekule 95-le protsendile, mitte näiteks 89%, pole ühtegi ratsionaalset põhjendust, siis tähendab see sisuliselt, et ta järjestab oma tulemused efekti suuruse järgi, seejärel tõmbab neist maha mõned, mille katsest-katsesse varieeruvus on suurem kui teistel (sageli väiksest valimist tuleneva juhusliku müra tõttu) ja lõpuks tõmbab juslikus kohas joone läbi efektide, misjärel ta ignoreerib kõiki juhuslikust joonest valele poole jäänud efekte.
+
 tüüpiline tulemuse kirjeldus artiklis: 
 
 1. sageduslik: the effect size is q (p < 0.01).
@@ -67,7 +69,7 @@ tüüpiline tulemuse kirjeldus artiklis:
 
 ####kahe paradigma erinevused 
 
-1. sageduslikus statistikas võrdub parim hinnang tegelikule efekti suurusele valimi keskmise efekti suurusega. Bayesi statistikas see sageli nii ei ole sest taustateadmiste mudel mõjutab seda hinnangut. Paljud mudelid püüavad ekstreemseid valimeid taustateadmiste abil mõistlikus suunas veidi nihutada, niiviisi vähendades ülepaisutatud efektide avaldamise ohtu.
+1. sageduslikus statistikas võrdub parim hinnang tegelikule efekti suurusele valimi keskmise efekti suurusega. Bayesi statistikas see sageli nii ei ole sest taustateadmiste mudel mõjutab seda hinnangut. Paljud mudelid püüavad ekstreemseid valimeid taustateadmiste abil veidi mõistlikus suunas nihutada, niiviisi vähendades ülepaisutatud efektide avaldamise ohtu.
 
 2. sageduslik statistika töötab tänu sellele, et uurija võtab vastu pluss-miinus otsuseid: iga H0 kas lükatakse ümber või jäetakse kehtima. Seevastu bayesiaan mõtleb halli varjundites: sissetulevad andmed kas suurendavad või vähendavad hüpoteeside tõenäosusi (mis jäävad aga alati > 0 ja < 1).
 
