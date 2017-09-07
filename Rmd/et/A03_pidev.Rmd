@@ -1,8 +1,7 @@
 ---
-title: "4. Ennustame Pidevat suurust"
-output:
-  html_document: default
+title: "Ennustame Pidevat suurust"
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE, warning = FALSE)
 ```
@@ -19,8 +18,7 @@ library(rethinking)
 
 ## Kui pikad on USA presidendid?
 
-Kui me eelmises peatükis modelleerisime diskreetseid binaarseid sündmusi (elus või surnud) üle binoomjaotuse, siis edasi tegeleme pidevate suurustega ehk parameetritega, millele saab omistada iga väärtuse -Inf kuni Inf. 
-
+Kui me eelmises peatükis modelleerisime diskreetseid binaarseid sündmusi (elus või surnud) üle binoomjaotuse, siis edasi tegeleme pidevate suurustega ehk parameetritega, millele saab omistada iga väärtuse vahemikus -Inf kuni Inf. 
 
 Proovime veelkord USA presidentide keskmist pikkust ennustada (sama näide oli bootstrappimisel). Selleks on meil on vaja kahte asja: (1) tõepära mudelit ning (2) igale tõepära mudeli parameetrile oma priorit.
 
@@ -50,7 +48,7 @@ Normaaljaotuse korral on meil 2 parameetrit, millele me posteeriori arvutame: mu
     Outlierid toovad meile paksema sabaga jaotuse, mis tipu ümber ei lähe aga kaugeltki nii laiaks, kui samade andmetega fititud normaaljaotus.
     
     
-####Kui lai on meie tõepärafunktsioon? 
+### Kui lai on meie tõepärafunktsioon? 
 
 > Normaaljaotusega modelleeritud tõepärafunktsioon on normaaljaotus, mille keskväärtus = mean(valim) ja mille standardhälve = sd(valim)/sqrt(N), kus N on valimi suurus. See tõepärafunktsioon modelleerib meie valimi keskväärtuse kohtamise tõenäosust igal võimalikul parameetriväärtusel. Sigma, mille posteeriori me Bayesi mudelist arvutame, on aga standardhälve algsete andmepunktide tasemel. See on väga oluline eristus sest sigma kaudu saab simueerida uusi andmepunkte.  
 
@@ -101,23 +99,20 @@ Siin lihtne posteeriorite plot:
 plot(precis(m1))
 ```
 
-
-
-Ilusamad parameetriplotid saate bayesploti raamatukogu kasutades
-
+Ilusamad parameetriplotid saate *bayesplot* raamatukogu kasutades.
 ```{r}
 library(bayesplot)
 fit3d <- as.data.frame(m3@stanfit)
 pars <- names(fit3d)
 pars
 
-#sisemine interval vastab 80% CI-le ja välimine 95% CI-le.
-mcmc_intervals(fit3d, pars=pars[1:2], prob = 0.8, prob_outer = 0.95) #with pars left out the last parameter lp_
+# Sisemine interval vastab 80% CI-le ja välimine 95% CI-le.
+mcmc_intervals(fit3d, pars = pars[1:2], prob = 0.8, prob_outer = 0.95) # with pars left out the last parameter lp_
 ```
 
 Siin on näha posteeriorid
 ```{r}
-mcmc_areas(fit3d, pars=pars[1:2], prob = 0.8, prob_outer = 0.99)
+mcmc_areas(fit3d, pars = pars[1:2], prob = 0.8, prob_outer = 0.99)
 ```
 
 Siit on näha, et m1 on selgelt laiema posteerioriga mu-le ja suurema SD-ga
@@ -125,7 +120,7 @@ Siit on näha, et m1 on selgelt laiema posteerioriga mu-le ja suurema SD-ga
 fit1d <- as.data.frame(m1@stanfit)
 pars <- names(fit1d)
 pars
-mcmc_areas(fit1d, pars=pars[1:2], prob = 0.8, prob_outer = 0.99)
+mcmc_areas(fit1d, pars = pars[1:2], prob = 0.8, prob_outer = 0.99)
 ```
 
 Nii saab markovi ahelad. Hall ala on burn-in, mida ei salvestata. Siit on näha, et ahelad on konvergeerunud ja n_eff on efektiivne valimi suurus. 
@@ -136,11 +131,14 @@ plot(m1)
 Või selline.
 
 ```{r}
-mcmc_trace(fit3d, pars=c("mu", "sigma"))
+mcmc_trace(fit3d, pars = c("mu", "sigma"))
 ```
 
 
-Siin on m0 ilma outlierita mudel ja me tahame teada, milline mudel m1 kuni m3 sellele kõige lähedasemad tulemused annab (kuna m0 on fititud valimi andmete peal, ei ole ka mu täpselt 0 ja sigma täpselt 1). Nagu näha on m3 ehk fikseeritud nu-ga t-jaotus kõige lähemal m0-le ja seega parim mudel outlieriga andmetele. Pane tähele, et kuna me fikseerisime nu väärtuse tõepäramudelis, pole sellele enam priorit vaja sets meie Bayesi arvutusmasin ei määra enam ise nu väärtust. Nu otsene hindamine töötab alati üsna ebakindalt: 
+Siin on m0 ilma outlierita mudel ja me tahame teada, milline mudel m1 kuni m3 sellele kõige lähedasemad tulemused annab (kuna m0 on fititud valimi andmete peal, ei ole ka mu täpselt 0 ja sigma täpselt 1). 
+Nagu näha on m3 ehk fikseeritud nu-ga t-jaotus kõige lähemal m0-le ja seega parim mudel outlieriga andmetele. 
+Pane tähele, et kuna me fikseerisime nu väärtuse tõepäramudelis, pole sellele enam priorit vaja sets meie Bayesi arvutusmasin ei määra enam ise nu väärtust. 
+Nu otsene hindamine töötab alati üsna ebakindalt: 
 
 ```{r}
 s2 <- extract.samples(m2)
