@@ -24,6 +24,9 @@ Kursus eeldab töötavate R, RStudio ja git programmide olemasolu sinu arvutist.
 5. Ava RStudio akna paremalt ülevalt nurgast "Project" menüüst "New Project" dialoog.
 6. Ava "New Directory" > "Empty Project" > vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks "R_kursus2017".
 
+![rstudio](assets/img/rstudio_screen_untitled.png)
+
+
 RStudio infolehekülg R projekti loomise kohta: [Using Projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
 
 ###Sinu kataloogi minimaalne struktuur:
@@ -68,9 +71,13 @@ Leia see.
 
 2. Plots paneelile ilmuvad joonised, mille sa teed. Neid saab sealt salvestada nupu Export/Save as image või Export/Save as pdf alt.
 
-3. Packages Näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Seal on nupp Install, mille alt avaneb aken, kuhu kirjuta raamatukogude nimed, mida soovid võrgust alla tõmmata (ilma jutumärkideta, komadega üksteisest eraldatud). Klikkides installitud paketi nimele avaneb selle paketi helpfail. Seal on ka nimekiri kõikidest selle paketi funktsioonidest koos iga funktsiooni kirjelduse ja helpfailiga. Seal on ka otsinguaken installitud pakettide otsimiseks paketi nime järgi. Väga kasulik, kui sul on 400 paketti, nagu mul.
+3. Packages Näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. 
+Seal on nupp Install, mille alt avaneb aken, kuhu kirjuta raamatukogude nimed, mida soovid võrgust alla tõmmata (ilma jutumärkideta, komadega üksteisest eraldatud). Klikkides installitud paketi nimele avaneb selle paketi helpfail. 
+Seal on ka nimekiri kõikidest selle paketi funktsioonidest koos iga funktsiooni kirjelduse ja helpfailiga. 
+Seal on ka otsinguaken installitud pakettide otsimiseks paketi nime järgi. 
 
-4. Help. Seal on ka otsinguaken, aga see tõõtab halvemini kui scripti või konsooli kirjutada ?paketi_nimi. Seal avanevad kõik help failid (ka need, mida konsooli kaudu otsitakse). 
+4. Help. Seal on ka otsinguaken, aga see tõõtab halvemini kui scripti või konsooli kirjutada `?paketi_nimi`. 
+Seal avanevad kõik help failid (ka need, mida konsooli kaudu otsitakse). 
 
 ###Nüüd proovime, kuidas töötab moodsam tekstieditor (R Notebook)
 
@@ -87,7 +94,6 @@ Te näete halli ala, kus on koodijupp plot(cars). vajuta selles hallis alas asuv
 
 Notebookis saab hästi kirjutada teksti, teksti vahele panna koodijuppe ja nende outputte. Uue halli koodiala saate rohelise nupu Insert/ R alt või cmd + alt + I shortcutiga. Detaile õpetame hiljem. See tekst on kirjutatud R Notebookis.
 
-
 ##R on kalkulaator
 
 Liidame `2 + 2`. 
@@ -99,59 +105,68 @@ Liidame `2 + 2`.
 2 + 2
 ```
 
-Nüüd ilmus vastus kujul [1] 4
-See tähendab, et 2 + 2 = 4
-Kontrollime seda
+Nüüd trükiti see vastus konsooli kujul `[1] 4`.
+See tähendab, et 2 + 2 = 4.
+Kontrollime seda:
 ```{r}
 2 + 2 == 4
 ```
-Vastus on TRUE (logical). Pane tähele, et aritmeetiline võrdusmärk on == (sest = tähendab midagi muud; assigneerimist).
+Vastus on TRUE (logical). 
+Pane tähele, et aritmeetiline võrdusmärk on == (sest = tähendab midagi muud; assigneerimist).
 
 ```{r eval=FALSE}
-* korrutusmärk
-/ jagamismärk
-+ pluss
-- miinus
-3**2 #3 astmes 2
-sqrt(3) #ruutjuur 3st
-log10(100) #kümnendlogaritm sajast
-log2(100)  #kahendlogaritm sajast
-log(100) #naturaallogaritm sajast
+* # korrutusmärk
+/ # jagamismärk
++ # pluss
+- # miinus
+3**2 # 3 astmes 2
+sqrt(3) # ruutjuur 3st
+log10(100) # kümnendlogaritm sajast
+log2(100)  # kahendlogaritm sajast
+log(100) # naturaallogaritm sajast
 ```
 
 ```{r}
-round(pi, 4) #ümarda pi neljale komakohale
+round(pi, 4) # ümarda pi neljale komakohale
 ```
 See on hea tulemuste väljaprintimisel
 
-##R on andmeanalüüsi keel, mille verbid on funktsioonid
+## R on andmeanalüüsi keel, mille verbid on funktsioonid
 
-Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt, kes püüab ära arvata, mida on vaja teha. Vahest teeb kah. Vahest isegi seda, mida kasutaja tahtis. R-i puudus on veateadete puudumine või krüptilised veateated. Sama kehtib ka R-i helpi kohta. Seega tasub alati kontrollida, kas R ikka tegi  seda, mida sina talle enda arust ette kirjutasid.
-
+Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt, kes püüab ära arvata, mida on vaja teha. 
+Vahest teeb kah. 
+Vahest isegi seda, mida kasutaja tahtis. 
+R-i puudus on veateadete puudumine või krüptilised veateated. 
+Sama kehtib ka R-i helpi kohta. 
+Seega tasub alati kontrollida, kas R ikka tegi seda, mida sina talle enda arust ette kirjutasid.
 
 ```{r}
-x <- c(6,3,3,4,5) #vector: c() - combine
-y<- c(1,3,4,2,7)
-cor(x, y) #correlation
+x <- c(6, 3, 3, 4, 5) # vector: c() - combine
+y<- c(1, 3, 4, 2, 7)
+cor(x, y) # correlation
 sum(x)
 sum(x, y)
 mean(x)
 median(x)
 quantile(x)
-sd(x) #standard deviation - goes with mean
+sd(x) # standard deviation - goes with mean
 max(x)
 min(x)
 ```
 
-
-R-is teevad asju programmikesed, mida kutsutakse **funktsioonideks**. Te võite mõelda funktsioonist nagu verbist. Näiteks `sum()` loe: "võta summa". Teie ütlete, kratt teeb. Iga funktsiooni nime järel on sulud. Nende sulgude sees asuvad selle funktsiooni **argumendid**. Et näha, millised argumendid seal on
+R-is teevad asju programmikesed, mida kutsutakse **funktsioonideks**. 
+Te võite mõelda funktsioonist nagu verbist. 
+Näiteks `sum()` loe: "võta summa". 
+Teie ütlete, kratt teeb. Iga funktsiooni nime järel on sulud. 
+Nende sulgude sees asuvad selle funktsiooni **argumendid**. 
+Et näha, millised argumendid seal on
 
 ```{r}
 ?sum
 ```
 
-   
-Help paneelis paremal all ilmub nüüd selle funktsiooni help page. Vt seal peatükki Usage: sum(..., na.rm=FALSE) ja edasi ptk Arguments, mis ütleb, et ... tähistab vektoreid. 
+
+Help paneelis paremal all ilmub nüüd selle funktsiooni help page. Vt seal peatükki Usage: `sum(..., na.rm = FALSE)` ja edasi ptk Arguments, mis ütleb, et `...` (ellipsis) tähistab vektoreid. 
 
 ------------------------
 ------------------------
@@ -177,7 +192,7 @@ na.rm	- logical. Should missing values (including NaN) be removed?
 ------------------------
 
 
-Seega võtab funktsioon sum() 2 argumenti: vektori arvudest (või loogilise vektori, mis koosneb TRUE ja FALSE määrangutest), ning na.rm argumendi, millele saab anda 2 väärtust, TRUE või FALSE. Usage ütleb ka, et na.rm = FALSE, mis tähendab, et sellele argumendile on antud vaikeväärtus --- kui me seda ise ei muuda, siis jäävad NA-d arvutusse sisse. Kuna NA tähendab "tundmatu arv" siis iga tehe NA-dega annab vastuseks "tundmatu arv" ehk NA (tundmatu arv + 2 = tundmatu arv). Seega NA tulemus annab märku, et teie andmetes võib olla midagi valesti.
+Seega võtab funktsioon `sum()` 2 argumenti: vektori arvudest (või loogilise vektori, mis koosneb TRUE ja FALSE määrangutest), ning na.rm argumendi, millele saab anda 2 väärtust, TRUE või FALSE. Usage ütleb ka, et na.rm = FALSE, mis tähendab, et sellele argumendile on antud vaikeväärtus -- kui me seda ise ei muuda, siis jäävad NA-d arvutusse sisse. Kuna NA tähendab "tundmatu arv" siis iga tehe NA-dega annab vastuseks "tundmatu arv" ehk NA (tundmatu arv + 2 = tundmatu arv). Seega NA tulemus annab märku, et teie andmetes võib olla midagi valesti.
 
 
 ```{r}
@@ -194,9 +209,13 @@ sum
 ```
 See ei ole küll liiga kasulik...
 
-###Kirjutame oma esimese funktsiooni
+### Kirjutame oma esimese funktsiooni
 
-Põhjus, miks R-s on funktsioonid, on ruumi kokkuhoid. Funktsiooni ainus mõte on peita teie eest kood funktsiooni nime taha. See muudab pikad koodilõigud hõlpsalt taaskasutatavaks sest lihtsam on kirjutada lühike funktsiooni nimi ja sisestada selle funktsiooni argumendid, kui copy-pastida n rida koodi ja siis muuta selle sees mingeid väärtusi. Koodi funktsioonidesse kokku surumine vähendab võimalusi lollideks vigadeks, mida te võite teha pikkade koodijuppidega manipuleerides. Seega tasub teil õppida ka oma koodi funktsioonidesse suruma.
+Põhjus, miks R-s on funktsioonid, on ruumi kokkuhoid. 
+Funktsiooni ainus mõte on peita teie eest kood funktsiooni nime taha. 
+See muudab pikad koodilõigud hõlpsalt taaskasutatavaks sest lihtsam on kirjutada lühike funktsiooni nimi ja sisestada selle funktsiooni argumendid, kui copy-pastida n rida koodi ja siis muuta selle sees mingeid väärtusi. 
+Koodi funktsioonidesse kokku surumine vähendab võimalusi lollideks vigadeks, mida te võite teha pikkade koodijuppidega manipuleerides. 
+Seega tasub teil õppida ka oma koodi funktsioonidena vormistama.
 
 Kõige pealt kirjutame natuke koodi.
 ```{r}
@@ -205,9 +224,12 @@ oranges <- 3 #three oranges
 (inventory <- apples + oranges)
 ```
  
- Ja nüüd teeme sellest funktsiooni inventory(). Seda koodi jooksutades näeme, et meie funktsioon ilmub R-i Environmenti, kuhu tekib Functions lahter. Seal on näha ka selle funktsiooni kaks argumenti, apples ja oranges.
+Ja nüüd teeme sellest funktsiooni `inventory()`. 
+Seda koodi jooksutades näeme, et meie funktsioon ilmub R-i Environmenti, kuhu tekib Functions lahter. 
+Seal on näha ka selle funktsiooni kaks argumenti, apples ja oranges.
  
- funktsiooni kirjutamiseks anname kõigepealt sellele nime ja kirjutame selle ilma sulgudeta. Siis tuleb <- , misjärel function(arg1, arg2, jne). Siis algavad loogelised sulud { }, mille sisse kirjutame oma koodi. Viimane koodirida on see, mis tuleb välja selle funktsiooni outputina. Antud juhul on selleks print(inventory), ehkki print() ei pea siia kirjutama sest R saab sellest ise aru.
+Funktsiooni kirjutamiseks anname kõigepealt sellele nime ja kirjutame selle ilma sulgudeta. 
+Siis tuleb `<-` ( __assignment operator__ ), misjärel `function(arg1, arg2, ...)`. Siis algavad loogelised sulud { }, mille sisse kirjutame oma koodi. Viimane koodirida on see, mis tuleb välja selle funktsiooni outputina. Antud juhul on selleks print(inventory), ehkki print() ei pea siia kirjutama sest R saab sellest ise aru.
  
 ```{r}
 inventory <- function(apples, oranges) {
