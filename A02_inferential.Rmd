@@ -1,8 +1,6 @@
 ---
-output: html_document
+title: "Järeldav statistika"
 ---
-
-## 3. järeldav statistika
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
