@@ -2,7 +2,6 @@
 title: "Tere R"
 output:
   html_document: default
-  html_notebook: default
 ---
 
 ```{r echo=FALSE, error=FALSE, message=FALSE}
@@ -12,11 +11,18 @@ library(stringr)
 
 ##Alustuseks
 
-1. googelda "install R" ja installi viimane versioon
-2. googelda "install RStudio" ja installi viimane versioon (mõlemad on väga lihtsad installid)
-3. ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)
-4. ava "File/New File/R script"
-5. ava "File/Save as" ja nimeta/salvesta oma skript kataloogi, mille sa selle kursuse jaoks tegid.
+###Installeeri kursusel vajalikud programmid
+
+Kursus eeldab töötavate R, RStudio ja git programmide olemasolu sinu arvutist. Kõik on väga lihtsad installid.
+1. Googelda "install R" või mine otse [R allalaadimise veebilehele](https://cran.r-project.org), laadi alla ja installi sobiv versioon.
+2. Googelda "install RStudio" või mine otse [RStudio allalaadimise veebilehele](https://www.rstudio.com/products/rstudio/download/), laadi alla ja installi sobiv versioon.
+3. Googelda "install git" või mine otse [git allalaadimise veebilehele](https://git-scm.com/downloads), laadi alla ja installi sobiv versioon.
+
+###Loo uus R projekt
+
+4. Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)
+5. Ava RStudio akna paremalt ülevalt nurgast "Project" menüüst "New Project" dialoog.
+6. Ava "New Directory" > "Empty Project" > vali projekti nimi (uue projekti kataloogi nimi) ja alamkataloog kus see projekti kataloog asuma hakkab.
 
 ###Sinu kataloogi struktuur:
 
