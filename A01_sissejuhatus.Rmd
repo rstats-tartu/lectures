@@ -21,26 +21,19 @@ See õpik on kirjutatud inimestele, kes kasutavad, mitte ei uuri, statistikat. �
 
 Me kasutame järgmisi R-i pakette, mis on kõik loodud bayesi mudelite rakendamise lihtsustamiseks: rethinking, brms, rstanarm, BayesianFirstAid ja bayesplot. Lisaks veel bayesboot bootstrapimiseks. Bayesi arvutusteks kasutavad need paketid Stan ja JAGS mcmc sämplereid (viimast küll ainult BayesianFirstAid paket). Selle õpiku valmimisel on kasutatud McElreathi, Kruschke ja Gelmani õpikuid (VIITED).
 
-Kuna osadele lugejatele on ilmselt õpetatud sageduslikku statistikat, võrdleme järgnevalt lühidalt sageduslikku ja bayesi statistilisi paradigmasid, et oleks paremini arusaadav, millest selle õpiku lugeja ilma jääb. Inimesed, kes ei ole õppinud sageduslikku statistikat võivad rahumeeli selle osa vahele jätta ning otsemaid siirduda osa 1. juurde.
+Lugejad, kellele on juba õpetatud sageduslikku statistikat, võivad tahta teada, mille poolest see erineb bayesi statistikast. Ehkki me usume, et bayesi statistika õpetamine võrdlevalt sagedusliku statistikaga ei ole parim lahendus, võrdleme lühidalt järgnevalt sageduslikku ja bayesi paradigmasid. Kes ei ole õppinud sageduslikku statistikat, võiksid selle osa vahele jätta.
 
 ##Ajaloost ja tõenäosusest
 
-Bayesiaanlik ja sageduslik statistika sündisid üksteise järel sama ema üsast. Tema nimi on Pierre-Simon Laplace ja ta arendas välja kõigepealt bayesi statistika alused ning seejärel sagedusliku statistika omad (ca. 1812). Sagedusliku statistika tekkimise ja hilisema õitsengu peamine põhjus oli arvutuslik lihtsus. Lihtsalt bayesi meetoditega ei olnud arvutustehnilistel põhjustel võimalik korralikult teadust teha enne 1990-ndaid aastaid, mil personaalarvutite kiire levik algatas buumi nende meetodite arendamises. Praegu on maailmas bayesi ja sageduslikku statistikat umbes pooleks (vähemalt uute meetodite arendustöö poole pealt), Eestis bayesi statistika 2017 aasta seisuga peaaegu, et puudub. 
+Bayesiaanlik ja sageduslik statistika leiutati üksteise järel Pierre-Simon Laplace poolt, kes arendas välja kõigepealt bayesi statistika alused ning seejärel sagedusliku statistika omad (ca. 1800 - 1812). Sagedusliku statistika tekkimise ja hilisema õitsengu põhjus 20. sajandil oli arvutuslik lihtsus. Bayesi meetoditega ei olnud võimalik korralikult teadust teha enne 1990-ndaid aastaid, mil personaalarvutite levik algatas buumi nende meetodite arendamises. Praegu on maailmas bayesi ja sageduslikku statistikat umbes pooleks (vähemalt uute meetodite arendustöö poole pealt). Eestis bayesi statistika 2017 aasta seisuga peaaegu, et puudub. 
 
-Statistika on ainulaadne teadus selle poolest, et see on alates oma lätetest 18. sajandil lahknenud kahes suunas, mis lahendavad samu teaduslikke küsimusi aga sellest hoolimata suures osas üksteisega ei haaku. Need kaks suunda on Bayesi statistika ja sageduslik statistika. Meie oleme bayesiaanid selles mõttes, et võimaluse korral eelistame me oma töös bayesi statistikat, ja ainult siis, kui seda on liiga keeruline rakendada (või kui meile ei meeldi inimene, kellele me statistikat teeme), kasutame sageduslikke meetodeid. Õnneks tuleb seda üha harvemini ette.
-
-      Statistikast leiab mõned meetodite klassid, mida võib edukalt vaadata nii
-      sagedusliku kui bayesiaanliku mätta otsast: eriti bootstrappimine ja osad
-      False Discovery Rate-i arvutamise meetodid. 
-      Aga need on pigem erandid, mis kinnitavad reeglit.
-
-Kahe statistika põhiline erinevus ei tule mitte matemaatikast --- mõlemad harud lähtuvad samadest tõenäosusteooria aksioomidest ja nende vahel puuduvad matemaatilised lahkarvamused --- vaid tõenäosuse tõlgendusest. 
+Kahe statistika põhiline erinevus ei tule matemaatikast --- mõlemad harud lähtuvad samadest tõenäosusteooria aksioomidest ja nende vahel puuduvad matemaatilised lahkarvamused --- vaid tõenäosuse tõlgendusest. 
 
 Bayesi tõlgenduses on tõenäosus teadlase usu määr mingi hüpoteesi kehtimisse. Hüpotees võib näiteks olla, et järgmise juulikuu sademete hulk Vilsandil jääb vahemikku 22 kuni 34 mm. Kui Bayesi arvutus annab selle hüpoteesi tõenäosuseks 0.57, siis oleme me selle teadmise najal nõus maksma mitte rohkem kui 57 senti kihlveo eest, mille alusel makstakse juhul, kui see hüpotees tõeseks osutub, välja 1 EUR (ja me saame vähemalt 43 senti kasumit).  
 
 Sageduslikud statistikud usuvad, et selline tõenäosuse tõlgendus on ebateaduslik, kuna see on "subjektiivne". 
 On võimalik, et n teadlast arvutavad korrektselt samade andmete põhjal n erinevat tõenäosust ja usuvad seega samade tõendite põhjal erinevaid asju. 
-See võib juhtuda siis, kui nad alguses lähtuvad väga erinevatest taustauskumustest oma hüpoteeside kehtimise kohta. Kui te usute, et teie taustateadmised ei tohi mingil juhul mõjutada järeldusi, mis te oma andmete põhjal teete, siis te ei ole bayesiaan. 
+See võib juhtuda siis, kui nad lähtuvad väga erinevatest taustauskumustest oma hüpoteeside kehtimise kohta. Kui te usute, et teie taustateadmised ei tohi mingil juhul mõjutada järeldusi, mis te oma andmete põhjal teete, siis te ei ole bayesiaan. 
 Sel juhul pakub alternatiivi sageduslik tõenäosuse tõlgendus. Sageduslik tõenäosus on defineeritud kui teatud tüüpi andmete esinemise pikaajaline suhteline sagedus. 
 Näiteks, kui me viskame münti palju kordi, siis peaks kullide (või kirjade) suhteline sagedus meile andma selle mündi tõenäosuse langeda kiri üleval. 
 Selline tõenäosus on omistatav ainult sellistele sündmustele, mille esinemisel on sagedus. 
@@ -51,16 +44,15 @@ Järgnevalt toome näite, kuidas bayesiaan ja sageduslik statistik lahendavad sa
 
 ###Näide: kahe grupi võrdlus
 
-meil on 2 gruppi, katse ja kontroll, millest kummagis n mõõtmist ja me soovime teada, kas katsetingimus mõjutab mõõtmistulemust piisavalt, et olla teaduslikult huvitav. Me eeldame, et andmed on normaaljaotusega.
+meil on 2 gruppi, katse ja kontroll, millest kummagis 30 mõõtmist ja me soovime teada, kui palju katsetingimus mõjutab mõõtmistulemust. Meie andmed on normaaljaotusega ja andmepunktid, mida me analüüsime, on efektisuurused (katse1 - kontroll1 = es1 jne).
 
 ####Bayesiaan 
 Statistiline küsimus on Bayesiaanil ja sageduslikul statistikul sama: kas ja kui palju erinevad kahe grupi keskväärtused? 
-Bayesiaan alustab sellest, et ehitab kaks mudelit: andmete mudel ja taustateadmiste mudel. 
-Kui andmed on normaaljaotusega siis on ka andmemudel normaaljaotus. 
+Bayesiaan alustab sellest, et ehitab kaks mudelit: andmete tõepäramudel ja taustateadmiste mudel ehk prior. 
 
+Kui andmed on normaaljaotusega, siis on ka tõepäramudel normaaljaotus. Alustame sellest, et fitime oma valimiandmed (üksikud efekti suurused) normaaljaotuse mudelisse.
 
-```{r echo=FALSE}
-library(brms) #t jaotuse modelleerimiseks
+```{r echo=FALSE, message=FALSE, error=FALSE}
 library(ggthemes)
 #pakett ggfotify pakub alt lahendust jaotuste joonistamiseks
 set.seed(19)
@@ -76,31 +68,27 @@ df %>% ggplot(aes(x=a)) +
   xlim(-10, 10) + ylim(0, 0.15) + labs(x=NULL, y=NULL) + theme_tufte()+ xlab("ES")
 ```
 
-**Joonis 1. paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X teljel on effekti suurused (ES). 30 ES-i on näidatud punktidena. Must joon näitab keskmisit ES-i. Andmed on mudeldatud normaaljaotusena.**
+**Joonis 1. paariviisiline katse - kontroll disain. Katset on korratud 30 korda. X teljel on effekti suurused (ES). 30 ES-i on näidatud punktidena. Must joon näitab keskmist ES-i. Andmed on mudeldatud normaaljaotusena.**
 
-See ei ole veel meie andmemudel, sest me tahame hinnangut ES **keskväärtuse** kõige tõenäolisemale väärtusele, ja lisaks veel hinnangut ebakindlusele esimese hinnangu ümber (ehk usalduslpiire).
-Seega tuleb eelmine jaotus kitsamaks tõmmata, nii et uus sd = eelmise jaotuse sd/sqrt(30).
+See ei ole veel tõepäramudel, sest me tahame hinnangut ES **keskväärtuse** kõige tõenäolisemale väärtusele, ja lisaks veel hinnangut ebakindlusele selle punkt-hinnangu ümber (usalduslpiire).
+Seega tuleb eelmine jaotus kitsamaks tõmmata, et ta kajastaks meie teadmisi ES-ide keskväärtuste, mitte individuaalsete ES-de, kohta. Uue jaotusmudeli sd = eelmise jaotuse sd/sqrt(30).
 
 ```{r echo=FALSE}
-library(brms) #t jaotuse modelleerimiseks
-library(ggthemes)
-#pakett ggfotify pakub alt lahendust jaotuste joonistamiseks
-
 df %>% ggplot(aes(x=a)) +
-  geom_dotplot(binwidth = 1/10, alpha=0.5) + 
   stat_function(fun=dnorm, args=list(mean=mean(df$a),sd=sd(df$a)/sqrt(30)), colour="red") +
   geom_vline(aes(xintercept=0), linetype=2)+
   geom_vline(aes(xintercept= mean(df$a)))+
   xlim(-10, 10) + ylim(0, 0.8) + labs(x=NULL, y=NULL) + theme_tufte()+ xlab("ES")
 ```
 
-**Joonis 2. See jaotus iseloomustab keskmise ES-i paiknemist puhtalt meie andmete põhjal.**
+**Joonis 2. See jaotus iseloomustab keskmise ES paiknemist puhtalt meie andmete põhjal.**
 
-Täpsemalt, kuna meil on joonisel näha ES-i väärtused -2 kuni 4, siis võib selle joonise põhjal öelda, milline on meie valimi keskväärtuse kohtamise tõenäosus igal võimalikul ES-i tõelisel väärtusel. Kõige tõenäolisemad on andmed siis, kui tegelik ES = andmete keskväärtusega (seda kohta näitab must joon). Kui me jagame musta joone pikkuse punase kurvi all katkendjoone pikkusega selle all, siis me saame teada, mitu korda on meie andmed tõenäolisemad siis kui tegelik ES = mean(valimi ES) võrreldes olukorraga, kus tegelik ES = 0. Sama näitaja võime loomulikult arvutada ükskõik millise hüpoteeside paari suhtes (näiteks, andmed on palju-palju tõenäolisemad hüpoteesi ES = 0.02 all kui hüpoteesi ES = -1 all; mis aga ei tähenda, et andmed oleksid väga tõenäolised kummagi võrreldud hüpoteesi all). 
+Täpsemalt, selle joonise põhjal võib arvutada, milline on meie valimi keskväärtuse kohtamise tõenäosus igal võimalikul tõelisel ES-i väärtusel. Kõige tõenäolisemad on andmed siis, kui tegelik ES = andmete keskväärtusega (seda kohta näitab must joon). Kui me jagame musta joone pikkuse punase kurvi all läbi katkendjoone pikkusega sama kurvi all, saame teada, mitu korda on meie andmed tõenäolisemad siis, kui tegelik ES = mean(valimi ES), võrreldes olukorraga, kus tegelik ES = 0. Loomulikult võime sama näitaja arvutada ükskõik millise hüpoteeside paari kohta (näiteks, andmed on miljon korda tõenäolisemad hüpoteesi ES = 0.02 all kui hüpoteesi ES = -1 all; mis aga ei tähenda, et andmed oleksid väga tõenäolised kummagi võrreldud hüpoteesi all). 
 
-Aga see ei ole veel Bayes. Bayesi lahenduseks lisame andmemudelile taustateadmiste mudeli. Selle sammuga tühistame me väga olulise eelduse, mis ripub veskikivina sagedusliku statistika kaelas. Nimelt, et valimi andmed peavad olema esinduslikud populatsiooni suhtes. Me võime olla üsna kindlad, et väikeste valimite korral see eeldus ei kehti ja sellega seoses ei tööta ka sageduslik statistika viisil, milleks R. A. Fisher selle 1920. kuni 1950. lõi. Taustateadmiste mudeli üks tähtis roll (kuigi mitte ainus) on õrnalt suunata meie hinnangut õiges suunas ja sellega vähendada halbade andmete võimet meid kahjustada. Kui sul on väike valim, palun eelda, et sinu andmed vajavad sellist kantseldamist.
+Aga see ei ole veel Bayes. Lisame andmemudelile taustateadmiste mudeli. Sellega tühistame me väga olulise eelduse, mis ripub veskikivina sagedusliku statistika kaelas. Nimelt, et valimi andmed peavad olema esinduslikud populatsiooni suhtes. Me võime olla üsna kindlad, et väikeste valimite korral see eeldus ei kehti ja sellega seoses ei tööta ka sageduslik statistika viisil, milleks R.A. Fisher selle kunagi lõi. Taustateadmiste mudeli roll (kuigi mitte ainus) on õrnalt suunata meie hinnangut õiges suunas vähendades halbade andmete võimet meile kahju teha. Kui sul on väike valim, siis sinu andmed vajavad sellist kantseldamist.
 
 Olgu meie taustateadmise mudel normaaljaotus keskväärtusega 0 ja standardhälbega 1
+
 ```{r echo=FALSE}
 df %>% ggplot(aes(x=a)) +
   stat_function(fun=dnorm, args=list(mean=mean(df$a),sd=sd(df$a)/sqrt(30)), colour="red") +
@@ -112,52 +100,60 @@ df %>% ggplot(aes(x=a)) +
 
 **Joonis 3. Taustateadmiste mudel e prior on must normaaljaotus, mille ülesanne on veidi vähendada ekstreemsete valimite kahjulikku mõju.** 
 
-Taustateadmiste mudel on sageli samuti normaaljaotus. Kui meil on palju taustateadmisi, siis on see jaotus kõrge ja kitsas, kui meil on vähe taustateadmisi, siis on see madal ja lai. 
+Taustateadmiste mudel on sageli normaaljaotus. Kui meil on palju taustateadmisi, siis on see jaotus kõrge ja kitsas, kui meil on vähe taustateadmisi, siis on see madal ja lai.
+
+      Mida teha, kui sa ei taha, et taustateadmiste mudel sinu 
+      posteeriori kuju mõjutab? Sellisel juhul kasutatakse nõrgalt 
+      informatiivseid prioreid, mis tähendab, et priori 
+      jaotus on palju laiem kui tõepäramudeli laius. Miks mitte 
+      kasutada mitte-informatiivseid tasaseid prioreid? 
+      Põhjused on arvutuslikud, seega tehnilist laadi.
+
 Igal juhul järgmise sammuna korrutab bayesiaan selle jaotuse andmejaotusega, saades tulemuseks kolmanda normaaljaotuse, mille ta seejärel normaliseerib nii, et jaotuse alune pindala = 1. 
 See kolmas jaotus on posterioorne tõenäosusjaotus, mis sisaldab kogu infot, millest saab arvutada kõige tõenäolisema katseefekti suuruse koos ebakindluse määraga selle ümber (mida rohkem andmeid, seda väiksem ebakindlus) ja tõenäosused, et tegelik katseefekt jääb ükskõik milllisesse meid huvitavasse vahemikku.
 
 Nüüd ei ole siis muud kui bayesi mudel läbi arvutada.
-```{r echo=FALSE}
+```{r include=FALSE}
 df <- as.data.frame(df)
 m <- map2stan(alist(
     a ~ dnorm( mean=mu , sd=sigma ) ,
     mu  ~ dnorm(0, 1) , 
     sigma ~ dcauchy(0,1)
 ), data=df)
+```
 
+```{r echo=FALSE}
 mm <- as.data.frame(m@stanfit)
 ggplot(mm, aes(mu))+ 
   geom_density(color="darkgreen", fill="green", alpha=0.2)+ 
   stat_function( fun=dnorm, args=list(mean=mean(df$a),sd=sd(df$a)/sqrt(30)), colour="red") +
   stat_function( fun=dnorm, args=list(mean=0,sd=1)) +
-  xlim(-10,10)+ xlab("ES")
+  xlim(-10,10)+ xlab("ES")+ theme_tufte()
 ```
+
 **Joonis 4. Triplot. Bayesi väljund on posterioorne tõenäosusjaotus (roheline). Nagu näha, ei ole selle jaotuse tipp täpselt samas kohas kui andmejaotuse tipp ehk keskväärtus. Prior tõmbab seda veidi nulli suunas. Lisaks on posteerior veidi kitsam kui andmemudel, mis tähendab, et hinnang ES-le tuleb väiksema ebakindluse määraga.**
 
 Posteerior sisaldab endas kogu infot, mis meil ES-i tõelise väärtuse kohta on. Siit saame arvutada
 
-1. meie parima hinnangu ES-i punktväärtusele, 
+1. parima hinnangu ES-i punktväärtusele, 
 
-2. usaldusintervalli, ehk millisest ES-ide vahemikust me loodame leida tõelise ES-i x protsendise tõenäosusega,
+2. usaldusintervalli, ehk millisest ES-ide vahemikust loodame leida tõelise ES-i näit 90% tõenäosusega,
 
 3. iga mõeldava ES-i väärtuste vahemiku kohta tõenäosuse, millega tõeline ES jääb sellesse vahemikku.
 
-4. saame ES-i põhjal arvutada mõne muu statistiku, näiteks ES1 = log10(ES), kasutades selleks ES-i posterioorset jaotust. Sel viisil kanname me meie ES-i hinnangus peituva ebakindluse üle ES1-le, millele samuti saame rakendada punkte 1-3 (sest ES1 on samuti posterioorne jaotus).
+4. saame ES-i põhjal arvutada mõne muu statistiku, näiteks ES1 = log(ES), kasutades selleks ES-i posterioorset jaotust. Sel viisil kanname oma ES-i hinnangus peituva ebakindluse üle ES1-le, millele saame samuti rakendada punkte 1-3 (sest ES1 on posterioorne jaotus).
 
-5. saame simuleerida uusi andmepunkte (üksikuid ES-e, mitte nende keskväärtusi)
+5. uute andmete lisandumisel saame kasutada ES-i posteeriorit uue priorina ja arvutada uue täiendatud posteeriori. Põhimõtteliselt võime seda teha pärast iga üksiku andmepunkti lisandumist. See avab ka head võimalused metaanalüüsiks.
 
-6. uute andmete lisandumisel saame kasutada ES-i posteeriorit uue priorina ja kohemaid arvutada uue täiendatud posteeriori. Põhimõtteliselt võime seda teha pärast iga üksiku andmepunkti lisandumist. See avab ka head võimalused metaanalüüsiks.
-
-Bayes on mõeldud usinatele ja ausatele teadlastele, kes loovad priorid oma tõeliste teadmiste põhjal ja soovivad võimalikult täpselt kirjeldada oma hinnangute ebakindlust. Teised teadlased saavad alati palgata sagedusliku statistiku.
+6. lisaks saame oma algsest mudelist ka posteeriori andmepunkti tasemel varieeruvusele  (pole näidatud). Seda kasutame uute andmete simuleerimiseks (meie näites üksikud ES-d).
 
 ####Sageduslik statistik 
 Sageduslik lähenemine sisaldab ainult ühte mudelit, mida võrreldakse valimi andmetega. 
 Sageduslik statistik alustab selles lihtsas näites täpselt samamoodi nagu bayesiaan, tekitades eelmisega identse andmemudeli, mis on keskendatud valimi keskväärtusele (Joonis 2). 
 Seejärel nihutab ta oma andmemudelit niipalju, et normaaljaotuse tipp ei ole enam valimi keskväärtuse kohal vaid hoopis 0-efekti kohal. Jaotuse laius nihutamisel ei muutu. 
 
-```{r}
+```{r echo=FALSE}
 df %>% ggplot(aes(x=a)) +
-  geom_dotplot(binwidth = 1/10, alpha=0.5) + 
   stat_function(fun=dnorm, args=list(mean=mean(df$a),sd=sd(df$a)/sqrt(30)), colour="red", alpha=0.2) +
   stat_function(fun=dnorm, args=list(mean=0,sd=sd(df$a)/sqrt(30))) +
   geom_vline(aes(xintercept=0), linetype=2)+
@@ -172,56 +168,62 @@ Kui valimi keskväärtuse kohal on H0 jaotus kõrge, siis on andmete tõenäosus
 Ja vastupidi, kui valimi keskväärtuse kohal on H0 madal, siis on andmete esinemise tõenäosus H0 all madal. 
 Seda tõenäosust kutsutakse p väärtuseks. 
 Mida väiksem on p, seda vähem tõenäolised on teie andmed juhul, kui H0 on tõene ja katseefekt võrdub nulliga. 
-Tehniliselt on p defineeritud kui "teie andmete või 0-st veel kaugemal asuvate andmete esinemise pikaajaline suhteline sagedus tingimusel, et H0 kehtib". 
+P on defineeritud kui "teie andmete või 0-st veel kaugemal asuvate andmete esinemise pikaajaline suhteline sagedus tingimusel, et H0 kehtib". 
 
 ####tulemuste tõlgendamine
 Kui sageduslik statistik kirjutab, et tema "efekti suurus on statistiliselt oluline 0.05 olulisusnivool", siis ta ütleb sellega, et tema poolt arvutatud p < 0.05. 
 Selle väite korrektne tõlgendus on, et juhul kui statistik pika aja jooksul võtab omaks "statistiliselt olulistena" kõik tulemused, millega kaasnev p  < 0.05 ja lükkab tagasi kõik tulemused, mille p > 0.05, siis sooritab ta 5% sagedusega tüüp 1 vigu. 
-See tähendab, et igast sajast tõesest H0-st, mida ta testib, võtab ta keskeltläbi 5 vastu kui statistiliselt olulised. 
-Sellisel kujul töötab sageduslik statistika väga hästi --- see on parim viis tüüp 1 vigade sageduse pikaajaliseks fikseerimiseks. 
+See tähendab, et igast sajast tõesest H0-st, mida ta testib, võtab ta keskeltläbi 5 vastu, kui statistiliselt olulised. 
+Sageduslik statistika on parim viis tüüp 1 vigade sageduse pikaajaliseks fikseerimiseks. 
 Paraku ei tea me ühegi üksiku testi kohta ette, kas see testib kehtivat või mittekehtivat H0-i, mis teeb raskeks katseseeriate ühekaupa tõlgendamise. 
 Tuletame meelde, et sageduslikus statistikas ei saa rääkida H0 kehtimise tõenäosusest vaid peab rääkima andmete tõenäosusest (ehk andmete esinemise sagedusest) tingimusel, et H0 kehtib. 
 
-**Kas p väärtust saab tõlgendada ühekaupa kui hinnangut tõendusmaterjali hulgale, mida teie valim pakub H0 vastu?** 
-Selle üle on vaieldud juba üle 80 aasta, kuid tundub, et ainus viis seda teha, kas või umbkaudu, on bayesiaanlik (mis tekitab küsimuse, miks mitte teha kohe bayesiaanlik arvutus ja saada paremini tõlgendatavad tulemused). 
-Kui te mõtlete p väärtuse definitsioonile, siis peaksite mõistma, miks p väärtust, mis on defineeritud pikaajalise sagedusena, on raske rakendada üksiksündmusele. 
+**Kas ühte p väärtust saab tõlgendada kui hinnangut tõendusmaterjali hulgale, mida teie valim pakub H0 vastu?** 
+Selle üle on vaieldud juba üle 80 aasta, kuid tundub, et ainus viis seda kas või umbkaudu teha on bayesiaanlik. Igal juhul, p väärtust, mis on defineeritud pikaajalise sagedusena, on raske rakendada üksiksündmusele. 
 Bayesiaanliku p väärtuste tõlgendamiskalkulaatori leiate aadressilt http://www.graphpad.com/quickcalcs/interpretPValue1/
 
-
-Kujutle mass spektroskoopia katset, kus mõõdame 2000 valgu tasemeid katse-kontroll skeemis ja katset korratakse n korda. 
-Sageduslik statistik kasutab adjusteeritud p väärtusi või q väärtusi, et tõmmata piir, millest ühele poole jäävad statistiliselt olulised tulemused (efektid) ja teisele poole statistiliselt mitteolulised null-efektid. 
-Edasi tõlgendab ta vaikimisi mitteolulisi efekte, kui ebaolulisi ja diskuteerib vaid "olulisi" efekte. 
-Paraku, p väärtuste arvutamine ja adjusteerimine saab toimuda mitmel erineval moel ja usalduspiiri panekule just 95-le protsendile, mitte näiteks 89% või 99.2%-le, pole ühtegi ratsionaalset põhjendust. 
-Seega järjestab ta oma tulemused kõigepealt efekti suuruse järgi, seejärel tõmbab neist osad selles reas tahapoole (need, mille katsest-katsesse varieeruvus on suurem kui teistel) ja lõpuks tõmbab sisuliselt juhuslikus kohas joone läbi efektide, misjärel ta ignoreerib kõiki sellest juhuslikust joonest valele poole jäänud efekte. 
-Meetod, mis väga hästi töötab pikaajalises kvaliteedikontrollis, ei ole kahjuks kuigi mõistlik katse tulemuste ükshaaval tõlgendamises. 
-Mis juhtub, kui oleme kavalad ja proovime mitmeid erinevaid p väärtustega töötamise meetodeid, et valida välja see usalduspiir, millest õigele poole jäävaid andmeid on teaduslikult kõige parem tõlgendada? 
-Ehkki ükshaaval võisid kõik meie poolt läbi arvutatud meetodid olla lubatud (ja isegi võrdselt head), ei fikseeri p väärtused nüüd enam tüüp 1 vigade sagedust.
-See tähendab, et p väärtus, millest te sõltute, on kaotanud oma definitsioonijärgse tähenduse ja te oleksite võinud oma usalduspiiri sama hästi tõmmata tunde järgi, kui erinevaid algoritme proovides.
-
-Seevastu bayesi tulemus, ei käi mitte H0 kohta vaid iga võimaliku parameetriväärtuse kohta (k.a. 0 väärtus). Me võime küsida iga parameetriväärtuste vahemiku kohta, kui tõenäoline on, et tõene väärtus asub just selles vahemikus.
+    Kujutle mass spektroskoopia katset, kus mõõdame 2000 valgu 
+    tasemeid katse-kontroll skeemis ja katset korratakse n korda. 
+    Sageduslik statistik kasutab adjusteeritud p väärtusi või q 
+    väärtusi, et tõmmata piir, millest ühele poole jäävad statistiliselt 
+    olulised ES-d ja teisele poole mitteolulised null-efektid. Edasi 
+    tõlgendab ta mitteolulisi efekte kui ebaolulisi ja diskuteerib vaid 
+    "olulisi" efekte. Paraku, p väärtuste arvutamine ja adjusteerimine 
+    saab toimuda mitmel erineval moel ja usalduspiiri panekule just 95-le 
+    protsendile, mitte näiteks 89% või 99.2%-le, pole ühtegi ratsionaalset 
+    põhjendust. Seega tõmbab ta sisuliselt juhuslikus kohas joone läbi 
+    efektide, misjärel ignoreerib kõiki sellest joonest valele poole jäänud 
+    efekte. Meetod, mis väga hästi töötab pikaajalises kvaliteedikontrollis, 
+    ei ole kahjuks kuigi mõistlik katse tulemuste ükshaaval tõlgendamises. 
+    Mis juhtub, kui oleme kavalad ja proovime mitmeid erinevaid p väärtustega 
+    töötamise meetodeid, et valida välja see usalduspiir, millest õigele poole 
+    jäävaid andmeid on teaduslikult kõige parem tõlgendada? Ehkki ükshaaval 
+    võisid kõik meie poolt läbi arvutatud meetodid olla lubatud (ja isegi 
+    võrdselt head), ei fikseeri p enam tüüp 1 vigade sagedust. See tähendab, 
+    et p on kaotanud definitsioonijärgse tähenduse ja te oleksite võinud oma 
+    olulisuspiiri sama hästi tõmmata tunde järgi.
 
 tüüpiline tulemuse kirjeldus artiklis: 
 
-1. sageduslik: the effect size is q (p < 0.01).
+1. sageduslik: the effect is statistically significant (p < 0.01).
 
-2. bayesiaanlik: the most likely effect size is q1 (90% CI= q2, q3) and the probability that the true effect is less than zero is q4 percent. 
-[90% CI - credible interval tähendab, et me oleme 90% kindlad, et tegelik efekti suurus asub vahemikus q2 ... q3] 
+2. bayesiaanlik: the most likely effect size is q1 (90% CI = q2, q3) and the probability that the true effect is < 0 is q4 percent. 
+
+90% CI --- credible interval --- tähendab, et me oleme 90% kindlad, et tegelik efekti suurus asub vahemikus q2 ... q3. 
 
 ####kahe paradigma erinevused 
 
-1. sageduslikus statistikas võrdub parim hinnang tegelikule efekti suurusele valimi keskmise efekti suurusega. Bayesi statistikas see sageli nii ei ole sest taustateadmiste mudel mõjutab seda hinnangut. Paljud mudelid püüavad ekstreemseid valimeid taustateadmiste abil veidi mõistlikus suunas nihutada, niiviisi vähendades ülepaisutatud efektide avaldamise ohtu.
+1. sageduslikus statistikas võrdub punkt-hinnang tegelikule efekti suurusele valimi keskmise ES-ga. Bayesi statistikas see sageli nii ei ole, sest taustateadmiste mudel mõjutab seda hinnangut. Paljud mudelid püüavad ekstreemseid valimeid taustateadmiste abil veidi mõistlikus suunas nihutada, niiviisi vähendades ülepaisutatud efektide avaldamise ohtu.
 
 2. sageduslik statistika töötab tänu sellele, et uurija võtab vastu pluss-miinus otsuseid: iga H0 kas lükatakse ümber või jäetakse kehtima. Seevastu bayesiaan mõtleb halli varjundites: sissetulevad andmed kas suurendavad või vähendavad hüpoteeside tõenäosusi (mis jäävad aga alati > 0 ja < 1).
 
-3. p väärtused kontrollivad tüüp 1 vigade sagedust ainult siis, kui katse disaini ja hilisema tulemuste analüüsi detailid on enne katse sooritamist jäigalt fikseeritud (või eelnevalt on täpselt paika pandud lubatud variatsioonid katse- ja analüüsi protokollis). Eelkõige tähendab see, et valimi suurus ja kasutatav(ad) statistiline(sed) test(id) peavad olema eelnevalt fikseeritud. Tüüpiliselt saame p väärtuse arvutada vaid üks kord ja kui p = 0.051, siis oleme sunnitud H0 paika jätma ning efekti deklareerimisest loobuma. Me ei saa lihtsalt katset juurde teha, et vaadata, mis juhtub. Bayesiaan seevastu võib oma posterioorse tõenäosuse arvutada kasvõi pärast iga katsepunkti kogumist ning katse peatada kohe (või alles siis), kui ta leiab, et tema posterioorne jaotus on piisavalt kitsas, et teaduslikku huvi pakkuda.
+3. p väärtused kontrollivad tüüp 1 vigade sagedust ainult siis, kui katse disaini ja hilisema tulemuste analüüsi detailid on enne katse sooritamist jäigalt fikseeritud (või eelnevalt on täpselt paika pandud lubatud variatsioonid katse- ja analüüsi protokollis). Eelkõige tähendab see, et valimi suurus ja kasutatavad statistilinsed testid peavad olema eelnevalt fikseeritud. Tüüpiliselt saame p väärtuse arvutada vaid üks kord ja kui p = 0.051, siis oleme sunnitud H0 paika jätma ning efekti deklareerimisest loobuma. Me ei saa lihtsalt katset juurde teha, et vaadata, mis juhtub. Bayesiaan seevastu võib oma posterioorse tõenäosuse arvutada kasvõi pärast iga katsepunkti kogumist ning katse peatada kohe (või alles siis), kui ta leiab, et tema posterioorne jaotus on piisavalt kitsas, et teaduslikku huvi pakkuda.
 
-4. sagedusliku statistika pluss-miinus iseloom tingib selle, et kui tegelik efekti suurus on küll teaduslikult huvitav, aga siiski liiga väike, et sattuda õigele poole olulisusnivood, siis annavad statistiliselt olulisi tulemusi populatsiooniga võrreldes ülepaisutatud efektid, mida tekib tänu juhuslikele valimiefektidele. Nii saab süstemaatiliselt kallutatud teaduse, mis hindab kordades üle oma efektide suurusi. Bayesi statistikas seda probleemi ei esine, kuna otsused ei ole pluss-miinus tüüpi.
+4. sagedusliku statistika pluss-miinus iseloom tingib selle, et kui tegelik efekti suurus on liiga väike, et sattuda õigele poole olulisusnivood, siis annavad statistiliselt olulisi tulemusi ülepaisutatud efektid, mida tekib tänu valimiveale. Nii saab süstemaatiliselt kallutatud teaduse. Bayesi statistikas seda probleemi ei esine, kuna otsused ei ole pluss-miinus tüüpi.
 
-5. bayesi statistika ei hoia tüüp 1 vigade sagedust kontrolli all. See-eest võtleb see nn valehäirete vastu, milleks kaasajal kasutatakse enim hierarhilisi shrinkage mudeleid. Neid käsitleme oma õpikus päris lõpus. See on ka bayesi vaste sageduslikus statistikas kasutatavatele multiple testingu korrektsioonidele. Kui sageduslik statistik võitleb valehäiretega p väärtusi adjusteerides ja selle läbi olulisusnivood nihutades, siis kaasaegne bayesiaan kasutab shrinkage mudelit, et parandada hinnanguid üksikute efektide keskväärtustele ja nende sd-le, kasutades paindlikult kogu andmesetis leiduvat infot.
+5. bayesi statistika ei fikseeri tüüp 1 vigade sagedust. See-eest võitleb see nn valehäirete vastu, milleks kaasajal kasutatakse enim hierarhilisi shrinkage mudeleid. See on bayesi vaste sageduslikus statistikas kasutatavatele multiple testingu korrektsioonidele. Kui sageduslik statistik võitleb valehäiretega p väärtusi adjusteerides ja selle läbi olulisusnivood nihutades, siis bayesiaan kasutab shrinkage mudelit, et parandada hinnanguid üksikute efektide keskväärtustele ja nende sd-le, kasutades paindlikult kogu andmesetis leiduvat infot.
 
-
-See on kõik, mida me sagedusliku statistika kohta ütleme. Mitte miski, mis järgneb, ei eelda sagedusliku paradigma tundmist ega valdamist.
-
+See on kõik, mida me sagedusliku statistika kohta ütleme. Mitte miski, mis järgneb, ei eelda sagedusliku paradigma tundmist.
 
 #1. osa: Mudel ja maailm
 
