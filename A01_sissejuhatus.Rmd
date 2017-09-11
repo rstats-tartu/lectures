@@ -284,7 +284,8 @@ Kui vaadata Koperniku produkti teooriana, mitte mudelina, siis oli sel selgeid e
 
 ### Millest koosneb mudel?
 
-> Mudel on matemaatilise formalism, mis püüab kirjeldada füüsikalist protsessi. 
+> Mudel on matemaatilise formalism, mis püüab kirjeldada füüsikalist protsessi.
+mudeli struktuuris on komponent, mis kirjeldab ideaalseid ennustusi ja eraldi veakomponent, mis kirjeldab kuidas andmepunktid varieeruvad selle ideaalse ennustuse ümber.
 
 Näiteks, sageli kirjeldame me produkti kuhjumist ensüümreaktsioonis eksponentsiaalse funktsioni (mudeli) abil. Kui meie andmed seda tüüpi funktiooniga sobivad, ütleb see meile midagi konkreetse ensüümi töömehhanismi kohta. Teisest küljest, need mudelid, mis on "generatiivsed", suudavad lisaks simuleerida ka uusi andmeid. Sealhulgas ka selliseid, mida päris maailmas ei saa kunagi esineda, sest seal puuduvad vastavad tingimused. Mudelisse saab aga sisse kirjutada igasuguseid tingimusi ehk parameetri väärtusi (näit substraadi konsentratsioone, mida me ei suuda "päriselt" saavutada). 
   
