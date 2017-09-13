@@ -1,9 +1,26 @@
----
-title: "Reproducible data analysis using R 2017"
+--- 
+title: "Reprodutseeritav andmeanalüüs kasutades R programmi"
+author: "Taavi Päll, Ülo Maiväli"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: []
+biblio-style: apalike
+link-citations: yes
+github-repo: rstats-tartu/lectures
+description: "Reproducible data analysis using R practical course materials."
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
+# Prerequisites
+
+Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
+
+To compile this example to PDF, you need to install XeLaTeX.
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
 ```
-
-Hello! This site is under construction.
