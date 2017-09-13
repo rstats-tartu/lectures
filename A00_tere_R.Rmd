@@ -1,108 +1,6 @@
 
-# Tarkvara tööriistad
 
-## Installeeri kursusel vajalikud programmid
-
-Praktiline kursus eeldab töötavate R, RStudio ja Git programmide olemasolu sinu arvutist. 
-Kõik on väga lihtsad installid.
-
-1. Googelda "install R" või mine otse [R allalaadimise veebilehele](https://cran.r-project.org), laadi alla ja installi sobiv versioon.
-2. Googelda "install RStudio" või mine otse [RStudio allalaadimise veebilehele](https://www.rstudio.com/products/rstudio/download/), laadi alla ja installi sobiv versioon.
-3. Googelda "install git" või mine otse [git allalaadimise veebilehele](https://git-scm.com/downloads), laadi alla ja installi sobiv versioon.
-
-
-## Loo GitHubi konto 
-
-- GitHubi konto loomiseks mine lehele https://github.com. Loo endale oma nimega seotud avalik konto. Tulevikule mõeldes vali kasutajanimi hoolikalt. Ära muretse detailide pärast, need on võimalik täita hiljem.
-
-- Loo repo nimega `intro_demo`.
-- Lisa repole lühike ja informatiivne kirjeldus. 
-- Vali "Public".
-- Pane linnuke kasti "Initialize this repository with a README".
-- Klikka "Create Repository".
-
-
-
-## Loo uus R projekt
-
-> NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta alakriipsu "\_". 
-
-4. Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)
-5. Ava RStudio akna paremalt ülevalt nurgast "Project" menüüst "New Project" dialoog.
-6. Ava "New Directory" > "Empty Project" > vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks "R_kursus2017".
-
-```{r, echo=FALSE}
-knitr::include_graphics("assets/img/rstudio_screen_untitled.png")
-```
-
-RStudio infolehekülg R projekti loomise kohta: [Using Projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
-
-###Sinu kataloogi minimaalne struktuur:
-
-**R_kursus2017/data; /R; /figs**
-- **data** kataloogi lähevad ainult algandmed (.csv või .xlsx laiendiga meie puhul).
-- **R** kataloogi läheb sinu kirjutatud kood .R laienditega failides.
-- **figs** kataloogi lähevad koodi abil genereeritud joonised.
-
-Nüüd peaks su RStudio konsoolis olema 4 akent, mille suurusi saad hõlpsalt muuta. Proovi seda teha.
-
-Üleval vasakul on sinu poolt nimega varustatud tekstieditor kuhu kirjutad R skripti (laiend .R).
-**Salvesta R skriptid projekti alamkataloogi R/**.
-
-Sinna kirjutad oma koodi ja kommentaarid sellele. 
-Leia selle kohalt valge/roheline nupp Run. 
-Kirjuta scripti aknasse `2 + 2`, jäta kursor sellele reale ja vajuta Run nuppu. 
-Leia tulemus alt vasakult konsoolist. 
-Nüüd kirjuta `2 + 3`, jäta kursor sellele reale ja vajuta 
-(PC-l Cntr + Enter). 
-Leia konsoolist tulemus.
-
-All vasakul on konsool. 
-Sinna sisestatakse su R (skripti) kood ja sinna trükitakse väljund.
-
-Üleval paremal on Environment. 
-Seal on näha R-i objektid, mis on sulle workspaces kättesaadavad ja millega sa saad töötada. 
-Kohe varsti õpime, kuidas objekte juurde tekitada ja Environmenti saata.
-
-All paremal on paneel mitme sakiga (tab-ga). 
-
-1. Files tab töötab nagu failihaldur. 
-Leia sealt paneel, kus on nupud New Folder, Delete, Rename ja More. 
-More/Set As Working Directory võimaldab määrata Folderi, kust R automaatselt faile otsib, kui sa nime järgi faili R-i keskkonda sisse loed. 
-More/Go To Working Directory viib sind sinna. 
-R konsoolist töökataloogi teada saamiseks ja seadistamiseks kasutatakse vastavalt käskusid `getwd()` ja `setwd()`.
-
-**Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada.**
-Seega, töökataloog võiks olla vaikimisi seatud "R_kursus2017/". 
-Sinna kataloogi kirjutati ka sinu poolt nimetatud .R laiendiga fail. 
-Leia see.
-
-2. Plots paneelile ilmuvad joonised, mille sa teed. Neid saab sealt salvestada nupu Export/Save as image või Export/Save as pdf alt.
-
-3. Packages Näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. 
-Seal on nupp Install, mille alt avaneb aken, kuhu kirjuta raamatukogude nimed, mida soovid võrgust alla tõmmata (ilma jutumärkideta, komadega üksteisest eraldatud). Klikkides installitud paketi nimele avaneb selle paketi helpfail. 
-Seal on ka nimekiri kõikidest selle paketi funktsioonidest koos iga funktsiooni kirjelduse ja helpfailiga. 
-Seal on ka otsinguaken installitud pakettide otsimiseks paketi nime järgi. 
-
-4. Help. Seal on ka otsinguaken, aga see tõõtab halvemini kui scripti või konsooli kirjutada `?paketi_nimi`. 
-Seal avanevad kõik help failid (ka need, mida konsooli kaudu otsitakse). 
-
-###Nüüd proovime, kuidas töötab moodsam tekstieditor (R Notebook)
-
-[R Notebook](http://rmarkdown.rstudio.com/r_notebooks.html) on R markdown dokument mis sisaldab R skripte ja teksti. 
-
-Ava File/New File/R Notebook.
-Anna sellele nimi (nagu enne).
-
-Kohe dokumendi alguses on tekst: title: "R Notebook". 
-
-Asenda seal jutumärkide sees olev tekst oma dokumendi pealkirjaga.
-
-Te näete halli ala, kus on koodijupp plot(cars). vajuta selles hallis alas asuvale rohelisele nupule, mis jooksutab selle koodi. Vaata kuhu ilmub joonis. See ei ole enam Plots paneelil vaid hoopis notebookis sealsamas koodibloki all. 
-
-Notebookis saab hästi kirjutada teksti, teksti vahele panna koodijuppe ja nende outputte. Uue halli koodiala saate rohelise nupu Insert/ R alt või cmd + alt + I shortcutiga. Detaile õpetame hiljem. See tekst on kirjutatud R Notebookis.
-
-##R on kalkulaator
+# R on kalkulaator
 
 Liidame `2 + 2`. 
 
@@ -123,11 +21,7 @@ Vastus on TRUE (logical).
 Pane tähele, et aritmeetiline võrdusmärk on == (sest = tähendab midagi muud; assigneerimist).
 
 ```{r eval=FALSE}
-* # korrutusmärk
-/ # jagamismärk
-+ # pluss
-- # miinus
-3**2 # 3 astmes 2
+3 ** 2 # 3 astmes 2
 sqrt(3) # ruutjuur 3st
 log10(100) # kümnendlogaritm sajast
 log2(100)  # kahendlogaritm sajast
@@ -149,8 +43,8 @@ Sama kehtib ka R-i helpi kohta.
 Seega tasub alati kontrollida, kas R ikka tegi seda, mida sina talle enda arust ette kirjutasid.
 
 ```{r}
-x <- c(6, 3, 3, 4, 5) # vector: c() - combine
-y<- c(1, 3, 4, 2, 7)
+x <- c(6, 3, 3, 4, 5)
+y <- c(1, 3, 4, 2, 7)
 cor(x, y) # correlation
 sum(x)
 sum(x, y)
@@ -246,9 +140,9 @@ inventory <- function(apples, oranges) {
 }
 ```
 
-Andes funktsiooni argumentidele väärtused, saab outputi:
+Andes funktsiooni argumentidele väärtused, saab väljundi:
 ```{r}
-inventory(2,3) #inventory(apples=2, oranges=3) #teeb sama asja
+inventory(2, 3) 
 ```
 Seega asendasime me kolm rida koodi ühega, mis on hea algus.
 
@@ -258,15 +152,15 @@ sd() annab standardhälbe. Sellel on 2 argumenti. vt Help-i.
 Me teame, et SEM=SD/sqrt(N)
 kus N = length(x)
 ```{r}
-SEM0<- function(x) {
-  SD<- sd(x) 
-  SEM<- SD/sqrt(length(x))
+SEM0 <- function(x) {
+  SD <- sd(x)
+  SEM <- SD / sqrt(length(x))
   SEM
 }
 ```
 
 x hoiab lihtsalt kohta andmetele, mida me tahame sinna funktsiooni suunata.
-sd(), sqrt() ja length() on olemasolevad baas R funktsioonid, mille me oma funktsiooni hõlmame.
+`sd()`, `sqrt()` ja `length()` on olemasolevad baas R funktsioonid, mille me oma funktsiooni hõlmame.
 
 ```{r}
 numbers<- c(2, 3.4, 54, NA, 3) #c() means "combine", NA means "any number" or "not available"
