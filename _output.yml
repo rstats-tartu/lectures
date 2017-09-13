@@ -3,7 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Reprodutseeritav andmeanalüüs kasutades R programmi</a></li>
+        <li><a href="./">Reprodutseeritav andmeanalüüs R programmiga</a></li>
       after: |
         <li><a href="https://github.com/rstats-tartu/lectures" target="blank">Published with bookdown</a></li>
     edit: https://github.com/rstats-tartu/lectures/edit/master/%s
