@@ -1,5 +1,5 @@
 ---
-title: "Tere R"
+title: "1. Sissejuhatus R-i"
 ---
 
 ```{r echo=FALSE, error=FALSE, message=FALSE}
@@ -7,7 +7,8 @@ library(tidyverse)
 library(stringr)
 ```
 
-##Alustuseks
+
+## 1.1 Alustuseks
 
 ###Installeeri kursusel vajalikud programmid
 
@@ -39,7 +40,8 @@ RStudio infolehekülg R projekti loomise kohta: [Using Projects](https://support
 Nüüd peaks su RStudio konsoolis olema 4 akent, mille suurusi saad hõlpsalt muuta. Proovi seda teha.
 
 Üleval vasakul on sinu poolt nimega varustatud tekstieditor kuhu kirjutad R skripti (laiend .R).
-**Salvesta R skriptid projekti alamkataloogi R/**.
+
+    Salvesta R skriptid projekti alamkataloogi R/.
 
 Sinna kirjutad oma koodi ja kommentaarid sellele. 
 Leia selle kohalt valge/roheline nupp Run. 
@@ -64,7 +66,8 @@ More/Set As Working Directory võimaldab määrata Folderi, kust R automaatselt 
 More/Go To Working Directory viib sind sinna. 
 R konsoolist töökataloogi teada saamiseks ja seadistamiseks kasutatakse vastavalt käskusid `getwd()` ja `setwd()`.
 
-**Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada.**
+    Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada.
+    
 Seega, töökataloog võiks olla vaikimisi seatud "R_kursus2017/". 
 Sinna kataloogi kirjutati ka sinu poolt nimetatud .R laiendiga fail. 
 Leia see.
@@ -94,11 +97,15 @@ Te näete halli ala, kus on koodijupp plot(cars). vajuta selles hallis alas asuv
 
 Notebookis saab hästi kirjutada teksti, teksti vahele panna koodijuppe ja nende outputte. Uue halli koodiala saate rohelise nupu Insert/ R alt või cmd + alt + I shortcutiga. Detaile õpetame hiljem. See tekst on kirjutatud R Notebookis.
 
-##R on kalkulaator
+## 1.2 R on kalkulaator
 
 Liidame `2 + 2`. 
 
-     Selleks, et R aru saaks, et tegu on temale mõeldud käsuga, tuleb see kirjutada Insert --> R abil (vt kohe ülesse rohelisele nupule "Insert") ja kood evalueeritakse siis, kui vajutad tekinud hallis koodialas rohelisele nupule või alternatiivselt, kui soovid jooksutada ainult osa koodi või üht koodirida, siis pane kursor soovitud reale või võta osa koodi blokki ja vajuta klaviatuuril cmd + enter.
+     Selleks, et R aru saaks, et tegu on temale mõeldud käsuga, tuleb see kirjutada
+     Insert --> R abil (vt kohe ülesse rohelisele nupule "Insert") ja kood evalueeritakse 
+     siis, kui vajutad tekinud hallis koodialas rohelisele nupule või alternatiivselt, 
+     kui soovid jooksutada ainult osa koodi või üht koodirida, siis pane kursor soovitud 
+     reale või võta osa koodi blokki ja vajuta klaviatuuril cmd + enter.
    
 
 ```{r}
@@ -111,6 +118,7 @@ Kontrollime seda:
 ```{r}
 2 + 2 == 4
 ```
+
 Vastus on TRUE (logical). 
 Pane tähele, et aritmeetiline võrdusmärk on == (sest = tähendab midagi muud; assigneerimist).
 
@@ -129,9 +137,10 @@ log(100) # naturaallogaritm sajast
 ```{r}
 round(pi, 4) # ümarda pi neljale komakohale
 ```
+
 See on hea tulemuste väljaprintimisel
 
-## R on andmeanalüüsi keel, mille verbid on funktsioonid
+## 1.3 R on andmeanalüüsi keel, mille verbid on funktsioonid
 
 Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt, kes püüab ära arvata, mida on vaja teha. 
 Vahest teeb kah. 
@@ -146,6 +155,7 @@ y<- c(1, 3, 4, 2, 7)
 cor(x, y) # correlation
 sum(x)
 sum(x, y)
+prod(x,y) #x, y ja z produkt ehk x * y 
 mean(x)
 median(x)
 quantile(x)
@@ -201,15 +211,17 @@ apples <- c(1, 34, 43, NA) #c() --- combine() on ise funktsioon
 sum(apples, na.rm = TRUE)
 
 ```
+
 Niimoodi saab arvutada summat vektorile nimega apples.
 
 evalueerides funktsiooni ilma selle sulgudeta saab masinast selle funktsiooni koodi. Näiteks:
 ```{r}
 sum
 ```
+
 See ei ole küll liiga kasulik...
 
-### Kirjutame oma esimese funktsiooni
+## 1.4 Kirjutame oma esimese funktsiooni
 
 Põhjus, miks R-s on funktsioonid, on ruumi kokkuhoid. 
 Funktsiooni ainus mõte on peita teie eest kood funktsiooni nime taha. 
@@ -292,7 +304,7 @@ SEM1(numbers)
 Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline protsess ja sellele, et alati saab paremini teha.
 
 
-####funktsioonide raamatukogud
+## 1.5 funktsioonide raamatukogud
 
 Kõige esimene sõnum sum() help lehel on sum {base}, mis tähendab, et see funktsioon kuulub nn baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest nad on laetud vaikimisi teie workspace-i. Enamus R-i paarikümne tuhandest funktsioonist ei ole sellised. Enamasti on sarnaseid asju tegevad funktsioonid on koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi võrgust alla laadida. 
 
@@ -361,7 +373,7 @@ install.packages(toInstall)
 Et see kood töötaks, peate oskama õigel viisil andmeid R-i sisse lugeda. Seda õpime varsti.
 
 
-##Objektid
+## 1.6 Objekt ja nimi
 
 R-i keskkonnas "workspace" asuvad **objektid**, millega me töötame. Tüüpilised objektid on
 
@@ -378,8 +390,6 @@ ls()
 
 to save current objects, use the “Save Workspace” option from the File menu
 
-
-###objekt ja nimi
 
 kui teil sünnib laps, annate talle nime.
 
@@ -441,7 +451,7 @@ Nüüd on nimega a seostatud uus objekt, mis koosneb numbrist 5 (olles ühe elem
 
 + alt + - on otsetee <- jaoks
 
-####Sama koodi saab kirjutada neljal viisil
+## 1.7 Sama koodi saab kirjutada neljal viisil
 
 Hargnevate teede aed: kui me muudame olemasolevat objekti on meil alati kaks valikut. Me kas jätame muudetud objektile vana objekti nime või me anname talle uue nime. Esimesel juhul läheb vana muutmata objekt workspacest kaduma aga nimesid ei tule juurde ja säilib teatud workflow sujuvus. Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende juurde saab alati tagasi tulla. Samas tekkib meile palju sarnaste nimedega objekte.
 
@@ -485,8 +495,8 @@ lollikindlus  1 --> 2 --> 3 --> 4 (vähem lollikindel)
 Mida vähem on kohti, kus saab koodi töötamist kontrollida, seda halvem teile. Sellepärast ärge kunagi pange üksteise otsa rohkem kui 4 torujuppi. See on teie otsustada, millist koodivormi te millal kasutate, aga te peaksite oskama lugeda neid kõiki.
 
 
-##objektide tüübid 
-###1: Vektor - andmerida
+## 1.8 Objektide tüübid 
+###1.8.1 Vektor - andmerida
 
 Vektor on rida kindlas järjekorras arve, tähemärke või TRUE/FALSE loogilisi väärtusi. Iga vektor sisaldab ainult ühte tüüpi andmeid. Vektor on elementaarüksus, millega me teeme tehteid. Andmetabelis ripuvad kõrvuti ühepikad vektorid (üks vektor = üks tulp) ja R-le meeldib arvutada vektori kaupa vasakult paremale (mis tabelis on ülevalt alla sest vektori algus on üleval tabeli headeri juures). Vektori loomiseks kasuta funktsiooni c() --- combine
 
@@ -532,7 +542,7 @@ rep(1:2, each=3)
 rep(c("a", "b"), each=3, times=2)
 ```
 
-####tehted arvuliste vektoritega
+###tehted arvuliste vektoritega
 
 Vektoreid saab liita, lahutada, korrutada ja jagada.
 ```{r}
@@ -571,7 +581,7 @@ sum(a); mean(a)
 Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 + 1 = 2.
 Seda loogiliste väärtuste omadust õpime varsti praktikas kasutama. 
 
-###2. List - andmekott
+###1.8.2. List - andmekott
 
 List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa arvatud listid. See on lihtsalt viis objektid koos hoida ühes suuremas meta-objektis. List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid kõik segamini loksuvad.
 
@@ -594,7 +604,7 @@ my_list$b
 
 
 
-###3. Tibble ja data frame - andmeraamid
+###1.8.3. Tibble ja data frame - andmeraamid
 
 Andmeraam on eriline list, mis koosneb ühepikkustest vektoritest. Andmeraam on ühtlasi teatud liiki tabel, kus igas veerus on ainult ühte tüüpi andmed. Need vektorid ripuvad andmeraamis kõrvuti nagu tuulehaugid suitsuahjus, kusjuures vektori algus vastab tuulehaugi peale, mis on konksu otsas (konks vastab andmeraamis tulba nimele ja ühtlasi vektori nimele). Iga vektori nimi muutub sellises tabelis tulba nimeks. Igas tulbas saab olla ainult ühte tüüpi andmeid. 
 
@@ -815,7 +825,7 @@ df[df == 0] <- NA #teeb vastupidi 0-d NA-deks
 
 Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud is.na() funktsiooniga.
 
-### 4. Matrix - numbriraam
+### 1.8.4. Matrix - numbriraam
 
 Maatriks koosneb ühepikkustest vektoritest, mis sisaldavad ainult numbreid. Enamasti me ei kasuta maatrikseid, vaid andmeraame.
 Tip: me saame sageli andmeraami maatriksina kasutada kui me viskame sealt välja mitte-numbrilised tulbad.
@@ -829,7 +839,7 @@ class(fruits)
 ```
 
 
-##Andmete tüübid
+## 1.9. Andmete tüübid
 
 + numeric / integer 
 + logical -2 väärtust TRUE/FALSE
@@ -838,7 +848,7 @@ class(fruits)
 
 Andmete tüüpe saab üksteiseks konverteerida as.factor(), as.numeric(), as.character(), as.integer(), as.logical()
 
-##Indekseerimine
+## 1.10. Indekseerimine
 
 Igale vektori, listi, andmeraami ja maatriksi elemendile vastab unikaalne postiindeks, mille abil saame just selle elemendi unikaalselt indentifitseerida, välja võtta ja töödelda.
 
@@ -932,7 +942,7 @@ Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välj
 Pane tähele, et [[ ]] lubab ainult ühe elemendi korraga listist välja päästa.
 
 
-##Regular expression ja find & replace
+## 1.11.Regular expression ja find & replace
 
 Regular expression annab võimaluse lühidalt kirjeldada mitte-üheseid otsinguparameetreid.
 
@@ -1025,11 +1035,11 @@ abc|d..f will match either "abc", or "deaf".
 ```
 
 
-##Tidyverse
+## 1.12 Tidyverse
 
 Tidyverse on väike osa R-i ökosüsteemist, kus kehtivad omad reeglid. Tidyverse  raamatukogud lähtuvad ühtsest filosoofiast ja töötavad hästi koos. Tidyverse algab andmetabeli struktuurist ja selle funktsioonid võtavad reeglina sisse õige struktuuriga tibble ja väljastavad samuti tibble, mis sobib hästi järgmise tidyverse funktsiooni sisendiks. Seega on tidyverse hästi sobiv läbi torude %>% laskmiseks. Tidyversiga sobib hästi kokku ka ggplot2 graafikasüsteem.
 
-###Tidy tabeli struktuur
+### 1.12.1 Tidy tabeli struktuur
 
 + **väärtus** (*value*) --- ühe mõõtmise tulemus (183 cm)
 + **muutuja** (*variable*) --- see, mida sa mõõdad (pikkus) või faktor (sex)
@@ -1059,7 +1069,7 @@ df
 
 Nii näeb välja tidy tibble. Kõik analüüsil vajalikud parameetrid tuleks siia tabelisse veeru kaupa sisse tuua. Näiteks, kui mõõtmised on sooritatud erinevates keskustes erinevate inimeste poolt kasutades sama ravimi erinevaid preparaate, oleks hea siia veel 3 veergu lisada (center, experimenter, batch).
 
-###Tabeli dimensioonide muutmine (pikk ja lai formaat)
+### 1.12.2 Tabeli dimensioonide muutmine (pikk ja lai formaat)
 
 Väga oluline osa tidyverses töötamisest on tabelite pika ja laia formaadi vahel viimine.
 
@@ -1090,7 +1100,7 @@ df_l1 %>% spread(key=experiment, value=value)
 ```
  key viitab pika tabeli veerule, mille väärtustest tulevad laias tabelis uute veergude nimed. value viitab pika tabeli veerule, kust võetakse arvud, mis uues laias tabelis uute veergude vahel laiali jagatakse.
 
-####Tibble transpose --- read veergudeks ja vastupidi
+#### 1.12.3 Tibble transpose --- read veergudeks ja vastupidi
  
 ```{r}
 df <- tibble(a=c("tim", "tom", "jill"), b1=c(1,2,3), b2=c(4,5,6))
@@ -1104,11 +1114,11 @@ colnames(df1) <- df$a
 df1
 ```
 
-## dplyr-i 5 verbi
+## 1.13 dplyr-i 5 verbi
 
 Need tuleb teil omale pähe ajada sest nende 5 verbiga (pluss gather ja spread) saab lihtsalt teha 90% andmeväänamisest, mida teil elus vaja läheb. NB! Check the data wrangling cheatsheet and dplyr help for further details. dplyr laetakse koos tidyverse-ga automaatselt teie workspace.
 
-### 1. select() columns
+### 1.13.1. select() columns
 
 Select selects, renames, and re-orders columns
 
@@ -1169,7 +1179,7 @@ rename(iris, petal_length = Petal.Length)
 
 See ?select for more details.
 
-### 2. filter() rows
+### 1.13.2. filter() rows
 
 
 Keep rows in Iris that have Species level "setosa" **and** Sepal.Length value <4.5.
@@ -1212,7 +1222,7 @@ remove NAs with filter()
 flights %>% filter(!is.na(dep_delay), !is.na(arr_delay))
 ```
 
-###3. summarise()
+### 1.13.3. summarise()
 
 Many rows summarised to a single value
 
@@ -1225,7 +1235,7 @@ n_distinct() loeb üles, mitu unikaalset väärtust läks samasse arvutusse.
 
 summarise on kasulikum, kui teda kasutada koos järgmise verbi, group_by-ga.
 
-### 4. group_by()
+### 1.13.4. group_by()
 
 Groups values for summarising or mutating
 
@@ -1266,7 +1276,7 @@ iris %>% group_by(Species) %>% top_n(-2, Sepal.Length)
 ```
 
 
-### 5. mutate
+### 1.13.5. mutate()
 
 Mutate põhikasutus on siiski uute veergude tekitamine, mis võtavad endale inputi rea kaupa. Seega tabeli ridade arv ei muutu.
 
@@ -1320,7 +1330,7 @@ df_l1 %>% mutate(normalised.value=value/mean(value), n2.val=value/sd(value))
 ```
 
 
-#### Grouped filters
+#### 1.13.6 Grouped filters
 
 Keep all groups bigger than a threshold:
 ```{r, eval=FALSE}
@@ -1361,7 +1371,7 @@ or
 
 Here we did the same thing more elegantly by directly parsing numbers from a character string.
 
-### separate() one column into several
+#### 1.13.7. separate() one column into several
 
 Siin on veel üks verb, mida aeg-ajalt kõigil vaja läheb. separate() võtab ühe veeru sisu (mis peab olema character string) ning jagab selle laiali mitme uue veeru vahel. Kui teda kasutada vormis `separate(df, old_Column, into=c("new_col1", "new_col2", "ja_nii_edasi"))` siis püüab masin ise ära arvata, kustkohalt veeru sisu hakkida (tühikud, komad, semikoolonid, koolonid jne). Aga te võite eksplitsiitselt ette anda separaatori sep="". sep=2 tähendab "peale 2. characterit". sep=-6 tähendab "enne tagantpoolt 6. characterit"
 
@@ -1391,9 +1401,7 @@ df <- tibble(index=c(1,2), taxon=c("Prokaryota.Bacteria.Alpha-Proteobacteria.Esc
 The companion FUN to separate is `unite()` - see help.
 
 
-
-
-###Faktorid
+## 1.14. Faktorid
 
 Faktor on andmetüüp, mis oli ajalooliselt tähtsam kui ta praegu on. Sageli saame oma saja ära ajada character vectori andmetüübiga ja ei vaja faktorit. Aga siiski läheb faktoreid aeg-ajalt kõigil vaja.
 

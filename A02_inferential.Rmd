@@ -11,14 +11,13 @@ library(rethinking) #HPDI() and PI(). Requires Stan.
 ```
 
 
-### 3.1. Simulatsiooni jõud
 
 Järeldav statistika püüab valimi põhjal teha järeldusi statistilise populatsiooni kohta, millest see valim pärineb. 
 Sellisel tegevusel on mõtet ainult siis, kui ühest küljest valim peegeldab populatsiooni ja teisest küljest valim ei ole sama asi, mis populatsioon. 
 Seega on statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. 
 Aga kõigepealt illustreerime valimi ja populatsiooni erinevust.
 
-###3.1.1. Valim ei ole sama, mis populatsioon
+###4.1. Valim ei ole sama, mis populatsioon
 
 Simuleerimine on lahe sest erinevalt päris maailmast elavad simulatsioonid mudeli väikses maailmas ning seega teame me täpselt, mida me teeme ja mida on meil selle tagajärjel oodata. Simulatsioonidega saame me hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi (parameetrite väärtuste kombinatsioone), mida päris maailmas kunagi ette ei tule. Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
 
@@ -42,14 +41,11 @@ N <- 3
 N_simulations <- 10000
 df <- tibble(a = rnorm(N * N_simulations, 100, 20), b = rep(1:N_simulations, each = N) )
 Summary <-  df %>% group_by(b) %>% summarise(Mean=mean(a), SD= sd(a) ) 
-
 Summary %>% ggplot(aes(Mean) ) + geom_histogram()
 ```
 
 ```{r}
-mean(Summary$Mean) 
-mean(Summary$SD)
-
+mean(Summary$Mean); mean(Summary$SD)
 ```
 
 Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse tõõtab lihtsalt kallutatult, kui n on väike (<10)
@@ -86,9 +82,9 @@ Ja me saame >40% tõenäosusega pahasti alahinnatud sd. Selline on väikeste val
 
 Aga vähemalt populatsiooni keskmise saame me palju valimeid tõmmates ilusasti kätte --- ka väga väikeste valimitega.
 
-Kahjuks pole meil ei vahendeid ega kannatust 10 000 valimi loodusest kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata, mis ongi bootstrappimise põhimõte.
+Kahjuks pole meil ei vahendeid ega kannatust 10 000 valimi loodusest kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata, mis ongi bootstrappimise põhimõte. Statistikasse tõi selle meetodi Brad Efron 1970-ndate lõpus.
 
-###3.1.2. Bootstrappimine
+### 4.2.Bootstrappimine
 
 > Populatsioon on valimile, mis valim on bootstrappitud valimile. 
 
@@ -104,7 +100,7 @@ Bootstrap empiirilisele valimile suurusega n töötab nii:
 Mis on USA presidentide keskmine pikkus? Meil on valim 10 presidendi pikkusega.
 
 ```{r}
-heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble(heights) 
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>%   as_tibble() 
 n <- 10 #sample size
 nr_boot_samples <- 4000 #the nr of bootstrap samples
 a <- sample_n(heights, n * nr_boot_samples, replace=TRUE)  #create random sample with replacement
@@ -117,7 +113,7 @@ Alternatiivne ja aeglasem kood, mis kasutab mosaic::do().
 
 ```{r}
 library(mosaic)
-heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble(heights) 
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble() 
 sample_means <- mosaic::do(4000) *
     (heights %>% sample_n(size = 10, replace = TRUE)) 
 #võta heigths andmeraamist 10-ne valim (tagasi panekuga) ja tee seda 4000 korda järjest. tulemuseks on tidy tibble, kus on veerg .index, mille järgi saab grupeerida.
@@ -249,11 +245,33 @@ plot(b5)
 
 Bootstrappimine on väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni --- mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral.
 
-Bootstrappimisel on üks konseptuaalne puudus, mis on eriti tõsine väikeste valimite korral. Võtame oma näite USA presidentidest. Meie valimi liikmed on kõik presideerinud viimase 50 aasta jooksul, aga selle aja jooksul on inimeste keskmine pikkus jõudsalt kasvanud. Kui me tahame ennustada järgmise 50 aasta keskmist presidentide pikkust, peaksime selle faktiga arvestama. Aga bootstrap ei jäta meile sellist võimalust. Vähemalt mitte lihtsat. 
+####Parameetriline bootstrap
+
+Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
+Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:
+```{r}
+mu <- mean(heights$value)
+sigma <- sd(heights$value)
+N <- length(heights$value)
+sample_means <- tibble(value=rnorm(N*1000, mu, sigma), indeks=rep(1:1000, each=N)) 
+
+sample_means1 <- sample_means %>% group_by(indeks) %>% summarise(Mean=mean(value))
+    
+ggplot(data = sample_means1, aes(x = Mean)) +
+  geom_histogram(color = "white", bins = 20)
+HPDI(sample_means1$Mean)
+```
+Võrdluseks, tavaline mitteparameetriline bootstrap annab vastuseks
+`HPDI(a1$Value)`
+```{r}
+HPDI(a1$Value)
+```
+
+Bootstrappimisel (nii parameetrilisel kui mitteparameetrilisel versioonil) on üks konseptuaalne puudus, mis on eriti tõsine väikeste valimite korral. Võtame oma näite USA presidentidest. Meie valimi liikmed on kõik presideerinud viimase 50 aasta jooksul, aga selle aja jooksul on inimeste keskmine pikkus jõudsalt kasvanud. Kui me tahame ennustada järgmise 50 aasta keskmist presidentide pikkust, peaksime selle faktiga arvestama. Aga bootstrap ei jäta meile sellist võimalust. Vähemalt mitte lihtsat. 
 
 Siin tuleb appi Bayesi statistika oma täies hiilguses. Selles paradigmas ei arvesta me mitte ainult andmetega vaid ka taustateadmistega, sünteesides need kokku üheks posterioorseks jaotuseks ehk järeljaotuseks. Selle jaotuse arvutamine erineb bootstrapist, kuid tema tõlgendus ja praktiline töö sellega on samasugune. Erinevalt bootstrapist on Bayes parameetriline meetod, mis sõltub andmete modelleerimisest modeleerija poolt ette antud jaotustesse (normaaljaotus, t jaotus jne). Tegelikult peame me Bayesi arvutuseks modelleerima vähemalt kaks erinevat jaotust: andmete jaotus, mida me kutsume likelihoodiks ehk tõepäraks, ning eelneva teadmise mudel ehk prior, mida samuti modeleeritakse tõenäosusjaotusena.
 
-##3.2. Bayesi põhimõte
+## 4.3. Bayesi põhimõte
 
 Bayesi arvutuseks on meil vaja teada
 
@@ -374,8 +392,9 @@ Seega on meil
 
 **Tõepära parameetri väärtusel x on tõenäosus kohata meie andmeid, kui x on juhtumisi parameetri tegelik väärtus.**  Meie näites koosneb tõepärafunktsioon tõenäosustest, et kuus üheksast patsiendist surid igal võimalikul suremuse väärtusel (0...1). Kuna see on lõpmatu rida, teeme natuke sohki ja arvutame tõepära 20-l valitud suremuse väärtusel 
 
-    Tehniliselt on sinu andmete tõepärafunktsioon agregeeritud iga üksiku andmepunkti tõepärafunktsioonist. 
-    Seega vaatab Bayes igat andmepunkti eraldi (andmete sisestamise järjekord ei loe).
+    Tehniliselt on sinu andmete tõepärafunktsioon agregeeritud iga üksiku 
+    andmepunkti tõepärafunktsioonist. Seega vaatab Bayes igat andmepunkti 
+    eraldi (andmete sisestamise järjekord ei loe).
 
 
 ```{r}
@@ -528,7 +547,7 @@ plot( x = p_grid , y = posterior2 , type="b" ,
 ```
 3. patsient jäi ellu. Nüüd on posteeriori tipp mitte 75% juures nagu ennist, vaid kuskil 50% juures --- tänu priorile.
 
-##2.3. Mudelite keel
+## 4.4. Mudelite keel
 
 Siin vaatame kuidas kirjeldada mudelit nii, et masin selle ära tunneb. Meie mudelid töötavad läbi rethinking() paketi. See raamatukogu pakub kaks võimalust, kuidas mudelit arvutada, mis mõlemad kasutavad sama notatsiooni. Mõlemad võimalused arvutavad posteeriori mitte Bayesi teoreemi kasutades (nagu me ennist tegime), vaid kasutades stohhastilisi meetodeid, mis iseloomustavad posteeriori umbkaudu (aga piisavalt täpselt). Põhjuseks on, et keerulisemate mudelite korral on Bayesi teoreemi kasutamine liialt arvutusmahukas. 
 
@@ -593,7 +612,7 @@ HPDI(samples$p, prob = 0.95) #highest density 95% at the center
 
 10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)
 
-###beta prior 
+## 4.5. beta prior 
 
 Nüüd anname sisse mõistlikuma struktuuriga priori: beta-jaotuse
 
@@ -663,8 +682,14 @@ HPDI(samples$p, prob = 0.95) #highest density 95% at the center
 
 Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n=9.
 
-####Lõpetuseks veel prioritest üldiselt. 
+## 4.6. Lõpetuseks veel prioritest üldiselt. 
 
-Neid võib jagada kolmeks: mitteinformatiivsed, väheinformatiivsed ehk "regularizing" ja informatiivsed. Mitteinformatiivseid prioreid ei ole sisuliselt olemas ja neid on soovitav vältida. Väheinformatiivsed priorid kujutavad endast kompromissi: nad muudavad võimalikult vähe tõepärafunktsiooni kuju, aga samas piiravad seda osa parameetriruumist, kust MCMC ahelad posteeriori otsivad (mis on arvutuslikult soodne). Nende taga on filosoofiline eeldus, et teadlast huvitavad eelkõige tema enda andmed ja see, mida need ühe või teise hüpoteesi (parameetri väärtuse) kohta ütlevad. See eeldus on vaieldav aga kui selle järgi käia, siis kulub vähem mõttejõudu eelteadmiste mudelisse formaliseerimiseks. Vähemalt suured farmaatsiafirmad seda hoiakut ei jaga ja kulutavad usinalt oma miljoneid korralike informatiivsete priorite tootmiseks. Selles protsessis saavad kokku statistikud, teaduseksperdid ja psühholoogid, et inimkonna teadmisi võimalikult adekvaatselt vormida tõenäosusjaotustesse. Meie töötame siin siiski enamasti väheinformatiivsete prioritega, mis on hetkel moes. Aga teile oma teaduses soovitan siiralt arendada informatiivseid prioreid. Vähemalt nõnda toimides te mõtlete oma teaduse üle põhjalikult järele. 
+Neid võib jagada kolmeks: mitteinformatiivsed, väheinformatiivsed ehk "regularizing" ja informatiivsed. 
+
+Mitteinformatiivseid prioreid ei ole sisuliselt olemas ja neid on soovitav vältida. Sageli kutsutakse tasaseid prioreid mitteinformatiivseteks. Neil on vähemalt 2 puudust. Tasane prior, mis ulatub lõpmatusse, on tehniliselt "improper", sest tema alune pindala ei summeeru ühele. Ja teiseks muudavad sellised priorid mcmc ahelad vähem efektiivseteks, mis võib teie arvutuse kihva keerata. 
+
+Väheinformatiivsed priorid kujutavad endast kompromissi: nad muudavad võimalikult vähe tõepärafunktsiooni kuju, aga samas piiravad seda osa parameetriruumist, kust MCMC ahelad posteeriori otsivad (mis on arvutuslikult soodne). Nende taga on filosoofiline eeldus, et teadlast huvitavad eelkõige tema enda andmed ja see, mida need ühe või teise hüpoteesi (parameetri väärtuse) kohta ütlevad. See eeldus on vaieldav aga kui selle järgi käia, siis kulub vähem mõttejõudu eelteadmiste mudelisse formaliseerimiseks. 
+
+Vähemalt suured farmaatsiafirmad seda hoiakut ei jaga ja kulutavad usinalt oma miljoneid korralike informatiivsete priorite tootmiseks. Selles protsessis saavad kokku statistikud, teaduseksperdid ja psühholoogid, et inimkonna teadmisi võimalikult adekvaatselt vormida tõenäosusjaotustesse. Meie töötame siin siiski enamasti väheinformatiivsete prioritega, mis on hetkel moes. Aga teile oma teaduses soovitan siiralt arendada informatiivseid prioreid. Vähemalt nõnda toimides te mõtlete oma teaduse üle põhjalikult järele. 
 
 
