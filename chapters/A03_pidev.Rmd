@@ -1,6 +1,5 @@
----
-title: "Ennustame Pidevat suurust"
----
+
+# Ennustame Pidevat suurust
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE, warning = FALSE)
@@ -239,7 +238,7 @@ Nüüd teeme katse võrrelda USA presidentide ja Euroopa presidentide keskmisi p
 heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) #the vector of values
 df1 <- as.data.frame(heights)
 df1$indeks <- rep("USA", times=nrow(df1)) #selle abil jagame hiljem koond tabeli kahte ossa
-world_presidents <- read.csv2("world_presidents.csv")
+world_presidents <- read.csv2("data/world_presidents.csv")
 world_presidents$indeks <- rep("eur", times=nrow(world_presidents)) #selle abil jagame hiljem koond tabeli kahte ossa
 world_presidents <- world_presidents %>% rename(heights=Height)
 df2 <- bind_rows(df1, world_presidents)
@@ -906,8 +905,8 @@ ggplot(data=dd1, aes(lGDP_s, lifeExp)) +
 Kasutame standardiseeritud prediktoreid, sest nende koefitsiente saab paremini tõlgendada (tegelikult piisab prediktorite tsentreerimisest). Meie andmed käsitlevad diabeedimarkereid Ameerika lõunaosariikide neegritel 1960-ndatel. Me ennustame siin sõltuvalt vanusest ja vööümbermõõdust hdl-i --- high density cholesterol --- mis on nn hea kolesterool.
 
 ```{r}
-diabetes <- read.table(file = '/Users/ulomaivali/Dropbox/loengud/2017 R course/data/diabetes.csv', header = TRUE, sep = ';', dec = ',')
-diabetes <- read.csv2("diabetes.csv")
+diabetes <- read.table(file = 'data/diabetes.csv', header = TRUE, sep = ';', dec = ',')
+diabetes <- read.csv2("data/diabetes.csv")
 d1 <- diabetes %>% select(hdl, age, waist) %>% na.omit()
 d2 <- d1 %>% mutate(age_st=(age - mean(age))/sd(age), 
                     waist_st=(waist - mean(waist))/sd(waist))
@@ -1094,8 +1093,8 @@ Nüüd konkreetne näide:
 
 Missing values are coded as -1.
 
-```{r}
-df <- read.table(file = "/Users/ulomaivali/Downloads/datasets/Gcsemv.txt", sep = " ", dec = ".", header = FALSE) 
+```{r, eval=F}
+df <- read.table(file = "data/Gcsemv.txt", sep = " ", dec = ".", header = FALSE) 
 
 df$V4[df$V4==-1] <- NA
 df$V5[df$V5==-1] <- NA
@@ -1111,7 +1110,7 @@ df$student <- as.factor(df$student)
 
 Alustuseks mitte-hierarhiline mudel, mis arvutab keskmise score1 igale koolile eraldi. See on intercept-only mudel, mis tähendab, et me hindame parameetri keskväärtust, mitte ei püüa ennustada parameeter y väärtust parameeter x-i väärtuse põhjal.
 
-```{r}
+```{r, eval=F}
 df1 <- na.omit(df)
 df2 <- df %>% filter(score1>0) 
 #muide, need mudelid töötavad ka df-ga, imputeerides NAd
@@ -1146,7 +1145,7 @@ Igale koolile antud hinnang on sõltumatu kõigist teistest koolidest.
 
 Ja nüüd hierarhiline mudel, mis teab koolide vahelisest varieeruvusest
 
-```{r}
+```{r, eval=F}
 #glimmer(score1 ~ (1|school), data=df1) #so intercept-only hierarhiline mudel
 
 m3 <- map2stan(
@@ -1164,7 +1163,7 @@ Siin on nüüd lisaparameeter sigma_school. Nagu näha on sigma_school < sigma, 
 
 ning veel üks hierarhiline mudel, mis teab nii koolide skooride keskmiste varieeruvust kui koolide vahelist varieeruvust.
 
-```{r}
+```{r, eval=F}
 m4 <- map2stan(
     alist(
         score1~ dnorm( mu , sigma ) ,
@@ -1177,12 +1176,12 @@ m4 <- map2stan(
 precis(m4, depth = 2)
 ```
 
-```{r}
+```{r, eval=F}
 compare(m2, m3, m4)
 ```
 m3 is the best model (and preferred by glimmer()), but also m4 and m2 have some weigth!
 
-```{r fig.height=10, fig.width=4}
+```{r fig.height=10, fig.width=4, eval=F}
 #coeftab(m2, m3, m4)
 plot(coeftab(m2, m3, m4))
 ```
@@ -1195,7 +1194,7 @@ Ennustame score1 ja score2 summa sõltuvust sex-ist. Küsimus: kui palju poiste 
 Seega kasutame prediktorina binaarset kategoorilist muutujat. See on analoogiline olukord ANOVA mudelile, mis võtab arvesse multiple testingu olukorra, mis meil siin on.
 ```{r}
 #df2 <- schools
-df2 <- read.csv( "schools.csv")
+df2 <- read.csv( "data/schools.csv")
 df2 <- df2 %>% mutate(summa=score1 + score2) %>% na.omit()
 df2$sex <- as.factor(df2$sex)
 f1 <- glimmer(summa~ sex + (1 | school), data=df2)
@@ -1450,7 +1449,6 @@ precis(m2)
 
 
 ```{r warning=F}
-
 m0 <- map2stan( alist(score1 ~ dnorm( mu , sigma ),
     mu <- Intercept + b_score2*score2 ,
     Intercept ~ dnorm(50,50),

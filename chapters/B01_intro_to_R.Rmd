@@ -1,15 +1,8 @@
----
-title: "Introduction to R"
----
-<<<<<<< HEAD
-  
-In R, one works in an area called the "workspace".
-=======
 
-## R workspace
+
+# R workspace
 
 In R, one works in an area called the *workspace*.
->>>>>>> 952ef691d54567fe26c66091cc661d000c73ab17
 The workspace is a working environment where objects are created and manipulated.
 Objects commonly kept in the workspace are (a) entire data sets (i.e. tibbles)
 and (b) the output of statistical analyses.
