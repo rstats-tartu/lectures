@@ -1,5 +1,8 @@
 ---
-title: "Järeldav statistika"
+title: "4. J<c3><a4>reldav statistika"
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r, message=FALSE, warning=FALSE}
@@ -12,16 +15,16 @@ library(rethinking) #HPDI() and PI(). Requires Stan.
 
 
 
-Järeldav statistika püüab valimi põhjal teha järeldusi statistilise populatsiooni kohta, millest see valim pärineb. 
-Sellisel tegevusel on mõtet ainult siis, kui ühest küljest valim peegeldab populatsiooni ja teisest küljest valim ei ole sama asi, mis populatsioon. 
-Seega on statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. 
+Järeldav statistika püüab, kasutades keerulisi algoritme, teha valimi põhjal järeldusi statistilise populatsiooni kohta, millest see valim pärineb. 
+Sellisel tegevusel on mõtet siis, kui ühest küljest valim peegeldab populatsiooni ja teisest küljest valim ei ole sama asi, mis populatsioon. Kui valim = populatsioon, siis pole mõtet keerulisi mudeleid kasutada, et valimi põhjal populatsiooni omadusi ennustada --- seda saab teha lihtsalt valimit kirjeldades. 
+Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. 
 Aga kõigepealt illustreerime valimi ja populatsiooni erinevust.
 
 ###4.1. Valim ei ole sama, mis populatsioon
 
-Simuleerimine on lahe sest erinevalt päris maailmast elavad simulatsioonid mudeli väikses maailmas ning seega teame me täpselt, mida me teeme ja mida on meil selle tagajärjel oodata. Simulatsioonidega saame me hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi (parameetrite väärtuste kombinatsioone), mida päris maailmas kunagi ette ei tule. Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
+Simuleerimine on lahe sest simulatsioonid elavad mudeli väikses maailmas ning seega teame me täpselt, mida me teeme ja mida on meil selle tagajärjel oodata. Simulatsioonidega saame me hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
 
-Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt tõsine ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!
+Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!
 
 ```{r}
 set.seed(1) #makes random number generation reproducible
@@ -34,7 +37,7 @@ Nagu näha on meie valimi keskmine 10% väiksem kui peaks ja valimi sd lausa kak
 
 Kui juba simuleerida, siis robinal: tõmbame ühe valimi asemel 10 000, arvutame seejärel 10 000 keskmist ja sd-d ning vaatame omakorda nende statistikute jaotusi ja keskväärtusi. Simulatsioon on nagu tselluliit --- see on nii odav, et igaüks võib seda endale lubada. 
 
-Meie lootus on, et kui meil on palu valimeid, millel kõigil on juhuslik viga, mis neid populatsiooni suhtes ühele või teisele poole kallutab, siis rohkem on valimeid, mis asuvad tõelisele populatsioonile pigem lähemal kui kaugemal. 
+Meie lootus on, et kui meil on palju valimeid, millel kõigil on juhuslik viga, mis neid populatsiooni suhtes ühele või teisele poole kallutab, siis rohkem on valimeid, mis asuvad tõelisele populatsioonile pigem lähemal kui kaugemal. 
 
 ```{r}
 N <- 3
@@ -48,7 +51,7 @@ Summary %>% ggplot(aes(Mean) ) + geom_histogram()
 mean(Summary$Mean); mean(Summary$SD)
 ```
 
-Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse tõõtab lihtsalt kallutatult, kui n on väike (<10)
+Oh-hooo. Paljude valimite keskmiste keskmine ennustab väga täpselt populatsiooni keskmist aga sd-de keskmise keskmine alahindab populatsiooni sd-d. Valem, millega sd-d arvutatakse tõõtab lihtsalt kallutatult, kui n on väike (<10). Kui ei usu, korda eelnevat simulatsiooni valimiga, mille N=30.
 
 Ja nüüd 10 000 SD keskväärtused:
 
@@ -82,13 +85,13 @@ Ja me saame >40% tõenäosusega pahasti alahinnatud sd. Selline on väikeste val
 
 Aga vähemalt populatsiooni keskmise saame me palju valimeid tõmmates ilusasti kätte --- ka väga väikeste valimitega.
 
-Kahjuks pole meil ei vahendeid ega kannatust 10 000 valimi loodusest kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata, mis ongi bootstrappimise põhimõte. Statistikasse tõi selle meetodi Brad Efron 1970-ndate lõpus.
+Kahjuks pole meil ei vahendeid ega kannatust loodusest 10 000 valimi kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata, mis ongi bootstrappimise põhimõte. Statistikasse tõi selle meetodi Brad Efron 1970-ndate lõpus.
 
 ### 4.2.Bootstrappimine
 
-> Populatsioon on valimile, mis valim on bootstrappitud valimile. 
+> Populatsioon on valimile sama, mis valim on bootstrappitud valimile. 
 
-Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 10 000 virtuaalset valimit. Selleks tõmbame me oma valimist virtuaalselt 10 000 uut juhuvalimit (bootstrap valimit), igaüks neist sama suur kui algne valim. Trikk seisneb selles, et bootstrap valimite tõmbamine käib asendusega, st iga empiirilise valimi element, mis bootstrap valimisse tõmmatakse, pannakse kohe ka algsesse valimisse tagasi. Seega saab seda elementi kohe uuesti samasse bootstrap valimisse tõmmata (kui juhus nii tahab). Seega sisaldab tüüpiline bootstrap valim osasid algse valimi numbreid mitmes korduses ja teisi üldse mitte. Bootstrap valimid plotitakse sama moodi nagu me ennist tegime oma valimitega lõpmatust populatsioonist. Ainsad erinevused on, et bootstrapis on piiratud algse andmekogu suurus, millest valimeid tõmmatakse ning, et iga bootstrapi valim on sama suur kui algne andmekogu.
+Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 1000 virtuaalset valimit. Selleks tõmbame me oma valimist virtuaalselt 1000 uut juhuvalimit (bootstrap valimit), igaüks neist sama suur kui algne valim. Trikk seisneb selles, et bootstrap valimite tõmbamine käib asendusega, st iga empiirilise valimi element, mis bootstrap valimisse tõmmatakse, pannakse kohe ka algsesse valimisse tagasi. Seega saab seda elementi kohe uuesti samasse bootstrap valimisse tõmmata (kui juhus nii tahab). Seega sisaldab tüüpiline bootstrap valim osasid algse valimi numbreid mitmes korduses ja teisi üldse mitte. Bootstrap valimid plotitakse samamoodi, nagu me ennist tegime oma valimitega lõpmatust populatsioonist. Ainsad erinevused on, et bootstrapis on piiratud algse andmekogu suurus, millest valimeid tõmmatakse ning, et iga bootstrapi valim on sama suur kui algne andmekogu (see viimane on pigem konventsioon, kui seadus).
 
 Bootstrap empiirilisele valimile suurusega n töötab nii:
 
@@ -102,7 +105,7 @@ Mis on USA presidentide keskmine pikkus? Meil on valim 10 presidendi pikkusega.
 ```{r}
 heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>%   as_tibble() 
 n <- 10 #sample size
-nr_boot_samples <- 4000 #the nr of bootstrap samples
+nr_boot_samples <- 1000 #the nr of bootstrap samples
 a <- sample_n(heights, n * nr_boot_samples, replace=TRUE)  #create random sample with replacement
 a$key <- rep(1:nr_boot_samples, each = n) #create a column "key" that cuts the sample into slices of size n
 a1 <- a %>% group_by(key) %>% summarise(Value= mean(value)) #calculate the mean for each slice of n values
@@ -111,10 +114,10 @@ dens(a1$Value)
 
 Alternatiivne ja aeglasem kood, mis kasutab mosaic::do(). 
 
-```{r}
+```{r eval=FALSE}
 library(mosaic)
 heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble() 
-sample_means <- mosaic::do(4000) *
+sample_means <- mosaic::do(1000) *
     (heights %>% sample_n(size = 10, replace = TRUE)) 
 #võta heigths andmeraamist 10-ne valim (tagasi panekuga) ja tee seda 4000 korda järjest. tulemuseks on tidy tibble, kus on veerg .index, mille järgi saab grupeerida.
 
@@ -134,7 +137,7 @@ mosaic::do(3)* rnorm(2)
 
 Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muid relevantseid andmeid, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.   
 
-Kuidas selle jaotusega edasi töötada? See on lihtne: meil on 4000 arvu ja me teeme nendega kõike seda, mida parasjagu tahame.
+Kuidas selle jaotusega edasi töötada? See on lihtne: meil on 1000 arvu ja me teeme nendega kõike seda, mida parasjagu tahame.
 
 Näiteks me võime arvutada, millisesse pikkuste vahemikku jääb 92% meie usust USA presidentide tõelise keskmise pikkuse kohta. See tähendab, et teades seda vahemikku peaksime olema valmis maksma mitte rohkem kui 92 senti pileti eest, mis juhul kui USA presidentide keskmine pikkus tõesti jääb sinna vahemikku, toob meile võidu suuruses 1 EUR (ja 8 senti kasumit). Selline kihlveokontor on muide täiesti respektaabel ja akadeemiline tõenäosuse tõlgendus; see on paljude arvates lausa parim tõlgendus, mis meil on. 
 
@@ -201,11 +204,13 @@ HPDI(m12$value)
 #requires JAGS.
 ```
 
+ 
+
 **Bayesian bootstrap SD arvutamiseks.**
 
 When use.weights = FALSE it is important that the summary statistics does not change as a function of sample size. This is the case with the sample standard deviation, so here we have to implement a function calculating the population standard deviation.
 
-```{r}
+```{r eval=FALSE}
 pop.sd <- function(x) {
   n <- length(x)
   sd(x) * sqrt( (n - 1) / n)
@@ -215,8 +220,8 @@ b3 <- bayesboot(heights, pop.sd)
 summary(b3)
 ```
 
-A Bayesian bootstrap analysis of a correlation coefficient
-```{r}
+**A Bayesian bootstrap analysis of a correlation coefficient**
+```{r eval=FALSE}
 #Data comparing two methods of measuring blood flow.
 blood.flow <- data.frame(
   dye = c(1.15, 1.7, 1.42, 1.38, 2.80, 4.7, 4.8, 1.41, 3.9),
@@ -229,9 +234,9 @@ plot(b4)
 
 ```
 
-A Bayesian bootstrap analysis of lm coefficients 
+**A Bayesian bootstrap analysis of lm coefficients** 
 
-```{r}
+```{r eval=FALSE}
 # A custom function that returns the coefficients of
 # a weighted linear regression on the blood.flow data
 lm.coefs <- function(d, w) {
@@ -250,9 +255,9 @@ Bootstrappimine on väga hea meetod, mis sõltub väiksemast arvust eeldustest k
 Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
 Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:
 ```{r}
-mu <- mean(heights$value)
-sigma <- sd(heights$value)
-N <- length(heights$value)
+mu <- mean(heights)
+sigma <- sd(heights)
+N <- length(heights)
 sample_means <- tibble(value=rnorm(N*1000, mu, sigma), indeks=rep(1:1000, each=N)) 
 
 sample_means1 <- sample_means %>% group_by(indeks) %>% summarise(Mean=mean(value))
@@ -261,15 +266,15 @@ ggplot(data = sample_means1, aes(x = Mean)) +
   geom_histogram(color = "white", bins = 20)
 HPDI(sample_means1$Mean)
 ```
-Võrdluseks, tavaline mitteparameetriline bootstrap annab vastuseks
-`HPDI(a1$Value)`
+
+Võrdluseks, tavaline mitteparameetriline bootstrap annab vastuseks `HPDI(a1$Value)`
 ```{r}
 HPDI(a1$Value)
 ```
 
 Bootstrappimisel (nii parameetrilisel kui mitteparameetrilisel versioonil) on üks konseptuaalne puudus, mis on eriti tõsine väikeste valimite korral. Võtame oma näite USA presidentidest. Meie valimi liikmed on kõik presideerinud viimase 50 aasta jooksul, aga selle aja jooksul on inimeste keskmine pikkus jõudsalt kasvanud. Kui me tahame ennustada järgmise 50 aasta keskmist presidentide pikkust, peaksime selle faktiga arvestama. Aga bootstrap ei jäta meile sellist võimalust. Vähemalt mitte lihtsat. 
 
-Siin tuleb appi Bayesi statistika oma täies hiilguses. Selles paradigmas ei arvesta me mitte ainult andmetega vaid ka taustateadmistega, sünteesides need kokku üheks posterioorseks jaotuseks ehk järeljaotuseks. Selle jaotuse arvutamine erineb bootstrapist, kuid tema tõlgendus ja praktiline töö sellega on samasugune. Erinevalt bootstrapist on Bayes parameetriline meetod, mis sõltub andmete modelleerimisest modeleerija poolt ette antud jaotustesse (normaaljaotus, t jaotus jne). Tegelikult peame me Bayesi arvutuseks modelleerima vähemalt kaks erinevat jaotust: andmete jaotus, mida me kutsume likelihoodiks ehk tõepäraks, ning eelneva teadmise mudel ehk prior, mida samuti modeleeritakse tõenäosusjaotusena.
+Siin tuleb appi Bayesi statistika oma täies hiilguses. Selles paradigmas ei arvesta me mitte ainult andmetega vaid ka taustateadmistega, sünteesides need kokku üheks posterioorseks jaotuseks ehk järeljaotuseks. Selle jaotuse arvutamine erineb bootstrapist, kuid tema tõlgendus ja praktiline töö sellega on samasugune. Erinevalt tavapärasest bootstrapist on Bayes parameetriline meetod, mis sõltub andmete modelleerimisest modeleerija poolt ette antud jaotustesse (normaaljaotus, t jaotus jne). Tegelikult peame me Bayesi arvutuseks modelleerima vähemalt kaks erinevat jaotust: andmete jaotus, mida me kutsume likelihoodiks ehk tõepäraks, ning eelneva teadmise mudel ehk prior, mida samuti modeleeritakse tõenäosusjaotusena.
 
 ## 4.3. Bayesi põhimõte
 
@@ -277,9 +282,9 @@ Bayesi arvutuseks on meil vaja teada
 
 1) milline on "*parameter space*" ehk parameetriruum? Parameetriruum koosneb kõikidest loogiliselt võimalikest parameetriväärtustest. Näiteks kui me viskame ühe korra münti, koosneb parameetriruum kahest elemendist: 0 ja 1, ehk null kulli ja üks kull. See ammendab võimalike sündmuste nimekirja. Kui me aga hindame mõnd pidevat suurust (keskmine pikkus, tõenäosus 0 ja 1 vahel jms), koosneb parameetriruum lõpmata paljudest elementidest (arvudest). 
 
-2) milline on "*likelihood function*" ehk tõepärafunktsioon? Me omistame igale parameetriruumi elemendile (igale võimalikule parameetri väärtusele) tõepära. Tõepära parameetri väärtusel x on defineeritud kui tõenäosus, millega me võiksime kohata oma andmeid, juhul kui x oleks päriselt õige parameetri väärtus. Teisisõnu, tõepära on kooskõla määr andmete ja parameetri väärtuse x vahel. Tõepära = Pr(andmed I parameetri väärtus). Näiteks, kui tõenäolised on meie andmed, kui USA keskmine president on juhtumisi 183.83629 cm pikkune? Sageli on tõepära modelleeritud pideva tõenäosusfunktsioonina (näiteks normaaljaotusena), mis täielikult katab pideva väärtusruumi. Tõepärafunktsioon ei summeeru 100-le protsendile --- see on normaliseerimata.
+2) milline on "*likelihood function*" ehk tõepärafunktsioon? Me omistame igale parameetriruumi elemendile (igale võimalikule parameetri väärtusele) tõepära. Tõepära parameetri väärtusel x on tõenäosus, millega me võiksime kohata oma andmete keskväärtust, juhul kui x oleks see ainus päris õige parameetri väärtus. Teisisõnu, tõepära on kooskõla määr andmete ja parameetri väärtuse x vahel. Tõepära = Pr(andmed | parameetri väärtus). Näiteks, kui tõenäolised on meie andmed, kui USA keskmine president on juhtumisi 183.83629 cm pikkune? Kuna meil on vaja modeleerida tõepära igal võimalikul parameetri väärtusel (mida pideva suuruse puhul on lõpmatu hulk), siis kujutame tõepära  pideva funktsioonina (näiteks normaaljaotusena), mis täielikult katab parameetriruumi. Tõepärafunktsioon ei summeeru 100-le protsendile --- see on normaliseerimata.
 
-3) milline on "*prior function*" ehk prior? Kui tõepära on modelleeritud pideva funktsioonina siis on ka prior modelleeritud pideva tõenäosusjaotusena (aga ta ei pea olema samas jaotusmudelis, kus tõepära). Erinevus seisneb selles, et kui tõepärafunktsioon annab meie andmete tõenäosuse igal parameetriväärtusel, siis prior annab iga parameetriväärtuse tõenäosuse olukorras, kus me üldse ei arvesta oma andmete olemasoluga. Me omistame igale parameetriruumi väärtusele eelneva tõenäosuse, et see väärtus on üks ja ainus tõene väärtus. Prior jaotus summeerub 1-le. Prior kajastab meie konkreetsetest andmetest sõltumatut arvamust, kui suure tõenäosusega on just see parameetri väärtus tõene; seega seda, mida me usume enne oma andmete nägemist. Nendel parameetri väärtustel, kus prior (või tõepära) = 0%, on ka posteerior garanteeritult 0%. See tähendab, et kui te olete 100% kindel, et mingi sündmus on võimatu, siis ei suuda ka mäekõrgune hunnik uusi andmeid teie uskumust muuta (eelduselt, et te olete ratsionaalne inimene).
+3) milline on "*prior function*" ehk prior? Igale tõepära väärtusele peab vastama priori väärtus. Seega, kui tõepära on modelleeritud pideva funktsioonina, siis on ka prior pidev funktsioon (aga prior ei pea olema sama tüüpi funktsioon, kui tõepära). Erinevus tõepära ja priori vahel seisneb selles, et kui tõepärafunktsioon annab just meie andmete keskväärtuse tõenäosuse igal parameetriväärtusel, siis prior annab iga parameetriväärtuse tõenäosuse, sõltumata meie andmetest. See-eest arvestab prior kõikide teiste relevantsete andmetega, sünteesides taustateadmised ühte tõenäousmudelisse. Me omistame igale parameetriruumi väärtusele eelneva tõenäosuse, et see väärtus on üks ja ainus tõene väärtus. Prior jaotus summeerub 1-le. Prior kajastab meie konkreetsetest andmetest sõltumatut arvamust, kui suure tõenäosusega on just see parameetri väärtus tõene; seega seda, mida me usume enne oma andmete nägemist. Nendel parameetri väärtustel, kus prior (või tõepära) = 0%, on ka posteerior garanteeritult 0%. See tähendab, et kui te olete 100% kindel, et mingi sündmus on võimatu, siis ei suuda ka mäekõrgune hunnik uusi andmeid teie uskumust muuta (eelduselt, et te olete ratsionaalne inimene).
 
 http://optics.eee.nottingham.ac.uk/match/uncertainty.php aitab praktikas priorit modelleerida (proovige *Roulette* meetodit).
 
@@ -287,7 +292,7 @@ Kui te eelnevast päriselt aru ei saanud, ärge muretsege. Varsti tulevad puust 
 
 Edasi on lihtne. Arvuti võtab tõepärafunktsiooni ja priori, korrutab need üksteisega läbi ning seejärel normaliseerib saadud jaotuse nii, et jaotusealune pindala võrdub ühega. Saadud tõenäosusjaotus ongi posteeriorne jaotus ehk posteerior ehk järeljaotus. Kogu lugu. 
 
-Me teame juba palju aastakümneid, et Bayesi teoreem on sellisele ülesandele parim võimalik lahendus. Lihtsamad ülesanded lahendame me selle abil täiuslikult. Kuna parameetrite arvu kasvuga mudelis muutub Bayesi teoreemi läbiarvutamine eksponentsiaalselt arvutusmahukamaks (sest läbi tuleb arvutada kõikide parameetrite väärtuste kõikvõimalikud kombinatsioonid), oleme sunnitud vähegi keerulisemad ülesanded lahendama umbkaudu, asendades Bayesi teoreemi *ad hoc* MCMC algoritmidega, mis teie arvutis peituva propelleri Karlsoni kombel lendu saadavad selleks, et "otse" sämplida arve posterioorsest jaotusest. Meie kasutatava MCMC *Hamiltonian Monte Carlo* mootori nimi on Stan. See on R-st eraldiseisev programm, millel on aga R-i interface R-i pakettide rstan(), rethinking(), rstanarm() jt kaudu. Meie töötame ka edaspidi puhtalt R-s, mis automaatselt suunab meie mudelid ja muud andmed Stani, kus need läbi arvutatakse ja seejärel tulemused R-i tagasi saadetakse. Tulemuste töötlus ja graafiline esitus toimub meie poolt jällegi R-is. Seega ei pea me ise kordagi Stani avama. (Stanil on sarnased interfaced ka Pythoni, Matlabi jt keeltega.) 
+Me teame juba pool sajandit, et Bayesi teoreem on sellisele ülesandele parim võimalik lahendus. Lihtsamad ülesanded lahendame me selle abil täiuslikult. Kuna parameetrite arvu kasvuga mudelis muutub Bayesi teoreemi läbiarvutamine eksponentsiaalselt arvutusmahukamaks (sest läbi tuleb arvutada mudeli kõikide parameetrite kõikide väärtuste kõikvõimalikud kombinatsioonid), oleme sunnitud vähegi keerulisemad ülesanded lahendama umbkaudu, asendades Bayesi teoreemi *ad hoc* MCMC algoritmiga, mis teie arvutis peituva propelleri Karlsoni kombel lendu saadab selle nimel, et tõmmata valim "otse" posterioorsest jaotusest. Meie poolt kasutatava MCMC *Hamiltonian Monte Carlo* mootori nimi on Stan. See on R-st eraldiseisev programm, millel on siiski R-i liides R-i pakettide rstan(), rethinking(), rstanarm() jt kaudu. Meie töötame ka edaspidi puhtalt R-s, mis automaatselt suunab meie mudelid ja muud andmed Stani, kus need läbi arvutatakse ja seejärel tulemused R-i tagasi saadetakse. Tulemuste töötlus ja graafiline esitus toimub jällegi R-is. Seega ei pea me ise kordagi Stani avama. 
 
 Alustame siiski lihtsa näitega, mida saab käsitsi läbi arvutada.
 
@@ -295,11 +300,11 @@ Alustame siiski lihtsa näitega, mida saab käsitsi läbi arvutada.
 
 Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. Seega on meil kaks andmetükki (50% ja n=3). Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.
 
-Parameetriruum: 0 elus, 1 elus, 2 elus ja 3 elus. Seega on meil neljaliikmeline parameetriruumi.
+Parameetriruum: 0 surnud, 1 surnud, 2 surnud ja 3 surnud. Seega on meil neljaliikmeline parameetriruumi.
 
 Edasi loeme üles kõik võimalikud sündmusteahelad, mis saavad loogiliselt juhtuda (et saada tõepärafunktsioon).
 
-Me heidame münti 3 korda: H - kiri, T - kull
+Me viskame kulli-kirja 3 korda: H - kiri, T - kull
 
 Võimalikud sündmused on:
 
@@ -316,12 +321,12 @@ TTT,
 
 Kui Pr(H) = 0.5 ning H = elus ja T = surnud, siis lugedes kokku kõik võimalikud sündmused:
 
-+ 0 elus - 1,
-+ 1 elus - 3,
-+ 2 elus - 3,
-+ 3 elus - 1
++ 0 surnud - 1,
++ 1 surnud - 3,
++ 2 surnud - 3,
++ 3 surnud - 1
 
-Nüüd teame parameetriruumi igale liikme kohta, kui suure tõenäosusega me ootame selle realiseerumist. Näiteks, Pr(0 elus) = 1/8, Pr(1 elus) = 3/8, Pr(1 või 2 elus) = 6/8 jne
+Nüüd teame parameetriruumi igale liikme kohta, kui suure tõenäosusega me ootame selle realiseerumist. Näiteks, Pr(0 surnud) = 1/8, Pr(1 surnud) = 3/8, Pr(1 või 2 surnud) = 6/8 jne
 
 Selle teadmise saab konverteerida tõepärafunktsiooniks
 
@@ -335,7 +340,7 @@ Siit näeme, et üks surm ja kaks surma on sama tõenäolised ja üks surm on ko
 
 Tõepära annab meile tõenäosuse Pr(mortality=0.5 & N=3) igale loogiliselt võimalikule surmade arvule (0 kuni 3). 
 
-Me saame sama tulemuse kasutades binoomjaotuse mudelit (sest mitteformaalselt kasutasime ka ennist sama mudelit).
+Me saame sama tulemuse kasutades binoomjaotuse mudelit (tegelikult kasutasime ka ennist sama mudelit). Ainus erinevus on, et nüüd on meil y teljel surmade tõenäosus.
 
 ```{r}
 x<-seq(0, 3)
@@ -351,7 +356,7 @@ y <- dbinom(x,9, 0.67)
 plot(x, y, type="b", xlab="nr of deaths", ylab="probability of x deaths", main="probability of x out of 9 deaths if Pr(Heads)=0.67")
 ```
 
-Lisame siia tasase priori (lihtsuse huvides) ja arvutame posterioorse jaotuse kasutades Bayesi teoreemi. Igale parameetri väärtusele, tõepära * prior on proportsionaalne posterioorse tõenäosusega, et just see parameetri väärtus on see ainus tõene väärtus. Posterioorsed tõenäosused normaliseeritakse nii, et nad summeeruksid 1-le.
+Lisame sellele tõepärafunktsioonile tasase priori (lihtsuse huvides) ja arvutame posterioorse jaotuse kasutades Bayesi teoreemi. Igale parameetri väärtusele on tõepära * prior proportsionaalne posterioorse tõenäosusega, et just see parameetri väärtus on see ainus tõene väärtus. Posterioorsed tõenäosused normaliseeritakse nii, et nad summeeruksid 1-le.
 
 Me defineerime X telje kui rea 10-st arvust (0 kuni 9 surma) ja arvutame tõepära igale neist 10-st arvust. Sellega ammendame me kõik loogiliselt võimalikud parameetri väärtused.
 
@@ -386,9 +391,9 @@ Nüüd koosnevad andmed 9 patsiendi morbiidsusinfost (parameeter, mille väärtu
 Seega on meil
 1) parameetriruum 0% kuni 100% suremus (0st 1-ni), mis sisaldab lõpmata palju numbreid.
 
-2) kaks võimalikku sündmust (surnud, elus), seega binoomjaotusega modelleeritud tõepärafunktsioon. Nagu me juba teame, on r funkrsioonis dbinom() kolm argumenti: surmade arv, patsientide koguarv ja surmade tõenäosus. Seekord oleme me fikseerinud esimesed kaks ja soovime arvutada kolmanda.
+2) kaks võimalikku sündmust (surnud, elus), seega binoomjaotusega modelleeritud tõepärafunktsioon. Nagu me juba teame, on r funktsioonis dbinom() kolm argumenti: surmade arv, patsientide koguarv ja surmade tõenäosus. Seekord oleme me fikseerinud esimesed kaks ja soovime arvutada kolmanda väärtuse.
 
-3) tasane prior, mis ulatub 0 ja 1 vahel. Me valisime selle priori selleks, et mitte muuta tõepärafunktsiooni kuju. See ei tähenda, et me arvaksime, et tasane prior on mitteinformatiivne. Tasane prior tähendab, et me usume, et suremuse kõik väärtused 0 ja 1 vahel on võrdselt tõenäolised. See on vägagi informatsioonirohke (ebatavaline) viis maailma näha ükskõik mis haiguse puhul!
+3) tasane prior, mis ulatub 0 ja 1 vahel. Me valisime selle priori selleks, et mitte muuta tõepärafunktsiooni kuju. See ei tähenda, et me arvaksime, et tasane prior on mitteinformatiivne. Tasane prior tähendab, et me usume, et suremuse kõik väärtused 0 ja 1 vahel on võrdselt tõenäolised. See on vägagi informatsioonirohke (ebatavaline) viis maailma näha, ükskõik mis haiguse puhul!
 
 **Tõepära parameetri väärtusel x on tõenäosus kohata meie andmeid, kui x on juhtumisi parameetri tegelik väärtus.**  Meie näites koosneb tõepärafunktsioon tõenäosustest, et kuus üheksast patsiendist surid igal võimalikul suremuse väärtusel (0...1). Kuna see on lõpmatu rida, teeme natuke sohki ja arvutame tõepära 20-l valitud suremuse väärtusel 
 
@@ -404,24 +409,20 @@ p_grid <- seq( from=0 , to=1 , length.out=20 )
 prior <- rep( 1 , 20 )
 # compute likelihood at each value in grid
 likelihood <- dbinom( 6 , size=9 , prob=p_grid )
-# compute product of likelihood and prior
-
+#plot prior
 plot(p_grid, prior, type="b", main="prior")
-
-p_grid <- seq( from=0 , to=1 , length.out=20 )
-likelihood <- dbinom( 6 , size=9 , prob=p_grid )
+#plot likelihood
 plot(p_grid, likelihood, type="b", main="the likelihood function")
-
-unstd.posterior <- likelihood * prior
-# standardize the posterior, so that it sums to 1
-posterior <- unstd.posterior / sum(unstd.posterior)
-
+# compute product of likelihood and prior & standardize the posterior.
+posterior <- likelihood * prior / sum(likelihood * prior)
+#plot posterior
 plot( x = p_grid , y = posterior , type="b" ,
     xlab="mortality" , ylab="posterior probability", main="posterior distribution" )
 ```
 
 Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sisaldab kogu meie teadmist suremuse kohta.
 
+> Alati on kasulik plottida kõik kolm funktsiooni (tõepära, prior ja posteerior).
 
 
 ####Kui n=1
@@ -440,10 +441,7 @@ p_grid <- seq( from=0 , to=1 , length.out=20 )
 prior <- rep( 1 , 20 )
 # compute likelihood at each value in grid
 likelihood <- dbinom( 1 , size=1 , prob=p_grid )
-# compute product of likelihood and prior
-unstd.posterior <- likelihood * prior
-# standardize the posterior, so that it sums to 1
-posterior <- unstd.posterior / sum(unstd.posterior)
+posterior <- likelihood * prior / sum(likelihood * prior)
 
 plot( x = p_grid , y = posterior , type="b" ,
     xlab="mortality" , ylab="posterior probability" )
@@ -459,10 +457,7 @@ p_grid <- seq( from=0 , to=1 , length.out=20 )
 prior <- posterior
 # compute likelihood at each value in grid
 likelihood <- dbinom( 1 , size=1 , prob=p_grid )
-# compute product of likelihood and prior
-unstd.posterior <- likelihood * prior
-# standardize the posterior, so that it sums to 1
-posterior1 <- unstd.posterior / sum(unstd.posterior)
+posterior1 <- likelihood * prior / sum(likelihood * prior)
 
 plot( x = p_grid , y = posterior1 , type="b" ,
     xlab="mortality" , ylab="posterior probability" )
@@ -479,9 +474,7 @@ prior <- posterior1
 # compute likelihood at each value in grid
 likelihood <- dbinom( 0 , size=1 , prob=p_grid )
 # compute product of likelihood and prior
-unstd.posterior <- likelihood * prior
-# standardize the posterior, so that it sums to 1
-posterior2 <- unstd.posterior / sum(unstd.posterior)
+posterior2 <- likelihood * prior / sum(likelihood * prior)
 
 plot( x = p_grid , y = posterior2 , type="b" ,
     xlab="mortality" , ylab="posterior probability" )
@@ -499,10 +492,7 @@ p_grid <- seq( from=0 , to=1 , length.out=20 )
 prior <- c( seq(1:10), seq(from= 10, to= 1) )
 # compute likelihood at each value in grid
 likelihood <- dbinom( 1 , size=1 , prob=p_grid )
-# compute product of likelihood and prior
-unstd.posterior <- likelihood * prior
-# standardize the posterior, so that it sums to 1
-posterior <- unstd.posterior / sum(unstd.posterior)
+posterior <- likelihood * prior / sum(likelihood * prior)
 
 plot(x=1:20, y=prior, type="b", main="prior")
 plot( x = p_grid , y = posterior , type="b" ,
@@ -518,9 +508,7 @@ prior <- posterior
 # compute likelihood at each value in grid
 likelihood <- dbinom( 1 , size=1 , prob=p_grid )
 # compute product of likelihood and prior
-unstd.posterior <- likelihood * prior
-# standardize the posterior, so it sums to 1
-posterior1 <- unstd.posterior / sum(unstd.posterior)
+posterior1 <- likelihood * prior / sum(likelihood * prior)
 
 plot(x=1:20, y=prior, type="b", main="prior")
 
@@ -537,10 +525,8 @@ p_grid <- seq( from=0 , to=1 , length.out=20 )
 prior <- posterior1
 # compute likelihood at each value in grid
 likelihood <- dbinom( 0 , size=1 , prob=p_grid )
-# compute product of likelihood and prior
-unstd.posterior <- likelihood * prior
-# standardize the posterior, so that it sums to 1
-posterior2 <- unstd.posterior / sum(unstd.posterior)
+posterior2 <- likelihood * prior / sum(likelihood * prior)
+
 plot(x=1:20, y=prior, type="b", main="prior")
 plot( x = p_grid , y = posterior2 , type="b" ,
     xlab="mortality" , ylab="posterior probability", main="posterior"  )

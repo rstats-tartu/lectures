@@ -300,9 +300,9 @@ y <- x + x**2
 plot(y~x, type="l")
 ```
 
-Mudeli keeles tähistame me seda, mida me ennustame (antud juhul pikkus) Y-ga ja seda, mille väärtuse põhjal me ennustame (antud juhul kaal) X-ga. Seega sirge mudeli matemaatiline formalism on Y = X. See on äärmiselt jäik mudel: ta on sirge kujuline ja selle sirge asukoht on rangelt fikseeritud. Sirge lõikab y telge alati 0-s (ehk mudeli keeles: selle sirge intercept ehk lõikepunkt Y teljel = 0) ja tema tõusunurk saab olla ainult 45 kraadi (mudeli keeles: mudeli slope ehk tõus = 1). Selle mudeli jäikus tuleneb sellest, et selles mudelis ei ole parameetreid, mida me saaksime vabalt muuta ehk tuunida.  
+Mudeli keeles tähistame me seda, mida me ennustame (antud juhul pikkus) Y-ga ja seda, mille väärtuse põhjal me ennustame (antud juhul kaal) X-ga. Seega sirge mudeli matemaatiline formalism on Y = X. See on äärmiselt jäik mudel: ta on sirge kujuline ja selle sirge asukoht on rangelt fikseeritud. Sirge lõikab y telge alati 0-s (mudeli keeles: sirge intercept ehk lõikepunkt Y teljel = 0) ja tema tõusunurk saab olla ainult 45 kraadi (mudeli keeles: mudeli slope ehk tõus = 1). Selle mudeli jäikus tuleneb sellest, et temas ei ole parameetreid, mille väärtusi me saaksime muuta ehk tuunida.  
 
-Kuidas aga kirjeldada sirget, mis võib paikneda 2-mõõtmelises ruumis ükskõik millises asendis? Selleks lisame mudelisse kaks parameetrit, intercept (a) ja tõus (b). Kui a=0 ja b=0, saame me eelpool kirjeldatud mudeli y = x. Kui a = 102, siis sirge lõikab y telge väärtusel 102. Kui b = 0.8, siis x-i tõustes 1 ühiku võrra tõuseb y-i väärtus 0.8 ühiku võrra. Kui a = 100 ja b = 0, siis saame sirge, mis on paraleelne x-teljega ja lõikab y telge väärtusel 100 (mis juhtub, kui a = Inf?). Seega, Teades a ja b väärtusi ning omistades x-le suvalise meid huvitava väärtuse, saab ennustada y-i keskmist väärtust. Näiteks, olgu andmete vastu fititud mudel: 
+Kuidas aga kirjeldada sirget, mis võib paikneda 2-mõõtmelises ruumis ükskõik millises asendis? Selleks lisame mudelisse kaks parameetrit, intercept (a) ja tõus (b). Kui a = 0 ja b = 1, saame me eelpool kirjeldatud mudeli y = x. Kui a = 102, siis sirge lõikab y telge väärtusel 102. Kui b = 0.8, siis x-i tõustes 1 ühiku võrra tõuseb y-i väärtus 0.8 ühiku võrra. Kui a = 100 ja b = 0, siis saame sirge, mis on paraleelne x-teljega ja lõikab y telge väärtusel 100. Seega, Teades a ja b väärtusi ning omistades x-le suvalise meid huvitava väärtuse, saab ennustada y-i keskmist väärtust. Näiteks, olgu andmete vastu fititud mudel: 
 
 pikkus(cm) = 102 + 0.8 * kaal(kg) ehk 
 
@@ -319,13 +319,12 @@ y <-  a + b * x
 plot(y~x, type="l", xlab="weight in kg", ylab="heigth in cm", main="a more flexible linear model", ylim=c(50, 200))
 ```
 
-See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline, olukord. Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu (sest 0-kaaluga inimesi pole olemas). Meie valimiandmed ei peegelda täpselt inimpopulatsiooni. Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole. Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.  
-
+See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline, olukord. Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu. Meie valimiandmed ei peegelda täpselt inimpopulatsiooni. Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole. Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.  
 
 
 ### Neli mõistet 
 
-X ja Y on muutujad, a ja b on parameetrid. Muutujate väärtused fikseeritakse andmete poolt, parameetrid fititakse muutujate väärtuste põhjal. Fititud mudel ennustab igale X-i väärtusele vastava kõige tõenäolisema Y väärtuse (Y keskväärtuse sellel X-i väärtusel).
+X ja Y on muutujad, a ja b on parameetrid. Muutujate väärtused fikseeritakse andmete poolt, parameetrid fititakse andmete põhjal. Fititud mudel ennustab igale X-i väärtusele vastava kõige tõenäolisema Y väärtuse (Y keskväärtuse sellel X-i väärtusel).
  
  > Y - mida me ennustame (dependent variable, predicted varable)
  
@@ -333,7 +332,7 @@ X ja Y on muutujad, a ja b on parameetrid. Muutujate väärtused fikseeritakse a
  
  > muutuja (variable) - iga asi, mida me valimis mõõdame (X ja Y on kaks muutujat). Muutuja väärtused on fikseeritud andmete poolt. Muutujal on sama palju fikseeritud väärtusi kui meil on selle muutuja kohta mõõtmisandmeid.
  
- > parameeter (parameter) - mudeli koefitsient, millele võib omistada suvalisi väärtusi. Parameetreid tuunides fitime me mudeli võimalikult hästi sobituma andmetega.
+ > parameeter (parameter) - mudeli koefitsient, millele võib omistada suvalisi väärtusi. Parameetreid tuunides fitime mudeli võimalikult hästi sobituma andmetega.
  
  
 
@@ -343,10 +342,11 @@ Mudelid sisaldavad (1) matemaatilisi struktuure, mis määravad mudeli tüübi n
 
 Seda tuunimist nimetatakse mudeli fittimiseks. Mudelit fittides on eesmärk saavutada antud tüüpi mudeli maksimaalne sobivus andmetega. Näiteks võrrand y = a + bx määrab mudeli, kus y = x on on see struktuur, mis tagab, et mudeli tüüp on sirge, ning a ja b on parameetrid, mis määravad sirge asendi. Seevastu struktuur y = x + x^2 tagab, et mudeli y = a + b1x + b2x^2  tüüp on parabool, ning parameetrite a, b1 ja b2 väärtused määravad selle parabooli täpse kuju. Ja nii edasi. 
 
-    lineraarse mudeli maksimaalse sobivuse andmetega saab tagada kahe erineva
-    algoritmiga: vähimruutude meetod, mis minimeerib andmepunktide kauguste 
-    ruutude summa mudeli ennustusest, ja Bayesi teoreem, mis väheinformatiivse
-    priori korral annab sisuliselt identse fiti. 
+    lineraarse mudeli maksimaalse sobivuse andmetega saab tagada kahel erineval viisil: 
+    (i) vähimruutude meetod arvutab iga andmepunkti kauguse mudeli ennustusest võtab 
+    selle kauguse ruutu, summeerib tulemused ja leiab sirge asendi, kus see summa 
+    on minimaalne; 
+    (ii) Bayesi teoreem annab väheinformatiivse priori korral praktiliselt sama fiti. 
   
  Hea mudel on 
  
@@ -356,15 +356,15 @@ Seda tuunimist nimetatakse mudeli fittimiseks. Mudelit fittides on eesmärk saav
  
  (3) genereerib usutavaid simuleeritud andmeid (see näitab mudeli kvaliteeti).
  
- Sageli fititkse samade andmetega mitu erinevat tüüpi mudelit ja püütakse otsustada, milline neist vastab kõige paremini eeltoodud tingimustele. Näiteks, kui sirge suudab kaalu järgi pikkust ennustada paremini kui parabool, siis on sirge mudel kooskõlas teadusliku hüpoteesiga, mis annaks mehhanismi protsessile, mille käigus kilode lisandumine viiks laias kaaluvahemikus inimeste pikkuse kasvule ilma, et pikkuse kasvu tempo kaalu tõustes langeks. 
+ Sageli fititkse samade andmetega mitu erinevat tüüpi mudelit ja püütakse otsustada, milline neist vastab kõige paremini eeltoodud tingimustele. Näiteks, kui sirge suudab kaalu järgi pikkust ennustada paremini kui parabool, siis on sirge mudel paremas kooskõlas teadusliku hüpoteesiga, mis annaks mehhanismi protsessile, mille käigus kilode lisandumine viiks laias kaaluvahemikus inimeste pikkuse kasvule ilma, et pikkuse kasvu tempo kaalu tõustes langeks. 
  
- See, et teie andmed sobivad matemaatiliselt hästi mingi mudeliga, ei tähenda automaatselt, et sellel faktil oleks mingi teaduslik relevantsus. Mudeli parameetrid on mõtekad mudeli matemaatilise kirjelduse kontekstis, aga mitte tingimata suure maailma põhjusliku seletamise kontekstis. Siiski, juhul kui mudeli matemaatiline struktuur loodi andmeid genreeeriva loodusliku protsessi olemust silmas pidades, siis võib mudeli fitist selguda olulisi tõsiasju suure maailma kohta. 
+ See, et teie andmed sobivad hästi mingi mudeliga, ei tähenda automaatselt, et see fakt oleks teaduslikult huvitav. Mudeli parameetrid on mõtekad mudeli matemaatilise kirjelduse kontekstis, aga mitte tingimata suure maailma põhjusliku seletamise kontekstis. Siiski, kui mudeli matemaatiline struktuur loodi andmeid genreeeriva loodusliku protsessi olemust silmas pidades, võib mudeli koefitsientide uurimisest selguda olulisi tõsiasju suure maailma kohta. 
   
 ####Üle- ja alafittimine
   
-  Osad mudelite tüübid on vähem paindlikud kui teised (parameetreid tuunides on neil vähem liikumisruumi). Kuigi sellised mudelid sobituvad halvemini andmetega, võivad need  ikkagi paremini kui mõni paindlikum mudel välja tuua andmete peidetud olemuse. Mudeldamine eeldab, et me usume, et meie andmetes leidub nii müra (mida mudel võiks ignoreerida), kui signaal (mida mudel püüab tabada). Kuna mudeli jaoks näeb müra samamoodi välja kui signaal, on iga mudel kompromiss üle- ja alafittimise vahel. Me lihtsalt loodame, et meie mudel on piisavalt jäik, et mitte liiga palju müra modelleerida ja samas piisavalt paindlik, et piisaval määral signaali tabada.
+  Osad mudelite tüübid on vähem paindlikud kui teised (parameetreid tuunides on neil vähem liikumisruumi). Kuigi sellised mudelid sobituvad halvemini andmetega, võivad need  ikkagi paremini kui mõni paindlikum mudel välja tuua andmete peidetud olemuse. Mudeldamine eeldab, et me usume, et meie andmetes leidub nii müra (mida mudel võiks ignoreerida), kui signaal (mida mudel püüab tabada). Kuna mudeli jaoks näeb müra samamoodi välja, kui signaal, on iga mudel kompromiss üle- ja alafittimise vahel. Me lihtsalt loodame, et meie mudel on piisavalt jäik, et mitte liiga palju müra modelleerida ja samas piisavalt paindlik, et piisaval määral signaali tabada.
   
-  Üks kõige jäigemaid mudeleid on sirge, mis tähendab, et sirge mudel on suure tõenäosusega alafittitud. Keera sirget kuipalju tahad, ikka ei sobitu ta enamiku andmekogudega. Ja need vähesed andmekogud, mis sirge mudeliga sobivad, on genereeritud teatud tüüpi lineaarsete protsesside poolt. Sirge on seega üks kõige paremini tõlgendatavaid mudeleid. Teises äärmuses on polünoomsed mudelid, mis on väga paindlikud, mida on väga raske tõlgendada ja mille puhul on suur mudeli ülefittimise oht. Ülefititud mudel järgib nii täpselt valimiandmeid, et sobitub hästi valimis leiduva juhusliku müraga ning seetõttu sobitub halvasti järgmise valimiga samast populatsioonist (sest igal valimil on oma juhuslik müra). Üldiselt, mida rohkem on mudelis tuunitavaid parameetreid, seda paindlikum mudel, seda kergem on seda valimiandmetega sobitada ja seda raskem on seda mudelit tõlgendada. Veelgi enam, alati on võimalik konstrueerida mudel, mis sobitub täiuslikult lõpliku arvu andmepunktidega (selle mudeli parameetrite arv = N). Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fititi --- ja täiesti kasutu.
+  Üks kõige jäigemaid mudeleid on sirge, mis tähendab, et sirge mudel on suure tõenäosusega alafittitud. Keera sirget kuipalju tahad, ikka ei sobitu ta enamiku andmekogudega. Ja need vähesed andmekogud, mis sirge mudeliga sobivad, on genereeritud teatud tüüpi lineaarsete protsesside poolt. Sirge on seega üks kõige paremini tõlgendatavaid mudeleid. Teises äärmuses on polünoomsed mudelid, mis on väga paindlikud, mida on väga raske tõlgendada ja mille puhul esineb suur mudeli ülefittimise oht. Ülefititud mudel järgib nii täpselt valimiandmeid, et sobitub hästi valimis leiduva juhusliku müraga ning seetõttu sobitub halvasti järgmise valimiga samast populatsioonist (igal valimil on oma juhuslik müra). Üldiselt, mida rohkem on mudelis tuunitavaid parameetreid, seda paindlikum on mudel, seda kergem on seda valimiandmetega sobitada ja seda raskem on seda tõlgendada. Veelgi enam, alati on võimalik konstrueerida mudel, mis sobitub täiuslikult kõikide andmepunktidega (selle mudeli parameetrite arv = N). Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fititi --- ja täiesti kasutu.
   
   
 ```{r echo=FALSE}
@@ -385,17 +385,13 @@ df %>%
 ```
 *Joonis: Kasvava paindlikusega polünoomsed mudelid. mod_e1 on sirge võrrand y = a + b1x (2 parameetrit: a ja b1), mod_e2 on lihtsaim võimalik polünoom: y= a + b1x + b2x^2 (3 parameetrit), ..., mod_e5: y= a + b1x + b2x^2 + b3x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6).*
 
+Vähemruutude meetodil fititud mudeleid saame võrrelda AIC-i näitaja järgi. AIC  - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega ja mudeli parameetrite arvu. 
+Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.
 ```{r}
 AIC(mod_e1, mod_e2, mod_e3, mod_e4, mod_e5)
 ```
 
 AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?
-
-    AIC - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega
-    ja mudeli parameetrite arvu. 
-    Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures
-    (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult
-    võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.  
 
 ```{r, echo=FALSE}
 a1 <- glance(mod_e1)
@@ -442,7 +438,7 @@ See ongi sirge mudel koos veakomponendiga. Seega on sellel lineaarsel regressioo
 
 
 
-> Kõik statistilised mudelid on tõenäosusmudelid ning sisaldavad veakomponenti. 
+> Kõik statistilised mudelid on tõenäosusmudelid ning sisaldavad veakomponenti. Tõenäosusmudel on matemaatiline funktsioon, mis  x-teljel loeb üles kõik võimalikud sündmustest ja y-teljel annab nende kõikide toimumise tõenäosused.  
 
 
 ###Statistiline mudel koosneb 3 komponendist: 
@@ -458,7 +454,6 @@ Muide, kõik veamudelid, millega me edaspidi töötame, modelleerivad igale x-i 
 
 ### 2.5.1. Enimkasutatud veamudel on normaaljaotus. 
 
-> Normaaljaotus on tõenäosusjaotus. Tõenäosusjaotus on matemaatiline funktsioon, mis  x-teljel loeb üles kõik võimalikud sündmustest ja y-teljel annab nende kõikide toimumise tõenäosused. 
 
 Normaaljaotuse matemaatiline kirjeldus on suhteliselt keeruline, aga see on puhtalt tingitud vajadusest jaotuse aluse pindala normaliseerimisest ühele. Tegelikult võime demonstreerida normaaljaotuse kujulist jaotust väga lihtsate vahenditega. Järgnev näitab ka, millised looduslikud protsessid võiksid tekitada normaalseid andmed, ja millised mitte. 
 
@@ -739,7 +734,6 @@ Kuidas tõlgendame aga tulemust r = 0.9? Mitte kuidagi. Selle asemel tõlgendame
 
 ```{r}
 #correlation<-cor.test(iris$Sepal.Length, iris$Sepal.Width, na.rm=T, method = "pearson") # a list of 9
-
 #names(correlation)
 #str(correlation)
 #correlation$conf.int
@@ -781,7 +775,7 @@ corrgram(iris, order=TRUE,
          lower.panel = panel.pts,
          upper.panel = panel.ellipse,
          diag.panel = panel.density,
-         main="Correlogram of diamond dataset")
+         main="Correlogram of Iris dataset")
 ```
 
 ### 3.2.1. Kuidas uurida muutuja sisest varieeruvust
@@ -839,13 +833,7 @@ p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1),
   stat_summary(fun.y=mean, geom="point", size=3, color="red")
 ```
 
-```{r}
-
-```
-
-
-
-Use a custom summary function :
+Nii saab plottida multiplikatiivse sd:
 ```{r}
 # Function to produce summary statistics (geometric mean and multipülicative sd)
 multi_sd <- function(x) {
@@ -959,62 +947,6 @@ ggplot(data=iris, aes(Sepal.Width, Petal.Width))+
   geom_smooth(method="lm", color="red") 
 ```
 
-##Joongraafikud
-
-Joonetüübid : “blank”, “solid”, “dashed”, “dotted”, “dotdash”, “longdash”, “twodash”.
-
-```{r}
-df2 <- data.frame(sex = rep(c("Female", "Male"), each=3),
-                  time=c("breakfeast", "Lunch", "Dinner"),
-                  bill=c(10, 30, 15, 13, 40, 17) )
-# Change line types
-ggplot(data=df2, aes(x=time, y=bill, group=sex)) +
-  geom_line(linetype="dashed")+
-  geom_point()
-
-# Change line colors and sizes
-ggplot(data=df2, aes(x=time, y=bill, group=sex)) +
-  geom_line(linetype="dotted", color="red", size=2)+
-  geom_point(color="blue", size=3)
-```
-
-Muudab tüüpi automaatselt muutuja sex taseme järgi
-```{r}
-# Change line types by groups (sex)
-ggplot(df2, aes(x=time, y=bill, group=sex)) +
-  geom_line(aes(linetype=sex))+
-  geom_point()+
-  theme(legend.position="top")
-# Change line types + colors
-ggplot(df2, aes(x=time, y=bill, group=sex)) +
-  geom_line(aes(linetype=sex, color=sex))+
-  geom_point(aes(color=sex))+
-  theme(legend.position="top")
-```
-
-Muuda jooni käsitsi:
-
-scale_linetype_manual() : joone tüüp
-
-scale_color_manual() : joone värv
-
-scale_size_manual() : joone laius
-```{r}
-# Set line types manually
-ggplot(df2, aes(x=time, y=bill, group=sex)) +
-  geom_line(aes(linetype=sex))+
-  geom_point()+
-  scale_linetype_manual(values=c("twodash", "dotted"))+
-  theme(legend.position="top")
-# Change line colors and sizes
-ggplot(df2, aes(x=time, y=bill, group=sex)) +
-  geom_line(aes(linetype=sex, color=sex, size=sex))+
-  geom_point()+
-  scale_linetype_manual(values=c("twodash", "dotted"))+
-  scale_color_manual(values=c('#999999','#E69F00'))+
-  scale_size_manual(values=c(1, 1.5))+
-  theme(legend.position="top")
-```
 
 
 ### 3.3. Kokkuvõte:
