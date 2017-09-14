@@ -9,8 +9,8 @@ Me usume, et nii on lihtsam ja tulusam statistikat õppida ja et Bayesi statisti
 Me usume ka, et kuigi praegused kiired arengud bayesi statistikas on tänaseks juba viinud selle suurel määral tavakasutajale kättesaadavasse vormi, toovad lähiaastad selles vallas veel suuri muutusi. 
 Nende muutustega koos peab arenema ka bayesi õpetamine. 
 
-Me kasutame järgmisi R-i pakette, mis on kõik loodud bayesi mudelite rakendamise lihtsustamiseks: "rethinking", "brms", "rstanarm", "BayesianFirstAid" ja "bayesplot". 
-Lisaks veel "bayesboot" bootstrapimiseks. 
+Me kasutame järgmisi R-i pakette, mis on kõik loodud bayesi mudelite rakendamise lihtsustamiseks: "rethinking" [@rethinking], "brms" [@brms], "rstanarm" [@rstanarm], "BayesianFirstAid" [@bayesianfirstaid] ja "bayesplot" [@bayesplot]. 
+Lisaks veel "bayesboot" bootstrapimiseks [@bayesboot]. 
 Bayesi arvutusteks kasutavad need paketid Stan ja JAGS mcmc sämplereid (viimast küll ainult `BayesianFirstAid paket). 
 Selle õpiku valmimisel on kasutatud McElreathi [@mcelreath2015], Kruschke [@kruschke2014] ja nn. Gelmani [@gelman2014] õpikuid.
 
