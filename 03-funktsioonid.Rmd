@@ -1,0 +1,187 @@
+
+# R on andmeanalüüsi keel, mille verbid on funktsioonid {#funs}
+
+Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt, kes püüab ära arvata, mida on vaja teha. 
+Vahest teeb kah. 
+Vahest isegi seda, mida kasutaja tahtis. 
+R-i puudus on veateadete puudumine või krüptilised veateated. 
+Sama kehtib ka R-i helpi kohta. 
+Seega tasub alati kontrollida, kas R ikka tegi seda, mida sina talle enda arust ette kirjutasid.
+
+```{r}
+x <- c(6, 3, 3, 4, 5)
+y <- c(1, 3, 4, 2, 7)
+cor(x, y) # correlation
+sum(x)
+sum(x, y)
+mean(x)
+median(x)
+quantile(x)
+sd(x) # standard deviation - goes with mean
+max(x)
+min(x)
+```
+
+R-is teevad asju programmikesed, mida kutsutakse **funktsioonideks**. 
+Te võite mõelda funktsioonist nagu verbist. 
+Näiteks funktsiooni `sum()` korral loe: "võta summa". 
+Iga funktsiooni nime järel on sulud. 
+Nende sulgude sees asuvad selle funktsiooni **argumendid**. 
+Argumendid määravad ära funktsiooni käitumise.
+Et näha, millised argumendid on funktsiooni käivitamiseks vajalikud ja milliseid on üldse võimalik seadistada, kasuta 'help' käsku.
+
+
+```{r}
+?sum
+```
+
+Help paneelis paremal all ilmub nüüd selle funktsiooni R dokumnetatsioon. 
+Vaata seal peatükki Usage: `sum(..., na.rm = FALSE)` ja edasi peatükki Arguments, mis ütleb, et `...` (ellipsis) tähistab vektoreid. 
+
+
+    sum {base}	R Documentation 
+    Sum of Vector Elements
+
+    Description:
+
+    sum returns the sum of all the values present in its arguments.
+
+    Usage
+
+    sum(..., na.rm = FALSE)
+
+    Arguments
+
+    ...	- numeric or complex or logical vectors.
+
+    na.rm	- logical. Should missing values (including NaN) be removed?
+
+
+Seega võtab funktsioon `sum()` 2 argumenti: vektori arvudest (või loogilise vektori, mis koosneb TRUE ja FALSE määrangutest), ning na.rm argumendi, millele saab anda 2 väärtust, TRUE või FALSE. 
+Usage ütleb ka, et na.rm = FALSE, mis tähendab, et sellele argumendile on antud vaikeväärtus -- kui me seda ise ei muuda, siis jäävad NA-d arvutusse sisse. 
+Kuna NA tähendab "tundmatu arv" siis iga tehe NA-dega annab vastuseks "tundmatu arv" ehk NA (tundmatu arv + 2 = tundmatu arv). 
+Seega NA tulemus annab märku, et teie andmetes võib olla midagi valesti.
+
+```{r}
+## moodustame vektori
+apples <- c(1, 34, 43, NA)
+## arvutame summa
+sum(apples, na.rm = TRUE)
+```
+Niimoodi saab arvutada summat vektorile nimega "apples".
+
+Sisestades R käsureale funktsiooni ilma selle sulgudeta saab masinast selle funktsiooni koodi. Näiteks:
+```{r}
+sum
+```
+Tulemus näitab, et `sum` on `Primitive` funktsioon, põhineb C koodil ja ei kasuta R koodi.
+
+## Kirjutame oma esimese R funktsiooni
+
+Põhjus, miks R-s on funktsioonid, on korduse vähendamine, koodi loetavaks muutmine ja seega ka ruumi kokkuhoid. 
+Funktsiooni ainus mõte on peita teie eest korduvad vajalikud koodiread kood funktsiooni nime taha. 
+See muudab pikad koodilõigud hõlpsalt taaskasutatavaks sest lihtsam on kirjutada lühike funktsiooni nimi ja sisestada selle funktsiooni argumendid. 
+Koodi funktsioonidesse kokku surumine vähendab võimalusi lollideks vigadeks, mida te võite teha pikkade koodijuppidega manipuleerides. 
+Seega tasub teil õppida ka oma korduvaid koodiridu funktsioonidena vormistama.
+
+Kõige pealt kirjutame natuke koodi.
+```{r}
+# two apples
+apples <- 2
+#three oranges
+oranges <- 3 
+(inventory <- apples + oranges)
+
+```
+ 
+Ja nüüd teeme sellest funktsiooni `inventory()`. 
+Seda koodi jooksutades näeme, et meie funktsioon ilmub R-i Environmenti, kuhu tekib Functions lahter. 
+Seal on näha ka selle funktsiooni kaks argumenti, apples ja oranges.
+ 
+Funktsiooni kirjutamiseks anname kõigepealt sellele nime ja kirjutame selle ilma sulgudeta. 
+Siis tuleb `<-` ( __assignment operator__ ), misjärel `function(arg1, arg2, ...)`. Siis algavad loogelised sulud { }, mille sisse kirjutame oma koodi. Viimane koodirida on see, mis tuleb välja selle funktsiooni outputina. Antud juhul on selleks print(inventory), ehkki print() ei pea siia kirjutama sest R saab sellest ise aru.
+ 
+```{r}
+inventory <- function(apples, oranges) {
+    apples + oranges
+}
+```
+
+Andes funktsiooni argumentidele väärtused, saab väljundi:
+```{r}
+inventory(2, 3)
+```
+Seega asendasime me kolm rida koodi ühega, mis on hea algus.
+
+Nüüd midagi kasulikumat. Funktsioon standrardvea arvutamiseks (baas R-s sellist funktsiooni ei ole)
+
+sd() annab standardhälbe. Sellel on 2 argumenti. vt Help-i.
+Me teame, et SEM=SD/sqrt(N)
+kus N = length(x)
+```{r}
+calc_sem <- function(x) {
+  stdev <- sd(x)
+  n <- length(x)
+  stdev / sqrt(n)
+}
+```
+
+x hoiab lihtsalt kohta andmetele, mida me tahame sinna funktsiooni suunata.
+`sd()`, `sqrt()` ja `length()` on olemasolevad baas R funktsioonid, mille me oma funktsiooni hõlmame.
+
+```{r}
+## create numeric vector
+numbers <- c(2, 3.4, 54, NA, 3)
+calc_sem(numbers)
+```
+No jah, kui meil on andmetes tundmatu arv (`NA`) siis on ka tulemuseks tundmatu arv.
+
+Sellisel juhul tuleb NA väärtused vektorist enne selle funktsiooni kasutamist välja visata:
+```{r}
+numbers_filtered <- na.omit(numbers)
+calc_sem(numbers_filtered)
+```
+
+On ka võimalus funktsiooni sisse kirjutada **NA väärtuste käsitlemine**. Näiteks, üks võimalus on **anda viga** ja funktsioon katkestada, et kasutaja saaks ise ühemõtteliselt oma andmetest NA väärtused eemaldada. 
+Teine võimalus on funktsioonis **NA-d vaikimisi eemaldada** ja anda selle kohta näiteks teade.
+
+NA-de vaikimisi eemaldamiseks on hetkel mitu võimalust, kasutame kõigepealt nö. valet lahendust:
+```{r}
+calc_sem <- function(x) {
+  ## kasutame sd funktsiooni argumenti na.rm
+  stdev <- sd(x, na.rm = TRUE)
+  n <- length(x)
+  stdev / sqrt(n)
+}
+
+calc_sem(numbers)
+```
+See annab meile vale tulemuse sest `na.rm = TRUE` viskab küll NA-d välja meie vektorist aga jätab vektori pikkuse muutmata (`length(x)` rida).
+
+Teeme uue versiooni oma funktsioonist, mis viskab vaikimisi välja puuduvad väärtused, kui need on olemas ja annab siis ka selle kohta hoiatuse.
+```{r}
+## x on numbriline vektor
+calc_sem <- function(x) {
+  
+  ## viskame NA väärtused vektorist välja
+  x <- na.omit(x)
+  
+  ## kui vektoris on NA väärtusi, siis hoiatame kasutajat
+  if(inherits(na.action(x), "omit")) {
+    warning("Removed NAs from vector.\n")
+  }
+  
+  ## arvutame standardvea kasutades filtreeritud vektorit
+  stdev <- sd(x)
+  n <- length(x)
+  stdev / sqrt(n)
+}
+
+calc_sem(numbers)
+length(numbers)
+```
+
+Missugune funktsiooni käitumine valida, sõltub kasutaja vajadusest.
+Rohkem infot NA käsitlemise funktsioonide kohta saab `?na.omit` abifailist.
+
+Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline protsess ja sellele, et alati saab paremini teha.
