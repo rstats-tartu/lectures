@@ -65,7 +65,7 @@ README.md ja DESCRIPTION asuvad projekti juurkataloogis.
 
 Suuremad projektid, nagu näiteks teadusartikkel või raamat, võivad sisaldada mitmeid Rmd faile ja võib tekkida kange kisatus need mõnda alamkataloogi tõsta. 
 Aga `knitr::knit()`, mis Rmarkdowni markdowniks konverteerib, arvestab, et Rmd fail asub juurkataloogis ja arvestab juurkataloogi suhtes ka failis olevaid _path_-e teistele failidele (näiteks "data/my_data.csv"). 
-Kui Rmd fail tõsta näiteks projekti alamkataloogi "projroot/analyses/", siis hakkab `knitr::knit()` otsima faile, mis tegelikult asuvad "projroot/data/" kataloogis, kataloogist "projroot/analyses/data/".  
+
 
 **data/** kataloog sisaldab faile toorandmetega. 
 Need failid peavad olema R-i poolt loetavad ja soovitavalt tekstipõhised, laienditega TXT, CSV, TSV jne. 
