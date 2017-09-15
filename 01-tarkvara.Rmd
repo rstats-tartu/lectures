@@ -11,7 +11,7 @@ Kõik on väga lihtsad installid.
 3. Googelda "install git" või mine otse [Git allalaadimise veebilehele](https://git-scm.com/downloads), laadi alla ja installi sobiv versioon.
 
 ## Loo GitHubi konto 
-GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine Git versioonikontrolli repositoorium ja veebimajutuse teenus.
+GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine <i class="fa fa-git" aria-hidden="true"></i> versioonikontrolli repositoorium ja veebimajutuse teenus.
 
 - <i class="fa fa-github" aria-hidden="true"></i> konto loomiseks mine lehele https://github.com. Loo endale oma nimega seotud avalik konto. Tulevikule mõeldes vali kasutajanimi hoolikalt. Ära muretse detailide pärast, need on võimalik täita hiljem.
 
@@ -26,16 +26,17 @@ GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine Git versi
 > NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta alakriipsu "\_". 
 
 4. Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)
-5. Ava RStudio akna paremalt ülevalt nurgast "Project" menüüst "New Project" dialoog.
+5. Ava RStudio akna (Joonis \@ref(fig:rstudiowindow)) paremalt ülevalt nurgast "Project" menüüst "New Project" dialoog.
 6. Ava "New Directory" > "Empty Project" > vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks "rstats2017".
 
-```{r, echo=FALSE, fig.cap="RStudio aken, mis on jagatud neljaks vaikimisi alaks. Vasakul üleval, koodi aken. Vasakul all, R konsool. Paremal üleval, töökeskonna aken, erinevate sakkidega. Paremal all, failid, plotid, help."}
+```{r rstudiowindow, echo=FALSE, fig.cap="RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga <i class='fa fa-git' aria-hidden='true'></i>. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. <i class='fa fa-git' aria-hidden='true'></i> menüüs on võimalik muutusi vaadata ja 'commit'ida ja <i class='fa fa-github' aria-hidden='true'></i>-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse)."}
 knitr::include_graphics("assets/img/rstudio_screen_untitled.png")
 ```
 
 RStudio infolehekülg R projekti loomise kohta: [Using Projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
 
 ## *Merge* konfliktid
+Kollaboreerides üle GitHubi tekivad varem või hiljem konfliktid projekti failide versioonide vahel nn. "merge conflicts", nende korrektselt lahendama õppimine on väga oluline. 
 
 - Oma repo GitHubi veebilehel muuda/paranda README.md dokumenti ja "Commit"-i seda lühisõnumiga mis sa muutsid/parandasid.
 - Seejärel, muuda oma arvutis olevat README.md faili RStudio-s viies sinna sisse mingi teistsuguse muudatuse. Tee "Commit" oma muudatustele.
@@ -43,10 +44,9 @@ RStudio infolehekülg R projekti loomise kohta: [Using Projects](https://support
 - Proovi "pull".
 - Lahenda "merge" konflikt ja seejärel "commit" + "push".
 
+Githubi veateadete lugemine ja Google otsing aitavad sind.
 
-Kollaboreerides üle GitHubi tekivad varem või hiljem "merge" konfliktid, nende korrektselt lahendama õppimine on väga oluline. Githubi veateadete lugemine ja Google otsing aitavad sind.
-
-## Sinu kataloogi soovitatav minimaalne struktuur
+## R projekti kataloogi soovitatav minimaalne struktuur
 
 Iga R projekt peab olema täiesti iseseisev (_selfcontained_) ja sisaldama kogu infot, andmeid ja instruktsioone, et projektiga seotud arvutused läbi viia ja raport genereerida.
 Kõik faili _path_-id peavad olema suhtelised.
@@ -54,19 +54,25 @@ Kõik faili _path_-id peavad olema suhtelised.
 
 R projekti kataloog peaks sisaldama projekti kirjeldavaid faile, mis nimetatakse 
 DESCRIPTION ja README.md. 
-DESCRIPTION on tavaline tekstifail ja sisaldab projekti metainfot ja infot projekti sõltuvuste kohta, nagu väliste andmesettide asukoht, vajalik tarkvara jne.
-README.md on markdown formaadis projekti info, sisaldab juhendeid kasutajatele.
+**DESCRIPTION** on tavaline tekstifail ja sisaldab projekti metainfot ja infot projekti sõltuvuste kohta, nagu väliste andmesettide asukoht, vajalik tarkvara jne.
+**README.md** on markdown formaadis projekti info, sisaldab juhendeid kasutajatele.
 Igale GitHubi repole on soovitav koostada README.md, esialgu kasvõi projekti pealkiri ja üks kirjeldav lause. 
 README.md ja DESCRIPTION asuvad projekti juurkataloogis.
 
 
-Samuti jäävad projekti juurkataloogi .Rmd laiendiga teksti ja analüüsi tulemusi tulemusi sisaldavad/kokku võtvad failid, millest genereeritakse lõplik raport/dokument.
+> Projekti juurkataloogi jäävad ka kõik .Rmd laiendiga teksti ja analüüsi tulemusi sisaldavad failid, millest genereeritakse lõplik raport/dokument.
 
 
 Suuremad projektid, nagu näiteks teadusartikkel või raamat, võivad sisaldada mitmeid Rmd faile ja võib tekkida kange kisatus need mõnda alamkataloogi tõsta. 
 Aga `knitr::knit()`, mis Rmarkdowni markdowniks konverteerib, arvestab, et Rmd fail asub juurkataloogis ja arvestab juurkataloogi suhtes ka failis olevaid _path_-e teistele failidele (näiteks "data/my_data.csv"). 
-Kui Rmd fail tõsta näiteks projekti alamkataloogi "projroot/analyses/", siis hakkab `knitr::knit()` tulutult otsima faile, mis tegelikult asuvad "projroot/data/" kataloogis, kataloogist "projroot/analyses/data/".  
- 
+Kui Rmd fail tõsta näiteks projekti alamkataloogi "projroot/analyses/", siis hakkab `knitr::knit()` otsima faile, mis tegelikult asuvad "projroot/data/" kataloogis, kataloogist "projroot/analyses/data/".  
+
+**data/** kataloog sisaldab faile toorandmetega. 
+Need failid peavad olema R-i poolt loetavad ja soovitavalt tekstipõhised, laienditega TXT, CSV, TSV jne. 
+Neid faile ei muudeta, ainult loetakse. 
+Kogu algandmete töötlus toimub programmaatiliselt
+
+
 ```
 project/
 |- DESCRIPTION       # project metadata and dependencies
@@ -85,52 +91,8 @@ project/
 |- lib/              # user generated functions
 |  +-my_functions.R  # R code defining functions
 ```
-On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid 
-kataloogi "R". 
+
+On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid taaskasutatavate funktsioonidega kataloogi **R/**. 
+Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i [@roxygen2], siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi **man/**. 
 R paketi puhul sisaldab iga R skripti fail ühe või enama funktsiooni definitsiooni.
-
-
-
-Nüüd peaks su RStudio konsoolis olema 4 akent, mille suurusi saad hõlpsalt muuta. Proovi seda teha.
-
-Üleval vasakul on sinu poolt nimega varustatud tekstieditor kuhu kirjutad R skripti (laiend .R).
-**Salvesta R skriptid projekti alamkataloogi src/**.
-
-Sinna kirjutad oma koodi ja kommentaarid sellele. 
-Leia selle kohalt valge/roheline nupp Run. 
-Kirjuta scripti aknasse `2 + 2`, jäta kursor sellele reale ja vajuta Run nuppu. 
-Leia tulemus alt vasakult konsoolist. 
-Nüüd kirjuta `2 + 3`, jäta kursor sellele reale ja vajuta 
-(PC-l Cntr + Enter). 
-Leia konsoolist tulemus.
-
-All vasakul on konsool. 
-Sinna sisestatakse su R (skripti) kood ja sinna trükitakse väljund.
-
-Üleval paremal on Environment. 
-Seal on näha R-i objektid, mis on sulle workspaces kättesaadavad ja millega sa saad töötada. 
-Kohe varsti õpime, kuidas objekte juurde tekitada ja Environmenti saata.
-
-All paremal on paneel mitme sakiga (tab-ga). 
-
-1. Files tab töötab nagu failihaldur. 
-Leia sealt paneel, kus on nupud New Folder, Delete, Rename ja More. 
-More/Set As Working Directory võimaldab määrata Folderi, kust R automaatselt faile otsib, kui sa nime järgi faili R-i keskkonda sisse loed. 
-More/Go To Working Directory viib sind sinna. 
-R konsoolist töökataloogi teada saamiseks ja seadistamiseks kasutatakse vastavalt käskusid `getwd()` ja `setwd()`.
-
-**Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada.**
-Seega, töökataloog võiks olla vaikimisi seatud "R_kursus2017/". 
-Sinna kataloogi kirjutati ka sinu poolt nimetatud .R laiendiga fail. 
-Leia see.
-
-2. Plots paneelile ilmuvad joonised, mille sa teed. Neid saab sealt salvestada nupu Export/Save as image või Export/Save as pdf alt.
-
-3. Packages Näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. 
-Seal on nupp Install, mille alt avaneb aken, kuhu kirjuta raamatukogude nimed, mida soovid võrgust alla tõmmata (ilma jutumärkideta, komadega üksteisest eraldatud). Klikkides installitud paketi nimele avaneb selle paketi helpfail. 
-Seal on ka nimekiri kõikidest selle paketi funktsioonidest koos iga funktsiooni kirjelduse ja helpfailiga. 
-Seal on ka otsinguaken installitud pakettide otsimiseks paketi nime järgi. 
-
-4. Help. Seal on ka otsinguaken, aga see tõõtab halvemini kui scripti või konsooli kirjutada `?paketi_nimi`. 
-Seal avanevad kõik help failid (ka need, mida konsooli kaudu otsitakse). 
 
