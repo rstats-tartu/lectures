@@ -70,7 +70,9 @@ Aga `knitr::knit()`, mis Rmarkdowni markdowniks konverteerib, arvestab, et Rmd f
 **data/** kataloog sisaldab faile toorandmetega. 
 Need failid peavad olema R-i poolt loetavad ja soovitavalt tekstipõhised, laienditega TXT, CSV, TSV jne. 
 Neid faile ei muudeta, ainult loetakse. 
-Kogu algandmete töötlus toimub programmaatiliselt
+Kogu algandmete töötlus toimub programmaatiliselt.
+Suured failid muudavad versioonikontrolli aeglaseks, samuti on suheliselt mõttetu versioonikontroll binaarsete failide korral (MS <i class="fa fa-file-word-o" aria-hidden="true"></i> näiteks), sest diffid pole lihtsalt inimkeeles. 
+Github ütleb suurte failide kohta nii: _"GitHub will warn you when pushing files larger than 50 MB. You will not be allowed to push files larger than 100 MB."_
 
 **src/** kataloog sisaldab analüüsi skripte, sealhulgas ka andmetöötluse skripte. 
 
@@ -97,4 +99,4 @@ project/
 
 On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid taaskasutatavate funktsioonidega kataloogi **R/**. 
 Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i [@roxygen2], siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi **man/**. 
-
+Rohkem projekti pakkimise kohta loe värskest preprindist "Packaging data analytical work reproducibly using R" [@marwick2017].
