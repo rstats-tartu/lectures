@@ -57,7 +57,7 @@ Kui Rmd fail tõsta näiteks projekti alamkataloogi "projroot/analyses/", siis h
  
 ```
 project/
-|- DESCRIPTION    # project metadata and dependencies
+|- DESCRIPTION       # project metadata and dependencies
 |- README.md         # description of contents and guide to users
 |- my_analysis.Rmd   # markdown file containing analysis
 |                    # writeup together with R code chunks
