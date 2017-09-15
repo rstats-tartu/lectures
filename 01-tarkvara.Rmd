@@ -72,6 +72,33 @@ Need failid peavad olema R-i poolt loetavad ja soovitavalt tekstipõhised, laien
 Neid faile ei muudeta, ainult loetakse. 
 Kogu algandmete töötlus toimub programmaatiliselt
 
+**src/** kataloog sisaldab analüüsi skripte, sealhulgas ka andmetöötluse skripte. 
+<!-- "knitr" võimaldab R skripte osakaupa Rmd failist käivitada.  -->
+<!-- Selleks peab R skriptis  evalueeritava koodi alguse markeerima `# @knitr minu-koodi-id`. -->
+
+<!-- ``` -->
+<!-- # @knitr normhist -->
+
+<!-- hist(rnorm(100)) -->
+<!-- ``` -->
+
+<!-- Ja Rmd failis tuleb kõigepealt eraldi koodi _chunk_-is see skript ("src/minu-skript.R") sisse lugeda: -->
+
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- library(knitr) -->
+<!-- read_chunk("src/minu-skript.R") -->
+<!-- ``` -->
+<!-- ``` -->
+
+<!-- Seejärel käivitatakse kood mis algab peale `# @knitr normhist` markeeringut lisades viite uues `chunk`-is sellele koodile. -->
+<!-- ``` -->
+<!-- ```{r normhist} -->
+
+<!-- ``` -->
+<!-- ``` -->
+
+**lib/** kataloogis on kasutaja poolt tehtud funktsioonide definitsioone sisaldavad R skriptid.
 
 ```
 project/
@@ -94,5 +121,4 @@ project/
 
 On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid taaskasutatavate funktsioonidega kataloogi **R/**. 
 Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i [@roxygen2], siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi **man/**. 
-R paketi puhul sisaldab iga R skripti fail ühe või enama funktsiooni definitsiooni.
 
