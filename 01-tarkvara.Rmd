@@ -8,11 +8,12 @@ Kõik on väga lihtsad installid.
 
 1. Googelda "install R" või mine otse [R allalaadimise veebilehele](https://cran.r-project.org), laadi alla ja installi sobiv versioon.
 2. Googelda "install RStudio" või mine otse [RStudio allalaadimise veebilehele](https://www.rstudio.com/products/rstudio/download/), laadi alla ja installi sobiv versioon.
-3. Googelda "install git" või mine otse [git allalaadimise veebilehele](https://git-scm.com/downloads), laadi alla ja installi sobiv versioon.
+3. Googelda "install git" või mine otse [Git allalaadimise veebilehele](https://git-scm.com/downloads), laadi alla ja installi sobiv versioon.
 
 ## Loo GitHubi konto 
+GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine Git versioonikontrolli repositoorium ja veebimajutuse teenus.
 
-- GitHubi konto loomiseks mine lehele https://github.com. Loo endale oma nimega seotud avalik konto. Tulevikule mõeldes vali kasutajanimi hoolikalt. Ära muretse detailide pärast, need on võimalik täita hiljem.
+- <i class="fa fa-github" aria-hidden="true"></i> konto loomiseks mine lehele https://github.com. Loo endale oma nimega seotud avalik konto. Tulevikule mõeldes vali kasutajanimi hoolikalt. Ära muretse detailide pärast, need on võimalik täita hiljem.
 
 - Loo repo nimega `intro_demo`.
 - Lisa repole lühike ja informatiivne kirjeldus. 
@@ -26,13 +27,24 @@ Kõik on väga lihtsad installid.
 
 4. Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)
 5. Ava RStudio akna paremalt ülevalt nurgast "Project" menüüst "New Project" dialoog.
-6. Ava "New Directory" > "Empty Project" > vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks "R_kursus2017".
+6. Ava "New Directory" > "Empty Project" > vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks "rstats2017".
 
 ```{r, echo=FALSE}
 knitr::include_graphics("assets/img/rstudio_screen_untitled.png")
 ```
 
 RStudio infolehekülg R projekti loomise kohta: [Using Projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
+
+## *Merge* konfliktid
+
+- Oma repo GitHubi veebilehel muuda/paranda README.md dokumenti ja "Commit"-i seda lühisõnumiga mis sa muutsid/parandasid.
+- Seejärel, muuda oma arvutis olevat README.md faili RStudio-s viies sinna sisse mingi teistsuguse muudatuse. Tee "Commit" oma muudatustele.
+- Proovi "push"-ida -- sa saad veateate!
+- Proovi "pull".
+- Lahenda "merge" konflikt ja seejärel "commit" + "push".
+
+
+Kollaboreerides üle GitHubi tekivad varem või hiljem "merge" konfliktid, nende korrektselt lahendama õppimine on väga oluline. Githubi veateadete lugemine ja Google otsing aitavad sind.
 
 ## Sinu kataloogi soovitatav minimaalne struktuur
 
