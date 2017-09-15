@@ -33,9 +33,9 @@ GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine <i class=
 knitr::include_graphics("assets/img/rstudio_screen_untitled.png")
 ```
 
-RStudio infolehekülg R projekti loomise kohta: [Using Projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
+Rohkem infot R projekti loomise kohta leiad RStudio infoleheküljelt: [Using Projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
 
-## *Merge* konfliktid
+## Git *Merge* konfliktid
 Kollaboreerides üle GitHubi tekivad varem või hiljem konfliktid projekti failide versioonide vahel nn. "merge conflicts", nende korrektselt lahendama õppimine on väga oluline. 
 
 - Oma repo GitHubi veebilehel muuda/paranda README.md dokumenti ja "Commit"-i seda lühisõnumiga mis sa muutsid/parandasid.
