@@ -29,7 +29,7 @@ GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine Git versi
 5. Ava RStudio akna paremalt ülevalt nurgast "Project" menüüst "New Project" dialoog.
 6. Ava "New Directory" > "Empty Project" > vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks "rstats2017".
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.cap="RStudio aken, mis on jagatud neljaks vaikimisi alaks. Vasakul üleval, koodi aken. Vasakul all, R konsool. Paremal üleval, töökeskonna aken, erinevate sakkidega. Paremal all, failid, plotid, help."}
 knitr::include_graphics("assets/img/rstudio_screen_untitled.png")
 ```
 
@@ -134,17 +134,3 @@ Seal on ka otsinguaken installitud pakettide otsimiseks paketi nime järgi.
 4. Help. Seal on ka otsinguaken, aga see tõõtab halvemini kui scripti või konsooli kirjutada `?paketi_nimi`. 
 Seal avanevad kõik help failid (ka need, mida konsooli kaudu otsitakse). 
 
-###Nüüd proovime, kuidas töötab moodsam tekstieditor (R Notebook)
-
-[R Notebook](http://rmarkdown.rstudio.com/r_notebooks.html) on R markdown dokument mis sisaldab R skripte ja teksti. 
-
-Ava File/New File/R Notebook.
-Anna sellele nimi (nagu enne).
-
-Kohe dokumendi alguses on tekst: title: "R Notebook". 
-
-Asenda seal jutumärkide sees olev tekst oma dokumendi pealkirjaga.
-
-Te näete halli ala, kus on koodijupp plot(cars). vajuta selles hallis alas asuvale rohelisele nupule, mis jooksutab selle koodi. Vaata kuhu ilmub joonis. See ei ole enam Plots paneelil vaid hoopis notebookis sealsamas koodibloki all. 
-
-Notebookis saab hästi kirjutada teksti, teksti vahele panna koodijuppe ja nende outputte. Uue halli koodiala saate rohelise nupu Insert/ R alt või cmd + alt + I shortcutiga. Detaile õpetame hiljem. See tekst on kirjutatud R Notebookis.
