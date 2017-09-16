@@ -22,11 +22,11 @@ Pane tähele, et aritmeetiline võrdusmärk on `==` (sest = tähendab hoopis vä
 
 Veel mõned näidisarvutused:
 ```{r eval=FALSE}
-# 3 astmes 2
-3 ** 2
-# Ruutjuur 3st
+## 3 astmes 2; Please read Note ?'**' 
+3 ^ 2
+## Ruutjuur 3st
 sqrt(3)
-# Naturaallogaritm sajast
+## Naturaallogaritm sajast
 log(100)
 ```
 
@@ -44,8 +44,8 @@ round(pi, 4)
 R-i töökeskkonnas "workspace" asuvad **objektid**, millega me töötame. 
 Tüüpilised objektid on:
 
-- Andmekogud (vektorid, tabelid, maatriksid, listid jm).
-- Statistiliste analüüside väljundid.
+- Vektorid, maatriksid, listid ja tabelid.
+- Statistiliste analüüside väljundid (S3, S4 klass).
 - Funktsioonid, mille oleme ise sisse lugenud.
 
 Käsk `ls()` annab objektide nimed teie workspace-s:
@@ -58,10 +58,15 @@ ls()
 Selleks, et salvestada töökeskkond faili kasuta <i class="fa fa-floppy-o" aria-hidden="true"></i> "Save" nuppu "Environment" akna servast või 
 menüüst "Session" -> "Save Workspace As".
 
+Projekti sulgemisel salvestab RStudio vaikimisi töökeskkonna. 
+Parema reprodutseeritavuse huvides pole siiski soovitav töökeskkonda peale töö lõppu, projekti sulgemisel, salvestada:
+- Selleks mine "Tools" > "Global Options" > kõige ülemine, "R General" menüüs vali "Save workspace to .RData on exit" > "Never" ever!
+- Võta ära linnuke "Restore .RData to workspace at startup" eest.
 
-### Objekt ja nimi
+Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele.
 
-kui teil sünnib laps, annate talle nime.
+## Objekt ja nimi
+Kui teil sünnib laps, annate talle nime.
 
 R-s on vastupidi: nimele antakse objekt
 ```{r}
@@ -69,25 +74,23 @@ babe <- "beebi"
 babe
 ```
 
-Siin on kõigepealt nimi (babe), siis assingmenti sümbol <- ja lõpuks objekt, mis on nimele antud (string "beebi"). 
+Siin on kõigepealt nimi (babe), siis assingmenti sümbol `<-` ja lõpuks objekt, mis on nimele antud (string "beebi"). 
 
-NB! stringid on jutumärkides, nimed mitte
+NB! Stringid on jutumärkides, nimed mitte.
+Nimi üksi evalueeritakse kui "print object", mis antud juhul on string "beebi"
 
-nimi üksi evalueeritakse kui "print object", mis antud juhul on string "beebi"
-
-Nüüd muudame objekti nime taga
-
+Nüüd muudame objekti nime taga:
 ```{r}
 babe <- c("saatan", "inglike")
 babe
 ```
 
-Tulemuseks on sama nimi, mis tähistab nüüd midagi muud (vektorit, mis koosneb 2st stringist). Objekt "beebi" kaotas oma nime ja on nüüd workspacest kadunud.
-
+Tulemuseks on sama nimi, mis tähistab nüüd midagi muud (vektorit, mis koosneb 2st stringist). Objekt "beebi" kaotas oma nime ja on nüüd workspacest kadunud. 
+`class()` annab meile objekti klassi.
 ```{r}
 class(babe)
 ```
-class() annab meile objekti tüübi. Antud juhul *character vector*. 
+ Antud juhul `r class(babe)`. 
 
 > Ainult need objektid, mis on assigneeritud nimele, lähevad workspace ja on sellistena kasutatvad edasises analüüsis.
 
@@ -96,16 +99,17 @@ apples <- 2
 bananas <- 3
 apples + bananas
 ```
-objekt 5 ei ole nimetatud, seega ei ilmu see ka workspace
+Selle ekspressiooni tulemus trükitakse ainult R konsooli, kuna teda ei määrata nimele siis ei ilmu see ka workspace.
 
 
 ```{r}
 a <- 2
 b <- 3
-a <- a+b
-str(a) #objekti nimega a struktuur
+a <- a + b
+# objekti nimega 'a' struktuur
+str(a)
 ```
-Nüüd on nimega a seostatud uus objekt, mis koosneb numbrist 5 (olles ühe elemendiga vektor). Ja nimega a eelnevalt seostatud objekt, mis koosnes numbrist 2, on workspacest lahkunud. 
+Nüüd on nimega a seostatud uus objekt, mis sisaldab numbrit 5 (olles ühe elemendiga vektor). Ja nimega a eelnevalt seostatud objekt, mis koosnes numbrist 2, on workspacest lahkunud. 
 
 ## Nimede vorm
 
