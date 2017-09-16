@@ -1,10 +1,6 @@
 
 # R on kalkulaator
 
-Selleks, et R aru saaks, et tegu on temale mõeldud käsu, aga mitte tavatekstiga, Rmarkdown failis, tuleb see R koodirida spetsiaalsesse **ümbrisesse või koodialasse** (i.k. _chunk_) pakendada.
-Uue koodiümbrise saad sisestada koodieditori servast "Insert" > "R" abil.
-Sisetatud R kood evalueeritakse siis, kui vajutad tekinud hallis koodialas rohelisele nupule või alternatiivselt, kui soovid jooksutada ainult osa koodi või üht koodirida, siis pane kursor soovitud reale või võta osa koodi blokki ja vajuta klaviatuuril cmd + enter.
-
 Liidame `2 + 2`. 
 ```{r}
 2 + 2
@@ -34,9 +30,10 @@ sqrt(3)
 log(100)
 ```
 
-Arvule $\pi$ on määratud oma objekt `pi`. Seega on soovitav enda poolt loodavatele objektidele mitte panna nimeks "pi".
+Arvule $\pi$ on määratud oma objekt `pi`. 
+Seega on soovitav enda poolt loodavatele objektidele mitte panna nimeks "pi".
 ```{r}
-# Ümarda pi neljale komakohale
+## Ümarda pi neljale komakohale
 round(pi, 4)
 ```
 Ümardamine on oluline tulemuste väljaprintimisel.
@@ -110,7 +107,7 @@ str(a) #objekti nimega a struktuur
 ```
 Nüüd on nimega a seostatud uus objekt, mis koosneb numbrist 5 (olles ühe elemendiga vektor). Ja nimega a eelnevalt seostatud objekt, mis koosnes numbrist 2, on workspacest lahkunud. 
 
-####Nimede vorm
+## Nimede vorm
 
 + Nimed algavad tähemärgiga, mitte numbriga ega $€%&/?~ˇöõüä
 
@@ -124,7 +121,7 @@ Nüüd on nimega a seostatud uus objekt, mis koosneb numbrist 5 (olles ühe elem
 
 + alt + - on otsetee <- jaoks
 
-####Sama koodi saab kirjutada neljal viisil
+## Sama koodi saab kirjutada neljal viisil
 
 Hargnevate teede aed: kui me muudame olemasolevat objekti on meil alati kaks valikut. Me kas jätame muudetud objektile vana objekti nime või me anname talle uue nime. Esimesel juhul läheb vana muutmata objekt workspacest kaduma aga nimesid ei tule juurde ja säilib teatud workflow sujuvus. Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende juurde saab alati tagasi tulla. Samas tekkib meile palju sarnaste nimedega objekte.
 
