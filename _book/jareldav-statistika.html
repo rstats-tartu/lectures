@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2017-09-15">
+<meta name="date" content="2017-09-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -411,10 +411,10 @@ sample_means1 &lt;-<span class="st"> </span>sample_means <span class="op">%&gt;%
 <pre><code>## Using parallel package.
 ##   * Set seed with set.rseed().
 ##   * Disable this message with options(`mosaic:parallelMessage` = FALSE)</code></pre>
-<pre><code>##           V1         V2
-## 1 -0.2437264  2.4400984
-## 2  0.1661775 -0.3401044
-## 3 -0.1477735 -1.1703677</code></pre>
+<pre><code>##           V1          V2
+## 1  2.1831575  0.10281544
+## 2  0.8128593 -0.06289664
+## 3 -0.3278966  1.40192887</code></pre>
 <p>Mida selline keskväärtuste jaotus tähendab? Me võime seda vaadelda posterioorse tõenäosusjaotusena. Selle tõlgenduse kohaselt iseloomustab see jaotus täpselt meie usku presidentide keskmise pikkuse kohta, niipalju kui see usk põhineb bootstrappimises kasutatud andmetel. Senikaua, kui meil pole muid relevantseid andmeid, on kõik, mida me usume teadvat USA presidentide keskmise pikkuse kohta, peidus selles jaotuses. Need pikkused, mille kohal jaotus on kõrgem, sisaldavad meie jaoks tõenäolisemalt tegelikku USA presidentide keskmist pikkust kui need pikkused, mille kohal posterioorne jaotus on madalam.</p>
 <p>Kuidas selle jaotusega edasi töötada? See on lihtne: meil on 4000 arvu ja me teeme nendega kõike seda, mida parasjagu tahame.</p>
 <p>Näiteks me võime arvutada, millisesse pikkuste vahemikku jääb 92% meie usust USA presidentide tõelise keskmise pikkuse kohta. See tähendab, et teades seda vahemikku peaksime olema valmis maksma mitte rohkem kui 92 senti pileti eest, mis juhul kui USA presidentide keskmine pikkus tõesti jääb sinna vahemikku, toob meile võidu suuruses 1 EUR (ja 8 senti kasumit). Selline kihlveokontor on muide täiesti respektaabel ja akadeemiline tõenäosuse tõlgendus; see on paljude arvates lausa parim tõlgendus, mis meil on.</p>
