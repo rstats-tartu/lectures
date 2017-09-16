@@ -11,7 +11,8 @@ See tähendab, et `2 + 2 = 4`.
 
 Kontrollime seda:
 ```{r}
-answer <- 2 + 2 == 4
+## liidame 2 ja 2 ning vaatame kas vastus võrdub 4
+answer <- (2 + 2) == 4
 ## Trükime vastuse välja
 answer
 ```
@@ -114,22 +115,21 @@ Nüüd on nimega a seostatud uus objekt, mis sisaldab numbrit 5 (olles ühe elem
 ## Nimede vorm
 
 + Nimed algavad tähemärgiga, mitte numbriga ega $€%&/?~ˇöõüä
-
 + Nimed ei sisalda tühikuid
-
 + Tühiku asemel kasuta alakriipsu: näiteks eriti_pikk_nimi
-
 + SUURED ja väiksed tähed on nimes erinevad
-
 + Nimed peaksid kirjeldama objekti, mis on sellele nimele assigneeritud ja nad võivad olla pikad sest TAB klahv annab meile auto-complete.
-
-+ alt + - on otsetee <- jaoks
++ alt + - on otsetee `<-` jaoks
 
 ## Sama koodi saab kirjutada neljal viisil
 
-Hargnevate teede aed: kui me muudame olemasolevat objekti on meil alati kaks valikut. Me kas jätame muudetud objektile vana objekti nime või me anname talle uue nime. Esimesel juhul läheb vana muutmata objekt workspacest kaduma aga nimesid ei tule juurde ja säilib teatud workflow sujuvus. Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende juurde saab alati tagasi tulla. Samas tekkib meile palju sarnaste nimedega objekte.
+Hargnevate teede aed: kui me muudame olemasolevat objekti on meil alati kaks valikut. 
+Me kas jätame muudetud objektile vana objekti nime või me anname talle uue nime. 
+Esimesel juhul läheb vana muutmata objekt workspacest kaduma aga nimesid ei tule juurde ja säilib teatud workflow sujuvus. 
+Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende juurde saab alati tagasi tulla. 
+Samas tekkib meile palju sarnaste nimedega objekte.
 
-Esimnene võimalus
+Esimnene võimalus:
 ```{r}
 a <- c(2, 3)
 a <- sum(a)
@@ -138,7 +138,7 @@ a <- round(a, 2)
 a
 ```
 
-Teine võimalus
+Teine võimalus:
 ```{r}
 a <- c(2, 3)
 a1 <- sum(a)
@@ -149,10 +149,12 @@ a3
 
 Kolmas võimalus on lühem variant esimesest. 
 Me nimelt ühendame etapid toru `%>%` kaudu.
-Siin me võtame objekti a (nö. andmed), suuname selle funktsiooni `sum()`, võtame selle funktsiooni väljundi ja suuname selle omakorda funktsiooni `sqrt()`. 
+Siin me võtame objekti "a" (nö. andmed), suuname selle funktsiooni `sum()`, võtame selle funktsiooni väljundi ja suuname selle omakorda funktsiooni `sqrt()`. 
 Seejärel võtame selle funktsiooni outputi ja määrame selle nimele "result" (aga võime selle ka mõne teise nimega siduda). 
 Kui mõni funktsioon võtab ainult ühe parameetri, mille me talle toru kaudu sisse sõõdame, siis pole selle funktsiooni taga isegi sulge vaja. 
-NB! R hea stiili juhised soovitavad siiski ka sellisel juhul kasutada funktsiooni koos sulgudega! 
+
+> NB! R hea stiili juhised soovitavad siiski ka _pipe_-s kasutada funktsiooni koos sulgudega! 
+
 See on hea lühike ja inimloetav viis koodi kirjutada, mis on masina jaoks identne esimese koodiga.
 ```{r}
 ## we need piping operator '%>%' from magrittr
@@ -162,19 +164,22 @@ result <- a %>% sum() %>% sqrt() %>% round(2)
 result
 ```
 
-Neljas võimalus: Kõrgharitud programmeerija kirjutaks selle koodi aga nii:
+Neljas võimalus, klassikaline baas R lahendus:
 ```{r}
 a <- c(2, 3)
-a <- round(sqrt(sum(a)), 2)
-a
+a1 <- round(sqrt(sum(a)), 2)
+a1
 ```
-Sellist koodi loetakse keskelt väljappoole ja kirjutattakse alates viimasest operatsioonist, mida soovitakse, et kood teeks. Masina jaoks pole vahet. Inimese jaoks on küll: 4. variant nõuab hästi pestud ajusid.
+Sellist koodi loetakse keskelt väljappoole ja kirjutattakse alates viimasest operatsioonist, mida soovitakse, et kood teeks. 
+Masina jaoks pole vahet. 
+Inimese jaoks on küll: 4. variant nõuab hästi pestud ajusid.
 
 Koodi lühidus 4 --> 3 --> 1 --> 2 (pikem)
+Lollikindlus  1 --> 2 --> 3 --> 4 (vähem lollikindel)
 
-lollikindlus  1 --> 2 --> 3 --> 4 (vähem lollikindel)
-
-Mida vähem on kohti, kus saab koodi töötamist kontrollida, seda halvem teile. Sellepärast ärge kunagi pange üksteise otsa rohkem kui 4 torujuppi. See on teie otsustada, millist koodivormi te millal kasutate, aga te peaksite oskama lugeda neid kõiki.
+Mida vähem on kohti, kus saab koodi töötamist kontrollida, seda halvem teile. 
+Sellepärast ärge kunagi pange üksteise otsa rohkem kui 4 torujuppi. 
+See on teie otsustada, millist koodivormi te millal kasutate, aga te peaksite oskama lugeda neid kõiki.
 
 
 ## Objektide tüübid 
