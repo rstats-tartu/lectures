@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reprodutseeritav andmeanalüüs kasutades R programmi</title>
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R programmi" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid." />
+  <meta name="github-repo" content="rstats-tartu/lectures" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R programmi" />
+  
+  <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid." />
+  
+
+<meta name="author" content="Taavi Päll, Ülo Maiväli">
+
+
+<meta name="date" content="2017-09-17">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="funs.html">
+<link rel="next" href="tidyverse.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Reprodutseeritav andmeanalüüs R programmiga</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Haara kannel, Vanemuine!</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Sissejuhatus</a></li>
+<li class="chapter" data-level="3" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>3</b> Tarkvaratööriistad</a><ul>
+<li class="chapter" data-level="3.1" data-path="tools.html"><a href="tools.html#installeeri-vajalikud-programmid"><i class="fa fa-check"></i><b>3.1</b> Installeeri vajalikud programmid</a></li>
+<li class="chapter" data-level="3.2" data-path="tools.html"><a href="tools.html#loo-githubi-konto"><i class="fa fa-check"></i><b>3.2</b> Loo GitHubi konto</a></li>
+<li class="chapter" data-level="3.3" data-path="tools.html"><a href="tools.html#loo-uus-r-projekt"><i class="fa fa-check"></i><b>3.3</b> Loo uus R projekt</a></li>
+<li class="chapter" data-level="3.4" data-path="tools.html"><a href="tools.html#git-merge-konfliktid"><i class="fa fa-check"></i><b>3.4</b> Git <em>Merge</em> konfliktid</a></li>
+<li class="chapter" data-level="3.5" data-path="tools.html"><a href="tools.html#r-projekti-kataloogi-soovitatav-minimaalne-struktuur"><i class="fa fa-check"></i><b>3.5</b> R projekti kataloogi soovitatav minimaalne struktuur</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html"><i class="fa fa-check"></i><b>4</b> Pakettide installeerimine</a><ul>
+<li class="chapter" data-level="4.1" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html#r-repositooriumid"><i class="fa fa-check"></i><b>4.1</b> R repositooriumid</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="calc.html"><a href="calc.html"><i class="fa fa-check"></i><b>5</b> R on kalkulaator</a><ul>
+<li class="chapter" data-level="5.1" data-path="calc.html"><a href="calc.html#r-objektid"><i class="fa fa-check"></i><b>5.1</b> R objektid</a></li>
+<li class="chapter" data-level="5.2" data-path="calc.html"><a href="calc.html#objekt-ja-nimi"><i class="fa fa-check"></i><b>5.2</b> Objekt ja nimi</a></li>
+<li class="chapter" data-level="5.3" data-path="calc.html"><a href="calc.html#nimede-vorm"><i class="fa fa-check"></i><b>5.3</b> Nimede vorm</a></li>
+<li class="chapter" data-level="5.4" data-path="calc.html"><a href="calc.html#sama-koodi-saab-kirjutada-neljal-viisil"><i class="fa fa-check"></i><b>5.4</b> Sama koodi saab kirjutada neljal viisil</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funs.html"><a href="funs.html"><i class="fa fa-check"></i><b>6</b> R on andmeanalüüsi keel, mille verbid on funktsioonid</a><ul>
+<li class="chapter" data-level="6.1" data-path="funs.html"><a href="funs.html#kirjutame-oma-esimese-r-funktsiooni"><i class="fa fa-check"></i><b>6.1</b> Kirjutame oma esimese R funktsiooni</a></li>
+<li class="chapter" data-level="6.2" data-path="funs.html"><a href="funs.html#funktsioonide-raamatukogud"><i class="fa fa-check"></i><b>6.2</b> Funktsioonide raamatukogud</a></li>
+<li class="chapter" data-level="6.3" data-path="funs.html"><a href="funs.html#paiguta-koigi-raamatukogude-lugemine-koodi-algusesse"><i class="fa fa-check"></i><b>6.3</b> Paiguta kõigi raamatukogude lugemine koodi algusesse</a></li>
+<li class="chapter" data-level="6.4" data-path="funs.html"><a href="funs.html#hurraa-uus-arvuti-aga-mis-libraryd-mul-olid"><i class="fa fa-check"></i><b>6.4</b> Hurraa, uus arvuti! aga mis libraryd mul olid…</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="obj.html"><a href="obj.html"><i class="fa fa-check"></i><b>7</b> Objektide tüübid</a><ul>
+<li class="chapter" data-level="7.1" data-path="obj.html"><a href="obj.html#vektor"><i class="fa fa-check"></i><b>7.1</b> Vektor</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="obj.html"><a href="obj.html#uus-vektor-seq-ja-rep"><i class="fa fa-check"></i><b>7.1.1</b> Uus vektor: <code>seq()</code> ja <code>rep()</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="obj.html"><a href="obj.html#tehted-arvuliste-vektoritega"><i class="fa fa-check"></i><b>7.1.2</b> Tehted arvuliste vektoritega</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="obj.html"><a href="obj.html#list"><i class="fa fa-check"></i><b>7.2</b> List</a></li>
+<li class="chapter" data-level="7.3" data-path="obj.html"><a href="obj.html#data-frame-ja-tibble"><i class="fa fa-check"></i><b>7.3</b> data frame ja tibble</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="obj.html"><a href="obj.html#rekodeerime-tibble-vaartusi"><i class="fa fa-check"></i><b>7.3.1</b> Rekodeerime tibble väärtusi</a></li>
+<li class="chapter" data-level="7.3.2" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-rea-kaupa"><i class="fa fa-check"></i><b>7.3.2</b> Ühendame kaks tibblet rea kaupa</a></li>
+<li class="chapter" data-level="7.3.3" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-veeru-kaupa"><i class="fa fa-check"></i><b>7.3.3</b> ühendame kaks tibblet veeru kaupa</a></li>
+<li class="chapter" data-level="7.3.4" data-path="obj.html"><a href="obj.html#nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha."><i class="fa fa-check"></i><b>7.3.4</b> Nii saab tibblest kätte vektori, millega saab tehteid teha.</a></li>
+<li class="chapter" data-level="7.3.5" data-path="obj.html"><a href="obj.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>7.3.5</b> Andmeraamide salvestamine (eksport-import)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="obj.html"><a href="obj.html#tabelit-sisse-lugedes-vaata-ule-na-d"><i class="fa fa-check"></i><b>7.4</b> Tabelit sisse lugedes vaata üle NA-d</a></li>
+<li class="chapter" data-level="7.5" data-path="obj.html"><a href="obj.html#matrix"><i class="fa fa-check"></i><b>7.5</b> Matrix</a></li>
+<li class="chapter" data-level="7.6" data-path="obj.html"><a href="obj.html#andmete-tuubid"><i class="fa fa-check"></i><b>7.6</b> Andmete tüübid</a></li>
+<li class="chapter" data-level="7.7" data-path="obj.html"><a href="obj.html#indekseerimine"><i class="fa fa-check"></i><b>7.7</b> Indekseerimine</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="obj.html"><a href="obj.html#vektorid-ja-nende-indeksid-on-uhedimensionaalsed"><i class="fa fa-check"></i><b>7.7.1</b> Vektorid ja nende indeksid on ühedimensionaalsed</a></li>
+<li class="chapter" data-level="7.7.2" data-path="obj.html"><a href="obj.html#andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-indeksid"><i class="fa fa-check"></i><b>7.7.2</b> Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid</a></li>
+<li class="chapter" data-level="7.7.3" data-path="obj.html"><a href="obj.html#listide-indekseerimine"><i class="fa fa-check"></i><b>7.7.3</b> Listide indekseerimine</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="obj.html"><a href="obj.html#regular-expression-ja-find-replace"><i class="fa fa-check"></i><b>7.8</b> Regular expression ja find &amp; replace</a><ul>
+<li class="chapter" data-level="7.8.1" data-path="obj.html"><a href="obj.html#common-operations-with-regular-expressions"><i class="fa fa-check"></i><b>7.8.1</b> Common operations with regular expressions</a></li>
+<li class="chapter" data-level="7.8.2" data-path="obj.html"><a href="obj.html#find-and-replace"><i class="fa fa-check"></i><b>7.8.2</b> Find and replace</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>8</b> Tidyverse</a><ul>
+<li class="chapter" data-level="8.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>8.1</b> Tidy tabeli struktuur</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>8.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
+<li class="chapter" data-level="8.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>8.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>8.2</b> dplyr ja selle viis verbi</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>8.2.1</b> <code>select()</code> columns</a></li>
+<li class="chapter" data-level="8.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>8.2.2</b> <code>filter()</code> rows</a></li>
+<li class="chapter" data-level="8.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>8.2.3</b> <code>summarise()</code></a></li>
+<li class="chapter" data-level="8.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>8.2.4</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="8.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>8.2.5</b> <code>mutate()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="tidyverse.html"><a href="tidyverse.html#grouped-filters"><i class="fa fa-check"></i><b>8.3</b> Grouped filters</a></li>
+<li class="chapter" data-level="8.4" data-path="tidyverse.html"><a href="tidyverse.html#separate-one-column-into-several"><i class="fa fa-check"></i><b>8.4</b> <code>separate()</code> one column into several</a></li>
+<li class="chapter" data-level="8.5" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>8.5</b> Faktorid</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>8.5.1</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
+<li class="chapter" data-level="8.5.2" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>8.5.2</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
+<li class="chapter" data-level="8.5.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>8.5.3</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
+<li class="chapter" data-level="8.5.4" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>8.5.4</b> Rekodeerime pideva muutuja faktoriks</a></li>
+<li class="chapter" data-level="8.5.5" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>8.5.5</b> Muudame faktori tasemete järjekorda joonisel</a></li>
+<li class="chapter" data-level="8.5.6" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>8.5.6</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
+<li class="chapter" data-level="8.5.7" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>8.5.7</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
+<li class="chapter" data-level="8.5.8" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>8.5.8</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliograafia.html"><a href="bibliograafia.html"><i class="fa fa-check"></i>Bibliograafia</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstats-tartu/lectures" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reprodutseeritav andmeanalüüs kasutades R programmi</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="obj" class="section level1">
+<h1><span class="header-section-number">7</span> Objektide tüübid</h1>
+<div id="vektor" class="section level2">
+<h2><span class="header-section-number">7.1</span> Vektor</h2>
+<p>Vektor on rida kindlas järjekorras arve, sõnu või TRUE/FALSE loogilisi väärtusi. Iga vektor ja maatriks (2D vektor) sisaldab ainult ühte tüüpi andmeid. Vektor on elementaarüksus, millega me teeme tehteid. Andmetabelis ripuvad kõrvuti ühepikad vektorid (üks vektor = üks tulp) ja R-le meeldib arvutada vektori kaupa vasakult paremale (mis tabelis on ülevalt alla sest vektori algus on üleval tabeli peas). Pikema kui üheelemendise vektori loomiseks kasuta funktsiooni <code>c()</code> – combine</p>
+<p>Loome numbrilise vektori ja vaatame ta struktuuri:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>)
+<span class="kw">str</span>(minu_vektor)</code></pre></div>
+<pre><code>##  num [1:3] 1 3 4</code></pre>
+<p>Loome vektori puuduva väärtusega, vaatame vektori klassi:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">4</span>)
+minu_vektor</code></pre></div>
+<pre><code>## [1]  1 NA  4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(minu_vektor)</code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<p>Klass jääb <em>numeric</em>-uks.</p>
+<p>Kui vektoris on segamini numbrid ja stringid, siis muudetakse numbrid ka stringideks:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="st">&quot;2&quot;</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="st">&quot;joe&quot;</span>)
+minu_vektor</code></pre></div>
+<pre><code>## [1] &quot;1&quot;   &quot;2&quot;   &quot;2&quot;   &quot;4&quot;   &quot;joe&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(minu_vektor)</code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<p>Piisab ühest “tõrvatilgast meepotis”, et teie vektor ei sisaldaks enam numbreid.</p>
+<p>Eelnevast segavektorist on võimalik numbrid päästa kasutades käsku <code>as.numeric()</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(minu_vektor)</code></pre></div>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>## [1]  1  2  2  4 NA</code></pre>
+<p>Väärtus “joe” muudeti NA-ks, kuna seda ei olnud võimalik numbriks muuta. Samuti peab olema tähelepanelik faktorite muutmisel numbriteks:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">9</span>, <span class="st">&quot;12&quot;</span>, <span class="dv">12</span>, <span class="fl">1.4</span>, <span class="st">&quot;joe&quot;</span>))
+minu_vektor</code></pre></div>
+<pre><code>## [1] 9   12  12  1.4 joe
+## Levels: 1.4 12 9 joe</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(minu_vektor)</code></pre></div>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Kui muudame faktori otse numbriks, saame faktori taseme numbri
+<span class="kw">as.numeric</span>(minu_vektor)</code></pre></div>
+<pre><code>## [1] 3 2 2 1 4</code></pre>
+<p>Faktorite muutmisel numbriteks tuleb need kõigepealt stringideks muuta:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(minu_vektor))</code></pre></div>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>## [1]  9.0 12.0 12.0  1.4   NA</code></pre>
+<p>Järgneva trikiga saab stringidest ekstraheerida numbrid:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
+minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="st">&quot;A2&quot;</span>, <span class="st">&quot;$2&quot;</span>, <span class="st">&quot;joe&quot;</span>)
+minu_vektor &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">parse_number</span>(minu_vektor))</code></pre></div>
+<pre><code>## Warning: 1 parsing failure.
+## row # A tibble: 1 x 4 col     row   col expected actual expected   &lt;int&gt; &lt;int&gt;    &lt;chr&gt;  &lt;chr&gt; actual 1     4    NA a number    joe</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor</code></pre></div>
+<pre><code>## [1]  1  2  2 NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(minu_vektor)</code></pre></div>
+<pre><code>##  num [1:4] 1 2 2 NA</code></pre>
+<p>R säilitab vektori algse järjekorra. Sageli on aga vaja tulemusi näiteks vaatamiseks ja presenteerimiseks sorteerida suuruse või tähestiku järjekorras:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sorts vector in ascending order
+<span class="kw">sort</span>(x, <span class="dt">decreasing =</span> <span class="ot">FALSE</span>, ...)</code></pre></div>
+<p>Vektori unikaalsed väärtused saab kätte käsuga <code>unique()</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## returns a vector or data frame, but with duplicate elements/rows removed
+<span class="kw">unique</span>(x)</code></pre></div>
+<pre><code>## [1] 6 3 4 5</code></pre>
+<div id="uus-vektor-seq-ja-rep" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Uus vektor: <code>seq()</code> ja <code>rep()</code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dt">by =</span> <span class="fl">0.5</span>)</code></pre></div>
+<pre><code>## [1] 2.0 2.5 3.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)</code></pre></div>
+<pre><code>## [1] 2.00 2.25 2.50 2.75 3.00</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">times =</span> <span class="dv">3</span>)</code></pre></div>
+<pre><code>## [1] 1 2 1 2 1 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">each =</span> <span class="dv">3</span>)</code></pre></div>
+<pre><code>## [1] 1 1 1 2 2 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="dt">each =</span> <span class="dv">3</span>, <span class="dt">times =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>##  [1] &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot;</code></pre>
+</div>
+<div id="tehted-arvuliste-vektoritega" class="section level3">
+<h3><span class="header-section-number">7.1.2</span> Tehted arvuliste vektoritega</h3>
+<p>Vektoreid saab liita, lahutada, korrutada ja jagada.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+b &lt;-<span class="st"> </span><span class="dv">4</span>
+a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
+<pre><code>## [1] 5 6 7</code></pre>
+<p>Kõik vektor a liikmed liideti arvuga 3 (kuna vektor b koosnes ühest liikmest, läks see kordusesse)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>) 
+a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
+<pre><code>## Warning in a + b: longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## [1] 5 7 7</code></pre>
+<p>Aga see töötab veateatega, sest vektorite pikkused ei ole üksteise kordajad 1 + 4; 2 + 5, 3 + 4</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
+b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">6</span>) 
+a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
+<pre><code>## [1]  6  8  8 10</code></pre>
+<p>See töötab: 1 + 5; 2 + 6; 3 + 5; 4 + 6</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
+b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>) 
+a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
+<pre><code>## [1]  6  8 10 12</code></pre>
+<p>Samuti see (ühepikkused vektorid — igat liiget kasutatakse üks kord)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)
+<span class="kw">sum</span>(a)</code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(a)</code></pre></div>
+<pre><code>## [1] 0.6666667</code></pre>
+<p>Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 + 1 = 2. Seda loogiliste väärtuste omadust õpime varsti praktikas kasutama.</p>
+</div>
+</div>
+<div id="list" class="section level2">
+<h2><span class="header-section-number">7.2</span> List</h2>
+<p>List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa arvatud listid. See on lihtsalt viis objektid koos hoida ühes suuremas meta-objektis. List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid kõik segamini loksuvad.</p>
+<p>Näiteks siin list, kus loksuvad 1 vektor nimega a, 1 tibble nimega b ja 1 list nimega c, mis omakorda sisaldab vektorit nimega d ja tibblet nimega e. Seega on meil tegu rekursiivse listiga.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># numeric vector a</span>
+a &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">5</span>)
+<span class="co"># data.frame</span>
+ab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(a, <span class="dt">b =</span> <span class="kw">rnorm</span>(<span class="dv">5</span>))
+<span class="co"># linear model</span>
+model &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars)
+<span class="co"># your grandma on bongos</span>
+grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
+<span class="co"># let&#39;s creat list</span>
+happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
+happy_list</code></pre></div>
+<pre><code>## [[1]]
+## [1] 0.2762876 0.4158597 0.4900479 0.3090371 0.3222536
+## 
+## [[2]]
+##           a          b
+## 1 0.2762876 -1.0901881
+## 2 0.4158597  1.1083613
+## 3 0.4900479 -0.6001232
+## 4 0.3090371 -2.3770933
+## 5 0.3222536  1.0845599
+## 
+## [[3]]
+## 
+## Call:
+## lm(formula = mpg ~ hp, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           hp  
+##    30.09886     -0.06823  
+## 
+## 
+## [[4]]
+## [1] &quot;your grandma on bongos&quot;</code></pre>
+<p>Võtame listist välja elemndi “ab”:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">happy_list<span class="op">$</span>ab</code></pre></div>
+<pre><code>## NULL</code></pre>
+</div>
+<div id="data-frame-ja-tibble" class="section level2">
+<h2><span class="header-section-number">7.3</span> data frame ja tibble</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
+<p>Andmeraam on eriline list, mis koosneb ühepikkustest vektoritest. Andmeraam on ühtlasi teatud liiki tabel, kus igas veerus on ainult ühte tüüpi andmed. Need vektorid ripuvad andmeraamis kõrvuti nagu tuulehaugid suitsuahjus, kusjuures vektori algus vastab tuulehaugi peale, mis on konksu otsas (konks vastab andmeraamis tulba nimele ja ühtlasi vektori nimele). Iga vektori nimi muutub sellises tabelis tulba nimeks. Igas tulbas saab olla ainult ühte tüüpi andmeid.</p>
+<p>R-s on 2 andmeraami tüüpi: data frame ja tibble, mis on väga sarnased. Tibble on uuem, veidi kaunima väljatrükiga, pisut mugavam kasutada.</p>
+<blockquote>
+<p>Oluline on, et erinevalt data frame-st saab tibblesse lisada ka list tulpasid, mis võimaldab sisuliselt suvalisi R objekte tibblesse paigutada. Põhimõtteliselt piisab ainult ühest andmestruktuurist – tibble, et R-is töötada. Kõik mis juhtub tibbles jääb tibblesse. Nice and tidy – tidyverse.</p>
+</blockquote>
+<p>“Tidyverse” töötab tibblega veidi paremini kui data frame-ga, aga see vahe ei ole suur.</p>
+<p>Siin on meil 3 vektorit: shop, apples ja oranges, millest me paneme kokku tibble nimega fruits</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## loome kolm vektorit
+shop &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;maxima&quot;</span>, <span class="st">&quot;tesco&quot;</span>, <span class="st">&quot;lidl&quot;</span>)
+apples &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">43</span>)
+oranges &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">32</span>, <span class="ot">NA</span>)
+vabakava &lt;-<span class="st"> </span><span class="kw">list</span>(letters, <span class="kw">runif</span>(<span class="dv">10</span>), <span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>cyl, mtcars))
+## paneme need vektorid kokku tibble-sse
+fruits &lt;-<span class="st"> </span><span class="kw">tibble</span>(shop, apples, oranges, vabakava)
+fruits</code></pre></div>
+<pre><code>## # A tibble: 3 x 4
+##     shop apples oranges   vabakava
+##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
+## 1 maxima      1       2 &lt;chr [26]&gt;
+## 2  tesco      4      32 &lt;dbl [10]&gt;
+## 3   lidl     43      NA   &lt;S3: lm&gt;</code></pre>
+<p>Siin ta on, ilusti meie workspace-s. Pange tähele viimast tulpa “vabakava”, mis sisaldab <em>character</em> vectorit, numbrilist vektorit ja lineaarse mudeli objekti.</p>
+<p>Listi juba nii lihtsalt data.frame-i ei pane:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="kw">data.frame</span>(shop, apples, oranges, vabakava))</code></pre></div>
+<p><strong>Mõned asjad, mida tibblega (ja data framega) saab teha:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(fruits, apples)</code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##   apples     n
+##    &lt;dbl&gt; &lt;int&gt;
+## 1      1     1
+## 2      4     1
+## 3     43     1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(fruits, shop)</code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##     shop     n
+##    &lt;chr&gt; &lt;int&gt;
+## 1   lidl     1
+## 2 maxima     1
+## 3  tesco     1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fruits)</code></pre></div>
+<pre><code>##      shop               apples        oranges    
+##  Length:3           Min.   : 1.0   Min.   : 2.0  
+##  Class :character   1st Qu.: 2.5   1st Qu.: 9.5  
+##  Mode  :character   Median : 4.0   Median :17.0  
+##                     Mean   :16.0   Mean   :17.0  
+##                     3rd Qu.:23.5   3rd Qu.:24.5  
+##                     Max.   :43.0   Max.   :32.0  
+##                                    NA&#39;s   :1     
+##  vabakava.Length  vabakava.Class  vabakava.Mode
+##  26         -none-     character               
+##  10         -none-     numeric                 
+##  12         lm         list                    
+##                                                
+##                                                
+##                                                
+## </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(fruits)</code></pre></div>
+<pre><code>## [1] &quot;shop&quot;     &quot;apples&quot;   &quot;oranges&quot;  &quot;vabakava&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(fruits)</code></pre></div>
+<pre><code>## [1] &quot;shop&quot;     &quot;apples&quot;   &quot;oranges&quot;  &quot;vabakava&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(fruits)</code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(fruits)</code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>(fruits, <span class="kw">desc</span>(apples)) <span class="co">#sorteerib tabeli veeru &quot;apples&quot; väärtuste järgi langevalt (default on tõusev sorteerimine). Võib argumendina anda mitu veergu.</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 4
+##     shop apples oranges   vabakava
+##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
+## 1   lidl     43      NA   &lt;S3: lm&gt;
+## 2  tesco      4      32 &lt;dbl [10]&gt;
+## 3 maxima      1       2 &lt;chr [26]&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">top_n</span>(fruits, <span class="dv">2</span>, apples) <span class="co">#saab 2 rida, milles on kõige rohkem õunu</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 4
+##    shop apples oranges   vabakava
+##   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
+## 1 tesco      4      32 &lt;dbl [10]&gt;
+## 2  lidl     43      NA   &lt;S3: lm&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">top_n</span>(fruits, <span class="op">-</span><span class="dv">2</span>, apples) <span class="co">#saab 2 rida, milles on kõige vähem õunu</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 4
+##     shop apples oranges   vabakava
+##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
+## 1 maxima      1       2 &lt;chr [26]&gt;
+## 2  tesco      4      32 &lt;dbl [10]&gt;</code></pre>
+<p>Tibblega saab teha maatriksarvutusi, kui kasutada ainult arvudega ridu. <code>apply()</code> arvutab maatriksi rea (1) või veeru (2) kaupa, vastavalt funktsioonile, mille sa ette annad.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colSums</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
+<pre><code>##  apples oranges 
+##      48      NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowSums</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
+<pre><code>## [1]  3 36 NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowMeans</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
+<pre><code>## [1]  1.5 18.0   NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colMeans</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
+<pre><code>##  apples oranges 
+##      16      NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits_subset &lt;-<span class="st"> </span>fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]
+<span class="co"># 1 tähendab, et arvuta sd rea kaupa</span>
+<span class="kw">apply</span>(fruits_subset, <span class="dv">1</span>, sd)</code></pre></div>
+<pre><code>## [1]  0.7071068 19.7989899         NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 2 tähendab, et arvuta sd veeru kaupa</span>
+<span class="kw">apply</span>(fruits_subset, <span class="dv">2</span>, sd) </code></pre></div>
+<pre><code>##   apples  oranges 
+## 23.43075       NA</code></pre>
+<p>Lisame käsitsi meie tabelile 1 rea:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st"> </span><span class="kw">add_row</span>(fruits, 
+                  <span class="dt">shop =</span> <span class="st">&quot;konsum&quot;</span>, 
+                  <span class="dt">apples =</span> <span class="dv">132</span>, 
+                  <span class="dt">oranges =</span> <span class="op">-</span><span class="dv">5</span>, 
+                  <span class="dt">.before =</span> <span class="dv">3</span>)
+fruits</code></pre></div>
+<pre><code>## # A tibble: 4 x 4
+##     shop apples oranges   vabakava
+##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
+## 1 maxima      1       2 &lt;chr [26]&gt;
+## 2  tesco      4      32 &lt;dbl [10]&gt;
+## 3 konsum    132      -5     &lt;NULL&gt;
+## 4   lidl     43      NA   &lt;S3: lm&gt;</code></pre>
+<p>Proovi ise:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">add_column</span>()</code></pre></div>
+<p>Eelnevaid verbe ei kasuta me vist enam kunagi sest tavaliselt loeme me andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:</p>
+<div id="rekodeerime-tibble-vaartusi" class="section level3">
+<h3><span class="header-section-number">7.3.1</span> Rekodeerime tibble väärtusi</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits<span class="op">$</span>apples[fruits<span class="op">$</span>apples<span class="op">==</span><span class="dv">43</span>] &lt;-<span class="st"> </span><span class="dv">333</span>
+fruits</code></pre></div>
+<pre><code>## # A tibble: 4 x 4
+##     shop apples oranges   vabakava
+##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
+## 1 maxima      1       2 &lt;chr [26]&gt;
+## 2  tesco      4      32 &lt;dbl [10]&gt;
+## 3 konsum    132      -5     &lt;NULL&gt;
+## 4   lidl    333      NA   &lt;S3: lm&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits<span class="op">$</span>shop[fruits<span class="op">$</span>shop<span class="op">==</span><span class="st">&quot;tesco&quot;</span>] &lt;-<span class="st"> &quot;TESCO&quot;</span>
+fruits</code></pre></div>
+<pre><code>## # A tibble: 4 x 4
+##     shop apples oranges   vabakava
+##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
+## 1 maxima      1       2 &lt;chr [26]&gt;
+## 2  TESCO      4      32 &lt;dbl [10]&gt;
+## 3 konsum    132      -5     &lt;NULL&gt;
+## 4   lidl    333      NA   &lt;S3: lm&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits<span class="op">$</span>apples[fruits<span class="op">$</span>apples<span class="op">&gt;</span><span class="dv">100</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
+fruits</code></pre></div>
+<pre><code>## # A tibble: 4 x 4
+##     shop apples oranges   vabakava
+##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
+## 1 maxima      1       2 &lt;chr [26]&gt;
+## 2  TESCO      4      32 &lt;dbl [10]&gt;
+## 3 konsum     NA      -5     &lt;NULL&gt;
+## 4   lidl     NA      NA   &lt;S3: lm&gt;</code></pre>
+<p>Remove duplicate rows where specific column (col1) contains duplicated values:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">distinct</span>(dat, col1, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)
+<span class="co"># kõikide col vastu</span>
+<span class="kw">distinct</span>(dat) </code></pre></div>
+<p>Rekodeerime <code>Inf</code> ja <code>NA</code> väärtused nulliks (väga halb mõte):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># inf to 0</span>
+x[<span class="kw">is.infinite</span>(x)] &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="co"># NA to 0</span>
+x[<span class="kw">is.na</span>(x)] &lt;-<span class="st"> </span><span class="dv">0</span></code></pre></div>
+</div>
+<div id="uhendame-kaks-tibblet-rea-kaupa" class="section level3">
+<h3><span class="header-section-number">7.3.2</span> Ühendame kaks tibblet rea kaupa</h3>
+<p>Tabeli veergude arv ei muutu, ridade arv kasvab.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">colB =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))
+dfs1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">colB =</span>  <span class="dv">4</span>)
+<span class="co">#id teeb veel ühe veeru, mis näitab, kummast algtabelist iga uue tabeli rida pärit on </span>
+<span class="kw">bind_rows</span>(dfs, dfs1, <span class="dt">.id =</span> <span class="st">&quot;id&quot;</span>)</code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##      id  colA  colB
+##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1     1     a     1
+## 2     1     b     2
+## 3     1     c     3
+## 4     2     d     4</code></pre>
+<p>Vaata Environmendist need tabelid üle ja mõtle järgi, mis juhtus.</p>
+<p>Kui <code>bind_rows()</code> miskipärast ei tööta, proovi <code>do.call(rbind, dfs)</code>, mis on väga sarnane.</p>
+<p>NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!</p>
+<p>Näiteks, võib-olla te tahtsite järgnevat tabelit saada, aga võib-olla ka mitte:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df2 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">ColC =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">ColD =</span> <span class="dv">4</span>)
+## works by guessing your true intention
+<span class="kw">bind_rows</span>(dfs1, df2)</code></pre></div>
+<pre><code>## # A tibble: 2 x 4
+##    colA  colB  ColC  ColD
+##   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1     d     4  &lt;NA&gt;    NA
+## 2  &lt;NA&gt;    NA     d     4</code></pre>
+</div>
+<div id="uhendame-kaks-tibblet-veeru-kaupa" class="section level3">
+<h3><span class="header-section-number">7.3.3</span> ühendame kaks tibblet veeru kaupa</h3>
+<p>Meil on 2 verbi: bind_cols ja cbind, millest esimene on konservatiivsem. Proovige eelkõige bind_col-ga läbi saada, aga kui muidu ei saa, siis cbind ühendab vahest asju, mida bind_cols keeldub puutumast. NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfx &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colC =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>))
+<span class="kw">cbind</span>(dfs, dfx)</code></pre></div>
+<pre><code>##   colA colB colC
+## 1    a    1    4
+## 2    b    2    5
+## 3    c    3    6</code></pre>
+</div>
+<div id="nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha." class="section level3">
+<h3><span class="header-section-number">7.3.4</span> Nii saab tibblest kätte vektori, millega saab tehteid teha.</h3>
+<p>Tibble jääb muidugi endisel kujul alles.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ubinad &lt;-<span class="st"> </span>fruits<span class="op">$</span>apples
+ubinad &lt;-<span class="st"> </span>ubinad <span class="op">+</span><span class="st"> </span><span class="dv">2</span>
+ubinad</code></pre></div>
+<pre><code>## [1]  3  6 NA NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## see on jälle vektor
+<span class="kw">str</span>(ubinad)</code></pre></div>
+<pre><code>##  num [1:4] 3 6 NA NA</code></pre>
+</div>
+<div id="andmeraamide-salvestamine-eksport-import" class="section level3">
+<h3><span class="header-section-number">7.3.5</span> Andmeraamide salvestamine (eksport-import)</h3>
+<p>Andmeraami saame salvestada näiteks csv-na (comma separated file) oma kõvakettale, kasutame “tidyverse” analooge paketist “readr”, mille nimed on baas R funktsioonidest eristatavad alakriipsu “_&quot; kasutamisega. “readr” laaditakse “tidyverse” laadimisega.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## loome uuesti fruits data tibble
+shop &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;maxima&quot;</span>, <span class="st">&quot;tesco&quot;</span>, <span class="st">&quot;lidl&quot;</span>)
+apples &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">43</span>)
+oranges &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">32</span>, <span class="ot">NA</span>)
+fruits &lt;-<span class="st"> </span><span class="kw">tibble</span>(shop, apples, oranges, vabakava)
+## kirjutame fruits tabeli csv faili fruits.csv kataloogi data 
+<span class="kw">write_csv</span>(fruits, <span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
+<p>Kuhu see fail läks? See läks meie projekti juurkataloogi kausta “data/”, juurkataloogi asukoha oma arvuti kõvakettal leiame käsuga:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getwd</span>()</code></pre></div>
+<pre><code>## [1] &quot;/Users/taavi/Dropbox/2017-R-course/lectures&quot;</code></pre>
+<p>Andmete sisselugemine töökataloogist:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
+<p>MS exceli failist saab tabeleid importida “readxl” paki abil.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)
+## kõigepealt vaatame kui palju sheete failis on
+sheets &lt;-<span class="st"> </span><span class="kw">excel_sheets</span>(<span class="st">&quot;data/excelfile.xlsx&quot;</span>)
+## siis impordime näiteks esimese sheeti
+dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;data/excelfile.xlsx&quot;</span>, <span class="dt">sheet =</span> sheets[<span class="dv">1</span>])</code></pre></div>
+<p>Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga <code>read_csv2</code> või <code>read.csv2</code> (need on erinevad funktsioonid; read.csv2 loeb selle sisse data framena ja read_csv2 tibble-na).</p>
+<p>R-i saab sisse lugeda palju erinevaid andmeformaate. Kui sa soovid oluliselt ohverdada reprodutseeritavust installi RStudio addin: “Gotta read em all R”. See läheb ülesse tab-i Addins. Sealt saab selle avada ja selle abil tabeleid oma workspace üles laadida. Selline point-and-click lahendus sobib ehk tabelite esialgseks tutvumiseks, kuid korrektne on andmed importida programmaatiliselt oma skriptis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install gotta read em all as R studio addin</span>
+<span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;Stan125/GREA&quot;</span>)</code></pre></div>
+<p>Alternatiiv: mine alla paremake Files tab-le, navigeeri sinna kuhu vaja ja kliki faili nimele, mida tahad R-i importida.</p>
+<p>Mõlemal juhul ilmub alla konsooli (all vasakul) koodijupp, mille jooksutamine peaks asja ära tegema. Te võite tahta selle koodi kopeerida üles vasakusse aknasse kus teie ülejäänud kood tulevastele põlvedele säilub.</p>
+<blockquote>
+<p>Tüüpiliselt töötate R-s oma algse andmestikuga. Reprodutseeruvaks projektiks on vaja 2 asja: algandmeid ja koodi, millega neid manipuleerida.</p>
+</blockquote>
+<p>NB! R ei muuda algandmeid, mille te näiteks csv-na sisse loete - need jäävad alati selliseks nagu need instrumendi või andmesisestaja poolt väljastati.</p>
+<p>Seega ei ole andmetabelite salvestamine töö vaheproduktidena sageli vajalik sest te jooksutate iga kord, kui te oma projekti juurde naasete, kogu analüüsi uuesti kuni kohani, kuhu te pooleli jäite. See tagab kõige paremini, et teie kood töötab tervikuna. Erandiks on tabelid, mille arvutamine palju aega võtab.</p>
+<p>Tibble konverteerimine data frame-ks ja tagasi tibbleks:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(fruits)</code></pre></div>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(fruits)
+<span class="kw">class</span>(fruits)</code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(fruits)
+<span class="kw">class</span>(fruits)</code></pre></div>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+</div>
+</div>
+<div id="tabelit-sisse-lugedes-vaata-ule-na-d" class="section level2">
+<h2><span class="header-section-number">7.4</span> Tabelit sisse lugedes vaata üle NA-d</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(VIM) </code></pre></div>
+<pre><code>## Loading required package: colorspace</code></pre>
+<pre><code>## Loading required package: grid</code></pre>
+<pre><code>## Loading required package: data.table</code></pre>
+<pre><code>## 
+## Attaching package: &#39;data.table&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     between, first, last</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     transpose</code></pre>
+<pre><code>## VIM is ready to use. 
+##  Since version 4.0.0 the GUI is in its own package VIMGUI.
+## 
+##           Please use the package to use the new (and old) GUI.</code></pre>
+<pre><code>## Suggestions and bug-reports can be submitted at: https://github.com/alexkowa/VIM/issues</code></pre>
+<pre><code>## 
+## Attaching package: &#39;VIM&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:datasets&#39;:
+## 
+##     sleep</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diabetes &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> <span class="st">&quot;data/diabetes.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">dec =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
+<span class="kw">str</span>(diabetes)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    403 obs. of  19 variables:
+##  $ id      : int  1000 1001 1002 1003 1005 1008 1011 1015 1016 1022 ...
+##  $ chol    : int  203 165 228 78 249 248 195 227 177 263 ...
+##  $ stab.glu: int  82 97 92 93 90 94 92 75 87 89 ...
+##  $ hdl     : int  56 24 37 12 28 69 41 44 49 40 ...
+##  $ ratio   : num  3.6 6.9 6.2 6.5 8.9 ...
+##  $ glyhb   : num  4.31 4.44 4.64 4.63 7.72 ...
+##  $ location: Factor w/ 2 levels &quot;Buckingham&quot;,&quot;Louisa&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ age     : int  46 29 58 67 64 34 30 37 45 55 ...
+##  $ gender  : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 1 1 1 2 2 2 2 2 2 1 ...
+##  $ height  : int  62 64 61 67 68 71 69 59 69 63 ...
+##  $ weight  : int  121 218 256 119 183 190 191 170 166 202 ...
+##  $ frame   : Factor w/ 4 levels &quot;&quot;,&quot;large&quot;,&quot;medium&quot;,..: 3 2 2 2 3 2 3 3 2 4 ...
+##  $ bp.1s   : int  118 112 190 110 138 132 161 NA 160 108 ...
+##  $ bp.1d   : int  59 68 92 50 80 86 112 NA 80 72 ...
+##  $ bp.2s   : int  NA NA 185 NA NA NA 161 NA 128 NA ...
+##  $ bp.2d   : int  NA NA 92 NA NA NA 112 NA 86 NA ...
+##  $ waist   : int  29 46 49 33 44 36 46 34 34 45 ...
+##  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...
+##  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggr</span>(diabetes, <span class="dt">prop =</span> <span class="ot">FALSE</span>, <span class="dt">numbers =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="main_files/figure-html/unnamed-chunk-81-1.png" width="672" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
+<p>Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nrows &lt;-<span class="st"> </span><span class="kw">nrow</span>(diabetes)
+  ncomplete &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">complete.cases</span>(diabetes))
+  ncomplete <span class="co">#136</span></code></pre></div>
+<pre><code>## [1] 136</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  ncomplete<span class="op">/</span>nrows <span class="co">#34%</span></code></pre></div>
+<pre><code>## [1] 0.337469</code></pre>
+<p>Mitu NA-d on igas tulbas?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(diabetes, <span class="cf">function</span>(x) <span class="kw">sum</span>(<span class="kw">is.na</span>(x))) </code></pre></div>
+<pre><code>##       id     chol stab.glu      hdl    ratio    glyhb location      age 
+##        0        1        0        1        1       13        0        0 
+##   gender   height   weight    frame    bp.1s    bp.1d    bp.2s    bp.2d 
+##        0        5        1        0        5        5      262      262 
+##    waist      hip time.ppn 
+##        2        2        3</code></pre>
+<p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
+<p><img src="main_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
+<pre><code>## 
+## Click in a column to sort by the corresponding variable.
+## To regain use of the VIM GUI and the R console, click outside the plot region.</code></pre>
+<p>Kuidas rekodeerida NA-d näiteks 0-ks:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> </span><span class="dv">0</span>
+dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> &quot;other&quot;</span>
+dfs[dfs <span class="op">==</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span> <span class="co"># teeb vastupidi 0-d NA-deks</span></code></pre></div>
+<p>Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud <code>is.na()</code> funktsiooniga.</p>
+</div>
+<div id="matrix" class="section level2">
+<h2><span class="header-section-number">7.5</span> Matrix</h2>
+<p>Maatriks on 2-dimensionaalne vektor, sisaldab ainult ühte tüüpi andmeid – numbrid, stringid, faktorid. Tip: me saame sageli andmeraami maatriksina kasutada kui me viskame sealt välja mitte-numbrilised tulbad.</p>
+<p>Aga saame ka andmeraame konverteerida otse maatriksiks (ja tagasi).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(fruits)
+<span class="kw">class</span>(fruits)</code></pre></div>
+</div>
+<div id="andmete-tuubid" class="section level2">
+<h2><span class="header-section-number">7.6</span> Andmete tüübid</h2>
+<ul>
+<li>numeric / integer</li>
+<li>logical – 2 väärtust TRUE/FALSE</li>
+<li>character</li>
+<li>factor (ordered and unordered) - 2+ diskreetset väärtust, mis võivad olla järjestatud suuremast väiksemani (aga ei asu üksteisest võrdsel kaugusel). Faktoreid käsitleme põhjalikumalt hiljem.</li>
+</ul>
+<p>Andmete tüüpe saab üksteiseks konverteerida <code>as.numeric()</code>, <code>as.character()</code>, <code>as.factor()</code>.</p>
+</div>
+<div id="indekseerimine" class="section level2">
+<h2><span class="header-section-number">7.7</span> Indekseerimine</h2>
+<p>Igale vektori, listi, andmeraami ja maatriksi elemendile vastab unikaalne postiindeks, mille abil saame just selle elemendi unikaalselt indentifitseerida, välja võtta ja töödelda.</p>
+<p>Seega on indeksi mõte väga lühikese käsuga välja võtta R-i objektide üksikuid elemente.</p>
+<p>R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).</p>
+<div id="vektorid-ja-nende-indeksid-on-uhedimensionaalsed" class="section level3">
+<h3><span class="header-section-number">7.7.1</span> Vektorid ja nende indeksid on ühedimensionaalsed</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">5</span> 
+my_vector</code></pre></div>
+<pre><code>## [1] 2 3 4 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="dv">1</span>] <span class="co">#1. element ehk number 2</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)] <span class="co">#1. ja 3. element </span></code></pre></div>
+<pre><code>## [1] 2 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="op">-</span><span class="dv">1</span>] <span class="co">#kõik elemendid, v.a. element number 1</span></code></pre></div>
+<pre><code>## [1] 3 4 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">3</span>)] <span class="co">#kõik elemendid, v.a. element number 1 ja 3</span></code></pre></div>
+<pre><code>## [1] 3 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="dv">3</span><span class="op">:</span><span class="dv">5</span>] <span class="co">#elemendid 3, 4 ja 5 (element 5 on määramata, seega NA)</span></code></pre></div>
+<pre><code>## [1]  4  5 NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="op">-</span>(<span class="dv">3</span><span class="op">:</span><span class="kw">length</span>(my_vector))] <span class="co">#1. ja 2. element</span></code></pre></div>
+<pre><code>## [1] 2 3</code></pre>
+</div>
+<div id="andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-indeksid" class="section level3">
+<h3><span class="header-section-number">7.7.2</span> Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid</h3>
+<p><strong>2D indeksi kuju on [rea_indeks, veeru_indeks]</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">colB =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))
+dat
+<span class="co"># üks andmepunkt: 1 rida, 2. veerg</span>
+dat[<span class="dv">1</span>, <span class="dv">2</span>]
+<span class="co"># 1. rida, kõik veerud</span>
+dat[<span class="dv">1</span>, ]
+<span class="co"># 2. veerg, kõik read</span>
+dat[, <span class="dv">2</span>]
+<span class="co"># kõik read peale 1.</span>
+dat[<span class="op">-</span><span class="dv">1</span>, ]
+<span class="co"># viskab välja 2. veeru</span>
+dat[, <span class="op">-</span><span class="dv">2</span>]
+<span class="co"># 2 andmepunkti: 2. rida, 1. ja 2. veerg</span>
+dat[<span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]
+<span class="co"># 2 andmepunkti: 2. rida, 3. ja 4. veerg</span>
+dat[<span class="dv">2</span>, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)]
+<span class="co">#viskab välja 1. ja 2. rea</span>
+dat[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), ]
+<span class="co">#veerg nimega colB, output on erandina vektor!</span>
+dat<span class="op">$</span>colB</code></pre></div>
+<p>Kui me indekseerimisega tibblest veeru ehk vektori välja võtame, on output class: tibble. Kui me teeme sama data frame-st, siis on output class: vector.</p>
+<p>Nüüd veidi keerulisemad konstruktsioonid, mis võimaldavad tabeli ühe kindla veeru väärtusi välja tõmmata teise veeru väärtuste järgi filteerides. Püüdke sellest koodist aru saada, et te hiljem ära tunneksite, kui midagi sellist vastu tuleb. Õnneks ei ole teil endil vaja sellist koodi kirjutada, me õpetame teile varsti lihtsama filtri meetodi.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">colB =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))
+dat<span class="op">$</span>colB[dat<span class="op">$</span>colA <span class="op">!=</span><span class="st"> &quot;a&quot;</span> ] <span class="co">#jätab sisse kõik vektori colB väärtused, kus samas tabeli reas olev colA väärtus ei ole &quot;a&quot;. output on vektor! </span></code></pre></div>
+<pre><code>## [1] 2 3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat<span class="op">$</span>colA[dat<span class="op">$</span>colB <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>] <span class="co">#jätab sisse kõik vektori colA väärtused, kus samas tabeli reas olev colB väärtus &gt;1. output on vektor. </span></code></pre></div>
+<pre><code>## [1] &quot;b&quot; &quot;c&quot;</code></pre>
+</div>
+<div id="listide-indekseerimine" class="section level3">
+<h3><span class="header-section-number">7.7.3</span> Listide indekseerimine</h3>
+<p><strong>Listi indekseerimisel kasutame kahte sorti nurksulge, “[ ]” ja “[[ ]]”, mis töötavad erinevalt</strong>.</p>
+<p>Kui listi vaadata nagu objektide vanglat, siis kaksiksulgude <code>[[ ]]</code> abil on võimalik üksikuid objekte vanglast välja päästa nii, et taastub nende algne kuju ehk class. Seevastu üksiksulud <code>[ ]</code> tekitavad uue listi, kus on säilinud osad algse listi elemendid, ehk uue vangla vähemate vangidega.</p>
+<blockquote>
+<p>Kaksiksulud “[[ ]]” päästavad listist välja ühe elemendi ja taastavad selle algse class-i (data.frame, vektor, list jms). Üksiksulud “[ ]” võtavad algsest listist välja teie poolt valitud elemendid aga jätavad uue objekti ikka listi kujule.</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a =</span> <span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="dt">colB =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)), <span class="dt">b =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>, <span class="st">&quot;s&quot;</span>))
+## this list has two elements, a data frame called &quot;a&quot; and a character vector called &quot;b&quot;.
+<span class="kw">str</span>(my_list)</code></pre></div>
+<pre><code>## List of 2
+##  $ a:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   2 obs. of  2 variables:
+##   ..$ colA: chr [1:2] &quot;A&quot; &quot;B&quot;
+##   ..$ colB: num [1:2] 1 2
+##  $ b: chr [1:3] &quot;1&quot; NA &quot;s&quot;</code></pre>
+<p>Tõmbame listist välja tibble:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_tibble &lt;-<span class="st"> </span>my_list[[<span class="dv">1</span>]]
+my_tibble</code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##    colA  colB
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1     A     1
+## 2     B     2</code></pre>
+<p>See ei ole enam list.</p>
+<p>Nüüd võtame üksiksuluga listist välja 1. elemendi, mis on tibble, aga output ei ole mitte tibble, vaid ikka list. Seekord ühe elemendiga, mis on tibble.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa &lt;-<span class="st"> </span>my_list[<span class="dv">1</span>]
+<span class="kw">str</span>(aa)</code></pre></div>
+<pre><code>## List of 1
+##  $ a:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   2 obs. of  2 variables:
+##   ..$ colA: chr [1:2] &quot;A&quot; &quot;B&quot;
+##   ..$ colB: num [1:2] 1 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa1 &lt;-<span class="st"> </span>my_list<span class="op">$</span>a[<span class="dv">2</span>,] <span class="co">#class is df</span>
+aa1</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##    colA  colB
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1     B     2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa3 &lt;-<span class="st"> </span>my_list[[<span class="dv">1</span>]][<span class="dv">1</span>,]
+aa3</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##    colA  colB
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1     A     1</code></pre>
+<p>Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välja objekti my_list 1. elemendi, tema algses tibble formaadis, (indeksi 1. dimensioon). Seejärel korjame sealt välja 1. rea, tibble formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).</p>
+<p>Pane tähele, et <code>[[ ]]</code> lubab ainult ühe elemendi korraga listist välja päästa.</p>
+</div>
+</div>
+<div id="regular-expression-ja-find-replace" class="section level2">
+<h2><span class="header-section-number">7.8</span> Regular expression ja find &amp; replace</h2>
+<p>Regular expression annab võimaluse lühidalt kirjeldada mitte-üheseid otsinguparameetreid.</p>
+<blockquote>
+<p>regular expression on string, mis kirjeldab mitut stringi</p>
+</blockquote>
+<p>A <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html">regular expression</a> <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html">Regular Expressions as used in R</a></p>
+<ul>
+<li>Most characters, including all letters and digits, are regular expressions that match themselves.</li>
+<li><code>.</code> matches any single character.</li>
+<li>You can refer also to a character class, which is a list of characters enclosed between <code>[</code> and <code>]</code>, e.g. <code>[[:alnum:]]</code> is same as <code>[A-z0-9]</code>.</li>
+<li>Most common character classes:
+<ul>
+<li><code>[:alnum:]</code> includes alphanumerics (<code>[:alpha:]</code> and <code>[:digit:]</code>);</li>
+<li><code>[:alpha:]</code>, includes alphabetic characters (<code>[:upper:]</code> and <code>[:lower:]</code> case);</li>
+<li><code>[:punct:]</code> includes punctuation characters ! &quot; # $ % &amp; ’ ( ) * + , - . / : ; &lt; = &gt; ? @ [  ] ^ _ ` ` { | } ~.;</li>
+<li><code>[:blank:]</code> includes space and tab; etc.</li>
+</ul></li>
+<li>The metacharacters in regular expressions are <code>. \ | ( ) [ { ^ $ * + ?</code>, whether these have a special meaning depends on the context. When matching a metacharacter as a regular character, precede it with a double backslash <code>\\</code>.</li>
+<li>Repetition quantifiers put after regex specify how many times regex is matched: <code>?</code>, optional, at most once; <code>*</code>, zero or more times; <code>+</code>, one or more times; <code>{n}</code>, n times; <code>{n,}</code>, n or more times; <code>{n,m}</code>, n to m times.</li>
+<li>^ anchors the regular expression to the start of the string.</li>
+<li>$ anchors the the regular expression to end of the string.</li>
+</ul>
+<div id="common-operations-with-regular-expressions" class="section level3">
+<h3><span class="header-section-number">7.8.1</span> Common operations with regular expressions</h3>
+<ul>
+<li>Locate a pattern match (positions)</li>
+<li>Extract a matched pattern</li>
+<li>Identify a match to a pattern</li>
+<li>Replace a matched pattern</li>
+</ul>
+</div>
+<div id="find-and-replace" class="section level3">
+<h3><span class="header-section-number">7.8.2</span> Find and replace</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)
+x&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;ananas&quot;</span>, <span class="st">&quot;banana&quot;</span>)
+
+<span class="co">#replaces all a-s at the beginning of strings with e-s</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;^a&quot;</span>, <span class="st">&quot;e&quot;</span>) </code></pre></div>
+<pre><code>## [1] &quot;epple&quot;  &quot;enanas&quot; &quot;banana&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># str_replace only replaces at the first occurence at each string</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;e&quot;</span>) </code></pre></div>
+<pre><code>## [1] &quot;epple&quot;  &quot;enanas&quot; &quot;benana&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#str_replace_all replaces all a-s anywhere in the strings</span>
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;e&quot;</span>) </code></pre></div>
+<pre><code>## [1] &quot;epple&quot;  &quot;enenes&quot; &quot;benene&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#replaces a and the following character at the end of string with nothing (i.e. deletes 2 chars)</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;a.$&quot;</span>, <span class="st">&quot;&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;apple&quot;  &quot;anan&quot;   &quot;banana&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#replaces a-s or s-s at the end of string with e-s</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;(a|s)$&quot;</span>, <span class="st">&quot;e&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;apple&quot;  &quot;ananae&quot; &quot;banane&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#replaces a-s or s-s anywhere in the string with e-s</span>
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;a|s&quot;</span>, <span class="st">&quot;e&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;epple&quot;  &quot;enenee&quot; &quot;benene&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#remove all numbers. </span>
+y&lt;-<span class="kw">c</span>(<span class="st">&quot;as1&quot;</span>, <span class="st">&quot;2we3w&quot;</span>, <span class="st">&quot;3e&quot;</span>)
+<span class="kw">str_replace_all</span>(y, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">d&quot;</span>, <span class="st">&quot;&quot;</span>) </code></pre></div>
+<pre><code>## [1] &quot;as&quot;  &quot;wew&quot; &quot;e&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#remove everything, except numbers. </span>
+<span class="kw">str_replace_all</span>(y, <span class="st">&quot;[A-Za-z_]&quot;</span>, <span class="st">&quot;&quot;</span>) </code></pre></div>
+<pre><code>## [1] &quot;1&quot;  &quot;23&quot; &quot;3&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple pie&quot;</span>)
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;^apple$&quot;</span>,<span class="st">&quot;m&quot;</span>) <span class="co">#To force to only match a complete string:</span></code></pre></div>
+<pre><code>## [1] &quot;m&quot;         &quot;apple pie&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_replace_all</span>(x, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">s&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co">#space to _</span></code></pre></div>
+<pre><code>## [1] &quot;apple&quot;     &quot;apple_pie&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_replace_all</span>(x, <span class="st">&quot;[apl]&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co">#a or p or l to _</span></code></pre></div>
+<pre><code>## [1] &quot;____e&quot;     &quot;____e _ie&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_replace_all</span>(x, <span class="st">&quot;[ap|p.e]&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co"># ap or p.e to _</span></code></pre></div>
+<pre><code>## [1] &quot;___l_&quot;     &quot;___l_ _i_&quot;</code></pre>
+<p><strong>patterns that match more than one character:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">. (dot)<span class="op">:</span><span class="st"> </span>any character apart from a newline.
+
+\\d<span class="op">:</span><span class="st"> </span>any digit.
+
+\\s<span class="op">:</span><span class="st"> </span>any <span class="kw">whitespace</span> (space, tab, newline).
+
+\[abc]<span class="op">:</span><span class="st"> </span>match a, b, or c.
+
+\[<span class="op">!</span>abc]<span class="op">:</span><span class="st"> </span>match anything except a, b, or c.
+
+To create a regular expression containing \d or \s, you???ll need to escape the \ <span class="cf">for</span> the string, so you will type <span class="st">&quot;</span><span class="ch">\\\\</span><span class="st">d&quot;</span> or <span class="st">&quot;</span><span class="ch">\\\\</span><span class="st">s&quot;</span>.
+
+abc<span class="op">|</span>d..f will match either <span class="st">&quot;abc&quot;</span>, or <span class="st">&quot;deaf&quot;</span>. </code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="funs.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstats-tartu/lectures/edit/master/04-objektid.Rmd",
+"text": "Edit"
+},
+"download": ["main.pdf", "main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="intro.html">
-<link rel="next" href="pakettide-installeerimine.html">
+<link rel="prev" href="pakettide-installeerimine.html">
+<link rel="next" href="funs.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -201,97 +201,134 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tools" class="section level1">
-<h1><span class="header-section-number">3</span> Tarkvaratööriistad</h1>
-<div id="installeeri-vajalikud-programmid" class="section level2">
-<h2><span class="header-section-number">3.1</span> Installeeri vajalikud programmid</h2>
-<p>Praktiline kursus eeldab töötavate R, RStudio ja Git programmide olemasolu sinu arvutist. Kõik on väga lihtsad installid.</p>
-<ol style="list-style-type: decimal">
-<li>Googelda “install R” või mine otse <a href="https://cran.r-project.org">R allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
-<li>Googelda “install RStudio” või mine otse <a href="https://www.rstudio.com/products/rstudio/download/">RStudio allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
-<li>Googelda “install git” või mine otse <a href="https://git-scm.com/downloads">Git allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
-</ol>
-</div>
-<div id="loo-githubi-konto" class="section level2">
-<h2><span class="header-section-number">3.2</span> Loo GitHubi konto</h2>
-<p>GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine <i class="fa fa-git" aria-hidden="true"></i> versioonikontrolli repositoorium ja veebimajutuse teenus.</p>
+<div id="calc" class="section level1">
+<h1><span class="header-section-number">5</span> R on kalkulaator</h1>
+<p>Liidame <code>2 + 2</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<p>Nüüd trükiti see vastus konsooli kujul <code>[1] 4</code>. See tähendab, et <code>2 + 2 = 4</code>.</p>
+<p>Kontrollime seda:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## liidame 2 ja 2 ning vaatame kas vastus võrdub 4
+answer &lt;-<span class="st"> </span>(<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>) <span class="op">==</span><span class="st"> </span><span class="dv">4</span>
+## Trükime vastuse välja
+answer</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Vastus on TRUE, (logical).</p>
+<p>Pane tähele, et aritmeetiline võrdusmärk on <code>==</code> (sest = tähendab hoopis väärtuse määramist objektile/argumendile).</p>
+<p>Veel mõned näidisarvutused:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## 3 astmes 2; Please read Note ?&#39;**&#39; 
+<span class="dv">3</span> <span class="op">^</span><span class="st"> </span><span class="dv">2</span>
+## Ruutjuur 3st
+<span class="kw">sqrt</span>(<span class="dv">3</span>)
+## Naturaallogaritm sajast
+<span class="kw">log</span>(<span class="dv">100</span>)</code></pre></div>
+<p>Arvule <span class="math inline">\(\pi\)</span> on määratud oma objekt <code>pi</code>. Seega on soovitav enda poolt loodavatele objektidele mitte panna nimeks “pi”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Ümarda pi neljale komakohale
+<span class="kw">round</span>(pi, <span class="dv">4</span>)</code></pre></div>
+<pre><code>## [1] 3.1416</code></pre>
+<p>Ümardamine on oluline tulemuste väljaprintimisel.</p>
+<div id="r-objektid" class="section level2">
+<h2><span class="header-section-number">5.1</span> R objektid</h2>
+<p>R-i töökeskkonnas “workspace” asuvad <strong>objektid</strong>, millega me töötame. Tüüpilised objektid on:</p>
 <ul>
-<li><p><i class="fa fa-github" aria-hidden="true"></i> konto loomiseks mine lehele <a href="https://github.com" class="uri">https://github.com</a>. Loo endale oma nimega seotud avalik konto. Tulevikule mõeldes vali kasutajanimi hoolikalt. Ära muretse detailide pärast, need on võimalik täita hiljem.</p></li>
-<li>Loo repo nimega <code>intro_demo</code>.</li>
-<li>Lisa repole lühike ja informatiivne kirjeldus.</li>
-<li>Vali “Public”.</li>
-<li>Pane linnuke kasti “Initialize this repository with a README”.</li>
-<li><p>Klikka “Create Repository”.</p></li>
+<li>Vektorid, maatriksid, listid ja tabelid.</li>
+<li>Statistiliste analüüside väljundid (S3, S4 klass).</li>
+<li>Funktsioonid, mille oleme ise sisse lugenud.</li>
+</ul>
+<p>Käsk <code>ls()</code> annab objektide nimed teie workspace-s:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre></div>
+<pre><code>## [1] &quot;answer&quot;</code></pre>
+<p><code>rm(a)</code> removes object a from the workspace</p>
+<p>Selleks, et salvestada töökeskkond faili kasuta <i class="fa fa-floppy-o" aria-hidden="true"></i> “Save” nuppu “Environment” akna servast või menüüst “Session” -&gt; “Save Workspace As”.</p>
+<p>Projekti sulgemisel salvestab RStudio vaikimisi töökeskkonna. Parema reprodutseeritavuse huvides pole siiski soovitav töökeskkonda peale töö lõppu, projekti sulgemisel, salvestada: - Selleks mine “Tools” &gt; “Global Options” &gt; kõige ülemine, “R General” menüüs vali “Save workspace to .RData on exit” &gt; “Never” ever! - Võta ära linnuke “Restore .RData to workspace at startup” eest.</p>
+<p>Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele.</p>
+</div>
+<div id="objekt-ja-nimi" class="section level2">
+<h2><span class="header-section-number">5.2</span> Objekt ja nimi</h2>
+<p>Kui teil sünnib laps, annate talle nime.</p>
+<p>R-s on vastupidi: nimele antakse objekt</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">babe &lt;-<span class="st"> &quot;beebi&quot;</span>
+babe</code></pre></div>
+<pre><code>## [1] &quot;beebi&quot;</code></pre>
+<p>Siin on kõigepealt nimi (babe), siis assingmenti sümbol <code>&lt;-</code> ja lõpuks objekt, mis on nimele antud (string “beebi”).</p>
+<p>NB! Stringid on jutumärkides, nimed mitte. Nimi üksi evalueeritakse kui “print object”, mis antud juhul on string “beebi”</p>
+<p>Nüüd muudame objekti nime taga:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">babe &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;saatan&quot;</span>, <span class="st">&quot;inglike&quot;</span>)
+babe</code></pre></div>
+<pre><code>## [1] &quot;saatan&quot;  &quot;inglike&quot;</code></pre>
+<p>Tulemuseks on sama nimi, mis tähistab nüüd midagi muud (vektorit, mis koosneb 2st stringist). Objekt “beebi” kaotas oma nime ja on nüüd workspacest kadunud. <code>class()</code> annab meile objekti klassi.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(babe)</code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<p>Antud juhul character.</p>
+<blockquote>
+<p>Ainult need objektid, mis on assigneeritud nimele, lähevad workspace ja on sellistena kasutatvad edasises analüüsis.</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">apples &lt;-<span class="st"> </span><span class="dv">2</span>
+bananas &lt;-<span class="st"> </span><span class="dv">3</span>
+apples <span class="op">+</span><span class="st"> </span>bananas</code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<p>Selle ekspressiooni tulemus trükitakse ainult R konsooli, kuna teda ei määrata nimele siis ei ilmu see ka workspace.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="dv">2</span>
+b &lt;-<span class="st"> </span><span class="dv">3</span>
+a &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b
+<span class="co"># objekti nimega &#39;a&#39; struktuur</span>
+<span class="kw">str</span>(a)</code></pre></div>
+<pre><code>##  num 5</code></pre>
+<p>Nüüd on nimega a seostatud uus objekt, mis sisaldab numbrit 5 (olles ühe elemendiga vektor). Ja nimega a eelnevalt seostatud objekt, mis koosnes numbrist 2, on workspacest lahkunud.</p>
+</div>
+<div id="nimede-vorm" class="section level2">
+<h2><span class="header-section-number">5.3</span> Nimede vorm</h2>
+<ul>
+<li>Nimed algavad tähemärgiga, mitte numbriga ega $€%&amp;/?~ˇöõüä</li>
+<li>Nimed ei sisalda tühikuid</li>
+<li>Tühiku asemel kasuta alakriipsu: näiteks eriti_pikk_nimi</li>
+<li>SUURED ja väiksed tähed on nimes erinevad</li>
+<li>Nimed peaksid kirjeldama objekti, mis on sellele nimele assigneeritud ja nad võivad olla pikad sest TAB klahv annab meile auto-complete.</li>
+<li>alt + - on otsetee <code>&lt;-</code> jaoks</li>
 </ul>
 </div>
-<div id="loo-uus-r-projekt" class="section level2">
-<h2><span class="header-section-number">3.3</span> Loo uus R projekt</h2>
+<div id="sama-koodi-saab-kirjutada-neljal-viisil" class="section level2">
+<h2><span class="header-section-number">5.4</span> Sama koodi saab kirjutada neljal viisil</h2>
+<p>Hargnevate teede aed: kui me muudame olemasolevat objekti on meil alati kaks valikut. Me kas jätame muudetud objektile vana objekti nime või me anname talle uue nime. Esimesel juhul läheb vana muutmata objekt workspacest kaduma aga nimesid ei tule juurde ja säilib teatud workflow sujuvus. Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende juurde saab alati tagasi tulla. Samas tekkib meile palju sarnaste nimedega objekte.</p>
+<p>Esimnene võimalus:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
+a &lt;-<span class="st"> </span><span class="kw">sum</span>(a)
+a &lt;-<span class="st"> </span><span class="kw">sqrt</span>(a)
+a &lt;-<span class="st"> </span><span class="kw">round</span>(a, <span class="dv">2</span>)
+a</code></pre></div>
+<pre><code>## [1] 2.24</code></pre>
+<p>Teine võimalus:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
+a1 &lt;-<span class="st"> </span><span class="kw">sum</span>(a)
+a2 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(a1)
+a3 &lt;-<span class="st"> </span><span class="kw">round</span>(a2, <span class="dv">2</span>)
+a3</code></pre></div>
+<pre><code>## [1] 2.24</code></pre>
+<p>Kolmas võimalus on lühem variant esimesest. Me nimelt ühendame etapid toru <code>%&gt;%</code> kaudu. Siin me võtame objekti “a” (nö. andmed), suuname selle funktsiooni <code>sum()</code>, võtame selle funktsiooni väljundi ja suuname selle omakorda funktsiooni <code>sqrt()</code>. Seejärel võtame selle funktsiooni outputi ja määrame selle nimele “result” (aga võime selle ka mõne teise nimega siduda). Kui mõni funktsioon võtab ainult ühe parameetri, mille me talle toru kaudu sisse sõõdame, siis pole selle funktsiooni taga isegi sulge vaja.</p>
 <blockquote>
-<p>NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta alakriipsu “_”.</p>
+<p>NB! R hea stiili juhised soovitavad siiski ka <em>pipe</em>-s kasutada funktsiooni koos sulgudega!</p>
 </blockquote>
-<ol start="4" style="list-style-type: decimal">
-<li>Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)</li>
-<li>Ava RStudio akna (Joonis <a href="tools.html#fig:rstudiowindow">3.1</a>) paremalt ülevalt nurgast “Project” menüüst “New Project” dialoog.</li>
-<li>Ava “New Directory” &gt; “Empty Project” &gt; vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks “rstats2017”.</li>
-</ol>
-<div class="figure"><span id="fig:rstudiowindow"></span>
-<img src="assets/img/rstudio_screen_untitled.png" alt="RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt;. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt; menüüs on võimalik muutusi vaadata ja 'commit'ida ja &lt;i class='fa fa-github' aria-hidden='true'&gt;&lt;/i&gt;-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse)." width="1280" />
-<p class="caption">
-Joonis 3.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga <i class='fa fa-git' aria-hidden='true'></i>. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. <i class='fa fa-git' aria-hidden='true'></i> menüüs on võimalik muutusi vaadata ja ’commit’ida ja <i class='fa fa-github' aria-hidden='true'></i>-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse).
-</p>
-</div>
-<p>Rohkem infot R projekti loomise kohta leiad RStudio infoleheküljelt: <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects">Using Projects</a>.</p>
-</div>
-<div id="git-merge-konfliktid" class="section level2">
-<h2><span class="header-section-number">3.4</span> Git <em>Merge</em> konfliktid</h2>
-<p>Kollaboreerides üle GitHubi tekivad varem või hiljem konfliktid projekti failide versioonide vahel nn. “merge conflicts”, nende korrektselt lahendama õppimine on väga oluline.</p>
-<ul>
-<li>Oma repo GitHubi veebilehel muuda/paranda README.md dokumenti ja “Commit”-i seda lühisõnumiga mis sa muutsid/parandasid.</li>
-<li>Seejärel, muuda oma arvutis olevat README.md faili RStudio-s viies sinna sisse mingi teistsuguse muudatuse. Tee “Commit” oma muudatustele.</li>
-<li>Proovi “push”-ida – sa saad veateate!</li>
-<li>Proovi “pull”.</li>
-<li>Lahenda “merge” konflikt ja seejärel “commit” + “push”.</li>
-</ul>
-<p>Githubi veateadete lugemine ja Google otsing aitavad sind.</p>
-</div>
-<div id="r-projekti-kataloogi-soovitatav-minimaalne-struktuur" class="section level2">
-<h2><span class="header-section-number">3.5</span> R projekti kataloogi soovitatav minimaalne struktuur</h2>
-<p>Iga R projekt peab olema täiesti iseseisev (<em>selfcontained</em>) ja sisaldama kogu infot, andmeid ja instruktsioone, et projektiga seotud arvutused läbi viia ja raport genereerida. Kõik faili <em>path</em>-id peavad olema suhtelised.</p>
-<p>R projekti kataloog peaks sisaldama projekti kirjeldavaid faile, mis nimetatakse DESCRIPTION ja README.md. <strong>DESCRIPTION</strong> on tavaline tekstifail ja sisaldab projekti metainfot ja infot projekti sõltuvuste kohta, nagu väliste andmesettide asukoht, vajalik tarkvara jne. <strong>README.md</strong> on markdown formaadis projekti info, sisaldab juhendeid kasutajatele. Igale GitHubi repole on soovitav koostada README.md, esialgu kasvõi projekti pealkiri ja üks kirjeldav lause. README.md ja DESCRIPTION asuvad projekti juurkataloogis.</p>
-<blockquote>
-<p>Projekti juurkataloogi jäävad ka kõik .Rmd laiendiga teksti ja analüüsi tulemusi sisaldavad failid, millest genereeritakse lõplik raport/dokument.</p>
-</blockquote>
-<p>Suuremad projektid, nagu näiteks teadusartikkel või raamat, võivad sisaldada mitmeid Rmd faile ja võib tekkida kange kisatus need mõnda alamkataloogi tõsta. Aga <code>knitr::knit()</code>, mis Rmarkdowni markdowniks konverteerib, arvestab, et Rmd fail asub juurkataloogis ja arvestab juurkataloogi suhtes ka failis olevaid <em>path</em>-e teistele failidele (näiteks “data/my_data.csv”).</p>
-<p><strong>data/</strong> kataloog sisaldab faile toorandmetega. Need failid peavad olema R-i poolt loetavad ja soovitavalt tekstipõhised, laienditega TXT, CSV, TSV jne. Neid faile ei muudeta, ainult loetakse. Kogu algandmete töötlus toimub programmaatiliselt. Suured failid muudavad versioonikontrolli aeglaseks, samuti on suheliselt mõttetu versioonikontroll binaarsete failide korral (MS <i class="fa fa-file-word-o" aria-hidden="true"></i> näiteks), sest diffid pole lihtsalt inimkeeles. Github ütleb suurte failide kohta nii: <em>“GitHub will warn you when pushing files larger than 50 MB. You will not be allowed to push files larger than 100 MB.”</em></p>
-<p><strong>src/</strong> kataloog sisaldab analüüsi skripte, sealhulgas ka andmetöötluse skripte.</p>
-<p><strong>lib/</strong> kataloogis on kasutaja poolt tehtud funktsioonide definitsioone sisaldavad R skriptid.</p>
-<pre><code>project/
-|- DESCRIPTION       # project metadata and dependencies
-|- README.md         # description of contents and guide to users
-|- my_analysis.Rmd   # markdown file containing analysis
-|                    # writeup together with R code chunks
-|
-|- data/             # raw data, not changed once created 
-|  +-my_data.csv     # data files in open formats, 
-|                    # such as TXT, CSV, TSV etc.
-|
-|- src/              # any programmatic code
-|  +-my_scripts.R    # R code used to analyse and 
-|                    # visualise data
-|
-|- lib/              # user generated functions
-|  +-my_functions.R  # R code defining functions</code></pre>
-<p>On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid taaskasutatavate funktsioonidega kataloogi <strong>R/</strong>. Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i <span class="citation">(Wickham, Danenberg, and Eugster <a href="#ref-roxygen2">2017</a>)</span>, siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi <strong>man/</strong>. Rohkem projekti pakkimise kohta loe värskest preprindist “Packaging data analytical work reproducibly using R” <span class="citation">(Marwick, Boettiger, and Mullen <a href="#ref-marwick2017">2017</a>)</span>.</p>
+<p>See on hea lühike ja inimloetav viis koodi kirjutada, mis on masina jaoks identne esimese koodiga.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## we need piping operator &#39;%&gt;%&#39; from magrittr
+<span class="kw">library</span>(magrittr)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;magrittr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     extract</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
+result &lt;-<span class="st"> </span>a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>)
+result</code></pre></div>
+<pre><code>## [1] 2.24</code></pre>
+<p>Neljas võimalus, klassikaline baas R lahendus:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
+a1 &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">sqrt</span>(<span class="kw">sum</span>(a)), <span class="dv">2</span>)
+a1</code></pre></div>
+<pre><code>## [1] 2.24</code></pre>
+<p>Sellist koodi loetakse keskelt väljappoole ja kirjutattakse alates viimasest operatsioonist, mida soovitakse, et kood teeks. Masina jaoks pole vahet. Inimese jaoks on küll: 4. variant nõuab hästi pestud ajusid.</p>
+<p>Koodi lühidus 4 –&gt; 3 –&gt; 1 –&gt; 2 (pikem) Lollikindlus 1 –&gt; 2 –&gt; 3 –&gt; 4 (vähem lollikindel)</p>
+<p>See on teie otsustada, millist koodivormi te millal kasutate, aga te peaksite oskama lugeda neid kõiki.</p>
 
-</div>
-</div>
-<h3>Bibliograafia</h3>
-<div id="refs" class="references">
-<div id="ref-roxygen2">
-<p>Wickham, Hadley, Peter Danenberg, and Manuel Eugster. 2017. <em>Roxygen2: In-Line Documentation for R</em>. <a href="https://CRAN.R-project.org/package=roxygen2" class="uri">https://CRAN.R-project.org/package=roxygen2</a>.</p>
-</div>
-<div id="ref-marwick2017">
-<p>Marwick, Ben, Carl Boettiger, and Lincoln Mullen. 2017. “Packaging Data Analytical Work Reproducibly Using R (and Friends).” <em>PeerJ Preprints</em> 5: e3192v1. doi:<a href="https://doi.org/10.7287/peerj.preprints.3192v1">10.7287/peerj.preprints.3192v1</a>.</p>
 </div>
 </div>
             </section>
@@ -299,8 +336,8 @@ Joonis 3.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimeg
           </div>
         </div>
       </div>
-<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pakettide-installeerimine.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="pakettide-installeerimine.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="funs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -329,7 +366,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstats-tartu/lectures/edit/master/01-tarkvara.Rmd",
+"link": "https://github.com/rstats-tartu/lectures/edit/master/03-kalkulaator.Rmd",
 "text": "Edit"
 },
 "download": ["main.pdf", "main.epub"],
