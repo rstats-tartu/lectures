@@ -53,7 +53,7 @@ Normaaljaotuse korral on meil 2 parameetrit, millele me posteeriori arvutame: mu
 > Normaaljaotusega modelleeritud tõepärafunktsioon on normaaljaotus, mille keskväärtus = mean(valim) ja mille standardhälve = sd(valim)/sqrt(N), kus N on valimi suurus. See tõepärafunktsioon modelleerib meie valimi keskväärtuse kohtamise tõenäosust igal võimalikul parameetriväärtusel. Sigma, mille posteeriori me Bayesi mudelist arvutame, on aga standardhälve algsete andmepunktide tasemel. See on väga oluline eristus sest sigma kaudu saab simueerida uusi andmepunkte.  
 
 
-```{r}
+```{r results="hide"}
 a <- c(rnorm(20)) #expected mean = 0, sd= 1
 b <- c(a, 5) #plus one outlier
 
@@ -90,6 +90,11 @@ m3 <- map2stan(
         sigma ~ dcauchy(0,1) #half-cauchy prior from sd 
 ), data=list(b=b))
 
+```
+
+Siin on m0 ilma outlierita mudel ja me tahame teada, milline mudel m1 kuni m3 sellele kõige lähedasemad tulemused annab (kuna m0 on fititud valimi andmete peal, ei ole ka mu täpselt 0 ja sigma täpselt 1). 
+Nagu näha on m3 ehk fikseeritud nu-ga t-jaotus kõige lähemal m0-le ja seega parim mudel outlieriga andmetele. 
+```{r}
 plot(coeftab(m0, m1, m2, m3), pars=c("mu", "sigma"))
 
 ```
@@ -135,8 +140,7 @@ mcmc_trace(fit3d, pars = c("mu", "sigma"))
 ```
 
 
-Siin on m0 ilma outlierita mudel ja me tahame teada, milline mudel m1 kuni m3 sellele kõige lähedasemad tulemused annab (kuna m0 on fititud valimi andmete peal, ei ole ka mu täpselt 0 ja sigma täpselt 1). 
-Nagu näha on m3 ehk fikseeritud nu-ga t-jaotus kõige lähemal m0-le ja seega parim mudel outlieriga andmetele. 
+
 Pane tähele, et kuna me fikseerisime nu väärtuse tõepäramudelis, pole sellele enam priorit vaja sets meie Bayesi arvutusmasin ei määra enam ise nu väärtust. 
 Nu otsene hindamine töötab alati üsna ebakindalt: 
 
@@ -173,7 +177,7 @@ plot(x,y, main="prior for sigma")
 
 
 
-```{r}
+```{r results="hide"}
 heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) #the vector of values
 df <- as.data.frame(heights)
 m1 <- map2stan(
@@ -191,9 +195,7 @@ m1 <- map2stan(
 precis(m1)
 ```
 
-```{r}
-plot(precis(m1))
-```
+
 
 ## 4.8. MCMC ahelate kvaliteet
 
@@ -239,7 +241,7 @@ Nüüd teeme katse võrrelda USA presidentide ja Euroopa presidentide keskmisi p
 heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) #the vector of values
 df1 <- as.data.frame(heights)
 df1$indeks <- rep("USA", times=nrow(df1)) #selle abil jagame hiljem koond tabeli kahte ossa
-world_presidents <- read.csv2("world_presidents.csv")
+world_presidents <- read.csv2("data/world_presidents.csv")
 world_presidents$indeks <- rep("eur", times=nrow(world_presidents)) #selle abil jagame hiljem koond tabeli kahte ossa
 world_presidents <- world_presidents %>% rename(heights=Height)
 df2 <- bind_rows(df1, world_presidents)
@@ -247,7 +249,7 @@ head(df2)
 
 ```
 
-```{r}
+```{r results="hide"}
 m2 <- map2stan(
     alist(
         heights ~ dnorm(mu, sigma) ,
@@ -368,7 +370,7 @@ Ainult interceptiga mudel. Keksväärtus ehk mu on ümber defineeritud kui inter
 > Kui me tahame fittida lineaarset mudelit, siis peab tõepära funktsioon olema kas normaaljaotus või studenti t jaotus.
 
 
-```{r}
+```{r results="hide"}
 g2007 <- as.data.frame(g2007)
 m4 <- map2stan(alist(
     lifeExp ~ dnorm( mu , sigma ),
@@ -377,6 +379,9 @@ m4 <- map2stan(alist(
     sigma ~ dcauchy(0,2)
 ), data=g2007)
 
+```
+
+```{r}
 precis(m4)
 ```
 
@@ -386,7 +391,8 @@ glimmer(lifeExp~ -1 + gdpPercap, data=g2007)
 ```
 
 Bayesi mudel on ilusam kui lm() sest ta toob mudeli eksplitsiitselt välja (samas kui lm notatsioon ütleb, et mudel on "miinus intercept") 
-```{r}
+
+```{r results="hide"}
 m5 <- map2stan(alist(
     lifeExp ~ dnorm( mu , sigma ),
     mu <- b_gdpPercap*gdpPercap,
@@ -394,11 +400,15 @@ m5 <- map2stan(alist(
     sigma ~ dcauchy(0,2)
 ), data=g2007)
 
+
+```
+
+```{r}
 precis(m5)
 ```
 
 Ja lõpuks täismudel:
-```{r}
+```{r results="hide"}
 m6 <- map2stan(alist(
     lifeExp ~ dnorm( mu , sigma ),
     mu <- Intercept + b_gdpPercap*gdpPercap,
@@ -407,6 +417,9 @@ m6 <- map2stan(alist(
     sigma ~ dcauchy(0,2)
 ), data=g2007)
 
+```
+
+```{r}
 compare(m4, m5, m6)
 ```
 
@@ -421,7 +434,7 @@ plot(coeftab(m4, m5, m6))
 
 
 Viime SKP andmed log-skaalasse ja proovime uuesti. See tähendab, et me arvame, et iga SKP kümnekordne tõus võiks kaasa tuua eluea tõusu x aasta võrra.
-```{r}
+```{r results="hide"}
 g2007 <- g2007 %>% mutate(l_GDP=log10(gdpPercap))
 g2007 <- as.data.frame(g2007)
 m7 <- map2stan(alist(
@@ -439,8 +452,13 @@ m8 <- map2stan(alist(
     sigma ~ dcauchy(0,2)
 ), data=g2007)
 
-compare(m4, m5, m6, m7, m8)
 ```
+
+```{r}
+compare(m4, m5, m6, m7, m8)
+
+```
+
 
 Now, as it happens, in log scale the intercept-fixed-at-0 model is almost as good as the full model. This is, however, not a general feature of modelling.
 
@@ -502,7 +520,7 @@ Nüüd on meil mu1 objektis 41 l_GDP väärtust, millest igale vastab 1000 ennus
 
 Pane tähele, et hall riba näitab ebakindlust ennustuse ümber keskmisele elueale üle kõikide riikide, mis võiksid sellist l_GDP-d omada (ehk ebakindlust regressioonijoonele). Kui me aga tahame ennustada ka keskmiste eluigade varieeruvust riigi tasemel (kasutades Bayesi hinnangut sigma parameetrile), siis on meil vaja sim() funktsiooni:
 
-```{r}
+```{r }
 mu.mean <- apply( mu1 , 2 , mean ) #applies the FUN mean() to each column
 mu.HPDI <- apply( mu1 , 2 , HPDI , prob=0.95 )
 sim.length <- as_tibble(rethinking::sim( m8 , data=list(l_GDP=width) ) )
@@ -608,7 +626,7 @@ Miks ei ole mudeli summary tabelis Aafrikat? Põhjus on tehniline. Kategoorilisi
 
 Kui me lahutame igast andmepunktist selle muutuja keskväärtuse siis saame 0-le tsentreeritud andmed. Kui me need omakorda läbi jagame sellle muutuja standardhälbega, siis saame standardiseeritud andmed, mille keskväärtus on null ja SD=1. Nii on lihtsam erinevas skaalas muutujaid omavahel võrrelda (muutus 1 ühik = muutudega 1 standardhäve võrra) ja mudeli arvutused üle Bayesi on ka lihtsamad.
 
-```{r}
+```{r results="hide"}
 g2007 <- g2007 %>% mutate(l_pop=log10(pop), lpop_s= (l_pop - mean(l_pop))/sd(l_pop),
                 lGDP_s= (l_GDP - mean(l_GDP))/sd(l_GDP))
 g2007 <- as.data.frame(g2007)
@@ -621,6 +639,9 @@ m5 <- map2stan(
         sigma ~ dunif( 0 , 10 )
 ),
     data = g2007 )
+```
+
+```{r}
 precis( m5 )
 ```
 
@@ -628,18 +649,22 @@ kui l_GDP kasvab 1 sd võrra, siis eluiga kasvab 6.9 aasta võrra.
 
 ```{r}
  f1 <- glimmer(lifeExp~lGDP_s + lpop_s + continent, data=g2007)
- f1$f
+ 
 ```
 See on mudeli struktuur, mis sisaldab uusi kategoorilisi muutujaid
 
 Siin on tähtis anda map2stan()-le ette glimmeri poolt eeltöödeldud andmed:
-```{r}
+```{r results="hide"}
 m6 <- map2stan(
   f1$f, 
   data= f1$d
 )
 
+```
+
+```{r}
 precis(m6)
+
 ```
 
 ### 4.13.2 keerulisemate mudelitega töötamine

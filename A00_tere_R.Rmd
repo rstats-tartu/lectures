@@ -149,6 +149,9 @@ R-i puudus on veateadete puudumine või krüptilised veateated.
 Sama kehtib ka R-i helpi kohta. 
 Seega tasub alati kontrollida, kas R ikka tegi seda, mida sina talle enda arust ette kirjutasid.
 
+    R-i põhiandmestruktuur on vektor: järjestatud rida elemente (numbreid, tähemärke, jm). 
+    Vektor elementidega 2, 3.4 ja 4 kirjutatakse c(2, 3.4, 4). 
+
 ```{r}
 x <- c(6, 3, 3, 4, 5) # vector: c() - combine
 y<- c(1, 3, 4, 2, 7)
@@ -220,157 +223,6 @@ sum
 ```
 
 See ei ole küll liiga kasulik...
-
-## 1.4 Kirjutame oma esimese funktsiooni
-
-Põhjus, miks R-s on funktsioonid, on ruumi kokkuhoid. 
-Funktsiooni ainus mõte on peita teie eest kood funktsiooni nime taha. 
-See muudab pikad koodilõigud hõlpsalt taaskasutatavaks sest lihtsam on kirjutada lühike funktsiooni nimi ja sisestada selle funktsiooni argumendid, kui copy-pastida n rida koodi ja siis muuta selle sees mingeid väärtusi. 
-Koodi funktsioonidesse kokku surumine vähendab võimalusi lollideks vigadeks, mida te võite teha pikkade koodijuppidega manipuleerides. 
-Seega tasub teil õppida ka oma koodi funktsioonidena vormistama.
-
-Kõige pealt kirjutame natuke koodi.
-```{r}
-apples <- 2 #two apples
-oranges <- 3 #three oranges
-(inventory <- apples + oranges)
-```
- 
-Ja nüüd teeme sellest funktsiooni `inventory()`. 
-Seda koodi jooksutades näeme, et meie funktsioon ilmub R-i Environmenti, kuhu tekib Functions lahter. 
-Seal on näha ka selle funktsiooni kaks argumenti, apples ja oranges.
- 
-Funktsiooni kirjutamiseks anname kõigepealt sellele nime ja kirjutame selle ilma sulgudeta. 
-Siis tuleb `<-` ( __assignment operator__ ), misjärel `function(arg1, arg2, ...)`. Siis algavad loogelised sulud { }, mille sisse kirjutame oma koodi. Viimane koodirida on see, mis tuleb välja selle funktsiooni outputina. Antud juhul on selleks print(inventory), ehkki print() ei pea siia kirjutama sest R saab sellest ise aru.
- 
-```{r}
-inventory <- function(apples, oranges) {
-  inventory <- apples + oranges
-  inventory
-}
-```
-
-Andes funktsiooni argumentidele väärtused, saab outputi:
-```{r}
-inventory(2,3) #inventory(apples=2, oranges=3) #teeb sama asja
-```
-Seega asendasime me kolm rida koodi ühega, mis on hea algus.
-
-Nüüd midagi kasulikumat. Funktsioon standrardvea arvutamiseks (baas R-s sellist funktsiooni ei ole)
-
-sd() annab standardhälbe. Sellel on 2 argumenti. vt Help-i.
-Me teame, et SEM=SD/sqrt(N)
-kus N = length(x)
-```{r}
-SEM0<- function(x) {
-  SD<- sd(x) 
-  SEM<- SD/sqrt(length(x))
-  SEM
-}
-```
-
-x hoiab lihtsalt kohta andmetele, mida me tahame sinna funktsiooni suunata.
-sd(), sqrt() ja length() on olemasolevad baas R funktsioonid, mille me oma funktsiooni hõlmame.
-
-```{r}
-numbers<- c(2, 3.4, 54, NA, 3) #c() means "combine", NA means "any number" or "not available"
-SEM0(numbers)
-```
-No jah, kui meil on andmetes tundmatu arv (NA) siis on ka tulemuseks tundmatu arv.
-
-Teeme uue versiooni oma funktsioonist
-```{r}
-SEM01<- function(x) {
-  SD<- sd(x, na.rm = TRUE) 
-  SEM<- SD/sqrt(length(x))
-  SEM
-}
-SEM01(numbers)
-length(numbers)
-```
-
-See annab meile vale tulemuse sest na.rm=TRUE viskab välja NA-d meie vektorist aga jätab vektori pikkuse muutmata. Piinlik lugu aga meil tuleb veelkord proovida. Seekord võtame vektorist NA-d välja ja töötame edasi uue lühema vektoriga. Siis klapib ka vektori pikkus 
-
-```{r}
-SEM1<- function(x) {
-  x1<- na.omit(x) #you want NAs to be removed
-  SD<- sd(x1) 
-  SEM<- SD/sqrt(length(x1))
-  SEM
-}
-SEM1(numbers)
-```
-
-Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline protsess ja sellele, et alati saab paremini teha.
-
-
-## 1.5 funktsioonide raamatukogud
-
-Kõige esimene sõnum sum() help lehel on sum {base}, mis tähendab, et see funktsioon kuulub nn baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest nad on laetud vaikimisi teie workspace-i. Enamus R-i paarikümne tuhandest funktsioonist ei ole sellised. Enamasti on sarnaseid asju tegevad funktsioonid on koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi võrgust alla laadida. 
-
-Selleks, et kasutada raamatukogudes leiduvaid funktsioone, tuleb kõigepealt antud raamatukogu oma arvutisse alla laadida (seda peab tegema ainult üks kord) ja seejärel see raamatukogu workspace sisse lugeda (seda tuleb teha igal R sessioonil, kus me vastava raamatukogu funktsioone kasutame).
-
-Näiteks, hea laps ei lahku kunagi kodust ilma raamatukogu "tidyverse"-ta.
-
-kõigepealt laeme selle alla oma arvutisse
-```{r eval=FALSE}
-install.packages("tidyverse")
-```
-
-NB! kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle nime + R ja vaadake instruktsioone allalaadimiseks.
-
-    Raamatukogud elavad repositorides, millest suurim on CRAN. install.packages() otsib teie raamatukogu just sealt. Teised suuremad repod on github ja bioconductor (seal on tuhandeid bioloogiliseks analüüsiks vajalikke pakette). Neist allalaadimine on pisut erinev, aga mitte kuigi keeruline. Kõigi pakettide kohta on võrgus ka allalaadimise õpetus. Googeldage paketi nime järgi.
-
-Nüüd on teil tidyverse pakett arvutis. Tegelikult kuuluvad siia raamatukokku omakorda tosinkond raamatukogu --- tidyverse on pisut meta. Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te need workspace sisse loete
-
-    Veel üks tehniline detail. library(tidyverse) ei loe sisse kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi. Neist osad, mis on vähemkasutatavad, tuleb eraldi ükshaaval sisse lugeda. Me teeme seda hiljem vastavalt vajadusele.
-
-```{r}
-library(tidyverse)
-```
-
-Seda tuleb teha iga kord, kui te R sessiooni alustate. Enamasti kirjutatakse sisse loetavad raamatukogud kohe R scripti algusesse. Siis on ilusti näha, mida hiljem vaja läheb. 
-
-    Kui te lähete RStudios paremal all olevale Packages tabile, siis on võimalik klikkida raamatukogu nimele ja näha selle help-faile, tutooriale ja kõiki selle raamatukogu funktsioone koos nende help failidega.
-
-Nüüd võite näiteks kasutada funktsiooni drop_na(), mis eemaldab teie andmetabelist read, mis sisaldavad NA-sid. See funktsioon asub tidyr raamatukogus, mis koos ülejäänud tidyverse-ga sisse loeti.
-
-```{r}
-?drop_na
-```
-
-verb: drop_na() loe: "viska NA-d välja"
-
-```{r}
-df <- tibble(apples=c(2, 3, NA, 5), oranges=c(4, NA, 6, 4)) #creates a 2-column table
-df #prints table
-df1 <- drop_na(df, apples) #drops those rows from df, where there are NAs in the column called "apples", and associates the resulting table with a new name, df1
-df1 #prints the new table 
-```
-Viskasin välja need df-i read, mis sisaldavad NA-sid tulbas apples.
-
-ekvivalentne viis seda funktsiooni kasutada on
-```{r eval=FALSE}
-tidyr::drop_na(df, apples)
-```
-
-Kuna R-l on lugematu hulk kasutajaid, kes funktsioone kirjutavad, siis on sageli sama asja jaoks mitu funktsiooni ja isegi mitu raamatukogu. Lisaks juhtub, et sama nimega funktsioonid teevad erinevates raamatukogudes täiesti erinevaid asju. Seega võivad tekkida konfliktid raamatukogude vahel ühe või teise funktsiooni evalueerimisel. Enamasti võidab konflikti korral raamatukogu, mis hiljem sisse loeti. Kui teil on kahtlus, et teie workspaces võib olla mitu sama nimega funktsiooni on ohutum kasutada vormi: raamatukogu_nimi::funktsioon().
-
-
-Kui te uuendate oma R versiooni mac-is või olete ostnud uue arvuti, siis lähevad kaduma kõik teie paketid. nende automaatseks allalaadimiseks tehke nii:
-
-```{r eval=FALSE}
-#in the old version/machine run:
-installed <- as.data.frame(installed.packages())
-write.csv(installed, "installed_previously.csv")
-
-#and in the new one:
-installedPreviously <- read.csv("installed_previously.csv")
-baseR <- as.data.frame(installed.packages())
-toInstall <- setdiff(installedPreviously$Package, baseR$Package)
-install.packages(toInstall) 
-```
-Et see kood töötaks, peate oskama õigel viisil andmeid R-i sisse lugeda. Seda õpime varsti.
 
 
 ## 1.6 Objekt ja nimi
@@ -544,7 +396,7 @@ rep(c("a", "b"), each=3, times=2)
 
 ###tehted arvuliste vektoritega
 
-Vektoreid saab liita, lahutada, korrutada ja jagada.
+Vektoritega saab teha aritmeetilisi tehteid.
 ```{r}
 a <- c(1,2,3)
 b <- 4 #ühe elemendiga vektor ei vaja c() enda ümber
@@ -788,7 +640,7 @@ class(fruits)
 
 ```{r}
 library(VIM) 
-diabetes <- read.table(file = "diabetes.csv", sep = ";", dec = ",", header = TRUE)
+diabetes <- read.table(file = "data/diabetes.csv", sep = ";", dec = ",", header = TRUE)
 str(diabetes)
 aggr(diabetes, prop=FALSE, numbers=T)
 ```
@@ -890,7 +742,8 @@ df$colB #veerg nimega colB, output on erandina vektor!
 Kui me indekseerimisega tibblest veeru ehk vektori välja võtame, on output class: tibble. Kui me teeme sama data frame-st, siis on output class: vector.
 
 Nüüd veidi keerulisemad konstruktsioonid, mis võimaldavad tabeli ühe kindla veeru väärtusi välja tõmmata teise veeru väärtuste järgi filteerides. Püüdke sellest koodist aru saada, et te hiljem ära tunneksite, kui midagi sellist vastu tuleb. Õnneks ei ole teil endil vaja sellist koodi kirjutada, me õpetame teile varsti lihtsama filtri meetodi.
-```{r}
+```{r eval=FALSE}
+
 df$colB[df$colA != "a"] #jätab sisse kõik vektori colB väärtused, kus samas tabeli reas olev colA väärtus ei ole "a". output on vektor! 
 df$colA[df$colB > 1] #jätab sisse kõik vektori colA väärtused, kus samas tabeli reas olev colB väärtus >1. output on vektor. 
 ```
@@ -940,6 +793,158 @@ aa3
 Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välja objekti my_list 1. elemendi, tema algses tibble formaadis, (indeksi 1. dimensioon). Seejärel korjame sealt välja 1. rea, tibble formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).
 
 Pane tähele, et [[ ]] lubab ainult ühe elemendi korraga listist välja päästa.
+
+## 1.4 Kirjutame oma esimese funktsiooni
+
+Põhjus, miks R-s on funktsioonid, on ruumi kokkuhoid. 
+Funktsiooni ainus mõte on peita teie eest kood funktsiooni nime taha. 
+See muudab pikad koodilõigud hõlpsalt taaskasutatavaks sest lihtsam on kirjutada lühike funktsiooni nimi ja sisestada selle funktsiooni argumendid, kui copy-pastida n rida koodi ja siis muuta selle sees mingeid väärtusi. 
+Koodi funktsioonidesse kokku surumine vähendab võimalusi lollideks vigadeks, mida te võite teha pikkade koodijuppidega manipuleerides. 
+Seega tasub teil õppida ka oma koodi funktsioonidena vormistama.
+
+Kõige pealt kirjutame natuke koodi.
+```{r}
+apples <- 2 #two apples
+oranges <- 3 #three oranges
+(inventory <- apples + oranges)
+```
+ 
+Ja nüüd teeme sellest funktsiooni `inventory()`. 
+Seda koodi jooksutades näeme, et meie funktsioon ilmub R-i Environmenti, kuhu tekib Functions lahter. 
+Seal on näha ka selle funktsiooni kaks argumenti, apples ja oranges.
+ 
+Funktsiooni kirjutamiseks anname kõigepealt sellele nime ja kirjutame selle ilma sulgudeta. 
+Siis tuleb `<-` ( __assignment operator__ ), misjärel `function(arg1, arg2, ...)`. Siis algavad loogelised sulud { }, mille sisse kirjutame oma koodi. Viimane koodirida on see, mis tuleb välja selle funktsiooni outputina. Antud juhul on selleks print(inventory), ehkki print() ei pea siia kirjutama sest R saab sellest ise aru.
+ 
+```{r}
+inventory <- function(apples, oranges) {
+  inventory <- apples + oranges
+  inventory
+}
+```
+
+Andes funktsiooni argumentidele väärtused, saab outputi:
+```{r}
+inventory(2,3) #inventory(apples=2, oranges=3) #teeb sama asja
+```
+Seega asendasime me kolm rida koodi ühega, mis on hea algus.
+
+Nüüd midagi kasulikumat. Funktsioon standrardvea arvutamiseks (baas R-s sellist funktsiooni ei ole)
+
+sd() annab standardhälbe. Sellel on 2 argumenti. vt Help-i.
+Me teame, et SEM=SD/sqrt(N)
+kus N = length(x)
+```{r}
+SEM0<- function(x) {
+  SD<- sd(x) 
+  SEM<- SD/sqrt(length(x))
+  SEM
+}
+```
+
+x hoiab lihtsalt kohta andmetele, mida me tahame sinna funktsiooni suunata.
+sd(), sqrt() ja length() on olemasolevad baas R funktsioonid, mille me oma funktsiooni hõlmame.
+
+```{r}
+numbers<- c(2, 3.4, 54, NA, 3) #c() means "combine", NA means "any number" or "not available"
+SEM0(numbers)
+```
+No jah, kui meil on andmetes tundmatu arv (NA) siis on ka tulemuseks tundmatu arv.
+
+Teeme uue versiooni oma funktsioonist
+```{r}
+SEM01<- function(x) {
+  SD<- sd(x, na.rm = TRUE) 
+  SEM<- SD/sqrt(length(x))
+  SEM
+}
+SEM01(numbers)
+length(numbers)
+```
+
+See annab meile vale tulemuse sest na.rm=TRUE viskab välja NA-d meie vektorist aga jätab vektori pikkuse muutmata. Piinlik lugu aga meil tuleb veelkord proovida. Seekord võtame vektorist NA-d välja ja töötame edasi uue lühema vektoriga. Siis klapib ka vektori pikkus 
+
+```{r}
+SEM1<- function(x) {
+  x1<- na.omit(x) #you want NAs to be removed
+  SD<- sd(x1) 
+  SEM<- SD/sqrt(length(x1))
+  SEM
+}
+SEM1(numbers)
+```
+
+Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline protsess ja sellele, et alati saab paremini teha.
+
+
+## 1.5 funktsioonide raamatukogud
+
+Kõige esimene sõnum sum() help lehel on sum {base}, mis tähendab, et see funktsioon kuulub nn baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest nad on laetud vaikimisi teie workspace-i. Enamus R-i paarikümne tuhandest funktsioonist ei ole sellised. Enamasti on sarnaseid asju tegevad funktsioonid on koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi võrgust alla laadida. 
+
+Selleks, et kasutada raamatukogudes leiduvaid funktsioone, tuleb kõigepealt antud raamatukogu oma arvutisse alla laadida (seda peab tegema ainult üks kord) ja seejärel see raamatukogu workspace sisse lugeda (seda tuleb teha igal R sessioonil, kus me vastava raamatukogu funktsioone kasutame).
+
+Näiteks, hea laps ei lahku kunagi kodust ilma raamatukogu "tidyverse"-ta.
+
+kõigepealt laeme selle alla oma arvutisse
+```{r eval=FALSE}
+install.packages("tidyverse")
+```
+
+NB! kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle nime + R ja vaadake instruktsioone allalaadimiseks.
+
+    Raamatukogud elavad repositorides, millest suurim on CRAN. install.packages() otsib teie raamatukogu just sealt. Teised suuremad repod on github ja bioconductor (seal on tuhandeid bioloogiliseks analüüsiks vajalikke pakette). Neist allalaadimine on pisut erinev, aga mitte kuigi keeruline. Kõigi pakettide kohta on võrgus ka allalaadimise õpetus. Googeldage paketi nime järgi.
+
+Nüüd on teil tidyverse pakett arvutis. Tegelikult kuuluvad siia raamatukokku omakorda tosinkond raamatukogu --- tidyverse on pisut meta. Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te need workspace sisse loete
+
+    Veel üks tehniline detail. library(tidyverse) ei loe sisse kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi. Neist osad, mis on vähemkasutatavad, tuleb eraldi ükshaaval sisse lugeda. Me teeme seda hiljem vastavalt vajadusele.
+
+```{r}
+library(tidyverse)
+```
+
+Seda tuleb teha iga kord, kui te R sessiooni alustate. Enamasti kirjutatakse sisse loetavad raamatukogud kohe R scripti algusesse. Siis on ilusti näha, mida hiljem vaja läheb. 
+
+    Kui te lähete RStudios paremal all olevale Packages tabile, siis on võimalik klikkida raamatukogu nimele ja näha selle help-faile, tutooriale ja kõiki selle raamatukogu funktsioone koos nende help failidega.
+
+Nüüd võite näiteks kasutada funktsiooni drop_na(), mis eemaldab teie andmetabelist read, mis sisaldavad NA-sid. See funktsioon asub tidyr raamatukogus, mis koos ülejäänud tidyverse-ga sisse loeti.
+
+```{r}
+?drop_na
+```
+
+verb: drop_na() loe: "viska NA-d välja"
+
+```{r}
+df <- tibble(apples=c(2, 3, NA, 5), oranges=c(4, NA, 6, 4)) #creates a 2-column table
+df #prints table
+df1 <- drop_na(df, apples) #drops those rows from df, where there are NAs in the column called "apples", and associates the resulting table with a new name, df1
+df1 #prints the new table 
+```
+Viskasin välja need df-i read, mis sisaldavad NA-sid tulbas apples.
+
+ekvivalentne viis seda funktsiooni kasutada on
+```{r eval=FALSE}
+tidyr::drop_na(df, apples)
+```
+
+Kuna R-l on lugematu hulk kasutajaid, kes funktsioone kirjutavad, siis on sageli sama asja jaoks mitu funktsiooni ja isegi mitu raamatukogu. Lisaks juhtub, et sama nimega funktsioonid teevad erinevates raamatukogudes täiesti erinevaid asju. Seega võivad tekkida konfliktid raamatukogude vahel ühe või teise funktsiooni evalueerimisel. Enamasti võidab konflikti korral raamatukogu, mis hiljem sisse loeti. Kui teil on kahtlus, et teie workspaces võib olla mitu sama nimega funktsiooni on ohutum kasutada vormi: raamatukogu_nimi::funktsioon().
+
+
+Kui te uuendate oma R versiooni mac-is või olete ostnud uue arvuti, siis lähevad kaduma kõik teie paketid. nende automaatseks allalaadimiseks tehke nii:
+
+```{r eval=FALSE}
+#in the old version/machine run:
+installed <- as.data.frame(installed.packages())
+write.csv(installed, "installed_previously.csv")
+
+#and in the new one:
+installedPreviously <- read.csv("installed_previously.csv")
+baseR <- as.data.frame(installed.packages())
+toInstall <- setdiff(installedPreviously$Package, baseR$Package)
+install.packages(toInstall) 
+```
+Et see kood töötaks, peate oskama õigel viisil andmeid R-i sisse lugeda. Seda õpime varsti.
+
 
 
 ## 1.11.Regular expression ja find & replace
@@ -1133,7 +1138,7 @@ iris %>% select(-(Petal.Length:Species)) #selects everything, except those cols
 
 To select 3 columns and rename *subject* to *SUBJ* and put liik as the 1st col:
 ```{r}
-iris %>% select(liik=Species, Sepal.Length, Sepal.Width )
+iris %>% select(liik=Species, Sepal.Length, Sepal.Width ) %>% head()
 ```
 
 
@@ -1155,7 +1160,7 @@ matches("(.)\\1"): selects variables that match a regular expression. This one m
 
 num_range("x", 1:3) matches x1, x2 and x3.
 
-```{r}
+```{r eval=FALSE}
 iris<-as_tibble(iris)
 select(iris, starts_with("Petal"))
 select(iris, ends_with("Width"))
