@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="intro.html">
-<link rel="next" href="calc.html">
+<link rel="prev" href="obj.html">
+<link rel="next" href="funs.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -196,163 +196,90 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tools" class="section level1">
-<h1><span class="header-section-number">3</span> Tarkvaratööriistad</h1>
-<div id="installeeri-vajalikud-programmid" class="section level2">
-<h2><span class="header-section-number">3.1</span> Installeeri vajalikud programmid</h2>
-<p>Praktiline kursus eeldab töötavate R, RStudio ja Git programmide olemasolu sinu arvutist. Kõik on väga lihtsad installid.</p>
-<ol style="list-style-type: decimal">
-<li>Googelda “install R” või mine otse <a href="https://cran.r-project.org">R allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
-<li>Googelda “install RStudio” või mine otse <a href="https://www.rstudio.com/products/rstudio/download/">RStudio allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
-<li>Googelda “install git” või mine otse <a href="https://git-scm.com/downloads">Git allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
-</ol>
-</div>
-<div id="loo-githubi-konto" class="section level2">
-<h2><span class="header-section-number">3.2</span> Loo GitHubi konto</h2>
-<p>GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine <i class="fa fa-git" aria-hidden="true"></i> versioonikontrolli repositoorium ja veebimajutuse teenus.</p>
+<div id="regex" class="section level1">
+<h1><span class="header-section-number">6</span> Regular expression ja find &amp; replace</h1>
+<p>Regular expression annab võimaluse lühidalt kirjeldada mitte-üheseid otsinguparameetreid.</p>
+<blockquote>
+<p>regular expression on string, mis kirjeldab mitut stringi</p>
+</blockquote>
+<p>A <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html">regular expression</a> <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html">Regular Expressions as used in R</a></p>
 <ul>
-<li><p><i class="fa fa-github" aria-hidden="true"></i> konto loomiseks mine lehele <a href="https://github.com" class="uri">https://github.com</a>. Loo endale oma nimega seotud avalik konto. Tulevikule mõeldes vali kasutajanimi hoolikalt. Ära muretse detailide pärast, need on võimalik täita hiljem.</p></li>
-<li>Loo repo nimega <code>intro_demo</code>.</li>
-<li>Lisa repole lühike ja informatiivne kirjeldus.</li>
-<li>Vali “Public”.</li>
-<li>Pane linnuke kasti “Initialize this repository with a README”.</li>
-<li><p>Klikka “Create Repository”.</p></li>
+<li>Most characters, including all letters and digits, are regular expressions that match themselves.</li>
+<li><code>.</code> matches any single character.</li>
+<li>You can refer also to a character class, which is a list of characters enclosed between <code>[</code> and <code>]</code>, e.g. <code>[[:alnum:]]</code> is same as <code>[A-z0-9]</code>.</li>
+<li>Most common character classes:</li>
+<li><code>[:alnum:]</code> includes alphanumerics (<code>[:alpha:]</code> and <code>[:digit:]</code>);</li>
+<li><code>[:alpha:]</code>, includes alphabetic characters (<code>[:upper:]</code> and <code>[:lower:]</code> case);</li>
+<li><code>[:punct:]</code> includes punctuation characters ! &quot; # $ % &amp; ’ ( ) * + , - . / : ; &lt; = &gt; ? @ [  ] ^ _ ` ` { | } ~.;</li>
+<li><code>[:blank:]</code> includes space and tab; etc.</li>
+<li>The metacharacters in regular expressions are <code>. \ | ( ) [ { ^ $ * + ?</code>, whether these have a special meaning depends on the context. When matching a metacharacter as a regular character, precede it with a double backslash <code>\\</code>.</li>
+<li>Repetition quantifiers put after regex specify how many times regex is matched: <code>?</code>, optional, at most once; <code>*</code>, zero or more times; <code>+</code>, one or more times; <code>{n}</code>, n times; <code>{n,}</code>, n or more times; <code>{n,m}</code>, n to m times.</li>
+<li>^ anchors the regular expression to the start of the string.</li>
+<li>$ anchors the the regular expression to end of the string.</li>
+</ul>
+<div id="common-operations-with-regular-expressions" class="section level3">
+<h3><span class="header-section-number">6.0.1</span> Common operations with regular expressions</h3>
+<ul>
+<li>Locate a pattern match (positions)</li>
+<li>Extract a matched pattern</li>
+<li>Identify a match to a pattern</li>
+<li>Replace a matched pattern</li>
 </ul>
 </div>
-<div id="loo-uus-r-projekt" class="section level2">
-<h2><span class="header-section-number">3.3</span> Loo uus R projekt</h2>
-<blockquote>
-<p>NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta alakriipsu “_”.</p>
-</blockquote>
-<ol start="4" style="list-style-type: decimal">
-<li>Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)</li>
-<li>Ava RStudio akna (Joonis <a href="tools.html#fig:rstudiowindow">3.1</a>) paremalt ülevalt nurgast “Project” menüüst “New Project” dialoog.</li>
-<li>Ava “New Directory” &gt; “Empty Project” &gt; vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks “rstats2017”.</li>
-</ol>
-<div class="figure"><span id="fig:rstudiowindow"></span>
-<img src="assets/img/rstudio_screen_untitled.png" alt="RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt;. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt; menüüs on võimalik muutusi vaadata ja 'commit'ida ja &lt;i class='fa fa-github' aria-hidden='true'&gt;&lt;/i&gt;-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse)."  />
-<p class="caption">
-Joonis 3.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga <i class='fa fa-git' aria-hidden='true'></i>. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. <i class='fa fa-git' aria-hidden='true'></i> menüüs on võimalik muutusi vaadata ja ’commit’ida ja <i class='fa fa-github' aria-hidden='true'></i>-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse).
-</p>
-</div>
-<p>Rohkem infot R projekti loomise kohta leiad RStudio infoleheküljelt: <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects">Using Projects</a>.</p>
-</div>
-<div id="git-merge-konfliktid" class="section level2">
-<h2><span class="header-section-number">3.4</span> Git <em>Merge</em> konfliktid</h2>
-<p>Kollaboreerides üle GitHubi tekivad varem või hiljem konfliktid projekti failide versioonide vahel nn. “merge conflicts”, nende korrektselt lahendama õppimine on väga oluline.</p>
-<ul>
-<li>Oma repo GitHubi veebilehel muuda/paranda README.md dokumenti ja “Commit”-i seda lühisõnumiga mis sa muutsid/parandasid.</li>
-<li>Seejärel, muuda oma arvutis olevat README.md faili RStudio-s viies sinna sisse mingi teistsuguse muudatuse. Tee “Commit” oma muudatustele.</li>
-<li>Proovi “push”-ida – sa saad veateate!</li>
-<li>Proovi “pull”.</li>
-<li>Lahenda “merge” konflikt ja seejärel “commit” + “push”.</li>
-</ul>
-<p>Githubi veateadete lugemine ja Google otsing aitavad sind.</p>
-</div>
-<div id="r-projekti-kataloogi-soovitatav-minimaalne-struktuur" class="section level2">
-<h2><span class="header-section-number">3.5</span> R projekti kataloogi soovitatav minimaalne struktuur</h2>
-<p>Iga R projekt peab olema täiesti iseseisev (<em>selfcontained</em>) ja sisaldama kogu infot, andmeid ja instruktsioone, et projektiga seotud arvutused läbi viia ja raport genereerida. Kõik faili <em>path</em>-id peavad olema suhtelised.</p>
-<p>R projekti kataloog peaks sisaldama projekti kirjeldavaid faile, mis nimetatakse DESCRIPTION ja README.md. <strong>DESCRIPTION</strong> on tavaline tekstifail ja sisaldab projekti metainfot ja infot projekti sõltuvuste kohta, nagu väliste andmesettide asukoht, vajalik tarkvara jne. <strong>README.md</strong> on markdown formaadis projekti info, sisaldab juhendeid kasutajatele. Igale GitHubi repole on soovitav koostada README.md, esialgu kasvõi projekti pealkiri ja üks kirjeldav lause. README.md ja DESCRIPTION asuvad projekti juurkataloogis.</p>
-<blockquote>
-<p>Projekti juurkataloogi jäävad ka kõik .Rmd laiendiga teksti ja analüüsi tulemusi sisaldavad failid, millest genereeritakse lõplik raport/dokument.</p>
-</blockquote>
-<p>Suuremad projektid, nagu näiteks teadusartikkel või raamat, võivad sisaldada mitmeid Rmd faile ja võib tekkida kange kisatus need mõnda alamkataloogi tõsta. Aga <code>knitr::knit()</code>, mis Rmarkdowni markdowniks konverteerib, arvestab, et Rmd fail asub juurkataloogis ja arvestab juurkataloogi suhtes ka failis olevaid <em>path</em>-e teistele failidele (näiteks “data/my_data.csv”).</p>
-<p><strong>data/</strong> kataloog sisaldab faile toorandmetega. Need failid peavad olema R-i poolt loetavad ja soovitavalt tekstipõhised, laienditega TXT, CSV, TSV jne. Neid faile ei muudeta, ainult loetakse. Kogu algandmete töötlus toimub programmaatiliselt. Suured failid muudavad versioonikontrolli aeglaseks, samuti on suheliselt mõttetu versioonikontroll binaarsete failide korral (MS <i class="fa fa-file-word-o" aria-hidden="true"></i> näiteks), sest diffid pole lihtsalt inimkeeles. Github ütleb suurte failide kohta nii: <em>“GitHub will warn you when pushing files larger than 50 MB. You will not be allowed to push files larger than 100 MB.”</em></p>
-<p><strong>src/</strong> kataloog sisaldab analüüsi skripte, sealhulgas ka andmetöötluse skripte.</p>
-<p><strong>lib/</strong> kataloogis on kasutaja poolt tehtud funktsioonide definitsioone sisaldavad R skriptid.</p>
-<pre><code>project/
-|- DESCRIPTION       # project metadata and dependencies
-|- README.md         # description of contents and guide to users
-|- my_analysis.Rmd   # markdown file containing analysis
-|                    # writeup together with R code chunks
-|
-|- data/             # raw data, not changed once created 
-|  +-my_data.csv     # data files in open formats, 
-|                    # such as TXT, CSV, TSV etc.
-|
-|- src/              # any programmatic code
-|  +-my_scripts.R    # R code used to analyse and 
-|                    # visualise data
-|
-|- lib/              # user generated functions
-|  +-my_functions.R  # R code defining functions</code></pre>
-<p>On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid taaskasutatavate funktsioonidega kataloogi <strong>R/</strong>. Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i <span class="citation">(Wickham, Danenberg, and Eugster <a href="#ref-roxygen2">2017</a>)</span>, siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi <strong>man/</strong>. Rohkem projekti pakkimise kohta loe värskest preprindist “Packaging data analytical work reproducibly using R” <span class="citation">(Marwick, Boettiger, and Mullen <a href="#ref-marwick2017">2017</a>)</span>.</p>
-</div>
-<div id="libs" class="section level2">
-<h2><span class="header-section-number">3.6</span> Pakettide installeerimine</h2>
-<p>R <em>library</em>-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. <strong>R baaspakett sisaldab juba mitmeid funktsioone.</strong> Kõige esimene sõnum <code>sum()</code> help lehel on “sum {base}”, mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda. Näiteks “base” raamatukogu versioon 3.4.1 sisaldab 453 funktsiooni. Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist <a href="https://cran.r-project.org">CRAN</a> alla laadida ja installeerida.</p>
-<p>Selleks, et installeerida pakett, sisesta järgnev käsurida R konsooli:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## eg use &quot;ggplot2&quot; as packagename
-<span class="kw">install.packages</span>(<span class="st">&quot;packagename&quot;</span>)</code></pre></div>
-<p>NB! Kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle nime + R ja vaadake instruktsioone installeerimiseks. Suure tõenäosusega on tegemist mõnes teises repos (näiteks Bioconductor) või ainult GitHubis asuva paketiga.</p>
-RStudio võimaldab ka <em>point-and-click</em> stiilis pakettide installeerimist:
-<div class="figure"><span id="fig:unnamed-chunk-2"></span>
-<img src="assets/img/RStudio_package.install.png" alt="RStudio 'Install Packages' dialoogiaken."  />
-<p class="caption">
-Joonis 3.2: RStudio ‘Install Packages’ dialoogiaken.
-</p>
-</div>
-<blockquote>
-<p>Sa ei saa installeeritud pakette enne kasutada, kui laadid nad töökeskkonda kasutades <code>library()</code> funktsiooni.</p>
-</blockquote>
-<p>Peale installeerimist lae pakett oma R sessiooni kasutades <code>library()</code> käsku, näiteks:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Load library/package tidyr
-<span class="kw">library</span>(dplyr)</code></pre></div>
-<p><code>library(dplyr)</code> käsk teeb R sessioonis kasutatavaks kõik “dplyr” paketi funktsioonid.</p>
-<p>Näiteks “dplyr” pakett sisaldab 237 funktsiooni:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-## let&#39;s look at the head of package list
-<span class="kw">head</span>(<span class="kw">ls</span>(<span class="st">&quot;package:dplyr&quot;</span>), <span class="dv">20</span>)</code></pre></div>
-<pre><code>##  [1] &quot;%&gt;%&quot;           &quot;add_count&quot;     &quot;add_count_&quot;    &quot;add_row&quot;      
-##  [5] &quot;add_rownames&quot;  &quot;add_tally&quot;     &quot;add_tally_&quot;    &quot;all_equal&quot;    
-##  [9] &quot;all_vars&quot;      &quot;anti_join&quot;     &quot;any_vars&quot;      &quot;arrange&quot;      
-## [13] &quot;arrange_&quot;      &quot;arrange_all&quot;   &quot;arrange_at&quot;    &quot;arrange_if&quot;   
-## [17] &quot;as_data_frame&quot; &quot;as_tibble&quot;     &quot;as.tbl&quot;        &quot;as.tbl_cube&quot;</code></pre>
-<p>Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab <code>::</code> operaatorit kasutades kutsuda välja/importida funktsiooni spetsiifilisest paketist:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dplyr<span class="op">::</span><span class="kw">select</span>(df, my_var)</code></pre></div>
-<p>Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat funktsiooni sisaldavat raamatukogu töökeskkonda laadida.</p>
-<p><strong>Funktsioonide-pakettide help failid RStudio kasutajaliidesest</strong>: Kui te lähete RStudios paremal all olevale “Packages” tabile, siis on võimalik klikkida raamatukogu nimele ja näha selle help-faile, tutooriale ja kõiki selle raamatukogu funktsioone koos nende help failidega.</p>
-</div>
-<div id="r-repositooriumid" class="section level2">
-<h2><span class="header-section-number">3.7</span> R repositooriumid</h2>
-<p>R pakid on saadaval kolmest põhilisest repositooriumist:</p>
-<ol style="list-style-type: decimal">
-<li><strong>CRAN</strong> <a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a></li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li><strong>Bioconductor</strong> <a href="https://www.bioconductor.org" class="uri">https://www.bioconductor.org</a></li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># First run biocLite script fron bioconductor.org</span>
-<span class="kw">source</span>(<span class="st">&quot;https://bioconductor.org/biocLite.R&quot;</span>)  
-<span class="co"># use &#39;http&#39; in url if &#39;https&#39; is unavailable. </span>
-<span class="kw">biocLite</span>(<span class="st">&quot;GenomicRanges&quot;</span>, <span class="dt">suppressUpdates =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<ol start="3" style="list-style-type: decimal">
-<li><strong>GitHub</strong> <a href="https://github.com" class="uri">https://github.com</a></li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Näiteks järgnev käsk installeerib xaringan 
-## presentation ninja paketi
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;yihui/xaringan&quot;</span>)</code></pre></div>
-<blockquote>
-<p>NB! antud praktilise kursuse raames tutvume ja kasutame ‘tidyverse’ metapaketi funktsioone, laadides need iga sessiooni alguses:</p>
-</blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## install.packages(&quot;tidyverse&quot;)
-<span class="kw">library</span>(tidyverse)</code></pre></div>
-<p>Nüüd on teil <code>tidyverse</code> pakett arvutis. Tegelikult kuuluvad siia raamatukokku omakorda tosinkond raamatukogu — tidyverse on pisut meta. Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te need töökeskkonda sisse loete</p>
-<p>Veel üks tehniline detail. <code>library(tidyverse)</code> käsk ei loe sisse kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi. Need tuleb vajadusel eraldi ükshaaval sisse lugeda.</p>
-<blockquote>
-<p>Paiguta kõigi raamatukogude lugemine koodi algusesse. Enamasti kirjutatakse sisse loetavad raamatukogud kohe R scripti algusesse. Siis on teile endale ja teistele kes teie koodi loevad ilusti näha, mida hiljem vaja läheb.</p>
-</blockquote>
+<div id="find-and-replace" class="section level3">
+<h3><span class="header-section-number">6.0.2</span> Find and replace</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)
+x&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;ananas&quot;</span>, <span class="st">&quot;banana&quot;</span>)
 
-</div>
-</div>
-<h3>Bibliograafia</h3>
-<div id="refs" class="references">
-<div id="ref-roxygen2">
-<p>Wickham, Hadley, Peter Danenberg, and Manuel Eugster. 2017. <em>Roxygen2: In-Line Documentation for R</em>. <a href="https://CRAN.R-project.org/package=roxygen2" class="uri">https://CRAN.R-project.org/package=roxygen2</a>.</p>
-</div>
-<div id="ref-marwick2017">
-<p>Marwick, Ben, Carl Boettiger, and Lincoln Mullen. 2017. “Packaging Data Analytical Work Reproducibly Using R (and Friends).” <em>PeerJ Preprints</em> 5: e3192v1. doi:<a href="https://doi.org/10.7287/peerj.preprints.3192v1">10.7287/peerj.preprints.3192v1</a>.</p>
+<span class="co">#replaces all a-s at the beginning of strings with e-s</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;^a&quot;</span>, <span class="st">&quot;e&quot;</span>) </code></pre></div>
+<pre><code>## [1] &quot;epple&quot;  &quot;enanas&quot; &quot;banana&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># str_replace only replaces at the first occurence at each string</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;e&quot;</span>) </code></pre></div>
+<pre><code>## [1] &quot;epple&quot;  &quot;enanas&quot; &quot;benana&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#str_replace_all replaces all a-s anywhere in the strings</span>
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;e&quot;</span>) </code></pre></div>
+<pre><code>## [1] &quot;epple&quot;  &quot;enenes&quot; &quot;benene&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#replaces a and the following character at the end of string with nothing (i.e. deletes 2 chars)</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;a.$&quot;</span>, <span class="st">&quot;&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;apple&quot;  &quot;anan&quot;   &quot;banana&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#replaces a-s or s-s at the end of string with e-s</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;(a|s)$&quot;</span>, <span class="st">&quot;e&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;apple&quot;  &quot;ananae&quot; &quot;banane&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#replaces a-s or s-s anywhere in the string with e-s</span>
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;a|s&quot;</span>, <span class="st">&quot;e&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;epple&quot;  &quot;enenee&quot; &quot;benene&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#remove all numbers. </span>
+y&lt;-<span class="kw">c</span>(<span class="st">&quot;as1&quot;</span>, <span class="st">&quot;2we3w&quot;</span>, <span class="st">&quot;3e&quot;</span>)
+<span class="kw">str_replace_all</span>(y, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">d&quot;</span>, <span class="st">&quot;&quot;</span>) </code></pre></div>
+<pre><code>## [1] &quot;as&quot;  &quot;wew&quot; &quot;e&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#remove everything, except numbers. </span>
+<span class="kw">str_replace_all</span>(y, <span class="st">&quot;[A-Za-z_]&quot;</span>, <span class="st">&quot;&quot;</span>) </code></pre></div>
+<pre><code>## [1] &quot;1&quot;  &quot;23&quot; &quot;3&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple pie&quot;</span>)
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;^apple$&quot;</span>,<span class="st">&quot;m&quot;</span>) <span class="co">#To force to only match a complete string:</span></code></pre></div>
+<pre><code>## [1] &quot;m&quot;         &quot;apple pie&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_replace_all</span>(x, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">s&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co">#space to _</span></code></pre></div>
+<pre><code>## [1] &quot;apple&quot;     &quot;apple_pie&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_replace_all</span>(x, <span class="st">&quot;[apl]&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co">#a or p or l to _</span></code></pre></div>
+<pre><code>## [1] &quot;____e&quot;     &quot;____e _ie&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_replace_all</span>(x, <span class="st">&quot;[ap|p.e]&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co"># ap or p.e to _</span></code></pre></div>
+<pre><code>## [1] &quot;___l_&quot;     &quot;___l_ _i_&quot;</code></pre>
+<p><strong>patterns that match more than one character:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">. (dot)<span class="op">:</span><span class="st"> </span>any character apart from a newline.
+
+\\d<span class="op">:</span><span class="st"> </span>any digit.
+
+\\s<span class="op">:</span><span class="st"> </span>any <span class="kw">whitespace</span> (space, tab, newline).
+
+\[abc]<span class="op">:</span><span class="st"> </span>match a, b, or c.
+
+\[<span class="op">!</span>abc]<span class="op">:</span><span class="st"> </span>match anything except a, b, or c.
+
+To create a regular expression containing \d or \s, you???ll need to escape the \ <span class="cf">for</span> the string, so you will type <span class="st">&quot;</span><span class="ch">\\\\</span><span class="st">d&quot;</span> or <span class="st">&quot;</span><span class="ch">\\\\</span><span class="st">s&quot;</span>.
+
+abc<span class="op">|</span>d..f will match either <span class="st">&quot;abc&quot;</span>, or <span class="st">&quot;deaf&quot;</span>. </code></pre></div>
+
 </div>
 </div>
             </section>
@@ -360,8 +287,8 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
           </div>
         </div>
       </div>
-<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="calc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="obj.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="funs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -390,7 +317,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstats-tartu/lectures/edit/master/01-tarkvara.Rmd",
+"link": "https://github.com/rstats-tartu/lectures/edit/master/04-regex.Rmd",
 "text": "Edit"
 },
 "download": ["main.pdf", "main.epub"],
