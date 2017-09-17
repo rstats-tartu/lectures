@@ -271,7 +271,8 @@ Siin ta on, ilusti meie workspace-s. Pange tähele viimast tulpa "vabakava", mis
 
 Listi juba nii lihtsalt data.frame-i ei pane:
 ```{r}
-try(data.frame(shop, apples, oranges, vabakava))
+dfs <- try(data.frame(shop, apples, oranges, vabakava))
+dfs
 ```
 
 **Mõned asjad, mida tibblega (ja data framega) saab teha:**

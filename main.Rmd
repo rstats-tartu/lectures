@@ -1,0 +1,1871 @@
+--- 
+title: "Reprodutseeritav andmeanalüüs kasutades R programmi"
+author: "Taavi Päll, Ülo Maiväli"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: kranz
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+github-repo: rstats-tartu/lectures
+description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs kasutades R programmi' materjalid."
+cover-image: assets/img/cover.png
+---
+
+
+```{r setup, include=FALSE}
+knitr::write_bib(c(.packages(), 'bookdown', 'knitr', 'rmarkdown'), 'packages.bib')
+options(htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE)
+```
+
+# Haara kannel, Vanemuine! {-}
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
+knitr::include_graphics('assets/img/cover.png', dpi = NA)
+```
+
+Bayesi tõlgenduses on tõenäosus teadlase usu määr mingi hüpoteesi kehtimisse. 
+Hüpotees võib näiteks olla, et järgmise juulikuu sademete hulk Vilsandil jääb vahemikku 22 kuni 34 mm. 
+Kui Bayesi arvutus annab selle hüpoteesi tõenäosuseks 0.57, siis oleme me selle teadmise najal nõus maksma mitte rohkem kui 57 senti kihlveo eest, mille alusel makstakse juhul, kui see hüpotees tõeseks osutub, välja 1 euro (ja me saame vähemalt 43 senti kasumit).  
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Sissejuhatus {#intro}
+
+See õpik on kirjutatud inimestele, kes kasutavad, mitte ei uuri, statistikat. 
+Õpiku kasutaja peaks olema võimeline töötama R keskkonnas. 
+Meie lähenemised statistika õpetamisele on arvutuslikud, mis tähendab, et me eelistame meetodi matemaatilise aluse asemel õpetada selle kasutamist ja tulemuste tõlgendamist. 
+See õpik on bayesiaanlik ja ei õpeta sageduslikku statistikat. 
+Me usume, et nii on lihtsam ja tulusam statistikat õppida ja et Bayesi statistikat kasutades saab rahuldada 99% teie tegelikest statistilistest vajadustest paremini, kui see on võimalik klassikaliste sageduslike meetoditega. 
+Me usume ka, et kuigi praegused kiired arengud bayesi statistikas on tänaseks juba viinud selle suurel määral tavakasutajale kättesaadavasse vormi, toovad lähiaastad selles vallas veel suuri muutusi. 
+Nende muutustega koos peab arenema ka bayesi õpetamine. 
+
+Me kasutame järgmisi R-i pakette, mis on kõik loodud bayesi mudelite rakendamise lihtsustamiseks: "rethinking" [@rethinking], "brms" [@brms], "rstanarm" [@rstanarm], "BayesianFirstAid" [@bayesianfirstaid] ja "bayesplot" [@bayesplot]. 
+Lisaks veel "bayesboot" bootstrapimiseks [@bayesboot]. 
+Bayesi arvutusteks kasutavad need paketid Stan ja JAGS mcmc sämplereid (viimast küll ainult `BayesianFirstAid paket). 
+Selle õpiku valmimisel on kasutatud McElreathi [@mcelreath2015], Kruschke [@kruschke2014] ja nn. Gelmani [@gelman2014] õpikuid.
+
+Lugejad, kellele on juba õpetatud sageduslikku statistikat, võivad tahta teada, mille poolest see erineb bayesi statistikast. 
+Ehkki me usume, et bayesi statistika õpetamine võrdlevalt sagedusliku statistikaga ei ole parim lahendus, võrdleme lühidalt järgnevalt sageduslikku ja bayesi paradigmasid. 
+Kes ei ole õppinud sageduslikku statistikat, võiksid selle osa vahele jätta.
+
+<!--chapter:end:00-intro.Rmd-->
+
+
+# Tarkvaratööriistad {#tools}
+
+## Installeeri vajalikud programmid
+
+Praktiline kursus eeldab töötavate R, RStudio ja Git programmide olemasolu sinu arvutist. 
+Kõik on väga lihtsad installid.
+
+1. Googelda "install R" või mine otse [R allalaadimise veebilehele](https://cran.r-project.org), laadi alla ja installi sobiv versioon.
+2. Googelda "install RStudio" või mine otse [RStudio allalaadimise veebilehele](https://www.rstudio.com/products/rstudio/download/), laadi alla ja installi sobiv versioon.
+3. Googelda "install git" või mine otse [Git allalaadimise veebilehele](https://git-scm.com/downloads), laadi alla ja installi sobiv versioon.
+
+## Loo GitHubi konto 
+GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine <i class="fa fa-git" aria-hidden="true"></i> versioonikontrolli repositoorium ja veebimajutuse teenus.
+
+- <i class="fa fa-github" aria-hidden="true"></i> konto loomiseks mine lehele https://github.com. Loo endale oma nimega seotud avalik konto. Tulevikule mõeldes vali kasutajanimi hoolikalt. Ära muretse detailide pärast, need on võimalik täita hiljem.
+
+- Loo repo nimega `intro_demo`.
+- Lisa repole lühike ja informatiivne kirjeldus. 
+- Vali "Public".
+- Pane linnuke kasti "Initialize this repository with a README".
+- Klikka "Create Repository".
+
+## Loo uus R projekt
+
+> NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta alakriipsu "\_". 
+
+4. Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)
+5. Ava RStudio akna (Joonis \@ref(fig:rstudiowindow)) paremalt ülevalt nurgast "Project" menüüst "New Project" dialoog.
+6. Ava "New Directory" > "Empty Project" > vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks "rstats2017".
+
+```{r rstudiowindow, echo=FALSE, fig.cap="RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga <i class='fa fa-git' aria-hidden='true'></i>. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. <i class='fa fa-git' aria-hidden='true'></i> menüüs on võimalik muutusi vaadata ja 'commit'ida ja <i class='fa fa-github' aria-hidden='true'></i>-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse)."}
+knitr::include_graphics("assets/img/rstudio_screen_untitled.png")
+```
+
+Rohkem infot R projekti loomise kohta leiad RStudio infoleheküljelt: [Using Projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
+
+## Git *Merge* konfliktid
+Kollaboreerides üle GitHubi tekivad varem või hiljem konfliktid projekti failide versioonide vahel nn. "merge conflicts", nende korrektselt lahendama õppimine on väga oluline. 
+
+- Oma repo GitHubi veebilehel muuda/paranda README.md dokumenti ja "Commit"-i seda lühisõnumiga mis sa muutsid/parandasid.
+- Seejärel, muuda oma arvutis olevat README.md faili RStudio-s viies sinna sisse mingi teistsuguse muudatuse. Tee "Commit" oma muudatustele.
+- Proovi "push"-ida -- sa saad veateate!
+- Proovi "pull".
+- Lahenda "merge" konflikt ja seejärel "commit" + "push".
+
+Githubi veateadete lugemine ja Google otsing aitavad sind.
+
+## R projekti kataloogi soovitatav minimaalne struktuur
+
+Iga R projekt peab olema täiesti iseseisev (_selfcontained_) ja sisaldama kogu infot, andmeid ja instruktsioone, et projektiga seotud arvutused läbi viia ja raport genereerida.
+Kõik faili _path_-id peavad olema suhtelised.
+
+
+R projekti kataloog peaks sisaldama projekti kirjeldavaid faile, mis nimetatakse 
+DESCRIPTION ja README.md. 
+**DESCRIPTION** on tavaline tekstifail ja sisaldab projekti metainfot ja infot projekti sõltuvuste kohta, nagu väliste andmesettide asukoht, vajalik tarkvara jne.
+**README.md** on markdown formaadis projekti info, sisaldab juhendeid kasutajatele.
+Igale GitHubi repole on soovitav koostada README.md, esialgu kasvõi projekti pealkiri ja üks kirjeldav lause. 
+README.md ja DESCRIPTION asuvad projekti juurkataloogis.
+
+
+> Projekti juurkataloogi jäävad ka kõik .Rmd laiendiga teksti ja analüüsi tulemusi sisaldavad failid, millest genereeritakse lõplik raport/dokument.
+
+
+Suuremad projektid, nagu näiteks teadusartikkel või raamat, võivad sisaldada mitmeid Rmd faile ja võib tekkida kange kisatus need mõnda alamkataloogi tõsta. 
+Aga `knitr::knit()`, mis Rmarkdowni markdowniks konverteerib, arvestab, et Rmd fail asub juurkataloogis ja arvestab juurkataloogi suhtes ka failis olevaid _path_-e teistele failidele (näiteks "data/my_data.csv"). 
+
+
+**data/** kataloog sisaldab faile toorandmetega. 
+Need failid peavad olema R-i poolt loetavad ja soovitavalt tekstipõhised, laienditega TXT, CSV, TSV jne. 
+Neid faile ei muudeta, ainult loetakse. 
+Kogu algandmete töötlus toimub programmaatiliselt.
+Suured failid muudavad versioonikontrolli aeglaseks, samuti on suheliselt mõttetu versioonikontroll binaarsete failide korral (MS <i class="fa fa-file-word-o" aria-hidden="true"></i> näiteks), sest diffid pole lihtsalt inimkeeles. 
+Github ütleb suurte failide kohta nii: _"GitHub will warn you when pushing files larger than 50 MB. You will not be allowed to push files larger than 100 MB."_
+
+**src/** kataloog sisaldab analüüsi skripte, sealhulgas ka andmetöötluse skripte. 
+
+**lib/** kataloogis on kasutaja poolt tehtud funktsioonide definitsioone sisaldavad R skriptid.
+
+```
+project/
+|- DESCRIPTION       # project metadata and dependencies
+|- README.md         # description of contents and guide to users
+|- my_analysis.Rmd   # markdown file containing analysis
+|                    # writeup together with R code chunks
+|
+|- data/             # raw data, not changed once created 
+|  +-my_data.csv     # data files in open formats, 
+|                    # such as TXT, CSV, TSV etc.
+|
+|- src/              # any programmatic code
+|  +-my_scripts.R    # R code used to analyse and 
+|                    # visualise data
+|
+|- lib/              # user generated functions
+|  +-my_functions.R  # R code defining functions
+```
+
+On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid taaskasutatavate funktsioonidega kataloogi **R/**. 
+Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i [@roxygen2], siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi **man/**. 
+Rohkem projekti pakkimise kohta loe värskest preprindist "Packaging data analytical work reproducibly using R" [@marwick2017].
+
+## Pakettide installeerimine {#libs}
+
+R _library_-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. **R baaspakett sisaldab juba mitmeid funktsioone.** Kõige esimene sõnum `sum()` help lehel on "sum {base}", mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka.
+Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda.
+Näiteks "base" raamatukogu `r sub("ion:","ioon",tolower(library(help="base")[["info"]][[1]][2]))` sisaldab `r length(library(help="base")[["info"]][[2]])` funktsiooni.
+Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist [CRAN](https://cran.r-project.org) alla laadida ja installeerida. 
+
+
+Selleks, et installeerida pakett, sisesta järgnev käsurida R konsooli:
+```{r, eval=FALSE}
+## eg use "ggplot2" as packagename
+install.packages("packagename")
+```
+
+NB! Kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle nime + R ja vaadake instruktsioone installeerimiseks.
+Suure tõenäosusega on tegemist mõnes teises repos (näiteks Bioconductor) või ainult GitHubis asuva paketiga.
+
+RStudio võimaldab ka _point-and-click_ stiilis pakettide installeerimist:
+```{r, echo=FALSE, fig.cap="RStudio 'Install Packages' dialoogiaken."}
+knitr::include_graphics("assets/img/RStudio_package.install.png")
+```
+
+> Sa ei saa installeeritud pakette enne kasutada, kui laadid nad töökeskkonda kasutades `library()` funktsiooni.
+
+Peale installeerimist lae pakett oma R sessiooni kasutades `library()` käsku, näiteks:
+
+```{r eval=FALSE}
+## Load library/package tidyr
+library(dplyr)
+```
+
+`library(dplyr)` käsk teeb R sessioonis kasutatavaks kõik "dplyr" paketi funktsioonid.
+
+
+Näiteks "dplyr" pakett sisaldab `r library(dplyr); length(ls("package:dplyr"))` funktsiooni:
+
+```{r}
+library(dplyr)
+## let's look at the head of package list
+head(ls("package:dplyr"), 20)
+```
+
+Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab `::` operaatorit kasutades kutsuda välja/importida funktsiooni spetsiifilisest paketist:
+```{r eval=FALSE}
+dplyr::select(df, my_var)
+```
+Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat funktsiooni sisaldavat raamatukogu töökeskkonda laadida.
+
+**Funktsioonide-pakettide help failid RStudio kasutajaliidesest**: Kui te lähete RStudios paremal all olevale "Packages" tabile, siis on võimalik klikkida raamatukogu nimele ja näha selle help-faile, tutooriale ja kõiki selle raamatukogu funktsioone koos nende help failidega.
+
+
+## R repositooriumid
+R pakid on saadaval kolmest põhilisest repositooriumist:
+
+1. __CRAN__ https://cran.r-project.org
+
+```{r eval=FALSE}
+install.packages("ggplot2")
+```
+
+2. __Bioconductor__ https://www.bioconductor.org
+
+```{r eval=FALSE}
+# First run biocLite script fron bioconductor.org
+source("https://bioconductor.org/biocLite.R")  
+# use 'http' in url if 'https' is unavailable. 
+biocLite("GenomicRanges", suppressUpdates = TRUE)
+```
+
+3. __GitHub__ https://github.com
+
+```{r eval=FALSE}
+## Näiteks järgnev käsk installeerib xaringan 
+## presentation ninja paketi
+devtools::install_github("yihui/xaringan")
+```
+
+> NB! antud praktilise kursuse raames tutvume ja kasutame 'tidyverse' metapaketi funktsioone, laadides need iga sessiooni alguses:
+
+```{r eval=FALSE}
+## install.packages("tidyverse")
+library(tidyverse)
+```
+
+Nüüd on teil `tidyverse` pakett arvutis. 
+Tegelikult kuuluvad siia raamatukokku omakorda tosinkond raamatukogu --- tidyverse on pisut meta. 
+Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te need töökeskkonda sisse loete
+
+Veel üks tehniline detail. `library(tidyverse)` käsk ei loe sisse kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi. 
+Need tuleb vajadusel eraldi ükshaaval sisse lugeda.
+
+
+> Paiguta kõigi raamatukogude lugemine koodi algusesse. Enamasti kirjutatakse sisse loetavad raamatukogud kohe R scripti algusesse. Siis on teile endale ja teistele kes teie koodi loevad ilusti näha, mida hiljem vaja läheb.
+
+
+<!--chapter:end:01-tarkvara.Rmd-->
+
+
+# R on kalkulaator {#calc}
+
+Liidame `2 + 2`. 
+```{r}
+2 + 2
+```
+
+Nüüd trükiti see vastus konsooli kujul `[1] 4`.
+See tähendab, et `2 + 2 = 4`.
+
+Kontrollime seda:
+```{r}
+## liidame 2 ja 2 ning vaatame kas vastus võrdub 4
+answer <- (2 + 2) == 4
+## Trükime vastuse välja
+answer
+```
+
+Vastus on `r answer`, (`r class(answer)`). 
+
+Pane tähele, et aritmeetiline võrdusmärk on `==` (sest = tähendab hoopis väärtuse määramist objektile/argumendile).
+
+Veel mõned näidisarvutused:
+```{r eval=FALSE}
+## 3 astmes 2; Please read Note ?'**' 
+3 ^ 2
+## Ruutjuur 3st
+sqrt(3)
+## Naturaallogaritm sajast
+log(100)
+```
+
+Arvule $\pi$ on määratud oma objekt `pi`. 
+Seega on soovitav enda poolt loodavatele objektidele mitte panna nimeks "pi".
+```{r}
+## Ümarda pi neljale komakohale
+round(pi, 4)
+```
+Ümardamine on oluline tulemuste väljaprintimisel.
+
+## Sama koodi saab kirjutada neljal viisil
+
+Hargnevate teede aed: kui me muudame olemasolevat objekti on meil alati kaks valikut. 
+Me kas jätame muudetud objektile vana objekti nime või me anname talle uue nime. 
+Esimesel juhul läheb vana muutmata objekt workspacest kaduma aga nimesid ei tule juurde ja säilib teatud workflow sujuvus. 
+Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende juurde saab alati tagasi tulla. 
+Samas tekkib meile palju sarnaste nimedega objekte.
+
+Esimnene võimalus:
+```{r}
+a <- c(2, 3)
+a <- sum(a)
+a <- sqrt(a)
+a <- round(a, 2)
+a
+```
+
+Teine võimalus:
+```{r}
+a <- c(2, 3)
+a1 <- sum(a)
+a2 <- sqrt(a1)
+a3 <- round(a2, 2)
+a3
+```
+
+Kolmas võimalus on lühem variant esimesest. 
+Me nimelt ühendame etapid toru `%>%` kaudu.
+Siin me võtame objekti "a" (nö. andmed), suuname selle funktsiooni `sum()`, võtame selle funktsiooni väljundi ja suuname selle omakorda funktsiooni `sqrt()`. 
+Seejärel võtame selle funktsiooni outputi ja määrame selle nimele "result" (aga võime selle ka mõne teise nimega siduda). 
+Kui mõni funktsioon võtab ainult ühe parameetri, mille me talle toru kaudu sisse sõõdame, siis pole selle funktsiooni taga isegi sulge vaja. 
+
+> NB! R hea stiili juhised soovitavad siiski ka _pipe_-s kasutada funktsiooni koos sulgudega! 
+
+See on hea lühike ja inimloetav viis koodi kirjutada, mis on masina jaoks identne esimese koodiga.
+```{r}
+## we need piping operator '%>%' from magrittr
+library(magrittr)
+a <- c(2, 3)
+result <- a %>% sum() %>% sqrt() %>% round(2)
+result
+```
+
+Neljas võimalus, klassikaline baas R lahendus:
+```{r}
+a <- c(2, 3)
+a1 <- round(sqrt(sum(a)), 2)
+a1
+```
+Sellist koodi loetakse keskelt väljappoole ja kirjutatakse alates viimasest operatsioonist, mida soovitakse, et kood teeks. 
+Masina jaoks pole vahet. 
+Inimese jaoks on küll: 4. variant nõuab hästi pestud ajusid.
+
+Koodi lühidus 4 --> 3 --> 1 --> 2 (pikem)
+Lollikindlus  1 --> 2 --> 3 --> 4 (vähem lollikindel)
+
+See on teie otsustada, millist koodivormi te millal kasutate, aga te peaksite oskama lugeda neid kõiki.
+
+<!--chapter:end:02-kalkulaator.Rmd-->
+
+
+# R objektid {#obj}
+
+R-i töökeskkonnas "workspace" asuvad **objektid**, millega me töötame. 
+Tüüpilised objektid on:
+
+- Vektorid, maatriksid, listid ja tabelid.
+- Statistiliste analüüside väljundid (S3, S4 klass).
+- Funktsioonid, mille oleme ise sisse lugenud.
+
+Käsk `ls()` annab objektide nimed teie workspace-s:
+```{r}
+ls()
+```
+
+`rm(a)` removes object a from the workspace
+
+Selleks, et salvestada töökeskkond faili kasuta <i class="fa fa-floppy-o" aria-hidden="true"></i> "Save" nuppu "Environment" akna servast või 
+menüüst "Session" -> "Save Workspace As".
+
+Projekti sulgemisel salvestab RStudio vaikimisi töökeskkonna. 
+**Parema reprodutseeritavuse huvides pole siiski soovitav töökeskkonda peale töö lõppu projekti sulgemisel salvestada!**. 
+Lülitame automaatse salvestamise välja:
+
+- Selleks mine "Tools" > "Global Options" > kõige ülemine, "R General" menüüs vali "Save workspace to .RData on exit" > "Never" ever!
+- Võta ära linnuke "Restore .RData to workspace at startup" eest.
+
+Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele.
+
+## Objekt ja nimi
+Kui teil sünnib laps, annate talle nime.
+
+R-s on vastupidi: nimele antakse objekt
+```{r}
+babe <- "beebi"
+babe
+```
+
+Siin on kõigepealt nimi (babe), siis assingmenti sümbol `<-` ja lõpuks objekt, mis on nimele antud (string "beebi"). 
+
+NB! Stringid on jutumärkides, nimed mitte.
+Nimi üksi evalueeritakse kui "print object", mis antud juhul on string "beebi"
+
+Nüüd muudame objekti nime taga:
+```{r}
+babe <- c("saatan", "inglike")
+babe
+```
+
+Tulemuseks on sama nimi, mis tähistab nüüd midagi muud (vektorit, mis koosneb 2st stringist). Objekt "beebi" kaotas oma nime ja on nüüd workspacest kadunud. 
+`class()` annab meile objekti klassi.
+```{r}
+class(babe)
+```
+ Antud juhul `r class(babe)`. 
+
+> Ainult need objektid, mis on assigneeritud nimele, lähevad workspace ja on sellistena kasutatvad edasises analüüsis.
+
+```{r}
+apples <- 2
+bananas <- 3
+apples + bananas
+```
+Selle ekspressiooni tulemus trükitakse ainult R konsooli, kuna teda ei määrata nimele siis ei ilmu see ka workspace.
+
+
+```{r}
+a <- 2
+b <- 3
+a <- a + b
+# objekti nimega 'a' struktuur
+str(a)
+```
+Nüüd on nimega a seostatud uus objekt, mis sisaldab numbrit 5 (olles ühe elemendiga vektor). Ja nimega a eelnevalt seostatud objekt, mis koosnes numbrist 2, on workspacest lahkunud. 
+
+## Nimede vorm
+
++ Nimed algavad tähemärgiga, mitte numbriga ega $€%&/?~ˇöõüä
++ Nimed ei sisalda tühikuid
++ Tühiku asemel kasuta alakriipsu: näiteks eriti_pikk_nimi
++ SUURED ja väiksed tähed on nimes erinevad
++ Nimed peaksid kirjeldama objekti, mis on sellele nimele assigneeritud ja nad võivad olla pikad sest TAB klahv annab meile auto-complete.
++ alt + - on otsetee `<-` jaoks
+
+## Andmete tüübid
+
++ numeric / integer 
++ logical -- 2 väärtust TRUE/FALSE
++ character
++ factor (ordered and unordered) - 2+ diskreetset väärtust, mis võivad olla järjestatud suuremast väiksemani (aga ei asu üksteisest võrdsel kaugusel). Faktoreid käsitleme põhjalikumalt hiljem.
+
+Andmete tüüpe saab üksteiseks konverteerida `as.numeric()`, `as.character()`, `as.factor()`.
+
+## Vektor
+
+Vektor on rida kindlas järjekorras arve, sõnu või TRUE/FALSE loogilisi väärtusi. 
+Iga vektor ja maatriks (2D vektor) sisaldab ainult ühte tüüpi andmeid. 
+Vektor on elementaarüksus, millega me teeme tehteid. 
+Andmetabelis ripuvad kõrvuti ühepikad vektorid (üks vektor = üks tulp) ja R-le meeldib arvutada vektori kaupa vasakult paremale (mis tabelis on ülevalt alla sest vektori algus on üleval tabeli peas). 
+Pikema kui üheelemendise vektori loomiseks kasuta funktsiooni `c()` -- combine
+
+Loome numbrilise vektori ja vaatame ta struktuuri:
+```{r}
+minu_vektor <- c(1, 3, 4)
+str(minu_vektor)
+```
+
+Loome vektori puuduva väärtusega, vaatame vektori klassi:
+```{r}
+minu_vektor <- c(1, NA, 4)
+minu_vektor
+class(minu_vektor)
+```
+Klass jääb _numeric_-uks.
+
+Kui vektoris on segamini numbrid ja stringid, siis muudetakse numbrid ka stringideks:
+```{r}
+minu_vektor <- c(1, "2", 2, 4, "joe")
+minu_vektor
+class(minu_vektor)
+```
+Piisab ühest "tõrvatilgast meepotis", et teie vektor ei sisaldaks enam numbreid.
+
+Eelnevast segavektorist on võimalik numbrid päästa kasutades käsku `as.numeric()`:
+```{r}
+as.numeric(minu_vektor)
+```
+Väärtus "joe" muudeti NA-ks, kuna seda ei olnud võimalik numbriks muuta.
+Samuti peab olema tähelepanelik faktorite muutmisel numbriteks:
+```{r}
+minu_vektor <- factor(c(9, "12", 12, 1.4, "joe"))
+minu_vektor
+class(minu_vektor)
+## Kui muudame faktori otse numbriks, saame faktori taseme numbri
+as.numeric(minu_vektor)
+```
+
+Faktorite muutmisel numbriteks tuleb need kõigepealt stringideks muuta:
+```{r}
+as.numeric(as.character(minu_vektor))
+```
+
+
+Järgneva trikiga saab stringidest ekstraheerida numbrid: 
+```{r}
+library(readr)
+minu_vektor <- c(1, "A2", "$2", "joe")
+minu_vektor <- as.vector(parse_number(minu_vektor))
+minu_vektor
+str(minu_vektor)
+```
+
+R säilitab vektori algse järjekorra. 
+Sageli on aga vaja tulemusi näiteks vaatamiseks ja presenteerimiseks sorteerida suuruse või tähestiku järjekorras:
+```{r eval=FALSE}
+## sorts vector in ascending order
+sort(x, decreasing = FALSE, ...)
+```
+
+Vektori unikaalsed väärtused saab kätte käsuga `unique()`:
+```{r}
+## returns a vector or data frame, but with duplicate elements/rows removed
+unique(c(1,1,1,2,2,2,2,2,3,3,4,5,5))
+```
+
+
+###  Uus vektor: `seq()` ja `rep()`
+
+```{r}
+seq(2, 3, by = 0.5)
+seq(2, 3, length.out = 5)
+rep(1:2, times = 3)
+rep(1:2, each = 3)
+rep(c("a", "b"), each = 3, times = 2)
+```
+
+### Tehted arvuliste vektoritega
+
+Vektoreid saab liita, lahutada, korrutada ja jagada.
+```{r}
+a <- c(1, 2, 3)
+b <- 4
+a + b
+```
+Kõik vektor a liikmed liideti arvuga 3 (kuna vektor b koosnes ühest liikmest, läks see kordusesse)
+
+```{r}
+a <- c(1, 2, 3)
+b <- c(4, 5) 
+a + b
+```
+Aga see töötab veateatega, sest vektorite pikkused ei ole üksteise kordajad
+1 + 4; 2 + 5, 3 + 4
+
+```{r}
+a <- c(1, 2, 3, 4)
+b <- c(5, 6) 
+a + b
+```
+See töötab: 1 + 5; 2 + 6; 3 + 5; 4 + 6 
+
+```{r}
+a <- c(1, 2, 3, 4)
+b <- c(5, 6, 7, 8) 
+a + b
+```
+Samuti see (ühepikkused vektorid --- igat liiget kasutatakse üks kord)
+
+```{r}
+a <- c(TRUE, FALSE, TRUE)
+sum(a)
+mean(a)
+```
+Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 + 1 = 2.
+Seda loogiliste väärtuste omadust õpime varsti praktikas kasutama. 
+
+## List
+
+List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa arvatud listid. 
+See on lihtsalt viis objektid koos hoida ühes suuremas meta-objektis. 
+List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid kõik segamini loksuvad.
+
+Näiteks siin list, kus loksuvad 1 vektor nimega a, 1 tibble nimega b ja 1 list nimega c, mis omakorda sisaldab vektorit nimega d ja tibblet nimega e. Seega on meil tegu rekursiivse listiga. 
+```{r}
+# numeric vector a
+a <- runif(5)
+# data.frame
+ab <- data.frame(a, b = rnorm(5))
+# linear model
+model <- lm(mpg ~ hp, data = mtcars)
+# your grandma on bongos
+grandma <- "your grandma on bongos"
+# let's creat list
+happy_list <- list(a, ab, model, grandma)
+happy_list
+```
+
+Võtame listist välja elemndi "ab":
+```{r}
+happy_list$ab
+```
+
+
+## data frame ja tibble
+
+```{r}
+library(tidyverse)
+```
+
+Andmeraam on eriline list, mis koosneb ühepikkustest vektoritest. Andmeraam on ühtlasi teatud liiki tabel, kus igas veerus on ainult ühte tüüpi andmed. Need vektorid ripuvad andmeraamis kõrvuti nagu tuulehaugid suitsuahjus, kusjuures vektori algus vastab tuulehaugi peale, mis on konksu otsas (konks vastab andmeraamis tulba nimele ja ühtlasi vektori nimele). Iga vektori nimi muutub sellises tabelis tulba nimeks. Igas tulbas saab olla ainult ühte tüüpi andmeid. 
+
+R-s on 2 andmeraami tüüpi: data frame ja tibble, mis on väga sarnased. 
+Tibble on uuem, veidi kaunima väljatrükiga, pisut mugavam kasutada.
+
+> Oluline on, et erinevalt data frame-st saab tibblesse lisada ka list tulpasid, mis võimaldab sisuliselt suvalisi R objekte tibblesse paigutada. Põhimõtteliselt piisab ainult ühest andmestruktuurist -- tibble, et R-is töötada. Kõik mis juhtub tibbles jääb tibblesse. Nice and tidy -- tidyverse.
+
+"Tidyverse" töötab tibblega veidi paremini kui data frame-ga, aga see vahe ei ole suur.
+
+Siin on meil 3 vektorit: shop, apples ja oranges, millest me paneme kokku tibble nimega fruits
+```{r}
+## loome kolm vektorit
+shop <- c("maxima", "tesco", "lidl")
+apples <- c(1, 4, 43)
+oranges <- c(2, 32, NA)
+vabakava <- list(letters, runif(10), lm(mpg ~ cyl, mtcars))
+## paneme need vektorid kokku tibble-sse
+fruits <- tibble(shop, apples, oranges, vabakava)
+fruits
+```
+Siin ta on, ilusti meie workspace-s. Pange tähele viimast tulpa "vabakava", mis sisaldab _character_ vectorit, numbrilist vektorit ja lineaarse mudeli objekti. 
+
+Listi juba nii lihtsalt data.frame-i ei pane:
+```{r}
+dfs <- try(data.frame(shop, apples, oranges, vabakava))
+dfs
+```
+
+**Mõned asjad, mida tibblega (ja data framega) saab teha:**
+
+```{r}
+count(fruits, apples)
+count(fruits, shop)
+summary(fruits)
+names(fruits)
+colnames(fruits)
+nrow(fruits)
+ncol(fruits)
+arrange(fruits, desc(apples)) #sorteerib tabeli veeru "apples" väärtuste järgi langevalt (default on tõusev sorteerimine). Võib argumendina anda mitu veergu.
+top_n(fruits, 2, apples) #saab 2 rida, milles on kõige rohkem õunu
+top_n(fruits, -2, apples) #saab 2 rida, milles on kõige vähem õunu
+```
+
+Tibblega saab teha maatriksarvutusi, kui kasutada ainult arvudega ridu. 
+`apply()` arvutab maatriksi rea (1) või veeru (2) kaupa, vastavalt funktsioonile, mille sa ette annad.
+```{r}
+colSums(fruits[ , 2:3])
+rowSums(fruits[ , 2:3])
+rowMeans(fruits[ , 2:3])
+colMeans(fruits[ , 2:3])
+fruits_subset <- fruits[ , 2:3]
+# 1 tähendab, et arvuta sd rea kaupa
+apply(fruits_subset, 1, sd)
+# 2 tähendab, et arvuta sd veeru kaupa
+apply(fruits_subset, 2, sd) 
+```
+
+Lisame käsitsi meie tabelile 1 rea:
+```{r}
+fruits <- add_row(fruits, 
+                  shop = "konsum", 
+                  apples = 132, 
+                  oranges = -5, 
+                  .before = 3)
+fruits
+```
+
+Proovi ise:
+```{r eval=FALSE}
+add_column()
+```
+
+Eelnevaid verbe ei kasuta me vist enam kunagi sest tavaliselt loeme me andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:
+
+### Rekodeerime tibble väärtusi
+
+```{r}
+fruits$apples[fruits$apples==43] <- 333
+fruits
+fruits$shop[fruits$shop=="tesco"] <- "TESCO"
+fruits
+fruits$apples[fruits$apples>100] <- NA
+fruits
+```
+
+
+Remove duplicate rows where specific column (col1) contains duplicated values:
+```{r eval=FALSE}
+distinct(dat, col1, .keep_all = TRUE)
+# kõikide col vastu
+distinct(dat) 
+```
+
+Rekodeerime `Inf` ja `NA` väärtused nulliks (väga halb mõte):
+```{r eval=FALSE}
+# inf to 0
+x[is.infinite(x)] <- 0
+# NA to 0
+x[is.na(x)] <- 0
+```
+
+
+### Ühendame kaks tibblet rea kaupa 
+
+Tabeli veergude arv ei muutu, ridade arv kasvab.
+```{r}
+dfs <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
+dfs1 <- tibble(colA = "d", colB =  4)
+#id teeb veel ühe veeru, mis näitab, kummast algtabelist iga uue tabeli rida pärit on 
+bind_rows(dfs, dfs1, .id = "id")
+```
+
+Vaata Environmendist need tabelid üle ja mõtle järgi, mis juhtus.
+
+Kui `bind_rows()` miskipärast ei tööta, proovi `do.call(rbind, dfs)`, mis on väga sarnane.
+
+NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!
+
+Näiteks, võib-olla te tahtsite järgnevat tabelit saada, aga võib-olla ka mitte:
+```{r}
+df2 <- tibble(ColC = "d", ColD = 4)
+## works by guessing your true intention
+bind_rows(dfs1, df2)
+```
+
+### ühendame kaks tibblet veeru kaupa
+
+Meil on 2 verbi: bind_cols ja cbind, millest esimene on konservatiivsem. Proovige eelkõige bind_col-ga läbi saada, aga kui muidu ei saa, siis cbind ühendab vahest asju, mida bind_cols keeldub puutumast. NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!
+
+```{r}
+dfx <- tibble(colC = c(4, 5, 6))
+cbind(dfs, dfx)
+```
+
+
+### Nii saab tibblest kätte vektori, millega saab tehteid teha. 
+
+Tibble jääb muidugi endisel kujul alles.
+```{r}
+ubinad <- fruits$apples
+ubinad <- ubinad + 2
+ubinad
+## see on jälle vektor
+str(ubinad)
+```
+
+
+### Andmeraamide salvestamine (eksport-import)
+
+Andmeraami saame salvestada näiteks csv-na (comma separated file) oma kõvakettale, kasutame "tidyverse" analooge paketist "readr", mille nimed on baas R funktsioonidest eristatavad alakriipsu "_" kasutamisega. "readr" laaditakse "tidyverse" laadimisega. 
+```{r, eval=FALSE}
+## loome uuesti fruits data tibble
+shop <- c("maxima", "tesco", "lidl")
+apples <- c(1, 4, 43)
+oranges <- c(2, 32, NA)
+fruits <- tibble(shop, apples, oranges, vabakava)
+## kirjutame fruits tabeli csv faili fruits.csv kataloogi data 
+write_csv(fruits, "data/fruits.csv")
+```
+
+Kuhu see fail läks? See läks meie projekti juurkataloogi kausta "data/", juurkataloogi asukoha oma arvuti kõvakettal leiame käsuga:
+```{r}
+getwd()
+```
+
+Andmete sisselugemine töökataloogist:
+```{r eval=FALSE}
+fruits <-  read_csv("data/fruits.csv")
+```
+
+MS exceli failist saab tabeleid importida "readxl" paki abil.
+```{r, eval=FALSE}
+library(readxl)
+## kõigepealt vaatame kui palju sheete failis on
+sheets <- excel_sheets("data/excelfile.xlsx")
+## siis impordime näiteks esimese sheeti
+dfs <- read_excel("data/excelfile.xlsx", sheet = sheets[1])
+```
+
+Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga `read_csv2` või `read.csv2` (need on erinevad funktsioonid; read.csv2 loeb selle sisse data framena ja read_csv2 tibble-na).
+
+R-i saab sisse lugeda palju erinevaid andmeformaate. 
+Kui sa soovid oluliselt ohverdada reprodutseeritavust installi RStudio addin: "Gotta read em all R".
+See läheb ülesse tab-i Addins. 
+Sealt saab selle avada ja selle abil tabeleid oma workspace üles laadida. 
+Selline point-and-click lahendus sobib ehk tabelite esialgseks tutvumiseks, kuid korrektne on andmed importida programmaatiliselt oma skriptis.
+```{r eval=FALSE}
+#install gotta read em all as R studio addin
+install.packages("devtools")
+devtools::install_github("Stan125/GREA")
+```
+
+
+Alternatiiv: mine alla paremake Files tab-le, navigeeri sinna kuhu vaja ja kliki faili nimele, mida tahad R-i importida.
+
+Mõlemal juhul ilmub alla konsooli (all vasakul) koodijupp, mille jooksutamine peaks asja ära tegema. 
+Te võite tahta selle koodi kopeerida üles vasakusse aknasse kus teie ülejäänud kood tulevastele põlvedele säilub.
+
+> Tüüpiliselt töötate R-s oma algse andmestikuga. Reprodutseeruvaks projektiks on vaja 2 asja: algandmeid ja koodi, millega neid manipuleerida. 
+
+NB! R ei muuda algandmeid, mille te näiteks csv-na sisse loete - need jäävad alati selliseks nagu need instrumendi või andmesisestaja poolt väljastati.
+
+Seega ei ole andmetabelite salvestamine töö vaheproduktidena sageli vajalik sest te jooksutate iga kord, kui te oma projekti juurde naasete, kogu analüüsi uuesti kuni kohani, kuhu te pooleli jäite. 
+See tagab kõige paremini, et teie kood töötab tervikuna. 
+Erandiks on tabelid, mille arvutamine palju aega võtab.
+
+Tibble konverteerimine data frame-ks ja tagasi tibbleks:
+```{r}
+class(fruits)
+fruits <- as.data.frame(fruits)
+class(fruits)
+fruits <- as_tibble(fruits)
+class(fruits)
+```
+
+## Tabelit sisse lugedes vaata üle NA-d
+
+```{r}
+library(VIM) 
+diabetes <- read.table(file = "data/diabetes.csv", sep = ";", dec = ",", header = TRUE)
+str(diabetes)
+aggr(diabetes, prop = FALSE, numbers = TRUE)
+```
+Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.
+
+Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?
+```{r}
+nrows <- nrow(diabetes)
+  ncomplete <- sum(complete.cases(diabetes))
+  ncomplete #136
+  ncomplete/nrows #34%
+```
+
+  
+Mitu NA-d on igas tulbas?
+```{r}
+sapply(diabetes, function(x) sum(is.na(x))) 
+```
+
+Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:
+```{r}
+matrixplot(diabetes) 
+```
+
+
+Kuidas rekodeerida NA-d näiteks 0-ks:
+```{r eval=FALSE}
+dfs[is.na(dfs)] <- 0
+dfs[is.na(dfs)] <- "other"
+dfs[dfs == 0] <- NA # teeb vastupidi 0-d NA-deks
+```
+
+Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud `is.na()` funktsiooniga.
+
+## Matrix
+
+Maatriks on 2-dimensionaalne vektor, sisaldab ainult ühte tüüpi andmeid -- numbrid, stringid, faktorid.
+Tip: me saame sageli andmeraami maatriksina kasutada kui me viskame sealt välja mitte-numbrilised tulbad.
+
+Aga saame ka andmeraame konverteerida otse maatriksiks (ja tagasi).
+```{r eval=FALSE}
+fruits <- as.matrix(fruits)
+class(fruits)
+```
+
+
+## Indekseerimine
+
+Igale vektori, listi, andmeraami ja maatriksi elemendile vastab unikaalne postiindeks, mille abil saame just selle elemendi unikaalselt indentifitseerida, välja võtta ja töödelda.
+
+Seega on indeksi mõte väga lühikese käsuga välja võtta R-i objektide üksikuid elemente. 
+
+R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
+
+### Vektorid ja nende indeksid on ühedimensionaalsed
+
+```{r}
+my_vector <- 2:5 
+my_vector
+my_vector[1] #1. element ehk number 2
+my_vector[c(1,3)] #1. ja 3. element 
+my_vector[-1] #kõik elemendid, v.a. element number 1
+my_vector[c(-1, -3)] #kõik elemendid, v.a. element number 1 ja 3
+my_vector[3:5] #elemendid 3, 4 ja 5 (element 5 on määramata, seega NA)
+my_vector[-(3:length(my_vector))] #1. ja 2. element
+```
+
+### Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid
+
+**2D indeksi kuju on [rea_indeks, veeru_indeks]**.
+
+```{r eval=FALSE}
+dat <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
+dat
+# üks andmepunkt: 1 rida, 2. veerg
+dat[1, 2]
+# 1. rida, kõik veerud
+dat[1, ]
+# 2. veerg, kõik read
+dat[, 2]
+# kõik read peale 1.
+dat[-1, ]
+# viskab välja 2. veeru
+dat[, -2]
+# 2 andmepunkti: 2. rida, 1. ja 2. veerg
+dat[2, 1:2]
+# 2 andmepunkti: 2. rida, 3. ja 4. veerg
+dat[2, c(1, 2)]
+#viskab välja 1. ja 2. rea
+dat[-c(1, 2), ]
+#veerg nimega colB, output on erandina vektor!
+dat$colB
+```
+Kui me indekseerimisega tibblest veeru ehk vektori välja võtame, on output class: tibble. Kui me teeme sama data frame-st, siis on output class: vector.
+
+Nüüd veidi keerulisemad konstruktsioonid, mis võimaldavad tabeli ühe kindla veeru väärtusi välja tõmmata teise veeru väärtuste järgi filteerides. Püüdke sellest koodist aru saada, et te hiljem ära tunneksite, kui midagi sellist vastu tuleb. Õnneks ei ole teil endil vaja sellist koodi kirjutada, me õpetame teile varsti lihtsama filtri meetodi.
+```{r}
+dat <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
+dat$colB[dat$colA != "a" ] #jätab sisse kõik vektori colB väärtused, kus samas tabeli reas olev colA väärtus ei ole "a". output on vektor! 
+dat$colA[dat$colB > 1] #jätab sisse kõik vektori colA väärtused, kus samas tabeli reas olev colB väärtus >1. output on vektor. 
+```
+
+### Listide indekseerimine
+
+**Listi indekseerimisel kasutame kahte sorti nurksulge, "[ ]" ja "[[ ]]", mis töötavad erinevalt**.
+
+Kui listi vaadata nagu objektide vanglat, siis kaksiksulgude `[[ ]]` abil on võimalik üksikuid objekte vanglast välja päästa nii, et taastub nende algne kuju ehk class.
+Seevastu üksiksulud `[ ]` tekitavad uue listi, kus on säilinud osad algse listi elemendid, ehk uue vangla vähemate vangidega. 
+
+> Kaksiksulud "[[ ]]" päästavad listist välja ühe elemendi ja taastavad selle algse class-i (data.frame, vektor, list jms). Üksiksulud "[ ]" võtavad algsest listist välja teie poolt valitud elemendid aga jätavad uue objekti ikka listi kujule.
+
+```{r}
+my_list <- list(a = tibble(colA = c("A", "B"), colB = c(1, 2)), b = c(1, NA, "s"))
+## this list has two elements, a data frame called "a" and a character vector called "b".
+str(my_list)
+```
+
+Tõmbame listist välja tibble:
+```{r}
+my_tibble <- my_list[[1]]
+my_tibble
+```
+See ei ole enam list.
+
+Nüüd võtame üksiksuluga listist välja 1. elemendi, mis on tibble, aga output ei ole mitte tibble, vaid ikka list. 
+Seekord ühe elemendiga, mis on tibble.
+```{r}
+aa <- my_list[1]
+str(aa)
+```
+
+
+```{r}
+aa1 <- my_list$a[2,] #class is df
+aa1
+```
+
+```{r}
+aa3 <- my_list[[1]][1,]
+aa3
+```
+
+Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välja objekti my_list 1. elemendi, tema algses tibble formaadis, (indeksi 1. dimensioon). Seejärel korjame sealt välja 1. rea, tibble formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).
+
+Pane tähele, et `[[ ]]` lubab ainult ühe elemendi korraga listist välja päästa.
+
+<!--chapter:end:03-objektid.Rmd-->
+
+
+# Regular expression ja find & replace {#regex}
+
+Regular expression annab võimaluse lühidalt kirjeldada mitte-üheseid otsinguparameetreid.
+
+> regular expression on string, mis kirjeldab mitut stringi
+
+
+A [regular expression](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html)  [Regular Expressions as used in R](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html)
+
++ Most characters, including all letters and digits, are regular expressions that match themselves. 
++ `.` matches any single character.
++ You can refer also to a character class, which is a list of characters enclosed between `[` and `]`, e.g. `[[:alnum:]]` is same as `[A-z0-9]`.
++ Most common character classes:
+  - `[:alnum:]` includes alphanumerics (`[:alpha:]` and `[:digit:]`); 
+- `[:alpha:]`, includes alphabetic characters (`[:upper:]` and `[:lower:]` case);
+- `[:punct:]` includes punctuation characters ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` ` { | } ~.; 
+- `[:blank:]` includes space and tab; etc. 
++ The metacharacters in regular expressions are `. \ | ( ) [ { ^ $ * + ?`, whether these have a special meaning depends on the context. When matching a metacharacter as a regular character, precede it with a double backslash `\\`.
++ Repetition quantifiers put after regex specify how many times regex is matched: `?`, optional, at most once; `*`, zero or more times; `+`, one or more times; `{n}`, n times; `{n,}`, n or more times; `{n,m}`, n to m times. 
++ ^ anchors the regular expression to the start of the string.
++ $ anchors the the regular expression to end of the string.
+
+## Common operations with regular expressions
+
++ Locate a pattern match (positions)
++ Extract a matched pattern
++ Identify a match to a pattern
++ Replace a matched pattern
+
+## Find and replace
+
+```{r }
+library(stringr)
+x<- c("apple", "ananas", "banana")
+
+#replaces all a-s at the beginning of strings with e-s
+str_replace(x, "^a", "e") 
+
+# str_replace only replaces at the first occurence at each string
+str_replace(x, "a", "e") 
+
+#str_replace_all replaces all a-s anywhere in the strings
+str_replace_all(x, "a", "e") 
+
+#replaces a and the following character at the end of string with nothing (i.e. deletes 2 chars)
+str_replace(x, "a.$", "")
+
+#replaces a-s or s-s at the end of string with e-s
+str_replace(x, "(a|s)$", "e")
+
+#replaces a-s or s-s anywhere in the string with e-s
+str_replace_all(x, "a|s", "e")
+
+#remove all numbers. 
+y<-c("as1", "2we3w", "3e")
+str_replace_all(y, "\\d", "") 
+
+#remove everything, except numbers. 
+str_replace_all(y, "[A-Za-z_]", "") 
+```
+
+
+
+```{r }
+x<- c("apple", "apple pie")
+str_replace_all(x, "^apple$","m") #To force to only match a complete string:
+str_replace_all(x, "\\s","_") #space to _
+str_replace_all(x, "[apl]","_") #a or p or l to _
+str_replace_all(x, "[ap|p.e]","_") # ap or p.e to _
+```
+
+
+**patterns that match more than one character:**
+
+
+```{r, eval=FALSE}
+
+. (dot): any character apart from a newline.
+
+\\d: any digit.
+
+\\s: any whitespace (space, tab, newline).
+
+\[abc]: match a, b, or c.
+
+\[!abc]: match anything except a, b, or c.
+
+To create a regular expression containing \d or \s, you???ll need to escape the \ for the string, so you will type "\\\\d" or "\\\\s".
+
+abc|d..f will match either "abc", or "deaf". 
+```
+
+<!--chapter:end:04-regex.Rmd-->
+
+
+# Funktsioonid on R keele verbid {#funs}
+
+Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt, kes püüab ära arvata, mida on vaja teha. 
+Vahest teeb kah. 
+Vahest isegi seda, mida kasutaja tahtis. 
+Mõni arvab, et R-i puudus on veateadete puudumine või krüptilised veateated. 
+Sama kehtib ka R-i helpi kohta. 
+Seega tasub alati kontrollida, kas R ikka tegi seda, mida sina talle enda arust ette kirjutasid.
+
+Paljudel juhtudel ütleb (hea) funktsiooni nimi mida see teeb:
+```{r}
+# create two test vectors
+x <- c(6, 3, 3, 4, 5)
+y <- c(1, 3, 4, 2, 7)
+```
+
+```{r}
+# calculate correlation
+cor(x, y)
+# calculate sum
+sum(x)
+# calculate sum of two vectors
+sum(x, y)
+# calculate average
+mean(x)
+# calculate median
+median(x)
+# calculate standard deviation
+sd(x)
+# return quantiles
+quantile(x)
+# return maximum value
+max(x)
+# return minimum value
+min(x)
+```
+
+R-is teevad asju programmikesed, mida kutsutakse **funktsioonideks**. 
+Te võite mõelda funktsioonist nagu verbist. 
+Näiteks funktsiooni `sum()` korral loe: "võta summa". 
+Iga funktsiooni nime järel on sulud. 
+Nende sulgude sees asuvad selle funktsiooni **argumendid**. 
+Argumendid määravad ära funktsiooni käitumise.
+Et näha, millised argumendid on funktsiooni käivitamiseks vajalikud ja milliseid on üldse võimalik seadistada, kasuta 'help' käsku.
+
+
+```{r}
+?sum
+```
+
+Help paneelis paremal all ilmub nüüd selle funktsiooni R dokumentatsioon. 
+Vaata seal peatükki Usage: `sum(..., na.rm = FALSE)` ja edasi peatükki Arguments, mis ütleb, et `...` (ellipsis) tähistab vektoreid. 
+
+
+    sum {base}	R Documentation 
+    Sum of Vector Elements
+
+    Description:
+
+    sum returns the sum of all the values present in its arguments.
+
+    Usage
+
+    sum(..., na.rm = FALSE)
+
+    Arguments
+
+    ...	- numeric or complex or logical vectors.
+
+    na.rm	- logical. Should missing values (including NaN) be removed?
+
+
+Seega võtab funktsioon `sum()` kaks argumenti: vektori arvudest (või loogilise vektori, mis koosneb TRUE ja FALSE määrangutest), ning "na.rm" argumendi, millele saab anda väärtuseks kas, TRUE või FALSE. 
+Usage ütleb ka, et vaikimisi on `na.rm = FALSE`, mis tähendab, et sellele argumendile on antud vaikeväärtus -- kui me seda ise ei muuda, siis jäävad NA-d arvutusse sisse. 
+Kuna NA tähendab "tundmatu arv" siis iga tehe NA-dega annab vastuseks "tundmatu arv" ehk NA (tundmatu arv + 2 = tundmatu arv). 
+Seega NA tulemus annab märku, et teie andmetes võib olla midagi valesti.
+
+```{r}
+## moodustame vektori
+apples <- c(1, 34, 43, NA)
+## arvutame summa
+sum(apples, na.rm = TRUE)
+```
+Niimoodi saab arvutada summat vektorile nimega "apples".
+
+Sisestades R käsureale funktsiooni ilma selle sulgudeta saab masinast selle funktsiooni koodi. Näiteks:
+```{r}
+sum
+```
+Tulemus näitab, et `sum()` on `Primitive` funktsioon, mis põhimõtteliselt tähendab, et ta põhineb C koodil ja ei kasuta R koodi.
+
+## Kirjutame R funktsiooni
+
+Võib ju väita, et funktsiooni ainus mõte on peita teie eest korduvad vajalikud koodiread kood funktsiooni nime taha. 
+Põhjus, miks R-s on funktsioonid, on korduse vähendamine, koodi loetavaks muutmine ja seega ka ruumi kokkuhoid. 
+Koodi funktsioonidena kasutamine suurendab analüüside reprodutseeritavust, kuna funktsioonis olev kood pärineb ühest allikast, mitte ei ole paljude koopiatena igal pool laiali.
+See muudab pikad koodilõigud hõlpsalt taaskasutatavaks sest lihtsam on kirjutada lühike funktsiooni nimi ja sisestada selle funktsiooni argumendid. 
+Koodi funktsioonidesse kokku surumine vähendab võimalusi lollideks vigadeks, mida te võite teha pikkade koodijuppidega manipuleerides. 
+Seega tasub teil õppida ka oma korduvaid koodiridu funktsioonidena vormistama.
+
+Kõige pealt kirjutame natuke koodi.
+```{r}
+# two apples
+apples <- 2
+# three oranges
+oranges <- 3 
+# parentheses around expression assigning result to an object 
+# ensure that result is also printed to R console
+(inventory <- apples + oranges)
+```
+ 
+Ja nüüd pakendame selle tehte funktsiooni `add2()`. 
+Funktsiooni defineerimiseks kasutame järgmist r ekspressiooni `function( arglist ) expr`, kus "arglist" on tühi või ühe või rohkema nimega argumenti kujul `name=expression`; "expr" on R-i ekspressioon st. kood mida see funktsioon käivitab. 
+Funktsiooni viimane evlueeritav koodirida on see, mis tuleb välja selle funktsiooni outputina.
+
+All toodud näites on selleks `x + y` tehte vastus.
+```{r}
+add2 <- function(x, y) {
+    x + y
+}
+```
+Seda koodi jooksutades näeme, et meie funktsioon ilmub R-i Environmenti, kuhu tekib Functions lahter. 
+Seal on näha ka selle funktsiooni kaks argumenti, apples ja oranges.
+
+Antud funktsiooni käivitamine annab veateate, sest funktsiooni argumentidel pole väärtusi:
+```{r}
+## run function in failsafe mode
+inventory <- try(add2())
+## when function fails, error message is returned
+class(inventory)
+## print error message
+cat(inventory)
+```
+
+Andes funktsiooni argumentidele väärtused, saab väljundi:
+```{r}
+## run function with proper arguments
+inventory <- add2(x = apples, y = oranges)
+## numeric vector is returned
+class(inventory)
+## result
+inventory
+```
+
+
+
+**Nüüd midagi kasulikumat!**
+
+Funktsioon standrardvea arvutamiseks (baas R-s sellist funktsiooni ei ole):
+`sd()` funktsioon arvutab standardhälbe. 
+Sellel on kaks argumenti: `r paste(names(formals(sd)), collapse = " and ")`.
+Me teame, et SEM=SD/sqrt(N)
+kus N = length(x)
+```{r}
+calc_sem <- function(x) {
+  stdev <- sd(x)
+  n <- length(x)
+  stdev / sqrt(n)
+}
+```
+
+x hoiab lihtsalt kohta andmetele, mida me tahame sinna funktsiooni suunata.
+`sd()`, `sqrt()` ja `length()` on olemasolevad baas R funktsioonid, mille me oma funktsiooni hõlmame.
+
+```{r}
+## create numeric vector
+numbers <- c(2, 3.4, 54, NA, 3)
+calc_sem(numbers)
+```
+No jah, kui meil on andmetes tundmatu arv (`NA`) siis on ka tulemuseks tundmatu arv.
+
+Sellisel juhul tuleb NA väärtused vektorist enne selle funktsiooni kasutamist välja visata:
+```{r}
+numbers_filtered <- na.omit(numbers)
+calc_sem(numbers_filtered)
+```
+
+On ka võimalus funktsiooni sisse kirjutada **NA väärtuste käsitlemine**. Näiteks, üks võimalus on **anda viga** ja funktsioon katkestada, et kasutaja saaks ise ühemõtteliselt oma andmetest NA väärtused eemaldada. 
+Teine võimalus on funktsioonis **NA-d vaikimisi eemaldada** ja anda selle kohta näiteks teade.
+
+NA-de vaikimisi eemaldamiseks on hetkel mitu võimalust, kasutame kõigepealt nö. valet lahendust:
+```{r}
+calc_sem <- function(x) {
+  ## kasutame sd funktsiooni argumenti na.rm
+  stdev <- sd(x, na.rm = TRUE)
+  n <- length(x)
+  stdev / sqrt(n)
+}
+
+calc_sem(numbers)
+```
+See annab meile vale tulemuse sest `na.rm = TRUE` viskab küll NA-d välja meie vektorist aga jätab vektori pikkuse muutmata (`length(x)` rida).
+
+Teeme uue versiooni oma funktsioonist, mis viskab vaikimisi välja puuduvad väärtused, kui need on olemas ja annab siis ka selle kohta hoiatuse.
+```{r}
+## x on numbriline vektor
+calc_sem <- function(x) {
+  
+  ## viskame NA väärtused vektorist välja
+  x <- na.omit(x)
+  
+  ## kui vektoris on NA väärtusi, siis hoiatame kasutajat
+  if(inherits(na.action(x), "omit")) {
+    warning("Removed NAs from vector.\n")
+  }
+  
+  ## arvutame standardvea kasutades filtreeritud vektorit
+  stdev <- sd(x)
+  n <- length(x)
+  stdev / sqrt(n)
+}
+
+calc_sem(numbers)
+length(numbers)
+```
+
+Missugune funktsiooni käitumine valida, sõltub kasutaja vajadusest.
+Rohkem infot NA käsitlemise funktsioonide kohta saab `?na.omit` abifailist.
+
+Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline protsess ja sellele, et alati saab paremini teha.
+
+<!--chapter:end:05-funktsioonid.Rmd-->
+
+
+# Tidyverse
+
+Tidyverse on osa R-i ökosüsteemist, kus kehtivad omad reeglid. 
+Tidyverse  raamatukogud lähtuvad ühtsest filosoofiast ja töötavad hästi koos. 
+Tidyverse algab andmetabeli struktuurist ja selle funktsioonid võtavad reeglina sisse õige struktuuriga tibble ja väljastavad samuti tibble, mis sobib hästi järgmise tidyverse funktsiooni sisendiks. 
+Seega on tidyverse hästi sobiv läbi torude %>% laskmiseks. 
+Tidyverse-ga sobib hästi kokku ka ggplot2 graafikasüsteem.
+
+## Tidy tabeli struktuur
+
++ **väärtus** (*value*) --- ühe mõõtmise tulemus (183 cm)
++ **muutuja** (*variable*) --- see, mida sa mõõdad (pikkus) või faktor (sex)
++ **andmepunkt** (*observation*) --- väärtused, mis mõõdeti samal katsetingimusel (1. subjekti pikkus ja kaal 3h ajapunktis)
++ **vaatlusühik** (*unit of measurement*) --- keda mõõdeti (subjekt nr 1)
++ **vaatlusühiku tüüp** --- inimene, hiir, jt
+
+> vaatlusühiku tüüp = tabel 
+
+> muutuja = veerg 
+
+> andmepunkt = rida 
+
+> vaatlusühikute koodid on kõik koos ühes veerus
+
+
+Veergude järjekord tabelis on 1. vaatlusühik, 2. faktor, mis annab katse-kontrolli erisuse, 3. kõik see, mida otse ei mõõdetud (sex, batch nr, etc.), 4. numbritega veerud (iga muutuja kohta üks veerg)
+ 
+```{r echo=FALSE}
+dat <- tribble(
+  ~subject, ~drug, ~sex, ~time, ~length, ~weigth,
+  "1",      "exp",  "F",     3,     168,      88,
+  "2",  "placebo",  "M",     3,     176,      91
+)
+dat
+```
+
+Nii näeb välja tidy tibble. Kõik analüüsil vajalikud parameetrid tuleks siia tabelisse veeru kaupa sisse tuua. Näiteks, kui mõõtmised on sooritatud erinevates keskustes erinevate inimeste poolt kasutades sama ravimi erinevaid preparaate, oleks hea siia veel 3 veergu lisada (center, experimenter, batch).
+
+### Tabeli dimensioonide muutmine (pikk ja lai formaat)
+
+Väga oluline osa tidyverses töötamisest on tabelite pika ja laia formaadi vahel viimine.
+
+See on laias formaadis tabel df, mis ei ole tidy
+```{r echo=FALSE}
+subject <- c("Tim", "Ann", "Jill")
+sex <- c("M", "F", "F")
+control <- c(23, 31, 30)
+experiment_1 <- c(34, 38, 36)
+experiment_2 <- c(40, 42, 44)
+dat <-tibble(subject, sex, control, experiment_1, experiment_2)
+dat 
+```
+
+Kõigepealt pikka formaati. key ja value argumendid on ainult uute veergude nimetamiseks, oluline on 3:ncol(dat) argument, mis ütleb, et "kogu kokku veerud alates 3. veerust". Alternatiivne viis seda öelda: c(-subject, -sex).
+```{r}
+dat_lng <- gather(dat, key = experiment, value = value, 3:ncol(dat))
+# df_l3<-df %>% gather(experiment, value, 3:ncol(df)) works as well.
+#df_l4<-df %>% gather(experiment, value, c(-subject, -sex)) works as well
+dat_lng
+```
+
+
+
+Paneme selle tagasi algsesse laia formaati: ?spread
+```{r}
+spread(dat_lng, key = experiment, value = value)
+```
+ key viitab pika tabeli veerule, mille väärtustest tulevad laias tabelis uute veergude nimed. value viitab pika tabeli veerule, kust võetakse arvud, mis uues laias tabelis uute veergude vahel laiali jagatakse.
+
+### Tibble transpose --- read veergudeks ja vastupidi
+ 
+```{r}
+dat <- tibble(a = c("tim", "tom", "jill"), b1 = c(1, 2, 3), b2 = c(4, 5, 6))
+dat
+```
+
+Me kasutame selleks maatriksarvutuse funktsiooni t() --- transpose. See võtab sisse ainult numbrilisi veerge, seega anname talle ette df miinus 1. veerg, mille sisu me konverteerime uue tablei veerunimedeks. 
+```{r}
+dat1 <- t(dat[,-1])
+colnames(dat1) <- dat$a
+dat1
+```
+
+## dplyr ja selle viis verbi
+
+Need tuleb teil omale pähe ajada sest nende 5 verbiga (pluss gather ja spread) saab lihtsalt teha 90% andmeväänamisest, mida teil elus vaja läheb. 
+NB! Check the data wrangling cheatsheet and dplyr help for further details. 
+dplyr laetakse koos tidyverse-ga automaatselt teie workspace.
+
+### `select()` columns
+
+`select()` selects, renames, and re-orders columns.
+
+Select columns from sex to value:
+```{r eval=FALSE}
+iris
+select(iris, Petal.Length:Species)
+select(iris, -(Petal.Length:Species)) #selects everything, except those cols
+```
+
+
+To select 3 columns and rename *subject* to *SUBJ* and put liik as the 1st col:
+```{r}
+select(iris, liik = Species, Sepal.Length, Sepal.Width )
+```
+
+
+To select all cols, except sex and value, and rename the *subject* col:
+```{r eval=FALSE}
+
+select(iris, -Sepal.Length, -Sepal.Width, liik = Species)
+```
+
+**helper functions you can use within select():**
+
+`starts_with("abc")`: matches names that begin with "abc."
+
+`ends_with("xyz")`: matches names that end with "xyz."
+
+`contains("ijk")`: matches names that contain "ijk."
+
+`matches("(.)\\1")`: selects variables that match a regular expression. This one matches any variables that contain repeated characters. 
+
+`num_range("x", 1:3)` matches x1, x2 and x3.
+
+```{r}
+iris <- as_tibble(iris)
+select(iris, starts_with("Petal"))
+select(iris, ends_with("Width"))
+
+# Move Species variable to the front
+select(iris, Species, everything())
+
+dat <- as.data.frame(matrix(runif(100), nrow = 10))
+dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
+select(dat, V9:V6)
+select(dat, num_range("V", 9:6))
+
+# Drop variables with -
+select(iris, -starts_with("Petal"))
+
+# Renaming -----------------------------------------
+# select() keeps only the variables you specify
+# rename() keeps all variables
+rename(iris, petal_length = Petal.Length)
+```
+
+
+### `filter()` rows
+
+Keep rows in Iris that have Species level "setosa" **and** Sepal.Length value <4.5.
+```{r}
+filter(iris, Species=="setosa" & Sepal.Length < 4.5)
+```
+
+Keep rows in Iris that have Species level "setosa" **or** Sepal.Length value <4.5.
+```{r}
+filter(iris, Species=="setosa" | Sepal.Length < 4.5)
+```
+
+
+Keep rows in Iris that have Species level "not setosa" **or** Sepal.Length value <4.5.
+```{r}
+filter(iris, Species !="setosa" | Sepal.Length < 4.5)
+```
+
+Kui tahame samast veerust filtreerida "või" ehk "|" abil mitu väärtust, on meil valida kahe samaväärse variandi vahel (tegelikult töötab 2. variant ka ühe väärtuse korral)
+
+```{r eval=FALSE}
+filter(iris, Species =="setosa" | Species =="versicolor")
+filter(iris, Species %in% c("setosa", "versicolor") )
+```
+Nagu näha, 2. variant on oluliselt lühem.
+
+Filtering with regular expression: we keep the rows where *subject* starts with the
+letter "T"
+```{r}
+library(stringr)
+filter(iris, str_detect(Species, "^v")) 
+```
+
+As you can see there are endless vistas here, open for a regular expression fanatic. I wish I was one!
+
+remove NAs with `filter()`
+```{r, eval=FALSE}
+filter(flights, !is.na(dep_delay), !is.na(arr_delay))
+```
+
+### `summarise()`
+
+Many rows summarised to a single value
+
+```{r}
+summarise(iris, 
+          MEAN = mean(Sepal.Length), 
+          SD = sd(Sepal.Length), 
+          N = n(), 
+          n_species = n_distinct(Species))
+```
+`n()` loeb üles, mitu väärtust läks selle summary statistic-u arvutusse,
+
+`n_distinct()` loeb üles, mitu unikaalset väärtust läks samasse arvutusse.
+
+summarise on kasulikum, kui teda kasutada koos järgmise verbi, group_by-ga.
+
+### `group_by()`
+
+`group_by()` groups values for summarising or mutating-
+
+When we summarise by *sex* we will get two values for each summary statistic: for males and females. 
+Aint that sexy?!
+
+```{r}
+iris_grouped <- group_by(iris, Species) 
+summarise(iris_grouped, 
+          MEAN = mean(Sepal.Length), 
+          SD = sd(Sepal.Length), 
+          N = n(), 
+          n_species = n_distinct(Species))
+```
+
+`summarise()` argumendid on indentsed eelmise näitega aga tulemus ei ole. 
+Siin me rakendame summarise verbi mitte kogu tabelile, vaid 3-le virtuaalsele tabelile, mis on saadud algsest tabelist. 
+
+`group_by()`-le saab anda järjest mitu grupeerivat muutujat. 
+Siis ta grupeerib kõigepealt neist esimese järgi, seejärel lõõb saadud grupid omakorda lahku teise argumendi järgi ja nii edasi kuni teie poolt antud argumendid otsa saavad.
+
+Now we group previously generated dat_lng data frame first by *sex* and then inside each group again by *experiment*. 
+This is getting complicated ...
+
+```{r}
+dat_lng
+group_by(dat_lng, sex, experiment) %>% 
+  summarise(MEAN = mean(value), 
+            SD = sd(value),
+            N = n(), 
+            n_sex = n_distinct(sex))
+```
+
+Now we group first by sex and then by variable. Spot the difference!
+
+```{r}
+group_by(dat_lng, experiment, sex) %>% 
+  summarise(MEAN = mean(value), 
+            SD = sd(value),
+            N = n(), 
+            n_sex = n_distinct(sex))
+```
+
+*pro tip* if you want to summarise and then display the summary values as new column(s), which are added to the original non-shrunk df, use `mutate()` instead of `summarise()`.
+
+```{r}
+mutate(iris_grouped,
+       MEAN = mean(Sepal.Length), 
+       SD = sd(Sepal.Length))
+```
+
+Anna igast grupist 3 kõrgeimat väärtust ja 2 madalaimat väärtust. Samad numbrid erinevates ridades antakse kõik - selle pärast on meil tabelis rohkem ridu. 
+```{r eval=FALSE}
+
+top_n(iris_grouped, 3, Sepal.Length)
+top_n(iris_grouped, -2, Sepal.Length)
+```
+
+
+### `mutate()`
+
+Mutate põhikasutus on siiski uute veergude tekitamine, mis võtavad endale inputi rea kaupa. Seega tabeli ridade arv ei muutu.
+
+If in your tibble called 'df' you have a column called 'value', you can create a new log2 transformed value value column called log_value by `df %>% mutate(log_value = log2(value))`. Or you can create a new column where a constant is substracted from the value column: `df %>% mutate(centered_value = value - mean(value) ) `. Here the mean value is substracted from each individual value.
+
+**Mutate adds new columns (and `transmute()` creates new columns while losing the previous columns)**
+
+Here we  firstly create a new column, which contains log-transformed values from the *value* column, and name it *log_value*.  
+```{r}
+mutate(dat_lng, log_value = log(value))
+```
+
+The same with transmute: note the dropping of some of the original cols, keeping the original *subject* col and renaming the *sex* col.
+```{r}
+transmute(dat_lng, subject, gender = sex, log_value = log(value))
+```
+
+```{r, eval=FALSE}
+flights_sml <- select(flights, 
+                      year:day, 
+                      ends_with("delay"), 
+                      distance, 
+                      air_time) %>% 
+  mutate(gain = arr_delay - dep_delay,
+    hours = air_time / 60,
+    gain_per_hour = gain / hours)
+```
+
+*`mutate_all()`, `mutate_if()` and `mutate_at()` and the three variants of `transmute()` (`transmute_all()`, `transmute_if()`, `transmute_at()`) make it easy to apply a transformation to a selection of variables. See help.*
+
+Here we first group and then mutate. Note that now, instead of a single constant, we divide by as many different constant as there are discrete factor levels in the sex variable (two, in our case):
+```{r}
+group_by(dat_lng, sex) %>% 
+  mutate(norm_value = value / mean(value), 
+         n2_val = value / sd(value))
+```
+
+Compare with a "straight" mutate to see the difference in values.
+
+```{r}
+mutate(dat_lng, 
+       norm_value = value / mean(value), 
+       n2_val = value / sd(value))
+```
+
+
+## Grouped filters
+
+Keep all groups bigger than a threshold:
+```{r, eval=FALSE}
+popular_dests <- flights %>% 
+  group_by(dest) %>% 
+  filter(n() > 365)
+```
+
+If you need to remove grouping, and return to operations on ungrouped data, use `ungroup()`.
+```{r, eval=FALSE}
+ungroup(dat) 
+```
+
+
+`str_replace_all()` helps to deal with unruly labelling inside columns containing strings
+
+The idea is to find a pattern in a collection of strings and replace it with something else. String == character vector.
+
+To find and replace we use `str_replace_all()`, whose base R analogue is `gsub()`.
+```{r}
+library(stringr)
+(bad.df <- tibble(time = c("t0", "t1", "t12"), value = c(2, 4, 9)))
+get_numeric <- function(x, ...) as.numeric(str_replace_all(x, ...))
+(bad.df <- mutate_at(bad.df, "time", get_numeric, pattern = "t", replacement = ""))
+```
+
+now we have a numeric time column, which can be used in plotting.
+
+or
+
+```{r}
+library(readr)
+(bad.df <- tibble(time = c("t0", "t1", "t12"), value = c(2, 4, 9)))
+mutate_at(bad.df, "time", parse_number)
+```
+
+Here we did the same thing more elegantly by directly parsing numbers from a character string.
+
+## `separate()` one column into several
+
+Siin on veel üks verb, mida aeg-ajalt kõigil vaja läheb. 
+`separate()` võtab ühe veeru sisu (mis peab olema character string) ning jagab selle laiali mitme uue veeru vahel. 
+Kui teda kasutada vormis `separate(df, old_Column, into=c("new_col1", "new_col2", "ja_nii_edasi"))` siis püüab programm ise ära arvata, kustkohalt veeru sisu hakkida (tühikud, komad, semikoolonid, koolonid jne). 
+Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab "peale 2. tähemärki". sep = -6 tähendab "enne tagantpoolt 6. tähemärki"
+
+```{r}
+(dat <- tibble(country = c("Albania"), disease.cases = c("80/1000")))
+(df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand")))
+(df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = "/"))
+(df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = 2))
+(df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = -6))
+```
+
+```{r}
+(dat <- tibble(index = c(1, 2), 
+               taxon = c("Procaryota; Bacteria; Alpha-Proteobacteria; Escharichia", "Eukaryota; Chordata")))
+(d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '; ', extra = "merge", fill = "right")) 
+```
+
+```{r}
+# some special cases:
+(dat <- tibble(index = c(1, 2), 
+               taxon = c("Prokaryota || Bacteria || Alpha-Proteobacteria || Escharichia", "Eukaryota || Chordata")))
+(d1 <- dat %>% separate(taxon, c("riik", "hmk", "klass", "perekond"), sep = "\\|\\|", extra = "merge", fill = "right")) 
+```
+
+```{r}
+dat <- tibble(index = c(1, 2), 
+              taxon = c("Prokaryota.Bacteria.Alpha-Proteobacteria.Escharichia", "Eukaryota.Chordata"))
+(d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[.]', extra = "merge", fill = "right")) 
+```
+
+```{r}
+(dat <- tibble(index = c(1,2), 
+               taxon = c("Prokaryota.Bacteria,Alpha-Proteobacteria.Escharichia", "Eukaryota.Chordata")))
+(d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[,\\.]', extra = "merge", fill = "right"))
+```
+
+The companion FUN to separate is `unite()` - see help.
+
+
+## Faktorid
+
+Faktor on andmetüüp, mis oli ajalooliselt tähtsam kui ta praegu on. 
+Sageli saame oma asja ära ajada character vectori andmetüübiga ja ei vaja faktorit. 
+Aga siiski läheb faktoreid aeg-ajalt kõigil vaja.
+
+> Faktorite abil töötame kategooriliste muutujatega, millel on fikseeritud hulk võimalikke väärtusi, mida me kõiki teame.
+
+Faktori väärtusi kutsutakse "tasemeteks" (levels). Näiteks: muutuja sex on 2 tasemega faktor (M, F) 
+
+ **NB! Faktoriks muutes saame character vectori liikmete järjekorra muuta mitte-tähestikuliseks**
+
+Me kasutame faktoritega töötamisel forcats paketti. 
+Kõigepealt loome character vectori x1 nelja kuu nime ingliskeelse lühendiga.
+```{r}
+library(forcats)
+x1 <- c("Dec", "Apr", "Jan", "Mar")
+```
+
+Nüüd kujutlege, et vektor x1 sisaldab 10 000 elementi. Seda vektorit on raske sorteerida, ja trükivead on ka raskesti leitavad. 
+Mõlema probleemi vastu aitab, kui me konverteerime x1-e faktoriks. 
+Selleks, et luua uus faktor, peaks kõigepealt üles lugema selle faktori kõik võimalikud tasemed:
+
+Nüüd loome uue faktori ehk muudame x1 character vektori y1 factor vektoriks.
+Erinevalt x1-st seostub iga y1 väärtusega faktori tase. 
+Kui algses vektoris on mõni element, millele ei vasta näiteks trükivea tõttu ühtegi faktori taset, siis see element muudetakse NA-ks. 
+Proovige see ise järele, viies trükivea sisse x1-e.
+```{r}
+y1 <- factor(x1, levels = month.abb)
+y1
+```
+NB! `month.abb` on R objekt mis sisaldab kuude ingliskeelseid lühendeid.
+
+**Kui sa faktorile tasemeid ette ei anna, siis need tekivad andmetest automaatselt ja tähestikulises järjekorras.**
+
+Kui sa tahad, et faktori tasemed oleks samas järjekorras kui selle taseme esmakordne ilmumine teie andmetes siis:
+
+```{r}
+f2 <- factor(x1) %>% fct_inorder()
+f2
+```
+
+`levels()` annab faktori tasemed ja nende järjekorra
+```{r}
+levels(f2)
+```
+
+Kui faktorid on tibbles oma veeruna, siis saab nende tasemed `count()` kasutades:
+```{r}
+gss_cat #tibble, mille veerg "race" on faktor.
+gss_cat %>% count(race)
+```
+Nii saame ka teada, mitu korda iga faktori tase selles tabelis esineb.
+
+
+### `fct_recode()` rekodeerib faktori tasemed 
+
+```{r}
+gss_cat %>% count(partyid)
+gss_cat %>%
+  mutate(partyid = fct_recode(partyid,
+                              "Republican, strong"    = "Strong republican",
+                              "Republican, weak"      = "Not str republican",
+                              "Independent, near rep" = "Ind,near rep",
+                              "Independent, near dem" = "Ind,near dem",
+                              "Democrat, weak"        = "Not str democrat",
+                              "Democrat, strong"      = "Strong democrat",
+                              "Other"                 = "No answer",
+                              "Other"                 = "Don't know",
+                              "Other"                 = "Other party"
+  )) %>%
+  count(partyid)
+```
+
+`fct_recode()` ei puuduta neid tasemeid, mida selle argumendis ei mainita. 
+Lisaks saab mitu vana taset muuta üheks uueks tasemeks.
+
+### `fct_collapse()` annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.
+
+```{r, eval=FALSE}
+gss_cat %>%
+  mutate(partyid = fct_collapse(partyid,
+                                other = c("No answer", "Don't know", "Other party"),
+                                rep = c("Strong republican", "Not str republican"),
+                                ind = c("Ind,near rep", "Independent", "Ind,near dem"),
+                                dem = c("Not str democrat", "Strong democrat")
+  )) %>%
+  count(partyid)
+```
+
+### `fct_lump()` lööb kokku kõik vähem arv kordi esinevad tasemed. 
+
+n parameeter ütleb, mitu algset taset tuleb alles jätta:
+```{r}
+gss_cat %>%
+  mutate(relig = fct_lump(relig, n = 5)) %>%
+  count(relig, sort = TRUE) %>%
+  print()
+```
+
+
+### Rekodeerime pideva muutuja faktoriks
+
+`cut()` jagab meie muutuja väärtused intervallidesse ja annab igale intervallile faktori taseme.
+
+`cut(x, breaks, labels = NULL, ordered_result = FALSE, ...)`
+
+breaks - either a numeric vector of two or more unique cut points or a single number >1, giving the number of intervals into which x is to be cut.
+labels - labels for the levels of the resulting category. 
+ordered_result - logical: should the result be an ordered factor?
+```{r}
+z <- 1:10
+z1 <- cut(z, breaks = c(0, 3, 6, 10), labels = c("A", "B", "C"))
+z1
+#Note that to include 1 in level “A” you need to start the first cut <1, while at the right side 3 is included in the 1st cut (in factor level “A”)
+z2 <- cut(z, breaks = 3, labels = c("A", "B", "C"))
+z2
+```
+
+`car::recode` aitab rekodeerida
+
+```{r}
+library(car) 
+x <- rep(1:3, 3)
+x
+recode(x, "c(1,2) = 'A'; else = 'B'")
+recode(x, "c(1,2) = NA")
+recode(x, "1:2 = 'A'; 3 = 'B'")
+```
+
+
+### Muudame faktori tasemete järjekorda joonisel
+
+```{r}
+## summeerime andmed
+gsscat_sum  <- group_by(gss_cat, relig) %>%
+  summarise(age = mean(age, na.rm = TRUE),
+            tvhours = mean(tvhours, na.rm = TRUE),
+            n = n())
+## joonistame graafiku
+p <- ggplot(gsscat_sum, aes(tvhours, fct_reorder(relig, tvhours))) +
+  geom_point()
+p
+```
+
+
+### `fct_relevel()` tõstab joonisel osad tasemed teistest ettepoole 
+
+Argumendid on faktor f ja need tasemed (jutumärkides), mida sa tahad tõsta.
+```{r}
+## täiendame eelmist graafikut ümberkorraldatud andmetega
+p + aes(tvhours, fct_relevel(relig, "None", "Don't know"))
+```
+
+### Joontega plotil saab `fct_reorder2()` abil assotseerida y väärtused suurimate x väärtustega
+
+See muudab ploti paremini jälgitavaks:
+```{r}
+## summeerime andmed
+gsscat_sum <- filter(gss_cat, !is.na(age)) %>%
+  group_by(age, marital) %>%
+  mutate(N=n())
+## paneme andmed graafikule
+ggplot(gsscat_sum, aes(age, N, colour = fct_reorder2(marital, age, N))) +
+  geom_line() +
+  labs(colour = "marital")
+```
+
+### Tulpdiagrammide korral kasuta `fct_infreq()`
+
+Loeme kokku erineva perekondliku staatusega isikud ja paneme need andmed tulpdiagrammi grupi suurusele vastupidises järjekorras st. väiksemad grupid tulevad enne.
+```{r}
+mutate(gss_cat, marital = fct_infreq(marital) %>% fct_rev()) %>%
+  ggplot(aes(marital)) + geom_bar()
+```
+
+<!--chapter:end:06-tidyverse.Rmd-->
+
+`r if (knitr:::is_html_output()) '# Bibliograafia {-}'`
+
+<!--chapter:end:99-references.Rmd-->
+

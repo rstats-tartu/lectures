@@ -21,14 +21,14 @@ A [regular expression](https://stat.ethz.ch/R-manual/R-devel/library/base/html/r
 + ^ anchors the regular expression to the start of the string.
 + $ anchors the the regular expression to end of the string.
 
-### Common operations with regular expressions
+## Common operations with regular expressions
 
 + Locate a pattern match (positions)
 + Extract a matched pattern
 + Identify a match to a pattern
 + Replace a matched pattern
 
-### Find and replace
+## Find and replace
 
 ```{r }
 library(stringr)

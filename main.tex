@@ -1,4 +1,4 @@
-\documentclass[]{book}
+\documentclass[]{kranz}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -25,10 +25,14 @@
 }{}
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 \hypersetup{unicode=true,
             pdftitle={Reprodutseeritav andmeanalüüs kasutades R programmi},
             pdfauthor={Taavi Päll, Ülo Maiväli},
-            pdfborder={0 0 0},
+            colorlinks=true,
+            linkcolor=Maroon,
+            citecolor=Blue,
+            urlcolor=Blue,
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 \usepackage{natbib}
@@ -141,13 +145,12 @@
 \maketitle
 
 {
-\setcounter{tocdepth}{1}
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
 \tableofcontents
 }
-\includegraphics[width=8.28in]{assets/img/cover}
-
-\chapter*{Haara kannel, Vanemuine!}\label{haara-kannel-vanemuine}
-\addcontentsline{toc}{chapter}{Haara kannel, Vanemuine!}
+\section*{Haara kannel, Vanemuine!}\label{haara-kannel-vanemuine}
+\addcontentsline{toc}{section}{Haara kannel, Vanemuine!}
 
 Bayesi tõlgenduses on tõenäosus teadlase usu määr mingi hüpoteesi
 kehtimisse. Hüpotees võib näiteks olla, et järgmise juulikuu sademete
@@ -157,7 +160,7 @@ nõus maksma mitte rohkem kui 57 senti kihlveo eest, mille alusel
 makstakse juhul, kui see hüpotees tõeseks osutub, välja 1 euro (ja me
 saame vähemalt 43 senti kasumit).
 
-\chapter{Sissejuhatus}\label{intro}
+\section{Sissejuhatus}\label{intro}
 
 See õpik on kirjutatud inimestele, kes kasutavad, mitte ei uuri,
 statistikat. Õpiku kasutaja peaks olema võimeline töötama R keskkonnas.
@@ -190,9 +193,9 @@ parim lahendus, võrdleme lühidalt järgnevalt sageduslikku ja bayesi
 paradigmasid. Kes ei ole õppinud sageduslikku statistikat, võiksid selle
 osa vahele jätta.
 
-\chapter{Tarkvaratööriistad}\label{tools}
+\section{Tarkvaratööriistad}\label{tools}
 
-\section{Installeeri vajalikud
+\subsection{Installeeri vajalikud
 programmid}\label{installeeri-vajalikud-programmid}
 
 Praktiline kursus eeldab töötavate R, RStudio ja Git programmide
@@ -215,7 +218,7 @@ olemasolu sinu arvutist. Kõik on väga lihtsad installid.
   laadi alla ja installi sobiv versioon.
 \end{enumerate}
 
-\section{Loo GitHubi konto}\label{loo-githubi-konto}
+\subsection{Loo GitHubi konto}\label{loo-githubi-konto}
 
 GitHub on veebipõhine versioonikontrolli repositoorium ja veebimajutuse
 teenus.
@@ -238,7 +241,7 @@ teenus.
   Klikka ``Create Repository''.
 \end{itemize}
 
-\section{Loo uus R projekt}\label{loo-uus-r-projekt}
+\subsection{Loo uus R projekt}\label{loo-uus-r-projekt}
 
 \begin{quote}
 NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta
@@ -269,7 +272,7 @@ Rohkem infot R projekti loomise kohta leiad RStudio infoleheküljelt:
 \href{https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects}{Using
 Projects}.
 
-\section{\texorpdfstring{Git \emph{Merge}
+\subsection{\texorpdfstring{Git \emph{Merge}
 konfliktid}{Git Merge konfliktid}}\label{git-merge-konfliktid}
 
 Kollaboreerides üle GitHubi tekivad varem või hiljem konfliktid projekti
@@ -295,7 +298,7 @@ lahendama õppimine on väga oluline.
 
 Githubi veateadete lugemine ja Google otsing aitavad sind.
 
-\section{R projekti kataloogi soovitatav minimaalne
+\subsection{R projekti kataloogi soovitatav minimaalne
 struktuur}\label{r-projekti-kataloogi-soovitatav-minimaalne-struktuur}
 
 Iga R projekt peab olema täiesti iseseisev (\emph{selfcontained}) ja
@@ -368,7 +371,7 @@ dokumentatsioon kataloogi \textbf{man/}. Rohkem projekti pakkimise kohta
 loe värskest preprindist ``Packaging data analytical work reproducibly
 using R'' \citep{marwick2017}.
 
-\section{Pakettide installeerimine}\label{libs}
+\subsection{Pakettide installeerimine}\label{libs}
 
 R \emph{library}-d ehk paketid sisaldavad ühte või enamat mingit kindlat
 operatsiooni läbi viivat funktsiooni. \textbf{R baaspakett sisaldab juba
@@ -386,7 +389,7 @@ Selleks, et installeerida pakett, sisesta järgnev käsurida R konsooli:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{## eg use 'ggplot2' as packagename}
+\NormalTok{## eg use "ggplot2" as packagename}
 \KeywordTok{install.packages}\NormalTok{(}\StringTok{"packagename"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -432,11 +435,13 @@ Näiteks ``dplyr'' pakett sisaldab 237 funktsiooni:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "%>%"           "add_count"     "add_count_"    "add_row"      
-##  [5] "add_rownames"  "add_tally"     "add_tally_"    "all_equal"    
-##  [9] "all_vars"      "anti_join"     "any_vars"      "arrange"      
-## [13] "arrange_"      "arrange_all"   "arrange_at"    "arrange_if"   
-## [17] "as_data_frame" "as_tibble"     "as.tbl"        "as.tbl_cube"
+##  [1] "%>%"           "add_count"     "add_count_"   
+##  [4] "add_row"       "add_rownames"  "add_tally"    
+##  [7] "add_tally_"    "all_equal"     "all_vars"     
+## [10] "anti_join"     "any_vars"      "arrange"      
+## [13] "arrange_"      "arrange_all"   "arrange_at"   
+## [16] "arrange_if"    "as_data_frame" "as_tibble"    
+## [19] "as.tbl"        "as.tbl_cube"
 \end{verbatim}
 
 Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab
@@ -458,7 +463,7 @@ võimalik klikkida raamatukogu nimele ja näha selle help-faile,
 tutooriale ja kõiki selle raamatukogu funktsioone koos nende help
 failidega.
 
-\section{R repositooriumid}\label{r-repositooriumid}
+\subsection{R repositooriumid}\label{r-repositooriumid}
 
 R pakid on saadaval kolmest põhilisest repositooriumist:
 
@@ -486,8 +491,8 @@ R pakid on saadaval kolmest põhilisest repositooriumist:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# First run biocLite script fron bioconductor.org}
-\KeywordTok{source}\NormalTok{(}\StringTok{"https://bioconductor.org/biocLite.R"}\NormalTok{)}
-\CommentTok{# use 'http' in url if 'https' is unavailable.}
+\KeywordTok{source}\NormalTok{(}\StringTok{"https://bioconductor.org/biocLite.R"}\NormalTok{)  }
+\CommentTok{# use 'http' in url if 'https' is unavailable. }
 \KeywordTok{biocLite}\NormalTok{(}\StringTok{"GenomicRanges"}\NormalTok{, }\DataTypeTok{suppressUpdates =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -502,7 +507,8 @@ R pakid on saadaval kolmest põhilisest repositooriumist:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{## Näiteks järgnev käsk installeerib xaringan presentation ninja paketi}
+\NormalTok{## Näiteks järgnev käsk installeerib xaringan }
+\NormalTok{## presentation ninja paketi}
 \NormalTok{devtools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"yihui/xaringan"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -514,7 +520,7 @@ metapaketi funktsioone, laadides need iga sessiooni alguses:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{## install.packages('tidyverse')}
+\NormalTok{## install.packages("tidyverse")}
 \KeywordTok{library}\NormalTok{(tidyverse)}
 \end{Highlighting}
 \end{Shaded}
@@ -535,7 +541,7 @@ on teile endale ja teistele kes teie koodi loevad ilusti näha, mida
 hiljem vaja läheb.
 \end{quote}
 
-\chapter{R on kalkulaator}\label{calc}
+\section{R on kalkulaator}\label{calc}
 
 Liidame \texttt{2\ +\ 2}.
 
@@ -576,8 +582,8 @@ Veel mõned näidisarvutused:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{## 3 astmes 2; Please read Note ?'**'}
-\DecValTok{3}\OperatorTok{^}\DecValTok{2}
+\NormalTok{## 3 astmes 2; Please read Note ?'**' }
+\DecValTok{3} \OperatorTok{^}\StringTok{ }\DecValTok{2}
 \NormalTok{## Ruutjuur 3st}
 \KeywordTok{sqrt}\NormalTok{(}\DecValTok{3}\NormalTok{)}
 \NormalTok{## Naturaallogaritm sajast}
@@ -596,12 +602,12 @@ enda poolt loodavatele objektidele mitte panna nimeks ``pi''.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 3.1416
+## [1] 3.142
 \end{verbatim}
 
 Ümardamine on oluline tulemuste väljaprintimisel.
 
-\section{Sama koodi saab kirjutada neljal
+\subsection{Sama koodi saab kirjutada neljal
 viisil}\label{sama-koodi-saab-kirjutada-neljal-viisil}
 
 Hargnevate teede aed: kui me muudame olemasolevat objekti on meil alati
@@ -700,7 +706,7 @@ Koodi lühidus 4 --\textgreater{} 3 --\textgreater{} 1 --\textgreater{} 2
 See on teie otsustada, millist koodivormi te millal kasutate, aga te
 peaksite oskama lugeda neid kõiki.
 
-\chapter{R objektid}\label{obj}
+\section{R objektid}\label{obj}
 
 R-i töökeskkonnas ``workspace'' asuvad \textbf{objektid}, millega me
 töötame. Tüüpilised objektid on:
@@ -724,7 +730,8 @@ Käsk \texttt{ls()} annab objektide nimed teie workspace-s:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "a"      "a1"     "a2"     "a3"     "answer" "result"
+## [1] "a"      "a1"     "a2"     "a3"     "answer"
+## [6] "result"
 \end{verbatim}
 
 \texttt{rm(a)} removes object a from the workspace
@@ -751,7 +758,7 @@ automaatse salvestamise välja:
 Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised
 salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele.
 
-\section{Objekt ja nimi}\label{objekt-ja-nimi}
+\subsection{Objekt ja nimi}\label{objekt-ja-nimi}
 
 Kui teil sünnib laps, annate talle nime.
 
@@ -842,7 +849,7 @@ Nüüd on nimega a seostatud uus objekt, mis sisaldab numbrit 5 (olles ühe
 elemendiga vektor). Ja nimega a eelnevalt seostatud objekt, mis koosnes
 numbrist 2, on workspacest lahkunud.
 
-\section{Nimede vorm}\label{nimede-vorm}
+\subsection{Nimede vorm}\label{nimede-vorm}
 
 \begin{itemize}
 \tightlist
@@ -862,7 +869,7 @@ numbrist 2, on workspacest lahkunud.
   alt + - on otsetee \texttt{\textless{}-} jaoks
 \end{itemize}
 
-\section{Andmete tüübid}\label{andmete-tuubid}
+\subsection{Andmete tüübid}\label{andmete-tuubid}
 
 \begin{itemize}
 \tightlist
@@ -881,7 +888,7 @@ numbrist 2, on workspacest lahkunud.
 Andmete tüüpe saab üksteiseks konverteerida \texttt{as.numeric()},
 \texttt{as.character()}, \texttt{as.factor()}.
 
-\section{Vektor}\label{vektor}
+\subsection{Vektor}\label{vektor}
 
 Vektor on rida kindlas järjekorras arve, sõnu või TRUE/FALSE loogilisi
 väärtusi. Iga vektor ja maatriks (2D vektor) sisaldab ainult ühte tüüpi
@@ -1076,9 +1083,8 @@ Vektori unikaalsed väärtused saab kätte käsuga \texttt{unique()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{## returns a vector or data frame, but with duplicate elements/rows}
-\NormalTok{## removed}
-\KeywordTok{unique}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{))}
+\NormalTok{## returns a vector or data frame, but with duplicate elements/rows removed}
+\KeywordTok{unique}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1086,7 +1092,7 @@ Vektori unikaalsed väärtused saab kätte käsuga \texttt{unique()}:
 ## [1] 1 2 3 4 5
 \end{verbatim}
 
-\subsection{\texorpdfstring{Uus vektor: \texttt{seq()} ja
+\subsubsection{\texorpdfstring{Uus vektor: \texttt{seq()} ja
 \texttt{rep()}}{Uus vektor: seq() ja rep()}}\label{uus-vektor-seq-ja-rep}
 
 \begin{Shaded}
@@ -1139,7 +1145,7 @@ Vektori unikaalsed väärtused saab kätte käsuga \texttt{unique()}:
 ##  [1] "a" "a" "a" "b" "b" "b" "a" "a" "a" "b" "b" "b"
 \end{verbatim}
 
-\subsection{Tehted arvuliste
+\subsubsection{Tehted arvuliste
 vektoritega}\label{tehted-arvuliste-vektoritega}
 
 Vektoreid saab liita, lahutada, korrutada ja jagada.
@@ -1162,14 +1168,14 @@ liikmest, läks see kordusesse)
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\NormalTok{b <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{b <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{) }
 \NormalTok{a }\OperatorTok{+}\StringTok{ }\NormalTok{b}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## Warning in a + b: longer object length is not a multiple of shorter object
-## length
+## Warning in a + b: longer object length is not a
+## multiple of shorter object length
 \end{verbatim}
 
 \begin{verbatim}
@@ -1182,7 +1188,7 @@ kordajad 1 + 4; 2 + 5, 3 + 4
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{)}
-\NormalTok{b <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{)}
+\NormalTok{b <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{) }
 \NormalTok{a }\OperatorTok{+}\StringTok{ }\NormalTok{b}
 \end{Highlighting}
 \end{Shaded}
@@ -1196,7 +1202,7 @@ See töötab: 1 + 5; 2 + 6; 3 + 5; 4 + 6
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{)}
-\NormalTok{b <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+\NormalTok{b <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{) }
 \NormalTok{a }\OperatorTok{+}\StringTok{ }\NormalTok{b}
 \end{Highlighting}
 \end{Shaded}
@@ -1225,14 +1231,14 @@ Samuti see (ühepikkused vektorid --- igat liiget kasutatakse üks kord)
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.6666667
+## [1] 0.6667
 \end{verbatim}
 
 Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i.
 summa 1 + 0 + 1 = 2. Seda loogiliste väärtuste omadust õpime varsti
 praktikas kasutama.
 
-\section{List}\label{list}
+\subsection{List}\label{list}
 
 List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa
 arvatud listid. See on lihtsalt viis objektid koos hoida ühes suuremas
@@ -1261,15 +1267,15 @@ nimega e. Seega on meil tegu rekursiivse listiga.
 
 \begin{verbatim}
 ## [[1]]
-## [1] 0.6907952 0.9723281 0.4198839 0.9370935 0.2233014
+## [1] 0.2376 0.5237 0.6156 0.7034 0.2578
 ## 
 ## [[2]]
-##           a           b
-## 1 0.6907952  0.19829677
-## 2 0.9723281 -0.07032321
-## 3 0.4198839  0.62965614
-## 4 0.9370935  0.96930838
-## 5 0.2233014 -0.06359423
+##        a       b
+## 1 0.2376  0.1841
+## 2 0.5237  0.6192
+## 3 0.6156 -1.2122
+## 4 0.7034 -0.1187
+## 5 0.2578 -2.1018
 ## 
 ## [[3]]
 ## 
@@ -1278,7 +1284,7 @@ nimega e. Seega on meil tegu rekursiivse listiga.
 ## 
 ## Coefficients:
 ## (Intercept)           hp  
-##    30.09886     -0.06823  
+##     30.0989      -0.0682  
 ## 
 ## 
 ## [[4]]
@@ -1297,7 +1303,7 @@ Võtame listist välja elemndi ``ab'':
 ## NULL
 \end{verbatim}
 
-\section{data frame ja tibble}\label{data-frame-ja-tibble}
+\subsection{data frame ja tibble}\label{data-frame-ja-tibble}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1472,7 +1478,7 @@ Listi juba nii lihtsalt data.frame-i ei pane:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{arrange}\NormalTok{(fruits, }\KeywordTok{desc}\NormalTok{(apples))  }\CommentTok{#sorteerib tabeli veeru 'apples' väärtuste järgi langevalt (default on tõusev sorteerimine). Võib argumendina anda mitu veergu.}
+\KeywordTok{arrange}\NormalTok{(fruits, }\KeywordTok{desc}\NormalTok{(apples)) }\CommentTok{#sorteerib tabeli veeru "apples" väärtuste järgi langevalt (default on tõusev sorteerimine). Võib argumendina anda mitu veergu.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1487,7 +1493,7 @@ Listi juba nii lihtsalt data.frame-i ei pane:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{top_n}\NormalTok{(fruits, }\DecValTok{2}\NormalTok{, apples)  }\CommentTok{#saab 2 rida, milles on kõige rohkem õunu}
+\KeywordTok{top_n}\NormalTok{(fruits, }\DecValTok{2}\NormalTok{, apples) }\CommentTok{#saab 2 rida, milles on kõige rohkem õunu}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1501,7 +1507,7 @@ Listi juba nii lihtsalt data.frame-i ei pane:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{top_n}\NormalTok{(fruits, }\OperatorTok{-}\DecValTok{2}\NormalTok{, apples)  }\CommentTok{#saab 2 rida, milles on kõige vähem õunu}
+\KeywordTok{top_n}\NormalTok{(fruits, }\OperatorTok{-}\DecValTok{2}\NormalTok{, apples) }\CommentTok{#saab 2 rida, milles on kõige vähem õunu}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1519,7 +1525,7 @@ vastavalt funktsioonile, mille sa ette annad.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{colSums}\NormalTok{(fruits[, }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
+\KeywordTok{colSums}\NormalTok{(fruits[ , }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1530,7 +1536,7 @@ vastavalt funktsioonile, mille sa ette annad.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{rowSums}\NormalTok{(fruits[, }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
+\KeywordTok{rowSums}\NormalTok{(fruits[ , }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1540,7 +1546,7 @@ vastavalt funktsioonile, mille sa ette annad.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{rowMeans}\NormalTok{(fruits[, }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
+\KeywordTok{rowMeans}\NormalTok{(fruits[ , }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1550,7 +1556,7 @@ vastavalt funktsioonile, mille sa ette annad.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{colMeans}\NormalTok{(fruits[, }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
+\KeywordTok{colMeans}\NormalTok{(fruits[ , }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1561,34 +1567,37 @@ vastavalt funktsioonile, mille sa ette annad.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fruits_subset <-}\StringTok{ }\NormalTok{fruits[, }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{]}
+\NormalTok{fruits_subset <-}\StringTok{ }\NormalTok{fruits[ , }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{]}
 \CommentTok{# 1 tähendab, et arvuta sd rea kaupa}
 \KeywordTok{apply}\NormalTok{(fruits_subset, }\DecValTok{1}\NormalTok{, sd)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.7071068 19.7989899         NA
+## [1]  0.7071 19.7990      NA
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# 2 tähendab, et arvuta sd veeru kaupa}
-\KeywordTok{apply}\NormalTok{(fruits_subset, }\DecValTok{2}\NormalTok{, sd)}
+\KeywordTok{apply}\NormalTok{(fruits_subset, }\DecValTok{2}\NormalTok{, sd) }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##   apples  oranges 
-## 23.43075       NA
+##  apples oranges 
+##   23.43      NA
 \end{verbatim}
 
 Lisame käsitsi meie tabelile 1 rea:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fruits <-}\StringTok{ }\KeywordTok{add_row}\NormalTok{(fruits, }\DataTypeTok{shop =} \StringTok{"konsum"}\NormalTok{, }\DataTypeTok{apples =} \DecValTok{132}\NormalTok{, }\DataTypeTok{oranges =} \OperatorTok{-}\DecValTok{5}\NormalTok{, }
-    \DataTypeTok{.before =} \DecValTok{3}\NormalTok{)}
+\NormalTok{fruits <-}\StringTok{ }\KeywordTok{add_row}\NormalTok{(fruits, }
+                  \DataTypeTok{shop =} \StringTok{"konsum"}\NormalTok{, }
+                  \DataTypeTok{apples =} \DecValTok{132}\NormalTok{, }
+                  \DataTypeTok{oranges =} \OperatorTok{-}\DecValTok{5}\NormalTok{, }
+                  \DataTypeTok{.before =} \DecValTok{3}\NormalTok{)}
 \NormalTok{fruits}
 \end{Highlighting}
 \end{Shaded}
@@ -1614,12 +1623,12 @@ Proovi ise:
 Eelnevaid verbe ei kasuta me vist enam kunagi sest tavaliselt loeme me
 andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:
 
-\subsection{Rekodeerime tibble
+\subsubsection{Rekodeerime tibble
 väärtusi}\label{rekodeerime-tibble-vaartusi}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fruits}\OperatorTok{$}\NormalTok{apples[fruits}\OperatorTok{$}\NormalTok{apples }\OperatorTok{==}\StringTok{ }\DecValTok{43}\NormalTok{] <-}\StringTok{ }\DecValTok{333}
+\NormalTok{fruits}\OperatorTok{$}\NormalTok{apples[fruits}\OperatorTok{$}\NormalTok{apples}\OperatorTok{==}\DecValTok{43}\NormalTok{] <-}\StringTok{ }\DecValTok{333}
 \NormalTok{fruits}
 \end{Highlighting}
 \end{Shaded}
@@ -1636,7 +1645,7 @@ väärtusi}\label{rekodeerime-tibble-vaartusi}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fruits}\OperatorTok{$}\NormalTok{shop[fruits}\OperatorTok{$}\NormalTok{shop }\OperatorTok{==}\StringTok{ "tesco"}\NormalTok{] <-}\StringTok{ "TESCO"}
+\NormalTok{fruits}\OperatorTok{$}\NormalTok{shop[fruits}\OperatorTok{$}\NormalTok{shop}\OperatorTok{==}\StringTok{"tesco"}\NormalTok{] <-}\StringTok{ "TESCO"}
 \NormalTok{fruits}
 \end{Highlighting}
 \end{Shaded}
@@ -1653,7 +1662,7 @@ väärtusi}\label{rekodeerime-tibble-vaartusi}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fruits}\OperatorTok{$}\NormalTok{apples[fruits}\OperatorTok{$}\NormalTok{apples }\OperatorTok{>}\StringTok{ }\DecValTok{100}\NormalTok{] <-}\StringTok{ }\OtherTok{NA}
+\NormalTok{fruits}\OperatorTok{$}\NormalTok{apples[fruits}\OperatorTok{$}\NormalTok{apples}\OperatorTok{>}\DecValTok{100}\NormalTok{] <-}\StringTok{ }\OtherTok{NA}
 \NormalTok{fruits}
 \end{Highlighting}
 \end{Shaded}
@@ -1675,7 +1684,7 @@ values:
 \begin{Highlighting}[]
 \KeywordTok{distinct}\NormalTok{(dat, col1, }\DataTypeTok{.keep_all =} \OtherTok{TRUE}\NormalTok{)}
 \CommentTok{# kõikide col vastu}
-\KeywordTok{distinct}\NormalTok{(dat)}
+\KeywordTok{distinct}\NormalTok{(dat) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -1691,7 +1700,7 @@ mõte):
 \end{Highlighting}
 \end{Shaded}
 
-\subsection{Ühendame kaks tibblet rea
+\subsubsection{Ühendame kaks tibblet rea
 kaupa}\label{uhendame-kaks-tibblet-rea-kaupa}
 
 Tabeli veergude arv ei muutu, ridade arv kasvab.
@@ -1699,9 +1708,8 @@ Tabeli veergude arv ei muutu, ridade arv kasvab.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dfs <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{colA =} \KeywordTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{), }\DataTypeTok{colB =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{))}
-\NormalTok{dfs1 <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{colA =} \StringTok{"d"}\NormalTok{, }\DataTypeTok{colB =} \DecValTok{4}\NormalTok{)}
-\CommentTok{# id teeb veel ühe veeru, mis näitab, kummast algtabelist iga uue}
-\CommentTok{# tabeli rida pärit on}
+\NormalTok{dfs1 <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{colA =} \StringTok{"d"}\NormalTok{, }\DataTypeTok{colB =}  \DecValTok{4}\NormalTok{)}
+\CommentTok{#id teeb veel ühe veeru, mis näitab, kummast algtabelist iga uue tabeli rida pärit on }
 \KeywordTok{bind_rows}\NormalTok{(dfs, dfs1, }\DataTypeTok{.id =} \StringTok{"id"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -1743,7 +1751,7 @@ mitte:
 ## 2  <NA>    NA     d     4
 \end{verbatim}
 
-\subsection{ühendame kaks tibblet veeru
+\subsubsection{ühendame kaks tibblet veeru
 kaupa}\label{uhendame-kaks-tibblet-veeru-kaupa}
 
 Meil on 2 verbi: bind\_cols ja cbind, millest esimene on
@@ -1766,7 +1774,7 @@ te tahtsite!
 ## 3    c    3    6
 \end{verbatim}
 
-\subsection{Nii saab tibblest kätte vektori, millega saab tehteid
+\subsubsection{Nii saab tibblest kätte vektori, millega saab tehteid
 teha.}\label{nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha.}
 
 Tibble jääb muidugi endisel kujul alles.
@@ -1794,7 +1802,7 @@ Tibble jääb muidugi endisel kujul alles.
 ##  num [1:4] 3 6 NA NA
 \end{verbatim}
 
-\subsection{Andmeraamide salvestamine
+\subsubsection{Andmeraamide salvestamine
 (eksport-import)}\label{andmeraamide-salvestamine-eksport-import}
 
 Andmeraami saame salvestada näiteks csv-na (comma separated file) oma
@@ -1809,7 +1817,7 @@ kasutamisega. ``readr'' laaditakse ``tidyverse'' laadimisega.
 \NormalTok{apples <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{43}\NormalTok{)}
 \NormalTok{oranges <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{32}\NormalTok{, }\OtherTok{NA}\NormalTok{)}
 \NormalTok{fruits <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(shop, apples, oranges, vabakava)}
-\NormalTok{## kirjutame fruits tabeli csv faili fruits.csv kataloogi data}
+\NormalTok{## kirjutame fruits tabeli csv faili fruits.csv kataloogi data }
 \KeywordTok{write_csv}\NormalTok{(fruits, }\StringTok{"data/fruits.csv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -1831,7 +1839,7 @@ Andmete sisselugemine töökataloogist:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fruits <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"data/fruits.csv"}\NormalTok{)}
+\NormalTok{fruits <-}\StringTok{  }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"data/fruits.csv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1861,7 +1869,7 @@ korrektne on andmed importida programmaatiliselt oma skriptis.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# install gotta read em all as R studio addin}
+\CommentTok{#install gotta read em all as R studio addin}
 \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
 \NormalTok{devtools}\OperatorTok{::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"Stan125/GREA"}\NormalTok{)}
 \end{Highlighting}
@@ -1925,14 +1933,13 @@ Tibble konverteerimine data frame-ks ja tagasi tibbleks:
 ## [1] "tbl_df"     "tbl"        "data.frame"
 \end{verbatim}
 
-\section{Tabelit sisse lugedes vaata üle
+\subsection{Tabelit sisse lugedes vaata üle
 NA-d}\label{tabelit-sisse-lugedes-vaata-ule-na-d}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(VIM)}
-\NormalTok{diabetes <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/diabetes.csv"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{";"}\NormalTok{, }\DataTypeTok{dec =} \StringTok{","}\NormalTok{, }
-    \DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(VIM) }
+\NormalTok{diabetes <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/diabetes.csv"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{";"}\NormalTok{, }\DataTypeTok{dec =} \StringTok{","}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
 \KeywordTok{str}\NormalTok{(diabetes)}
 \end{Highlighting}
 \end{Shaded}
@@ -1976,8 +1983,8 @@ Kui palju ridu, milles on 0 NA-d? Mitu \% kõikidest ridadest?
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{nrows <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(diabetes)}
-\NormalTok{ncomplete <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{complete.cases}\NormalTok{(diabetes))}
-\NormalTok{ncomplete  }\CommentTok{#136}
+\NormalTok{  ncomplete <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{complete.cases}\NormalTok{(diabetes))}
+\NormalTok{  ncomplete }\CommentTok{#136}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1987,29 +1994,31 @@ Kui palju ridu, milles on 0 NA-d? Mitu \% kõikidest ridadest?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ncomplete}\OperatorTok{/}\NormalTok{nrows  }\CommentTok{#34%}
+\NormalTok{  ncomplete}\OperatorTok{/}\NormalTok{nrows }\CommentTok{#34%}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.337469
+## [1] 0.3375
 \end{verbatim}
 
 Mitu NA-d on igas tulbas?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{sapply}\NormalTok{(diabetes, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(x)))}
+\KeywordTok{sapply}\NormalTok{(diabetes, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(x))) }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##       id     chol stab.glu      hdl    ratio    glyhb location      age 
-##        0        1        0        1        1       13        0        0 
-##   gender   height   weight    frame    bp.1s    bp.1d    bp.2s    bp.2d 
-##        0        5        1        0        5        5      262      262 
-##    waist      hip time.ppn 
-##        2        2        3
+##       id     chol stab.glu      hdl    ratio    glyhb 
+##        0        1        0        1        1       13 
+## location      age   gender   height   weight    frame 
+##        0        0        0        5        1        0 
+##    bp.1s    bp.1d    bp.2s    bp.2d    waist      hip 
+##        5        5      262      262        2        2 
+## time.ppn 
+##        3
 \end{verbatim}
 
 Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon
@@ -2017,7 +2026,7 @@ seda suurem number selle tulba kontekstis:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{matrixplot}\NormalTok{(diabetes)}
+\KeywordTok{matrixplot}\NormalTok{(diabetes) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -2029,14 +2038,14 @@ Kuidas rekodeerida NA-d näiteks 0-ks:
 \begin{Highlighting}[]
 \NormalTok{dfs[}\KeywordTok{is.na}\NormalTok{(dfs)] <-}\StringTok{ }\DecValTok{0}
 \NormalTok{dfs[}\KeywordTok{is.na}\NormalTok{(dfs)] <-}\StringTok{ "other"}
-\NormalTok{dfs[dfs }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{] <-}\StringTok{ }\OtherTok{NA}  \CommentTok{# teeb vastupidi 0-d NA-deks}
+\NormalTok{dfs[dfs }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{] <-}\StringTok{ }\OtherTok{NA} \CommentTok{# teeb vastupidi 0-d NA-deks}
 \end{Highlighting}
 \end{Shaded}
 
 Pane tähele, et NA tähistamine ei käi character vectorina vaid
 dedikeeritud \texttt{is.na()} funktsiooniga.
 
-\section{Matrix}\label{matrix}
+\subsection{Matrix}\label{matrix}
 
 Maatriks on 2-dimensionaalne vektor, sisaldab ainult ühte tüüpi andmeid
 -- numbrid, stringid, faktorid. Tip: me saame sageli andmeraami
@@ -2052,7 +2061,7 @@ Aga saame ka andmeraame konverteerida otse maatriksiks (ja tagasi).
 \end{Highlighting}
 \end{Shaded}
 
-\section{Indekseerimine}\label{indekseerimine}
+\subsection{Indekseerimine}\label{indekseerimine}
 
 Igale vektori, listi, andmeraami ja maatriksi elemendile vastab
 unikaalne postiindeks, mille abil saame just selle elemendi unikaalselt
@@ -2063,12 +2072,12 @@ Seega on indeksi mõte väga lühikese käsuga välja võtta R-i objektide
 
 R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
 
-\subsection{Vektorid ja nende indeksid on
+\subsubsection{Vektorid ja nende indeksid on
 ühedimensionaalsed}\label{vektorid-ja-nende-indeksid-on-uhedimensionaalsed}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my_vector <-}\StringTok{ }\DecValTok{2}\OperatorTok{:}\DecValTok{5}
+\NormalTok{my_vector <-}\StringTok{ }\DecValTok{2}\OperatorTok{:}\DecValTok{5} 
 \NormalTok{my_vector}
 \end{Highlighting}
 \end{Shaded}
@@ -2079,7 +2088,7 @@ R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my_vector[}\DecValTok{1}\NormalTok{]  }\CommentTok{#1. element ehk number 2}
+\NormalTok{my_vector[}\DecValTok{1}\NormalTok{] }\CommentTok{#1. element ehk number 2}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2089,7 +2098,7 @@ R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my_vector[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{)]  }\CommentTok{#1. ja 3. element }
+\NormalTok{my_vector[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)] }\CommentTok{#1. ja 3. element }
 \end{Highlighting}
 \end{Shaded}
 
@@ -2099,7 +2108,7 @@ R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my_vector[}\OperatorTok{-}\DecValTok{1}\NormalTok{]  }\CommentTok{#kõik elemendid, v.a. element number 1}
+\NormalTok{my_vector[}\OperatorTok{-}\DecValTok{1}\NormalTok{] }\CommentTok{#kõik elemendid, v.a. element number 1}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2109,7 +2118,7 @@ R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my_vector[}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\OperatorTok{-}\DecValTok{3}\NormalTok{)]  }\CommentTok{#kõik elemendid, v.a. element number 1 ja 3}
+\NormalTok{my_vector[}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\OperatorTok{-}\DecValTok{3}\NormalTok{)] }\CommentTok{#kõik elemendid, v.a. element number 1 ja 3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2119,7 +2128,7 @@ R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my_vector[}\DecValTok{3}\OperatorTok{:}\DecValTok{5}\NormalTok{]  }\CommentTok{#elemendid 3, 4 ja 5 (element 5 on määramata, seega NA)}
+\NormalTok{my_vector[}\DecValTok{3}\OperatorTok{:}\DecValTok{5}\NormalTok{] }\CommentTok{#elemendid 3, 4 ja 5 (element 5 on määramata, seega NA)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2129,7 +2138,7 @@ R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my_vector[}\OperatorTok{-}\NormalTok{(}\DecValTok{3}\OperatorTok{:}\KeywordTok{length}\NormalTok{(my_vector))]  }\CommentTok{#1. ja 2. element}
+\NormalTok{my_vector[}\OperatorTok{-}\NormalTok{(}\DecValTok{3}\OperatorTok{:}\KeywordTok{length}\NormalTok{(my_vector))] }\CommentTok{#1. ja 2. element}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2137,7 +2146,7 @@ R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
 ## [1] 2 3
 \end{verbatim}
 
-\subsection{Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka
+\subsubsection{Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka
 nende
 indeksid}\label{andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-indeksid}
 
@@ -2161,9 +2170,9 @@ indeksid}\label{andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-i
 \NormalTok{dat[}\DecValTok{2}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{]}
 \CommentTok{# 2 andmepunkti: 2. rida, 3. ja 4. veerg}
 \NormalTok{dat[}\DecValTok{2}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)]}
-\CommentTok{# viskab välja 1. ja 2. rea}
+\CommentTok{#viskab välja 1. ja 2. rea}
 \NormalTok{dat[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), ]}
-\CommentTok{# veerg nimega colB, output on erandina vektor!}
+\CommentTok{#veerg nimega colB, output on erandina vektor!}
 \NormalTok{dat}\OperatorTok{$}\NormalTok{colB}
 \end{Highlighting}
 \end{Shaded}
@@ -2182,7 +2191,7 @@ meetodi.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{colA =} \KeywordTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{), }\DataTypeTok{colB =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{))}
-\NormalTok{dat}\OperatorTok{$}\NormalTok{colB[dat}\OperatorTok{$}\NormalTok{colA }\OperatorTok{!=}\StringTok{ "a"}\NormalTok{]  }\CommentTok{#jätab sisse kõik vektori colB väärtused, kus samas tabeli reas olev colA väärtus ei ole 'a'. output on vektor! }
+\NormalTok{dat}\OperatorTok{$}\NormalTok{colB[dat}\OperatorTok{$}\NormalTok{colA }\OperatorTok{!=}\StringTok{ "a"}\NormalTok{ ] }\CommentTok{#jätab sisse kõik vektori colB väärtused, kus samas tabeli reas olev colA väärtus ei ole "a". output on vektor! }
 \end{Highlighting}
 \end{Shaded}
 
@@ -2192,7 +2201,7 @@ meetodi.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat}\OperatorTok{$}\NormalTok{colA[dat}\OperatorTok{$}\NormalTok{colB }\OperatorTok{>}\StringTok{ }\DecValTok{1}\NormalTok{]  }\CommentTok{#jätab sisse kõik vektori colA väärtused, kus samas tabeli reas olev colB väärtus >1. output on vektor. }
+\NormalTok{dat}\OperatorTok{$}\NormalTok{colA[dat}\OperatorTok{$}\NormalTok{colB }\OperatorTok{>}\StringTok{ }\DecValTok{1}\NormalTok{] }\CommentTok{#jätab sisse kõik vektori colA väärtused, kus samas tabeli reas olev colB väärtus >1. output on vektor. }
 \end{Highlighting}
 \end{Shaded}
 
@@ -2200,7 +2209,7 @@ meetodi.
 ## [1] "b" "c"
 \end{verbatim}
 
-\subsection{Listide indekseerimine}\label{listide-indekseerimine}
+\subsubsection{Listide indekseerimine}\label{listide-indekseerimine}
 
 \textbf{Listi indekseerimisel kasutame kahte sorti nurksulge, ``{[}
 {]}'' ja ``{[}{[} {]}{]}'', mis töötavad erinevalt}.
@@ -2220,10 +2229,8 @@ aga jätavad uue objekti ikka listi kujule.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my_list <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{a =} \KeywordTok{tibble}\NormalTok{(}\DataTypeTok{colA =} \KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\DataTypeTok{colB =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)), }\DataTypeTok{b =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }
-    \OtherTok{NA}\NormalTok{, }\StringTok{"s"}\NormalTok{))}
-\NormalTok{## this list has two elements, a data frame called 'a' and a character}
-\NormalTok{## vector called 'b'.}
+\NormalTok{my_list <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{a =} \KeywordTok{tibble}\NormalTok{(}\DataTypeTok{colA =} \KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\DataTypeTok{colB =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)), }\DataTypeTok{b =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\StringTok{"s"}\NormalTok{))}
+\NormalTok{## this list has two elements, a data frame called "a" and a character vector called "b".}
 \KeywordTok{str}\NormalTok{(my_list)}
 \end{Highlighting}
 \end{Shaded}
@@ -2275,7 +2282,7 @@ on tibble.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{aa1 <-}\StringTok{ }\NormalTok{my_list}\OperatorTok{$}\NormalTok{a[}\DecValTok{2}\NormalTok{, ]  }\CommentTok{#class is df}
+\NormalTok{aa1 <-}\StringTok{ }\NormalTok{my_list}\OperatorTok{$}\NormalTok{a[}\DecValTok{2}\NormalTok{,] }\CommentTok{#class is df}
 \NormalTok{aa1}
 \end{Highlighting}
 \end{Shaded}
@@ -2289,7 +2296,7 @@ on tibble.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{aa3 <-}\StringTok{ }\NormalTok{my_list[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{, ]}
+\NormalTok{aa3 <-}\StringTok{ }\NormalTok{my_list[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{,]}
 \NormalTok{aa3}
 \end{Highlighting}
 \end{Shaded}
@@ -2309,7 +2316,7 @@ formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).
 Pane tähele, et \texttt{{[}{[}\ {]}{]}} lubab ainult ühe elemendi
 korraga listist välja päästa.
 
-\chapter{Regular expression ja find \& replace}\label{regex}
+\section{Regular expression ja find \& replace}\label{regex}
 
 Regular expression annab võimaluse lühidalt kirjeldada mitte-üheseid
 otsinguparameetreid.
@@ -2366,7 +2373,7 @@ Expressions as used in R}
   \$ anchors the the regular expression to end of the string.
 \end{itemize}
 
-\section{Common operations with regular
+\subsection{Common operations with regular
 expressions}\label{common-operations-with-regular-expressions}
 
 \begin{itemize}
@@ -2381,15 +2388,15 @@ expressions}\label{common-operations-with-regular-expressions}
   Replace a matched pattern
 \end{itemize}
 
-\section{Find and replace}\label{find-and-replace}
+\subsection{Find and replace}\label{find-and-replace}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(stringr)}
-\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"ananas"}\NormalTok{, }\StringTok{"banana"}\NormalTok{)}
+\NormalTok{x<-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"ananas"}\NormalTok{, }\StringTok{"banana"}\NormalTok{)}
 
-\CommentTok{# replaces all a-s at the beginning of strings with e-s}
-\KeywordTok{str_replace}\NormalTok{(x, }\StringTok{"^a"}\NormalTok{, }\StringTok{"e"}\NormalTok{)}
+\CommentTok{#replaces all a-s at the beginning of strings with e-s}
+\KeywordTok{str_replace}\NormalTok{(x, }\StringTok{"^a"}\NormalTok{, }\StringTok{"e"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -2400,7 +2407,7 @@ expressions}\label{common-operations-with-regular-expressions}
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# str_replace only replaces at the first occurence at each string}
-\KeywordTok{str_replace}\NormalTok{(x, }\StringTok{"a"}\NormalTok{, }\StringTok{"e"}\NormalTok{)}
+\KeywordTok{str_replace}\NormalTok{(x, }\StringTok{"a"}\NormalTok{, }\StringTok{"e"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -2410,8 +2417,8 @@ expressions}\label{common-operations-with-regular-expressions}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# str_replace_all replaces all a-s anywhere in the strings}
-\KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"a"}\NormalTok{, }\StringTok{"e"}\NormalTok{)}
+\CommentTok{#str_replace_all replaces all a-s anywhere in the strings}
+\KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"a"}\NormalTok{, }\StringTok{"e"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -2421,8 +2428,7 @@ expressions}\label{common-operations-with-regular-expressions}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# replaces a and the following character at the end of string with}
-\CommentTok{# nothing (i.e. deletes 2 chars)}
+\CommentTok{#replaces a and the following character at the end of string with nothing (i.e. deletes 2 chars)}
 \KeywordTok{str_replace}\NormalTok{(x, }\StringTok{"a.$"}\NormalTok{, }\StringTok{""}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -2433,7 +2439,7 @@ expressions}\label{common-operations-with-regular-expressions}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# replaces a-s or s-s at the end of string with e-s}
+\CommentTok{#replaces a-s or s-s at the end of string with e-s}
 \KeywordTok{str_replace}\NormalTok{(x, }\StringTok{"(a|s)$"}\NormalTok{, }\StringTok{"e"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -2444,7 +2450,7 @@ expressions}\label{common-operations-with-regular-expressions}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# replaces a-s or s-s anywhere in the string with e-s}
+\CommentTok{#replaces a-s or s-s anywhere in the string with e-s}
 \KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"a|s"}\NormalTok{, }\StringTok{"e"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -2455,9 +2461,9 @@ expressions}\label{common-operations-with-regular-expressions}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# remove all numbers.}
-\NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"as1"}\NormalTok{, }\StringTok{"2we3w"}\NormalTok{, }\StringTok{"3e"}\NormalTok{)}
-\KeywordTok{str_replace_all}\NormalTok{(y, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{d"}\NormalTok{, }\StringTok{""}\NormalTok{)}
+\CommentTok{#remove all numbers. }
+\NormalTok{y<-}\KeywordTok{c}\NormalTok{(}\StringTok{"as1"}\NormalTok{, }\StringTok{"2we3w"}\NormalTok{, }\StringTok{"3e"}\NormalTok{)}
+\KeywordTok{str_replace_all}\NormalTok{(y, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{d"}\NormalTok{, }\StringTok{""}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -2467,8 +2473,8 @@ expressions}\label{common-operations-with-regular-expressions}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# remove everything, except numbers.}
-\KeywordTok{str_replace_all}\NormalTok{(y, }\StringTok{"[A-Za-z_]"}\NormalTok{, }\StringTok{""}\NormalTok{)}
+\CommentTok{#remove everything, except numbers. }
+\KeywordTok{str_replace_all}\NormalTok{(y, }\StringTok{"[A-Za-z_]"}\NormalTok{, }\StringTok{""}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -2478,8 +2484,8 @@ expressions}\label{common-operations-with-regular-expressions}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"apple pie"}\NormalTok{)}
-\KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"^apple$"}\NormalTok{, }\StringTok{"m"}\NormalTok{)  }\CommentTok{#To force to only match a complete string:}
+\NormalTok{x<-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"apple"}\NormalTok{, }\StringTok{"apple pie"}\NormalTok{)}
+\KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"^apple$"}\NormalTok{,}\StringTok{"m"}\NormalTok{) }\CommentTok{#To force to only match a complete string:}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2489,7 +2495,7 @@ expressions}\label{common-operations-with-regular-expressions}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{s"}\NormalTok{, }\StringTok{"_"}\NormalTok{)  }\CommentTok{#space to _}
+\KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{s"}\NormalTok{,}\StringTok{"_"}\NormalTok{) }\CommentTok{#space to _}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2499,7 +2505,7 @@ expressions}\label{common-operations-with-regular-expressions}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"[apl]"}\NormalTok{, }\StringTok{"_"}\NormalTok{)  }\CommentTok{#a or p or l to _}
+\KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"[apl]"}\NormalTok{,}\StringTok{"_"}\NormalTok{) }\CommentTok{#a or p or l to _}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2509,7 +2515,7 @@ expressions}\label{common-operations-with-regular-expressions}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"[ap|p.e]"}\NormalTok{, }\StringTok{"_"}\NormalTok{)  }\CommentTok{# ap or p.e to _}
+\KeywordTok{str_replace_all}\NormalTok{(x, }\StringTok{"[ap|p.e]"}\NormalTok{,}\StringTok{"_"}\NormalTok{) }\CommentTok{# ap or p.e to _}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2537,7 +2543,7 @@ expressions}\label{common-operations-with-regular-expressions}
 \end{Highlighting}
 \end{Shaded}
 
-\chapter{Funktsioonid on R keele verbid}\label{funs}
+\section{Funktsioonid on R keele verbid}\label{funs}
 
 Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt,
 kes püüab ära arvata, mida on vaja teha. Vahest teeb kah. Vahest isegi
@@ -2564,7 +2570,7 @@ Paljudel juhtudel ütleb (hea) funktsiooni nimi mida see teeb:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.1166019
+## [1] -0.1166
 \end{verbatim}
 
 \begin{Shaded}
@@ -2619,7 +2625,7 @@ Paljudel juhtudel ütleb (hea) funktsiooni nimi mida see teeb:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 1.30384
+## [1] 1.304
 \end{verbatim}
 
 \begin{Shaded}
@@ -2667,7 +2673,7 @@ käsku.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\StringTok{`}\DataTypeTok{?}\StringTok{`}\NormalTok{(sum)}
+\NormalTok{?sum}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2736,7 +2742,7 @@ selle funktsiooni koodi. Näiteks:
 Tulemus näitab, et \texttt{sum()} on \texttt{Primitive} funktsioon, mis
 põhimõtteliselt tähendab, et ta põhineb C koodil ja ei kasuta R koodi.
 
-\section{Kirjutame R funktsiooni}\label{kirjutame-r-funktsiooni}
+\subsection{Kirjutame R funktsiooni}\label{kirjutame-r-funktsiooni}
 
 Võib ju väita, et funktsiooni ainus mõte on peita teie eest korduvad
 vajalikud koodiread kood funktsiooni nime taha. Põhjus, miks R-s on
@@ -2758,9 +2764,9 @@ Kõige pealt kirjutame natuke koodi.
 \CommentTok{# two apples}
 \NormalTok{apples <-}\StringTok{ }\DecValTok{2}
 \CommentTok{# three oranges}
-\NormalTok{oranges <-}\StringTok{ }\DecValTok{3}
-\CommentTok{# parentheses around expression assigning result to an object ensure}
-\CommentTok{# that result is also printed to R console}
+\NormalTok{oranges <-}\StringTok{ }\DecValTok{3} 
+\CommentTok{# parentheses around expression assigning result to an object }
+\CommentTok{# ensure that result is also printed to R console}
 \NormalTok{(inventory <-}\StringTok{ }\NormalTok{apples }\OperatorTok{+}\StringTok{ }\NormalTok{oranges)}
 \end{Highlighting}
 \end{Shaded}
@@ -2853,9 +2859,9 @@ argumenti: x and na.rm. Me teame, et SEM=SD/sqrt(N) kus N = length(x)
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{calc_sem <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
-\NormalTok{    stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
-\NormalTok{    n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
-\NormalTok{    stdev}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(n)}
+\NormalTok{  stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  stdev }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -2890,7 +2896,7 @@ kasutamist välja visata:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 12.80338
+## [1] 12.8
 \end{verbatim}
 
 On ka võimalus funktsiooni sisse kirjutada \textbf{NA väärtuste
@@ -2905,10 +2911,10 @@ kõigepealt nö. valet lahendust:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{calc_sem <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
-\NormalTok{    ## kasutame sd funktsiooni argumenti na.rm}
-\NormalTok{    stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{    n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
-\NormalTok{    stdev}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(n)}
+\NormalTok{  ## kasutame sd funktsiooni argumenti na.rm}
+\NormalTok{  stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  stdev }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
 \NormalTok{\}}
 
 \KeywordTok{calc_sem}\NormalTok{(numbers)}
@@ -2916,7 +2922,7 @@ kõigepealt nö. valet lahendust:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 11.4517
+## [1] 11.45
 \end{verbatim}
 
 See annab meile vale tulemuse sest \texttt{na.rm\ =\ TRUE} viskab küll
@@ -2931,19 +2937,19 @@ hoiatuse.
 \begin{Highlighting}[]
 \NormalTok{## x on numbriline vektor}
 \NormalTok{calc_sem <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
-    
-\NormalTok{    ## viskame NA väärtused vektorist välja}
-\NormalTok{    x <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(x)}
-    
-\NormalTok{    ## kui vektoris on NA väärtusi, siis hoiatame kasutajat}
-    \ControlFlowTok{if}\NormalTok{ (}\KeywordTok{inherits}\NormalTok{(}\KeywordTok{na.action}\NormalTok{(x), }\StringTok{"omit"}\NormalTok{)) \{}
-        \KeywordTok{warning}\NormalTok{(}\StringTok{"Removed NAs from vector.}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{    \}}
-    
-\NormalTok{    ## arvutame standardvea kasutades filtreeritud vektorit}
-\NormalTok{    stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
-\NormalTok{    n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
-\NormalTok{    stdev}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(n)}
+  
+\NormalTok{  ## viskame NA väärtused vektorist välja}
+\NormalTok{  x <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(x)}
+  
+\NormalTok{  ## kui vektoris on NA väärtusi, siis hoiatame kasutajat}
+  \ControlFlowTok{if}\NormalTok{(}\KeywordTok{inherits}\NormalTok{(}\KeywordTok{na.action}\NormalTok{(x), }\StringTok{"omit"}\NormalTok{)) \{}
+    \KeywordTok{warning}\NormalTok{(}\StringTok{"Removed NAs from vector.}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+  
+\NormalTok{  ## arvutame standardvea kasutades filtreeritud vektorit}
+\NormalTok{  stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  stdev }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
 \NormalTok{\}}
 
 \KeywordTok{calc_sem}\NormalTok{(numbers)}
@@ -2955,7 +2961,7 @@ hoiatuse.
 \end{verbatim}
 
 \begin{verbatim}
-## [1] 12.80338
+## [1] 12.8
 \end{verbatim}
 
 \begin{Shaded}
@@ -2975,7 +2981,7 @@ abifailist.
 Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline
 protsess ja sellele, et alati saab paremini teha.
 
-\chapter{Tidyverse}\label{tidyverse}
+\section{Tidyverse}\label{tidyverse}
 
 Tidyverse on osa R-i ökosüsteemist, kus kehtivad omad reeglid. Tidyverse
 raamatukogud lähtuvad ühtsest filosoofiast ja töötavad hästi koos.
@@ -2985,7 +2991,7 @@ mis sobib hästi järgmise tidyverse funktsiooni sisendiks. Seega on
 tidyverse hästi sobiv läbi torude \%\textgreater{}\% laskmiseks.
 Tidyverse-ga sobib hästi kokku ka ggplot2 graafikasüsteem.
 
-\section{Tidy tabeli struktuur}\label{tidy-tabeli-struktuur}
+\subsection{Tidy tabeli struktuur}\label{tidy-tabeli-struktuur}
 
 \begin{itemize}
 \tightlist
@@ -3038,7 +3044,7 @@ sooritatud erinevates keskustes erinevate inimeste poolt kasutades sama
 ravimi erinevaid preparaate, oleks hea siia veel 3 veergu lisada
 (center, experimenter, batch).
 
-\subsection{Tabeli dimensioonide muutmine (pikk ja lai
+\subsubsection{Tabeli dimensioonide muutmine (pikk ja lai
 formaat)}\label{tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat}
 
 Väga oluline osa tidyverses töötamisest on tabelite pika ja laia
@@ -3064,8 +3070,7 @@ c(-subject, -sex).
 \begin{Highlighting}[]
 \NormalTok{dat_lng <-}\StringTok{ }\KeywordTok{gather}\NormalTok{(dat, }\DataTypeTok{key =}\NormalTok{ experiment, }\DataTypeTok{value =}\NormalTok{ value, }\DecValTok{3}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(dat))}
 \CommentTok{# df_l3<-df %>% gather(experiment, value, 3:ncol(df)) works as well.}
-\CommentTok{# df_l4<-df %>% gather(experiment, value, c(-subject, -sex)) works as}
-\CommentTok{# well}
+\CommentTok{#df_l4<-df %>% gather(experiment, value, c(-subject, -sex)) works as well}
 \NormalTok{dat_lng}
 \end{Highlighting}
 \end{Shaded}
@@ -3106,13 +3111,12 @@ key viitab pika tabeli veerule, mille väärtustest tulevad laias tabelis
 uute veergude nimed. value viitab pika tabeli veerule, kust võetakse
 arvud, mis uues laias tabelis uute veergude vahel laiali jagatakse.
 
-\subsection{Tibble transpose --- read veergudeks ja
+\subsubsection{Tibble transpose --- read veergudeks ja
 vastupidi}\label{tibble-transpose-read-veergudeks-ja-vastupidi}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{a =} \KeywordTok{c}\NormalTok{(}\StringTok{"tim"}\NormalTok{, }\StringTok{"tom"}\NormalTok{, }\StringTok{"jill"}\NormalTok{), }\DataTypeTok{b1 =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), }\DataTypeTok{b2 =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }
-    \DecValTok{6}\NormalTok{))}
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{a =} \KeywordTok{c}\NormalTok{(}\StringTok{"tim"}\NormalTok{, }\StringTok{"tom"}\NormalTok{, }\StringTok{"jill"}\NormalTok{), }\DataTypeTok{b1 =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), }\DataTypeTok{b2 =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{))}
 \NormalTok{dat}
 \end{Highlighting}
 \end{Shaded}
@@ -3132,7 +3136,7 @@ võtab sisse ainult numbrilisi veerge, seega anname talle ette df miinus
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat1 <-}\StringTok{ }\KeywordTok{t}\NormalTok{(dat[, }\OperatorTok{-}\DecValTok{1}\NormalTok{])}
+\NormalTok{dat1 <-}\StringTok{ }\KeywordTok{t}\NormalTok{(dat[,}\OperatorTok{-}\DecValTok{1}\NormalTok{])}
 \KeywordTok{colnames}\NormalTok{(dat1) <-}\StringTok{ }\NormalTok{dat}\OperatorTok{$}\NormalTok{a}
 \NormalTok{dat1}
 \end{Highlighting}
@@ -3144,7 +3148,7 @@ võtab sisse ainult numbrilisi veerge, seega anname talle ette df miinus
 ## b2   4   5    6
 \end{verbatim}
 
-\section{dplyr ja selle viis verbi}\label{dplyr-ja-selle-viis-verbi}
+\subsection{dplyr ja selle viis verbi}\label{dplyr-ja-selle-viis-verbi}
 
 Need tuleb teil omale pähe ajada sest nende 5 verbiga (pluss gather ja
 spread) saab lihtsalt teha 90\% andmeväänamisest, mida teil elus vaja
@@ -3152,7 +3156,7 @@ läheb. NB! Check the data wrangling cheatsheet and dplyr help for
 further details. dplyr laetakse koos tidyverse-ga automaatselt teie
 workspace.
 
-\subsection{\texorpdfstring{\texttt{select()}
+\subsubsection{\texorpdfstring{\texttt{select()}
 columns}{select() columns}}\label{select-columns}
 
 \texttt{select()} selects, renames, and re-orders columns.
@@ -3163,7 +3167,7 @@ Select columns from sex to value:
 \begin{Highlighting}[]
 \NormalTok{iris}
 \KeywordTok{select}\NormalTok{(iris, Petal.Length}\OperatorTok{:}\NormalTok{Species)}
-\KeywordTok{select}\NormalTok{(iris, }\OperatorTok{-}\NormalTok{(Petal.Length}\OperatorTok{:}\NormalTok{Species))  }\CommentTok{#selects everything, except those cols}
+\KeywordTok{select}\NormalTok{(iris, }\OperatorTok{-}\NormalTok{(Petal.Length}\OperatorTok{:}\NormalTok{Species)) }\CommentTok{#selects everything, except those cols}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3172,7 +3176,7 @@ liik as the 1st col:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{select}\NormalTok{(iris, }\DataTypeTok{liik =}\NormalTok{ Species, Sepal.Length, Sepal.Width)}
+\KeywordTok{select}\NormalTok{(iris, }\DataTypeTok{liik =}\NormalTok{ Species, Sepal.Length, Sepal.Width )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3409,19 +3413,20 @@ variables that contain repeated characters.
 
 \begin{verbatim}
 ## # A tibble: 150 x 5
-##    Species Sepal.Length Sepal.Width Petal.Length Petal.Width
-##     <fctr>        <dbl>       <dbl>        <dbl>       <dbl>
-##  1  setosa          5.1         3.5          1.4         0.2
-##  2  setosa          4.9         3.0          1.4         0.2
-##  3  setosa          4.7         3.2          1.3         0.2
-##  4  setosa          4.6         3.1          1.5         0.2
-##  5  setosa          5.0         3.6          1.4         0.2
-##  6  setosa          5.4         3.9          1.7         0.4
-##  7  setosa          4.6         3.4          1.4         0.3
-##  8  setosa          5.0         3.4          1.5         0.2
-##  9  setosa          4.4         2.9          1.4         0.2
-## 10  setosa          4.9         3.1          1.5         0.1
-## # ... with 140 more rows
+##    Species Sepal.Length Sepal.Width Petal.Length
+##     <fctr>        <dbl>       <dbl>        <dbl>
+##  1  setosa          5.1         3.5          1.4
+##  2  setosa          4.9         3.0          1.4
+##  3  setosa          4.7         3.2          1.3
+##  4  setosa          4.6         3.1          1.5
+##  5  setosa          5.0         3.6          1.4
+##  6  setosa          5.4         3.9          1.7
+##  7  setosa          4.6         3.4          1.4
+##  8  setosa          5.0         3.4          1.5
+##  9  setosa          4.4         2.9          1.4
+## 10  setosa          4.9         3.1          1.5
+## # ... with 140 more rows, and 1 more variables:
+## #   Petal.Width <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -3434,18 +3439,18 @@ variables that contain repeated characters.
 
 \begin{verbatim}
 ## # A tibble: 10 x 5
-##           V9         V8        V5         V2        V6
-##        <dbl>      <dbl>     <dbl>      <dbl>     <dbl>
-##  1 0.3038074 0.57523533 0.8766701 0.59739312 0.2062493
-##  2 0.8407008 0.72715453 0.2978863 0.03845679 0.4584412
-##  3 0.9144408 0.49019610 0.0190619 0.08581457 0.2526243
-##  4 0.1730181 0.45466149 0.8107451 0.36239665 0.8472349
-##  5 0.2950919 0.36010777 0.6194633 0.26521047 0.1602161
-##  6 0.5961679 0.70008905 0.2964404 0.39492751 0.9570128
-##  7 0.3725690 0.03041804 0.8561121 0.12209548 0.9057229
-##  8 0.3879856 0.33766852 0.4686311 0.65796379 0.6438531
-##  9 0.2398996 0.17041055 0.4741931 0.96572418 0.9091165
-## 10 0.6548596 0.35675325 0.8724397 0.89674960 0.8565457
+##        V9       V8       V5     V2      V6
+##     <dbl>    <dbl>    <dbl>  <dbl>   <dbl>
+##  1 0.6288 0.240864 0.818923 0.5815 0.04952
+##  2 0.8961 0.936968 0.411140 0.7829 0.55065
+##  3 0.8091 0.453242 0.134573 0.5896 0.84749
+##  4 0.7617 0.006659 0.146492 0.1318 0.59532
+##  5 0.9758 0.131051 0.006327 0.8297 0.19016
+##  6 0.8193 0.519675 0.058168 0.4657 0.68993
+##  7 0.2888 0.966405 0.289861 0.4289 0.29977
+##  8 0.0981 0.673018 0.228936 0.4834 0.09216
+##  9 0.3256 0.777429 0.855171 0.1098 0.52489
+## 10 0.7861 0.481586 0.222033 0.7986 0.55651
 \end{verbatim}
 
 \begin{Shaded}
@@ -3456,18 +3461,18 @@ variables that contain repeated characters.
 
 \begin{verbatim}
 ## # A tibble: 10 x 4
-##           V9         V8         V7        V6
-##        <dbl>      <dbl>      <dbl>     <dbl>
-##  1 0.3038074 0.57523533 0.76268867 0.2062493
-##  2 0.8407008 0.72715453 0.36915209 0.4584412
-##  3 0.9144408 0.49019610 0.98965047 0.2526243
-##  4 0.1730181 0.45466149 0.10260499 0.8472349
-##  5 0.2950919 0.36010777 0.04457804 0.1602161
-##  6 0.5961679 0.70008905 0.72963103 0.9570128
-##  7 0.3725690 0.03041804 0.43240223 0.9057229
-##  8 0.3879856 0.33766852 0.05320890 0.6438531
-##  9 0.2398996 0.17041055 0.22164345 0.9091165
-## 10 0.6548596 0.35675325 0.36879751 0.8565457
+##        V9       V8     V7      V6
+##     <dbl>    <dbl>  <dbl>   <dbl>
+##  1 0.6288 0.240864 0.7096 0.04952
+##  2 0.8961 0.936968 0.7332 0.55065
+##  3 0.8091 0.453242 0.4523 0.84749
+##  4 0.7617 0.006659 0.8530 0.59532
+##  5 0.9758 0.131051 0.2574 0.19016
+##  6 0.8193 0.519675 0.5033 0.68993
+##  7 0.2888 0.966405 0.1014 0.29977
+##  8 0.0981 0.673018 0.8871 0.09216
+##  9 0.3256 0.777429 0.4581 0.52489
+## 10 0.7861 0.481586 0.5539 0.55651
 \end{verbatim}
 
 \begin{Shaded}
@@ -3496,30 +3501,32 @@ variables that contain repeated characters.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Renaming ----------------------------------------- select() keeps}
-\CommentTok{# only the variables you specify rename() keeps all variables}
+\CommentTok{# Renaming -----------------------------------------}
+\CommentTok{# select() keeps only the variables you specify}
+\CommentTok{# rename() keeps all variables}
 \KeywordTok{rename}\NormalTok{(iris, }\DataTypeTok{petal_length =}\NormalTok{ Petal.Length)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 150 x 5
-##    Sepal.Length Sepal.Width petal_length Petal.Width Species
-##           <dbl>       <dbl>        <dbl>       <dbl>  <fctr>
-##  1          5.1         3.5          1.4         0.2  setosa
-##  2          4.9         3.0          1.4         0.2  setosa
-##  3          4.7         3.2          1.3         0.2  setosa
-##  4          4.6         3.1          1.5         0.2  setosa
-##  5          5.0         3.6          1.4         0.2  setosa
-##  6          5.4         3.9          1.7         0.4  setosa
-##  7          4.6         3.4          1.4         0.3  setosa
-##  8          5.0         3.4          1.5         0.2  setosa
-##  9          4.4         2.9          1.4         0.2  setosa
-## 10          4.9         3.1          1.5         0.1  setosa
-## # ... with 140 more rows
+##    Sepal.Length Sepal.Width petal_length Petal.Width
+##           <dbl>       <dbl>        <dbl>       <dbl>
+##  1          5.1         3.5          1.4         0.2
+##  2          4.9         3.0          1.4         0.2
+##  3          4.7         3.2          1.3         0.2
+##  4          4.6         3.1          1.5         0.2
+##  5          5.0         3.6          1.4         0.2
+##  6          5.4         3.9          1.7         0.4
+##  7          4.6         3.4          1.4         0.3
+##  8          5.0         3.4          1.5         0.2
+##  9          4.4         2.9          1.4         0.2
+## 10          4.9         3.1          1.5         0.1
+## # ... with 140 more rows, and 1 more variables:
+## #   Species <fctr>
 \end{verbatim}
 
-\subsection{\texorpdfstring{\texttt{filter()}
+\subsubsection{\texorpdfstring{\texttt{filter()}
 rows}{filter() rows}}\label{filter-rows}
 
 Keep rows in Iris that have Species level ``setosa'' \textbf{and}
@@ -3527,18 +3534,19 @@ Sepal.Length value \textless{}4.5.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{filter}\NormalTok{(iris, Species }\OperatorTok{==}\StringTok{ "setosa"} \OperatorTok{&}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{<}\StringTok{ }\FloatTok{4.5}\NormalTok{)}
+\KeywordTok{filter}\NormalTok{(iris, Species}\OperatorTok{==}\StringTok{"setosa"} \OperatorTok{&}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{<}\StringTok{ }\FloatTok{4.5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 4 x 5
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##          <dbl>       <dbl>        <dbl>       <dbl>  <fctr>
-## 1          4.4         2.9          1.4         0.2  setosa
-## 2          4.3         3.0          1.1         0.1  setosa
-## 3          4.4         3.0          1.3         0.2  setosa
-## 4          4.4         3.2          1.3         0.2  setosa
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width
+##          <dbl>       <dbl>        <dbl>       <dbl>
+## 1          4.4         2.9          1.4         0.2
+## 2          4.3         3.0          1.1         0.1
+## 3          4.4         3.0          1.3         0.2
+## 4          4.4         3.2          1.3         0.2
+## # ... with 1 more variables: Species <fctr>
 \end{verbatim}
 
 Keep rows in Iris that have Species level ``setosa'' \textbf{or}
@@ -3546,25 +3554,26 @@ Sepal.Length value \textless{}4.5.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{filter}\NormalTok{(iris, Species }\OperatorTok{==}\StringTok{ "setosa"} \OperatorTok{|}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{<}\StringTok{ }\FloatTok{4.5}\NormalTok{)}
+\KeywordTok{filter}\NormalTok{(iris, Species}\OperatorTok{==}\StringTok{"setosa"} \OperatorTok{|}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{<}\StringTok{ }\FloatTok{4.5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 50 x 5
-##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##           <dbl>       <dbl>        <dbl>       <dbl>  <fctr>
-##  1          5.1         3.5          1.4         0.2  setosa
-##  2          4.9         3.0          1.4         0.2  setosa
-##  3          4.7         3.2          1.3         0.2  setosa
-##  4          4.6         3.1          1.5         0.2  setosa
-##  5          5.0         3.6          1.4         0.2  setosa
-##  6          5.4         3.9          1.7         0.4  setosa
-##  7          4.6         3.4          1.4         0.3  setosa
-##  8          5.0         3.4          1.5         0.2  setosa
-##  9          4.4         2.9          1.4         0.2  setosa
-## 10          4.9         3.1          1.5         0.1  setosa
-## # ... with 40 more rows
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##           <dbl>       <dbl>        <dbl>       <dbl>
+##  1          5.1         3.5          1.4         0.2
+##  2          4.9         3.0          1.4         0.2
+##  3          4.7         3.2          1.3         0.2
+##  4          4.6         3.1          1.5         0.2
+##  5          5.0         3.6          1.4         0.2
+##  6          5.4         3.9          1.7         0.4
+##  7          4.6         3.4          1.4         0.3
+##  8          5.0         3.4          1.5         0.2
+##  9          4.4         2.9          1.4         0.2
+## 10          4.9         3.1          1.5         0.1
+## # ... with 40 more rows, and 1 more variables:
+## #   Species <fctr>
 \end{verbatim}
 
 Keep rows in Iris that have Species level ``not setosa'' \textbf{or}
@@ -3572,25 +3581,26 @@ Sepal.Length value \textless{}4.5.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{filter}\NormalTok{(iris, Species }\OperatorTok{!=}\StringTok{ "setosa"} \OperatorTok{|}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{<}\StringTok{ }\FloatTok{4.5}\NormalTok{)}
+\KeywordTok{filter}\NormalTok{(iris, Species }\OperatorTok{!=}\StringTok{"setosa"} \OperatorTok{|}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{<}\StringTok{ }\FloatTok{4.5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 104 x 5
-##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-##           <dbl>       <dbl>        <dbl>       <dbl>     <fctr>
-##  1          4.4         2.9          1.4         0.2     setosa
-##  2          4.3         3.0          1.1         0.1     setosa
-##  3          4.4         3.0          1.3         0.2     setosa
-##  4          4.4         3.2          1.3         0.2     setosa
-##  5          7.0         3.2          4.7         1.4 versicolor
-##  6          6.4         3.2          4.5         1.5 versicolor
-##  7          6.9         3.1          4.9         1.5 versicolor
-##  8          5.5         2.3          4.0         1.3 versicolor
-##  9          6.5         2.8          4.6         1.5 versicolor
-## 10          5.7         2.8          4.5         1.3 versicolor
-## # ... with 94 more rows
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##           <dbl>       <dbl>        <dbl>       <dbl>
+##  1          4.4         2.9          1.4         0.2
+##  2          4.3         3.0          1.1         0.1
+##  3          4.4         3.0          1.3         0.2
+##  4          4.4         3.2          1.3         0.2
+##  5          7.0         3.2          4.7         1.4
+##  6          6.4         3.2          4.5         1.5
+##  7          6.9         3.1          4.9         1.5
+##  8          5.5         2.3          4.0         1.3
+##  9          6.5         2.8          4.6         1.5
+## 10          5.7         2.8          4.5         1.3
+## # ... with 94 more rows, and 1 more variables:
+## #   Species <fctr>
 \end{verbatim}
 
 Kui tahame samast veerust filtreerida ``või'' ehk ``\textbar{}'' abil
@@ -3599,8 +3609,8 @@ töötab 2. variant ka ühe väärtuse korral)
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{filter}\NormalTok{(iris, Species }\OperatorTok{==}\StringTok{ "setosa"} \OperatorTok{|}\StringTok{ }\NormalTok{Species }\OperatorTok{==}\StringTok{ "versicolor"}\NormalTok{)}
-\KeywordTok{filter}\NormalTok{(iris, Species }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"setosa"}\NormalTok{, }\StringTok{"versicolor"}\NormalTok{))}
+\KeywordTok{filter}\NormalTok{(iris, Species }\OperatorTok{==}\StringTok{"setosa"} \OperatorTok{|}\StringTok{ }\NormalTok{Species }\OperatorTok{==}\StringTok{"versicolor"}\NormalTok{)}
+\KeywordTok{filter}\NormalTok{(iris, Species }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"setosa"}\NormalTok{, }\StringTok{"versicolor"}\NormalTok{) )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3612,25 +3622,26 @@ starts with the letter ``T''
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(stringr)}
-\KeywordTok{filter}\NormalTok{(iris, }\KeywordTok{str_detect}\NormalTok{(Species, }\StringTok{"^v"}\NormalTok{))}
+\KeywordTok{filter}\NormalTok{(iris, }\KeywordTok{str_detect}\NormalTok{(Species, }\StringTok{"^v"}\NormalTok{)) }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 100 x 5
-##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-##           <dbl>       <dbl>        <dbl>       <dbl>     <fctr>
-##  1          7.0         3.2          4.7         1.4 versicolor
-##  2          6.4         3.2          4.5         1.5 versicolor
-##  3          6.9         3.1          4.9         1.5 versicolor
-##  4          5.5         2.3          4.0         1.3 versicolor
-##  5          6.5         2.8          4.6         1.5 versicolor
-##  6          5.7         2.8          4.5         1.3 versicolor
-##  7          6.3         3.3          4.7         1.6 versicolor
-##  8          4.9         2.4          3.3         1.0 versicolor
-##  9          6.6         2.9          4.6         1.3 versicolor
-## 10          5.2         2.7          3.9         1.4 versicolor
-## # ... with 90 more rows
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##           <dbl>       <dbl>        <dbl>       <dbl>
+##  1          7.0         3.2          4.7         1.4
+##  2          6.4         3.2          4.5         1.5
+##  3          6.9         3.1          4.9         1.5
+##  4          5.5         2.3          4.0         1.3
+##  5          6.5         2.8          4.6         1.5
+##  6          5.7         2.8          4.5         1.3
+##  7          6.3         3.3          4.7         1.6
+##  8          4.9         2.4          3.3         1.0
+##  9          6.6         2.9          4.6         1.3
+## 10          5.2         2.7          3.9         1.4
+## # ... with 90 more rows, and 1 more variables:
+## #   Species <fctr>
 \end{verbatim}
 
 As you can see there are endless vistas here, open for a regular
@@ -3644,22 +3655,25 @@ remove NAs with \texttt{filter()}
 \end{Highlighting}
 \end{Shaded}
 
-\subsection{\texorpdfstring{\texttt{summarise()}}{summarise()}}\label{summarise}
+\subsubsection{\texorpdfstring{\texttt{summarise()}}{summarise()}}\label{summarise}
 
 Many rows summarised to a single value
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summarise}\NormalTok{(iris, }\DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(Sepal.Length), }\DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(Sepal.Length), }\DataTypeTok{N =} \KeywordTok{n}\NormalTok{(), }
-    \DataTypeTok{n_species =} \KeywordTok{n_distinct}\NormalTok{(Species))}
+\KeywordTok{summarise}\NormalTok{(iris, }
+          \DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(Sepal.Length), }
+          \DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(Sepal.Length), }
+          \DataTypeTok{N =} \KeywordTok{n}\NormalTok{(), }
+          \DataTypeTok{n_species =} \KeywordTok{n_distinct}\NormalTok{(Species))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 1 x 4
-##       MEAN        SD     N n_species
-##      <dbl>     <dbl> <int>     <int>
-## 1 5.843333 0.8280661   150         3
+##    MEAN     SD     N n_species
+##   <dbl>  <dbl> <int>     <int>
+## 1 5.843 0.8281   150         3
 \end{verbatim}
 
 \texttt{n()} loeb üles, mitu väärtust läks selle summary statistic-u
@@ -3671,7 +3685,7 @@ arvutusse.
 summarise on kasulikum, kui teda kasutada koos järgmise verbi,
 group\_by-ga.
 
-\subsection{\texorpdfstring{\texttt{group\_by()}}{group\_by()}}\label{group_by}
+\subsubsection{\texorpdfstring{\texttt{group\_by()}}{group\_by()}}\label{group_by}
 
 \texttt{group\_by()} groups values for summarising or mutating-
 
@@ -3680,19 +3694,22 @@ statistic: for males and females. Aint that sexy?!
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris_grouped <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(iris, Species)}
-\KeywordTok{summarise}\NormalTok{(iris_grouped, }\DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(Sepal.Length), }\DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(Sepal.Length), }
-    \DataTypeTok{N =} \KeywordTok{n}\NormalTok{(), }\DataTypeTok{n_species =} \KeywordTok{n_distinct}\NormalTok{(Species))}
+\NormalTok{iris_grouped <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(iris, Species) }
+\KeywordTok{summarise}\NormalTok{(iris_grouped, }
+          \DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(Sepal.Length), }
+          \DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(Sepal.Length), }
+          \DataTypeTok{N =} \KeywordTok{n}\NormalTok{(), }
+          \DataTypeTok{n_species =} \KeywordTok{n_distinct}\NormalTok{(Species))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 3 x 5
-##      Species  MEAN        SD     N n_species
-##       <fctr> <dbl>     <dbl> <int>     <int>
-## 1     setosa 5.006 0.3524897    50         1
-## 2 versicolor 5.936 0.5161711    50         1
-## 3  virginica 6.588 0.6358796    50         1
+##      Species  MEAN     SD     N n_species
+##       <fctr> <dbl>  <dbl> <int>     <int>
+## 1     setosa 5.006 0.3525    50         1
+## 2 versicolor 5.936 0.5162    50         1
+## 3  virginica 6.588 0.6359    50         1
 \end{verbatim}
 
 \texttt{summarise()} argumendid on indentsed eelmise näitega aga tulemus
@@ -3731,44 +3748,50 @@ is getting complicated \ldots{}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{group_by}\NormalTok{(dat_lng, sex, experiment) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(value), }\DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(value), }
-    \DataTypeTok{N =} \KeywordTok{n}\NormalTok{(), }\DataTypeTok{n_sex =} \KeywordTok{n_distinct}\NormalTok{(sex))}
+\KeywordTok{group_by}\NormalTok{(dat_lng, sex, experiment) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(value), }
+            \DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(value),}
+            \DataTypeTok{N =} \KeywordTok{n}\NormalTok{(), }
+            \DataTypeTok{n_sex =} \KeywordTok{n_distinct}\NormalTok{(sex))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 6 x 6
 ## # Groups:   sex [?]
-##     sex   experiment  MEAN        SD     N n_sex
-##   <chr>        <chr> <dbl>     <dbl> <int> <int>
-## 1     F      control  30.5 0.7071068     2     1
-## 2     F experiment_1  37.0 1.4142136     2     1
-## 3     F experiment_2  43.0 1.4142136     2     1
-## 4     M      control  23.0        NA     1     1
-## 5     M experiment_1  34.0        NA     1     1
-## 6     M experiment_2  40.0        NA     1     1
+##     sex   experiment  MEAN     SD     N n_sex
+##   <chr>        <chr> <dbl>  <dbl> <int> <int>
+## 1     F      control  30.5 0.7071     2     1
+## 2     F experiment_1  37.0 1.4142     2     1
+## 3     F experiment_2  43.0 1.4142     2     1
+## 4     M      control  23.0     NA     1     1
+## 5     M experiment_1  34.0     NA     1     1
+## 6     M experiment_2  40.0     NA     1     1
 \end{verbatim}
 
 Now we group first by sex and then by variable. Spot the difference!
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{group_by}\NormalTok{(dat_lng, experiment, sex) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(value), }\DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(value), }
-    \DataTypeTok{N =} \KeywordTok{n}\NormalTok{(), }\DataTypeTok{n_sex =} \KeywordTok{n_distinct}\NormalTok{(sex))}
+\KeywordTok{group_by}\NormalTok{(dat_lng, experiment, sex) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(value), }
+            \DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(value),}
+            \DataTypeTok{N =} \KeywordTok{n}\NormalTok{(), }
+            \DataTypeTok{n_sex =} \KeywordTok{n_distinct}\NormalTok{(sex))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 6 x 6
 ## # Groups:   experiment [?]
-##     experiment   sex  MEAN        SD     N n_sex
-##          <chr> <chr> <dbl>     <dbl> <int> <int>
-## 1      control     F  30.5 0.7071068     2     1
-## 2      control     M  23.0        NA     1     1
-## 3 experiment_1     F  37.0 1.4142136     2     1
-## 4 experiment_1     M  34.0        NA     1     1
-## 5 experiment_2     F  43.0 1.4142136     2     1
-## 6 experiment_2     M  40.0        NA     1     1
+##     experiment   sex  MEAN     SD     N n_sex
+##          <chr> <chr> <dbl>  <dbl> <int> <int>
+## 1      control     F  30.5 0.7071     2     1
+## 2      control     M  23.0     NA     1     1
+## 3 experiment_1     F  37.0 1.4142     2     1
+## 4 experiment_1     M  34.0     NA     1     1
+## 5 experiment_2     F  43.0 1.4142     2     1
+## 6 experiment_2     M  40.0     NA     1     1
 \end{verbatim}
 
 \emph{pro tip} if you want to summarise and then display the summary
@@ -3777,26 +3800,29 @@ use \texttt{mutate()} instead of \texttt{summarise()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mutate}\NormalTok{(iris_grouped, }\DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(Sepal.Length), }\DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(Sepal.Length))}
+\KeywordTok{mutate}\NormalTok{(iris_grouped,}
+       \DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(Sepal.Length), }
+       \DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(Sepal.Length))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 150 x 7
 ## # Groups:   Species [3]
-##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species  MEAN
-##           <dbl>       <dbl>        <dbl>       <dbl>  <fctr> <dbl>
-##  1          5.1         3.5          1.4         0.2  setosa 5.006
-##  2          4.9         3.0          1.4         0.2  setosa 5.006
-##  3          4.7         3.2          1.3         0.2  setosa 5.006
-##  4          4.6         3.1          1.5         0.2  setosa 5.006
-##  5          5.0         3.6          1.4         0.2  setosa 5.006
-##  6          5.4         3.9          1.7         0.4  setosa 5.006
-##  7          4.6         3.4          1.4         0.3  setosa 5.006
-##  8          5.0         3.4          1.5         0.2  setosa 5.006
-##  9          4.4         2.9          1.4         0.2  setosa 5.006
-## 10          4.9         3.1          1.5         0.1  setosa 5.006
-## # ... with 140 more rows, and 1 more variables: SD <dbl>
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##           <dbl>       <dbl>        <dbl>       <dbl>
+##  1          5.1         3.5          1.4         0.2
+##  2          4.9         3.0          1.4         0.2
+##  3          4.7         3.2          1.3         0.2
+##  4          4.6         3.1          1.5         0.2
+##  5          5.0         3.6          1.4         0.2
+##  6          5.4         3.9          1.7         0.4
+##  7          4.6         3.4          1.4         0.3
+##  8          5.0         3.4          1.5         0.2
+##  9          4.4         2.9          1.4         0.2
+## 10          4.9         3.1          1.5         0.1
+## # ... with 140 more rows, and 3 more variables:
+## #   Species <fctr>, MEAN <dbl>, SD <dbl>
 \end{verbatim}
 
 Anna igast grupist 3 kõrgeimat väärtust ja 2 madalaimat väärtust. Samad
@@ -3810,7 +3836,7 @@ rohkem ridu.
 \end{Highlighting}
 \end{Shaded}
 
-\subsection{\texorpdfstring{\texttt{mutate()}}{mutate()}}\label{mutate}
+\subsubsection{\texorpdfstring{\texttt{mutate()}}{mutate()}}\label{mutate}
 
 Mutate põhikasutus on siiski uute veergude tekitamine, mis võtavad
 endale inputi rea kaupa. Seega tabeli ridade arv ei muutu.
@@ -3839,15 +3865,15 @@ values from the \emph{value} column, and name it \emph{log\_value}.
 ## # A tibble: 9 x 5
 ##   subject   sex   experiment value log_value
 ##     <chr> <chr>        <chr> <dbl>     <dbl>
-## 1     Tim     M      control    23  3.135494
-## 2     Ann     F      control    31  3.433987
-## 3    Jill     F      control    30  3.401197
-## 4     Tim     M experiment_1    34  3.526361
-## 5     Ann     F experiment_1    38  3.637586
-## 6    Jill     F experiment_1    36  3.583519
-## 7     Tim     M experiment_2    40  3.688879
-## 8     Ann     F experiment_2    42  3.737670
-## 9    Jill     F experiment_2    44  3.784190
+## 1     Tim     M      control    23     3.135
+## 2     Ann     F      control    31     3.434
+## 3    Jill     F      control    30     3.401
+## 4     Tim     M experiment_1    34     3.526
+## 5     Ann     F experiment_1    38     3.638
+## 6    Jill     F experiment_1    36     3.584
+## 7     Tim     M experiment_2    40     3.689
+## 8     Ann     F experiment_2    42     3.738
+## 9    Jill     F experiment_2    44     3.784
 \end{verbatim}
 
 The same with transmute: note the dropping of some of the original cols,
@@ -3863,22 +3889,27 @@ keeping the original \emph{subject} col and renaming the \emph{sex} col.
 ## # A tibble: 9 x 3
 ##   subject gender log_value
 ##     <chr>  <chr>     <dbl>
-## 1     Tim      M  3.135494
-## 2     Ann      F  3.433987
-## 3    Jill      F  3.401197
-## 4     Tim      M  3.526361
-## 5     Ann      F  3.637586
-## 6    Jill      F  3.583519
-## 7     Tim      M  3.688879
-## 8     Ann      F  3.737670
-## 9    Jill      F  3.784190
+## 1     Tim      M     3.135
+## 2     Ann      F     3.434
+## 3    Jill      F     3.401
+## 4     Tim      M     3.526
+## 5     Ann      F     3.638
+## 6    Jill      F     3.584
+## 7     Tim      M     3.689
+## 8     Ann      F     3.738
+## 9    Jill      F     3.784
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights_sml <-}\StringTok{ }\KeywordTok{select}\NormalTok{(flights, year}\OperatorTok{:}\NormalTok{day, }\KeywordTok{ends_with}\NormalTok{(}\StringTok{"delay"}\NormalTok{), distance, }
-\NormalTok{    air_time) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{gain =}\NormalTok{ arr_delay }\OperatorTok{-}\StringTok{ }\NormalTok{dep_delay, }\DataTypeTok{hours =}\NormalTok{ air_time}\OperatorTok{/}\DecValTok{60}\NormalTok{, }
-    \DataTypeTok{gain_per_hour =}\NormalTok{ gain}\OperatorTok{/}\NormalTok{hours)}
+\NormalTok{flights_sml <-}\StringTok{ }\KeywordTok{select}\NormalTok{(flights, }
+\NormalTok{                      year}\OperatorTok{:}\NormalTok{day, }
+                      \KeywordTok{ends_with}\NormalTok{(}\StringTok{"delay"}\NormalTok{), }
+\NormalTok{                      distance, }
+\NormalTok{                      air_time) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{gain =}\NormalTok{ arr_delay }\OperatorTok{-}\StringTok{ }\NormalTok{dep_delay,}
+    \DataTypeTok{hours =}\NormalTok{ air_time }\OperatorTok{/}\StringTok{ }\DecValTok{60}\NormalTok{,}
+    \DataTypeTok{gain_per_hour =}\NormalTok{ gain }\OperatorTok{/}\StringTok{ }\NormalTok{hours)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3894,56 +3925,62 @@ factor levels in the sex variable (two, in our case):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{group_by}\NormalTok{(dat_lng, sex) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{norm_value =}\NormalTok{ value}\OperatorTok{/}\KeywordTok{mean}\NormalTok{(value), }\DataTypeTok{n2_val =}\NormalTok{ value}\OperatorTok{/}\KeywordTok{sd}\NormalTok{(value))}
+\KeywordTok{group_by}\NormalTok{(dat_lng, sex) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{norm_value =}\NormalTok{ value }\OperatorTok{/}\StringTok{ }\KeywordTok{mean}\NormalTok{(value), }
+         \DataTypeTok{n2_val =}\NormalTok{ value }\OperatorTok{/}\StringTok{ }\KeywordTok{sd}\NormalTok{(value))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 9 x 6
 ## # Groups:   sex [2]
-##   subject   sex   experiment value norm_value   n2_val
-##     <chr> <chr>        <chr> <dbl>      <dbl>    <dbl>
-## 1     Tim     M      control    23  0.7113402 2.667694
-## 2     Ann     F      control    31  0.8416290 5.465862
-## 3    Jill     F      control    30  0.8144796 5.289544
-## 4     Tim     M experiment_1    34  1.0515464 3.943548
-## 5     Ann     F experiment_1    38  1.0316742 6.700089
-## 6    Jill     F experiment_1    36  0.9773756 6.347453
-## 7     Tim     M experiment_2    40  1.2371134 4.639468
-## 8     Ann     F experiment_2    42  1.1402715 7.405361
-## 9    Jill     F experiment_2    44  1.1945701 7.757998
+##   subject   sex   experiment value norm_value n2_val
+##     <chr> <chr>        <chr> <dbl>      <dbl>  <dbl>
+## 1     Tim     M      control    23     0.7113  2.668
+## 2     Ann     F      control    31     0.8416  5.466
+## 3    Jill     F      control    30     0.8145  5.290
+## 4     Tim     M experiment_1    34     1.0515  3.944
+## 5     Ann     F experiment_1    38     1.0317  6.700
+## 6    Jill     F experiment_1    36     0.9774  6.347
+## 7     Tim     M experiment_2    40     1.2371  4.639
+## 8     Ann     F experiment_2    42     1.1403  7.405
+## 9    Jill     F experiment_2    44     1.1946  7.758
 \end{verbatim}
 
 Compare with a ``straight'' mutate to see the difference in values.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mutate}\NormalTok{(dat_lng, }\DataTypeTok{norm_value =}\NormalTok{ value}\OperatorTok{/}\KeywordTok{mean}\NormalTok{(value), }\DataTypeTok{n2_val =}\NormalTok{ value}\OperatorTok{/}\KeywordTok{sd}\NormalTok{(value))}
+\KeywordTok{mutate}\NormalTok{(dat_lng, }
+       \DataTypeTok{norm_value =}\NormalTok{ value }\OperatorTok{/}\StringTok{ }\KeywordTok{mean}\NormalTok{(value), }
+       \DataTypeTok{n2_val =}\NormalTok{ value }\OperatorTok{/}\StringTok{ }\KeywordTok{sd}\NormalTok{(value))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 9 x 6
-##   subject   sex   experiment value norm_value   n2_val
-##     <chr> <chr>        <chr> <dbl>      <dbl>    <dbl>
-## 1     Tim     M      control    23  0.6509434 3.477273
-## 2     Ann     F      control    31  0.8773585 4.686759
-## 3    Jill     F      control    30  0.8490566 4.535574
-## 4     Tim     M experiment_1    34  0.9622642 5.140317
-## 5     Ann     F experiment_1    38  1.0754717 5.745060
-## 6    Jill     F experiment_1    36  1.0188679 5.442688
-## 7     Tim     M experiment_2    40  1.1320755 6.047432
-## 8     Ann     F experiment_2    42  1.1886792 6.349803
-## 9    Jill     F experiment_2    44  1.2452830 6.652175
+##   subject   sex   experiment value norm_value n2_val
+##     <chr> <chr>        <chr> <dbl>      <dbl>  <dbl>
+## 1     Tim     M      control    23     0.6509  3.477
+## 2     Ann     F      control    31     0.8774  4.687
+## 3    Jill     F      control    30     0.8491  4.536
+## 4     Tim     M experiment_1    34     0.9623  5.140
+## 5     Ann     F experiment_1    38     1.0755  5.745
+## 6    Jill     F experiment_1    36     1.0189  5.443
+## 7     Tim     M experiment_2    40     1.1321  6.047
+## 8     Ann     F experiment_2    42     1.1887  6.350
+## 9    Jill     F experiment_2    44     1.2453  6.652
 \end{verbatim}
 
-\section{Grouped filters}\label{grouped-filters}
+\subsection{Grouped filters}\label{grouped-filters}
 
 Keep all groups bigger than a threshold:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{popular_dests <-}\StringTok{ }\NormalTok{flights }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(dest) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(}\KeywordTok{n}\NormalTok{() }\OperatorTok{>}\StringTok{ }\DecValTok{365}\NormalTok{)}
+\NormalTok{popular_dests <-}\StringTok{ }\NormalTok{flights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(dest) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\KeywordTok{n}\NormalTok{() }\OperatorTok{>}\StringTok{ }\DecValTok{365}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3952,7 +3989,7 @@ data, use \texttt{ungroup()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ungroup}\NormalTok{(dat)}
+\KeywordTok{ungroup}\NormalTok{(dat) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -4035,7 +4072,7 @@ or
 Here we did the same thing more elegantly by directly parsing numbers
 from a character string.
 
-\section{\texorpdfstring{\texttt{separate()} one column into
+\subsection{\texorpdfstring{\texttt{separate()} one column into
 several}{separate() one column into several}}\label{separate-one-column-into-several}
 
 Siin on veel üks verb, mida aeg-ajalt kõigil vaja läheb.
@@ -4064,7 +4101,7 @@ tähemärki''
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(df.sep <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(disease.cases, }\DataTypeTok{into =} \KeywordTok{c}\NormalTok{(}\StringTok{"cases"}\NormalTok{, }\StringTok{"thousand"}\NormalTok{)))}
+\NormalTok{(df.sep <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(disease.cases, }\DataTypeTok{into=}\KeywordTok{c}\NormalTok{(}\StringTok{"cases"}\NormalTok{, }\StringTok{"thousand"}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4077,8 +4114,7 @@ tähemärki''
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(df.sep <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(disease.cases, }\DataTypeTok{into =} \KeywordTok{c}\NormalTok{(}\StringTok{"cases"}\NormalTok{, }\StringTok{"thousand"}\NormalTok{), }
-    \DataTypeTok{sep =} \StringTok{"/"}\NormalTok{))}
+\NormalTok{(df.sep <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(disease.cases, }\DataTypeTok{into=}\KeywordTok{c}\NormalTok{(}\StringTok{"cases"}\NormalTok{, }\StringTok{"thousand"}\NormalTok{), }\DataTypeTok{sep =} \StringTok{"/"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4091,8 +4127,7 @@ tähemärki''
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(df.sep <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(disease.cases, }\DataTypeTok{into =} \KeywordTok{c}\NormalTok{(}\StringTok{"cases"}\NormalTok{, }\StringTok{"thousand"}\NormalTok{), }
-    \DataTypeTok{sep =} \DecValTok{2}\NormalTok{))}
+\NormalTok{(df.sep <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(disease.cases, }\DataTypeTok{into=}\KeywordTok{c}\NormalTok{(}\StringTok{"cases"}\NormalTok{, }\StringTok{"thousand"}\NormalTok{), }\DataTypeTok{sep =} \DecValTok{2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4105,8 +4140,7 @@ tähemärki''
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(df.sep <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(disease.cases, }\DataTypeTok{into =} \KeywordTok{c}\NormalTok{(}\StringTok{"cases"}\NormalTok{, }\StringTok{"thousand"}\NormalTok{), }
-    \DataTypeTok{sep =} \OperatorTok{-}\DecValTok{6}\NormalTok{))}
+\NormalTok{(df.sep <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(disease.cases, }\DataTypeTok{into=}\KeywordTok{c}\NormalTok{(}\StringTok{"cases"}\NormalTok{, }\StringTok{"thousand"}\NormalTok{), }\DataTypeTok{sep =} \OperatorTok{-}\DecValTok{6}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4119,115 +4153,118 @@ tähemärki''
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{index =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{taxon =} \KeywordTok{c}\NormalTok{(}\StringTok{"Procaryota; Bacteria; Alpha-Proteobacteria; Escharichia"}\NormalTok{, }
-    \StringTok{"Eukaryota; Chordata"}\NormalTok{)))}
+\NormalTok{(dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{index =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }
+               \DataTypeTok{taxon =} \KeywordTok{c}\NormalTok{(}\StringTok{"Procaryota; Bacteria; Alpha-Proteobacteria; Escharichia"}\NormalTok{, }\StringTok{"Eukaryota; Chordata"}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 2 x 2
-##   index                                                   taxon
-##   <dbl>                                                   <chr>
-## 1     1 Procaryota; Bacteria; Alpha-Proteobacteria; Escharichia
-## 2     2                                     Eukaryota; Chordata
+##   index
+##   <dbl>
+## 1     1
+## 2     2
+## # ... with 1 more variables: taxon <chr>
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(d1 <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(taxon, }\KeywordTok{c}\NormalTok{(}\StringTok{"riik"}\NormalTok{, }\StringTok{"hmk"}\NormalTok{, }\StringTok{"klass"}\NormalTok{, }\StringTok{"perekond"}\NormalTok{), }\DataTypeTok{sep =} \StringTok{"; "}\NormalTok{, }
-    \DataTypeTok{extra =} \StringTok{"merge"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"right"}\NormalTok{))}
+\NormalTok{(d1 <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(taxon, }\KeywordTok{c}\NormalTok{(}\StringTok{'riik'}\NormalTok{, }\StringTok{'hmk'}\NormalTok{, }\StringTok{"klass"}\NormalTok{, }\StringTok{"perekond"}\NormalTok{), }\DataTypeTok{sep =} \StringTok{'; '}\NormalTok{, }\DataTypeTok{extra =} \StringTok{"merge"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"right"}\NormalTok{)) }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 2 x 5
-##   index       riik      hmk                klass    perekond
-## * <dbl>      <chr>    <chr>                <chr>       <chr>
-## 1     1 Procaryota Bacteria Alpha-Proteobacteria Escharichia
-## 2     2  Eukaryota Chordata                 <NA>        <NA>
+##   index       riik      hmk                klass
+## * <dbl>      <chr>    <chr>                <chr>
+## 1     1 Procaryota Bacteria Alpha-Proteobacteria
+## 2     2  Eukaryota Chordata                 <NA>
+## # ... with 1 more variables: perekond <chr>
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# some special cases:}
-\NormalTok{(dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{index =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{taxon =} \KeywordTok{c}\NormalTok{(}\StringTok{"Prokaryota || Bacteria || Alpha-Proteobacteria || Escharichia"}\NormalTok{, }
-    \StringTok{"Eukaryota || Chordata"}\NormalTok{)))}
+\NormalTok{(dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{index =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }
+               \DataTypeTok{taxon =} \KeywordTok{c}\NormalTok{(}\StringTok{"Prokaryota || Bacteria || Alpha-Proteobacteria || Escharichia"}\NormalTok{, }\StringTok{"Eukaryota || Chordata"}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 2 x 2
-##   index                                                         taxon
-##   <dbl>                                                         <chr>
-## 1     1 Prokaryota || Bacteria || Alpha-Proteobacteria || Escharichia
-## 2     2                                         Eukaryota || Chordata
+##   index
+##   <dbl>
+## 1     1
+## 2     2
+## # ... with 1 more variables: taxon <chr>
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(d1 <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(taxon, }\KeywordTok{c}\NormalTok{(}\StringTok{"riik"}\NormalTok{, }\StringTok{"hmk"}\NormalTok{, }\StringTok{"klass"}\NormalTok{, }\StringTok{"perekond"}\NormalTok{), }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{|}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{|"}\NormalTok{, }
-    \DataTypeTok{extra =} \StringTok{"merge"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"right"}\NormalTok{))}
+\NormalTok{(d1 <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(taxon, }\KeywordTok{c}\NormalTok{(}\StringTok{"riik"}\NormalTok{, }\StringTok{"hmk"}\NormalTok{, }\StringTok{"klass"}\NormalTok{, }\StringTok{"perekond"}\NormalTok{), }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{|}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{|"}\NormalTok{, }\DataTypeTok{extra =} \StringTok{"merge"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"right"}\NormalTok{)) }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 2 x 5
-##   index        riik        hmk                  klass     perekond
-## * <dbl>       <chr>      <chr>                  <chr>        <chr>
-## 1     1 Prokaryota   Bacteria   Alpha-Proteobacteria   Escharichia
-## 2     2  Eukaryota    Chordata                   <NA>         <NA>
+##   index        riik        hmk                  klass
+## * <dbl>       <chr>      <chr>                  <chr>
+## 1     1 Prokaryota   Bacteria   Alpha-Proteobacteria 
+## 2     2  Eukaryota    Chordata                   <NA>
+## # ... with 1 more variables: perekond <chr>
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{index =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{taxon =} \KeywordTok{c}\NormalTok{(}\StringTok{"Prokaryota.Bacteria.Alpha-Proteobacteria.Escharichia"}\NormalTok{, }
-    \StringTok{"Eukaryota.Chordata"}\NormalTok{))}
-\NormalTok{(d1 <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(taxon, }\KeywordTok{c}\NormalTok{(}\StringTok{"riik"}\NormalTok{, }\StringTok{"hmk"}\NormalTok{, }\StringTok{"klass"}\NormalTok{, }\StringTok{"perekond"}\NormalTok{), }\DataTypeTok{sep =} \StringTok{"[.]"}\NormalTok{, }
-    \DataTypeTok{extra =} \StringTok{"merge"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"right"}\NormalTok{))}
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{index =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }
+              \DataTypeTok{taxon =} \KeywordTok{c}\NormalTok{(}\StringTok{"Prokaryota.Bacteria.Alpha-Proteobacteria.Escharichia"}\NormalTok{, }\StringTok{"Eukaryota.Chordata"}\NormalTok{))}
+\NormalTok{(d1 <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(taxon, }\KeywordTok{c}\NormalTok{(}\StringTok{'riik'}\NormalTok{, }\StringTok{'hmk'}\NormalTok{, }\StringTok{"klass"}\NormalTok{, }\StringTok{"perekond"}\NormalTok{), }\DataTypeTok{sep =} \StringTok{'[.]'}\NormalTok{, }\DataTypeTok{extra =} \StringTok{"merge"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"right"}\NormalTok{)) }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 2 x 5
-##   index       riik      hmk                klass    perekond
-## * <dbl>      <chr>    <chr>                <chr>       <chr>
-## 1     1 Prokaryota Bacteria Alpha-Proteobacteria Escharichia
-## 2     2  Eukaryota Chordata                 <NA>        <NA>
+##   index       riik      hmk                klass
+## * <dbl>      <chr>    <chr>                <chr>
+## 1     1 Prokaryota Bacteria Alpha-Proteobacteria
+## 2     2  Eukaryota Chordata                 <NA>
+## # ... with 1 more variables: perekond <chr>
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{index =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{taxon =} \KeywordTok{c}\NormalTok{(}\StringTok{"Prokaryota.Bacteria,Alpha-Proteobacteria.Escharichia"}\NormalTok{, }
-    \StringTok{"Eukaryota.Chordata"}\NormalTok{)))}
+\NormalTok{(dat <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{index =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }
+               \DataTypeTok{taxon =} \KeywordTok{c}\NormalTok{(}\StringTok{"Prokaryota.Bacteria,Alpha-Proteobacteria.Escharichia"}\NormalTok{, }\StringTok{"Eukaryota.Chordata"}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 2 x 2
-##   index                                                taxon
-##   <dbl>                                                <chr>
-## 1     1 Prokaryota.Bacteria,Alpha-Proteobacteria.Escharichia
-## 2     2                                   Eukaryota.Chordata
+##   index
+##   <dbl>
+## 1     1
+## 2     2
+## # ... with 1 more variables: taxon <chr>
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(d1 <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(taxon, }\KeywordTok{c}\NormalTok{(}\StringTok{"riik"}\NormalTok{, }\StringTok{"hmk"}\NormalTok{, }\StringTok{"klass"}\NormalTok{, }\StringTok{"perekond"}\NormalTok{), }\DataTypeTok{sep =} \StringTok{"[,}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.]"}\NormalTok{, }
-    \DataTypeTok{extra =} \StringTok{"merge"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"right"}\NormalTok{))}
+\NormalTok{(d1 <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{separate}\NormalTok{(taxon, }\KeywordTok{c}\NormalTok{(}\StringTok{'riik'}\NormalTok{, }\StringTok{'hmk'}\NormalTok{, }\StringTok{"klass"}\NormalTok{, }\StringTok{"perekond"}\NormalTok{), }\DataTypeTok{sep =} \StringTok{'[,}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.]'}\NormalTok{, }\DataTypeTok{extra =} \StringTok{"merge"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"right"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 2 x 5
-##   index       riik      hmk                klass    perekond
-## * <dbl>      <chr>    <chr>                <chr>       <chr>
-## 1     1 Prokaryota Bacteria Alpha-Proteobacteria Escharichia
-## 2     2  Eukaryota Chordata                 <NA>        <NA>
+##   index       riik      hmk                klass
+## * <dbl>      <chr>    <chr>                <chr>
+## 1     1 Prokaryota Bacteria Alpha-Proteobacteria
+## 2     2  Eukaryota Chordata                 <NA>
+## # ... with 1 more variables: perekond <chr>
 \end{verbatim}
 
 The companion FUN to separate is \texttt{unite()} - see help.
 
-\section{Faktorid}\label{faktorid}
+\subsection{Faktorid}\label{faktorid}
 
 Faktor on andmetüüp, mis oli ajalooliselt tähtsam kui ta praegu on.
 Sageli saame oma asja ära ajada character vectori andmetüübiga ja ei
@@ -4275,7 +4312,7 @@ ise järele, viies trükivea sisse x1-e.
 
 \begin{verbatim}
 ## [1] Dec Apr Jan Mar
-## Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+## 12 Levels: Jan Feb Mar Apr May Jun Jul Aug Sep ... Dec
 \end{verbatim}
 
 NB! \texttt{month.abb} on R objekt mis sisaldab kuude ingliskeelseid
@@ -4316,26 +4353,27 @@ Kui faktorid on tibbles oma veeruna, siis saab nende tasemed
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gss_cat  }\CommentTok{#tibble, mille veerg 'race' on faktor.}
+\NormalTok{gss_cat }\CommentTok{#tibble, mille veerg "race" on faktor.}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 21,483 x 9
-##     year       marital   age   race        rincome            partyid
-##    <int>        <fctr> <int> <fctr>         <fctr>             <fctr>
-##  1  2000 Never married    26  White  $8000 to 9999       Ind,near rep
-##  2  2000      Divorced    48  White  $8000 to 9999 Not str republican
-##  3  2000       Widowed    67  White Not applicable        Independent
-##  4  2000 Never married    39  White Not applicable       Ind,near rep
-##  5  2000      Divorced    25  White Not applicable   Not str democrat
-##  6  2000       Married    25  White $20000 - 24999    Strong democrat
-##  7  2000 Never married    36  White $25000 or more Not str republican
-##  8  2000      Divorced    44  White  $7000 to 7999       Ind,near dem
-##  9  2000       Married    44  White $25000 or more   Not str democrat
-## 10  2000       Married    47  White $25000 or more  Strong republican
-## # ... with 21,473 more rows, and 3 more variables: relig <fctr>,
-## #   denom <fctr>, tvhours <int>
+##     year       marital   age   race        rincome
+##    <int>        <fctr> <int> <fctr>         <fctr>
+##  1  2000 Never married    26  White  $8000 to 9999
+##  2  2000      Divorced    48  White  $8000 to 9999
+##  3  2000       Widowed    67  White Not applicable
+##  4  2000 Never married    39  White Not applicable
+##  5  2000      Divorced    25  White Not applicable
+##  6  2000       Married    25  White $20000 - 24999
+##  7  2000 Never married    36  White $25000 or more
+##  8  2000      Divorced    44  White  $7000 to 7999
+##  9  2000       Married    44  White $25000 or more
+## 10  2000       Married    47  White $25000 or more
+## # ... with 21,473 more rows, and 4 more variables:
+## #   partyid <fctr>, relig <fctr>, denom <fctr>,
+## #   tvhours <int>
 \end{verbatim}
 
 \begin{Shaded}
@@ -4355,7 +4393,7 @@ Kui faktorid on tibbles oma veeruna, siis saab nende tasemed
 
 Nii saame ka teada, mitu korda iga faktori tase selles tabelis esineb.
 
-\subsection{\texorpdfstring{\texttt{fct\_recode()} rekodeerib faktori
+\subsubsection{\texorpdfstring{\texttt{fct\_recode()} rekodeerib faktori
 tasemed}{fct\_recode() rekodeerib faktori tasemed}}\label{fct_recode-rekodeerib-faktori-tasemed}
 
 \begin{Shaded}
@@ -4382,11 +4420,19 @@ tasemed}{fct\_recode() rekodeerib faktori tasemed}}\label{fct_recode-rekodeerib-
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gss_cat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{partyid =} \KeywordTok{fct_recode}\NormalTok{(partyid, }\StringTok{`}\DataTypeTok{Republican, strong}\StringTok{`}\NormalTok{ =}\StringTok{ "Strong republican"}\NormalTok{, }
-    \StringTok{`}\DataTypeTok{Republican, weak}\StringTok{`}\NormalTok{ =}\StringTok{ "Not str republican"}\NormalTok{, }\StringTok{`}\DataTypeTok{Independent, near rep}\StringTok{`}\NormalTok{ =}\StringTok{ "Ind,near rep"}\NormalTok{, }
-    \StringTok{`}\DataTypeTok{Independent, near dem}\StringTok{`}\NormalTok{ =}\StringTok{ "Ind,near dem"}\NormalTok{, }\StringTok{`}\DataTypeTok{Democrat, weak}\StringTok{`}\NormalTok{ =}\StringTok{ "Not str democrat"}\NormalTok{, }
-    \StringTok{`}\DataTypeTok{Democrat, strong}\StringTok{`}\NormalTok{ =}\StringTok{ "Strong democrat"}\NormalTok{, }\DataTypeTok{Other =} \StringTok{"No answer"}\NormalTok{, }\DataTypeTok{Other =} \StringTok{"Don't know"}\NormalTok{, }
-    \DataTypeTok{Other =} \StringTok{"Other party"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{count}\NormalTok{(partyid)}
+\NormalTok{gss_cat }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{partyid =} \KeywordTok{fct_recode}\NormalTok{(partyid,}
+                              \StringTok{"Republican, strong"}\NormalTok{    =}\StringTok{ "Strong republican"}\NormalTok{,}
+                              \StringTok{"Republican, weak"}\NormalTok{      =}\StringTok{ "Not str republican"}\NormalTok{,}
+                              \StringTok{"Independent, near rep"}\NormalTok{ =}\StringTok{ "Ind,near rep"}\NormalTok{,}
+                              \StringTok{"Independent, near dem"}\NormalTok{ =}\StringTok{ "Ind,near dem"}\NormalTok{,}
+                              \StringTok{"Democrat, weak"}\NormalTok{        =}\StringTok{ "Not str democrat"}\NormalTok{,}
+                              \StringTok{"Democrat, strong"}\NormalTok{      =}\StringTok{ "Strong democrat"}\NormalTok{,}
+                              \StringTok{"Other"}\NormalTok{                 =}\StringTok{ "No answer"}\NormalTok{,}
+                              \StringTok{"Other"}\NormalTok{                 =}\StringTok{ "Don't know"}\NormalTok{,}
+                              \StringTok{"Other"}\NormalTok{                 =}\StringTok{ "Other party"}
+\NormalTok{  )) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(partyid)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4407,29 +4453,35 @@ tasemed}{fct\_recode() rekodeerib faktori tasemed}}\label{fct_recode-rekodeerib-
 \texttt{fct\_recode()} ei puuduta neid tasemeid, mida selle argumendis
 ei mainita. Lisaks saab mitu vana taset muuta üheks uueks tasemeks.
 
-\subsection{\texorpdfstring{\texttt{fct\_collapse()} annab argumenti
+\subsubsection{\texorpdfstring{\texttt{fct\_collapse()} annab argumenti
 sisse vanade tasemete vektori, et teha vähem uusi
 tasemeid.}{fct\_collapse() annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.}}\label{fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gss_cat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{partyid =} \KeywordTok{fct_collapse}\NormalTok{(partyid, }\DataTypeTok{other =} \KeywordTok{c}\NormalTok{(}\StringTok{"No answer"}\NormalTok{, }
-    \StringTok{"Don't know"}\NormalTok{, }\StringTok{"Other party"}\NormalTok{), }\DataTypeTok{rep =} \KeywordTok{c}\NormalTok{(}\StringTok{"Strong republican"}\NormalTok{, }\StringTok{"Not str republican"}\NormalTok{), }
-    \DataTypeTok{ind =} \KeywordTok{c}\NormalTok{(}\StringTok{"Ind,near rep"}\NormalTok{, }\StringTok{"Independent"}\NormalTok{, }\StringTok{"Ind,near dem"}\NormalTok{), }\DataTypeTok{dem =} \KeywordTok{c}\NormalTok{(}\StringTok{"Not str democrat"}\NormalTok{, }
-        \StringTok{"Strong democrat"}\NormalTok{))) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{count}\NormalTok{(partyid)}
+\NormalTok{gss_cat }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{partyid =} \KeywordTok{fct_collapse}\NormalTok{(partyid,}
+                                \DataTypeTok{other =} \KeywordTok{c}\NormalTok{(}\StringTok{"No answer"}\NormalTok{, }\StringTok{"Don't know"}\NormalTok{, }\StringTok{"Other party"}\NormalTok{),}
+                                \DataTypeTok{rep =} \KeywordTok{c}\NormalTok{(}\StringTok{"Strong republican"}\NormalTok{, }\StringTok{"Not str republican"}\NormalTok{),}
+                                \DataTypeTok{ind =} \KeywordTok{c}\NormalTok{(}\StringTok{"Ind,near rep"}\NormalTok{, }\StringTok{"Independent"}\NormalTok{, }\StringTok{"Ind,near dem"}\NormalTok{),}
+                                \DataTypeTok{dem =} \KeywordTok{c}\NormalTok{(}\StringTok{"Not str democrat"}\NormalTok{, }\StringTok{"Strong democrat"}\NormalTok{)}
+\NormalTok{  )) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(partyid)}
 \end{Highlighting}
 \end{Shaded}
 
-\subsection{\texorpdfstring{\texttt{fct\_lump()} lööb kokku kõik vähem
-arv kordi esinevad
+\subsubsection{\texorpdfstring{\texttt{fct\_lump()} lööb kokku kõik
+vähem arv kordi esinevad
 tasemed.}{fct\_lump() lööb kokku kõik vähem arv kordi esinevad tasemed.}}\label{fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed.}
 
 n parameeter ütleb, mitu algset taset tuleb alles jätta:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gss_cat }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{relig =} \KeywordTok{fct_lump}\NormalTok{(relig, }\DataTypeTok{n =} \DecValTok{5}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{count}\NormalTok{(relig, }\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{    }\KeywordTok{print}\NormalTok{()}
+\NormalTok{gss_cat }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{relig =} \KeywordTok{fct_lump}\NormalTok{(relig, }\DataTypeTok{n =} \DecValTok{5}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(relig, }\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{print}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4445,7 +4497,7 @@ n parameeter ütleb, mitu algset taset tuleb alles jätta:
 ## 6     Jewish   388
 \end{verbatim}
 
-\subsection{Rekodeerime pideva muutuja
+\subsubsection{Rekodeerime pideva muutuja
 faktoriks}\label{rekodeerime-pideva-muutuja-faktoriks}
 
 \texttt{cut()} jagab meie muutuja väärtused intervallidesse ja annab
@@ -4474,9 +4526,7 @@ factor?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Note that to include 1 in level “A” you need to start the first cut}
-\CommentTok{# <1, while at the right side 3 is included in the 1st cut (in factor}
-\CommentTok{# level “A”)}
+\CommentTok{#Note that to include 1 in level “A” you need to start the first cut <1, while at the right side 3 is included in the 1st cut (in factor level “A”)}
 \NormalTok{z2 <-}\StringTok{ }\KeywordTok{cut}\NormalTok{(z, }\DataTypeTok{breaks =} \DecValTok{3}\NormalTok{, }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{))}
 \NormalTok{z2}
 \end{Highlighting}
@@ -4491,7 +4541,7 @@ factor?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(car)}
+\KeywordTok{library}\NormalTok{(car) }
 \NormalTok{x <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{)}
 \NormalTok{x}
 \end{Highlighting}
@@ -4531,24 +4581,27 @@ factor?
 ## [1] "A" "A" "B" "A" "A" "B" "A" "A" "B"
 \end{verbatim}
 
-\subsection{Muudame faktori tasemete järjekorda
+\subsubsection{Muudame faktori tasemete järjekorda
 joonisel}\label{muudame-faktori-tasemete-jarjekorda-joonisel}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{## summeerime andmed}
-\NormalTok{gsscat_sum <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(gss_cat, relig) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{age =} \KeywordTok{mean}\NormalTok{(age, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }
-    \DataTypeTok{tvhours =} \KeywordTok{mean}\NormalTok{(tvhours, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }\DataTypeTok{n =} \KeywordTok{n}\NormalTok{())}
+\NormalTok{gsscat_sum  <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(gss_cat, relig) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{age =} \KeywordTok{mean}\NormalTok{(age, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+            \DataTypeTok{tvhours =} \KeywordTok{mean}\NormalTok{(tvhours, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{),}
+            \DataTypeTok{n =} \KeywordTok{n}\NormalTok{())}
 \NormalTok{## joonistame graafiku}
-\NormalTok{p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(gsscat_sum, }\KeywordTok{aes}\NormalTok{(tvhours, }\KeywordTok{fct_reorder}\NormalTok{(relig, tvhours))) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+\NormalTok{p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(gsscat_sum, }\KeywordTok{aes}\NormalTok{(tvhours, }\KeywordTok{fct_reorder}\NormalTok{(relig, tvhours))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
 \NormalTok{p}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{main_files/figure-latex/unnamed-chunk-139-1.pdf}
 
-\subsection{\texorpdfstring{\texttt{fct\_relevel()} tõstab joonisel osad
-tasemed teistest
+\subsubsection{\texorpdfstring{\texttt{fct\_relevel()} tõstab joonisel
+osad tasemed teistest
 ettepoole}{fct\_relevel() tõstab joonisel osad tasemed teistest ettepoole}}\label{fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole}
 
 Argumendid on faktor f ja need tasemed (jutumärkides), mida sa tahad
@@ -4563,7 +4616,7 @@ tõsta.
 
 \includegraphics{main_files/figure-latex/unnamed-chunk-140-1.pdf}
 
-\subsection{\texorpdfstring{Joontega plotil saab
+\subsubsection{\texorpdfstring{Joontega plotil saab
 \texttt{fct\_reorder2()} abil assotseerida y väärtused suurimate x
 väärtustega}{Joontega plotil saab fct\_reorder2() abil assotseerida y väärtused suurimate x väärtustega}}\label{joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega}
 
@@ -4572,17 +4625,19 @@ See muudab ploti paremini jälgitavaks:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{## summeerime andmed}
-\NormalTok{gsscat_sum <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(gss_cat, }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(age)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(age, marital) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{N =} \KeywordTok{n}\NormalTok{())}
+\NormalTok{gsscat_sum <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(gss_cat, }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(age)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(age, marital) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{N=}\KeywordTok{n}\NormalTok{())}
 \NormalTok{## paneme andmed graafikule}
-\KeywordTok{ggplot}\NormalTok{(gsscat_sum, }\KeywordTok{aes}\NormalTok{(age, N, }\DataTypeTok{colour =} \KeywordTok{fct_reorder2}\NormalTok{(marital, age, N))) }\OperatorTok{+}\StringTok{ }
-\StringTok{    }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"marital"}\NormalTok{)}
+\KeywordTok{ggplot}\NormalTok{(gsscat_sum, }\KeywordTok{aes}\NormalTok{(age, N, }\DataTypeTok{colour =} \KeywordTok{fct_reorder2}\NormalTok{(marital, age, N))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"marital"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{main_files/figure-latex/unnamed-chunk-141-1.pdf}
 
-\subsection{\texorpdfstring{Tulpdiagrammide korral kasuta
+\subsubsection{\texorpdfstring{Tulpdiagrammide korral kasuta
 \texttt{fct\_infreq()}}{Tulpdiagrammide korral kasuta fct\_infreq()}}\label{tulpdiagrammide-korral-kasuta-fct_infreq}
 
 Loeme kokku erineva perekondliku staatusega isikud ja paneme need andmed
@@ -4591,8 +4646,8 @@ grupid tulevad enne.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mutate}\NormalTok{(gss_cat, }\DataTypeTok{marital =} \KeywordTok{fct_infreq}\NormalTok{(marital) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{fct_rev}\NormalTok{()) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(marital)) }\OperatorTok{+}\StringTok{ }
-\StringTok{    }\KeywordTok{geom_bar}\NormalTok{()}
+\KeywordTok{mutate}\NormalTok{(gss_cat, }\DataTypeTok{marital =} \KeywordTok{fct_infreq}\NormalTok{(marital) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{fct_rev}\NormalTok{()) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(marital)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
