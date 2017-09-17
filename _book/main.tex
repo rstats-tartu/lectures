@@ -365,11 +365,21 @@ dokumentatsioon kataloogi \textbf{man/}. Rohkem projekti pakkimise kohta
 loe värskest preprindist ``Packaging data analytical work reproducibly
 using R'' \citep{marwick2017}.
 
-\chapter{Pakettide installeerimine}\label{pakettide-installeerimine}
+\section{Pakettide installeerimine}\label{libs}
 
-R paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi
-viivat funktsiooni. Selleks, et installeerida pakett, sisesta järgnev
-käsurida R konsooli:
+R \emph{library}-d ehk paketid sisaldavad ühte või enamat mingit kindlat
+operatsiooni läbi viivat funktsiooni. \textbf{R baaspakett sisaldab juba
+mitmeid funktsioone.} Kõige esimene sõnum \texttt{sum()} help lehel on
+``sum \{base\}'', mis tähendab, et see funktsioon kuulub nn.
+baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest
+neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda.
+Näiteks ``base'' raamatukogu versioon 3.4.1 sisaldab 453 funktsiooni.
+Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku
+raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest
+repositooriumist \href{https://cran.r-project.org}{CRAN} alla laadida ja
+installeerida.
+
+Selleks, et installeerida pakett, sisesta järgnev käsurida R konsooli:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -377,6 +387,11 @@ käsurida R konsooli:
 \KeywordTok{install.packages}\NormalTok{(}\StringTok{"packagename"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+NB! Kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle
+nime + R ja vaadake instruktsioone installeerimiseks. Suure tõenäosusega
+on tegemist mõnes teises repos (näiteks Bioconductor) või ainult
+GitHubis asuva paketiga.
 
 RStudio võimaldab ka \emph{point-and-click} stiilis pakettide
 installeerimist:
@@ -396,38 +411,49 @@ Peale installeerimist lae pakett oma R sessiooni kasutades
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{## Load library/package tidyr}
-\KeywordTok{library}\NormalTok{(tidyr)}
+\KeywordTok{library}\NormalTok{(dplyr)}
 \end{Highlighting}
 \end{Shaded}
 
-\texttt{library(tidyr)} käsk teeb R sessioonis kasutatavaks kõik
-``tidyr'' paketi funktsioonid.
+\texttt{library(dplyr)} käsk teeb R sessioonis kasutatavaks kõik
+``dplyr'' paketi funktsioonid.
 
-Näiteks ``tidyr'' pakett sisaldab 41 funktsiooni:
+Näiteks ``dplyr'' pakett sisaldab 237 funktsiooni:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(tidyr)}
-\KeywordTok{ls}\NormalTok{(}\StringTok{"package:tidyr"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(dplyr)}
+\NormalTok{## let's look at the head of package list}
+\KeywordTok{head}\NormalTok{(}\KeywordTok{ls}\NormalTok{(}\StringTok{"package:dplyr"}\NormalTok{), }\DecValTok{20}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "%>%"             "complete"        "complete_"      
-##  [4] "crossing"        "crossing_"       "drop_na"        
-##  [7] "drop_na_"        "expand"          "expand_"        
-## [10] "extract"         "extract_"        "extract_numeric"
-## [13] "fill"            "fill_"           "full_seq"       
-## [16] "gather"          "gather_"         "nest"           
-## [19] "nest_"           "nesting"         "nesting_"       
-## [22] "population"      "replace_na"      "separate"       
-## [25] "separate_"       "separate_rows"   "separate_rows_" 
-## [28] "smiths"          "spread"          "spread_"        
-## [31] "table1"          "table2"          "table3"         
-## [34] "table4a"         "table4b"         "table5"         
-## [37] "unite"           "unite_"          "unnest"         
-## [40] "unnest_"         "who"
+##  [1] "%>%"           "add_count"     "add_count_"    "add_row"      
+##  [5] "add_rownames"  "add_tally"     "add_tally_"    "all_equal"    
+##  [9] "all_vars"      "anti_join"     "any_vars"      "arrange"      
+## [13] "arrange_"      "arrange_all"   "arrange_at"    "arrange_if"   
+## [17] "as_data_frame" "as_tibble"     "as.tbl"        "as.tbl_cube"
 \end{verbatim}
+
+Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab
+\texttt{::} operaatorit kasutades kutsuda välja/importida funktsiooni
+spetsiifilisest paketist:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(df, my_var)}
+\end{Highlighting}
+\end{Shaded}
+
+Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat
+funktsiooni sisaldavat raamatukogu töökeskkonda laadida.
+
+\textbf{Funktsioonide-pakettide help failid RStudio kasutajaliidesest}:
+Kui te lähete RStudios paremal all olevale ``Packages'' tabile, siis on
+võimalik klikkida raamatukogu nimele ja näha selle help-faile,
+tutooriale ja kõiki selle raamatukogu funktsioone koos nende help
+failidega.
 
 \section{R repositooriumid}\label{r-repositooriumid}
 
@@ -490,6 +516,22 @@ metapaketi funktsioone, laadides need iga sessiooni alguses:
 \KeywordTok{library}\NormalTok{(tidyverse)}
 \end{Highlighting}
 \end{Shaded}
+
+Nüüd on teil \texttt{tidyverse} pakett arvutis. Tegelikult kuuluvad siia
+raamatukokku omakorda tosinkond raamatukogu --- tidyverse on pisut meta.
+Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te
+need töökeskkonda sisse loete
+
+Veel üks tehniline detail. \texttt{library(tidyverse)} käsk ei loe sisse
+kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi.
+Need tuleb vajadusel eraldi ükshaaval sisse lugeda.
+
+\begin{quote}
+Paiguta kõigi raamatukogude lugemine koodi algusesse. Enamasti
+kirjutatakse sisse loetavad raamatukogud kohe R scripti algusesse. Siis
+on teile endale ja teistele kes teie koodi loevad ilusti näha, mida
+hiljem vaja läheb.
+\end{quote}
 
 \chapter{R on kalkulaator}\label{calc}
 
@@ -557,7 +599,106 @@ enda poolt loodavatele objektidele mitte panna nimeks ``pi''.
 
 Ümardamine on oluline tulemuste väljaprintimisel.
 
-\section{R objektid}\label{r-objektid}
+\section{Sama koodi saab kirjutada neljal
+viisil}\label{sama-koodi-saab-kirjutada-neljal-viisil}
+
+Hargnevate teede aed: kui me muudame olemasolevat objekti on meil alati
+kaks valikut. Me kas jätame muudetud objektile vana objekti nime või me
+anname talle uue nime. Esimesel juhul läheb vana muutmata objekt
+workspacest kaduma aga nimesid ei tule juurde ja säilib teatud workflow
+sujuvus. Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende
+juurde saab alati tagasi tulla. Samas tekkib meile palju sarnaste
+nimedega objekte.
+
+Esimnene võimalus:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(a)}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(a)}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{round}\NormalTok{(a, }\DecValTok{2}\NormalTok{)}
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.24
+\end{verbatim}
+
+Teine võimalus:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{a1 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(a)}
+\NormalTok{a2 <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(a1)}
+\NormalTok{a3 <-}\StringTok{ }\KeywordTok{round}\NormalTok{(a2, }\DecValTok{2}\NormalTok{)}
+\NormalTok{a3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.24
+\end{verbatim}
+
+Kolmas võimalus on lühem variant esimesest. Me nimelt ühendame etapid
+toru \texttt{\%\textgreater{}\%} kaudu. Siin me võtame objekti ``a''
+(nö. andmed), suuname selle funktsiooni \texttt{sum()}, võtame selle
+funktsiooni väljundi ja suuname selle omakorda funktsiooni
+\texttt{sqrt()}. Seejärel võtame selle funktsiooni outputi ja määrame
+selle nimele ``result'' (aga võime selle ka mõne teise nimega siduda).
+Kui mõni funktsioon võtab ainult ühe parameetri, mille me talle toru
+kaudu sisse sõõdame, siis pole selle funktsiooni taga isegi sulge vaja.
+
+\begin{quote}
+NB! R hea stiili juhised soovitavad siiski ka \emph{pipe}-s kasutada
+funktsiooni koos sulgudega!
+\end{quote}
+
+See on hea lühike ja inimloetav viis koodi kirjutada, mis on masina
+jaoks identne esimese koodiga.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## we need piping operator '%>%' from magrittr}
+\KeywordTok{library}\NormalTok{(magrittr)}
+\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{result <-}\StringTok{ }\NormalTok{a }\OperatorTok{%>%}\StringTok{ }\KeywordTok{sum}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{sqrt}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{round}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{result}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.24
+\end{verbatim}
+
+Neljas võimalus, klassikaline baas R lahendus:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{a1 <-}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{sum}\NormalTok{(a)), }\DecValTok{2}\NormalTok{)}
+\NormalTok{a1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.24
+\end{verbatim}
+
+Sellist koodi loetakse keskelt väljappoole ja kirjutatakse alates
+viimasest operatsioonist, mida soovitakse, et kood teeks. Masina jaoks
+pole vahet. Inimese jaoks on küll: 4. variant nõuab hästi pestud ajusid.
+
+Koodi lühidus 4 --\textgreater{} 3 --\textgreater{} 1 --\textgreater{} 2
+(pikem) Lollikindlus 1 --\textgreater{} 2 --\textgreater{} 3
+--\textgreater{} 4 (vähem lollikindel)
+
+See on teie otsustada, millist koodivormi te millal kasutate, aga te
+peaksite oskama lugeda neid kõiki.
+
+\chapter{R objektid}\label{obj}
 
 R-i töökeskkonnas ``workspace'' asuvad \textbf{objektid}, millega me
 töötame. Tüüpilised objektid on:
@@ -581,7 +722,7 @@ Käsk \texttt{ls()} annab objektide nimed teie workspace-s:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "answer"
+## [1] "a"      "a1"     "a2"     "a3"     "answer" "result"
 \end{verbatim}
 
 \texttt{rm(a)} removes object a from the workspace
@@ -590,13 +731,20 @@ Selleks, et salvestada töökeskkond faili kasuta ``Save'' nuppu
 ``Environment'' akna servast või menüüst ``Session'' -\textgreater{}
 ``Save Workspace As''.
 
-Projekti sulgemisel salvestab RStudio vaikimisi töökeskkonna. Parema
-reprodutseeritavuse huvides pole siiski soovitav töökeskkonda peale töö
-lõppu, projekti sulgemisel, salvestada: - Selleks mine ``Tools''
-\textgreater{} ``Global Options'' \textgreater{} kõige ülemine, ``R
-General'' menüüs vali ``Save workspace to .RData on exit''
-\textgreater{} ``Never'' ever! - Võta ära linnuke ``Restore .RData to
-workspace at startup'' eest.
+Projekti sulgemisel salvestab RStudio vaikimisi töökeskkonna.
+\textbf{Parema reprodutseeritavuse huvides pole siiski soovitav
+töökeskkonda peale töö lõppu projekti sulgemisel salvestada!}. Lülitame
+automaatse salvestamise välja:
+
+\begin{itemize}
+\tightlist
+\item
+  Selleks mine ``Tools'' \textgreater{} ``Global Options''
+  \textgreater{} kõige ülemine, ``R General'' menüüs vali ``Save
+  workspace to .RData on exit'' \textgreater{} ``Never'' ever!
+\item
+  Võta ära linnuke ``Restore .RData to workspace at startup'' eest.
+\end{itemize}
 
 Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised
 salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele.
@@ -712,726 +860,24 @@ numbrist 2, on workspacest lahkunud.
   alt + - on otsetee \texttt{\textless{}-} jaoks
 \end{itemize}
 
-\section{Sama koodi saab kirjutada neljal
-viisil}\label{sama-koodi-saab-kirjutada-neljal-viisil}
-
-Hargnevate teede aed: kui me muudame olemasolevat objekti on meil alati
-kaks valikut. Me kas jätame muudetud objektile vana objekti nime või me
-anname talle uue nime. Esimesel juhul läheb vana muutmata objekt
-workspacest kaduma aga nimesid ei tule juurde ja säilib teatud workflow
-sujuvus. Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende
-juurde saab alati tagasi tulla. Samas tekkib meile palju sarnaste
-nimedega objekte.
-
-Esimnene võimalus:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\NormalTok{a <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(a)}
-\NormalTok{a <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(a)}
-\NormalTok{a <-}\StringTok{ }\KeywordTok{round}\NormalTok{(a, }\DecValTok{2}\NormalTok{)}
-\NormalTok{a}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 2.24
-\end{verbatim}
-
-Teine võimalus:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\NormalTok{a1 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(a)}
-\NormalTok{a2 <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(a1)}
-\NormalTok{a3 <-}\StringTok{ }\KeywordTok{round}\NormalTok{(a2, }\DecValTok{2}\NormalTok{)}
-\NormalTok{a3}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 2.24
-\end{verbatim}
-
-Kolmas võimalus on lühem variant esimesest. Me nimelt ühendame etapid
-toru \texttt{\%\textgreater{}\%} kaudu. Siin me võtame objekti ``a''
-(nö. andmed), suuname selle funktsiooni \texttt{sum()}, võtame selle
-funktsiooni väljundi ja suuname selle omakorda funktsiooni
-\texttt{sqrt()}. Seejärel võtame selle funktsiooni outputi ja määrame
-selle nimele ``result'' (aga võime selle ka mõne teise nimega siduda).
-Kui mõni funktsioon võtab ainult ühe parameetri, mille me talle toru
-kaudu sisse sõõdame, siis pole selle funktsiooni taga isegi sulge vaja.
-
-\begin{quote}
-NB! R hea stiili juhised soovitavad siiski ka \emph{pipe}-s kasutada
-funktsiooni koos sulgudega!
-\end{quote}
-
-See on hea lühike ja inimloetav viis koodi kirjutada, mis on masina
-jaoks identne esimese koodiga.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## we need piping operator '%>%' from magrittr}
-\KeywordTok{library}\NormalTok{(magrittr)}
-\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\NormalTok{result <-}\StringTok{ }\NormalTok{a }\OperatorTok{%>%}\StringTok{ }\KeywordTok{sum}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{sqrt}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{round}\NormalTok{(}\DecValTok{2}\NormalTok{)}
-\NormalTok{result}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 2.24
-\end{verbatim}
-
-Neljas võimalus, klassikaline baas R lahendus:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\NormalTok{a1 <-}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{sum}\NormalTok{(a)), }\DecValTok{2}\NormalTok{)}
-\NormalTok{a1}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 2.24
-\end{verbatim}
-
-Sellist koodi loetakse keskelt väljappoole ja kirjutattakse alates
-viimasest operatsioonist, mida soovitakse, et kood teeks. Masina jaoks
-pole vahet. Inimese jaoks on küll: 4. variant nõuab hästi pestud ajusid.
-
-Koodi lühidus 4 --\textgreater{} 3 --\textgreater{} 1 --\textgreater{} 2
-(pikem) Lollikindlus 1 --\textgreater{} 2 --\textgreater{} 3
---\textgreater{} 4 (vähem lollikindel)
-
-See on teie otsustada, millist koodivormi te millal kasutate, aga te
-peaksite oskama lugeda neid kõiki.
-
-\chapter{R on andmeanalüüsi keel, mille verbid on
-funktsioonid}\label{funs}
-
-Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt,
-kes püüab ära arvata, mida on vaja teha. Vahest teeb kah. Vahest isegi
-seda, mida kasutaja tahtis. Mõni arvab, et R-i puudus on veateadete
-puudumine või krüptilised veateated. Sama kehtib ka R-i helpi kohta.
-Seega tasub alati kontrollida, kas R ikka tegi seda, mida sina talle
-enda arust ette kirjutasid.
-
-Paljudel juhtudel ütleb (hea) funktsiooni nimi mida see teeb:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# create two test vectors}
-\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)}
-\NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{7}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# calculate correlation}
-\KeywordTok{cor}\NormalTok{(x, y)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] -0.1166019
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# calculate sum}
-\KeywordTok{sum}\NormalTok{(x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 21
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# calculate sum of two vectors}
-\KeywordTok{sum}\NormalTok{(x, y)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 38
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# calculate average}
-\KeywordTok{mean}\NormalTok{(x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 4.2
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# calculate median}
-\KeywordTok{median}\NormalTok{(x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 4
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# calculate standard deviation}
-\KeywordTok{sd}\NormalTok{(x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 1.30384
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# return quantiles}
-\KeywordTok{quantile}\NormalTok{(x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   0%  25%  50%  75% 100% 
-##    3    3    4    5    6
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# return maximum value}
-\KeywordTok{max}\NormalTok{(x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 6
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# return minimum value}
-\KeywordTok{min}\NormalTok{(x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 3
-\end{verbatim}
-
-R-is teevad asju programmikesed, mida kutsutakse
-\textbf{funktsioonideks}. Te võite mõelda funktsioonist nagu verbist.
-Näiteks funktsiooni \texttt{sum()} korral loe: ``võta summa''. Iga
-funktsiooni nime järel on sulud. Nende sulgude sees asuvad selle
-funktsiooni \textbf{argumendid}. Argumendid määravad ära funktsiooni
-käitumise. Et näha, millised argumendid on funktsiooni käivitamiseks
-vajalikud ja milliseid on üldse võimalik seadistada, kasuta `help'
-käsku.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{?sum}
-\end{Highlighting}
-\end{Shaded}
-
-Help paneelis paremal all ilmub nüüd selle funktsiooni R
-dokumentatsioon. Vaata seal peatükki Usage:
-\texttt{sum(...,\ na.rm\ =\ FALSE)} ja edasi peatükki Arguments, mis
-ütleb, et \texttt{...} (ellipsis) tähistab vektoreid.
-
-\begin{verbatim}
-sum {base}  R Documentation 
-Sum of Vector Elements
-
-Description:
-
-sum returns the sum of all the values present in its arguments.
-
-Usage
-
-sum(..., na.rm = FALSE)
-
-Arguments
-
-... - numeric or complex or logical vectors.
-
-na.rm   - logical. Should missing values (including NaN) be removed?
-\end{verbatim}
-
-Seega võtab funktsioon \texttt{sum()} kaks argumenti: vektori arvudest
-(või loogilise vektori, mis koosneb TRUE ja FALSE määrangutest), ning
-``na.rm'' argumendi, millele saab anda väärtuseks kas, TRUE või FALSE.
-Usage ütleb ka, et vaikimisi on \texttt{na.rm\ =\ FALSE}, mis tähendab,
-et sellele argumendile on antud vaikeväärtus -- kui me seda ise ei
-muuda, siis jäävad NA-d arvutusse sisse. Kuna NA tähendab ``tundmatu
-arv'' siis iga tehe NA-dega annab vastuseks ``tundmatu arv'' ehk NA
-(tundmatu arv + 2 = tundmatu arv). Seega NA tulemus annab märku, et teie
-andmetes võib olla midagi valesti.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## moodustame vektori}
-\NormalTok{apples <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{34}\NormalTok{, }\DecValTok{43}\NormalTok{, }\OtherTok{NA}\NormalTok{)}
-\NormalTok{## arvutame summa}
-\KeywordTok{sum}\NormalTok{(apples, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 78
-\end{verbatim}
-
-Niimoodi saab arvutada summat vektorile nimega ``apples''.
-
-Sisestades R käsureale funktsiooni ilma selle sulgudeta saab masinast
-selle funktsiooni koodi. Näiteks:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{sum}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## function (..., na.rm = FALSE)  .Primitive("sum")
-\end{verbatim}
-
-Tulemus näitab, et \texttt{sum()} on \texttt{Primitive} funktsioon, mis
-põhimõtteliselt tähendab, et ta põhineb C koodil ja ei kasuta R koodi.
-
-\section{Kirjutame oma esimese R
-funktsiooni}\label{kirjutame-oma-esimese-r-funktsiooni}
-
-Võib ju väita, et funktsiooni ainus mõte on peita teie eest korduvad
-vajalikud koodiread kood funktsiooni nime taha. Põhjus, miks R-s on
-funktsioonid, on korduse vähendamine, koodi loetavaks muutmine ja seega
-ka ruumi kokkuhoid. Koodi funktsioonidena kasutamine suurendab
-analüüside reprodutseeritavust, kuna funktsioonis olev kood pärineb
-ühest allikast, mitte ei ole paljude koopiatena igal pool laiali. See
-muudab pikad koodilõigud hõlpsalt taaskasutatavaks sest lihtsam on
-kirjutada lühike funktsiooni nimi ja sisestada selle funktsiooni
-argumendid. Koodi funktsioonidesse kokku surumine vähendab võimalusi
-lollideks vigadeks, mida te võite teha pikkade koodijuppidega
-manipuleerides. Seega tasub teil õppida ka oma korduvaid koodiridu
-funktsioonidena vormistama.
-
-Kõige pealt kirjutame natuke koodi.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# two apples}
-\NormalTok{apples <-}\StringTok{ }\DecValTok{2}
-\CommentTok{# three oranges}
-\NormalTok{oranges <-}\StringTok{ }\DecValTok{3} 
-\CommentTok{# parentheses around expression assigning result to an object }
-\CommentTok{# ensure that result is also printed to R console}
-\NormalTok{(inventory <-}\StringTok{ }\NormalTok{apples }\OperatorTok{+}\StringTok{ }\NormalTok{oranges)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 5
-\end{verbatim}
-
-Ja nüüd pakendame selle tehte funktsiooni \texttt{add2()}. Funktsiooni
-defineerimiseks kasutame järgmist r ekspressiooni
-\texttt{function(\ arglist\ )\ expr}, kus ``arglist'' on tühi või ühe
-või rohkema nimega argumenti kujul \texttt{name=expression}; ``expr'' on
-R-i ekspressioon st. kood mida see funktsioon käivitab. Funktsiooni
-viimane evlueeritav koodirida on see, mis tuleb välja selle funktsiooni
-outputina.
-
-All toodud näites on selleks \texttt{x\ +\ y} tehte vastus.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{add2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, y) \{}
-\NormalTok{    x }\OperatorTok{+}\StringTok{ }\NormalTok{y}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-Seda koodi jooksutades näeme, et meie funktsioon ilmub R-i Environmenti,
-kuhu tekib Functions lahter. Seal on näha ka selle funktsiooni kaks
-argumenti, apples ja oranges.
-
-Antud funktsiooni käivitamine annab veateate, sest funktsiooni
-argumentidel pole väärtusi:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## run function in failsafe mode}
-\NormalTok{inventory <-}\StringTok{ }\KeywordTok{try}\NormalTok{(}\KeywordTok{add2}\NormalTok{())}
-\NormalTok{## when function fails, error message is returned}
-\KeywordTok{class}\NormalTok{(inventory)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "try-error"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## print error message}
-\KeywordTok{cat}\NormalTok{(inventory)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Error in add2() : argument "x" is missing, with no default
-\end{verbatim}
-
-Andes funktsiooni argumentidele väärtused, saab väljundi:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## run function with proper arguments}
-\NormalTok{inventory <-}\StringTok{ }\KeywordTok{add2}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ apples, }\DataTypeTok{y =}\NormalTok{ oranges)}
-\NormalTok{## numeric vector is returned}
-\KeywordTok{class}\NormalTok{(inventory)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "numeric"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## result}
-\NormalTok{inventory}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 5
-\end{verbatim}
-
-\textbf{Nüüd midagi kasulikumat.}
-
-Funktsioon standrardvea arvutamiseks (baas R-s sellist funktsiooni ei
-ole): \texttt{sd()} funktsioon arvutab standardhälbe. Sellel on kaks
-argumenti: x and na.rm. Me teame, et SEM=SD/sqrt(N) kus N = length(x)
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{calc_sem <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
-\NormalTok{  stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
-\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
-\NormalTok{  stdev }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-x hoiab lihtsalt kohta andmetele, mida me tahame sinna funktsiooni
-suunata. \texttt{sd()}, \texttt{sqrt()} ja \texttt{length()} on
-olemasolevad baas R funktsioonid, mille me oma funktsiooni hõlmame.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## create numeric vector}
-\NormalTok{numbers <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\FloatTok{3.4}\NormalTok{, }\DecValTok{54}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\KeywordTok{calc_sem}\NormalTok{(numbers)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] NA
-\end{verbatim}
-
-No jah, kui meil on andmetes tundmatu arv (\texttt{NA}) siis on ka
-tulemuseks tundmatu arv.
-
-Sellisel juhul tuleb NA väärtused vektorist enne selle funktsiooni
-kasutamist välja visata:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{numbers_filtered <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(numbers)}
-\KeywordTok{calc_sem}\NormalTok{(numbers_filtered)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 12.80338
-\end{verbatim}
-
-On ka võimalus funktsiooni sisse kirjutada \textbf{NA väärtuste
-käsitlemine}. Näiteks, üks võimalus on \textbf{anda viga} ja funktsioon
-katkestada, et kasutaja saaks ise ühemõtteliselt oma andmetest NA
-väärtused eemaldada. Teine võimalus on funktsioonis \textbf{NA-d
-vaikimisi eemaldada} ja anda selle kohta näiteks teade.
-
-NA-de vaikimisi eemaldamiseks on hetkel mitu võimalust, kasutame
-kõigepealt nö. valet lahendust:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{calc_sem <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
-\NormalTok{  ## kasutame sd funktsiooni argumenti na.rm}
-\NormalTok{  stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
-\NormalTok{  stdev }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
-\NormalTok{\}}
-
-\KeywordTok{calc_sem}\NormalTok{(numbers)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 11.4517
-\end{verbatim}
-
-See annab meile vale tulemuse sest \texttt{na.rm\ =\ TRUE} viskab küll
-NA-d välja meie vektorist aga jätab vektori pikkuse muutmata
-(\texttt{length(x)} rida).
-
-Teeme uue versiooni oma funktsioonist, mis viskab vaikimisi välja
-puuduvad väärtused, kui need on olemas ja annab siis ka selle kohta
-hoiatuse.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## x on numbriline vektor}
-\NormalTok{calc_sem <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
-  
-\NormalTok{  ## viskame NA väärtused vektorist välja}
-\NormalTok{  x <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(x)}
-  
-\NormalTok{  ## kui vektoris on NA väärtusi, siis hoiatame kasutajat}
-  \ControlFlowTok{if}\NormalTok{(}\KeywordTok{inherits}\NormalTok{(}\KeywordTok{na.action}\NormalTok{(x), }\StringTok{"omit"}\NormalTok{)) \{}
-    \KeywordTok{warning}\NormalTok{(}\StringTok{"Removed NAs from vector.}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{  \}}
-  
-\NormalTok{  ## arvutame standardvea kasutades filtreeritud vektorit}
-\NormalTok{  stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
-\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
-\NormalTok{  stdev }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
-\NormalTok{\}}
-
-\KeywordTok{calc_sem}\NormalTok{(numbers)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in calc_sem(numbers): Removed NAs from vector.
-\end{verbatim}
-
-\begin{verbatim}
-## [1] 12.80338
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{length}\NormalTok{(numbers)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 5
-\end{verbatim}
-
-Missugune funktsiooni käitumine valida, sõltub kasutaja vajadusest.
-Rohkem infot NA käsitlemise funktsioonide kohta saab \texttt{?na.omit}
-abifailist.
-
-Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline
-protsess ja sellele, et alati saab paremini teha.
-
-\section{Funktsioonide raamatukogud}\label{funktsioonide-raamatukogud}
-
-Kõige esimene sõnum \texttt{sum()} help lehel on ``sum \{base\}'', mis
-tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka. Need
-funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud
-laetakse vaikimisi teie töökeskkonda. Näiteks ``base'' raamatukogu
-versioon 3.4.1 sisaldab 453 funktsiooni. Enamasti on sarnaseid asju
-tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse,
-mis tuleb eraldi R kesksest repositooriumist
-\href{https://cran.r-project.org}{CRAN} alla laadida ja installeerida.
-
-Selleks, et kasutada raamatukogudes leiduvaid funktsioone, tuleb
-kõigepealt antud raamatukogu oma arvutisse alla laadida (seda peab
-tegema ainult üks kord) ja seejärel see raamatukogu töökeskkond sisse
-lugeda (seda tuleb teha igal R sessioonil, kus me vastava raamatukogu
-funktsioone kasutame).
-
-Näiteks, hea laps ei lahku kunagi kodust ilma raamatukogu
-``tidyverse''-ta.
-
-Kõigepealt installeerime selle oma arvutisse.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-NB! kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle
-nime + R ja vaadake instruktsioone allalaadimiseks.
-
-Raamatukogud elavad \emph{repositorides}, millest suurim on CRAN.
-\texttt{install.packages()} otsib, laadib alla ja installeerib teie
-soovitud raamatukogu just sealt. Teised suuremad repod on GitHub
-\url{https://github.com}, kus elab sageli R pakettide source kood ja dev
-versioonid, ja Bioconductor (seal on tuhandeid bioloogiliseks analüüsiks
-vajalikke pakette). Neist allalaadimine on pisut erinev, aga mitte kuigi
-keeruline. Kõigi pakettide kohta on võrgus ka allalaadimise õpetus.
-Googeldage paketi nime järgi.
-
-Nüüd on teil \texttt{tidyverse} pakett arvutis. Tegelikult kuuluvad siia
-raamatukokku omakorda tosinkond raamatukogu --- tidyverse on pisut meta.
-Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te
-need töökeskkonda sisse loete
-
-Veel üks tehniline detail. \texttt{library(tidyverse)} käsk ei loe sisse
-kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi.
-Need tuleb vajadusel eraldi ükshaaval sisse lugeda.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(tidyverse)}
-\end{Highlighting}
-\end{Shaded}
-
-Antud kursuse raames tuleb seda teha iga kord, kui te R sessiooni
-alustate. Pakette/library-sid on soovitav laadida töökeskkonda muidu
-ikka ainult vastavalt vajadusele. ``tidyverse''-gi puhul on soovitatav
-eelistatult laadida ainult see/need raamatukogud, mida tegelikult
-kasutama ka hakatakse. Vaikimisi kogu aeg kogu ``tiduverse'' rammatukogu
-laadimine ei pruugi olla reprodutseeritavuse mõttes hea, sest
-paratamatult võivad tekkida konfliktid teiste mitte-tidyverse
-raamatukogude funktsioonidega. Näiteks on \texttt{select()} funktsioon
-lisaks ``dplyr'' librarile olemas ka mitmes teises paketis.
-
-Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab
-\texttt{::} operaatorit kasutades kutsuda välja/importida funktsiooni
-spetsiifilisest paketist:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{tidyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(df, my_var)}
-\end{Highlighting}
-\end{Shaded}
-
-Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat
-funktsiooni sisaldavat raamatukogu töökeskkonda laadida.
-
-\section{Paiguta kõigi raamatukogude lugemine koodi
-algusesse}\label{paiguta-koigi-raamatukogude-lugemine-koodi-algusesse}
-
-Enamasti kirjutatakse sisse loetavad raamatukogud kohe R scripti
-algusesse. Siis on teile endale ja teistele kes teie koodi loevad ilusti
-näha, mida hiljem vaja läheb.
-
-Kui te lähete RStudios paremal all olevale ``Packages'' tabile, siis on
-võimalik klikkida raamatukogu nimele ja näha selle help-faile,
-tutooriale ja kõiki selle raamatukogu funktsioone koos nende help
-failidega.
-
-Nüüd võite näiteks kasutada funktsiooni \texttt{drop\_na()}, mis
-eemaldab teie andmetabelist read, mis sisaldavad NA-sid. See funktsioon
-asub ``tidyr'' raamatukogus, mis koos ülejäänud ``tidyverse''-ga sisse
-loeti.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{?drop_na}
-\end{Highlighting}
-\end{Shaded}
-
-Verb: \texttt{drop\_na()} loe: ``viska NA-d välja''.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# creates a two-column table}
-\NormalTok{df <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{apples =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{5}\NormalTok{), }\DataTypeTok{oranges =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{4}\NormalTok{)) }
-\NormalTok{df}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 4 x 2
-##   apples oranges
-##    <dbl>   <dbl>
-## 1      2       4
-## 2      3      NA
-## 3     NA       6
-## 4      5       4
-\end{verbatim}
-
-Nüüd filtreerime tabelist välja selle rea mis sisaldavad NA väärtusi
-tulbas ``apples''. Tabeli mõlemas tulbas on üks NA, seega jääb tabelisse
-tulbas ``oranges'' NA-d sisaldav rida alles.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df1 <-}\StringTok{ }\KeywordTok{drop_na}\NormalTok{(df, apples) }
-\NormalTok{df1}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 3 x 2
-##   apples oranges
-##    <dbl>   <dbl>
-## 1      2       4
-## 2      3      NA
-## 3      5       4
-\end{verbatim}
-
-\section{Hurraa, uus arvuti! aga mis libraryd mul
-olid\ldots{}}\label{hurraa-uus-arvuti-aga-mis-libraryd-mul-olid}
-
-Kui te uuendate oma R versiooni või olete ostnud uue arvuti, siis
-lähevad kaduma kõik teie paketid. Nende automaatseks allalaadimiseks
-võite teha nii:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{## in the old version/machine run:}
-\NormalTok{installed <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{installed.packages}\NormalTok{())}
-\KeywordTok{write.csv}\NormalTok{(installed, }\StringTok{"data/installed_previously.csv"}\NormalTok{)}
-
-\NormalTok{## when new machine, move "data/installed_previously.csv" into new computer}
-
-\NormalTok{## and in the new one:}
-\NormalTok{installedPreviously <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/installed_previously.csv"}\NormalTok{)}
-\NormalTok{baseR <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{installed.packages}\NormalTok{())}
-\NormalTok{toInstall <-}\StringTok{ }\KeywordTok{setdiff}\NormalTok{(installedPreviously}\OperatorTok{$}\NormalTok{Package, baseR}\OperatorTok{$}\NormalTok{Package)}
-\KeywordTok{install.packages}\NormalTok{(toInstall) }
-\end{Highlighting}
-\end{Shaded}
-
-Tundub juskui tark ja mõistlik, kuid:
+\section{Andmete tüübid}\label{andmete-tuubid}
 
 \begin{itemize}
 \tightlist
 \item
-  Massiline pakettide installatsioon uude arvutisse võib kergesti
-  takerduda erinevate R-i väliste sõltuvuste taha ja tekitab
-  frustratsiooni.
+  numeric / integer
 \item
-  Lisaks, ebavajalikest pakettidest vabanemiseks on mõistlik vajaminevad
-  paketid jooksvalt tagasi installeerida.
+  logical -- 2 väärtust TRUE/FALSE
 \item
-  Kiire internet on laialt saadaval ja ka kompileeritavad paketid ei
-  võta installatsiooniks rohkem kui mõni minut aega.
+  character
+\item
+  factor (ordered and unordered) - 2+ diskreetset väärtust, mis võivad
+  olla järjestatud suuremast väiksemani (aga ei asu üksteisest võrdsel
+  kaugusel). Faktoreid käsitleme põhjalikumalt hiljem.
 \end{itemize}
 
-\chapter{Objektide tüübid}\label{obj}
+Andmete tüüpe saab üksteiseks konverteerida \texttt{as.numeric()},
+\texttt{as.character()}, \texttt{as.factor()}.
 
 \section{Vektor}\label{vektor}
 
@@ -1629,12 +1075,12 @@ Vektori unikaalsed väärtused saab kätte käsuga \texttt{unique()}:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{## returns a vector or data frame, but with duplicate elements/rows removed}
-\KeywordTok{unique}\NormalTok{(x)}
+\KeywordTok{unique}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 6 3 4 5
+## [1] 1 2 3 4 5
 \end{verbatim}
 
 \subsection{\texorpdfstring{Uus vektor: \texttt{seq()} ja
@@ -1812,15 +1258,15 @@ nimega e. Seega on meil tegu rekursiivse listiga.
 
 \begin{verbatim}
 ## [[1]]
-## [1] 0.1809017 0.6291214 0.7813255 0.3920464 0.6427031
+## [1] 0.01684116 0.92217625 0.83712493 0.57547763 0.80505060
 ## 
 ## [[2]]
-##           a            b
-## 1 0.1809017 -0.003066488
-## 2 0.6291214 -0.067804705
-## 3 0.7813255  0.794375467
-## 4 0.3920464 -0.895106266
-## 5 0.6427031 -1.458063588
+##            a          b
+## 1 0.01684116 -0.5035121
+## 2 0.92217625 -0.4699207
+## 3 0.83712493  1.7919783
+## 4 0.57547763  0.5923619
+## 5 0.80505060  2.0362937
 ## 
 ## [[3]]
 ## 
@@ -2509,7 +1955,7 @@ NA-d}\label{tabelit-sisse-lugedes-vaata-ule-na-d}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{main_files/figure-latex/unnamed-chunk-81-1.pdf} Siit on
+\includegraphics{main_files/figure-latex/unnamed-chunk-61-1.pdf} Siit on
 näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis
 sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur
 kaotus.
@@ -2564,7 +2010,7 @@ seda suurem number selle tulba kontekstis:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{main_files/figure-latex/unnamed-chunk-84-1.pdf}
+\includegraphics{main_files/figure-latex/unnamed-chunk-64-1.pdf}
 
 Kuidas rekodeerida NA-d näiteks 0-ks:
 
@@ -2594,25 +2040,6 @@ Aga saame ka andmeraame konverteerida otse maatriksiks (ja tagasi).
 \KeywordTok{class}\NormalTok{(fruits)}
 \end{Highlighting}
 \end{Shaded}
-
-\section{Andmete tüübid}\label{andmete-tuubid}
-
-\begin{itemize}
-\tightlist
-\item
-  numeric / integer
-\item
-  logical -- 2 väärtust TRUE/FALSE
-\item
-  character
-\item
-  factor (ordered and unordered) - 2+ diskreetset väärtust, mis võivad
-  olla järjestatud suuremast väiksemani (aga ei asu üksteisest võrdsel
-  kaugusel). Faktoreid käsitleme põhjalikumalt hiljem.
-\end{itemize}
-
-Andmete tüüpe saab üksteiseks konverteerida \texttt{as.numeric()},
-\texttt{as.character()}, \texttt{as.factor()}.
 
 \section{Indekseerimine}\label{indekseerimine}
 
@@ -2869,8 +2296,7 @@ formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).
 Pane tähele, et \texttt{{[}{[}\ {]}{]}} lubab ainult ühe elemendi
 korraga listist välja päästa.
 
-\section{Regular expression ja find \&
-replace}\label{regular-expression-ja-find-replace}
+\chapter{Regular expression ja find \& replace}\label{regex}
 
 Regular expression annab võimaluse lühidalt kirjeldada mitte-üheseid
 otsinguparameetreid.
@@ -2898,22 +2324,18 @@ Expressions as used in R}
   \texttt{{[}{[}:alnum:{]}{]}} is same as \texttt{{[}A-z0-9{]}}.
 \item
   Most common character classes:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{{[}:alnum:{]}} includes alphanumerics
-    (\texttt{{[}:alpha:{]}} and \texttt{{[}:digit:{]}});
-  \item
-    \texttt{{[}:alpha:{]}}, includes alphabetic characters
-    (\texttt{{[}:upper:{]}} and \texttt{{[}:lower:{]}} case);
-  \item
-    \texttt{{[}:punct:{]}} includes punctuation characters ! " \# \$ \%
-    \& ' ( ) * + , - . / : ; \textless{} = \textgreater{} ? @ {[} ~{]}
-    \^{} \_ ` ` \{ \textbar{} \} \textasciitilde{}.;
-  \item
-    \texttt{{[}:blank:{]}} includes space and tab; etc.
-  \end{itemize}
+\item
+  \texttt{{[}:alnum:{]}} includes alphanumerics (\texttt{{[}:alpha:{]}}
+  and \texttt{{[}:digit:{]}});
+\item
+  \texttt{{[}:alpha:{]}}, includes alphabetic characters
+  (\texttt{{[}:upper:{]}} and \texttt{{[}:lower:{]}} case);
+\item
+  \texttt{{[}:punct:{]}} includes punctuation characters ! " \# \$ \% \&
+  ' ( ) * + , - . / : ; \textless{} = \textgreater{} ? @ {[} ~{]} \^{}
+  \_ ` ` \{ \textbar{} \} \textasciitilde{}.;
+\item
+  \texttt{{[}:blank:{]}} includes space and tab; etc.
 \item
   The metacharacters in regular expressions are
   \texttt{.\ \textbackslash{}\ \textbar{}\ (\ )\ {[}\ \{\ \^{}\ \$\ *\ +\ ?},
@@ -3100,6 +2522,444 @@ expressions}\label{common-operations-with-regular-expressions}
 \NormalTok{abc}\OperatorTok{|}\NormalTok{d..f will match either }\StringTok{"abc"}\NormalTok{, or }\StringTok{"deaf"}\NormalTok{. }
 \end{Highlighting}
 \end{Shaded}
+
+\chapter{Funktsioonid on R keele verbid}\label{funs}
+
+Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt,
+kes püüab ära arvata, mida on vaja teha. Vahest teeb kah. Vahest isegi
+seda, mida kasutaja tahtis. Mõni arvab, et R-i puudus on veateadete
+puudumine või krüptilised veateated. Sama kehtib ka R-i helpi kohta.
+Seega tasub alati kontrollida, kas R ikka tegi seda, mida sina talle
+enda arust ette kirjutasid.
+
+Paljudel juhtudel ütleb (hea) funktsiooni nimi mida see teeb:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# create two test vectors}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate correlation}
+\KeywordTok{cor}\NormalTok{(x, y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.1166019
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate sum}
+\KeywordTok{sum}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 21
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate sum of two vectors}
+\KeywordTok{sum}\NormalTok{(x, y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 38
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate average}
+\KeywordTok{mean}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate median}
+\KeywordTok{median}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate standard deviation}
+\KeywordTok{sd}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.30384
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# return quantiles}
+\KeywordTok{quantile}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   0%  25%  50%  75% 100% 
+##    3    3    4    5    6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# return maximum value}
+\KeywordTok{max}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# return minimum value}
+\KeywordTok{min}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+R-is teevad asju programmikesed, mida kutsutakse
+\textbf{funktsioonideks}. Te võite mõelda funktsioonist nagu verbist.
+Näiteks funktsiooni \texttt{sum()} korral loe: ``võta summa''. Iga
+funktsiooni nime järel on sulud. Nende sulgude sees asuvad selle
+funktsiooni \textbf{argumendid}. Argumendid määravad ära funktsiooni
+käitumise. Et näha, millised argumendid on funktsiooni käivitamiseks
+vajalikud ja milliseid on üldse võimalik seadistada, kasuta `help'
+käsku.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?sum}
+\end{Highlighting}
+\end{Shaded}
+
+Help paneelis paremal all ilmub nüüd selle funktsiooni R
+dokumentatsioon. Vaata seal peatükki Usage:
+\texttt{sum(...,\ na.rm\ =\ FALSE)} ja edasi peatükki Arguments, mis
+ütleb, et \texttt{...} (ellipsis) tähistab vektoreid.
+
+\begin{verbatim}
+sum {base}  R Documentation 
+Sum of Vector Elements
+
+Description:
+
+sum returns the sum of all the values present in its arguments.
+
+Usage
+
+sum(..., na.rm = FALSE)
+
+Arguments
+
+... - numeric or complex or logical vectors.
+
+na.rm   - logical. Should missing values (including NaN) be removed?
+\end{verbatim}
+
+Seega võtab funktsioon \texttt{sum()} kaks argumenti: vektori arvudest
+(või loogilise vektori, mis koosneb TRUE ja FALSE määrangutest), ning
+``na.rm'' argumendi, millele saab anda väärtuseks kas, TRUE või FALSE.
+Usage ütleb ka, et vaikimisi on \texttt{na.rm\ =\ FALSE}, mis tähendab,
+et sellele argumendile on antud vaikeväärtus -- kui me seda ise ei
+muuda, siis jäävad NA-d arvutusse sisse. Kuna NA tähendab ``tundmatu
+arv'' siis iga tehe NA-dega annab vastuseks ``tundmatu arv'' ehk NA
+(tundmatu arv + 2 = tundmatu arv). Seega NA tulemus annab märku, et teie
+andmetes võib olla midagi valesti.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## moodustame vektori}
+\NormalTok{apples <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{34}\NormalTok{, }\DecValTok{43}\NormalTok{, }\OtherTok{NA}\NormalTok{)}
+\NormalTok{## arvutame summa}
+\KeywordTok{sum}\NormalTok{(apples, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 78
+\end{verbatim}
+
+Niimoodi saab arvutada summat vektorile nimega ``apples''.
+
+Sisestades R käsureale funktsiooni ilma selle sulgudeta saab masinast
+selle funktsiooni koodi. Näiteks:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sum}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (..., na.rm = FALSE)  .Primitive("sum")
+\end{verbatim}
+
+Tulemus näitab, et \texttt{sum()} on \texttt{Primitive} funktsioon, mis
+põhimõtteliselt tähendab, et ta põhineb C koodil ja ei kasuta R koodi.
+
+\section{Kirjutame R funktsiooni}\label{kirjutame-r-funktsiooni}
+
+Võib ju väita, et funktsiooni ainus mõte on peita teie eest korduvad
+vajalikud koodiread kood funktsiooni nime taha. Põhjus, miks R-s on
+funktsioonid, on korduse vähendamine, koodi loetavaks muutmine ja seega
+ka ruumi kokkuhoid. Koodi funktsioonidena kasutamine suurendab
+analüüside reprodutseeritavust, kuna funktsioonis olev kood pärineb
+ühest allikast, mitte ei ole paljude koopiatena igal pool laiali. See
+muudab pikad koodilõigud hõlpsalt taaskasutatavaks sest lihtsam on
+kirjutada lühike funktsiooni nimi ja sisestada selle funktsiooni
+argumendid. Koodi funktsioonidesse kokku surumine vähendab võimalusi
+lollideks vigadeks, mida te võite teha pikkade koodijuppidega
+manipuleerides. Seega tasub teil õppida ka oma korduvaid koodiridu
+funktsioonidena vormistama.
+
+Kõige pealt kirjutame natuke koodi.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# two apples}
+\NormalTok{apples <-}\StringTok{ }\DecValTok{2}
+\CommentTok{# three oranges}
+\NormalTok{oranges <-}\StringTok{ }\DecValTok{3} 
+\CommentTok{# parentheses around expression assigning result to an object }
+\CommentTok{# ensure that result is also printed to R console}
+\NormalTok{(inventory <-}\StringTok{ }\NormalTok{apples }\OperatorTok{+}\StringTok{ }\NormalTok{oranges)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+Ja nüüd pakendame selle tehte funktsiooni \texttt{add2()}. Funktsiooni
+defineerimiseks kasutame järgmist r ekspressiooni
+\texttt{function(\ arglist\ )\ expr}, kus ``arglist'' on tühi või ühe
+või rohkema nimega argumenti kujul \texttt{name=expression}; ``expr'' on
+R-i ekspressioon st. kood mida see funktsioon käivitab. Funktsiooni
+viimane evlueeritav koodirida on see, mis tuleb välja selle funktsiooni
+outputina.
+
+All toodud näites on selleks \texttt{x\ +\ y} tehte vastus.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{add2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, y) \{}
+\NormalTok{    x }\OperatorTok{+}\StringTok{ }\NormalTok{y}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Seda koodi jooksutades näeme, et meie funktsioon ilmub R-i Environmenti,
+kuhu tekib Functions lahter. Seal on näha ka selle funktsiooni kaks
+argumenti, apples ja oranges.
+
+Antud funktsiooni käivitamine annab veateate, sest funktsiooni
+argumentidel pole väärtusi:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## run function in failsafe mode}
+\NormalTok{inventory <-}\StringTok{ }\KeywordTok{try}\NormalTok{(}\KeywordTok{add2}\NormalTok{())}
+\NormalTok{## when function fails, error message is returned}
+\KeywordTok{class}\NormalTok{(inventory)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "try-error"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## print error message}
+\KeywordTok{cat}\NormalTok{(inventory)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in add2() : argument "x" is missing, with no default
+\end{verbatim}
+
+Andes funktsiooni argumentidele väärtused, saab väljundi:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## run function with proper arguments}
+\NormalTok{inventory <-}\StringTok{ }\KeywordTok{add2}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ apples, }\DataTypeTok{y =}\NormalTok{ oranges)}
+\NormalTok{## numeric vector is returned}
+\KeywordTok{class}\NormalTok{(inventory)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## result}
+\NormalTok{inventory}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\textbf{Nüüd midagi kasulikumat!}
+
+Funktsioon standrardvea arvutamiseks (baas R-s sellist funktsiooni ei
+ole): \texttt{sd()} funktsioon arvutab standardhälbe. Sellel on kaks
+argumenti: x and na.rm. Me teame, et SEM=SD/sqrt(N) kus N = length(x)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{calc_sem <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  stdev }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+x hoiab lihtsalt kohta andmetele, mida me tahame sinna funktsiooni
+suunata. \texttt{sd()}, \texttt{sqrt()} ja \texttt{length()} on
+olemasolevad baas R funktsioonid, mille me oma funktsiooni hõlmame.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## create numeric vector}
+\NormalTok{numbers <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\FloatTok{3.4}\NormalTok{, }\DecValTok{54}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\KeywordTok{calc_sem}\NormalTok{(numbers)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] NA
+\end{verbatim}
+
+No jah, kui meil on andmetes tundmatu arv (\texttt{NA}) siis on ka
+tulemuseks tundmatu arv.
+
+Sellisel juhul tuleb NA väärtused vektorist enne selle funktsiooni
+kasutamist välja visata:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbers_filtered <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(numbers)}
+\KeywordTok{calc_sem}\NormalTok{(numbers_filtered)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12.80338
+\end{verbatim}
+
+On ka võimalus funktsiooni sisse kirjutada \textbf{NA väärtuste
+käsitlemine}. Näiteks, üks võimalus on \textbf{anda viga} ja funktsioon
+katkestada, et kasutaja saaks ise ühemõtteliselt oma andmetest NA
+väärtused eemaldada. Teine võimalus on funktsioonis \textbf{NA-d
+vaikimisi eemaldada} ja anda selle kohta näiteks teade.
+
+NA-de vaikimisi eemaldamiseks on hetkel mitu võimalust, kasutame
+kõigepealt nö. valet lahendust:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{calc_sem <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  ## kasutame sd funktsiooni argumenti na.rm}
+\NormalTok{  stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  stdev }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
+\NormalTok{\}}
+
+\KeywordTok{calc_sem}\NormalTok{(numbers)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11.4517
+\end{verbatim}
+
+See annab meile vale tulemuse sest \texttt{na.rm\ =\ TRUE} viskab küll
+NA-d välja meie vektorist aga jätab vektori pikkuse muutmata
+(\texttt{length(x)} rida).
+
+Teeme uue versiooni oma funktsioonist, mis viskab vaikimisi välja
+puuduvad väärtused, kui need on olemas ja annab siis ka selle kohta
+hoiatuse.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## x on numbriline vektor}
+\NormalTok{calc_sem <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  
+\NormalTok{  ## viskame NA väärtused vektorist välja}
+\NormalTok{  x <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(x)}
+  
+\NormalTok{  ## kui vektoris on NA väärtusi, siis hoiatame kasutajat}
+  \ControlFlowTok{if}\NormalTok{(}\KeywordTok{inherits}\NormalTok{(}\KeywordTok{na.action}\NormalTok{(x), }\StringTok{"omit"}\NormalTok{)) \{}
+    \KeywordTok{warning}\NormalTok{(}\StringTok{"Removed NAs from vector.}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+  
+\NormalTok{  ## arvutame standardvea kasutades filtreeritud vektorit}
+\NormalTok{  stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{  stdev }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
+\NormalTok{\}}
+
+\KeywordTok{calc_sem}\NormalTok{(numbers)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in calc_sem(numbers): Removed NAs from vector.
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 12.80338
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(numbers)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+Missugune funktsiooni käitumine valida, sõltub kasutaja vajadusest.
+Rohkem infot NA käsitlemise funktsioonide kohta saab \texttt{?na.omit}
+abifailist.
+
+Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline
+protsess ja sellele, et alati saab paremini teha.
 
 \chapter{Tidyverse}\label{tidyverse}
 
@@ -3558,18 +3418,18 @@ variables that contain repeated characters.
 
 \begin{verbatim}
 ## # A tibble: 10 x 5
-##           V9        V8        V5         V2        V6
-##        <dbl>     <dbl>     <dbl>      <dbl>     <dbl>
-##  1 0.7319082 0.7949616 0.6583874 0.31065863 0.8080031
-##  2 0.1544345 0.9520258 0.6550620 0.89244697 0.9231152
-##  3 0.4587578 0.4585689 0.3744394 0.96317303 0.4452229
-##  4 0.8343949 0.3187834 0.6947866 0.29473846 0.2110396
-##  5 0.3154226 0.4763567 0.7835104 0.56945050 0.3034199
-##  6 0.6129105 0.7453097 0.2132041 0.89709913 0.2057310
-##  7 0.8225607 0.2449560 0.8121671 0.67101704 0.1763945
-##  8 0.4307588 0.6351382 0.1924458 0.02329034 0.1886192
-##  9 0.9632866 0.6384404 0.8472404 0.86026056 0.1655083
-## 10 0.6341059 0.1790103 0.6246067 0.82426689 0.5054788
+##           V9        V8        V5        V2        V6
+##        <dbl>     <dbl>     <dbl>     <dbl>     <dbl>
+##  1 0.9613165 0.9882680 0.8751001 0.1189526 0.4194693
+##  2 0.8427600 0.8505254 0.5353464 0.5698342 0.0774178
+##  3 0.2064142 0.5333487 0.5046003 0.2869559 0.3218222
+##  4 0.9813440 0.6457954 0.6699365 0.6485930 0.2591594
+##  5 0.8512575 0.2655271 0.9859679 0.9865256 0.4126495
+##  6 0.6213863 0.8454272 0.6786452 0.1702252 0.8144115
+##  7 0.8712815 0.3664518 0.6403682 0.4644201 0.5215614
+##  8 0.3026712 0.6247726 0.3568434 0.8205082 0.7251425
+##  9 0.7802022 0.5732615 0.5769528 0.1793494 0.5434890
+## 10 0.2041836 0.1636278 0.5377116 0.1202884 0.7335941
 \end{verbatim}
 
 \begin{Shaded}
@@ -3582,16 +3442,16 @@ variables that contain repeated characters.
 ## # A tibble: 10 x 4
 ##           V9        V8        V7        V6
 ##        <dbl>     <dbl>     <dbl>     <dbl>
-##  1 0.7319082 0.7949616 0.6640462 0.8080031
-##  2 0.1544345 0.9520258 0.7712118 0.9231152
-##  3 0.4587578 0.4585689 0.8625624 0.4452229
-##  4 0.8343949 0.3187834 0.1446820 0.2110396
-##  5 0.3154226 0.4763567 0.8363240 0.3034199
-##  6 0.6129105 0.7453097 0.5223407 0.2057310
-##  7 0.8225607 0.2449560 0.8308751 0.1763945
-##  8 0.4307588 0.6351382 0.7300725 0.1886192
-##  9 0.9632866 0.6384404 0.7937780 0.1655083
-## 10 0.6341059 0.1790103 0.1807813 0.5054788
+##  1 0.9613165 0.9882680 0.4409435 0.4194693
+##  2 0.8427600 0.8505254 0.3399676 0.0774178
+##  3 0.2064142 0.5333487 0.8188102 0.3218222
+##  4 0.9813440 0.6457954 0.1874342 0.2591594
+##  5 0.8512575 0.2655271 0.7227956 0.4126495
+##  6 0.6213863 0.8454272 0.2712084 0.8144115
+##  7 0.8712815 0.3664518 0.9072707 0.5215614
+##  8 0.3026712 0.6247726 0.1224734 0.7251425
+##  9 0.7802022 0.5732615 0.1434732 0.5434890
+## 10 0.2041836 0.1636278 0.3998745 0.7335941
 \end{verbatim}
 
 \begin{Shaded}
@@ -4703,7 +4563,7 @@ joonisel}\label{muudame-faktori-tasemete-jarjekorda-joonisel}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{main_files/figure-latex/unnamed-chunk-144-1.pdf}
+\includegraphics{main_files/figure-latex/unnamed-chunk-138-1.pdf}
 
 \subsection{\texorpdfstring{\texttt{fct\_relevel()} tõstab joonisel osad
 tasemed teistest
@@ -4719,7 +4579,7 @@ tõsta.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{main_files/figure-latex/unnamed-chunk-145-1.pdf}
+\includegraphics{main_files/figure-latex/unnamed-chunk-139-1.pdf}
 
 \subsection{\texorpdfstring{Joontega plotil saab
 \texttt{fct\_reorder2()} abil assotseerida y väärtused suurimate x
@@ -4740,7 +4600,7 @@ See muudab ploti paremini jälgitavaks:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{main_files/figure-latex/unnamed-chunk-146-1.pdf}
+\includegraphics{main_files/figure-latex/unnamed-chunk-140-1.pdf}
 
 \subsection{\texorpdfstring{Tulpdiagrammide korral kasuta
 \texttt{fct\_infreq()}}{Tulpdiagrammide korral kasuta fct\_infreq()}}\label{tulpdiagrammide-korral-kasuta-fct_infreq}
@@ -4756,7 +4616,7 @@ grupid tulevad enne.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{main_files/figure-latex/unnamed-chunk-147-1.pdf}
+\includegraphics{main_files/figure-latex/unnamed-chunk-141-1.pdf}
 
 \bibliography{packages.bib,book.bib}
 

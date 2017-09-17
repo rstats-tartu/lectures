@@ -100,3 +100,98 @@ project/
 On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid taaskasutatavate funktsioonidega kataloogi **R/**. 
 Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i [@roxygen2], siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi **man/**. 
 Rohkem projekti pakkimise kohta loe värskest preprindist "Packaging data analytical work reproducibly using R" [@marwick2017].
+
+## Pakettide installeerimine {#libs}
+
+R _library_-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. **R baaspakett sisaldab juba mitmeid funktsioone.** Kõige esimene sõnum `sum()` help lehel on "sum {base}", mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka.
+Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda.
+Näiteks "base" raamatukogu `r sub("ion:","ioon",tolower(library(help="base")[["info"]][[1]][2]))` sisaldab `r length(library(help="base")[["info"]][[2]])` funktsiooni.
+Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist [CRAN](https://cran.r-project.org) alla laadida ja installeerida. 
+
+
+Selleks, et installeerida pakett, sisesta järgnev käsurida R konsooli:
+```{r, eval=FALSE}
+## eg use "ggplot2" as packagename
+install.packages("packagename")
+```
+
+NB! Kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle nime + R ja vaadake instruktsioone installeerimiseks.
+Suure tõenäosusega on tegemist mõnes teises repos (näiteks Bioconductor) või ainult GitHubis asuva paketiga.
+
+RStudio võimaldab ka _point-and-click_ stiilis pakettide installeerimist:
+```{r, echo=FALSE, fig.cap="RStudio 'Install Packages' dialoogiaken."}
+knitr::include_graphics("assets/img/RStudio_package.install.png")
+```
+
+> Sa ei saa installeeritud pakette enne kasutada, kui laadid nad töökeskkonda kasutades `library()` funktsiooni.
+
+Peale installeerimist lae pakett oma R sessiooni kasutades `library()` käsku, näiteks:
+
+```{r eval=FALSE}
+## Load library/package tidyr
+library(dplyr)
+```
+
+`library(dplyr)` käsk teeb R sessioonis kasutatavaks kõik "dplyr" paketi funktsioonid.
+
+
+Näiteks "dplyr" pakett sisaldab `r library(dplyr); length(ls("package:dplyr"))` funktsiooni:
+
+```{r}
+library(dplyr)
+## let's look at the head of package list
+head(ls("package:dplyr"), 20)
+```
+
+Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab `::` operaatorit kasutades kutsuda välja/importida funktsiooni spetsiifilisest paketist:
+```{r eval=FALSE}
+dplyr::select(df, my_var)
+```
+Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat funktsiooni sisaldavat raamatukogu töökeskkonda laadida.
+
+**Funktsioonide-pakettide help failid RStudio kasutajaliidesest**: Kui te lähete RStudios paremal all olevale "Packages" tabile, siis on võimalik klikkida raamatukogu nimele ja näha selle help-faile, tutooriale ja kõiki selle raamatukogu funktsioone koos nende help failidega.
+
+
+## R repositooriumid
+R pakid on saadaval kolmest põhilisest repositooriumist:
+
+1. __CRAN__ https://cran.r-project.org
+
+```{r eval=FALSE}
+install.packages("ggplot2")
+```
+
+2. __Bioconductor__ https://www.bioconductor.org
+
+```{r eval=FALSE}
+# First run biocLite script fron bioconductor.org
+source("https://bioconductor.org/biocLite.R")  
+# use 'http' in url if 'https' is unavailable. 
+biocLite("GenomicRanges", suppressUpdates = TRUE)
+```
+
+3. __GitHub__ https://github.com
+
+```{r eval=FALSE}
+## Näiteks järgnev käsk installeerib xaringan 
+## presentation ninja paketi
+devtools::install_github("yihui/xaringan")
+```
+
+> NB! antud praktilise kursuse raames tutvume ja kasutame 'tidyverse' metapaketi funktsioone, laadides need iga sessiooni alguses:
+
+```{r eval=FALSE}
+## install.packages("tidyverse")
+library(tidyverse)
+```
+
+Nüüd on teil `tidyverse` pakett arvutis. 
+Tegelikult kuuluvad siia raamatukokku omakorda tosinkond raamatukogu --- tidyverse on pisut meta. 
+Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te need töökeskkonda sisse loete
+
+Veel üks tehniline detail. `library(tidyverse)` käsk ei loe sisse kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi. 
+Need tuleb vajadusel eraldi ükshaaval sisse lugeda.
+
+
+> Paiguta kõigi raamatukogude lugemine koodi algusesse. Enamasti kirjutatakse sisse loetavad raamatukogud kohe R scripti algusesse. Siis on teile endale ja teistele kes teie koodi loevad ilusti näha, mida hiljem vaja läheb.
+

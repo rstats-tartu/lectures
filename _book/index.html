@@ -51,6 +51,43 @@
 <script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -76,78 +113,42 @@
 <li class="chapter" data-level="3.3" data-path="tools.html"><a href="tools.html#loo-uus-r-projekt"><i class="fa fa-check"></i><b>3.3</b> Loo uus R projekt</a></li>
 <li class="chapter" data-level="3.4" data-path="tools.html"><a href="tools.html#git-merge-konfliktid"><i class="fa fa-check"></i><b>3.4</b> Git <em>Merge</em> konfliktid</a></li>
 <li class="chapter" data-level="3.5" data-path="tools.html"><a href="tools.html#r-projekti-kataloogi-soovitatav-minimaalne-struktuur"><i class="fa fa-check"></i><b>3.5</b> R projekti kataloogi soovitatav minimaalne struktuur</a></li>
+<li class="chapter" data-level="3.6" data-path="tools.html"><a href="tools.html#libs"><i class="fa fa-check"></i><b>3.6</b> Pakettide installeerimine</a></li>
+<li class="chapter" data-level="3.7" data-path="tools.html"><a href="tools.html#r-repositooriumid"><i class="fa fa-check"></i><b>3.7</b> R repositooriumid</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html"><i class="fa fa-check"></i><b>4</b> Pakettide installeerimine</a><ul>
-<li class="chapter" data-level="4.1" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html#eg-use-ggplot2-as-packagename"><i class="fa fa-check"></i><b>4.1</b> eg use “ggplot2” as packagename</a></li>
-<li class="chapter" data-level="4.2" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html#load-librarypackage-tidyr"><i class="fa fa-check"></i><b>4.2</b> Load library/package tidyr</a></li>
-<li class="chapter" data-level="4.3" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html#r-repositooriumid"><i class="fa fa-check"></i><b>4.3</b> R repositooriumid</a></li>
-<li class="chapter" data-level="4.4" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html#naiteks-jargnev-kask-installeerib-xaringan"><i class="fa fa-check"></i><b>4.4</b> Näiteks järgnev käsk installeerib xaringan</a></li>
-<li class="chapter" data-level="4.5" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html#presentation-ninja-paketi"><i class="fa fa-check"></i><b>4.5</b> presentation ninja paketi</a></li>
-<li class="chapter" data-level="4.6" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html#install.packagestidyverse"><i class="fa fa-check"></i><b>4.6</b> install.packages(“tidyverse”)</a></li>
+<li class="chapter" data-level="4" data-path="calc.html"><a href="calc.html"><i class="fa fa-check"></i><b>4</b> R on kalkulaator</a><ul>
+<li class="chapter" data-level="4.1" data-path="calc.html"><a href="calc.html#sama-koodi-saab-kirjutada-neljal-viisil"><i class="fa fa-check"></i><b>4.1</b> Sama koodi saab kirjutada neljal viisil</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="calc.html"><a href="calc.html"><i class="fa fa-check"></i><b>5</b> R on kalkulaator</a><ul>
-<li class="chapter" data-level="5.1" data-path="calc.html"><a href="calc.html#liidame-2-ja-2-ning-vaatame-kas-vastus-vordub-4"><i class="fa fa-check"></i><b>5.1</b> liidame 2 ja 2 ning vaatame kas vastus võrdub 4</a></li>
-<li class="chapter" data-level="5.2" data-path="calc.html"><a href="calc.html#trukime-vastuse-valja"><i class="fa fa-check"></i><b>5.2</b> Trükime vastuse välja</a></li>
-<li class="chapter" data-level="5.3" data-path="calc.html"><a href="calc.html#astmes-2-please-read-note-ruutjuur-3st-naturaallogaritm-sajast-umarda-pi-neljale-komakohale-r-objektid-objekt-ja-nimi-nimede-vorm-sama-koodi-saab-kirjutada-neljal-viisil-we-need-piping-operator-from-magrittr"><i class="fa fa-check"></i><b>5.3</b> 3 astmes 2; Please read Note ?’**‘## Ruutjuur 3st ## Naturaallogaritm sajast ## Ümarda pi neljale komakohale ## R objektid ## Objekt ja nimi ## Nimede vorm ## Sama koodi saab kirjutada neljal viisil ## we need piping operator’%&gt;%’ from magrittr</a></li>
+<li class="chapter" data-level="5" data-path="obj.html"><a href="obj.html"><i class="fa fa-check"></i><b>5</b> R objektid</a><ul>
+<li class="chapter" data-level="5.1" data-path="obj.html"><a href="obj.html#objekt-ja-nimi"><i class="fa fa-check"></i><b>5.1</b> Objekt ja nimi</a></li>
+<li class="chapter" data-level="5.2" data-path="obj.html"><a href="obj.html#nimede-vorm"><i class="fa fa-check"></i><b>5.2</b> Nimede vorm</a></li>
+<li class="chapter" data-level="5.3" data-path="obj.html"><a href="obj.html#andmete-tuubid"><i class="fa fa-check"></i><b>5.3</b> Andmete tüübid</a></li>
+<li class="chapter" data-level="5.4" data-path="obj.html"><a href="obj.html#vektor"><i class="fa fa-check"></i><b>5.4</b> Vektor</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="obj.html"><a href="obj.html#uus-vektor-seq-ja-rep"><i class="fa fa-check"></i><b>5.4.1</b> Uus vektor: <code>seq()</code> ja <code>rep()</code></a></li>
+<li class="chapter" data-level="5.4.2" data-path="obj.html"><a href="obj.html#tehted-arvuliste-vektoritega"><i class="fa fa-check"></i><b>5.4.2</b> Tehted arvuliste vektoritega</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="funs.html"><a href="funs.html"><i class="fa fa-check"></i><b>6</b> R on andmeanalüüsi keel, mille verbid on funktsioonid</a><ul>
-<li class="chapter" data-level="6.1" data-path="funs.html"><a href="funs.html#moodustame-vektori"><i class="fa fa-check"></i><b>6.1</b> moodustame vektori</a></li>
-<li class="chapter" data-level="6.2" data-path="funs.html"><a href="funs.html#arvutame-summa"><i class="fa fa-check"></i><b>6.2</b> arvutame summa</a></li>
-<li class="chapter" data-level="6.3" data-path="funs.html"><a href="funs.html#kirjutame-oma-esimese-r-funktsiooni"><i class="fa fa-check"></i><b>6.3</b> Kirjutame oma esimese R funktsiooni</a></li>
-<li class="chapter" data-level="6.4" data-path="funs.html"><a href="funs.html#run-function-in-failsafe-mode"><i class="fa fa-check"></i><b>6.4</b> run function in failsafe mode</a></li>
-<li class="chapter" data-level="6.5" data-path="funs.html"><a href="funs.html#when-function-fails-error-message-is-returned"><i class="fa fa-check"></i><b>6.5</b> when function fails, error message is returned</a></li>
-<li class="chapter" data-level="6.6" data-path="funs.html"><a href="funs.html#print-error-message"><i class="fa fa-check"></i><b>6.6</b> print error message</a></li>
-<li class="chapter" data-level="6.7" data-path="funs.html"><a href="funs.html#run-function-with-proper-arguments"><i class="fa fa-check"></i><b>6.7</b> run function with proper arguments</a></li>
-<li class="chapter" data-level="6.8" data-path="funs.html"><a href="funs.html#numeric-vector-is-returned"><i class="fa fa-check"></i><b>6.8</b> numeric vector is returned</a></li>
-<li class="chapter" data-level="6.9" data-path="funs.html"><a href="funs.html#result"><i class="fa fa-check"></i><b>6.9</b> result</a></li>
-<li class="chapter" data-level="6.10" data-path="funs.html"><a href="funs.html#create-numeric-vector"><i class="fa fa-check"></i><b>6.10</b> create numeric vector</a></li>
-<li class="chapter" data-level="6.11" data-path="funs.html"><a href="funs.html#x-on-numbriline-vektor"><i class="fa fa-check"></i><b>6.11</b> x on numbriline vektor</a></li>
-<li class="chapter" data-level="6.12" data-path="funs.html"><a href="funs.html#funktsioonide-raamatukogud"><i class="fa fa-check"></i><b>6.12</b> Funktsioonide raamatukogud</a></li>
-<li class="chapter" data-level="6.13" data-path="funs.html"><a href="funs.html#paiguta-koigi-raamatukogude-lugemine-koodi-algusesse"><i class="fa fa-check"></i><b>6.13</b> Paiguta kõigi raamatukogude lugemine koodi algusesse</a></li>
-<li class="chapter" data-level="6.14" data-path="funs.html"><a href="funs.html#hurraa-uus-arvuti-aga-mis-libraryd-mul-olid"><i class="fa fa-check"></i><b>6.14</b> Hurraa, uus arvuti! aga mis libraryd mul olid…</a></li>
-<li class="chapter" data-level="6.15" data-path="funs.html"><a href="funs.html#in-the-old-versionmachine-run"><i class="fa fa-check"></i><b>6.15</b> in the old version/machine run:</a></li>
-<li class="chapter" data-level="6.16" data-path="funs.html"><a href="funs.html#when-new-machine-move-datainstalled_previously.csv-into-new-computer"><i class="fa fa-check"></i><b>6.16</b> when new machine, move “data/installed_previously.csv” into new computer</a></li>
-<li class="chapter" data-level="6.17" data-path="funs.html"><a href="funs.html#and-in-the-new-one"><i class="fa fa-check"></i><b>6.17</b> and in the new one:</a></li>
+<li class="chapter" data-level="5.5" data-path="obj.html"><a href="obj.html#list"><i class="fa fa-check"></i><b>5.5</b> List</a></li>
+<li class="chapter" data-level="5.6" data-path="obj.html"><a href="obj.html#data-frame-ja-tibble"><i class="fa fa-check"></i><b>5.6</b> data frame ja tibble</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="obj.html"><a href="obj.html#rekodeerime-tibble-vaartusi"><i class="fa fa-check"></i><b>5.6.1</b> Rekodeerime tibble väärtusi</a></li>
+<li class="chapter" data-level="5.6.2" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-rea-kaupa"><i class="fa fa-check"></i><b>5.6.2</b> Ühendame kaks tibblet rea kaupa</a></li>
+<li class="chapter" data-level="5.6.3" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-veeru-kaupa"><i class="fa fa-check"></i><b>5.6.3</b> ühendame kaks tibblet veeru kaupa</a></li>
+<li class="chapter" data-level="5.6.4" data-path="obj.html"><a href="obj.html#nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha."><i class="fa fa-check"></i><b>5.6.4</b> Nii saab tibblest kätte vektori, millega saab tehteid teha.</a></li>
+<li class="chapter" data-level="5.6.5" data-path="obj.html"><a href="obj.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>5.6.5</b> Andmeraamide salvestamine (eksport-import)</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="obj.html"><a href="obj.html"><i class="fa fa-check"></i><b>7</b> Objektide tüübid</a><ul>
-<li class="chapter" data-level="7.1" data-path="obj.html"><a href="obj.html#vektor"><i class="fa fa-check"></i><b>7.1</b> Vektor</a></li>
-<li class="chapter" data-level="7.2" data-path="obj.html"><a href="obj.html#kui-muudame-faktori-otse-numbriks-saame-faktori-taseme-numbri"><i class="fa fa-check"></i><b>7.2</b> Kui muudame faktori otse numbriks, saame faktori taseme numbri</a></li>
-<li class="chapter" data-level="7.3" data-path="obj.html"><a href="obj.html#sorts-vector-in-ascending-order"><i class="fa fa-check"></i><b>7.3</b> sorts vector in ascending order</a></li>
-<li class="chapter" data-level="7.4" data-path="obj.html"><a href="obj.html#returns-a-vector-or-data-frame-but-with-duplicate-elementsrows-removed"><i class="fa fa-check"></i><b>7.4</b> returns a vector or data frame, but with duplicate elements/rows removed</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="obj.html"><a href="obj.html#uus-vektor-seq-ja-rep"><i class="fa fa-check"></i><b>7.4.1</b> Uus vektor: <code>seq()</code> ja <code>rep()</code></a></li>
-<li class="chapter" data-level="7.4.2" data-path="obj.html"><a href="obj.html#tehted-arvuliste-vektoritega"><i class="fa fa-check"></i><b>7.4.2</b> Tehted arvuliste vektoritega</a></li>
+<li class="chapter" data-level="5.7" data-path="obj.html"><a href="obj.html#tabelit-sisse-lugedes-vaata-ule-na-d"><i class="fa fa-check"></i><b>5.7</b> Tabelit sisse lugedes vaata üle NA-d</a></li>
+<li class="chapter" data-level="5.8" data-path="obj.html"><a href="obj.html#matrix"><i class="fa fa-check"></i><b>5.8</b> Matrix</a></li>
+<li class="chapter" data-level="5.9" data-path="obj.html"><a href="obj.html#indekseerimine"><i class="fa fa-check"></i><b>5.9</b> Indekseerimine</a><ul>
+<li class="chapter" data-level="5.9.1" data-path="obj.html"><a href="obj.html#vektorid-ja-nende-indeksid-on-uhedimensionaalsed"><i class="fa fa-check"></i><b>5.9.1</b> Vektorid ja nende indeksid on ühedimensionaalsed</a></li>
+<li class="chapter" data-level="5.9.2" data-path="obj.html"><a href="obj.html#andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-indeksid"><i class="fa fa-check"></i><b>5.9.2</b> Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid</a></li>
+<li class="chapter" data-level="5.9.3" data-path="obj.html"><a href="obj.html#listide-indekseerimine"><i class="fa fa-check"></i><b>5.9.3</b> Listide indekseerimine</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="obj.html"><a href="obj.html#list"><i class="fa fa-check"></i><b>7.5</b> List</a></li>
-<li class="chapter" data-level="7.6" data-path="obj.html"><a href="obj.html#data-frame-ja-tibble"><i class="fa fa-check"></i><b>7.6</b> data frame ja tibble</a></li>
-<li class="chapter" data-level="7.7" data-path="obj.html"><a href="obj.html#loome-kolm-vektorit"><i class="fa fa-check"></i><b>7.7</b> loome kolm vektorit</a></li>
-<li class="chapter" data-level="7.8" data-path="obj.html"><a href="obj.html#paneme-need-vektorid-kokku-tibble-sse"><i class="fa fa-check"></i><b>7.8</b> paneme need vektorid kokku tibble-sse</a><ul>
-<li class="chapter" data-level="7.8.1" data-path="obj.html"><a href="obj.html#rekodeerime-tibble-vaartusi"><i class="fa fa-check"></i><b>7.8.1</b> Rekodeerime tibble väärtusi</a></li>
-<li class="chapter" data-level="7.8.2" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-rea-kaupa"><i class="fa fa-check"></i><b>7.8.2</b> Ühendame kaks tibblet rea kaupa</a></li>
 </ul></li>
-<li class="chapter" data-level="7.9" data-path="obj.html"><a href="obj.html#works-by-guessing-your-true-intention"><i class="fa fa-check"></i><b>7.9</b> works by guessing your true intention</a><ul>
-<li class="chapter" data-level="7.9.1" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-veeru-kaupa"><i class="fa fa-check"></i><b>7.9.1</b> ühendame kaks tibblet veeru kaupa</a></li>
-<li class="chapter" data-level="7.9.2" data-path="obj.html"><a href="obj.html#nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha."><i class="fa fa-check"></i><b>7.9.2</b> Nii saab tibblest kätte vektori, millega saab tehteid teha.</a></li>
+<li class="chapter" data-level="6" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>6</b> Regular expression ja find &amp; replace</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="regex.html"><a href="regex.html#common-operations-with-regular-expressions"><i class="fa fa-check"></i><b>6.0.1</b> Common operations with regular expressions</a></li>
+<li class="chapter" data-level="6.0.2" data-path="regex.html"><a href="regex.html#find-and-replace"><i class="fa fa-check"></i><b>6.0.2</b> Find and replace</a></li>
 </ul></li>
-<li class="chapter" data-level="7.10" data-path="obj.html"><a href="obj.html#see-on-jalle-vektor"><i class="fa fa-check"></i><b>7.10</b> see on jälle vektor</a><ul>
-<li class="chapter" data-level="7.10.1" data-path="obj.html"><a href="obj.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>7.10.1</b> Andmeraamide salvestamine (eksport-import)</a></li>
-</ul></li>
-<li class="chapter" data-level="7.11" data-path="obj.html"><a href="obj.html#loome-uuesti-fruits-data-tibble"><i class="fa fa-check"></i><b>7.11</b> loome uuesti fruits data tibble</a></li>
-<li class="chapter" data-level="7.12" data-path="obj.html"><a href="obj.html#kirjutame-fruits-tabeli-csv-faili-fruits.csv-kataloogi-data"><i class="fa fa-check"></i><b>7.12</b> kirjutame fruits tabeli csv faili fruits.csv kataloogi data</a></li>
-<li class="chapter" data-level="7.13" data-path="obj.html"><a href="obj.html#koigepealt-vaatame-kui-palju-sheete-failis-on"><i class="fa fa-check"></i><b>7.13</b> kõigepealt vaatame kui palju sheete failis on</a></li>
-<li class="chapter" data-level="7.14" data-path="obj.html"><a href="obj.html#siis-impordime-naiteks-esimese-sheeti"><i class="fa fa-check"></i><b>7.14</b> siis impordime näiteks esimese sheeti</a></li>
-<li class="chapter" data-level="7.15" data-path="obj.html"><a href="obj.html#tabelit-sisse-lugedes-vaata-ule-na-d"><i class="fa fa-check"></i><b>7.15</b> Tabelit sisse lugedes vaata üle NA-d</a></li>
-<li class="chapter" data-level="7.16" data-path="obj.html"><a href="obj.html#matrix"><i class="fa fa-check"></i><b>7.16</b> Matrix</a></li>
-<li class="chapter" data-level="7.17" data-path="obj.html"><a href="obj.html#andmete-tuubid"><i class="fa fa-check"></i><b>7.17</b> Andmete tüübid</a></li>
-<li class="chapter" data-level="7.18" data-path="obj.html"><a href="obj.html#indekseerimine"><i class="fa fa-check"></i><b>7.18</b> Indekseerimine</a><ul>
-<li class="chapter" data-level="7.18.1" data-path="obj.html"><a href="obj.html#vektorid-ja-nende-indeksid-on-uhedimensionaalsed"><i class="fa fa-check"></i><b>7.18.1</b> Vektorid ja nende indeksid on ühedimensionaalsed</a></li>
-<li class="chapter" data-level="7.18.2" data-path="obj.html"><a href="obj.html#andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-indeksid"><i class="fa fa-check"></i><b>7.18.2</b> Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid</a></li>
-<li class="chapter" data-level="7.18.3" data-path="obj.html"><a href="obj.html#listide-indekseerimine"><i class="fa fa-check"></i><b>7.18.3</b> Listide indekseerimine</a></li>
-</ul></li>
-<li class="chapter" data-level="7.19" data-path="obj.html"><a href="obj.html#this-list-has-two-elements-a-data-frame-called-a-and-a-character-vector-called-b."><i class="fa fa-check"></i><b>7.19</b> this list has two elements, a data frame called “a” and a character vector called “b”.</a></li>
-<li class="chapter" data-level="7.20" data-path="obj.html"><a href="obj.html#regular-expression-ja-find-replace"><i class="fa fa-check"></i><b>7.20</b> Regular expression ja find &amp; replace</a><ul>
-<li class="chapter" data-level="7.20.1" data-path="obj.html"><a href="obj.html#common-operations-with-regular-expressions"><i class="fa fa-check"></i><b>7.20.1</b> Common operations with regular expressions</a></li>
-<li class="chapter" data-level="7.20.2" data-path="obj.html"><a href="obj.html#find-and-replace"><i class="fa fa-check"></i><b>7.20.2</b> Find and replace</a></li>
-</ul></li>
+<li class="chapter" data-level="7" data-path="funs.html"><a href="funs.html"><i class="fa fa-check"></i><b>7</b> Funktsioonid on R keele verbid</a><ul>
+<li class="chapter" data-level="7.1" data-path="funs.html"><a href="funs.html#kirjutame-r-funktsiooni"><i class="fa fa-check"></i><b>7.1</b> Kirjutame R funktsiooni</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>8</b> Tidyverse</a><ul>
 <li class="chapter" data-level="8.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>8.1</b> Tidy tabeli struktuur</a><ul>
@@ -169,20 +170,12 @@
 <li class="chapter" data-level="8.5.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>8.5.3</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
 <li class="chapter" data-level="8.5.4" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>8.5.4</b> Rekodeerime pideva muutuja faktoriks</a></li>
 <li class="chapter" data-level="8.5.5" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>8.5.5</b> Muudame faktori tasemete järjekorda joonisel</a></li>
-</ul></li>
-<li class="chapter" data-level="8.6" data-path="tidyverse.html"><a href="tidyverse.html#summeerime-andmed"><i class="fa fa-check"></i><b>8.6</b> summeerime andmed</a></li>
-<li class="chapter" data-level="8.7" data-path="tidyverse.html"><a href="tidyverse.html#joonistame-graafiku"><i class="fa fa-check"></i><b>8.7</b> joonistame graafiku</a><ul>
-<li class="chapter" data-level="8.7.1" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>8.7.1</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
-</ul></li>
-<li class="chapter" data-level="8.8" data-path="tidyverse.html"><a href="tidyverse.html#taiendame-eelmist-graafikut-umberkorraldatud-andmetega"><i class="fa fa-check"></i><b>8.8</b> täiendame eelmist graafikut ümberkorraldatud andmetega</a><ul>
-<li class="chapter" data-level="8.8.1" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>8.8.1</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
-</ul></li>
-<li class="chapter" data-level="8.9" data-path="tidyverse.html"><a href="tidyverse.html#summeerime-andmed-1"><i class="fa fa-check"></i><b>8.9</b> summeerime andmed</a></li>
-<li class="chapter" data-level="8.10" data-path="tidyverse.html"><a href="tidyverse.html#paneme-andmed-graafikule"><i class="fa fa-check"></i><b>8.10</b> paneme andmed graafikule</a><ul>
-<li class="chapter" data-level="8.10.1" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>8.10.1</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
+<li class="chapter" data-level="8.5.6" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>8.5.6</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
+<li class="chapter" data-level="8.5.7" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>8.5.7</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
+<li class="chapter" data-level="8.5.8" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>8.5.8</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="placeholder.html"><a href="placeholder.html"><i class="fa fa-check"></i><b>9</b> Placeholder</a></li>
+<li class="chapter" data-level="" data-path="bibliograafia.html"><a href="bibliograafia.html"><i class="fa fa-check"></i>Bibliograafia</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstats-tartu/lectures" target="blank">Published with bookdown</a></li>
 
@@ -259,6 +252,17 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

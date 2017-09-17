@@ -1,5 +1,5 @@
 
-# R on andmeanalüüsi keel, mille verbid on funktsioonid {#funs}
+# Funktsioonid on R keele verbid {#funs}
 
 Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt, kes püüab ära arvata, mida on vaja teha. 
 Vahest teeb kah. 
@@ -90,7 +90,7 @@ sum
 ```
 Tulemus näitab, et `sum()` on `Primitive` funktsioon, mis põhimõtteliselt tähendab, et ta põhineb C koodil ja ei kasuta R koodi.
 
-## Kirjutame oma esimese R funktsiooni
+## Kirjutame R funktsiooni
 
 Võib ju väita, et funktsiooni ainus mõte on peita teie eest korduvad vajalikud koodiread kood funktsiooni nime taha. 
 Põhjus, miks R-s on funktsioonid, on korduse vähendamine, koodi loetavaks muutmine ja seega ka ruumi kokkuhoid. 
@@ -143,7 +143,9 @@ class(inventory)
 inventory
 ```
 
-**Nüüd midagi kasulikumat.** 
+
+
+**Nüüd midagi kasulikumat!**
 
 Funktsioon standrardvea arvutamiseks (baas R-s sellist funktsiooni ei ole):
 `sd()` funktsioon arvutab standardhälbe. 
@@ -217,102 +219,3 @@ Missugune funktsiooni käitumine valida, sõltub kasutaja vajadusest.
 Rohkem infot NA käsitlemise funktsioonide kohta saab `?na.omit` abifailist.
 
 Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline protsess ja sellele, et alati saab paremini teha.
-
-## Funktsioonide raamatukogud
-
-Kõige esimene sõnum `sum()` help lehel on "sum {base}", mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka.
-Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda.
-Näiteks "base" raamatukogu `r sub("ion:","ioon",tolower(library(help="base")[["info"]][[1]][2]))` sisaldab `r length(library(help="base")[["info"]][[2]])` funktsiooni.
-Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist [CRAN](https://cran.r-project.org) alla laadida ja installeerida. 
-
-Selleks, et kasutada raamatukogudes leiduvaid funktsioone, tuleb kõigepealt antud raamatukogu oma arvutisse alla laadida (seda peab tegema ainult üks kord) ja seejärel see raamatukogu töökeskkond sisse lugeda (seda tuleb teha igal R sessioonil, kus me vastava raamatukogu funktsioone kasutame).
-
-Näiteks, hea laps ei lahku kunagi kodust ilma raamatukogu "tidyverse"-ta.
-
-Kõigepealt installeerime selle oma arvutisse.
-```{r eval=FALSE}
-install.packages("tidyverse")
-```
-
-NB! kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle nime + R ja vaadake instruktsioone allalaadimiseks.
-
-Raamatukogud elavad _repositorides_, millest suurim on CRAN. `install.packages()` otsib, laadib alla ja installeerib teie soovitud raamatukogu just sealt. 
-Teised suuremad repod on GitHub https://github.com, kus elab sageli R pakettide source kood ja dev versioonid, ja Bioconductor (seal on tuhandeid bioloogiliseks analüüsiks vajalikke pakette). 
-Neist allalaadimine on pisut erinev, aga mitte kuigi keeruline. 
-Kõigi pakettide kohta on võrgus ka allalaadimise õpetus. 
-Googeldage paketi nime järgi.
-
-Nüüd on teil `tidyverse` pakett arvutis. 
-Tegelikult kuuluvad siia raamatukokku omakorda tosinkond raamatukogu --- tidyverse on pisut meta. 
-Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te need töökeskkonda sisse loete
-
-Veel üks tehniline detail. `library(tidyverse)` käsk ei loe sisse kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi. 
-Need tuleb vajadusel eraldi ükshaaval sisse lugeda.
-
-```{r}
-library(tidyverse)
-```
-
-Antud kursuse raames tuleb seda teha iga kord, kui te R sessiooni alustate. 
-Pakette/library-sid on soovitav laadida töökeskkonda muidu ikka ainult vastavalt vajadusele. 
-"tidyverse"-gi puhul on soovitatav eelistatult laadida ainult see/need raamatukogud, mida tegelikult kasutama ka hakatakse.
-Vaikimisi kogu aeg kogu "tiduverse" rammatukogu laadimine ei pruugi olla reprodutseeritavuse mõttes hea, sest paratamatult võivad tekkida konfliktid teiste mitte-tidyverse raamatukogude funktsioonidega.
-Näiteks on `select()` funktsioon lisaks "dplyr" librarile olemas ka mitmes teises paketis.
-
-Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab `::` operaatorit kasutades kutsuda välja/importida funktsiooni spetsiifilisest paketist:
-```{r eval=FALSE}
-tidyr::select(df, my_var)
-```
-Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat funktsiooni sisaldavat raamatukogu töökeskkonda laadida.
-
-## Paiguta kõigi raamatukogude lugemine koodi algusesse
-
-Enamasti kirjutatakse sisse loetavad raamatukogud kohe R scripti algusesse. 
-Siis on teile endale ja teistele kes teie koodi loevad ilusti näha, mida hiljem vaja läheb.
-
-Kui te lähete RStudios paremal all olevale "Packages" tabile, siis on võimalik klikkida raamatukogu nimele ja näha selle help-faile, tutooriale ja kõiki selle raamatukogu funktsioone koos nende help failidega.
-
-Nüüd võite näiteks kasutada funktsiooni `drop_na()`, mis eemaldab teie andmetabelist read, mis sisaldavad NA-sid. 
-See funktsioon asub "tidyr" raamatukogus, mis koos ülejäänud "tidyverse"-ga sisse loeti.
-
-```{r}
-?drop_na
-```
-
-Verb: `drop_na()` loe: "viska NA-d välja".
-```{r}
-# creates a two-column table
-df <- tibble(apples = c(2, 3, NA, 5), oranges = c(4, NA, 6, 4)) 
-df
-```
-
-Nüüd filtreerime tabelist välja selle rea mis sisaldavad NA väärtusi tulbas "apples". 
-Tabeli mõlemas tulbas on üks NA, seega jääb tabelisse tulbas "oranges" NA-d sisaldav rida alles. 
-```{r}
-df1 <- drop_na(df, apples) 
-df1
-```
-
-## Hurraa, uus arvuti! aga mis libraryd mul olid...
-
-Kui te uuendate oma R versiooni või olete ostnud uue arvuti, siis lähevad kaduma kõik teie paketid. Nende automaatseks allalaadimiseks võite teha nii:
-
-```{r eval=FALSE}
-## in the old version/machine run:
-installed <- as.data.frame(installed.packages())
-write.csv(installed, "data/installed_previously.csv")
-
-## when new machine, move "data/installed_previously.csv" into new computer
-
-## and in the new one:
-installedPreviously <- read.csv("data/installed_previously.csv")
-baseR <- as.data.frame(installed.packages())
-toInstall <- setdiff(installedPreviously$Package, baseR$Package)
-install.packages(toInstall) 
-```
-
-Tundub juskui tark ja mõistlik, kuid:
-
-- Massiline pakettide installatsioon uude arvutisse võib kergesti takerduda erinevate R-i väliste sõltuvuste taha ja tekitab frustratsiooni.
-- Lisaks, ebavajalikest pakettidest vabanemiseks on mõistlik vajaminevad paketid jooksvalt tagasi installeerida.
-- Kiire internet on laialt saadaval ja ka kompileeritavad paketid ei võta installatsiooniks rohkem kui mõni minut aega.

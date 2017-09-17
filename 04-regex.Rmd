@@ -1,0 +1,92 @@
+
+# Regular expression ja find & replace {#regex}
+
+Regular expression annab võimaluse lühidalt kirjeldada mitte-üheseid otsinguparameetreid.
+
+> regular expression on string, mis kirjeldab mitut stringi
+
+
+A [regular expression](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html)  [Regular Expressions as used in R](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html)
+
++ Most characters, including all letters and digits, are regular expressions that match themselves. 
++ `.` matches any single character.
++ You can refer also to a character class, which is a list of characters enclosed between `[` and `]`, e.g. `[[:alnum:]]` is same as `[A-z0-9]`.
++ Most common character classes:
+  - `[:alnum:]` includes alphanumerics (`[:alpha:]` and `[:digit:]`); 
+- `[:alpha:]`, includes alphabetic characters (`[:upper:]` and `[:lower:]` case);
+- `[:punct:]` includes punctuation characters ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` ` { | } ~.; 
+- `[:blank:]` includes space and tab; etc. 
++ The metacharacters in regular expressions are `. \ | ( ) [ { ^ $ * + ?`, whether these have a special meaning depends on the context. When matching a metacharacter as a regular character, precede it with a double backslash `\\`.
++ Repetition quantifiers put after regex specify how many times regex is matched: `?`, optional, at most once; `*`, zero or more times; `+`, one or more times; `{n}`, n times; `{n,}`, n or more times; `{n,m}`, n to m times. 
++ ^ anchors the regular expression to the start of the string.
++ $ anchors the the regular expression to end of the string.
+
+### Common operations with regular expressions
+
++ Locate a pattern match (positions)
++ Extract a matched pattern
++ Identify a match to a pattern
++ Replace a matched pattern
+
+### Find and replace
+
+```{r }
+library(stringr)
+x<- c("apple", "ananas", "banana")
+
+#replaces all a-s at the beginning of strings with e-s
+str_replace(x, "^a", "e") 
+
+# str_replace only replaces at the first occurence at each string
+str_replace(x, "a", "e") 
+
+#str_replace_all replaces all a-s anywhere in the strings
+str_replace_all(x, "a", "e") 
+
+#replaces a and the following character at the end of string with nothing (i.e. deletes 2 chars)
+str_replace(x, "a.$", "")
+
+#replaces a-s or s-s at the end of string with e-s
+str_replace(x, "(a|s)$", "e")
+
+#replaces a-s or s-s anywhere in the string with e-s
+str_replace_all(x, "a|s", "e")
+
+#remove all numbers. 
+y<-c("as1", "2we3w", "3e")
+str_replace_all(y, "\\d", "") 
+
+#remove everything, except numbers. 
+str_replace_all(y, "[A-Za-z_]", "") 
+```
+
+
+
+```{r }
+x<- c("apple", "apple pie")
+str_replace_all(x, "^apple$","m") #To force to only match a complete string:
+str_replace_all(x, "\\s","_") #space to _
+str_replace_all(x, "[apl]","_") #a or p or l to _
+str_replace_all(x, "[ap|p.e]","_") # ap or p.e to _
+```
+
+
+**patterns that match more than one character:**
+
+
+```{r, eval=FALSE}
+
+. (dot): any character apart from a newline.
+
+\\d: any digit.
+
+\\s: any whitespace (space, tab, newline).
+
+\[abc]: match a, b, or c.
+
+\[!abc]: match anything except a, b, or c.
+
+To create a regular expression containing \d or \s, you???ll need to escape the \ for the string, so you will type "\\\\d" or "\\\\s".
+
+abc|d..f will match either "abc", or "deaf". 
+```
