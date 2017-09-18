@@ -1,15 +1,7 @@
-<<<<<<< HEAD:A01_sissejuhatus.Rmd
----
-title: "2. Sissejuhatus andmeanalüüsi"
-output:
-  pdf_document: default
-  html_notebook: default
----
-=======
+
 
 # Bayesiaanlik statistika
 
->>>>>>> 4a904f8ff148d8ab5f8c60b29e06a3d7233ab7ee:chapters/A01_sissejuhatus.Rmd
 
 ```{r, error=FALSE, message=FALSE, echo=FALSE}
 library(tidyverse)
@@ -33,8 +25,7 @@ Lugejad, kellele on juba õpetatud sageduslikku statistikat, võivad tahta teada
 =======
 
 
-## Ajaloost ja tõenäosusest
->>>>>>> 4a904f8ff148d8ab5f8c60b29e06a3d7233ab7ee:chapters/A01_sissejuhatus.Rmd
+
 
 ## 2.2 Suur ja väike maailm
 
