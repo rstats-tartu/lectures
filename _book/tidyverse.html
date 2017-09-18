@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Reprodutseeritav andmeanalüüs kasutades R programmi</title>
+  <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid.">
   <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R programmi" />
+  <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="assets/img/cover.png" />
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="rstats-tartu/lectures" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R programmi" />
+  <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid." />
   <meta name="twitter:image" content="assets/img/cover.png" />
@@ -188,7 +188,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reprodutseeritav andmeanalüüs kasutades R programmi</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reprodutseeritav andmeanalüüs kasutades R keelt</a>
           </h1>
         </div>
 
@@ -506,32 +506,32 @@ dat1</code></pre></div>
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)</code></pre></div>
 <pre><code>## # A tibble: 10 x 5
-##         V9     V8      V5      V2     V6
-##      &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-##  1 0.81403 0.5397 0.57440 0.03390 0.9307
-##  2 0.68460 0.6364 0.54300 0.05799 0.5629
-##  3 0.09379 0.9230 0.11633 0.06910 0.3877
-##  4 0.23586 0.7828 0.85774 0.84829 0.3258
-##  5 0.07284 0.0297 0.13109 0.57431 0.5877
-##  6 0.57019 0.6015 0.08251 0.60175 0.7440
-##  7 0.64281 0.4906 0.97588 0.74240 0.2160
-##  8 0.34176 0.8389 0.04742 0.19883 0.3801
-##  9 0.57406 0.1348 0.05891 0.35762 0.7046
-## 10 0.42814 0.5941 0.96346 0.42684 0.5420</code></pre>
+##         V9     V8      V5      V2       V6
+##      &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+##  1 0.54612 0.2927 0.63965 0.26161 0.955604
+##  2 0.54810 0.7265 0.95562 0.10001 0.593661
+##  3 0.14802 0.3437 0.64398 0.44145 0.952735
+##  4 0.19706 0.7398 0.70140 0.41013 0.183176
+##  5 0.58680 0.9062 0.81169 0.83527 0.844123
+##  6 0.03605 0.4148 0.01671 0.86743 0.364803
+##  7 0.55690 0.2101 0.97734 0.31232 0.929230
+##  8 0.85034 0.9969 0.20084 0.09755 0.008479
+##  9 0.88860 0.4522 0.13237 0.85816 0.320244
+## 10 0.91111 0.8510 0.88292 0.92675 0.796858</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))</code></pre></div>
 <pre><code>## # A tibble: 10 x 4
-##         V9     V8      V7     V6
-##      &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-##  1 0.81403 0.5397 0.79345 0.9307
-##  2 0.68460 0.6364 0.69383 0.5629
-##  3 0.09379 0.9230 0.50335 0.3877
-##  4 0.23586 0.7828 0.30584 0.3258
-##  5 0.07284 0.0297 0.84407 0.5877
-##  6 0.57019 0.6015 0.95326 0.7440
-##  7 0.64281 0.4906 0.57453 0.2160
-##  8 0.34176 0.8389 0.08784 0.3801
-##  9 0.57406 0.1348 0.25124 0.7046
-## 10 0.42814 0.5941 0.33847 0.5420</code></pre>
+##         V9     V8      V7       V6
+##      &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+##  1 0.54612 0.2927 0.34716 0.955604
+##  2 0.54810 0.7265 0.39990 0.593661
+##  3 0.14802 0.3437 0.04588 0.952735
+##  4 0.19706 0.7398 0.68628 0.183176
+##  5 0.58680 0.9062 0.72845 0.844123
+##  6 0.03605 0.4148 0.60594 0.364803
+##  7 0.55690 0.2101 0.91217 0.929230
+##  8 0.85034 0.9969 0.26812 0.008479
+##  9 0.88860 0.4522 0.30310 0.320244
+## 10 0.91111 0.8510 0.27215 0.796858</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Drop variables with -</span>
 <span class="kw">select</span>(iris, <span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;Petal&quot;</span>))</code></pre></div>
 <pre><code>## # A tibble: 150 x 3
