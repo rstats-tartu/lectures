@@ -506,32 +506,32 @@ dat1</code></pre></div>
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)</code></pre></div>
 <pre><code>## # A tibble: 10 x 5
-##         V9      V8     V5     V2       V6
-##      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
-##  1 0.47515 0.45947 0.6833 0.6538 0.767780
-##  2 0.56771 0.34956 0.3334 0.5077 0.197348
-##  3 0.22235 0.66774 0.4430 0.1320 0.461129
-##  4 0.49677 0.75493 0.9466 0.1856 0.179925
-##  5 0.14123 0.67774 0.4392 0.8549 0.204132
-##  6 0.65546 0.02008 0.7172 0.6686 0.443371
-##  7 0.40481 0.30349 0.5971 0.9260 0.004976
-##  8 0.02038 0.81965 0.2860 0.5155 0.951156
-##  9 0.23660 0.48877 0.9530 0.8921 0.553517
-## 10 0.11486 0.97010 0.4693 0.3602 0.489669</code></pre>
+##         V9     V8     V5      V2      V6
+##      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 0.20985 0.2891 0.7687 0.38165 0.05493
+##  2 0.56933 0.8572 0.2858 0.15792 0.19545
+##  3 0.05821 0.3448 0.2977 0.25951 0.08797
+##  4 0.99846 0.9706 0.5870 0.01253 0.01205
+##  5 0.83600 0.7678 0.4348 0.12871 0.24753
+##  6 0.40256 0.5141 0.9514 0.78672 0.68526
+##  7 0.22462 0.5242 0.6596 0.60988 0.43881
+##  8 0.53566 0.5486 0.5504 0.77546 0.29295
+##  9 0.66309 0.9171 0.9417 0.51255 0.44049
+## 10 0.52906 0.6573 0.5857 0.39797 0.25974</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))</code></pre></div>
 <pre><code>## # A tibble: 10 x 4
-##         V9      V8     V7       V6
-##      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
-##  1 0.47515 0.45947 0.5215 0.767780
-##  2 0.56771 0.34956 0.2719 0.197348
-##  3 0.22235 0.66774 0.2567 0.461129
-##  4 0.49677 0.75493 0.3108 0.179925
-##  5 0.14123 0.67774 0.3697 0.204132
-##  6 0.65546 0.02008 0.3098 0.443371
-##  7 0.40481 0.30349 0.4604 0.004976
-##  8 0.02038 0.81965 0.4980 0.951156
-##  9 0.23660 0.48877 0.5977 0.553517
-## 10 0.11486 0.97010 0.9163 0.489669</code></pre>
+##         V9     V8     V7      V6
+##      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+##  1 0.20985 0.2891 0.9823 0.05493
+##  2 0.56933 0.8572 0.4500 0.19545
+##  3 0.05821 0.3448 0.1295 0.08797
+##  4 0.99846 0.9706 0.2244 0.01205
+##  5 0.83600 0.7678 0.5272 0.24753
+##  6 0.40256 0.5141 0.9104 0.68526
+##  7 0.22462 0.5242 0.4446 0.43881
+##  8 0.53566 0.5486 0.6792 0.29295
+##  9 0.66309 0.9171 0.6104 0.44049
+## 10 0.52906 0.6573 0.4420 0.25974</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Drop variables with -</span>
 <span class="kw">select</span>(iris, <span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;Petal&quot;</span>))</code></pre></div>
 <pre><code>## # A tibble: 150 x 3
