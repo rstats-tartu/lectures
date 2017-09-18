@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reprodutseeritav andmeanalüüs kasutades R programmi</title>
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R programmi" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid." />
+  <meta name="github-repo" content="rstats-tartu/lectures" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R programmi" />
+  
+  <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid." />
+  
+
+<meta name="author" content="Taavi Päll, Ülo Maiväli">
+
+
+<meta name="date" content="2017-09-16">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="bayesiaanlik-statistika.html">
+<link rel="next" href="osa-kuidas-naevad-valja-teie-andmed.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Reprodutseeritav andmeanalüüs R programmiga</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Haara kannel, Vanemuine!</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Sissejuhatus</a></li>
+<li class="chapter" data-level="3" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>3</b> Tarkvaratööriistad</a><ul>
+<li class="chapter" data-level="3.1" data-path="tools.html"><a href="tools.html#installeeri-vajalikud-programmid"><i class="fa fa-check"></i><b>3.1</b> Installeeri vajalikud programmid</a></li>
+<li class="chapter" data-level="3.2" data-path="tools.html"><a href="tools.html#loo-githubi-konto"><i class="fa fa-check"></i><b>3.2</b> Loo GitHubi konto</a></li>
+<li class="chapter" data-level="3.3" data-path="tools.html"><a href="tools.html#loo-uus-r-projekt"><i class="fa fa-check"></i><b>3.3</b> Loo uus R projekt</a></li>
+<li class="chapter" data-level="3.4" data-path="tools.html"><a href="tools.html#git-merge-konfliktid"><i class="fa fa-check"></i><b>3.4</b> Git <em>Merge</em> konfliktid</a></li>
+<li class="chapter" data-level="3.5" data-path="tools.html"><a href="tools.html#r-projekti-kataloogi-soovitatav-minimaalne-struktuur"><i class="fa fa-check"></i><b>3.5</b> R projekti kataloogi soovitatav minimaalne struktuur</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html"><i class="fa fa-check"></i><b>4</b> Pakettide installeerimine</a><ul>
+<li class="chapter" data-level="4.1" data-path="pakettide-installeerimine.html"><a href="pakettide-installeerimine.html#r-repositooriumid"><i class="fa fa-check"></i><b>4.1</b> R repositooriumid</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html"><i class="fa fa-check"></i><b>5</b> R on kalkulaator</a><ul>
+<li class="chapter" data-level="5.1" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#r-objektid"><i class="fa fa-check"></i><b>5.1</b> R objektid</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#objekt-ja-nimi"><i class="fa fa-check"></i><b>5.1.1</b> Objekt ja nimi</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#objektide-tuubid"><i class="fa fa-check"></i><b>5.2</b> Objektide tüübid</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#vektor---andmerida"><i class="fa fa-check"></i><b>5.2.1</b> Vektor - andmerida</a></li>
+<li class="chapter" data-level="5.2.2" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#uus-vektor-seq-ja-rep"><i class="fa fa-check"></i><b>5.2.2</b> Uus vektor: <code>seq()</code> ja <code>rep()</code></a></li>
+<li class="chapter" data-level="5.2.3" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#tehted-arvuliste-vektoritega"><i class="fa fa-check"></i><b>5.2.3</b> tehted arvuliste vektoritega</a></li>
+<li class="chapter" data-level="5.2.4" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#list-andmekott"><i class="fa fa-check"></i><b>5.2.4</b> List – andmekott</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#tibble-ja-data-frame---andmeraamid"><i class="fa fa-check"></i><b>5.3</b> Tibble ja data frame - andmeraamid</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#uhendame-kaks-tibblet-rea-kaupa"><i class="fa fa-check"></i><b>5.3.1</b> Ühendame kaks tibblet rea kaupa</a></li>
+<li class="chapter" data-level="5.3.2" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>5.3.2</b> Andmeraamide salvestamine (eksport-import)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#tabelit-sisse-lugedes-vaata-ule-na-d"><i class="fa fa-check"></i><b>5.4</b> tabelit sisse lugedes vaata üle NA-d</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#matrix---numbriraam"><i class="fa fa-check"></i><b>5.4.1</b> 4. Matrix - numbriraam</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#andmete-tuubid"><i class="fa fa-check"></i><b>5.5</b> Andmete tüübid</a></li>
+<li class="chapter" data-level="5.6" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#indekseerimine"><i class="fa fa-check"></i><b>5.6</b> Indekseerimine</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#vektorid-ja-nende-indeksid-on-uhe-dimensionaalsed"><i class="fa fa-check"></i><b>5.6.1</b> Vektorid ja nende indeksid on ühe-dimensionaalsed</a></li>
+<li class="chapter" data-level="5.6.2" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#andmeraamid-ja-maatriksid-on-kahe-dimensionaalsed-nagu-ka-nende-indeksid"><i class="fa fa-check"></i><b>5.6.2</b> andmeraamid ja maatriksid on kahe-dimensionaalsed, nagu ka nende indeksid</a></li>
+<li class="chapter" data-level="5.6.3" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#litside-indeksid-on-kolme-dimensionaalsed"><i class="fa fa-check"></i><b>5.6.3</b> litside indeksid on kolme-dimensionaalsed</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#regular-expression-ja-find-replace"><i class="fa fa-check"></i><b>5.7</b> Regular expression ja find &amp; replace</a></li>
+<li class="chapter" data-level="5.8" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#tidyverse"><i class="fa fa-check"></i><b>5.8</b> Tidyverse</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>5.8.1</b> Tidy tabeli struktuur</a></li>
+<li class="chapter" data-level="5.8.2" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>5.8.2</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#dplyr-i-5-verbi"><i class="fa fa-check"></i><b>5.9</b> dplyr-i 5 verbi</a><ul>
+<li class="chapter" data-level="5.9.1" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#select-columns"><i class="fa fa-check"></i><b>5.9.1</b> <code>select()</code> columns</a></li>
+<li class="chapter" data-level="5.9.2" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#filter-rows"><i class="fa fa-check"></i><b>5.9.2</b> <code>filter()</code> rows</a></li>
+<li class="chapter" data-level="5.9.3" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#summarise"><i class="fa fa-check"></i><b>5.9.3</b> <code>summarise()</code></a></li>
+<li class="chapter" data-level="5.9.4" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#group_by"><i class="fa fa-check"></i><b>5.9.4</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="5.9.5" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#mutate"><i class="fa fa-check"></i><b>5.9.5</b> 5. mutate</a></li>
+<li class="chapter" data-level="5.9.6" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#grouped-filters"><i class="fa fa-check"></i><b>5.9.6</b> Grouped filters</a></li>
+<li class="chapter" data-level="5.9.7" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#separate-one-column-into-several"><i class="fa fa-check"></i><b>5.9.7</b> <code>separate()</code> one column into several</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#faktorid"><i class="fa fa-check"></i><b>5.10</b> Faktorid</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>5.10.1</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
+<li class="chapter" data-level="5.10.2" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>5.10.2</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
+<li class="chapter" data-level="5.10.3" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>5.10.3</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
+<li class="chapter" data-level="5.10.4" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>5.10.4</b> Rekodeerime pideva muutuja faktoriks</a></li>
+<li class="chapter" data-level="5.10.5" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>5.10.5</b> Muudame faktori tasemete järjekorda joonisel</a></li>
+<li class="chapter" data-level="5.10.6" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>5.10.6</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
+<li class="chapter" data-level="5.10.7" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>5.10.7</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
+<li class="chapter" data-level="5.10.8" data-path="r-on-kalkulaator.html"><a href="r-on-kalkulaator.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>5.10.8</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funs.html"><a href="funs.html"><i class="fa fa-check"></i><b>6</b> R on andmeanalüüsi keel, mille verbid on funktsioonid</a><ul>
+<li class="chapter" data-level="6.1" data-path="funs.html"><a href="funs.html#kirjutame-oma-esimese-r-funktsiooni"><i class="fa fa-check"></i><b>6.1</b> Kirjutame oma esimese R funktsiooni</a></li>
+<li class="chapter" data-level="6.2" data-path="funs.html"><a href="funs.html#funktsioonide-raamatukogud"><i class="fa fa-check"></i><b>6.2</b> Funktsioonide raamatukogud</a></li>
+<li class="chapter" data-level="6.3" data-path="funs.html"><a href="funs.html#paiguta-koigi-raamatukogude-lugemine-koodi-algusesse"><i class="fa fa-check"></i><b>6.3</b> Paiguta kõigi raamatukogude lugemine koodi algusesse</a></li>
+<li class="chapter" data-level="6.4" data-path="funs.html"><a href="funs.html#hurraa-uus-arvuti-aga-mis-libraryd-mul-olid"><i class="fa fa-check"></i><b>6.4</b> Hurraa, uus arvuti! aga mis libraryd mul olid…</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliograafia.html"><a href="bibliograafia.html"><i class="fa fa-check"></i>Bibliograafia</a></li>
+<li class="chapter" data-level="7" data-path="bayesiaanlik-statistika.html"><a href="bayesiaanlik-statistika.html"><i class="fa fa-check"></i><b>7</b> Bayesiaanlik statistika</a><ul>
+<li class="chapter" data-level="7.1" data-path="bayesiaanlik-statistika.html"><a href="bayesiaanlik-statistika.html#ajaloost-ja-toenaosusest"><i class="fa fa-check"></i><b>7.1</b> Ajaloost ja tõenäosusest</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="bayesiaanlik-statistika.html"><a href="bayesiaanlik-statistika.html#naide-kahe-grupi-vordlus"><i class="fa fa-check"></i><b>7.1.1</b> Näide: kahe grupi võrdlus</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="osa-mudel-ja-maailm.html"><a href="osa-mudel-ja-maailm.html"><i class="fa fa-check"></i><b>8</b> 1. osa: Mudel ja maailm</a><ul>
+<li class="chapter" data-level="8.0.1" data-path="osa-mudel-ja-maailm.html"><a href="osa-mudel-ja-maailm.html#suur-ja-vaike-maailm"><i class="fa fa-check"></i><b>8.0.1</b> Suur ja väike maailm</a></li>
+<li class="chapter" data-level="8.0.2" data-path="osa-mudel-ja-maailm.html"><a href="osa-mudel-ja-maailm.html#mudeli-vaike-maailm"><i class="fa fa-check"></i><b>8.0.2</b> Mudeli väike maailm</a></li>
+<li class="chapter" data-level="8.0.3" data-path="osa-mudel-ja-maailm.html"><a href="osa-mudel-ja-maailm.html#millest-koosneb-mudel"><i class="fa fa-check"></i><b>8.0.3</b> Millest koosneb mudel?</a></li>
+<li class="chapter" data-level="8.0.4" data-path="osa-mudel-ja-maailm.html"><a href="osa-mudel-ja-maailm.html#moistet"><i class="fa fa-check"></i><b>8.0.4</b> 4 mõistet</a></li>
+<li class="chapter" data-level="8.0.5" data-path="osa-mudel-ja-maailm.html"><a href="osa-mudel-ja-maailm.html#mudeli-fittimine"><i class="fa fa-check"></i><b>8.0.5</b> Mudeli fittimine</a></li>
+<li class="chapter" data-level="8.0.6" data-path="osa-mudel-ja-maailm.html"><a href="osa-mudel-ja-maailm.html#veamudel"><i class="fa fa-check"></i><b>8.0.6</b> Veamudel</a></li>
+<li class="chapter" data-level="8.0.7" data-path="osa-mudel-ja-maailm.html"><a href="osa-mudel-ja-maailm.html#statistiline-mudel-koosneb-3-komponendist"><i class="fa fa-check"></i><b>8.0.7</b> Statistiline mudel koosneb 3 komponendist:</a></li>
+<li class="chapter" data-level="8.0.8" data-path="osa-mudel-ja-maailm.html"><a href="osa-mudel-ja-maailm.html#normaaljaotuse-ja-lognormaaljaotuse-erilisus"><i class="fa fa-check"></i><b>8.0.8</b> normaaljaotuse ja lognormaaljaotuse erilisus</a></li>
+<li class="chapter" data-level="8.1" data-path="osa-mudel-ja-maailm.html"><a href="osa-mudel-ja-maailm.html#kusimused-mida-statistika-kusib"><i class="fa fa-check"></i><b>8.1</b> Küsimused, mida statistika küsib</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="osa-kuidas-naevad-valja-teie-andmed.html"><a href="osa-kuidas-naevad-valja-teie-andmed.html"><i class="fa fa-check"></i><b>9</b> 2 osa. Kuidas näevad välja teie andmed?</a><ul>
+<li class="chapter" data-level="9.1" data-path="osa-kuidas-naevad-valja-teie-andmed.html"><a href="osa-kuidas-naevad-valja-teie-andmed.html#summaarsed-statistikud"><i class="fa fa-check"></i><b>9.1</b> summaarsed statistikud</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="osa-kuidas-naevad-valja-teie-andmed.html"><a href="osa-kuidas-naevad-valja-teie-andmed.html#keskvaartused"><i class="fa fa-check"></i><b>9.1.1</b> keskväärtused</a></li>
+<li class="chapter" data-level="9.1.2" data-path="osa-kuidas-naevad-valja-teie-andmed.html"><a href="osa-kuidas-naevad-valja-teie-andmed.html#muutuja-sisene-varieeruvus"><i class="fa fa-check"></i><b>9.1.2</b> muutuja sisene varieeruvus</a></li>
+<li class="chapter" data-level="9.1.3" data-path="osa-kuidas-naevad-valja-teie-andmed.html"><a href="osa-kuidas-naevad-valja-teie-andmed.html#muutujate-koos-varieeruvus"><i class="fa fa-check"></i><b>9.1.3</b> muutujate koos-varieeruvus</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="osa-kuidas-naevad-valja-teie-andmed.html"><a href="osa-kuidas-naevad-valja-teie-andmed.html#eda-eksploratoorne-andmeanaluus"><i class="fa fa-check"></i><b>9.2</b> 2.2 EDA — eksploratoorne andmeanalüüs</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="osa-kuidas-naevad-valja-teie-andmed.html"><a href="osa-kuidas-naevad-valja-teie-andmed.html#kuidas-uurida-muutuja-sisest-varieeruvust"><i class="fa fa-check"></i><b>9.2.1</b> Kuidas uurida muutuja sisest varieeruvust</a></li>
+<li class="chapter" data-level="9.2.2" data-path="osa-kuidas-naevad-valja-teie-andmed.html"><a href="osa-kuidas-naevad-valja-teie-andmed.html#kahe-muutuja-koos-varieerumine"><i class="fa fa-check"></i><b>9.2.2</b> Kahe muutuja koos-varieerumine</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="osa-kuidas-naevad-valja-teie-andmed.html"><a href="osa-kuidas-naevad-valja-teie-andmed.html#joongraafikud"><i class="fa fa-check"></i><b>9.3</b> Joongraafikud</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="jata-meelde.html"><a href="jata-meelde.html"><i class="fa fa-check"></i><b>10</b> Jäta meelde:</a><ul>
+<li class="chapter" data-level="10.1" data-path="jata-meelde.html"><a href="jata-meelde.html#sonastik"><i class="fa fa-check"></i><b>10.1</b> Sõnastik</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html"><i class="fa fa-check"></i><b>11</b> Järeldav statistika</a><ul>
+<li class="chapter" data-level="11.0.1" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#simulatsiooni-joud"><i class="fa fa-check"></i><b>11.0.1</b> 3.1. Simulatsiooni jõud</a></li>
+<li class="chapter" data-level="11.0.2" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#valim-ei-ole-sama-mis-populatsioon"><i class="fa fa-check"></i><b>11.0.2</b> 3.1.1. Valim ei ole sama, mis populatsioon</a></li>
+<li class="chapter" data-level="11.0.3" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#bootstrappimine"><i class="fa fa-check"></i><b>11.0.3</b> 3.1.2. Bootstrappimine</a></li>
+<li class="chapter" data-level="11.1" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#bayesi-pohimote"><i class="fa fa-check"></i><b>11.1</b> 3.2. Bayesi põhimõte</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#naide"><i class="fa fa-check"></i><b>11.1.1</b> 1. näide</a></li>
+<li class="chapter" data-level="11.1.2" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#naide-sonastame-oma-probleemi-umber"><i class="fa fa-check"></i><b>11.1.2</b> 2. näide: sõnastame oma probleemi ümber</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#mudelite-keel"><i class="fa fa-check"></i><b>11.2</b> 2.3. Mudelite keel</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="jareldav-statistika.html"><a href="jareldav-statistika.html#beta-prior"><i class="fa fa-check"></i><b>11.2.1</b> beta prior</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstats-tartu/lectures" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reprodutseeritav andmeanalüüs kasutades R programmi</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="osa-mudel-ja-maailm" class="section level1">
+<h1><span class="header-section-number">8</span> 1. osa: Mudel ja maailm</h1>
+<p>Andmeanalüüs ja statistika (siin sünonüümid) on lahutamatu osa igast loodusteadusest. Järgnevalt seletan, miks.</p>
+<div id="suur-ja-vaike-maailm" class="section level3">
+<h3><span class="header-section-number">8.0.1</span> Suur ja väike maailm</h3>
+<p>Kuna maailm on liiga suur ja keeruline, et seda otse uurida, lõikavad teadlased selle väiksemateks tükkideks, kasutades tordilabidana teaduslike hüpoteese. Tüüpiline hüpotees pakub välja mittematemaatilise seletuse mõnele kitsalt piiritletud loodusnähtusele. Näiteks darvinistlik evolutsiooniteooria püüab seletada evolutsiooni toimemehhanisme. Seda teooriat võib võrrelda empiiriliste andmetega.</p>
+<p>Mis juhtub, kui teie lemmikhüpotees on andmetega kooskõlas? Kas see tähendab, et see hüpotees on tõene? Või, et see on tõenäoliselt tõene? Kahjuks on vastus mõlemale küsimusele eitav. Põhjuseks on asjaolu, et enamasti leiab iga nähtuse seletamiseks rohkem kui ühe alternatiivse teadusliku hüpoteesi (näit. lamarksistlik evolutsiooniteooria) ning rohkem kui üks üksteist välistav hüpotees võib olla olemasolevate andmetega võrdses kooskõlas. Asja teeb veel hullemaks, et teoreetiliselt on võimalik sõnastada lõpmatult palju erinevaid teooriaid, mis kõik pakuvad alternatiivseid ja üksteist välistavaid seletusi samale nähtusele.</p>
+<p>Olgu peale, kui me vaatame maailma kõiketeadja jumala perspektiivist, siis tema võib vaadelda kõikehõlmava tõendusmaterjali sobivust kõigi võimalike teooriatega ning valida välja selle ainsa teooria, mis kõige paremini tõendusmaterjaliga sobib. Kuigi, see eeldaks, et tal on lõpmata palju andmeid, sest muidu ei oleks tal loogiliselt võimalik lõpmata paljude teooriate vahel valida - aga jumala jaoks on kõik võimalik. Igal juhul meie, surelike, jaoks tähendab see, et teaduslikus “faktis” saab alati kahelda, sest kunagi ei või kindel olla, et parimad teooriad lõpmata suurest teooriapilvest ei ole meil täiesti tähelepanuta jäänud ning, et meie jaoks eksisteerivad andmed kajastaksid hästi kõiki võimalikke andmeid. On selge nagu seebivesi, et mida vähem aega me kulutame teoorialoomeks ja andmete kogumiseks, seda vähem usutavad on ka meie teaduslikud järeldused. Sageli on nii, et mida kehvem on olukord andmerindel, seda rohkem vajame statistikat. Kui meil õnnestuks oma andmetest ilma statistikata saia teha, ei kõhkleks me hetkegi! Eriti, kuna statistikaga käivad käsikäes statistilised mudelid.</p>
+</div>
+<div id="mudeli-vaike-maailm" class="section level3">
+<h3><span class="header-section-number">8.0.2</span> Mudeli väike maailm</h3>
+<p>Ülalmainitud teadusliku meetodi puudused tingivad, et meie huvides on oma teaduslikke probleeme veel ühe taseme võrra lihtsustada, taandades need statistilisteks probleemideks. Selleks tuletame me tavakeelsest ja laiahaardelisest teaduslikust teooriast täpselt formuleeritud matemaatilise mudeli ning seejärel asume uurima oma mudelit.</p>
+<p>Mudeli maailm erineb päris maailmast selle poolest, et mudeli maailmas on kõikvõimalikud sündmused, mis põhimõtteliselt võivad juhtuda, juba ette teada ja üles loetud (seda sündmuste kogu kutsutakse parameetriruumiks). Seega, tehniliselt on mudeli maailmas üllatused võimatud.</p>
+<p>Mudeli eeliseks teooria ees on, et hästi konstrueeritud mudel on lihtsamini mõistetav — erinevalt vähegi keerulisemast teaduslikust hüpoteesist on mudeli eeldused ja ennustused läbinähtavad ja täpselt formuleeritavad. Mudeli puuduseks on aga, et erinevalt teooriast ei ole mingit võimalust, et mudel vastaks tegelikkusele ehk oleks tõene. Seda sellepärast, et mudel on taotluslikult lihtsustav (erandiks on puhtalt ennustuslikud mudelid, mis on aga enamasti läbinähtamatu struktuuriga). Mudel on kas kasulik või kasutu; teooria on kas tõene või väär. Mudeli ja maailma vahel võib olla kaudne “peegeldus”, aga mitte kunagi otsene side. Seega, ükski number, mis arvutatakse mudeli raames, ei kandu sama numbrina üle teaduslikku ega päris maailma. Ja kogu statistika (ka mitteparameetriline) toimub mudeli väikses maailmas. Arvud, mida statistika teile pakub, elavad mudeli maailmas; samas kui teie teaduslik huvi on suunatud päris maailmale. Näiteks 95% usaldusintervall ei tähenda, et te peaksite olema 95% kindel, et tõde asub selles intervallis – sageli ei tohiks te seda nii julgelt tõlgendada isegi kitsas mudeli maailmas.</p>
+<div id="naide-aristoteles-ptolemaios-ja-kopernikus" class="section level4">
+<h4><span class="header-section-number">8.0.2.1</span> Näide: Aristoteles, Ptolemaios ja Kopernikus</h4>
+<p>Aristoteles lõi teooria maailma toimimise kohta, mis domineeris haritud Eurooplase maailmapilti enam kui 1200 aasta vältel. Selle kohaselt asub universumi keskpunktis maakera ning kõik, mida siin leida võib, on tehtud neljast elemendist: maa, vesi, õhk ja tuli. Samas, kogu maailmaruum alates kuu sfäärist on tehtud viiendast elemendist (eeter), mida aga ei leidu maal (nagu nelja elementi ei leidu kuu peal ja sealt edasi). Taevakehad (kuu, päike, planeedid ja kinnistähed) tiirlevad ümber maa kontsentrilistes sfäärides, mis on omavahel seotud (mille vahel pole vaba ruumi). Seega on kogu liikumine eetri sfäärides ühtlane ja ringikujuline ja see liikumine põhjustab pika põhjus-tagajärg ahela kaudu kõiki liikumisi, mida maapeal kohtame. Kaasa arvatud meie sündimine, elukäik ja surm (mis on kõik liikumised). Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimese liikumise poolt, mille käivitab kõige välimises sfääris paiknev meie jaoks mõistetamatu intellektiga “olend”.</p>
+<p>Aristotelese suur teooria ühendab kogu maailmapildi alates kaasaegses mõistes keemiast ja kosmoloogiast kuni bioloogia, maateaduse ja isegi geograafiani. Sellised ühendteooriad on nagu 500 aastased sekvoiad; nad on rasked langetada, aga kui mõni siiski kukub, kostab ragin kaugele. Samas, ühte Aristotelese kosmoloogia olulist puudust nähti kohe. Nimelt ei suuda Aristoteles seletada, miks osad planeedid teavavõlvil vahest suunda muudavad ja mõnda aega lausa vastupidises suunas liiguvad (retrogressioon). Kuna astronoomia põhiline kasutusala oli astroloogia, siis põõrati planeetide liikumisele suurt tähelepanu. Lahenduseks ei olnud aga mitte suure teooria ümbertegemine või ümberlükkamine, vaid nõudlus uue teaduse järele, mis “päästaks fenomenid”. Siin tuli appi Ptolemaios, kes lõi matemaatilise mudeli, kus planeedid mitte lihtsalt ei liigu ringtrajektoori mõõda vaid samal ajal teevad ka väiksemaid ringe ümber esimese suure ringjoone. Neid väiksemaid ringe kutsutakse epitsükliteks. See mudel suutis planeetide liikumist taevavõlvil piisavalt hästi ennustada, et astroloogide nõudlik seltskond sellega rahule jäi.</p>
+<p>Ptolemaiosel ja tema järgijatel oli tegelikult mitu erinevat mudelit. Osad neist ei sialdanud epitsükleid ja maakera ei asunud tema mudelites universumi keskel, vaid oli sellest punktist eemale nihutatud — nii et päike ei teinud ringe ümber maakera vaid ümber tühja punkti. On oluline, et leidus epitsüklitega mudel ja ilma epitsükliteta mudel, mis olid matemaatiliselt ekvivalentsed ja seega andsid võrdseid ennustusi. Oli selge, et Aristotelese teooria ja fenomenide päästmise mudelid olid fundamentaalselt erinevad asjad. Samal ajal kui Aritoteles <strong>seletas</strong> maailma põhiolemust põhjuslike seoste jadana (mitte matemaatiliselt), <strong>kirjeldas/ennustas</strong> Ptolemaios sellesama maailma käitumist matemaatiliste (mitte põhjuslike) struktuuride abil.</p>
+<p>Nii tekkis olukord, kus maailma mõistmiseks kasutati 1000 aasta vältel Aristotelese ühendteooriat aga selle kirjeldamiseks ja tuleviku ennustamiseks hoopis ptolemailisi mudeleid, mida keegi päriselt tõeks ei pidanud ja mida hinnati selle järgi, kui hästi need “päästsid fenomene”.</p>
+<p>See toob meid Koperniku juurde, kes teadusajaloolaste arvates vallandas 17. sajandi teadusliku revolutsiooni avaldades raamatu, kus ta asetab päikese universumi keskele ja paneb maa selle ümber ringtrajektooril tiirlema. Kas Kopernikus tõrjus sellega kõrvale Aristotelese, Ptolemaiose või mõlemad? Kaasaegne seisukoht on, et kuigi Kopernikus soovis teha kolmandat, arvasid tema rängalt matemaatilise teose avaldamisele järgnenud 40 aasta vältel pea kõik asjatundlikud astronoomid, et ta soovis välja pakkuda vaid lihtsama alternatiivi epitsüklitega mudelile, mis selleks ajaks oli muutunud väga keerukaks (aga ka samavõrra ennustustäpseks). Kuna Kopernikuse raamat läks trükki ajal, mil selle autor oli juba surivoodil, kirjutas sellele eessõna üks tema vaimulikust sõber, kes püüdis oodatavat kiriklikku pahameelt leevendada sugereerides, et päikese keskele viimine ei ole muud kui mudeldamise trikk, millest ei tasu järeldada, et maakera ka tegelikult ümber päikese tiirleb (piibel räägib, kuidas jumal peatas taevavõlvil päikese, mitte maa). Ja kuna eessõna oli anonüümne, eeldasid lugejad muidugi, et selle kirjutas autor. Lisaks, kuigi Kopernikus tõstis päikese keskele, jäi ta ringikujuliste trajektooride juurde, mis tähendas, et selleks, et tema mudel fenomenide päästmisel hätta ei jääks ja astroloogidele kasutu ei oleks, oli ta sunnitud maad ja planeete liigutama ümber päikese mõõda epitsükleid. Kokkuvõttes oli Koperniku mudel sama keeruline kui Ptolemaiose standardmudel (neis oli võrdne arv epitsükleid) ja selle abil tehtud ennustused planeetide liikumise kohta olid väiksema täpsusega.</p>
+<pre><code>  Koperniku mudel suutis samas ennustada mõningaid nähtusi (planeetide näiv
+  heledus muutub ning jõuab maksimumi nende lähimas asukohas maale), mida
+  Ptolemaiose mudel ei ennustanud. See ei tähenda, et need fenomenid oleksid
+  olnud vastuolus Ptolemaiose mudeliga. Lihtsalt, nende Ptolemaiose mudelisse
+  sobitamiseks oli vaja osad mudeli parameetrid fikseerida nii-öelda suvalistele väärtustele. 
+  Seega Koperniku mudel töötas nii, nagu see oli, samas kui Ptolemaiose mudel vajas ad hoc tuunimimst.  </code></pre>
+<p>Kui vaadata Koperniku produkti teooriana, mitte mudelina, siis oli sel selgeid eeliseid Aristotelese ees. Juba ammu oli nähtud komeete üle taevavõlvi lendamas (mis Aristotelese järgi asusid kinnistähtede muutumatus sfääris) ja supernoova tekkimist ja kadu, ning enam ei olnud kaugel ka aeg mil Galileo joonistas oma teleskoobist kraatreid kuu pinnal, näidates, et kuu ei saanud koosneda täiuslikust viiendast elemendist ja et sellel toimusid ilmselt sarnased füüsikalised protsessid kui maal. On usutav, et kui Kopernikus oleks jõudnud oma raamatule ise essõna kirjutada, oleks tema teooria vastuvõtt olnud palju kiirem (ja valulisem). Seega, teooria ja mudeli eristus on tähtis!</p>
+<pre><code>  Koperniku teooriast tuleneb loogilise paratamatusena, et tähtedel esineb
+  maapealt vaadates parallaks. See tähendab, et kui maakera koos astronoomiga
+  teeb poolringi ümber päikese, siis kinnistähe näiv asukoht taevavõlvil
+  muutub sest astronoom vaatleb teda teise nurga alt. Pange oma nimetissõrm
+  näost u 10 cm kaugusele, sulgege parem silm, seejärel avage see ning sulgege
+  vasak silm ja te näete oma sõrme parallaksi selle näiva asukoha muutusena.
+  Tähtede parallaksi püüti mõõta juba Aleksandrias 1000 aastat enne Kopernikust, 
+  et leida kinnitust teooriale, mille kohaselt maakera tiirleb ümber päikese. 
+  Mõõtmised ei näidanud aga parallaksi olemasolu (sest maa trajektoori diameeter 
+  on palju lühem kui maa kaugus tähtedest). Parallaks mõõdeti edukalt alles 1838, 
+  siis kui juba ammu iga koolijüts uskus, et maakera tiirleb ümber päikese!
+  
+  </code></pre>
+</div>
+</div>
+<div id="millest-koosneb-mudel" class="section level3">
+<h3><span class="header-section-number">8.0.3</span> Millest koosneb mudel?</h3>
+<blockquote>
+<p>Mudel on matemaatilise formalism, mis püüab kirjeldada füüsikalist protsessi. mudeli struktuuris on komponent, mis kirjeldab ideaalseid ennustusi ja eraldi veakomponent, mis kirjeldab kuidas andmepunktid varieeruvad selle ideaalse ennustuse ümber.</p>
+</blockquote>
+<p>Näiteks, sageli kirjeldame me produkti kuhjumist ensüümreaktsioonis eksponentsiaalse funktsioni (mudeli) abil. Kui meie andmed seda tüüpi funktiooniga sobivad, ütleb see meile midagi konkreetse ensüümi töömehhanismi kohta. Teisest küljest, need mudelid, mis on “generatiivsed”, suudavad lisaks simuleerida ka uusi andmeid. Sealhulgas ka selliseid, mida päris maailmas ei saa kunagi esineda, sest seal puuduvad vastavad tingimused. Mudelisse saab aga sisse kirjutada igasuguseid tingimusi ehk parameetri väärtusi (näit substraadi konsentratsioone, mida me ei suuda “päriselt” saavutada).</p>
+<p>Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab, kuidas inimeste pikkus sõltub nende kaalust. Lihtsaim mudel pikkuse sõltuvusest kaalust on pikkus = kaal (formaliseeritult: y = x) ja see mudel ennustab, et kui Johni kaal = 80 kg, siis John on 80 cm pikkune. Selle mudeli saame graafiliselt kujutada nii</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">50</span><span class="op">:</span><span class="dv">200</span> <span class="co">#y = kaal</span>
+y &lt;-<span class="st"> </span>x <span class="co"># x = pikkus </span>
+<span class="kw">plot</span>(y<span class="op">~</span>x, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;weight in kg&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;heigth in cm&quot;</span>, <span class="dt">main=</span><span class="st">&quot;fixed linear model&quot;</span>)</code></pre></div>
+<p><img src="main_files/figure-html/unnamed-chunk-149-1.png" width="672" /></p>
+<p>kõigepealt painutame sirget. See joon on ikka veel täielikult fikseeritud, aga ta pole enam sirge (ehki tehniliselt on meil ikka lineaarne seos x ja y vahel)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">50</span><span class="op">:</span><span class="dv">200</span>
+y &lt;-<span class="st"> </span>x <span class="op">+</span><span class="st"> </span>x<span class="op">**</span><span class="dv">2</span>
+<span class="kw">plot</span>(y<span class="op">~</span>x, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)</code></pre></div>
+<p><img src="main_files/figure-html/unnamed-chunk-150-1.png" width="672" /></p>
+<p>Mudeli keeles tähistame me seda, mida me ennustame (antud juhul pikkus) Y-ga ja seda, mille väärtuse põhjal me ennustame (antud juhul kaal) X-ga. Seega sirge mudeli matemaatiline formalism on Y = X. See on äärmiselt jäik mudel: ta on sirge kujuline ja selle sirge asukoht parameetriruumis on rangelt fikseeritud. Sirge lõikab y telge alati 0-s (ehk mudeli keeles: selle sirge intercept ehk lõikepunkt Y teljel = 0) ja tema tõusunurk saab olla ainult 45 kraadi (mudeli keeles: mudeli slope ehk tõus = 1). Selle mudeli jäikus tuleneb sellest, et selles mudelis ei ole parameetreid, mida me saaksime vabalt muuta ehk tuunida.</p>
+<p>Kuidas aga kirjeldada sirget, mis võib paikneda 2-mõõtmelises ruumis ükskõik millises asendis? Selleks lisame mudelisse kaks parameetrit, intercept (a) ja tõus (b). Kui a=0 ja b=0, saame me eelpool kirjeldatud mudeli y = x. Kui a = 102, siis sirge lõikab y telge väärtusel 102. Kui b = 0.8, siis x-i tõustes 1 ühiku võrra tõuseb y-i väärtus 0.8 ühiku võrra. Kui a = 100 ja b = 0, siis saame sirge, mis on paraleelne x-teljega ja lõikab y telge väärtusel 100 (mis juhtub, kui a = Inf?). Seega, Teades a ja b väärtusi ning omistades x-le suvalise meid huvitava väärtuse, saab ennustada y-i keskmist väärtust. Näiteks, olgu andmete vastu fititud mudel:</p>
+<p>pikkus(cm) = 102 + 0.8 * kaal(kg) ehk</p>
+<p>y = 102 + 0.8x.</p>
+<p>Omistades nüüd kaalule väärtuse 80 kg, tuleb mudeli poolt ennustatud keskmine pikkus 102 + 0.8 * 80 = 166 cm. Iga kg lisakaalu ennustab mudeli kohaselt 0.8 cm võrra suuremat pikkust.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="dv">102</span>
+b &lt;-<span class="st"> </span><span class="fl">0.8</span>
+x &lt;-<span class="st">  </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span> 
+y &lt;-<span class="st">  </span>a <span class="op">+</span><span class="st"> </span>b <span class="op">*</span><span class="st"> </span>x
+<span class="kw">plot</span>(y<span class="op">~</span>x, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;weight in kg&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;heigth in cm&quot;</span>, <span class="dt">main=</span><span class="st">&quot;a more flexible linear model&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">200</span>))</code></pre></div>
+<p><img src="main_files/figure-html/unnamed-chunk-151-1.png" width="672" /></p>
+<p>See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline, olukord. Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu (sest 0-kaaluga inimesi pole olemas). Meie valimiandmed ei peegelda täpselt inimpopulatsiooni. Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole. Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.</p>
+</div>
+<div id="moistet" class="section level3">
+<h3><span class="header-section-number">8.0.4</span> 4 mõistet</h3>
+<p>X ja Y on muutujad, a ja b on parameetrid. Muutujate väärtused fikseeritakse andmete poolt, parameetrid fititakse muutujate väärtuste põhjal. Fititud mudel ennustab igale X-i väärtusele vastava kõige tõenäolisema Y väärtuse (Y keskväärtuse sellel X-i väärtusel).</p>
+<blockquote>
+<p>Y - mida me ennustame (dependent variable, predicted varable)</p>
+</blockquote>
+<blockquote>
+<p>X - mille põhjal me ennustame (independent variable, predictor)</p>
+</blockquote>
+<blockquote>
+<p>muutuja (variable) - iga asi, mida me valimis mõõdame (X ja Y on kaks muutujat). Muutuja väärtused on fikseeritud andmete poolt. Muutujal on sama palju fikseeritud väärtusi kui meil on selle muutuja kohta mõõtmisandmeid.</p>
+</blockquote>
+<blockquote>
+<p>parameeter (parameter) - mudeli koefitsient, millele võib omistada suvalisi väärtusi. Parameetreid tuunides fitime me mudeli võimalikult hästi sobituma andmetega.</p>
+</blockquote>
+</div>
+<div id="mudeli-fittimine" class="section level3">
+<h3><span class="header-section-number">8.0.5</span> Mudeli fittimine</h3>
+<p>Mudelid sisaldavad (1) matemaatilisi struktuure, mis määravad mudeli tüübi ning (2) parameetreid, mida saab andmete põhjal tuunida, niiviisi täpsustades mudeli kuju.</p>
+<p>Seda tuunimist nimetatakse mudeli fittimiseks. Mudelit fittides on eesmärk saavutada antud tüüpi mudeli maksimaalne sobivus andmetega. Näiteks võrrand y = a + bx määrab mudeli, kus y = x on on see struktuur, mis tagab, et mudeli tüüp on sirge, ning a ja b on parameetrid, mis määravad sirge asendi. Seevastu struktuur y = x + x^2 tagab, et mudeli y = a + b1x + b2x^2 tüüp on parabool, ning parameetrite a, b1 ja b2 väärtused määravad selle parabooli täpse kuju. Ja nii edasi.</p>
+<p>Hea mudel on</p>
+<ol style="list-style-type: decimal">
+<li><p>võimalikult lihtsa struktuuriga, mille põhjal on veel võimalik teha järeldusi protsessi kohta, mis genereeris mudeli fittimiseks kasutatud andmeid;</p></li>
+<li><p>sobitub piisavalt hästi andmetega (eriti uute andmetega, mida ei kasutatud selle mudeli fittimiseks), et olla relevantne andmeid genereeriva protsessi kirjeldus;</p></li>
+<li><p>genereerib usutavaid simuleeritud andmeid (see näitab mudeli kvaliteeti).</p></li>
+</ol>
+<p>Sageli fititkse samade andmetega mitu erinevat tüüpi mudelit ja püütakse otsustada, milline neist vastab kõige paremini eeltoodud tingimustele. Näiteks, kui sirge suudab kaalu järgi pikkust ennustada paremini kui parabool, siis on sirge mudel kooskõlas teadusliku hüpoteesiga, mis annaks mehhanismi protsessile, mille käigus kilode lisandumine viiks laias kaaluvahemikus inimeste pikkuse kasvule ilma, et pikkuse kasvu tempo kaalu tõustes langeks.</p>
+<div id="ule--ja-alafittimine" class="section level4">
+<h4><span class="header-section-number">8.0.5.1</span> Üle- ja alafittimine</h4>
+<p>Osad mudelite tüübid on vähem paindlikud kui teised (parameetreid tuunides on neil vähem liikumisruumi). Kuigi sellised mudelid sobituvad halvemini andmetega, võivad need ikkagi paremini kui mõni paindlikum mudel välja tuua andmete peidetud olemuse. Mudeldamine eeldab, et me usume, et meie andmetes leidub nii müra (mida mudel võiks ignoreerida), kui signaal (mida mudel püüab tabada). Kuna mudeli jaoks näeb müra samamoodi välja kui signaal, on iga mudel kompromiss üle- ja alafittimise vahel. Me lihtsalt loodame, et meie mudel on piisavalt jäik, et mitte liiga palju müra modelleerida ja samas piisavalt paindlik, et piisaval määral signaali tabada.</p>
+<p>Üks kõige jäigemaid mudeleid on sirge, mis tähendab, et sirge mudel on suure tõenäosusega alafittitud. Keera sirget kuipalju tahad, ikka ei sobitu ta enamiku andmekogudega. Ja need vähesed andmekogud, mis sirge mudeliga sobivad, on genereeritud teatud tüüpi lineaarsete protsesside poolt. Sirge on seega üks kõige paremini tõlgendatavaid mudeleid. Teises äärmuses on polünoomsed mudelid, mis on väga paindlikud, mida on väga raske tõlgendada ja mille puhul on suur mudeli ülefittimise oht. Ülefititud mudel järgib nii täpselt valimiandmeid, et sobitub hästi valimis leiduva juhusliku müraga ning seetõttu sobitub halvasti järgmise valimiga samast populatsioonist (sest igal valimil on oma juhuslik müra). Üldiselt, mida rohkem on mudelis tuunitavaid parameetreid, seda paindlikum mudel, seda kergem on seda valimiandmetega sobitada ja seda raskem on seda mudelit tõlgendada. Veelgi enam, alati on võimalik konstrueerida mudel, mis sobitub täiuslikult lõpliku arvu andmepunktidega (selle mudeli parameetrite arv = N). Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fititi — ja täiesti kasutu.</p>
+<p><img src="main_files/figure-html/unnamed-chunk-152-1.png" width="672" /> <em>Joonis: Kasvava paindlikusega polünoomsed mudelid. mod_e1 on sirge võrrand y = a + b1x (2 parameetrit: a ja b1), mod_e2 on lihtsaim võimalik polünoom: y= a + b1x + b2x^2 (3 parameetrit), …, mod_e5: y= a + b1x + b2x^2 + b3x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6).</em></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">AIC</span>(mod_e1, mod_e2, mod_e3, mod_e4, mod_e5)</code></pre></div>
+<pre><code>##        df      AIC
+## mod_e1  3 27.77993
+## mod_e2  4 29.76669
+## mod_e3  5 26.21330
+## mod_e4  6 25.11245
+## mod_e5  7     -Inf</code></pre>
+<p>AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?</p>
+<pre><code>AIC - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega
+ja mudeli parameetrite arvu. 
+Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures
+(kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult
+võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.  </code></pre>
+<p><img src="main_files/figure-html/unnamed-chunk-154-1.png" width="672" /> <em>Joonis: sedamööda kuidas parameetrite arv mudelis kasvab, kasvab ka R ruut. R ruut 0.8 tähendab, et x-i varieeruvus suudab seletada kuni 80% y-i varieeruvusest. Lisaparameetri lisamine ei saa põhimõtteliselt R ruutu vähendada. Aga selle kasvu kiirus on aeglustuv. Ühel hetkel ei õigusta mudeli fiti paranemine enam mudeli paindlikuse kasvu (mis mõlemad saavutatakse parameetreid lisades).</em></p>
+<pre><code>Ülefittimise vältimiseks kasutavad Bayesi mudelid informatiivseid prioreid, 
+mis välistavad ekstreemsed parameetriväärtused. 
+Vt http://elevanth.org/blog/2017/08/22/there-is-always-prior-information/ </code></pre>
+</div>
+</div>
+<div id="veamudel" class="section level3">
+<h3><span class="header-section-number">8.0.6</span> Veamudel</h3>
+<p>Eelpool kirjeldatud mudelid on deterministlikud — nad ei sisalda hinnangut andmete varieeruvusele ennustuse ümber. Neid kutsutakse ka <strong>protsessi mudeliteks</strong> sest nad modelleerivad protsessi täpselt. Ehk kui mudel ennustab, et 80 kg inimene on 166 cm pikkune, siis protsessi mudel ei ütle, kui suurt kaalust sõltumatut pikkuste varieeruvust võime oodata 80 kg-ste inimeste hulgas? Selle hinnangu andmiseks tuleb mudelile lisada veel üks komponent, <strong>veamudel</strong> ehk veakomponent, mis sageli tuuakse sisse normaaljaotuse kujul. Veakomponent modelleerib üksikute inimeste pikkuste varieeruvust (mitte keskmise pikkuse varieeruvust) igal mõeldaval ja mittemõeldaval kaalul. Tänu sellele ei ole mudeli ennustused enam deterministlikud, vaid tõenäosuslikud.</p>
+<p>Kuidas veakomponent lineaarsesse mudelisse sisse tuua?</p>
+<p>ilma veakomponendita mudel: <em>y = a + bx</em></p>
+<p>Veakomponent tähendab, et y-i väärtus varieerub ümber mudeli poolt ennustatud keskväärtuse ja seda varieeruvust normaaljaotusega modelleerides saame</p>
+<p><em>y ~ dnorm(mu, sigma)</em></p>
+<p>kus <em>mu</em> on mudeli poolt ennustatud keskväärtus ja <em>sigma</em> on mudeli poolt ennustatud standardhälve ehk varieeruvus andmepunktide tasemel. Tilde ~ tähistab seose tõenäosuslikkust.</p>
+<p>Sirge mudelisse varieeruvuse sisse toomiseks defineerime mu ümber nõnda:</p>
+<p><em>mu = a + bx</em>, mis tähendab, et</p>
+<p><em>y ~ dnorm(a + bx, sigma)</em></p>
+<p>See ongi sirge mudel koos veakomponendiga. Peatükis 3 õpime me selliste mudelitega töötama.</p>
+<blockquote>
+<p>Kõik statistilised mudelid on tõenäosusmudelid ning sisaldavad veakomponenti.</p>
+</blockquote>
+</div>
+<div id="statistiline-mudel-koosneb-3-komponendist" class="section level3">
+<h3><span class="header-section-number">8.0.7</span> Statistiline mudel koosneb 3 komponendist:</h3>
+<pre><code>&gt; (1) matemaatiline struktuur, mis sisaldab muutujaid ja annab mudeli tüübi, 
+
+&gt; (2) tuunitavad parameetrid ja 
+
+&gt; (3) veamudel.</code></pre>
+<p>Muide, kõik veamudelid, millega me edaspidi töötame, modelleerivad igale x-i väärtusele (kaalule) sama suure y-i suunalise varieeruvuse (pikkuste sd). Suurem osa statistikast kasutab eeldusi, mida keegi päriselt tõe pähe ei võta, aga millega on arvutuslikus mõttes lihtsam elada.</p>
+<div id="enimkasutatud-veamudel-on-normaaljaotus." class="section level4">
+<h4><span class="header-section-number">8.0.7.1</span> Enimkasutatud veamudel on normaaljaotus.</h4>
+<p>Oletame, et meil on kolm andmepunkti ning me usume, et need andmed on juhuslikult tõmmatud normaaljaotusest või sellele lähedasest jaotusest. Normaaljaotuse mudelit kasutades me sisuliselt deklareerime, et me usume, et kui me oleksime olnud vähem laisad ja 3 mõõtmise asemel sooritanuks 3000, siis need mõõtmised sobituksid piisavalt hästi meie 3 väärtuse peal fititud normaaljaotusega. Seega, me usume, et omades 3 andmepunkti me teame juba umbkaudu, millised tulemused me oleksime saanud korjates näiteks 3 miljonit andmepunkti. Oma mudelist võime simuleerida ükskõik kui palju andmepunkte.</p>
+<p>Aga pidage meeles, et selle mudeli fittimiseks kasutame me ainult neid andmeid, mis meil päriselt on — ja kui meil on ainult 3 andmepunkti, on tõenäoline, et fititud mudel ei kajasta hästi tegelikkust.</p>
+<blockquote>
+<p>Halvad andmed ei anna kunagi head tulemust.</p>
+</blockquote>
+<p>Eelnev ei kehti Bayesi mudelite kohta, mis toovad priorite kaudu sisse lisainfot, mis ei kajastu valimiandmetes ja võib analüüsi päästa.</p>
+<p>Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väikestel valimitel? Siin aitab simulatsioon, kus me tõmbame 3-se valimi etteantud populatsioonist ning üritame selle valimi põhjal ennustada selleasama populatsiooni struktuuri. Kuna tegemist on simulatsiooniga, teame täpselt, et populatsioon, kust me tõmbame oma kolmese valimi, on normaaljaotusega, et tema keskväärtus = 0 ja et tema sd = 1. Me fitime oma valimi andmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse.</p>
+<pre><code>## Loading required package: Rcpp</code></pre>
+<pre><code>## Loading &#39;brms&#39; package (version 1.10.0). Useful instructions
+## can be found by typing help(&#39;brms&#39;). A more detailed introduction
+## to the package is available through vignette(&#39;brms_overview&#39;).
+## Run theme_set(theme_default()) to use the default bayesplot theme.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;brms&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:rethinking&#39;:
+## 
+##     LOO, stancode, WAIC</code></pre>
+<pre><code>## `stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="main_files/figure-html/unnamed-chunk-155-1.png" width="672" /></p>
+<p><em>Joonis: juhuvalim normaaljaotusest, mille keskmine=0 ja sd=1 (n=3; andmepunktid on näidatud mustade munadena). Sinine joon - popualtsioon, millest tõmmati valim; punane joon - normaaljaotuse mudel, mis on fititud valimi andmetel; must joon - Studenti t jaotuse mudel, mis on fititud samade andmetega.</em></p>
+<p>Mõlemad mudelid on süstemaatiliselt nihutatud väiksemate väärtuste poole ja alahindavad varieeruvust. t jaotuse mudel on oodatult paksemate sabadega ja ennustab 0-st kaugele palju rohkem väärtusi kui normaaljaotuse mudel. Kuna me teame, et populatsioon on normaaljaotusega, pole väga üllatav, et t jaotus modeleerib seda halvemini kui normaaljaotus.</p>
+<p>Igal juhul, mõni teine juhuvalim annaks meile hoopis teistsugused mudelid, mis rohkem või vähem erinevad algsest populatsioonist.</p>
+<p>Mis juhtub kui me kasutame oma normaaljaotuse mudelit uute andmete simuleerimiseks? Kui lähedased on need simuleeritud andmed populatsiooni andmetega ja kui lähedased valimi andmetega, millega me normaaljaotuse mudeli fittisime?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">19</span>) <span class="co">#muudab simulatsiooni korratavaks</span>
+<span class="co">#tõmbame 3 juhuslikku arvu normaalhaotusest, mille keskväärtus = 0 ja sd = 1.</span>
+df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">sample_data=</span><span class="kw">rnorm</span>(<span class="dv">3</span>)) 
+<span class="co">#fitime normaaljaotuse mudeli valimi keskmise ja sd-ga</span>
+<span class="kw">mean</span>(df<span class="op">$</span>sample_data); <span class="kw">sd</span>(df<span class="op">$</span>sample_data)</code></pre></div>
+<pre><code>## [1] -0.3817353</code></pre>
+<pre><code>## [1] 0.7896821</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#simuleerime 1000 uut andmepunkti fititud mudelist</span>
+simulated_data &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="kw">mean</span>(df<span class="op">$</span>sample_data), <span class="kw">sd</span>(df<span class="op">$</span>sample_data))
+<span class="co">#arvutame simuleeritud andmete keskmise ja sd ning joonistame neist histogrammi</span>
+<span class="kw">mean</span>(simulated_data); <span class="kw">sd</span>(simulated_data); <span class="kw">hist</span>(simulated_data)</code></pre></div>
+<pre><code>## [1] -0.3848133</code></pre>
+<pre><code>## [1] 0.7749198</code></pre>
+<p><img src="main_files/figure-html/unnamed-chunk-156-1.png" width="672" /></p>
+<p>Nagu näha, on uute (simuleeritud) andmete keskväärtus ja SD väga sarnased algsete andmete omale, mida kasutasime mudeli fittimisel. Kahjuks ei ole need aga kaugeltki nii sarnased algsele jaotusele, mille kuju me püüame oma andmete ja mudeli pealt ennustada. Seega on meie mudel üle-fittitud, mis tähendab, et ta kajastab liigselt neid valimi aspekte, mis ei peegelda algse populatsiooni omadusi. Loomulikult ei vasta ükski mudel päriselt tegelikkusele. Küsimus on pigem selles, kas mõni meie mudelitest on piisavalt hea, et olla kasulik. Vastus sellele sõltub, milleks plaanime oma mudelit kasutada.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(simulated_data<span class="op">&gt;</span><span class="dv">0</span>); <span class="kw">mean</span>(simulated_data<span class="op">&gt;</span><span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] 0.317</code></pre>
+<pre><code>## [1] 0.037</code></pre>
+<p>Kui populatsiooniväärtustest on 50% suuremad kui 0, siis mudeli järgi vaevalt 32%. Kui populatsiooniväärtustest on 16% suuremad kui 1, siis mudeli järgi vaevalt 4%. See illustreerib hästi mudeli kvaliteeti.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(brms)
+sim_t &lt;-<span class="st"> </span><span class="kw">rstudent_t</span>(<span class="dv">1000</span>, <span class="dv">2</span>, <span class="kw">mean</span>(df<span class="op">$</span>sample_data), <span class="kw">sd</span>(df<span class="op">$</span>sample_data))
+<span class="kw">mean</span>(sim_t<span class="op">&gt;</span><span class="dv">0</span>); <span class="kw">mean</span>(sim_t<span class="op">&gt;</span><span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] 0.338</code></pre>
+<pre><code>## [1] 0.11</code></pre>
+<p>Samad ennustused t jaotusest on isegi paremad! Aga kumb on ikkagi parem mudel populatsioonile?</p>
+</div>
+</div>
+<div id="normaaljaotuse-ja-lognormaaljaotuse-erilisus" class="section level3">
+<h3><span class="header-section-number">8.0.8</span> normaaljaotuse ja lognormaaljaotuse erilisus</h3>
+<p>Normaaljaotus ja lognormaaljaotus on erilised sest</p>
+<ol style="list-style-type: decimal">
+<li><p>keskne piirteoreem ütleb, et olgu teie valim ükskõik millise jaotusega, paljudest valimitest arvutatud <strong>aritmeetilised keskmised</strong> on alati enam-vähem normaaljaotusega (kui n&gt;30). Selle matemaatilise formalismi tuletus füüsikalisse maailma on nn “elementaarsete vigade hüpotees”, mille kohaselt paljude väikeste üksteisest sõltumatute juhuslike efektide (vigade) summa annab tulemuseks normaaljaotuse. Paraku annavad enamus bioloogilisi mõõtmisi eranditult mitte-negatiivseid tulemusi. Sageli on selliste mõõtmiste tulemuste jaotused ebasümmeetrilised (v.a. siis, kui cv = sd/mean on väike) ja siis on meil sageli tegu lognormaaljaotusega, mis tekkib log-normaalsete muutujate korrutamisest (mitte liitmisest, nagu normaaljaotuse puhul). Keskne piirteoreem 2: suvalise jaotusega muutujate <strong>geomeetrilised keskmised</strong> on lognormaaljaotusega. Elementaarsete vigade hüpotees 2: Kui juhuslik varieeruvus tekib paljude juhuslike efektide korrutamisel, on tulemuseks lognormaaljaotus. Lognormaaljaotuse elementide (arvude) logaritmimisel saame normaaljaotuse.</p></li>
+<li><p>Mõlemad jaotused (normaal ja lognormaal) on maksimaalse entroopiaga jaotused. Entroopiat vaadeldakse siin informatsiooni/müra kaudu — maksimaalse entroopiaga süsteem sisaldab maksimaalselt müra ja minimaalselt informatsiooni (Shannoni informatsiooniteooria). See tähendab, et väljaspool oma parameetrite tuunitud väärtusi on need normaal- ja lognormaaljaotused minimaalselt informatiivsed. Näiteks normaaljaotusel on kaks parameetrit, mu ja sigma (ehk keskmine ja standardhälve). Seega, andes normaaljaotusele ette keskväärtuse ja standardhälbe fikseerime üheselt jaotuse ehk mudeli kuju ja samas lisame sinna minimaalselt muud (sooviamtut) informatsiooni. Teised maksimaalse entroopiaga jaotused on eksponentsiaalne jaotus, binoomjaotus ja poissoni jaotus. Maksimaalse entroopiaga jaotused sobivad hästi Bayesi prioriteks sest me suudame paremini kontrollida, millist informatsiooni me neisse surume.</p></li>
+</ol>
+</div>
+<div id="kusimused-mida-statistika-kusib" class="section level2">
+<h2><span class="header-section-number">8.1</span> Küsimused, mida statistika küsib</h2>
+<p>Statistika abil saab vastuseid järgmisetele küsimustele:</p>
+<ol style="list-style-type: decimal">
+<li><p>kuidas näevad välja teie andmed ehk milline on just teie andmete jaotus, keskväärtus, varieeruvus ja koos-varieeruvus? Näiteks, mõõdetud pikkuste ja kaalude koos-varieeruvust saab mõõta korrelatsioonikordaja abil.</p></li>
+<li><p>mida me peaksime teie valimi andmete põhjal uskuma populatsiooni parameetri tegeliku väärtuse kohta? Näiteks, kui meie andmete põhjal arvutatud keskmine pikkus on 178 cm, siis kui palju on meil põhjust arvata, et tegelik populatsiooni keskmine pikkus &gt; 185 cm?</p></li>
+<li><p>mida ütleb statistilise mudeli struktuur teadusliku hüpoteesi kohta? Näiteks, kui meie poolt mõõdetud pikkuste ja kaalude koos-varieeruvust saab hästi kirjeldada kindlat tüüpi lineaarse regressioonimudeliga, siis on meil ehk tõendusmaterjali, et pikkus ja kaal on omavahel sellisel viisil seotud ja eelistatud peaks olema teaduslik teooria, mis just sellise seose tekkimisele bioloogilise mehhanismi annab.</p></li>
+<li><p>mida ennustab mudel tuleviku kohta? Näiteks, meie lineaarne pikkuse-kaalu mudel suudab ennustada tulevikus kogutavaid pikkuse andmeid. Aga kui hästi?</p></li>
+</ol>
+<blockquote>
+<p>statistika ülesanne on lähtuvalt piiratud hulgast andmetest ja mudelitest kvantifitseerida parimal võimalikul viisil kõhedust, mida peaksime tundma vastates eeltoodud küsimustele.</p>
+</blockquote>
+<p>Statistika ei vasta otse teaduslikele küsimustele ega küsimustele päris maailma kohta. Statistilised vastused jäävad alati kasutatud andmete ja mudelite piiridesse. Sellega seoses peaksime eelistama hästi kogutud rikkalikke andmeid ja paindlikke mudeleid. Siis on lootust, et hüpe mudeli koefitsientidest päris maailma kirjeldamisse tuleb üle kitsama kuristiku. Bayesil on siin eelis, sest osav statistik suudab koostöös teadlastega priori mudelisse küllalt palju kasulikku infot koguda. Samas, amatöör suudab bayesi abil samavõrra käkki keerata. Mida paindlikum on meetod, seda vähem automaatne on selle mõistlik kasutamine.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bayesiaanlik-statistika.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="osa-kuidas-naevad-valja-teie-andmed.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstats-tartu/lectures/edit/master/A01_sissejuhatus.Rmd",
+"text": "Edit"
+},
+"download": ["main.pdf", "main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

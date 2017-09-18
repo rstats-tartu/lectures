@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="assets/img/cover.png" />
+  <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid." />
+  <meta name="github-repo" content="rstats-tartu/lectures" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  
+  <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid." />
+  <meta name="twitter:image" content="assets/img/cover.png" />
+
+<meta name="author" content="Taavi Päll, Ülo Maiväli">
+
+
+<meta name="date" content="2017-09-18">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="intro.html">
+<link rel="next" href="calc.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Reprodutseeritav andmeanalüüs R programmiga</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Haara kannel, Vanemuine!</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Sissejuhatus</a></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> Tarkvaratööriistad</a><ul>
+<li class="chapter" data-level="2.1" data-path="tools.html"><a href="tools.html#installeeri-vajalikud-programmid"><i class="fa fa-check"></i><b>2.1</b> Installeeri vajalikud programmid</a></li>
+<li class="chapter" data-level="2.2" data-path="tools.html"><a href="tools.html#loo-githubi-konto"><i class="fa fa-check"></i><b>2.2</b> Loo GitHubi konto</a></li>
+<li class="chapter" data-level="2.3" data-path="tools.html"><a href="tools.html#loo-uus-r-projekt"><i class="fa fa-check"></i><b>2.3</b> Loo uus R projekt</a></li>
+<li class="chapter" data-level="2.4" data-path="tools.html"><a href="tools.html#git-merge-konfliktid"><i class="fa fa-check"></i><b>2.4</b> Git <em>Merge</em> konfliktid</a></li>
+<li class="chapter" data-level="2.5" data-path="tools.html"><a href="tools.html#r-projekti-kataloogi-soovitatav-minimaalne-struktuur"><i class="fa fa-check"></i><b>2.5</b> R projekti kataloogi soovitatav minimaalne struktuur</a></li>
+<li class="chapter" data-level="2.6" data-path="tools.html"><a href="tools.html#libs"><i class="fa fa-check"></i><b>2.6</b> Pakettide installeerimine</a></li>
+<li class="chapter" data-level="2.7" data-path="tools.html"><a href="tools.html#r-repositooriumid"><i class="fa fa-check"></i><b>2.7</b> R repositooriumid</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="calc.html"><a href="calc.html"><i class="fa fa-check"></i><b>3</b> R on kalkulaator</a><ul>
+<li class="chapter" data-level="3.1" data-path="calc.html"><a href="calc.html#sama-koodi-saab-kirjutada-neljal-viisil"><i class="fa fa-check"></i><b>3.1</b> Sama koodi saab kirjutada neljal viisil</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="obj.html"><a href="obj.html"><i class="fa fa-check"></i><b>4</b> R objektid</a><ul>
+<li class="chapter" data-level="4.1" data-path="obj.html"><a href="obj.html#objekt-ja-nimi"><i class="fa fa-check"></i><b>4.1</b> Objekt ja nimi</a></li>
+<li class="chapter" data-level="4.2" data-path="obj.html"><a href="obj.html#nimede-vorm"><i class="fa fa-check"></i><b>4.2</b> Nimede vorm</a></li>
+<li class="chapter" data-level="4.3" data-path="obj.html"><a href="obj.html#andmete-tuubid"><i class="fa fa-check"></i><b>4.3</b> Andmete tüübid</a></li>
+<li class="chapter" data-level="4.4" data-path="obj.html"><a href="obj.html#vektor"><i class="fa fa-check"></i><b>4.4</b> Vektor</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="obj.html"><a href="obj.html#uus-vektor-seq-ja-rep"><i class="fa fa-check"></i><b>4.4.1</b> Uus vektor: <code>seq()</code> ja <code>rep()</code></a></li>
+<li class="chapter" data-level="4.4.2" data-path="obj.html"><a href="obj.html#tehted-arvuliste-vektoritega"><i class="fa fa-check"></i><b>4.4.2</b> Tehted arvuliste vektoritega</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="obj.html"><a href="obj.html#list"><i class="fa fa-check"></i><b>4.5</b> List</a></li>
+<li class="chapter" data-level="4.6" data-path="obj.html"><a href="obj.html#data-frame-ja-tibble"><i class="fa fa-check"></i><b>4.6</b> data frame ja tibble</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="obj.html"><a href="obj.html#rekodeerime-tibble-vaartusi"><i class="fa fa-check"></i><b>4.6.1</b> Rekodeerime tibble väärtusi</a></li>
+<li class="chapter" data-level="4.6.2" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-rea-kaupa"><i class="fa fa-check"></i><b>4.6.2</b> Ühendame kaks tibblet rea kaupa</a></li>
+<li class="chapter" data-level="4.6.3" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-veeru-kaupa"><i class="fa fa-check"></i><b>4.6.3</b> ühendame kaks tibblet veeru kaupa</a></li>
+<li class="chapter" data-level="4.6.4" data-path="obj.html"><a href="obj.html#nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha."><i class="fa fa-check"></i><b>4.6.4</b> Nii saab tibblest kätte vektori, millega saab tehteid teha.</a></li>
+<li class="chapter" data-level="4.6.5" data-path="obj.html"><a href="obj.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>4.6.5</b> Andmeraamide salvestamine (eksport-import)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="obj.html"><a href="obj.html#tabelit-sisse-lugedes-vaata-ule-na-d"><i class="fa fa-check"></i><b>4.7</b> Tabelit sisse lugedes vaata üle NA-d</a></li>
+<li class="chapter" data-level="4.8" data-path="obj.html"><a href="obj.html#matrix"><i class="fa fa-check"></i><b>4.8</b> Matrix</a></li>
+<li class="chapter" data-level="4.9" data-path="obj.html"><a href="obj.html#indekseerimine"><i class="fa fa-check"></i><b>4.9</b> Indekseerimine</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="obj.html"><a href="obj.html#vektorid-ja-nende-indeksid-on-uhedimensionaalsed"><i class="fa fa-check"></i><b>4.9.1</b> Vektorid ja nende indeksid on ühedimensionaalsed</a></li>
+<li class="chapter" data-level="4.9.2" data-path="obj.html"><a href="obj.html#andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-indeksid"><i class="fa fa-check"></i><b>4.9.2</b> Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid</a></li>
+<li class="chapter" data-level="4.9.3" data-path="obj.html"><a href="obj.html#listide-indekseerimine"><i class="fa fa-check"></i><b>4.9.3</b> Listide indekseerimine</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>5</b> Regular expression ja find &amp; replace</a><ul>
+<li class="chapter" data-level="5.1" data-path="regex.html"><a href="regex.html#common-operations-with-regular-expressions"><i class="fa fa-check"></i><b>5.1</b> Common operations with regular expressions</a></li>
+<li class="chapter" data-level="5.2" data-path="regex.html"><a href="regex.html#find-and-replace"><i class="fa fa-check"></i><b>5.2</b> Find and replace</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funs.html"><a href="funs.html"><i class="fa fa-check"></i><b>6</b> Funktsioonid on R keele verbid</a><ul>
+<li class="chapter" data-level="6.1" data-path="funs.html"><a href="funs.html#kirjutame-r-funktsiooni"><i class="fa fa-check"></i><b>6.1</b> Kirjutame R funktsiooni</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>7</b> Tidyverse</a><ul>
+<li class="chapter" data-level="7.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>7.1</b> Tidy tabeli struktuur</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>7.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
+<li class="chapter" data-level="7.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>7.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>7.2</b> dplyr ja selle viis verbi</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>7.2.1</b> <code>select()</code> columns</a></li>
+<li class="chapter" data-level="7.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>7.2.2</b> <code>filter()</code> rows</a></li>
+<li class="chapter" data-level="7.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>7.2.3</b> <code>summarise()</code></a></li>
+<li class="chapter" data-level="7.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>7.2.4</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="7.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>7.2.5</b> <code>mutate()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="tidyverse.html"><a href="tidyverse.html#grouped-filters"><i class="fa fa-check"></i><b>7.3</b> Grouped filters</a></li>
+<li class="chapter" data-level="7.4" data-path="tidyverse.html"><a href="tidyverse.html#separate-one-column-into-several"><i class="fa fa-check"></i><b>7.4</b> <code>separate()</code> one column into several</a></li>
+<li class="chapter" data-level="7.5" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>7.5</b> Faktorid</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>7.5.1</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
+<li class="chapter" data-level="7.5.2" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>7.5.2</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
+<li class="chapter" data-level="7.5.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>7.5.3</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
+<li class="chapter" data-level="7.5.4" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>7.5.4</b> Rekodeerime pideva muutuja faktoriks</a></li>
+<li class="chapter" data-level="7.5.5" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>7.5.5</b> Muudame faktori tasemete järjekorda joonisel</a></li>
+<li class="chapter" data-level="7.5.6" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>7.5.6</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
+<li class="chapter" data-level="7.5.7" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>7.5.7</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
+<li class="chapter" data-level="7.5.8" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>7.5.8</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliograafia.html"><a href="bibliograafia.html"><i class="fa fa-check"></i>Bibliograafia</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstats-tartu/lectures" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reprodutseeritav andmeanalüüs kasutades R keelt</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tools" class="section level1">
+<h1><span class="header-section-number">2</span> Tarkvaratööriistad</h1>
+<div id="installeeri-vajalikud-programmid" class="section level2">
+<h2><span class="header-section-number">2.1</span> Installeeri vajalikud programmid</h2>
+<p>Praktiline kursus eeldab töötavate R, RStudio ja Git programmide olemasolu sinu arvutist. Kõik on väga lihtsad installid.</p>
+<ol style="list-style-type: decimal">
+<li>Googelda “install R” või mine otse <a href="https://cran.r-project.org">R allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
+<li>Googelda “install RStudio” või mine otse <a href="https://www.rstudio.com/products/rstudio/download/">RStudio allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
+<li>Googelda “install git” või mine otse <a href="https://git-scm.com/downloads">Git allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
+</ol>
+</div>
+<div id="loo-githubi-konto" class="section level2">
+<h2><span class="header-section-number">2.2</span> Loo GitHubi konto</h2>
+<p>GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine <i class="fa fa-git" aria-hidden="true"></i> versioonikontrolli repositoorium ja veebimajutuse teenus.</p>
+<ul>
+<li><p><i class="fa fa-github" aria-hidden="true"></i> konto loomiseks mine lehele <a href="https://github.com" class="uri">https://github.com</a>. Loo endale oma nimega seotud avalik konto. Tulevikule mõeldes vali kasutajanimi hoolikalt. Ära muretse detailide pärast, need on võimalik täita hiljem.</p></li>
+<li>Loo repo nimega <code>intro_demo</code>.</li>
+<li>Lisa repole lühike ja informatiivne kirjeldus.</li>
+<li>Vali “Public”.</li>
+<li>Pane linnuke kasti “Initialize this repository with a README”.</li>
+<li><p>Klikka “Create Repository”.</p></li>
+</ul>
+</div>
+<div id="loo-uus-r-projekt" class="section level2">
+<h2><span class="header-section-number">2.3</span> Loo uus R projekt</h2>
+<blockquote>
+<p>NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta alakriipsu “_”.</p>
+</blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)</li>
+<li>Ava RStudio akna (Joonis <a href="tools.html#fig:rstudiowindow">2.1</a>) paremalt ülevalt nurgast “Project” menüüst “New Project” dialoog.</li>
+<li>Ava “New Directory” &gt; “Empty Project” &gt; vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks “rstats2017”.</li>
+</ol>
+<div class="figure"><span id="fig:rstudiowindow"></span>
+<img src="assets/img/rstudio_screen_untitled.png" alt="RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt;. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt; menüüs on võimalik muutusi vaadata ja 'commit'ida ja &lt;i class='fa fa-github' aria-hidden='true'&gt;&lt;/i&gt;-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse)." width="1280" />
+<p class="caption">
+Joonis 2.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga <i class='fa fa-git' aria-hidden='true'></i>. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. <i class='fa fa-git' aria-hidden='true'></i> menüüs on võimalik muutusi vaadata ja ’commit’ida ja <i class='fa fa-github' aria-hidden='true'></i>-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse).
+</p>
+</div>
+<p>Rohkem infot R projekti loomise kohta leiad RStudio infoleheküljelt: <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects">Using Projects</a>.</p>
+</div>
+<div id="git-merge-konfliktid" class="section level2">
+<h2><span class="header-section-number">2.4</span> Git <em>Merge</em> konfliktid</h2>
+<p>Kollaboreerides üle GitHubi tekivad varem või hiljem konfliktid projekti failide versioonide vahel nn. “merge conflicts”, nende korrektselt lahendama õppimine on väga oluline.</p>
+<ul>
+<li>Oma repo GitHubi veebilehel muuda/paranda README.md dokumenti ja “Commit”-i seda lühisõnumiga mis sa muutsid/parandasid.</li>
+<li>Seejärel, muuda oma arvutis olevat README.md faili RStudio-s viies sinna sisse mingi teistsuguse muudatuse. Tee “Commit” oma muudatustele.</li>
+<li>Proovi “push”-ida – sa saad veateate!</li>
+<li>Proovi “pull”.</li>
+<li>Lahenda “merge” konflikt ja seejärel “commit” + “push”.</li>
+</ul>
+<p>Githubi veateadete lugemine ja Google otsing aitavad sind.</p>
+</div>
+<div id="r-projekti-kataloogi-soovitatav-minimaalne-struktuur" class="section level2">
+<h2><span class="header-section-number">2.5</span> R projekti kataloogi soovitatav minimaalne struktuur</h2>
+<p>Iga R projekt peab olema täiesti iseseisev (<em>selfcontained</em>) ja sisaldama kogu infot, andmeid ja instruktsioone, et projektiga seotud arvutused läbi viia ja raport genereerida. Kõik faili <em>path</em>-id peavad olema suhtelised.</p>
+<p>R projekti kataloog peaks sisaldama projekti kirjeldavaid faile, mis nimetatakse DESCRIPTION ja README.md. <strong>DESCRIPTION</strong> on tavaline tekstifail ja sisaldab projekti metainfot ja infot projekti sõltuvuste kohta, nagu väliste andmesettide asukoht, vajalik tarkvara jne. <strong>README.md</strong> on markdown formaadis projekti info, sisaldab juhendeid kasutajatele. Igale GitHubi repole on soovitav koostada README.md, esialgu kasvõi projekti pealkiri ja üks kirjeldav lause. README.md ja DESCRIPTION asuvad projekti juurkataloogis.</p>
+<blockquote>
+<p>Projekti juurkataloogi jäävad ka kõik .Rmd laiendiga teksti ja analüüsi tulemusi sisaldavad failid, millest genereeritakse lõplik raport/dokument.</p>
+</blockquote>
+<p>Suuremad projektid, nagu näiteks teadusartikkel või raamat, võivad sisaldada mitmeid Rmd faile ja võib tekkida kange kisatus need mõnda alamkataloogi tõsta. Aga <code>knitr::knit()</code>, mis Rmarkdowni markdowniks konverteerib, arvestab, et Rmd fail asub juurkataloogis ja arvestab juurkataloogi suhtes ka failis olevaid <em>path</em>-e teistele failidele (näiteks “data/my_data.csv”).</p>
+<p><strong>data/</strong> kataloog sisaldab faile toorandmetega. Need failid peavad olema R-i poolt loetavad ja soovitavalt tekstipõhised, laienditega TXT, CSV, TSV jne. Neid faile ei muudeta, ainult loetakse. Kogu algandmete töötlus toimub programmaatiliselt. Suured failid muudavad versioonikontrolli aeglaseks, samuti on suheliselt mõttetu versioonikontroll binaarsete failide korral (MS <i class="fa fa-file-word-o" aria-hidden="true"></i> näiteks), sest diffid pole lihtsalt inimkeeles. Github ütleb suurte failide kohta nii: <em>“GitHub will warn you when pushing files larger than 50 MB. You will not be allowed to push files larger than 100 MB.”</em></p>
+<p><strong>src/</strong> kataloog sisaldab analüüsi skripte, sealhulgas ka andmetöötluse skripte.</p>
+<p><strong>lib/</strong> kataloogis on kasutaja poolt tehtud funktsioonide definitsioone sisaldavad R skriptid.</p>
+<pre><code>project/
+|- DESCRIPTION       # project metadata and dependencies
+|- README.md         # description of contents and guide to users
+|- my_analysis.Rmd   # markdown file containing analysis
+|                    # writeup together with R code chunks
+|
+|- data/             # raw data, not changed once created 
+|  +-my_data.csv     # data files in open formats, 
+|                    # such as TXT, CSV, TSV etc.
+|
+|- src/              # any programmatic code
+|  +-my_scripts.R    # R code used to analyse and 
+|                    # visualise data
+|
+|- lib/              # user generated functions
+|  +-my_functions.R  # R code defining functions</code></pre>
+<p>On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid taaskasutatavate funktsioonidega kataloogi <strong>R/</strong>. Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i <span class="citation">(Wickham, Danenberg, and Eugster <a href="#ref-roxygen2">2017</a>)</span>, siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi <strong>man/</strong>. Rohkem projekti pakkimise kohta loe värskest preprindist “Packaging data analytical work reproducibly using R” <span class="citation">(Marwick, Boettiger, and Mullen <a href="#ref-marwick2017">2017</a>)</span>.</p>
+</div>
+<div id="libs" class="section level2">
+<h2><span class="header-section-number">2.6</span> Pakettide installeerimine</h2>
+<p>R <em>library</em>-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. <strong>R baaspakett sisaldab juba mitmeid funktsioone.</strong> Kõige esimene sõnum <code>sum()</code> help lehel on “sum {base}”, mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda. Näiteks “base” raamatukogu versioon 3.4.1 sisaldab 453 funktsiooni. Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist <a href="https://cran.r-project.org">CRAN</a> alla laadida ja installeerida.</p>
+<p>Selleks, et installeerida pakett, sisesta järgnev käsurida R konsooli:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## eg use &quot;ggplot2&quot; as packagename
+<span class="kw">install.packages</span>(<span class="st">&quot;packagename&quot;</span>)</code></pre></div>
+<p>NB! Kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle nime + R ja vaadake instruktsioone installeerimiseks. Suure tõenäosusega on tegemist mõnes teises repos (näiteks Bioconductor) või ainult GitHubis asuva paketiga.</p>
+RStudio võimaldab ka <em>point-and-click</em> stiilis pakettide installeerimist:
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="assets/img/RStudio_package.install.png" alt="RStudio 'Install Packages' dialoogiaken." width="606" />
+<p class="caption">
+Joonis 2.2: RStudio ‘Install Packages’ dialoogiaken.
+</p>
+</div>
+<blockquote>
+<p>Sa ei saa installeeritud pakette enne kasutada, kui laadid nad töökeskkonda kasutades <code>library()</code> funktsiooni.</p>
+</blockquote>
+<p>Peale installeerimist lae pakett oma R sessiooni kasutades <code>library()</code> käsku, näiteks:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Load library/package tidyr
+<span class="kw">library</span>(dplyr)</code></pre></div>
+<p><code>library(dplyr)</code> käsk teeb R sessioonis kasutatavaks kõik “dplyr” paketi funktsioonid.</p>
+<p>Näiteks “dplyr” pakett sisaldab 237 funktsiooni:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+## let&#39;s look at the head of package list
+<span class="kw">head</span>(<span class="kw">ls</span>(<span class="st">&quot;package:dplyr&quot;</span>), <span class="dv">20</span>)</code></pre></div>
+<pre><code>##  [1] &quot;%&gt;%&quot;           &quot;add_count&quot;     &quot;add_count_&quot;   
+##  [4] &quot;add_row&quot;       &quot;add_rownames&quot;  &quot;add_tally&quot;    
+##  [7] &quot;add_tally_&quot;    &quot;all_equal&quot;     &quot;all_vars&quot;     
+## [10] &quot;anti_join&quot;     &quot;any_vars&quot;      &quot;arrange&quot;      
+## [13] &quot;arrange_&quot;      &quot;arrange_all&quot;   &quot;arrange_at&quot;   
+## [16] &quot;arrange_if&quot;    &quot;as_data_frame&quot; &quot;as_tibble&quot;    
+## [19] &quot;as.tbl&quot;        &quot;as.tbl_cube&quot;</code></pre>
+<p>Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab <code>::</code> operaatorit kasutades kutsuda välja/importida funktsiooni spetsiifilisest paketist:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dplyr<span class="op">::</span><span class="kw">select</span>(df, my_var)</code></pre></div>
+<p>Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat funktsiooni sisaldavat raamatukogu töökeskkonda laadida.</p>
+<p><strong>Funktsioonide-pakettide help failid RStudio kasutajaliidesest</strong>: Kui te lähete RStudios paremal all olevale “Packages” tabile, siis on võimalik klikkida raamatukogu nimele ja näha selle help-faile, tutooriale ja kõiki selle raamatukogu funktsioone koos nende help failidega.</p>
+</div>
+<div id="r-repositooriumid" class="section level2">
+<h2><span class="header-section-number">2.7</span> R repositooriumid</h2>
+<p>R pakid on saadaval kolmest põhilisest repositooriumist:</p>
+<ol style="list-style-type: decimal">
+<li><strong>CRAN</strong> <a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Bioconductor</strong> <a href="https://www.bioconductor.org" class="uri">https://www.bioconductor.org</a></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># First run biocLite script fron bioconductor.org</span>
+<span class="kw">source</span>(<span class="st">&quot;https://bioconductor.org/biocLite.R&quot;</span>)  
+<span class="co"># use &#39;http&#39; in url if &#39;https&#39; is unavailable. </span>
+<span class="kw">biocLite</span>(<span class="st">&quot;GenomicRanges&quot;</span>, <span class="dt">suppressUpdates =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>GitHub</strong> <a href="https://github.com" class="uri">https://github.com</a></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Näiteks järgnev käsk installeerib xaringan 
+## presentation ninja paketi
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;yihui/xaringan&quot;</span>)</code></pre></div>
+<blockquote>
+<p>NB! antud praktilise kursuse raames tutvume ja kasutame ‘tidyverse’ metapaketi funktsioone, laadides need iga sessiooni alguses:</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## install.packages(&quot;tidyverse&quot;)
+<span class="kw">library</span>(tidyverse)</code></pre></div>
+<p>Nüüd on teil <code>tidyverse</code> pakett arvutis. Tegelikult kuuluvad siia raamatukokku omakorda tosinkond raamatukogu — tidyverse on pisut meta. Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te need töökeskkonda sisse loete</p>
+<p>Veel üks tehniline detail. <code>library(tidyverse)</code> käsk ei loe sisse kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi. Need tuleb vajadusel eraldi ükshaaval sisse lugeda.</p>
+<blockquote>
+<p>Paiguta kõigi raamatukogude lugemine koodi algusesse. Enamasti kirjutatakse sisse loetavad raamatukogud kohe R scripti algusesse. Siis on teile endale ja teistele kes teie koodi loevad ilusti näha, mida hiljem vaja läheb.</p>
+</blockquote>
+
+</div>
+</div>
+<h3>Bibliograafia</h3>
+<div id="refs" class="references">
+<div id="ref-roxygen2">
+<p>Wickham, Hadley, Peter Danenberg, and Manuel Eugster. 2017. <em>Roxygen2: In-Line Documentation for R</em>. <a href="https://CRAN.R-project.org/package=roxygen2" class="uri">https://CRAN.R-project.org/package=roxygen2</a>.</p>
+</div>
+<div id="ref-marwick2017">
+<p>Marwick, Ben, Carl Boettiger, and Lincoln Mullen. 2017. “Packaging Data Analytical Work Reproducibly Using R (and Friends).” <em>PeerJ Preprints</em> 5: e3192v1. doi:<a href="https://doi.org/10.7287/peerj.preprints.3192v1">10.7287/peerj.preprints.3192v1</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="calc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstats-tartu/lectures/edit/master/01-tarkvara.Rmd",
+"text": "Edit"
+},
+"download": ["main.pdf", "main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

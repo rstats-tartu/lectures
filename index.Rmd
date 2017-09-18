@@ -1,9 +1,32 @@
+--- 
+title: "Reprodutseeritav andmeanalüüs kasutades R keelt"
+author: "Taavi Päll, Ülo Maiväli"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+github-repo: rstats-tartu/lectures
+description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs kasutades R programmi' materjalid."
+cover-image: assets/img/cover.png
 ---
-title: "Reproducible data analysis using R 2017"
----
+
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE)
+knitr::write_bib(c(.packages(), 'bookdown', 'knitr', 'rmarkdown'), 'packages.bib')
+options(htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE)
 ```
 
-Hello! This site is under construction.
+# Haara kannel, Vanemuine! {-}
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
+knitr::include_graphics('assets/img/cover.png', dpi = NA)
+```
+
+Bayesi tõlgenduses on tõenäosus teadlase usu määr mingi hüpoteesi kehtimisse. 
+Hüpotees võib näiteks olla, et järgmise juulikuu sademete hulk Vilsandil jääb vahemikku 22 kuni 34 mm. 
+Kui Bayesi arvutus annab selle hüpoteesi tõenäosuseks 0.57, siis oleme me selle teadmise najal nõus maksma mitte rohkem kui 57 senti kihlveo eest, mille alusel makstakse juhul, kui see hüpotees tõeseks osutub, välja 1 euro (ja me saame vähemalt 43 senti kasumit).  
+
