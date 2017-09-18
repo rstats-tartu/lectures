@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2017-09-17">
+<meta name="date" content="2017-09-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -506,32 +506,32 @@ dat1</code></pre></div>
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)</code></pre></div>
 <pre><code>## # A tibble: 10 x 5
-##         V9       V8      V5     V2     V6
-##      &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-##  1 0.34465 0.806570 0.59509 0.9571 0.4826
-##  2 0.41957 0.327267 0.20168 0.1487 0.5940
-##  3 0.94373 0.784786 0.76874 0.1181 0.2255
-##  4 0.05966 0.261990 0.81249 0.6954 0.2787
-##  5 0.91686 0.678983 0.76797 0.3520 0.1824
-##  6 0.39964 0.134740 0.07104 0.8500 0.4519
-##  7 0.98197 0.003235 0.33353 0.5191 0.9520
-##  8 0.27385 0.728204 0.11995 0.6662 0.9052
-##  9 0.40857 0.810279 0.50123 0.1204 0.8673
-## 10 0.96805 0.191550 0.82726 0.5488 0.9642</code></pre>
+##        V9     V8      V5      V2      V6
+##     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 0.5813 0.8138 0.02835 0.87857 0.89166
+##  2 0.8905 0.5537 0.99925 0.71738 0.89073
+##  3 0.1454 0.5054 0.96604 0.05163 0.36083
+##  4 0.5798 0.3100 0.58640 0.28809 0.35893
+##  5 0.5638 0.7619 0.78818 0.81615 0.88162
+##  6 0.8782 0.7023 0.69344 0.51940 0.45825
+##  7 0.3291 0.7967 0.88476 0.97021 0.07894
+##  8 0.8580 0.9638 0.63532 0.32930 0.24480
+##  9 0.4846 0.1405 0.62219 0.78178 0.49212
+## 10 0.3695 0.7066 0.89716 0.28018 0.55426</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))</code></pre></div>
 <pre><code>## # A tibble: 10 x 4
-##         V9       V8       V7     V6
-##      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-##  1 0.34465 0.806570 0.271169 0.4826
-##  2 0.41957 0.327267 0.157229 0.5940
-##  3 0.94373 0.784786 0.693853 0.2255
-##  4 0.05966 0.261990 0.527959 0.2787
-##  5 0.91686 0.678983 0.003198 0.1824
-##  6 0.39964 0.134740 0.896480 0.4519
-##  7 0.98197 0.003235 0.233838 0.9520
-##  8 0.27385 0.728204 0.807364 0.9052
-##  9 0.40857 0.810279 0.466255 0.8673
-## 10 0.96805 0.191550 0.595674 0.9642</code></pre>
+##        V9     V8     V7      V6
+##     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+##  1 0.5813 0.8138 0.3679 0.89166
+##  2 0.8905 0.5537 0.3857 0.89073
+##  3 0.1454 0.5054 0.3945 0.36083
+##  4 0.5798 0.3100 0.1093 0.35893
+##  5 0.5638 0.7619 0.9614 0.88162
+##  6 0.8782 0.7023 0.4794 0.45825
+##  7 0.3291 0.7967 0.1960 0.07894
+##  8 0.8580 0.9638 0.7304 0.24480
+##  9 0.4846 0.1405 0.4534 0.49212
+## 10 0.3695 0.7066 0.3294 0.55426</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Drop variables with -</span>
 <span class="kw">select</span>(iris, <span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;Petal&quot;</span>))</code></pre></div>
 <pre><code>## # A tibble: 150 x 3
