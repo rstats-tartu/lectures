@@ -388,15 +388,15 @@ grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
 happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
 happy_list</code></pre></div>
 <pre><code>## [[1]]
-## [1] 0.7843 0.8674 0.3778 0.9341 0.7314
+## [1] 0.4971 0.9051 0.6324 0.9146 0.7017
 ## 
 ## [[2]]
-##        a      b
-## 1 0.7843 0.4166
-## 2 0.8674 0.7830
-## 3 0.3778 0.1831
-## 4 0.9341 0.2368
-## 5 0.7314 1.6552
+##        a       b
+## 1 0.4971 -0.2152
+## 2 0.9051  0.0266
+## 3 0.6324  0.1442
+## 4 0.9146 -0.1029
+## 5 0.7017 -0.1586
 ## 
 ## [[3]]
 ## 
@@ -648,7 +648,7 @@ fruits &lt;-<span class="st"> </span><span class="kw">tibble</span>(shop, apples
 <span class="kw">write_csv</span>(fruits, <span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
 <p>Kuhu see fail läks? See läks meie projekti juurkataloogi kausta “data/”, juurkataloogi asukoha oma arvuti kõvakettal leiame käsuga:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getwd</span>()</code></pre></div>
-<pre><code>## [1] &quot;/home/travis/build/rstats-tartu/lectures&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/taavi/Dropbox/2017-R-course/lectures&quot;</code></pre>
 <p>Andmete sisselugemine töökataloogist:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
 <p>MS exceli failist saab tabeleid importida “readxl” paki abil.</p>
@@ -684,7 +684,6 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <h2><span class="header-section-number">4.7</span> Tabelit sisse lugedes vaata üle NA-d</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(VIM) </code></pre></div>
 <pre><code>## Loading required package: colorspace</code></pre>
-<pre><code>## Loading required package: methods</code></pre>
 <pre><code>## Loading required package: grid</code></pre>
 <pre><code>## Loading required package: data.table</code></pre>
 <pre><code>## 
@@ -749,6 +748,9 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
 <p><img src="main_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<pre><code>## 
+## Click in a column to sort by the corresponding variable.
+## To regain use of the VIM GUI and the R console, click outside the plot region.</code></pre>
 <p>Kuidas rekodeerida NA-d näiteks 0-ks:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> </span><span class="dv">0</span>
 dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> &quot;other&quot;</span>
