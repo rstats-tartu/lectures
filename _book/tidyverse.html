@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2017-09-18">
+<meta name="date" content="2017-09-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -294,158 +294,21 @@ dat1</code></pre></div>
 <span class="kw">select</span>(iris, Petal.Length<span class="op">:</span>Species)
 <span class="kw">select</span>(iris, <span class="op">-</span>(Petal.Length<span class="op">:</span>Species)) <span class="co">#selects everything, except those cols</span></code></pre></div>
 <p>To select 3 columns and rename <em>subject</em> to <em>SUBJ</em> and put liik as the 1st col:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(iris, <span class="dt">liik =</span> Species, Sepal.Length, Sepal.Width )</code></pre></div>
-<pre><code>##           liik Sepal.Length Sepal.Width
-## 1       setosa          5.1         3.5
-## 2       setosa          4.9         3.0
-## 3       setosa          4.7         3.2
-## 4       setosa          4.6         3.1
-## 5       setosa          5.0         3.6
-## 6       setosa          5.4         3.9
-## 7       setosa          4.6         3.4
-## 8       setosa          5.0         3.4
-## 9       setosa          4.4         2.9
-## 10      setosa          4.9         3.1
-## 11      setosa          5.4         3.7
-## 12      setosa          4.8         3.4
-## 13      setosa          4.8         3.0
-## 14      setosa          4.3         3.0
-## 15      setosa          5.8         4.0
-## 16      setosa          5.7         4.4
-## 17      setosa          5.4         3.9
-## 18      setosa          5.1         3.5
-## 19      setosa          5.7         3.8
-## 20      setosa          5.1         3.8
-## 21      setosa          5.4         3.4
-## 22      setosa          5.1         3.7
-## 23      setosa          4.6         3.6
-## 24      setosa          5.1         3.3
-## 25      setosa          4.8         3.4
-## 26      setosa          5.0         3.0
-## 27      setosa          5.0         3.4
-## 28      setosa          5.2         3.5
-## 29      setosa          5.2         3.4
-## 30      setosa          4.7         3.2
-## 31      setosa          4.8         3.1
-## 32      setosa          5.4         3.4
-## 33      setosa          5.2         4.1
-## 34      setosa          5.5         4.2
-## 35      setosa          4.9         3.1
-## 36      setosa          5.0         3.2
-## 37      setosa          5.5         3.5
-## 38      setosa          4.9         3.6
-## 39      setosa          4.4         3.0
-## 40      setosa          5.1         3.4
-## 41      setosa          5.0         3.5
-## 42      setosa          4.5         2.3
-## 43      setosa          4.4         3.2
-## 44      setosa          5.0         3.5
-## 45      setosa          5.1         3.8
-## 46      setosa          4.8         3.0
-## 47      setosa          5.1         3.8
-## 48      setosa          4.6         3.2
-## 49      setosa          5.3         3.7
-## 50      setosa          5.0         3.3
-## 51  versicolor          7.0         3.2
-## 52  versicolor          6.4         3.2
-## 53  versicolor          6.9         3.1
-## 54  versicolor          5.5         2.3
-## 55  versicolor          6.5         2.8
-## 56  versicolor          5.7         2.8
-## 57  versicolor          6.3         3.3
-## 58  versicolor          4.9         2.4
-## 59  versicolor          6.6         2.9
-## 60  versicolor          5.2         2.7
-## 61  versicolor          5.0         2.0
-## 62  versicolor          5.9         3.0
-## 63  versicolor          6.0         2.2
-## 64  versicolor          6.1         2.9
-## 65  versicolor          5.6         2.9
-## 66  versicolor          6.7         3.1
-## 67  versicolor          5.6         3.0
-## 68  versicolor          5.8         2.7
-## 69  versicolor          6.2         2.2
-## 70  versicolor          5.6         2.5
-## 71  versicolor          5.9         3.2
-## 72  versicolor          6.1         2.8
-## 73  versicolor          6.3         2.5
-## 74  versicolor          6.1         2.8
-## 75  versicolor          6.4         2.9
-## 76  versicolor          6.6         3.0
-## 77  versicolor          6.8         2.8
-## 78  versicolor          6.7         3.0
-## 79  versicolor          6.0         2.9
-## 80  versicolor          5.7         2.6
-## 81  versicolor          5.5         2.4
-## 82  versicolor          5.5         2.4
-## 83  versicolor          5.8         2.7
-## 84  versicolor          6.0         2.7
-## 85  versicolor          5.4         3.0
-## 86  versicolor          6.0         3.4
-## 87  versicolor          6.7         3.1
-## 88  versicolor          6.3         2.3
-## 89  versicolor          5.6         3.0
-## 90  versicolor          5.5         2.5
-## 91  versicolor          5.5         2.6
-## 92  versicolor          6.1         3.0
-## 93  versicolor          5.8         2.6
-## 94  versicolor          5.0         2.3
-## 95  versicolor          5.6         2.7
-## 96  versicolor          5.7         3.0
-## 97  versicolor          5.7         2.9
-## 98  versicolor          6.2         2.9
-## 99  versicolor          5.1         2.5
-## 100 versicolor          5.7         2.8
-## 101  virginica          6.3         3.3
-## 102  virginica          5.8         2.7
-## 103  virginica          7.1         3.0
-## 104  virginica          6.3         2.9
-## 105  virginica          6.5         3.0
-## 106  virginica          7.6         3.0
-## 107  virginica          4.9         2.5
-## 108  virginica          7.3         2.9
-## 109  virginica          6.7         2.5
-## 110  virginica          7.2         3.6
-## 111  virginica          6.5         3.2
-## 112  virginica          6.4         2.7
-## 113  virginica          6.8         3.0
-## 114  virginica          5.7         2.5
-## 115  virginica          5.8         2.8
-## 116  virginica          6.4         3.2
-## 117  virginica          6.5         3.0
-## 118  virginica          7.7         3.8
-## 119  virginica          7.7         2.6
-## 120  virginica          6.0         2.2
-## 121  virginica          6.9         3.2
-## 122  virginica          5.6         2.8
-## 123  virginica          7.7         2.8
-## 124  virginica          6.3         2.7
-## 125  virginica          6.7         3.3
-## 126  virginica          7.2         3.2
-## 127  virginica          6.2         2.8
-## 128  virginica          6.1         3.0
-## 129  virginica          6.4         2.8
-## 130  virginica          7.2         3.0
-## 131  virginica          7.4         2.8
-## 132  virginica          7.9         3.8
-## 133  virginica          6.4         2.8
-## 134  virginica          6.3         2.8
-## 135  virginica          6.1         2.6
-## 136  virginica          7.7         3.0
-## 137  virginica          6.3         3.4
-## 138  virginica          6.4         3.1
-## 139  virginica          6.0         3.0
-## 140  virginica          6.9         3.1
-## 141  virginica          6.7         3.1
-## 142  virginica          6.9         3.1
-## 143  virginica          5.8         2.7
-## 144  virginica          6.8         3.2
-## 145  virginica          6.7         3.3
-## 146  virginica          6.7         3.0
-## 147  virginica          6.3         2.5
-## 148  virginica          6.5         3.0
-## 149  virginica          6.2         3.4
-## 150  virginica          5.9         3.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(iris, <span class="dt">liik =</span> Species, Sepal.Length, Sepal.Width) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">as_data_frame</span>()</code></pre></div>
+<pre><code>## # A tibble: 150 x 3
+##      liik Sepal.Length Sepal.Width
+##    &lt;fctr&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+##  1 setosa          5.1         3.5
+##  2 setosa          4.9         3.0
+##  3 setosa          4.7         3.2
+##  4 setosa          4.6         3.1
+##  5 setosa          5.0         3.6
+##  6 setosa          5.4         3.9
+##  7 setosa          4.6         3.4
+##  8 setosa          5.0         3.4
+##  9 setosa          4.4         2.9
+## 10 setosa          4.9         3.1
+## # ... with 140 more rows</code></pre>
 <p>To select all cols, except sex and value, and rename the <em>subject</em> col:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(iris, <span class="op">-</span>Sepal.Length, <span class="op">-</span>Sepal.Width, <span class="dt">liik =</span> Species)</code></pre></div>
 <p><strong>helper functions you can use within select():</strong></p>
@@ -506,32 +369,32 @@ dat1</code></pre></div>
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)</code></pre></div>
 <pre><code>## # A tibble: 10 x 5
-##         V9     V8      V5      V2       V6
-##      &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
-##  1 0.54612 0.2927 0.63965 0.26161 0.955604
-##  2 0.54810 0.7265 0.95562 0.10001 0.593661
-##  3 0.14802 0.3437 0.64398 0.44145 0.952735
-##  4 0.19706 0.7398 0.70140 0.41013 0.183176
-##  5 0.58680 0.9062 0.81169 0.83527 0.844123
-##  6 0.03605 0.4148 0.01671 0.86743 0.364803
-##  7 0.55690 0.2101 0.97734 0.31232 0.929230
-##  8 0.85034 0.9969 0.20084 0.09755 0.008479
-##  9 0.88860 0.4522 0.13237 0.85816 0.320244
-## 10 0.91111 0.8510 0.88292 0.92675 0.796858</code></pre>
+##         V9     V8      V5     V2      V6
+##      &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+##  1 0.51502 0.7071 0.91824 0.3629 0.23244
+##  2 0.40062 0.7479 0.36441 0.8079 0.77043
+##  3 0.57236 0.3280 0.24827 0.4356 0.19992
+##  4 0.39159 0.4651 0.39239 0.4262 0.34117
+##  5 0.81634 0.6054 0.49056 0.1186 0.87146
+##  6 0.21121 0.4576 0.43537 0.5009 0.01517
+##  7 0.60405 0.5875 0.02298 0.1704 0.96598
+##  8 0.86714 0.2944 0.02522 0.2539 0.67663
+##  9 0.04453 0.9104 0.19554 0.1903 0.88319
+## 10 0.03943 0.4583 0.16339 0.1815 0.43436</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))</code></pre></div>
 <pre><code>## # A tibble: 10 x 4
-##         V9     V8      V7       V6
-##      &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
-##  1 0.54612 0.2927 0.34716 0.955604
-##  2 0.54810 0.7265 0.39990 0.593661
-##  3 0.14802 0.3437 0.04588 0.952735
-##  4 0.19706 0.7398 0.68628 0.183176
-##  5 0.58680 0.9062 0.72845 0.844123
-##  6 0.03605 0.4148 0.60594 0.364803
-##  7 0.55690 0.2101 0.91217 0.929230
-##  8 0.85034 0.9969 0.26812 0.008479
-##  9 0.88860 0.4522 0.30310 0.320244
-## 10 0.91111 0.8510 0.27215 0.796858</code></pre>
+##         V9     V8     V7      V6
+##      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+##  1 0.51502 0.7071 0.5982 0.23244
+##  2 0.40062 0.7479 0.4220 0.77043
+##  3 0.57236 0.3280 0.2635 0.19992
+##  4 0.39159 0.4651 0.4843 0.34117
+##  5 0.81634 0.6054 0.6893 0.87146
+##  6 0.21121 0.4576 0.8237 0.01517
+##  7 0.60405 0.5875 0.6368 0.96598
+##  8 0.86714 0.2944 0.2862 0.67663
+##  9 0.04453 0.9104 0.2862 0.88319
+## 10 0.03943 0.4583 0.3451 0.43436</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Drop variables with -</span>
 <span class="kw">select</span>(iris, <span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;Petal&quot;</span>))</code></pre></div>
 <pre><code>## # A tibble: 150 x 3

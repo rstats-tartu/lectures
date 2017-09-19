@@ -102,7 +102,7 @@ select(iris, -(Petal.Length:Species)) #selects everything, except those cols
 
 To select 3 columns and rename *subject* to *SUBJ* and put liik as the 1st col:
 ```{r}
-select(iris, liik = Species, Sepal.Length, Sepal.Width )
+select(iris, liik = Species, Sepal.Length, Sepal.Width) %>% dplyr::as_data_frame()
 ```
 
 
