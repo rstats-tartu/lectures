@@ -1,6 +1,7 @@
 library(tidyverse)
 
-a <- read_csv("R.csv")
+a <- read_csv("Rc.csv")
+?read_csv
 
 colnames(a) <- c("subject", "years", "supervisor", 
                  "stat course", "data anal", "R prof",
@@ -22,3 +23,6 @@ boxplot(a$ratio_x1_x2~a$supervisor)
 plot(a$x1, a$x2)
 abline(lm(a$x2~a$x1))
 
+b <- rnorm(10)
+mad(b)
+?mad
