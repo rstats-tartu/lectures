@@ -11,7 +11,9 @@ library(ggthemes)
 ```
 
 
-R-s on kaks olulisemat graafikasüsteemi (ja veel paar-kolm vähemtähtsat), mida võib vaadata nagu kaht eraldi keelt, mis mõlemad elavad R keele sees. Baasgraafika võimaldab väga lihtsate vahenditega teha kiireid ja suhteliselt ilusaid graafikuid. Seda kasutame sageli enda tarbeks kiirete plottide tegemiseks. Ja ggplot2 raamatukogu on hea avaldamiseks ilupiltide vormisamiseks ja keskmiselt keeruliste visualiseeringute tegemiseks. ggplot2 ja tema sateliit-raamatukogud on järgnevalt meie põhilised huviobjekid, aga alustame siiski baasgraafikast. 
+R-s on kaks olulisemat graafikasüsteemi (ja veel paar-kolm vähemtähtsat), mida võib vaadata nagu kaht eraldi keelt, mis mõlemad elavad R keele sees. Baasgraafika võimaldab väga lihtsate vahenditega teha kiireid ja suhteliselt ilusaid graafikuid. Seda kasutame sageli enda tarbeks kiirete plottide tegemiseks. Ja ggplot2 raamatukogu on hea ilupiltide vormistamiseks ja keskmiselt keeruliste visualiseeringute tegemiseks. Kuigi ggplot2 ja tema sateliit-raamatukogud on meie põhilised huviobjekid, alustame siiski baasgraafikast. Ehki me piirdume vaid väga lihtsate näidetega tasub teada, et baasgraafikas saab teha ka komplekseid visualiseeringuid: http://shinyapps.org/apps/RGraphCompendium/index.php
+
+
 
 ## 1.15. Baasgraafika
 
@@ -88,7 +90,7 @@ plot(iris, col=iris$Species)
 
 Juhhei, tulemus on paariviisiline plot kõigist muutujate kombinatsioonidest.
 
-Ainus  mitte-plot verb, mmida ma baasgraafikas vajan on hist(), mis joonistab histogrammi
+Ainus  mitte-plot verb, mida baasgraafikas vajame, on hist(), mis joonistab histogrammi
 ```{r}
 hist(iris$Sepal.Length)
 ```
@@ -104,7 +106,7 @@ või
 hist(iris$Sepal.Length, breaks = 15)
 ```
 
-See on kiire viis bin-i laiust reguleerida, aga arvestage, et sõltuvalt andmetest ei pruugi breaks=25 tähendada, et teie histogrammil on 25 bin-i.
+See viimane on kiire viis bin-i laiust reguleerida, aga arvestage, et sõltuvalt andmetest ei pruugi breaks=15 tähendada, et teie histogrammil on 15 bin-i.
 
 Ja lõpuks veel üks histogramm, et demonstreerida baas R-i võimalusi (samad argumendid töötavad ka plot funktsioonis)
 ```{r}
@@ -118,17 +120,23 @@ hist(iris$Sepal.Length,
      xlab = "sepal length",
      ylab="probability density")
 
-abline(v = median(iris$Sepal.Length), col = "blue", lwd = 2)
-abline(h = 0.3, col = "cyan", lwd = 2)
+abline(v = median(iris$Sepal.Length), col = "blue", lwd = 2) #vertical line that intercepts x at median sepal length
+abline(h = 0.3, col = "cyan", lwd = 2) #horisontal line that intercepts y at 0.3
 ```
 
 ## 1.16. ggplot2
 
-ggplot2 põhiverb on ggplot(). See graafikasüsteem töötab kiht-kihi-haaval ja uusi kihte lisatakse pluss-märgi abil. See annab modulaarsuse kaudu lihtsuse ja võimaluse luua üsna keerulisi meistriteoseid. Tõenäoliselt on ggplot hetkel kättesaadavatest graafikasüsteemidest parim (kaasa arvates tasulised programmid!).
+Ggplot on avaldamiseks sobiva tasemega lihtne aga võimas graafikasüsteem. Näiteid selle abil tehtud visualiseeringutest leiab siit: http://ggplot2.tidyverse.org/reference/ 
+http://www.r-graph-gallery.com
+http://www.ggplot2-exts.org
+http://www.cookbook-r.com
+
+
+ggplot2 põhiverb on ggplot(). See graafikasüsteem töötab kiht-kihi-haaval ja uusi kihte lisatakse pluss-märgi abil. See annab modulaarsuse kaudu lihtsuse ja võimaluse luua ka keerulisi taieseid. Tõenäoliselt on ggplot hetkel kättesaadavatest graafikasüsteemidest parim (kaasa arvates tasulised programmid!).
 
 ggploti töövoog on järgmine:
 
-minimaalselt pead ette andma kolm asja: 1. andmed, mida visualiseeritakse, 2. aes() inputi, mis määrab, milline muutuja läheb x teljele ja milline y teljele, ning 3. geom-i, mis määrab, mis tüüpi visualiseeringut sa tahad. Lisaks määrad sa aes(), kas ja kuidas sa tahad grupeerida pidevaid muutujaid faktori tasemete järgi.
+minimaalselt pead ette andma kolm asja: 1. andmed, mida visualiseeritakse, 2. aes() inputi, mis määrab, milline muutuja läheb x teljele ja milline y teljele, ning 3. geom-i, mis määrab, mis tüüpi visualiseeringut sa tahad. Lisaks määrad sa aes()-is, kas ja kuidas sa tahad grupeerida pidevaid muutujaid faktori tasemete järgi.
 
 Kõigepealt suuname oma andmed ggplot() funktsiooni
                     
@@ -266,28 +274,25 @@ sp + geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
 ```
 
 
-
-
-
 ### 1.16.4 Joongraafikud
 
 Joonetüübid on “blank”, “solid”, “dashed”, “dotted”, “dotdash”, “longdash”, “twodash”.
 
-```{r}
-df2 <- data.frame(sex = rep(c("Female", "Male"), each=3),
+```{r eval=FALSE}
+dfs2 <- data.frame(sex = rep(c("Female", "Male"), each=3),
                   time=c("breakfeast", "Lunch", "Dinner"),
                   bill=c(10, 30, 15, 13, 40, 17) )
 
 # Change line colors and sizes
-ggplot(data=df2, aes(x=time, y=bill, group=sex)) +
+ggplot(data=dfs2, aes(x=time, y=bill, group=sex)) +
   geom_line(linetype="dotted", color="red", size=2)+
   geom_point(color="blue", size=3)
 ```
 
 Muudab tüüpi automaatselt muutuja sex taseme järgi
-```{r}
+```{r eval=FALSE}
 # Change line types + colors
-ggplot(df2, aes(x=time, y=bill, group=sex)) +
+ggplot(dfs2, aes(x=time, y=bill, group=sex)) +
   geom_line(aes(linetype=sex, color=sex))+
   geom_point(aes(color=sex))+
   theme(legend.position="top")
@@ -300,8 +305,8 @@ scale_linetype_manual() : joone tüüp
 scale_color_manual() : joone värv
 
 scale_size_manual() : joone laius
-```{r}
-ggplot(df2, aes(x=time, y=bill, group=sex)) +
+```{r eval=FALSE}
+ggplot(dfs2, aes(x=time, y=bill, group=sex)) +
   geom_line(aes(linetype=sex, color=sex, size=sex))+
   geom_point()+
   scale_linetype_manual(values=c("twodash", "dotted"))+
@@ -487,7 +492,7 @@ ggplot(mpg, aes(displ, hwy)) +
 ```
 
 eemaldame telgede markeeringud
-```{r}
+```{r eval=FALSE}
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
   scale_x_continuous(labels = NULL) +
@@ -495,7 +500,7 @@ ggplot(mpg, aes(displ, hwy)) +
 ```
 
 ### 1.16.10. muudame telgede ja legendi nimed
-```{r}
+```{r eval=FALSE}
 a1 <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + 
   geom_point()
 a1 + labs(
@@ -605,7 +610,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 ####pidevatele muutujatele
-```{r}
+```{r eval=FALSE}
 df <- data.frame(x = 1, y = 1:5, z = c(1, 3, 2, NA, 5))
 p <- ggplot(df, aes(x, y)) + geom_tile(aes(fill = z), size = 5)
 p
@@ -623,7 +628,7 @@ p+scale_color_gradientn(colours = rainbow(5))
 
 The default colour scheme, scale colour hue(), picks evenly spaced hues around the HCL colour wheel. This works well for up to about eight colours, but after that it becomes hard to tell the different colours apart. You can control the default chroma and luminance, and the range of hues, with the h, c and l arguments:
 
-```{r}
+```{r eval=FALSE}
 ToothGrowth <- ToothGrowth
 ToothGrowth$dose <- as.factor(ToothGrowth$dose)
 mtcars <- mtcars
@@ -655,7 +660,7 @@ sp + scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))
 
 The argument breaks can be used to control the appearance of the legend. This holds true also for the other scale_xx() functions.
 
-```{r}
+```{r eval=FALSE}
 # Box plot
 bp + scale_fill_manual(breaks = c("2", "1", "0.5"), 
                        values=c("red", "blue", "green"))
@@ -684,8 +689,8 @@ scale_colour_viridis() provided by the viridis package is a continuous analog of
 
 For continuous colour, you can use the built-in scale_colour_gradient() or scale_fill_gradient(). If you have a diverging scale, you can use scale_colour_gradient2(). That allows you to give, for example, positive and negative values different colours. That’s sometimes also useful if you want to distinguish points above or below the mean.
 ```{r eval=FALSE}
-df <- data.frame(x = c( "a" ,  "b" ,  "c" ,  "d" ), y = c(3, 4, 1, 2))
-bars <- ggplot(df, aes(x, y, fill = x)) +
+dfs <- data.frame(x = c( "a" ,  "b" ,  "c" ,  "d" ), y = c(3, 4, 1, 2))
+bars <- ggplot(dfs, aes(x, y, fill = x)) +
   geom_bar(stat =  "identity" ) +
   labs(x = NULL, y = NULL) +
   theme(legend.position =  "none" )
@@ -709,7 +714,7 @@ bars + scale_fill_grey(start = 0, end = 0.5)
  
 
 ```{r}
-
+library(tidyverse)
 set.seed(10) #make predictable random data
 baseline <- rlnorm(100, 0, 1)
 post <- 0.8*baseline + rnorm(100, 0, 0.10*baseline)
@@ -732,7 +737,7 @@ my.data <- data.frame(baseline, post, diff, diffp)
 
 In standard Bland Altman plots, one plots the difference between methods against the average of the methods, but in this case, the x-axis should be the baseline result, because that is the closest thing we have to the truth.
 
-```{r eval=FALSE}
+```{r, eval=FALSE}
 library(ggExtra)
 diffplot <- ggplot(my.data, aes(baseline, diff)) + 
   geom_point(size=2, colour = rgb(0,0,0, alpha = 0.5)) + 
@@ -753,7 +758,7 @@ ggMarginal(diffplot, type="histogram", bins = 25)
 
  We can also obviously do the percent difference.
  
-```{r eval=FALSE}
+```{r eval=FALSE, fig.width= 3, fig.height=5}
 diffplotp <- ggplot(my.data, aes(baseline, diffp)) + 
   geom_point(size=2, colour = rgb(0,0,0, alpha = 0.5)) + 
   theme_bw() + 
@@ -764,10 +769,8 @@ diffplotp <- ggplot(my.data, aes(baseline, diffp)) +
   ylab("Difference pre and post Storage (%)") +
   xlab("Baseline Concentration (mg/L)")
 
+
 ggMarginal(diffplotp, type="histogram", bins = 25)
 ```
-
-
-
 
 
