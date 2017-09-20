@@ -11,5 +11,6 @@ Imports:
     devtools, 
     ggthemes, 
     grid, 
-    ggExtra
+    ggExtra,
+    ggrepel
 Remotes: rstudio/bookdown
