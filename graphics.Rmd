@@ -350,10 +350,11 @@ ggplot(mpg, aes(displ, hwy)) +
 
 Lõpuks lisame teksti neile parimatele autodele. Selleks kasutame ggrepel raamatukogu funktsiooni geom_label_repel
 ```{r}
+library(ggrepel)
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(colour = class))+
   geom_point(size = 3, shape = 1, data = best_in_class) +
-  ggrepel::geom_label_repel(aes(label = model), data = best_in_class, cex=2)
+  geom_label_repel(aes(label = model), data = best_in_class, cex=2)
 
 ```
 
