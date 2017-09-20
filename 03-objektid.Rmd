@@ -1,4 +1,9 @@
 
+```{r, message=FALSE, error=FALSE, echo=FALSE}
+library(tidyverse)
+```
+
+
 # R objektid {#obj}
 
 R-i töökeskkonnas "workspace" asuvad **objektid**, millega me töötame. 
@@ -323,6 +328,7 @@ Eelnevaid verbe ei kasuta me vist enam kunagi sest tavaliselt loeme me andmed si
 
 ### Rekodeerime tibble väärtusi
 
+
 ```{r}
 fruits$apples[fruits$apples==43] <- 333
 fruits
@@ -340,7 +346,7 @@ distinct(dat, col1, .keep_all = TRUE)
 distinct(dat) 
 ```
 
-Rekodeerime `Inf` ja `NA` väärtused nulliks (väga halb mõte):
+Rekodeerime `Inf` ja `NA` väärtused nulliks (mis küll tavaliselt on halb mõte):
 ```{r eval=FALSE}
 # inf to 0
 x[is.infinite(x)] <- 0
@@ -378,7 +384,7 @@ Meil on 2 verbi: bind_cols ja cbind, millest esimene on konservatiivsem. Proovig
 
 ```{r}
 dfx <- tibble(colC = c(4, 5, 6))
-cbind(dfs, dfx)
+bind_cols(dfs, dfx)
 ```
 
 
@@ -417,7 +423,7 @@ Andmete sisselugemine töökataloogist:
 fruits <-  read_csv("data/fruits.csv")
 ```
 
-MS exceli failist saab tabeleid importida "readxl" paki abil.
+MS exceli failist saab tabeleid importida "readxl" raamatukogu abil.
 ```{r, eval=FALSE}
 library(readxl)
 ## kõigepealt vaatame kui palju sheete failis on
@@ -429,10 +435,13 @@ dfs <- read_excel("data/excelfile.xlsx", sheet = sheets[1])
 Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga `read_csv2` või `read.csv2` (need on erinevad funktsioonid; read.csv2 loeb selle sisse data framena ja read_csv2 tibble-na).
 
 R-i saab sisse lugeda palju erinevaid andmeformaate. 
-Kui sa soovid oluliselt ohverdada reprodutseeritavust installi RStudio addin: "Gotta read em all R".
+Näiteks, installi RStudio addin: "Gotta read em all R".
 See läheb ülesse tab-i Addins. 
 Sealt saab selle avada ja selle abil tabeleid oma workspace üles laadida. 
 Selline point-and-click lahendus sobib ehk tabelite esialgseks tutvumiseks, kuid korrektne on andmed importida programmaatiliselt oma skriptis.
+
+Nii installeerime gotta rea em' all raamatukogu githubist. 
+
 ```{r eval=FALSE}
 #install gotta read em all as R studio addin
 install.packages("devtools")
@@ -451,7 +460,7 @@ NB! R ei muuda algandmeid, mille te näiteks csv-na sisse loete - need jäävad 
 
 Seega ei ole andmetabelite salvestamine töö vaheproduktidena sageli vajalik sest te jooksutate iga kord, kui te oma projekti juurde naasete, kogu analüüsi uuesti kuni kohani, kuhu te pooleli jäite. 
 See tagab kõige paremini, et teie kood töötab tervikuna. 
-Erandiks on tabelid, mille arvutamine palju aega võtab.
+Erandiks on tabelid, mille arvutamine võtab palju aega.
 
 Tibble konverteerimine data frame-ks ja tagasi tibbleks:
 ```{r}
