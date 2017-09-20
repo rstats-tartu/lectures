@@ -411,13 +411,6 @@ ggplot(mpg, aes(displ, hwy)) +
   facet_grid(drv ~ .)
 ```
 
-```{r eval=FALSE}
-library(ggforce)
-ggplot(iris, aes(Petal.Length, Petal.Width, colour = Species)) +
-    geom_point() +
-    facet_zoom(x = Species == "versicolor")
-```
-
 ### Telgede ulatus
 
 Telgede ulatust saab määrata 3-l erineval viisil
