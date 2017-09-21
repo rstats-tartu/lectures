@@ -30,6 +30,8 @@ Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised salvesta nee
 Nüüd laadime hiljem vaja minevad libraryd:
 ```{r, message=FALSE}
 library(tidyverse)
+library(VIM)
+library(readxl) 
 ## Install gotta read em all as R studio addin
 ## install.packages("devtools")
 devtools::install_github("Stan125/GREA")
@@ -154,7 +156,7 @@ as.numeric(as.character(minu_vektor))
 Järgneva trikiga saab stringidest ekstraheerida numbrid: 
 ```{r}
 minu_vektor <- c(1, "A2", "$2", "joe")
-## parse_number() is imported from tidyverse 'readr' library 
+## parse_number() is imported from tidyverse 'readr' 
 minu_vektor <- as.vector(parse_number(minu_vektor))
 minu_vektor
 str(minu_vektor)
@@ -466,7 +468,6 @@ class(fruits)
 ## Tabelit sisse lugedes vaata üle NA-d
 
 ```{r}
-library(VIM) 
 diabetes <- read.table(file = "data/diabetes.csv", sep = ";", dec = ",", header = TRUE)
 str(diabetes)
 aggr(diabetes, prop = FALSE, numbers = TRUE)
