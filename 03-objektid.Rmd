@@ -1,9 +1,4 @@
 
-```{r, message=FALSE, error=FALSE, echo=FALSE}
-library(tidyverse)
-```
-
-
 # R objektid {#obj}
 
 R-i töökeskkonnas "workspace" asuvad **objektid**, millega me töötame. 
@@ -32,7 +27,17 @@ Lülitame automaatse salvestamise välja:
 
 Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele.
 
+Nüüd laadime hiljem vaja minevad libraryd:
+```{r, message=FALSE}
+library(tidyverse)
+## Install gotta read em all as R studio addin
+## install.packages("devtools")
+devtools::install_github("Stan125/GREA")
+```
+
+
 ## Objekt ja nimi
+
 Kui teil sünnib laps, annate talle nime.
 
 R-s on vastupidi: nimele antakse objekt
@@ -148,8 +153,8 @@ as.numeric(as.character(minu_vektor))
 
 Järgneva trikiga saab stringidest ekstraheerida numbrid: 
 ```{r}
-library(readr)
 minu_vektor <- c(1, "A2", "$2", "joe")
+## parse_number() is imported from tidyverse 'readr' library 
 minu_vektor <- as.vector(parse_number(minu_vektor))
 minu_vektor
 str(minu_vektor)
@@ -247,10 +252,6 @@ happy_list$ab
 
 
 ## data frame ja tibble
-
-```{r}
-library(tidyverse)
-```
 
 Andmeraam on eriline list, mis koosneb ühepikkustest vektoritest. Andmeraam on ühtlasi teatud liiki tabel, kus igas veerus on ainult ühte tüüpi andmed. Need vektorid ripuvad andmeraamis kõrvuti nagu tuulehaugid suitsuahjus, kusjuures vektori algus vastab tuulehaugi peale, mis on konksu otsas (konks vastab andmeraamis tulba nimele ja ühtlasi vektori nimele). Iga vektori nimi muutub sellises tabelis tulba nimeks. Igas tulbas saab olla ainult ühte tüüpi andmeid. 
 
@@ -435,19 +436,10 @@ dfs <- read_excel("data/excelfile.xlsx", sheet = sheets[1])
 Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga `read_csv2` või `read.csv2` (need on erinevad funktsioonid; read.csv2 loeb selle sisse data framena ja read_csv2 tibble-na).
 
 R-i saab sisse lugeda palju erinevaid andmeformaate. 
-Näiteks, installi RStudio addin: "Gotta read em all R".
+Näiteks, installi RStudio addin: "Gotta read em all R", vaata eespool.
 See läheb ülesse tab-i Addins. 
 Sealt saab selle avada ja selle abil tabeleid oma workspace üles laadida. 
 Selline point-and-click lahendus sobib ehk tabelite esialgseks tutvumiseks, kuid korrektne on andmed importida programmaatiliselt oma skriptis.
-
-Nii installeerime gotta rea em' all raamatukogu githubist. 
-
-```{r eval=FALSE}
-#install gotta read em all as R studio addin
-install.packages("devtools")
-devtools::install_github("Stan125/GREA")
-```
-
 
 Alternatiiv: mine alla paremake Files tab-le, navigeeri sinna kuhu vaja ja kliki faili nimele, mida tahad R-i importida.
 
