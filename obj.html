@@ -241,6 +241,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Võta ära linnuke “Restore .RData to workspace at startup” eest.</li>
 </ul>
 <p>Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele.</p>
+<p>Nüüd laadime hiljem vaja minevad libraryd:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+## Install gotta read em all as R studio addin
+## install.packages(&quot;devtools&quot;)
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;Stan125/GREA&quot;</span>)</code></pre></div>
 <div id="objekt-ja-nimi" class="section level2">
 <h2><span class="header-section-number">4.1</span> Objekt ja nimi</h2>
 <p>Kui teil sünnib laps, annate talle nime.</p>
@@ -335,8 +340,8 @@ minu_vektor</code></pre></div>
 <pre><code>## Warning: NAs introduced by coercion</code></pre>
 <pre><code>## [1]  9.0 12.0 12.0  1.4   NA</code></pre>
 <p>Järgneva trikiga saab stringidest ekstraheerida numbrid:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
-minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="st">&quot;A2&quot;</span>, <span class="st">&quot;$2&quot;</span>, <span class="st">&quot;joe&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="st">&quot;A2&quot;</span>, <span class="st">&quot;$2&quot;</span>, <span class="st">&quot;joe&quot;</span>)
+## parse_number() is imported from tidyverse &#39;readr&#39; library 
 minu_vektor &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">parse_number</span>(minu_vektor))</code></pre></div>
 <pre><code>## Warning: 1 parsing failure.
 ## row # A tibble: 1 x 4 col     row   col expected actual expected   &lt;int&gt; &lt;int&gt;    &lt;chr&gt;  &lt;chr&gt; actual 1     4    NA a number    joe</code></pre>
@@ -413,15 +418,15 @@ grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
 happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
 happy_list</code></pre></div>
 <pre><code>## [[1]]
-## [1] 0.1729 0.9842 0.5968 0.8921 0.8887
+## [1] 0.1556 0.1072 0.1703 0.3265 0.9810
 ## 
 ## [[2]]
-##        a         b
-## 1 0.1729  0.698992
-## 2 0.9842  1.244783
-## 3 0.5968  0.517943
-## 4 0.8921  0.009629
-## 5 0.8887 -0.985606
+##        a       b
+## 1 0.1556  1.3818
+## 2 0.1072  0.3889
+## 3 0.1703  1.1051
+## 4 0.3265 -0.2045
+## 5 0.9810  0.9992
 ## 
 ## [[3]]
 ## 
@@ -441,7 +446,6 @@ happy_list</code></pre></div>
 </div>
 <div id="data-frame-ja-tibble" class="section level2">
 <h2><span class="header-section-number">4.6</span> data frame ja tibble</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
 <p>Andmeraam on eriline list, mis koosneb ühepikkustest vektoritest. Andmeraam on ühtlasi teatud liiki tabel, kus igas veerus on ainult ühte tüüpi andmed. Need vektorid ripuvad andmeraamis kõrvuti nagu tuulehaugid suitsuahjus, kusjuures vektori algus vastab tuulehaugi peale, mis on konksu otsas (konks vastab andmeraamis tulba nimele ja ühtlasi vektori nimele). Iga vektori nimi muutub sellises tabelis tulba nimeks. Igas tulbas saab olla ainult ühte tüüpi andmeid.</p>
 <p>R-s on 2 andmeraami tüüpi: data frame ja tibble, mis on väga sarnased. Tibble on uuem, veidi kaunima väljatrükiga, pisut mugavam kasutada.</p>
 <blockquote>
@@ -678,11 +682,7 @@ sheets &lt;-<span class="st"> </span><span class="kw">excel_sheets</span>(<span 
 ## siis impordime näiteks esimese sheeti
 dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;data/excelfile.xlsx&quot;</span>, <span class="dt">sheet =</span> sheets[<span class="dv">1</span>])</code></pre></div>
 <p>Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga <code>read_csv2</code> või <code>read.csv2</code> (need on erinevad funktsioonid; read.csv2 loeb selle sisse data framena ja read_csv2 tibble-na).</p>
-<p>R-i saab sisse lugeda palju erinevaid andmeformaate. Näiteks, installi RStudio addin: “Gotta read em all R”. See läheb ülesse tab-i Addins. Sealt saab selle avada ja selle abil tabeleid oma workspace üles laadida. Selline point-and-click lahendus sobib ehk tabelite esialgseks tutvumiseks, kuid korrektne on andmed importida programmaatiliselt oma skriptis.</p>
-<p>Nii installeerime gotta rea em’ all raamatukogu githubist.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install gotta read em all as R studio addin</span>
-<span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;Stan125/GREA&quot;</span>)</code></pre></div>
+<p>R-i saab sisse lugeda palju erinevaid andmeformaate. Näiteks, installi RStudio addin: “Gotta read em all R”, vaata eespool. See läheb ülesse tab-i Addins. Sealt saab selle avada ja selle abil tabeleid oma workspace üles laadida. Selline point-and-click lahendus sobib ehk tabelite esialgseks tutvumiseks, kuid korrektne on andmed importida programmaatiliselt oma skriptis.</p>
 <p>Alternatiiv: mine alla paremake Files tab-le, navigeeri sinna kuhu vaja ja kliki faili nimele, mida tahad R-i importida.</p>
 <p>Mõlemal juhul ilmub alla konsooli (all vasakul) koodijupp, mille jooksutamine peaks asja ära tegema. Te võite tahta selle koodi kopeerida üles vasakusse aknasse kus teie ülejäänud kood tulevastele põlvedele säilub.</p>
 <blockquote>
@@ -749,7 +749,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 ##  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...
 ##  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggr</span>(diabetes, <span class="dt">prop =</span> <span class="ot">FALSE</span>, <span class="dt">numbers =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-64-1.png" width="672" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
+<p><img src="main_files/figure-html/unnamed-chunk-62-1.png" width="672" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
 <p>Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nrows &lt;-<span class="st"> </span><span class="kw">nrow</span>(diabetes)
   ncomplete &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">complete.cases</span>(diabetes))
@@ -769,7 +769,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 ##        3</code></pre>
 <p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
 <p>Kuidas rekodeerida NA-d näiteks 0-ks:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> </span><span class="dv">0</span>
 dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> &quot;other&quot;</span>
