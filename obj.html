@@ -243,6 +243,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele.</p>
 <p>Nüüd laadime hiljem vaja minevad libraryd:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(VIM)
+<span class="kw">library</span>(readxl) 
 ## Install gotta read em all as R studio addin
 ## install.packages(&quot;devtools&quot;)
 devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;Stan125/GREA&quot;</span>)</code></pre></div>
@@ -341,7 +343,7 @@ minu_vektor</code></pre></div>
 <pre><code>## [1]  9.0 12.0 12.0  1.4   NA</code></pre>
 <p>Järgneva trikiga saab stringidest ekstraheerida numbrid:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="st">&quot;A2&quot;</span>, <span class="st">&quot;$2&quot;</span>, <span class="st">&quot;joe&quot;</span>)
-## parse_number() is imported from tidyverse &#39;readr&#39; library 
+## parse_number() is imported from tidyverse &#39;readr&#39; 
 minu_vektor &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">parse_number</span>(minu_vektor))</code></pre></div>
 <pre><code>## Warning: 1 parsing failure.
 ## row # A tibble: 1 x 4 col     row   col expected actual expected   &lt;int&gt; &lt;int&gt;    &lt;chr&gt;  &lt;chr&gt; actual 1     4    NA a number    joe</code></pre>
@@ -418,15 +420,15 @@ grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
 happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
 happy_list</code></pre></div>
 <pre><code>## [[1]]
-## [1] 0.1556 0.1072 0.1703 0.3265 0.9810
+## [1] 0.6321 0.7424 0.4916 0.5154 0.2353
 ## 
 ## [[2]]
 ##        a       b
-## 1 0.1556  1.3818
-## 2 0.1072  0.3889
-## 3 0.1703  1.1051
-## 4 0.3265 -0.2045
-## 5 0.9810  0.9992
+## 1 0.6321  1.0865
+## 2 0.7424  2.6664
+## 3 0.4916 -0.4743
+## 4 0.5154  0.7339
+## 5 0.2353 -1.2795
 ## 
 ## [[3]]
 ## 
@@ -703,29 +705,6 @@ dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class
 </div>
 <div id="tabelit-sisse-lugedes-vaata-ule-na-d" class="section level2">
 <h2><span class="header-section-number">4.7</span> Tabelit sisse lugedes vaata üle NA-d</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(VIM) </code></pre></div>
-<pre><code>## Loading required package: colorspace</code></pre>
-<pre><code>## Loading required package: methods</code></pre>
-<pre><code>## Loading required package: grid</code></pre>
-<pre><code>## Loading required package: data.table</code></pre>
-<pre><code>## 
-## Attaching package: &#39;data.table&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     transpose</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     between, first, last</code></pre>
-<pre><code>## VIM is ready to use. 
-##  Since version 4.0.0 the GUI is in its own package VIMGUI.
-## 
-##           Please use the package to use the new (and old) GUI.</code></pre>
-<pre><code>## Suggestions and bug-reports can be submitted at: https://github.com/alexkowa/VIM/issues</code></pre>
-<pre><code>## 
-## Attaching package: &#39;VIM&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:datasets&#39;:
-## 
-##     sleep</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diabetes &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> <span class="st">&quot;data/diabetes.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">dec =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
 <span class="kw">str</span>(diabetes)</code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    403 obs. of  19 variables:
