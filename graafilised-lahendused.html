@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2017-09-20">
+<meta name="date" content="2017-09-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -250,28 +250,28 @@ iris</code></pre></div>
 <p>Baasgraafika põhiverb on plot(). See püüab teie poolt ette antud andmete pealt ära arvata, millist plotti te soovite. plot() põhiargumendid on x ja y, mis määravad selle, mida plotitakse x teljele ja mida y teljele. Esimene argument on vaikimisi x ja teine y.</p>
 <p>Kui te annate ette faktor-andmed, on vastuseks tulpdiagramm, kus tulbad loevad üles selle faktori kõigi tasemete esinemiste arvu. Antud juhul on meil igast liigist mõõdetud 50 isendit.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Species)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
 <p>Kui te annate ette ühe pideva muutuja</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
 <p>Nüüd on tulemuseks plot, kus on näha mõõtmisete rea (ehk tabeli) iga järgmise liikme (tablei rea) väärtus. Siin on meil kokku 150 mõõtmist muutujale Sepal.Length.</p>
 <p>Alternatiiv sellele vaatele on stripchart</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stripchart</span>(iris<span class="op">$</span>Sepal.Length)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
 <p>Enam lihtsamaks üks joonis ei lähe!</p>
 <p>Mis juhtub, kui me x-teljele paneme faktortunnuse ja y teljele pideva tunnuse?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Species, iris<span class="op">$</span>Sepal.Length)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
 <p>Vastuseks on boxplot. Sama ploti saame ka nii:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(iris<span class="op">$</span>Sepal.Length<span class="op">~</span>iris<span class="op">$</span>Species).</code></pre></div>
 <p>Siin on tegu R-i mudeli notatsiooniga: y telje muutuja, tilde, x telje muutuja. Tilde näitab, et y sõltub x-st stohhastiliselt, mitte deterministlikult. Deterministliku seost tähistatakse võrdusmärgiga (=).</p>
 <p>Aga vastipidi?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>( iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species )</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
 <p>Pole paha, see on üsna informatiivne scatterplot.</p>
 <p>Järgmiseks kahe pideva muutuja scatterplot, kus me veel lisaks värvime punktid liigi järgi</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width, <span class="dt">col=</span>iris<span class="op">$</span>Species)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
 <p>Ja lõpuks tõmbame läbi punktide punase regressioonijoone</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)
 <span class="kw">abline</span>(
@@ -279,21 +279,21 @@ iris</code></pre></div>
   <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, 
   <span class="dt">lwd=</span><span class="dv">2</span>
   )</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 <p>lwd parameeter reguleerib joone laiust. lm() on funktsioon, mis fitib sirge vähimruutude meetodil (vt ptk …).</p>
 <p>Mis juhtub, kui me anname plot() funtsioonile sisse kogu irise tibble?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris, <span class="dt">col=</span>iris<span class="op">$</span>Species)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 <p>Juhhei, tulemus on paariviisiline plot kõigist muutujate kombinatsioonidest.</p>
 <p>Ainus mitte-plot verb, mida baasgraafikas vajame, on hist(), mis joonistab histogrammi</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(iris<span class="op">$</span>Sepal.Length)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
 <p>Histogrammi tegemiseks jagatakse andmepunktid nende väärtuste järgi bin-idesse ja plotitakse igasse bin-i sattunud andmepunktide arv. Näiteks esimeses bin-is on Sepal.Length muutuja väärtused, mis jäävad 4 ja 4.5 cm vahele ja selliseid väärtusi on kokku viis. Histogrammi puhul on oluline teada, et selle kuju sõltub bin-ide laiusest. Bini laiust saab muuta kahel viisil:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(iris<span class="op">$</span>Sepal.Length, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">9</span>, <span class="dt">by =</span> <span class="fl">0.25</span>))</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 <p>või</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(iris<span class="op">$</span>Sepal.Length, <span class="dt">breaks =</span> <span class="dv">15</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
 <p>See viimane on kiire viis bin-i laiust reguleerida, aga arvestage, et sõltuvalt andmetest ei pruugi breaks=15 tähendada, et teie histogrammil on 15 bin-i.</p>
 <p>Ja lõpuks veel üks histogramm, et demonstreerida baas R-i võimalusi (samad argumendid töötavad ka plot funktsioonis)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(iris<span class="op">$</span>Sepal.Length,
@@ -308,7 +308,7 @@ iris</code></pre></div>
 
 <span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">median</span>(iris<span class="op">$</span>Sepal.Length), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co">#vertical line that intercepts x at median sepal length</span>
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="fl">0.3</span>, <span class="dt">col =</span> <span class="st">&quot;cyan&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co">#horisontal line that intercepts y at 0.3</span></code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
 </div>
 <div id="ggplot2" class="section level2">
 <h2><span class="header-section-number">7.2</span> ggplot2</h2>
@@ -318,16 +318,16 @@ iris</code></pre></div>
 <p>minimaalselt pead ette andma kolm asja: 1. andmed, mida visualiseeritakse, 2. aes() inputi, mis määrab, milline muutuja läheb x teljele ja milline y teljele, ning 3. geom-i, mis määrab, mis tüüpi visualiseeringut sa tahad. Lisaks määrad sa aes()-is, kas ja kuidas sa tahad grupeerida pidevaid muutujaid faktori tasemete järgi.</p>
 <p>Kõigepealt suuname oma andmed ggplot() funktsiooni</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>()</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
 <p>Saime tühja ploti.</p>
 <p>Nüüd ütleme, et x teljele pannakse Sepal.Length ja y teljele Sepal.Width andmed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Sepal.Width))</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
 <p>Aga plot on ikka tühi sest me pole ggplotile öelnud, millist visualiseeringut me tahame. Teeme seda nüüd.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Sepal.Width)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
 <p>Me lisasime kaks kihti: esimene visualiseerib andmepunktid ja teine joonistab regressioonisirge koos usaldusintervalliga (standardviga).</p>
 <pre><code>plussmärk peab olema vana rea lõpus, mitte uue rea (kihi) alguses</code></pre>
 <div id="regressioonisirgete-plottimine" class="section level3">
@@ -337,25 +337,25 @@ iris</code></pre></div>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">se=</span><span class="ot">FALSE</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
 <p>Me võime geom_smooth-i anda erineva andmeseti kui ggplot() põhifunktsiooni. Nii joonistame me regressioonisirge ainult nendele andmetele.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Sepal.Width)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data=</span><span class="kw">filter</span>(iris, Species <span class="op">==</span><span class="st">&quot;setosa&quot;</span>), <span class="dt">method =</span> lm) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
 <p>Siin viis kuidas öelda, et me jätame sisse andmed, kus liik on virginica või versicolor.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Sepal.Width)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data=</span><span class="kw">filter</span>(iris, Species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;virginica&quot;</span>, <span class="st">&quot;versicolor&quot;</span>)), <span class="dt">method =</span> lm) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
 <p>Ja lõpuks joonistame 3 sirget; üks igale liigile.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Sepal.Width, <span class="dt">color=</span>Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span>F) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
 <p>Kaalutud lineaarne mudel on viis anda andmepunktidele, mida me tähtsamaks peame (või mis on täpsemalt mõõdetud) suurem kaal. Kõigepealt, siin on USA demograafilised andmed erinevate kesk-lääne omavalitsuste kohta (437 omavalitsust).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(midwest &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(midwest) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(percwhite, percbelowpoverty, poptotal))</code></pre></div>
 <pre><code>## # A tibble: 437 x 3
@@ -378,7 +378,7 @@ iris</code></pre></div>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">weight =</span> poptotal), <span class="dt">method =</span> lm, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;percent white&quot;</span>, <span class="dt">y=</span><span class="st">&quot;percent below poverty&quot;</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-117-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
 <p>Regeressioonijoone saab eksplitsiitselt määrata intercepti ja slope abil. See on eriti kasulik bayesi mudelite visualiseerimisel mudeli koefitsientide põhjal. Kasuta geom_abline().</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>mtcars, <span class="kw">aes</span>(<span class="dt">x=</span>wt, <span class="dt">y=</span>mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
 reg&lt;-<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)
@@ -394,7 +394,7 @@ reg</code></pre></div>
 <span class="co"># Equation of the line : </span>
 sp <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> coeff[<span class="dv">1</span>], <span class="dt">slope =</span> coeff[<span class="dv">2</span>], <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, 
                  <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="dt">size=</span><span class="fl">1.5</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
 </div>
 <div id="lisame-plotile-sirgjooni" class="section level3">
 <h3><span class="header-section-number">7.2.2</span> Lisame plotile sirgjooni</h3>
@@ -404,12 +404,12 @@ sp &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt"
 <span class="co"># Add horizontal line at y = 2O</span>
 sp <span class="op">+</span><span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">20</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>, 
                 <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-120-1.png" width="672" /></p>
 <p>ja vertikaalsed sirged geom_vline abil</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a vertical line at x = 3</span>
 sp <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">3</span>, <span class="dt">linetype=</span><span class="st">&quot;dotted&quot;</span>, 
                 <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="fl">1.5</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-120-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
 </div>
 <div id="segmendid-ja-nooled" class="section level3">
 <h3><span class="header-section-number">7.2.3</span> Segmendid ja nooled</h3>
@@ -417,15 +417,15 @@ sp <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline
 <p>geom_segment(aes(x, y, xend, yend))</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a vertical line segment</span>
 sp <span class="op">+</span><span class="st"> </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">4</span>, <span class="dt">y =</span> <span class="dv">15</span>, <span class="dt">xend =</span> <span class="dv">4</span>, <span class="dt">yend =</span> <span class="dv">27</span>))</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add horizontal line segment</span>
 sp <span class="op">+</span><span class="st"> </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">15</span>, <span class="dt">xend =</span> <span class="dv">3</span>, <span class="dt">yend =</span> <span class="dv">15</span>))</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-121-2.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-122-2.png" width="672" /></p>
 <p><strong>arrow</strong> läheb argumendina geom_segment-i</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(grid)
 sp <span class="op">+</span><span class="st"> </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">5</span>, <span class="dt">y =</span> <span class="dv">30</span>, <span class="dt">xend =</span> <span class="fl">3.5</span>, <span class="dt">yend =</span> <span class="dv">25</span>),
                   <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.5</span>, <span class="st">&quot;cm&quot;</span>)))</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-123-1.png" width="672" /></p>
 </div>
 <div id="joongraafikud" class="section level3">
 <h3><span class="header-section-number">7.2.4</span> Joongraafikud</h3>
@@ -460,11 +460,11 @@ sp <span class="op">+</span><span class="st"> </span><span class="kw">geom_segme
 <p>aes() töötab nii ggplot() kui geom_ funktsioonides</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Sepal.Width, <span class="dt">size =</span> Petal.Length, <span class="dt">color=</span> Species))</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
 <p>kui me kasutame color argumenti aes()st väljaspool, siis värvime kõik punktid sama värvi.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Sepal.Width, <span class="dt">size =</span> Petal.Length), <span class="dt">color=</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-128-1.png" width="672" /></p>
 <p>Kasulik trikk on kasutada mitut andmesetti sama ploti tegemiseks. Uus andmestik - mpg - on autode kütusekulu kohta.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mpg, <span class="dv">2</span>)</code></pre></div>
 <pre><code>## # A tibble: 2 x 11
@@ -497,14 +497,14 @@ best_in_class &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">shape =</span> <span class="dv">1</span>, <span class="dt">data =</span> best_in_class) </code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-129-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
 <p>Lõpuks lisame teksti neile parimatele autodele. Selleks kasutame ggrepel raamatukogu funktsiooni geom_label_repel</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggrepel)
 <span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">shape =</span> <span class="dv">1</span>, <span class="dt">data =</span> best_in_class) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_label_repel</span>(<span class="kw">aes</span>(<span class="dt">label =</span> model), <span class="dt">data =</span> best_in_class, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-131-1.png" width="672" /></p>
 </div>
 </div>
 <div id="facet" class="section level2">
@@ -517,30 +517,30 @@ best_in_class &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#here we separate different classes of cars into different colors</span>
 <span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class))</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-131-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
-<span class="st">   </span><span class="kw">geom_point</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>class, <span class="dt">nrow=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="main_files/figure-html/unnamed-chunk-132-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">   </span><span class="kw">geom_point</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>class, <span class="dt">ncol=</span><span class="dv">3</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>class, <span class="dt">nrow=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="main_files/figure-html/unnamed-chunk-133-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
+<span class="st">   </span><span class="kw">geom_point</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>class, <span class="dt">ncol=</span><span class="dv">3</span>)</code></pre></div>
+<p><img src="main_files/figure-html/unnamed-chunk-134-1.png" width="672" /></p>
 <p>Kui me tahame kahe muutuja kõigi kombinatsioonide vastu paneele, siis kasuta facet_grid</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">   </span><span class="kw">geom_point</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(drv <span class="op">~</span><span class="st"> </span>cyl)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-134-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-135-1.png" width="672" /></p>
 <p>drv — drive - 4(-wheel), f(orward), r(ear) cyl — cylinders - 4, 5, 6, or 8</p>
 <p>By using a dot in the equations you can set the facets side-by-side (.~var) or on top of each other (var~.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">   </span><span class="kw">geom_point</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>drv)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-135-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">   </span><span class="kw">geom_point</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(drv <span class="op">~</span><span class="st"> </span>.)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
 <div id="telgede-ulatus" class="section level3">
 <h3><span class="header-section-number">7.3.1</span> Telgede ulatus</h3>
 <p>Telgede ulatust saab määrata 3-l erineval viisil</p>
@@ -562,24 +562,24 @@ best_in_class &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="kw">log10</span>(carat), <span class="kw">log10</span>(price))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bin2d</span>()</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
 <p>Kahjuks on nüüd telgede tähistus log skaalas. Järgnev plot on identne, välja arvatud, et x telg on originaalses lineaarses skaalas</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(carat, price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bin2d</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_y_log10</span>()</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp &lt;-<span class="st"> </span><span class="kw">ggplot</span>(cars, <span class="kw">aes</span>(<span class="dt">x =</span> speed, <span class="dt">y =</span> dist)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
 sp</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#data and scale are linear</span>
 
 sp <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_continuous</span>(<span class="dt">trans=</span><span class="st">&#39;log2&#39;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">trans=</span><span class="st">&#39;log2&#39;</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-139-2.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-140-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#data and scale are both logarithmic</span>
 
 sp <span class="op">+</span><span class="st"> </span><span class="kw">coord_trans</span>(<span class="dt">x=</span><span class="st">&quot;log2&quot;</span>, <span class="dt">y=</span><span class="st">&quot;log2&quot;</span>) <span class="co">#data is log transformed but the scale is linear</span></code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-139-3.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-140-3.png" width="672" /></p>
 </div>
 <div id="muudame-telgede-markeeringuid" class="section level3">
 <h3><span class="header-section-number">7.3.3</span> Muudame telgede markeeringuid</h3>
@@ -587,7 +587,7 @@ sp <span class="op">+</span><span class="st"> </span><span class="kw">coord_tran
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">15</span>, <span class="dv">40</span>, <span class="dt">by =</span> <span class="dv">5</span>))</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
 <p>muuda teljemarkeeringute nurka</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
@@ -620,7 +620,7 @@ a1 <span class="op">+</span><span class="st"> </span><span class="kw">labs</span
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>()</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-147-1.png" width="672" /></p>
 </div>
 </div>
 <div id="pealkirjad-ja-muu-selline" class="section level2">
@@ -634,7 +634,7 @@ a1 <span class="op">+</span><span class="st"> </span><span class="kw">labs</span
      <span class="dt">subtitle =</span> <span class="st">&quot;subtitle&quot;</span>,
      <span class="dt">caption =</span> <span class="st">&quot;caption&quot;</span>
       )</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-147-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-148-1.png" width="672" /></p>
 <p>ggtitle() - anna graafikule pealkiri</p>
 <div id="graafiku-legend" class="section level3">
 <h3><span class="header-section-number">7.4.1</span> Graafiku legend</h3>
@@ -672,7 +672,7 @@ base <span class="op">+</span><span class="st"> </span><span class="kw">theme</s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> drv)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-152-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-153-1.png" width="672" /></p>
 <div id="pidevatele-muutujatele" class="section level3">
 <h3><span class="header-section-number">7.5.1</span> Pidevatele muutujatele</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">z =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">5</span>))
@@ -765,7 +765,7 @@ my.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(baselin
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">shape=</span><span class="dv">1</span>) <span class="op">+</span><span class="st">    </span><span class="co"># Use hollow circles</span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm) <span class="op">+</span><span class="st">  </span><span class="co"># Add linear regression line </span>
 <span class="st">    </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">2</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-157-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-158-1.png" width="672" /></p>
 <p>Now we will prepare the difference data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diff &lt;-<span class="st"> </span>(post <span class="op">-</span><span class="st"> </span>baseline)
 diffp &lt;-<span class="st"> </span>(post <span class="op">-</span><span class="st"> </span>baseline)<span class="op">/</span>baseline<span class="op">*</span><span class="dv">100</span>

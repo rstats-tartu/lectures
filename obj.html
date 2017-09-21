@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2017-09-20">
+<meta name="date" content="2017-09-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -413,15 +413,15 @@ grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
 happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
 happy_list</code></pre></div>
 <pre><code>## [[1]]
-## [1] 0.5002 0.9585 0.4100 0.3568 0.7780
+## [1] 0.1729 0.9842 0.5968 0.8921 0.8887
 ## 
 ## [[2]]
-##        a       b
-## 1 0.5002  1.5248
-## 2 0.9585 -0.1278
-## 3 0.4100 -0.9124
-## 4 0.3568  1.1510
-## 5 0.7780 -0.5741
+##        a         b
+## 1 0.1729  0.698992
+## 2 0.9842  1.244783
+## 3 0.5968  0.517943
+## 4 0.8921  0.009629
+## 5 0.8887 -0.985606
 ## 
 ## [[3]]
 ## 
@@ -749,7 +749,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 ##  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...
 ##  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggr</span>(diabetes, <span class="dt">prop =</span> <span class="ot">FALSE</span>, <span class="dt">numbers =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-63-1.png" width="672" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
+<p><img src="main_files/figure-html/unnamed-chunk-64-1.png" width="672" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
 <p>Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nrows &lt;-<span class="st"> </span><span class="kw">nrow</span>(diabetes)
   ncomplete &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">complete.cases</span>(diabetes))
@@ -769,7 +769,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 ##        3</code></pre>
 <p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
 <p>Kuidas rekodeerida NA-d näiteks 0-ks:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> </span><span class="dv">0</span>
 dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> &quot;other&quot;</span>
