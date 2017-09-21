@@ -47,7 +47,14 @@ Esimesel juhul läheb vana muutmata objekt workspacest kaduma aga nimesid ei tul
 Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende juurde saab alati tagasi tulla. 
 Samas tekkib meile palju sarnaste nimedega objekte.
 
-Esimnene võimalus:
+Kõigepealt laadime vajalikud raamatukogud. 
+```{r}
+## We need piping operator '%>%' from magrittr.
+## We can import '%>%' via dplyr from tidyverse
+library(dplyr)
+```
+
+Esimene võimalus:
 ```{r}
 a <- c(2, 3)
 a <- sum(a)
@@ -75,8 +82,6 @@ Kui mõni funktsioon võtab ainult ühe parameetri, mille me talle toru kaudu si
 
 See on hea lühike ja inimloetav viis koodi kirjutada, mis on masina jaoks identne esimese koodiga.
 ```{r}
-## we need piping operator '%>%' from magrittr
-library(magrittr)
 a <- c(2, 3)
 result <- a %>% sum() %>% sqrt() %>% round(2)
 result
