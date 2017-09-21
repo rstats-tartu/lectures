@@ -24,7 +24,7 @@ Pane tähele, et aritmeetiline võrdusmärk on `==` (sest = tähendab hoopis vä
 Veel mõned näidisarvutused:
 ```{r eval=FALSE}
 ## 3 astmes 2; Please read Note ?'**' 
-3 ^ 2
+3 ^ 2 # 3**2 also works
 ## Ruutjuur 3st
 sqrt(3)
 ## Naturaallogaritm sajast

@@ -10,7 +10,7 @@ biblio-style: apalike
 link-citations: yes
 colorlinks: yes
 github-repo: rstats-tartu/lectures
-description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs kasutades R programmi' materjalid."
+description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' materjalid."
 cover-image: assets/img/cover.png
 ---
 
@@ -28,5 +28,5 @@ knitr::include_graphics('assets/img/cover.png', dpi = NA)
 
 Bayesi tõlgenduses on tõenäosus teadlase usu määr mingi hüpoteesi kehtimisse. 
 Hüpotees võib näiteks olla, et järgmise juulikuu sademete hulk Vilsandil jääb vahemikku 22 kuni 34 mm. 
-Kui Bayesi arvutus annab selle hüpoteesi tõenäosuseks 0.57, siis oleme me selle teadmise najal nõus maksma mitte rohkem kui 57 senti kihlveo eest, mille alusel makstakse juhul, kui see hüpotees tõeseks osutub, välja 1 euro (ja me saame vähemalt 43 senti kasumit).  
+Kui arvutus annab selle hüpoteesi tõenäosuseks 0.57, siis oleme me selle teadmise najal nõus maksma mitte rohkem kui 57 senti kihlveo eest, mille alusel makstakse juhul, kui see hüpotees tõeseks osutub, välja 1 euro (ja me saame vähemalt 43 senti kasumit).  
 

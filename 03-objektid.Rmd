@@ -41,7 +41,6 @@ devtools::install_github("Stan125/GREA")
 ## Objekt ja nimi
 
 Kui teil sünnib laps, annate talle nime.
-
 R-s on vastupidi: nimele antakse objekt
 ```{r}
 babe <- "beebi"
