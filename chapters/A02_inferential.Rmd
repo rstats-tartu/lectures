@@ -21,13 +21,19 @@ library(rethinking) #HPDI() and PI(). Requires Stan.
 
 
 Järeldav statistika püüab, kasutades keerulisi algoritme, teha valimi põhjal järeldusi statistilise populatsiooni kohta, millest see valim pärineb. 
-Sellisel tegevusel on mõtet siis, kui ühest küljest valim peegeldab populatsiooni ja teisest küljest valim ei ole sama asi, mis populatsioon. Kui valim = populatsioon, siis pole mõtet keerulisi mudeleid kasutada, et valimi põhjal populatsiooni omadusi ennustada --- seda saab teha lihtsalt valimit kirjeldades. 
+Sellisel tegevusel on mõtet ainult siis, kui ühest küljest valim peegeldab populatsiooni ja teisest küljest valim ei ole sama asi, mis populatsioon. 
+Kui valim = populatsioon, siis pole mõtet keerulisi mudeleid kasutada, et valimi põhjal populatsiooni omadusi ennustada --- seda saab teha lihtsalt valimit kirjeldades. 
+Ja kui valimil ning populatsioonil pole suurt midagi ühist, siis on valim lihtsalt ebarelevatne populatsiooni kirjeldamiseks. 
 Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. 
 Aga kõigepealt illustreerime valimi ja populatsiooni erinevust.
 
 ###4.1. Valim ei ole sama, mis populatsioon
 
-Simuleerimine on lahe sest simulatsioonid elavad mudeli väikses maailmas ning seega teame me täpselt, mida me teeme ja mida on meil selle tagajärjel oodata. Simulatsioonidega saame me hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
+    Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame 
+    täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me 
+    hõlpsalt kontrollida, kas ja kuidas meie mudelid töötavad ning genereerida olukordi 
+    (parameetrite väärtuste kombinatsioone), mida suures maailmas kunagi ette ei tule. 
+    Selles mõttes on mudelid korraga nii väiksemad kui suuremad kui päris maailm. 
 
 Alustuseks simuleerime juhuvalimi n=3 lõpmata suurest normaaljaotusega populatsioonist, mille keskmine on 100 ja sd on 20. Päris elus on korraliku juhuvalimi tõmbamine tehniliselt raske ettevõtmine ja, mis veelgi olulisem, me ei tea kunagi, milline on populatsiooni tõeline jaotus, keskmine ja sd. Elagu simulatsioon!
 
@@ -38,11 +44,11 @@ mean(Sample)
 sd(Sample)
 ```
 
-Nagu näha on meie valimi keskmine 10% väiksem kui peaks ja valimi sd lausa kaks korda väiksem kui peaks. Seega peegeldab meie valim halvasti populatsiooni --- aga me teame seda ainult tänu sellele, et tegu on simulatsiooniga.
+Nagu näha on meie valimi keskmine 10% väiksem kui peaks ja valimi sd lausa kaks korda väiksem. Seega peegeldab meie valim halvasti populatsiooni --- aga me teame seda ainult tänu sellele, et tegu on simulatsiooniga.
 
-Kui juba simuleerida, siis robinal: tõmbame ühe valimi asemel 10 000, arvutame seejärel 10 000 keskmist ja sd-d ning vaatame omakorda nende statistikute jaotusi ja keskväärtusi. Simulatsioon on nagu tselluliit --- see on nii odav, et igaüks võib seda endale lubada. 
+Kui juba simuleerida, siis robinal: tõmbame ühe valimi asemel 10 000, arvutame seejärel 10 000 keskmist ja 10 000 sd-d ning vaatame nende statistikute jaotusi ja keskväärtusi. Simulatsioon on nagu tselluliit --- see on nii odav, et igaüks võib seda endale lubada. 
 
-Meie lootus on, et kui meil on palju valimeid, millel kõigil on juhuslik viga, mis neid populatsiooni suhtes ühele või teisele poole kallutab, siis rohkem on valimeid, mis asuvad tõelisele populatsioonile pigem lähemal kui kaugemal. 
+Meie lootus on, et kui meil on palju valimeid, millel kõigil on juhuslik viga, mis neid populatsiooni suhtes ühele või teisele poole kallutab, siis rohkem on valimeid, mis asuvad tõelisele populatsioonile pigem lähemal kui kaugemal. Samuti, kui valimiviga on juhuslik, siis satub umbkaudu sama palju valimeid tõelisest populatsiooniväärtusest ühele poole kui teisele poole ja vigade jaotus tuleb sümmeetriline. 
 
 ```{r}
 N <- 3
@@ -86,17 +92,30 @@ Me saame >20% tõenäosusega pahasti ülehinnatud SD.
 sum(Summary$SD<15)/10000
 ```
 
-Ja me saame >40% tõenäosusega pahasti alahinnatud sd. Selline on väikeste valimite traagika. (Jooksuta sama simulatsiooni n = 100 korral.)
+Ja me saame >40% tõenäosusega pahasti alahinnatud sd. Selline on väikeste valimite traagika.
 
 Aga vähemalt populatsiooni keskmise saame me palju valimeid tõmmates ilusasti kätte --- ka väga väikeste valimitega.
 
-Kahjuks pole meil ei vahendeid ega kannatust loodusest 10 000 valimi kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata, mis ongi bootstrappimise põhimõte. Statistikasse tõi selle meetodi Brad Efron 1970-ndate lõpus.
+Kahjuks pole meil ei vahendeid ega kannatust loodusest 10 000 valimi kogumiseks. Enamasti on meil üksainus valim. Õnneks pole sellest väga hullu, sest meil on olemas analoogne meetod, mis töötab üsna hästi ka ühe valimiga. Seda kutsutakse *bootstrappimiseks* ja selle võttis esimesena kasutusele parun von Münchausen. Too jutukas parun nimelt suutis end soomülkast iseenda patsi pidi välja tõmmata, mis ongi bootstrappimise põhimõte. 
+Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979 aastal.
+
+![Bootstrap päästab, kui muu ei aita](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/munchausen.jpg)
 
 ### 4.2.Bootstrappimine
 
 > Populatsioon on valimile sama, mis valim on bootstrappitud valimile. 
 
-Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 1000 virtuaalset valimit. Selleks tõmbame me oma valimist virtuaalselt 1000 uut juhuvalimit (bootstrap valimit), igaüks neist sama suur kui algne valim. Trikk seisneb selles, et bootstrap valimite tõmbamine käib asendusega, st iga empiirilise valimi element, mis bootstrap valimisse tõmmatakse, pannakse kohe ka algsesse valimisse tagasi. Seega saab seda elementi kohe uuesti samasse bootstrap valimisse tõmmata (kui juhus nii tahab). Seega sisaldab tüüpiline bootstrap valim osasid algse valimi numbreid mitmes korduses ja teisi üldse mitte. Bootstrap valimid plotitakse samamoodi, nagu me ennist tegime oma valimitega lõpmatust populatsioonist. Ainsad erinevused on, et bootstrapis on piiratud algse andmekogu suurus, millest valimeid tõmmatakse ning, et iga bootstrapi valim on sama suur kui algne andmekogu (see viimane on pigem konventsioon, kui seadus).
+Nüüd alustame ühestainsast empiirilisest valimist ja genereerime sellest 1000 virtuaalset valimit. 
+Selleks tõmbame me oma valimist virtuaalselt 1000 uut juhuvalimit (bootstrap valimit), millest igaüks on sama suur kui algne valim. 
+Trikk seisneb selles, et bootstrap valimite tõmbamine käib asendusega, st iga empiirilise valimi element, mis bootstrap valimisse tõmmatakse, pannakse kohe algsesse valimisse tagasi. 
+Seega saab seda elementi kohe uuesti samasse bootstrap valimisse tõmmata (kui juhus nii tahab). 
+Seega sisaldab tüüpiline bootstrap valim osasid algse valimi numbreid mitmes korduses ja teisi üldse mitte. 
+Iga bootstrap valimi põhjal arvutatakse meid huvitav statistik (näiteks keskväärtus) ja kõik need 1000 bootstrapitud statistikut plotitakse samamoodi, nagu me ennist tegime valimitega lõpmata suurest populatsioonist. 
+Ainsad erinevused on, et bootstrapis võrdub andmekogu suurus, millest valimeid tõmmatakse, valimi suurusega ning, et iga bootstrapi valim on sama suur kui algne andmekogu (sest meie statistiku varieeruvus sõltub valimi suurusest ja me tahame seda varieeruvust oma bootstrapvalimiga tabada). 
+Tüüpiliselt kasutatakse bootstrapitud statistikuid selleks, et arvutada usaldusintervall statistiku väärtusele.
+
+    Bootstrap ei muuda meie hinnangut statistiku punktväärtusele. Ta annab hinnangu 
+    ebakindluse määrale, mida me oma valimi põhjal peaksime selle punkthinnangu kohta tundma.
 
 Bootstrap empiirilisele valimile suurusega n töötab nii:
 
@@ -108,13 +127,14 @@ Bootstrap empiirilisele valimile suurusega n töötab nii:
 Mis on USA presidentide keskmine pikkus? Meil on valim 10 presidendi pikkusega.
 
 ```{r}
-heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>%   as_tibble() 
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble() 
 n <- 10 #sample size
 nr_boot_samples <- 1000 #the nr of bootstrap samples
 a <- sample_n(heights, n * nr_boot_samples, replace=TRUE)  #create random sample with replacement
 a$key <- rep(1:nr_boot_samples, each = n) #create a column "key" that cuts the sample into slices of size n
 a1 <- a %>% group_by(key) %>% summarise(Value= mean(value)) #calculate the mean for each slice of n values
 dens(a1$Value)
+#HPDI(a1$Value)
 ```
 
 Alternatiivne ja aeglasem kood, mis kasutab mosaic::do(). 
@@ -133,7 +153,7 @@ ggplot(data = sample_means1, aes(x = Mean)) +
 ```
 
 Nii saab do() abil 2 veeruga tibble, mille igas veerus on 3 juhuslikku arvu. NB! kuna ka tidyverse/dplyr sisaldab do() nimelist funktsiooni, on kasulik seda siin eksplitsiitselt mosaic::do() kaudu esile manada.
-```{r}
+```{r eval=FALSE}
 mosaic::do(3)* rnorm(2)
 
 ```
@@ -167,7 +187,49 @@ mode(a1$Value)
 ```
 Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm). Lühikesed jupatsid ei saa Ameerikamaal presidendiks!
 
-Edaspidi kasutame bootstrappimiseks veidi moodsamat meetodit --- Bayesian bootstrap --- mis töötab veidi paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased.
+#### veidi keerulisem bootsrap
+Eelnevalt tutvustasime nn percentiilmeetodit mootstrapi arvutamiseks. See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga parim meetod bootstrappimiseks, empiiriline bootstrap, on siiski veidi keerulisem. Nimelt ei ploti me enam mitte 10 000 statistiku väärtust vaid 10 000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
+```{r}
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble() 
+n <- 10 #sample size
+nr_boot_samples <- 1000 #the nr of bootstrap samples
+a <- sample_n(heights, n * nr_boot_samples, replace=TRUE)  #create random sample with replacement
+a$key <- rep(1:nr_boot_samples, each = n) #create a column "key" that cuts the sample into slices of size n
+a1 <- a %>% group_by(key) %>% summarise(Value= mean(value) - mean(heights$value)) #calculate the difference between the mean for each slice of n values and the emprirical sample mean
+dens(a1$Value)
+
+```
+
+Ja usaldusinterval tuleb niiviisi
+```{r}
+a <- HPDI(a1$Value)
+CI_low <- mean(heights$value) - a[1]
+CI_high <- mean(heights$value) + a[1]
+```
+
+Alternatiivne kood sama asja tegemiseks: 
+```{r eval=FALSE}
+heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) 
+n <- 10
+xbar = mean(heights)
+nboot = 20
+# Generate 20 bootstrap samples, i.e.  an n x 20 array of
+# random resamples from x
+tmpdata = sample(heights, n*nboot, replace=TRUE)
+bootstrapsample = matrix(tmpdata, nrow=n, ncol=nboot)
+# Compute the means x∗
+bsmeans = colMeans(bootstrapsample)
+# Compute δ∗ for each bootstrap sample 
+deltastar = bsmeans - xbar
+# Find the 0.1 and 0.9 quantile for deltastar
+d = quantile(deltastar, c(0.1, 0.9))
+```
+
+
+
+
+
+Edaspidi kasutame bootstrappimiseks pisut moodsamat meetodit --- Bayesian bootstrap --- mis töötab veidi paremini väikeste valimite korral. Aga üldiselt on tulemused sarnased.
 ```{r}
 library(bayesboot)
 # Heights of the last ten American presidents in cm (Kennedy to Obama).
