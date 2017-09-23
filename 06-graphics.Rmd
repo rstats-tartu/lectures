@@ -1,9 +1,10 @@
 
 # Graafilised lahendused
 
-```{r}
+```{r message=FALSE, error=FALSE}
 library(tidyverse)
 library(ggthemes)
+library(ggjoy)
 ```
 
 
@@ -762,5 +763,215 @@ diffplotp <- ggplot(my.data, aes(baseline, diffp)) +
 
 ggMarginal(diffplotp, type="histogram", bins = 25)
 ```
+
+### Erinevad ggplot geom_-id
+
+#### Kui iga muutja kohta on üks andmepunkt
+
+Siis kasuta cleveland plotti. See on parem kui barplot. 
+
+```{r}
+dd <- diamonds %>% group_by(clarity) %>% summarise(number_of_diamonds=n())
+dd %>% ggplot(aes(x=number_of_diamonds, 
+                  y=reorder(clarity, number_of_diamonds))) +
+  geom_point(size=3) +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_line(colour="grey60", linetype="dashed")) +
+  labs(y="clarity")
+```
+
+
+###Tulpdiagrammid mõõdavad counte ja proportsioone
+
+```{r}
+str(diamonds)
+```
+
+
+loeb üles, mitu korda esineb iga cut
+```{r}
+ggplot(diamonds) + 
+  geom_bar(aes(x = cut, fill = cut)) + 
+  theme(legend.position="none")
+```
+
+Pane tähele, et y teljel on arv, mitu korda esineb tabelis iga cut. See arv ei ole tabelis muutuja. geom_bar, geom_hist, geom_dens arvutavad plotile uued y väärtused --- nad jagavad andmed binidesse ja loevad üles, mitu andmepunkti sattus igasse bini.
+
+Kui tahad tulpdiagrammi proportsioonidest, mitu korda eineb tabelis igat cut-i, siis tee nii:
+  
+```{r, eval=FALSE}
+ggplot(diamonds) + 
+  geom_bar(aes(x = cut, y = ..prop.., group = 1))
+```
+
+Pane tähele et tulpade omavahelised suhted jäid samaks. Muutus ainult y telje tähistus.
+
+Edasi lisame eelnevale veel ühe muutuja: clarity. Nii saame üles lugeda kõigi cut-i ja clarity kombinatsioonide esinemise arvu või sageduse. Erinvate clarity tasemete esinemiste arv samal cut-i tasemel on siin üksteise otsa kuhjatud, mis tähendab, et tulpade kõrgus ei muutu võrreldes eelnevaga.
+
+```{r}
+ggplot(diamonds) + 
+  geom_bar(aes(x = cut, fill = clarity))
+```
+
+Kui me tahame, et cut-i ja clarity kombinatsioonid oleks kastidena ükteise sees, pigem kui üksteise otsa kuhjatud, siis kasutame position = "identity" argumenti. 
+
+```{r}
+ggplot(diamonds, aes(x = cut, fill = clarity)) + 
+  geom_bar(alpha = 0.7, position = "identity") 
+```
+
+ka see graafik pole väga lihtne lugeda. Parem viime clarity klassid üksteise kõrvale
+
+```{r}
+ggplot(data = diamonds, aes(x = cut, fill = clarity)) + 
+  geom_bar(position = "dodge")
+```
+
+Eelnev on hea viis kuidas võrrelda clarity tasemete esinemis-sagedusi ühe cut-i taseme piires.
+
+Ja lõpuks, position="fill" normaliseerib tulbad, mis muudab selle, mis toimub iga cut-i sees, hästi võrreldavaks. See on hea viis, kuidas võrrelda clarity tasemete proportsioone erinevate cut-i tasemete vahel. 
+
+```{r}
+ggplot(data = diamonds, aes(x = cut, fill = clarity)) + 
+  geom_bar(position = "fill")
+```
+
+
+
+#### Andmepunktid on ükshaaval välja plotitud
+Kõigepealt dotplot, mis ei pane andmepunkti y skaalal täpselt õigesse kohta vaid tekitab histogrammilaadsed andmebinnid, kus siiski iga punkt on eraldi näidatud. See lihtsustab veidi "kirjude" kompleksete andemsettide esitust.
+
+```{r}
+ToothGrowth <- ToothGrowth
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+p<-ggplot(ToothGrowth, aes(x=dose, y=len)) + 
+  geom_dotplot(binaxis='y', stackdir='center')
+p
+# Change dotsize and stack ratio, add line or dot for median
+ggplot(ToothGrowth, aes(x=dose, y=len)) + 
+  geom_dotplot(binaxis='y', stackdir='center',
+               stackratio=1.5, dotsize=0.7)+
+  stat_summary(fun.y = median, geom = "point", shape = 95, 
+               color = "red", size = 15) +
+  theme_tufte()
+
+p + stat_summary(fun.y=median, geom="point", shape=18,
+                 size=5, color="red")
+
+#add mean and SD, use pointrange
+p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), 
+                 geom="pointrange", color="red")
+#use errorbars
+p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), 
+        geom="errorbar", color="red", width=0.2) +
+  stat_summary(fun.y=mean, geom="point", size=3, color="red")
+```
+
+Sama jitterplotina --- nüüd on iga punkt y suhtes õiges kohas, aga joonis ei näe enam liiga puhas välja.
+
+```{r}
+ggplot(ToothGrowth, aes(x=dose, y=len)) + 
+  geom_jitter(width = 0.05)+
+  stat_summary(fun.y = median, geom = "point", shape = 95, 
+               color = "red", size = 15, alpha=0.6) +
+  theme_tufte()
+```
+
+```{r}
+# Change dot plot colors by groups
+p<-ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
+  geom_dotplot(binaxis='y', stackdir='center')
+p
+```
+
+
+It is also possible to change manually dot plot colors using the functions :
+
+scale_fill_manual() : to use custom colors
+
+scale_fill_brewer() : to use color palettes from RColorBrewer package
+
+scale_fill_grey() : to use grey color palettes
+
+
+```{r}
+#Choose which items to display :
+p + scale_x_discrete(limits=c("0.5", "2"))
+```
+
+
+
+Dotplot kui histogram:
+```{r}
+ggplot(iris, aes(Sepal.Length)) + geom_dotplot()
+```
+
+Histogram:
+
+```{r}
+ggplot(iris, aes(Sepal.Length)) + 
+  geom_histogram(bins = 10, color="white", fill = "navyblue") 
+```
+
+
+```{r}
+library(ggthemes)
+d <- iris        # Full data set
+d_bg <- d[, -5]  # Background Data - full without the 5th column (Species)
+
+ggplot(data = d, aes(x = Sepal.Width, fill = Species)) +
+  geom_histogram(data = d_bg, fill = "grey", alpha=0.8, bins=10) +
+  geom_histogram(colour = "black", bins=10) +
+  facet_grid(Species~.) +
+  guides(fill = FALSE) +  # to remove the legend
+  theme_tufte()          # for clean look overall
+
+```
+
+
+density plot:
+```{r}
+iris%>%ggplot()+
+  geom_density(aes(Sepal.Width, fill=Species, color=Species, alpha=0.5))+
+  theme_tufte()
+
+```
+
+joyplot võimaldab kõrvuti panna isegi sadu density plotte
+
+```{r}
+library(ggjoy)
+ggplot(iris, aes(x=Sepal.Length, y=Species, fill=Species)) + 
+  geom_joy(scale=4, rel_min_height=0.01, alpha=0.9) +
+  theme_joy(font_size = 13, grid=TRUE) + 
+  theme(legend.position = "none")
+```
+
+
+Boxplot:
+```{r}
+ggplot(iris, aes(Species, Sepal.Width, fill=Species)) + geom_boxplot()
+```
+
+violin plot plus jitterplot:
+```{r}
+ggplot(iris, aes(Species, Sepal.Width)) + 
+  geom_violin(aes(fill=Species)) +
+  geom_jitter(width = 0.1, alpha=0.4, size=0.5)
+```
+
+#### Kahe muutuja koos-varieeruvus 
+
+```{r}
+  
+ggplot(data = diamonds, aes(x = depth, y = price)) +
+  geom_point(size=0.1, alpha=0.1) +
+  geom_density2d()
+```
+
+
+
 
 

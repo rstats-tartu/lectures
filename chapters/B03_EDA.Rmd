@@ -6,9 +6,9 @@ output:
 ## EDA -- exploratory data analysis
 
 
-```{r}
+```{r message=FALSE, error=FALSE}
 library(tidyverse)
-library(ggjoy)
+library(car)
 library(ggthemes)
 library(psych)
 ```

@@ -17,72 +17,59 @@ library(ggjoy)
 library(corrgram)
 library(modelr)
 library(broom)
+library(car)
 ```
-
-
-See õpik on kirjutatud inimestele, kes kasutavad, mitte ei uuri, statistikat. Õpiku kasutaja peaks olema võimeline töötama R keskkonnas. Meie lähenemised statistika õpetamisele on arvutuslikud, mis tähendab, et me eelistame meetodi matemaatilise aluse asemel õpetada selle kasutamist ja tulemuste tõlgendamist. See õpik on bayesiaanlik ja ei õpeta sageduslikku statistikat. Me usume, et nii on lihtsam ja tulusam statistikat õppida ja et Bayesi statistikat kasutades saab rahuldada 99% teie tegelikest statistilistest vajadustest paremini, kui see on võimalik klassikaliste sageduslike meetoditega. Me usume ka, et kuigi praegused kiired arengud bayesi statistikas on tänaseks juba viinud selle suurel määral tavakasutajale kättesaadavasse vormi, toovad lähiaastad selles vallas veel suuri muutusi. Nende muutustega koos peab arenema ka bayesi õpetamine. 
-
-Me kasutame järgmisi R-i pakette, mis on kõik loodud bayesi mudelite rakendamise lihtsustamiseks: rethinking, brms, rstanarm, BayesianFirstAid ja bayesplot. Lisaks veel bayesboot bootstrapimiseks. Bayesi arvutusteks kasutavad need paketid Stan ja JAGS mcmc sämplereid (viimast küll ainult BayesianFirstAid paket). Selle õpiku valmimisel on kasutatud McElreathi, Kruschke ja Gelmani õpikuid (VIITED). Õpikus on ära toodud enamus kasutatud R koodist eesmärgiga, et lugeja prooviks seda koodi ise kodus jooksutada ja modifitseerida. Selline koodiga mängimine annab teile väärtuslikku intuitsooni statistika toimimise osas just selliste andmete korral, mis teie elus domineerivad. 
-
-Lugejad, kellele on juba õpetatud sageduslikku statistikat, võivad tahta teada, mille poolest see erineb bayesi statistikast. Ehkki me usume, et bayesi statistika õpetamine võrdlevalt sagedusliku statistikaga ei ole parim lahendus, võrdleme järgnevalt lühidalt sageduslikku ja bayesi paradigmasid. Kes ei ole õppinud sageduslikku statistikat, võiksid selle osa vahele jätta.
-
-
-=======
-
 
 
 
 ## 2.2 Suur ja väike maailm
 
-Andmeanalüüs ja statistika (siin sünonüümid) on lahutamatu osa igast loodusteadusest. Järgnevalt seletan, miks.
+Statistika on lahutamatu loodusteadusest. Järgnevalt seletan, miks.
 
-Kuna maailm on liiga suur ja keeruline, et seda otse uurida, lõikavad teadlased selle väiksemateks tükkideks, kasutades tordilabidana teaduslike hüpoteese. Tüüpiline hüpotees pakub välja mittematemaatilise seletuse mõnele kitsalt piiritletud loodusnähtusele. Näiteks darvinistlik evolutsiooniteooria püüab seletada evolutsiooni toimemehhanisme. Seda teooriat võib võrrelda empiiriliste andmetega. 
+Kuna maailmas on kõik kõigega seotud, on seda raske otse uurida. Teadus töötab tänu sellele, et teadlased lõikavad reaalsuse väikesteks tükkideks, kasutades tordilabidana teaduslike hüpoteese, ning uurivad seda tükikaupa. Tüüpiline ioloogiline bhüpotees pakub välja mittematemaatilise seletuse mõnele piiritletud loodusnähtusele. Näiteks darvinistlik evolutsiooniteooria püüab seletada evolutsiooni toimemehhanisme. Seda teooriat võib võrrelda empiiriliste andmetega. 
 
-Mis juhtub, kui teie lemmikhüpotees on andmetega kooskõlas? Kas see tähendab, et see hüpotees on tõene? Või, et see on tõenäoliselt tõene? Kahjuks on vastus mõlemale küsimusele eitav. Põhjuseks on asjaolu, et enamasti leiab iga nähtuse seletamiseks rohkem kui ühe alternatiivse teadusliku hüpoteesi (näit. lamarksistlik evolutsiooniteooria) ning rohkem kui üks üksteist välistav hüpotees võib olla olemasolevate andmetega võrdses kooskõlas. Asja teeb veel hullemaks, et teoreetiliselt on võimalik sõnastada lõpmatult palju erinevaid teooriaid, mis kõik pakuvad alternatiivseid ja üksteist välistavaid seletusi samale nähtusele. 
-
-Olgu peale, kui me vaatame maailma kõiketeadja jumala perspektiivist, siis tema võib vaadelda kõikehõlmava tõendusmaterjali sobivust kõigi võimalike teooriatega ning valida välja selle ainsa teooria, mis kõige paremini tõendusmaterjaliga sobib. Kuigi, see eeldaks, et tal on lõpmata palju andmeid, sest muidu ei oleks tal loogiliselt võimalik lõpmata paljude teooriate vahel valida - aga jumala jaoks on kõik võimalik. Igal juhul meie, surelike, jaoks tähendab see, et teaduslikus "faktis" saab alati kahelda, sest kunagi ei või kindel olla, et parimad teooriad lõpmata suurest teooriapilvest ei ole meil täiesti tähelepanuta jäänud ning, et meie jaoks eksisteerivad andmed kajastaksid hästi kõiki võimalikke andmeid. On selge nagu seebivesi, et mida vähem aega me kulutame teoorialoomeks ja andmete kogumiseks, seda vähem usutavad on ka meie teaduslikud järeldused. Sageli on nii, et mida kehvem on olukord andmerindel, seda rohkem vajame statistikat. Kui meil õnnestuks oma andmetest ilma statistikata saia teha, ei kõhkleks me hetkegi! Eriti, kuna statistikaga käivad käsikäes statistilised mudelid.         
+Mis juhtub, kui teie hüpotees on andmetega kooskõlas? Kas see tähendab, et see hüpotees vastab tõele? Või, et see on tõenäoliselt tõene? Kahjuks on vastus mõlemale küsimusele eitav. Põhjuseks on asjaolu, et enamasti leiab iga nähtuse seletamiseks rohkem kui ühe alternatiivse teadusliku hüpoteesi (näit. lamarksistlik evolutsiooniteooria) ning rohkem kui üks üksteist välistav hüpotees võib olla olemasolevate andmetega võrdses kooskõlas. Asja teeb veel hullemaks, et teoreetiliselt on võimalik sõnastada lõpmatult palju erinevaid teooriaid, mis kõik pakuvad alternatiivseid ja üksteist välistavaid seletusi samale nähtusele. Kuna hüpoteese on lõpmata hulk aga andmeid on alalti lõplik hulk, siis saab igas teaduslikus "faktis" kahelda.  
+Kunagi ei või kindel olla, et parimad teooriad ei ole täiesti tähelepanuta jäänud ning, et meie poolt kogutud vähesed andmed kajastavad hästi kõiki võimalikke andmeid. 
 
 ## 2.2.1 Mudeli väike maailm
 
-  Ülalmainitud teadusliku meetodi puudused tingivad, et meie huvides on oma teaduslikke probleeme veel ühe taseme võrra lihtsustada, taandades need statistilisteks probleemideks. Selleks tuletame me tavakeelsest ja laiahaardelisest teaduslikust teooriast täpselt formuleeritud matemaatilise mudeli ning seejärel asume uurima oma mudelit. 
+  Ülalmainitud teadusliku meetodi puudused tingivad, et meie huvides on oma teaduslikke probleeme veel ühe taseme võrra lihtsustada, taandades need statistilisteks probleemideks. Selleks tuletame me tavakeelsest teaduslikust teooriast täpselt formuleeritud matemaatilise mudeli ning seejärel asume uurima oma mudelit lootuses, et mudeli kooskõla andmetega ütleb meile midagi teadusliku hüpoteesi kohta. 
   
-  Mudeli maailm erineb päris maailmast selle poolest, et mudeli maailmas on kõik sündmused, mis põhimõtteliselt võivad juhtuda, juba ette teada ja üles loendatud (seda sündmuste kogu kutsutakse parameetriruumiks). Seega, tehniliselt on mudeli maailmas üllatused võimatud.
-  
-  Mudeli eeliseks teooria ees on, et hästi konstrueeritud mudel on lihtsamini mõistetav --- erinevalt vähegi keerulisemast teaduslikust hüpoteesist on mudeli eeldused ja ennustused läbinähtavad ja täpselt formuleeritavad. Mudeli puuduseks on aga, et erinevalt teooriast ei ole mingit võimalust, et mudel vastaks tegelikkusele ehk oleks tõene. Seda sellepärast, et mudel on taotluslikult lihtsustav (erandiks on puhtalt ennustuslikud mudelid, mis on aga enamasti läbinähtamatu struktuuriga). Mudel on kas kasulik või kasutu; teooria on kas tõene või väär. Mudeli ja maailma vahel võib olla kaudne peegeldus, aga mitte kunagi otsene side. Seega, ükski number, mis arvutatakse mudeli raames, ei kandu sama numbrina üle teaduslikku ega päris maailma. Ja kogu statistika (ka mitteparameetriline) toimub mudeli väikses maailmas. Arvud, mida statistika teile pakub, elavad mudeli maailmas; samas kui teie teaduslik huvi on suunatud päris maailmale. Näiteks 95% usaldusintervall ei tähenda, et te peaksite olema 95% kindel, et tõde asub selles intervallis – sageli ei tohiks te seda nii julgelt tõlgendada isegi kitsas mudeli maailmas. 
+  Mudeli maailm erineb päris maailmast selle poolest, et mudeli maailmas on kõik sündmused, mis põhimõtteliselt võivad juhtuda, juba ette teada ja üles loendatud (seda sündmuste kogu kutsutakse parameetriruumiks). Tehniliselt on mudeli maailmas üllatused võimatud.
+Mudeli eeliseks teooria ees on, et hästi konstrueeritud mudel on lihtsamini mõistetav --- erinevalt vähegi keerulisemast teaduslikust hüpoteesist on mudeli eeldused ja ennustused läbinähtavad ja täpselt formuleeritavad. Mudeli puuduseks on aga, et erinevalt teooriast ei ole mingit võimalust, et mudel vastaks tegelikkusele. Seda sellepärast, et mudel on taotluslikult lihtsustav (erandiks on puhtalt ennustuslikud mudelid, mis on aga enamasti läbinähtamatu struktuuriga). Mudel on kas kasulik või kasutu; teooria on kas tõene või väär. Mudeli ja maailma vahel võib olla kaudne peegeldus, aga mitte kunagi otsene side. Seega, ükski number, mis arvutatakse mudeli raames, ei kandu sama numbrina üle teaduslikku ega päris maailma. Ja kogu statistika (ka mitteparameetriline) toimub mudeli väikses maailmas. Arvud, mida statistika teile pakub, elavad mudeli maailmas; samas kui teie teaduslik huvi on suunatud päris maailmale. Näiteks 95% usaldusintervall ei tähenda, et te peaksite olema 95% kindel, et tõde asub selles intervallis – sageli ei tohiks te seda nii julgelt tõlgendada isegi kitsas mudeli maailmas. 
   
 #### 2.2.2. Näide: Aristoteles, Ptolemaios ja Kopernikus
 
-Aristoteles lõi teooria maailma toimimise kohta, mis domineeris haritud Eurooplase maailmapilti enam kui 1200 aasta vältel. Selle kohaselt asub universumi keskpunktis maakera ning kõik, mida siin leida võib, on tehtud neljast elemendist: maa, vesi, õhk ja tuli. Samas, kogu maailmaruum alates kuu sfäärist on tehtud viiendast elemendist (eeter), mida aga ei leidu maal (nagu nelja elementi ei leidu kuu peal ja sealt edasi). Taevakehad (kuu, päike, planeedid ja kinnistähed) tiirlevad ümber maa kontsentrilistes sfäärides, mis on omavahel seotud (mille vahel pole vaba ruumi). Seega on kogu liikumine eetri sfäärides ühtlane ja ringikujuline ja see liikumine põhjustab pika põhjus-tagajärg ahela kaudu kõiki liikumisi, mida maapeal kohtame. Kaasa arvatud meie sündimine, elukäik ja surm (mis on kõik liikumised). Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimese liikumise poolt, mille käivitab kõige välimises sfääris paiknev meie jaoks mõistetamatu intellektiga "olend".  
+Aristoteles lõi teooria maailma toimimise kohta, mis domineeris haritud Eurooplase maailmapilti enam kui 1200 aasta vältel. Selle kohaselt asub universumi keskpunktis maakera ning kõik, mida siin leida võib, on tehtud neljast elemendist: maa, vesi, õhk ja tuli. Samas, kogu maailmaruum alates kuu sfäärist on tehtud viiendast elemendist (eeter), mida aga ei leidu maal (nagu nelja elementi ei leidu kuu peal ja sealt edasi). Taevakehad (kuu, päike, planeedid ja kinnistähed) tiirlevad ümber maa kontsentrilistes sfäärides, mille vahel pole vaba ruumi. Seega on kogu liikumine eetri sfäärides ühtlane ja ringikujuline ja see liikumine põhjustab pika põhjus-tagajärg ahela kaudu kõiki liikumisi, mida maapeal kohtame. Kaasa arvatud meie sündimine, elukäik ja surm. Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimese liikumise poolt, mille käivitab kõige välimises sfääris paiknev meie jaoks mõistetamatu intellektiga "olend".  
 
 ![Keskaegne aristotellik maailm.](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/arist.jpg)
 
-
-
 Aristotelese suur teooria ühendab kogu maailmapildi alates kaasaegses mõistes keemiast ja kosmoloogiast kuni bioloogia, maateaduse ja isegi geograafiani. Sellised ühendteooriad on nagu 500 aastased sekvoiad; nad on rasked langetada, aga kui mõni siiski kukub, kostab ragin kaugele. Samas, ühte Aristotelese kosmoloogia olulist puudust nähti kohe. Nimelt ei suuda Aristoteles seletada, miks osad planeedid teavavõlvil vahest suunda muudavad ja mõnda aega lausa vastupidises suunas liiguvad (retrogressioon). Kuna astronoomia põhiline kasutusala oli astroloogia, siis põõrati planeetide liikumisele suurt tähelepanu. Lahenduseks ei olnud aga mitte suure teooria ümbertegemine või ümberlükkamine, vaid nõudlus uue teaduse järele, mis "päästaks fenomenid". Siin tuli appi Ptolemaios, kes lõi matemaatilise mudeli, kus planeedid mitte lihtsalt ei liigu ringtrajektoori mõõda vaid samal ajal teevad ka väiksemaid ringe ümber esimese suure ringjoone. Neid väiksemaid ringe kutsutakse epitsükliteks. See mudel suutis planeetide liikumist taevavõlvil piisavalt hästi ennustada, et astroloogide nõudlik seltskond sellega rahule jäi. 
 
-Ptolemaiosel ja tema järgijatel oli tegelikult mitu erinevat mudelit. Osad neist ei sialdanud epitsükleid ja maakera ei asunud tema mudelites universumi keskel, vaid oli sellest punktist eemale nihutatud --- nii et päike ei teinud ringe ümber maakera vaid ümber tühja punkti. On oluline, et leidus epitsüklitega mudel ja ilma epitsükliteta mudel, mis olid matemaatiliselt ekvivalentsed ja seega andsid võrdseid ennustusi. Oli selge, et Aristotelese teooria ja fenomenide päästmise mudelid olid fundamentaalselt erinevad asjad. Samal ajal kui Aritoteles **seletas** maailma põhiolemust põhjuslike seoste jadana (mitte matemaatiliselt), **kirjeldas/ennustas** Ptolemaios sellesama maailma käitumist matemaatiliste (mitte põhjuslike) struktuuride abil.
+Ptolemaiosel ja tema järgijatel oli tegelikult mitu erinevat mudelit. Osad neist ei sialdanud epitsükleid ja maakera ei asunud tema mudelites universumi keskel, vaid oli sellest punktist eemale nihutatud --- nii et päike ei teinud ringe ümber maakera vaid ümber tühja punkti. On oluline, et leidus epitsüklitega mudel ja ilma epitsükliteta mudel, mis andsid identseid ennustusi. Oli selge, et Aristotelese teooria ja fenomenide päästmise mudelid olid fundamentaalselt erinevad asjad. Samal ajal kui Aritoteles **seletas** maailma põhiolemust põhjuslike seoste jadana (mitte matemaatiliselt), **kirjeldas/ennustas** Ptolemaios sellesama maailma käitumist matemaatiliste (mitte põhjuslike) struktuuride abil.
 
 ![ilma epitsükliteta ptolemailine mudel.](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/dante/dante/pt2.jpg)
 
 Nii tekkis olukord, kus maailma mõistmiseks kasutati 1000 aasta vältel Aristotelese ühendteooriat aga selle kirjeldamiseks ja tuleviku ennustamiseks hoopis ptolemailisi mudeleid, mida keegi päriselt tõeks ei pidanud ja mida hinnati selle järgi, kui hästi need "päästsid fenomene". 
 
-See toob meid Koperniku juurde, kes teadusajaloolaste arvates vallandas 17. sajandi teadusliku revolutsiooni avaldades raamatu, kus ta asetab päikese universumi keskele ja paneb maa selle ümber ringtrajektooril tiirlema. Kas Kopernikus tõrjus sellega kõrvale Aristotelese, Ptolemaiose või mõlemad? Kaasaegne seisukoht on, et kuigi Kopernikus soovis teha kolmandat, arvasid tema rängalt matemaatilise teose avaldamisele järgnenud 40 aasta vältel pea kõik asjatundlikud astronoomid, et ta soovis välja pakkuda vaid lihtsama alternatiivi epitsüklitega mudelile, mis selleks ajaks oli muutunud väga keerukaks (aga ka samavõrra ennustustäpseks). Kuna Kopernikuse raamat läks trükki ajal, mil selle autor oli juba surivoodil, kirjutas sellele eessõna üks tema vaimulikust sõber, kes püüdis oodatavat kiriklikku pahameelt leevendada sugereerides, et päikese keskele viimine ei ole muud kui mudeldamise trikk, millest ei tasu järeldada, et maakera ka tegelikult ümber päikese tiirleb (piibel räägib, kuidas jumal peatas taevavõlvil päikese, mitte maa). Ja kuna eessõna oli anonüümne, eeldasid lugejad muidugi, et selle kirjutas autor. Lisaks, kuigi Kopernikus tõstis päikese keskele, jäi ta ringikujuliste trajektooride juurde, mis tähendas, et selleks, et tema mudel fenomenide päästmisel hätta ei jääks ja astroloogidele kasutu ei oleks, oli ta sunnitud maad ja planeete liigutama ümber päikese mõõda epitsükleid. Kokkuvõttes oli Koperniku mudel sama keeruline kui Ptolemaiose standardmudel (neis oli võrdne arv epitsükleid) ja selle abil tehtud ennustused planeetide liikumise kohta olid väiksema täpsusega. 
+See toob meid Koperniku juurde, kes teadusajaloolaste arvates vallandas 17. sajandi teadusliku revolutsiooni avaldades raamatu, kus ta asetab päikese universumi keskele ja paneb maa selle ümber ringtrajektooril tiirlema. Kas Kopernikus tõrjus sellega kõrvale Aristotelese, Ptolemaiose või mõlemad? Kaasaegne seisukoht on, et kuigi Kopernikus soovis teha kolmandat, arvasid tema rängalt matemaatilise teose avaldamisele järgnenud 40 aasta vältel pea kõik asjatundlikud astronoomid, et ta soovis välja pakkuda vaid lihtsama alternatiivi epitsüklitega mudelile, mis selleks ajaks oli muutunud väga keerukaks (aga ka samavõrra ennustustäpseks). Kuna Kopernikuse raamat läks trükki ajal, mil selle autor oli juba oma surivoodil, kirjutas sellele eessõna üks tema vaimulikust sõber, kes püüdis oodatavat kiriklikku pahameelt leevendada sugereerides, et päikese keskele viimine on vaid mudeldamise trikk, millest ei tasu järeldada, et maakera ka tegelikult ümber päikese tiirleb (piibel räägib, kuidas jumal peatas taevavõlvil päikese, mitte maa). Ja kuna eessõna oli anonüümne, eeldasid lugejad muidugi, et selle kirjutas autor. Lisaks, kuigi Kopernikus tõstis päikese keskele, jäi ta ringikujuliste trajektooride juurde, mis tähendas, et selleks, et tema teooria fenomenide päästmisel hätta ei jääks ja astroloogidele kasutu ei oleks, oli ta sunnitud maad ja planeete liigutama ümber päikese mõõda epitsükleid. Kokkuvõttes oli Kopernikuse mudel sama keeruline kui Ptolemaiose standardmudel ja selle abil tehtud ennustused planeetide liikumise kohta olid isegi väiksema täpsusega. 
 
 ![Kopernikuse teooria ja epitsüklitega mudel on üllatavalt sarnased.](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/dante/dante/kop.jpg)
 
-      Koperniku mudel suutis samas ennustada mõningaid nähtusi (planeetide näiv
-      heledus muutub ning jõuab maksimumi nende lähimas asukohas maale), mida
+> Koperniku teooria suutis samas ennustada mõningaid nähtusi (planeetide näiv
+    heledus muutub ning jõuab maksimumi nende lähimas asukohas maale), mida
       Ptolemaiose mudel ei ennustanud. See ei tähenda, et need fenomenid oleksid
       olnud vastuolus Ptolemaiose mudeliga. Lihtsalt, nende Ptolemaiose mudelisse
-      sobitamiseks oli vaja osad mudeli parameetrid fikseerida nii-öelda suvalistele väärtustele. 
-      Seega Koperniku mudel töötas nii, nagu see oli, samas kui Ptolemaiose mudel vajas ad hoc tuunimimst.  
+      sobitamiseks oli vaja osad mudeli parameetrid fikseerida nii-öelda 
+      suvalistele väärtustele. Seega Koperniku mudel töötas nii, nagu see oli, 
+      samas kui Ptolemaiose mudel vajas ad hoc tuunimimst.  
 
 Kui vaadata Koperniku produkti teooriana, mitte mudelina, siis oli sel selgeid eeliseid Aristotelese ees. Juba ammu oli nähtud komeete üle taevavõlvi lendamas (mis Aristotelese järgi asusid kinnistähtede muutumatus sfääris) ja supernoova tekkimist ja kadu, ning enam ei olnud kaugel ka aeg mil Galileo joonistas oma teleskoobist kraatreid kuu pinnal, näidates, et kuu ei saanud koosneda täiuslikust viiendast elemendist ja et sellel toimusid ilmselt sarnased füüsikalised protsessid kui maal. On usutav, et kui Kopernikus oleks jõudnud oma raamatule ise essõna kirjutada, oleks tema teooria vastuvõtt olnud palju kiirem (ja valulisem). Seega, teooria ja mudeli eristus on tähtis! 
 
 
 
-      Koperniku teooriast tuleneb loogilise paratamatusena, et tähtedel esineb
-      maalt vaadates parallaks. See tähendab, et kui maakera koos astronoomiga
+  > Koperniku teooriast tuleneb loogilise paratamatusena, et tähtedel esineb
+    maalt vaadates parallaks. See tähendab, et kui maakera koos astronoomiga
       teeb poolringi ümber päikese, siis kinnistähe näiv asukoht taevavõlvil
       muutub, sest astronoom vaatleb teda teise nurga alt. Pange oma nimetissõrm
       näost u 10 cm kaugusele, sulgege parem silm, seejärel avage see ning sulgege
@@ -99,20 +86,23 @@ Kui vaadata Koperniku produkti teooriana, mitte mudelina, siis oli sel selgeid e
 ## 2.3. Millest koosneb mudel?
 
 > Mudel on matemaatilise formalism, mis püüab kirjeldada füüsikalist protsessi.
-mudeli struktuuris on komponent, mis kirjeldab ideaalseid ennustusi ja eraldi veakomponent, mis kirjeldab kuidas andmepunktid varieeruvad selle ideaalse ennustuse ümber. Mudeli koostisosad on (i) muutuja, mille väärtusi ennustatkse (dependent variable), (ii), muutuja(d), mille väärtuste põhjal ennustatakse (independent variables), (iii) parameetrid, mille väärtused fititakse ii põhjal ja (iv) konstandid.  
+Mudeli struktuuris on komponent, mis kirjeldab ideaalseid ennustusi ja eraldi veakomponent, mis kirjeldab kuidas andmepunktid varieeruvad selle ideaalse ennustuse ümber. Mudeli koostisosad on (i) muutuja, mille väärtusi ennustatakse (dependent variable), (ii), muutuja(d), mille väärtuste põhjal ennustatakse (independent variables), (iii) parameetrid, mille väärtused fititakse ii põhjal ja (iv) konstandid.  
   
 Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab, kuidas inimeste pikkus sõltub nende kaalust. Lihtsaim mudel pikkuse sõltuvusest kaalust on pikkus = kaal (formaliseeritult: y = x) ja see mudel ennustab, et kui Johni kaal = 80 kg, siis John on 80 cm pikkune. siin on pikkus *(i)* muutuja, mille väärtust ennustatakse ja kaal *(ii)* muutuja, mille väärtuste põhjal ennustatakse. Mudeli komponendid *(iii)* ja *(iv)* puuduvad. Selle mudeli saame graafiliselt kujutada nii:
  
-```{r}
+```{r fig.height=3, fig.width=3}
 x <- 50:200 #y = kaal
 y <- x # x = pikkus 
-plot(y~x, type="l", xlab="weight in kg", ylab="heigth in cm", main="fixed linear model")
+plot(y~x, 
+     type="l", 
+     xlab="weight in kg", 
+     ylab="heigth in cm")
 ```
 
 Nüüd painutame seda sirget. See joon on ikka veel täielikult fikseeritud, aga ta pole enam sirge (ehkki tehniliselt on meil ikka lineaarne seos x ja y vahel).
 
 
-```{r}
+```{r fig.height=3, fig.width=3}
 x <- 50:200
 y <- x - x**2
 plot(y~x, type="l")
@@ -129,12 +119,16 @@ y = 102 + 0.8x.
 Omistades nüüd kaalule väärtuse 80 kg, tuleb mudeli poolt ennustatud keskmine pikkus 102 + 0.8 * 80 = 166 cm. Iga kg lisakaalu ennustab mudeli kohaselt 0.8 cm võrra suuremat pikkust.
 
 
-```{r}
+```{r fig.height=3, fig.width=3}
 a <- 102
 b <- 0.8
 x <-  0:100 
 y <-  a + b * x
-plot(y~x, type="l", xlab="weight in kg", ylab="heigth in cm", main="a more flexible linear model", ylim=c(50, 200))
+plot(y~x, 
+     type="l", 
+     xlab="weight in kg", 
+     ylab="heigth in cm", 
+     ylim=c(50, 200))
 ```
 
 See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline, olukord. Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu. Meie valimiandmed ei peegelda täpselt inimpopulatsiooni. Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole. Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.  
@@ -148,7 +142,7 @@ X ja Y on muutujad, a ja b on parameetrid. Muutujate väärtused fikseeritakse a
  
  > X - mille põhjal me ennustame (independent variable, predictor)
  
- > muutuja (variable) - iga asi, mida me valimis mõõdame (X ja Y on kaks muutujat). Muutuja väärtused on fikseeritud andmete poolt. Muutujal on sama palju fikseeritud väärtusi kui meil on selle muutuja kohta mõõtmisandmeid.
+ > muutuja (variable) - iga asi, mida me valimis mõõdame (X ja Y on kaks muutujat). Muutujal on sama palju fikseeritud väärtusi kui meil on selle muutuja kohta mõõtmisandmeid.
  
  > parameeter (parameter) - mudeli koefitsient, millele võib omistada suvalisi väärtusi. Parameetreid tuunides fitime mudeli võimalikult hästi sobituma andmetega.
  
@@ -158,9 +152,9 @@ X ja Y on muutujad, a ja b on parameetrid. Muutujate väärtused fikseeritakse a
 
 Mudelid sisaldavad (1) matemaatilisi struktuure, mis määravad mudeli tüübi ning (2) parameetreid, mida saab andmete põhjal tuunida, niiviisi täpsustades mudeli kuju. 
 
-Seda tuunimist nimetatakse mudeli fittimiseks. Mudelit fittides on eesmärk saavutada antud tüüpi mudeli maksimaalne sobivus andmetega. Näiteks võrrand y = a + bx määrab mudeli, kus y = x on on see struktuur, mis tagab, et mudeli tüüp on sirge, ning a ja b on parameetrid, mis määravad sirge asendi. Seevastu struktuur y = x + x^2 tagab, et mudeli y = a + b1x + b2x^2  tüüp on parabool, ning parameetrite a, b1 ja b2 väärtused määravad selle parabooli täpse kuju. Ja nii edasi. 
+Seda tuunimist nimetatakse mudeli fittimiseks. Mudelit fittides on eesmärk saavutada antud tüüpi mudeli maksimaalne sobivus andmetega. Näiteks võrrand *y = a + bx* määrab mudeli, kus *y = x* on on see struktuur, mis tagab, et mudeli tüüp on sirge, ning *a* ja *b* on parameetrid, mis määravad sirge asendi. Seevastu struktuur *y = x + x^2* tagab, et mudeli *y = a + b1x + b2x^2*  tüüp on parabool, ning parameetrite *a*, *b1* ja *b2* väärtused määravad selle parabooli täpse kuju. Ja nii edasi. 
 
-    lineraarse mudeli maksimaalse sobivuse andmetega saab tagada kahel erineval viisil: 
+  > lineraarse mudeli parima sobivuse andmetega saab tagada kahel erineval viisil: 
     (i) vähimruutude meetod mõõdab y telje suunaliselt iga andmepunkti kauguse mudeli
     ennustusest, võtab selle kauguse ruutu, summeerib kauguste ruudud ning leiab sirge 
     asendi, mille korral see summa on minimaalne; 
@@ -172,7 +166,7 @@ Seda tuunimist nimetatakse mudeli fittimiseks. Mudelit fittides on eesmärk saav
  
  (2) sobitub piisavalt hästi andmetega (eriti uute andmetega, mida ei kasutatud selle mudeli fittimiseks), et olla relevantne andmeid genereeriva protsessi kirjeldus; 
  
- (3) genereerib usutavaid simuleeritud andmeid (see näitab mudeli kvaliteeti).
+ (3) genereerib usutavaid simuleeritud andmeid.
  
  Sageli fititkse samade andmetega mitu erinevat tüüpi mudelit ja püütakse otsustada, milline neist vastab kõige paremini eeltoodud tingimustele. Näiteks, kui sirge suudab kaalu järgi pikkust ennustada paremini kui parabool, siis on sirge mudel paremas kooskõlas teadusliku hüpoteesiga, mis annaks mehhanismi protsessile, mille käigus kilode lisandumine viiks laias kaaluvahemikus inimeste pikkuse kasvule ilma, et pikkuse kasvu tempo kaalu tõustes langeks. 
  
@@ -185,8 +179,9 @@ Seda tuunimist nimetatakse mudeli fittimiseks. Mudelit fittides on eesmärk saav
   Üks kõige jäigemaid mudeleid on sirge, mis tähendab, et sirge mudel on suure tõenäosusega alafittitud. Keera sirget kuipalju tahad, ikka ei sobitu ta enamiku andmekogudega. Ja need vähesed andmekogud, mis sirge mudeliga sobivad, on genereeritud teatud tüüpi lineaarsete protsesside poolt. Sirge on seega üks kõige paremini tõlgendatavaid mudeleid. Teises äärmuses on polünoomsed mudelid, mis on väga paindlikud, mida on väga raske tõlgendada ja mille puhul esineb suur mudeli ülefittimise oht. Ülefititud mudel järgib nii täpselt valimiandmeid, et sobitub hästi valimis leiduva juhusliku müraga ning seetõttu sobitub halvasti järgmise valimiga samast populatsioonist (igal valimil on oma juhuslik müra). Üldiselt, mida rohkem on mudelis tuunitavaid parameetreid, seda paindlikum on mudel, seda kergem on seda valimiandmetega sobitada ja seda raskem on seda tõlgendada. Veelgi enam, alati on võimalik konstrueerida mudel, mis sobitub täiuslikult kõikide andmepunktidega (selle mudeli parameetrite arv = N). Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fititi --- ja täiesti kasutu.
   
   
-```{r echo=FALSE}
-df <- tibble(x=c(2, 3, 2.2, 5, 7, 8), y=c(8, 5, 9, 10, 11, 10.1))
+```{r echo=FALSE, fig.height=3, fig.width=6}
+df <- tibble(x=c(2, 3, 2.2, 5, 7, 8), 
+             y=c(8, 5, 9, 10, 11, 10.1))
 mod_e1 <- lm(y ~ x, data = df)
 mod_e2 <- lm(y ~ poly(x, 2), data = df)
 mod_e3 <- lm(y ~ poly(x, 3), data = df)
@@ -198,7 +193,7 @@ df %>%
   gather_predictions(mod_e1, mod_e2, mod_e3, mod_e4, mod_e5) %>% 
   ggplot(aes(x, pred, colour = model)) +
   geom_line() +
-  geom_point(aes(x, y), color="black", size=2) 
+  geom_point(aes(x, y), color="black", size=2) + theme_tufte() + xlab(NULL) + ylab(NULL)
 
 ```
 *Joonis: Kasvava paindlikusega polünoomsed mudelid. mod_e1 on sirge võrrand y = a + b1x (2 parameetrit: a ja b1), mod_e2 on lihtsaim võimalik polünoom: y= a + b1x + b2x^2 (3 parameetrit), ..., mod_e5: y= a + b1x + b2x^2 + b3x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6).*
@@ -220,18 +215,20 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
 
 ## 2.5. Veamudel
   
-Eelpool kirjeldatud mudelid on deterministlikud --- nad ei sisalda hinnangut andmete varieeruvusele ennustuse ümber. Neid kutsutakse ka **protsessi mudeliteks** sest nad modelleerivad protsessi täpselt. Ehk kui mudel ennustab, et 80 kg inimene on 166 cm pikkune, siis protsessi mudel ei ütle, kui suurt kaalust sõltumatut pikkuste varieeruvust võime oodata 80 kg-ste inimeste hulgas? Selle hinnangu andmiseks tuleb mudelile lisada veel üks komponent, **veamudel** ehk veakomponent, mis sageli tuuakse sisse normaaljaotuse kujul. Veakomponent modelleerib üksikute inimeste pikkuste varieeruvust (mitte keskmise pikkuse varieeruvust) igal mõeldaval ja mittemõeldaval kaalul. Tänu sellele ei ole mudeli ennustused enam deterministlikud, vaid tõenäosuslikud. 
+Eelpool kirjeldatud mudelid on deterministlikud --- nad ei sisalda hinnangut andmete varieeruvusele ennustuse ümber. Neid kutsutakse ka **protsessi mudeliteks** sest nad modelleerivad protsessi täpselt. Ehk, kui mudel ennustab, et 80 kg inimene on 166 cm pikkune, siis protsessi mudel ei ütle, kui suurt kaalust sõltumatut pikkuste varieeruvust võime oodata 80 kg-ste inimeste hulgas. Selle hinnangu andmiseks tuleb mudelile lisada veel üks komponent, **veamudel** ehk veakomponent, mis sageli tuuakse sisse normaaljaotuse kujul. Veakomponent modelleerib üksikute inimeste pikkuste varieeruvust (mitte keskmise pikkuse varieeruvust) igal mõeldaval ja mittemõeldaval kaalul. Tänu sellele ei ole mudeli ennustused enam deterministlikud, vaid tõenäosuslikud. 
 
-    Bioloogid, erinevalt füüsikutest, usuvad, et valimisisene andmete varieeruvus on
-    pigem tingitud bioloogilisest varieeruvusest kui mõõtmisveast. Aga loomulikult on
+  > Bioloogid, erinevalt füüsikutest, usuvad, et valimisisene andmete varieeruvus on
+    pigem tingitud bioloogilisest varieeruvusest, kui mõõtmisveast. Aga loomulikult on
     seal olemas ka mõõtmisviga. Lihtsuse ja ajaloolise järjepidevuse huvides räägime
     järgnevalt veamudelist, mitte "bioloogilise varieeruvuse ja veamudelist".
 
 Kuidas veakomponent lineaarsesse mudelisse sisse tuua?
 
-ilma veakomponendita mudel: *y = a + bx*
+ilma veakomponendita mudel: 
 
-Veakomponent tähendab, et y-i väärtus varieerub ümber mudeli poolt ennustatud keskväärtuse ja seda varieeruvust normaaljaotusega modelleerides saame
+*y = a + bx*
+
+Veakomponent tähendab, et *y*-i väärtus varieerub ümber mudeli poolt ennustatud keskväärtuse ja seda varieeruvust normaaljaotusega modelleerides saame
 
 *y ~ dnorm(mu, sigma)* 
 
@@ -239,24 +236,17 @@ kus *mu* on mudeli poolt ennustatud keskväärtus ja *sigma* on mudeli poolt enn
 
 Sirge mudelisse varieeruvuse sisse toomiseks defineerime mu ümber nõnda:
 
-*mu = a + bx*, mis tähendab, et
+*mu = a + bx*, 
+
+mis tähendab, et
 
 *y ~ dnorm(a + bx, sigma)*
 
 See ongi sirge mudel koos veakomponendiga. Seega on sellel lineaarsel regressioonimudelil kolm parameetrit: intercept *a*, tõus *b* ja "veaparameeter" *sigma*. Sellist mudelit on mõistlikum fittida Bayesi teoreemi abil, kui vähimruutude meetodil. Bayesi meetodiga fititud mudel, mida kutsutakse posteerioriks, näitab, millised kombinatsioonid nendest kolmest parameetrist usutavalt koos esinevad (ja millised mitte). Seega on fititud 3 parameetriga bayesi mudel 3-dimensionaalne tõenäosusjaotus (3D posteerior). Muidugi saame ka ükshaaval välja plottida kolm 1D posteeriori, millest igaüks iseloomustab üht parameetrit ning on kollapseeritud üle kahe ülejäänud parameetri. 4. peatükis õpime selliste mudelitega töötama. 
 
 
-
 > Kõik statistilised mudelid on tõenäosusmudelid ning sisaldavad veakomponenti. Tõenäosusmudel on matemaatiline funktsioon, mis  x-teljel loeb üles kõik võimalikud sündmustest ja y-teljel annab nende kõikide toimumise tõenäosused.  
 
-
-###Statistiline mudel koosneb 3 komponendist: 
-    
-    > (1) matemaatiline struktuur, mis sisaldab muutujaid ja annab mudeli tüübi, 
-    
-    > (2) tuunitavad parameetrid ja 
-    
-    > (3) veamudel.
 
 Muide, kõik veamudelid, millega me edaspidi töötame, modelleerivad igale x-i väärtusele (kaalule) sama suure y-i suunalise varieeruvuse (pikkuste sd). Suurem osa statistikast kasutab eeldusi, mida keegi päriselt tõe pähe ei võta, aga millega on arvutuslikus mõttes lihtsam elada.
 
@@ -271,34 +261,34 @@ Järgnevas koodis me võtame 12 juhuvalimit arvudest 1 ja 100 vahel (kasutades r
 Seejärel liidame need 12 arvu. Nüüd võtame uue 12-se valimi ja kordame eelnevat. 
 Me teeme seda 10 000 korda järjest ja plotime saadud 10 000 arvu (10 000 liitmistehte tulemust) tihedusfuntksioonina. 
 
-```{r}
+```{r fig.height=2, fig.width=4}
 kasv <- replicate( 10000 , sum( runif( 12, 1, 100 ) ) ) 
 dens( kasv )
 ```
 
-Selles näites võrdub iga andmepunkt 10 000st ühe bakteritüve kasvukiiruse mõõtmisega (eeldades, et mõõtmisviga puudub). Seega, antud eelduste korral on bakteritüvede kasvukiirused normaaljaotusega.
+Selles näites võrdub iga andmepunkt 10 000st ühe bakteritüve kasvukiiruse mõõtmisega. Seega, antud eelduste korral on bakteritüvede kasvukiirused normaaljaotusega.
 
-Nüüd vaatame, mis juhtub kui 12 geeni mõjud ei ole üksteisest sõltumatud. Kui 12 geeni on omavahel vastasmõjudes, siis nende geenide mõjud korrutuvad, mitte ei liitu.
+Nüüd vaatame, mis juhtub, kui 12 geeni mõjud ei ole üksteisest sõltumatud. Kui 12 geeni on omavahel vastasmõjudes, siis nende geenide mõjud korrutuvad, mitte ei liitu.
 Kõigepealt vaatleme juhtu, kus 12 geeni on kõik väikeste mõjudega ning seega mitte ühegi geeni mõju ei domineeri teiste üle.
 Seekord võtame oma 12 juhuvalimit arvudest 1 ja 1.1 vahel. 1 tähendab 0-kasvu ja 1.1 tähendab 10% kasvu. Seejärel korrutame need 12 arvu, misjärel kordame eelnevat 10 000 korda. 
 
-```{r}
+```{r fig.height=2, fig.width=4}
 kasv <- replicate( 10000 , prod( runif( 12, 1, 1.1 ) ) ) 
 dens( kasv )
 ```
 
 Eelmises näites olid need üksikud interakteeruvad geenid ükshaaval väikeste mõjudega. Mitte ühegi geeni mõju ei domineeri teiste üle. Mis juhtub, kui mõnel geenil on kuni 2 korda suurem mõju kui teisel?
 
-```{r}
+```{r fig.height=2, fig.width=4}
 kasv <- replicate( 10000 , prod( runif(12,1,2) ) ) 
 dens( kasv )
 ```
 
-Nüüd on tulemuseks log-normaaljaotus. Mis teie arvate, kas bioloogias on enamasti tegu faktoritega, mis omavahel ei interakteeru või kui interakteeruvad, on kõik ühtlaselt väikeste efektidega? Või on tegu interakteeruvate faktoritega, millest osad on palju suuremate mõjudega uuritavale tunnusele, kui teised? Ühel juhul eelistate te normaaljaotuse mudeleid, teisel juhul peate õppima töötama ka lognormaaljaotusega.
+Nüüd on tulemuseks log-normaaljaotus. Mis teie arvate, kas bioloogias on enamasti tegu faktoritega, mis omavahel ei interakteeru või kui interakteeruvad, on kõik ühtlaselt väikeste efektidega? Või on tegu vastasmõjudes olevate faktoritega, millest osad on palju suuremate mõjudega uuritavale tunnusele, kui teised? Ühel juhul eelistate te normaaljaotuse mudeleid, teisel juhul peate õppima töötama ka lognormaaljaotusega.
 
 Kui me vaatame samu andmeid logaritmilises skaalas, avastame, et need andmed on normaaljaotusega.
 
-```{r}
+```{r fig.height=2, fig.width=4}
 kasv <- replicate( 10000 , log10(prod( runif(12,1,2) ) ) )
 dens( kasv )
 ```
@@ -315,9 +305,9 @@ Eelnev ei kehti Bayesi mudelite kohta, mis toovad priorite kaudu sisse lisainfot
 
 Kuidas panna skeptik uskuma, et statistilised meetodid töötavad halvasti väikestel valimitel? Siin aitab simulatsioon, kus me tõmbame 3-se valimi etteantud populatsioonist ning üritame selle valimi põhjal ennustada selleasama populatsiooni struktuuri. Kuna tegemist on simulatsiooniga, teame täpselt, et populatsioon, kust me tõmbame oma kolmese valimi, on normaaljaotusega, et tema keskväärtus = 0 ja et tema sd = 1. Me fitime oma valimi andmetega 2 erinevat mudelit: normaaljaotuse ja Studenti t jaotuse. 
   
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, fig.height=3, fig.width=4}
 library(brms) #t jaotuse modelleerimiseks
-library(ggthemes)
+
 #pakett ggfotify pakub alt lahendust jaotuste joonistamiseks
 set.seed(19)
 df <- tibble(a=rnorm(3))
@@ -338,7 +328,7 @@ Igal juhul, mõni teine juhuvalim annaks meile hoopis teistsugused mudelid, mis 
 
 Mis juhtub kui me kasutame oma normaaljaotuse mudelit uute andmete simuleerimiseks? Kui lähedased on need simuleeritud andmed populatsiooni andmetega ja kui lähedased valimi andmetega, millega me normaaljaotuse mudeli fittisime?
 
-```{r}
+```{r fig.height=3, fig.width=4}
 set.seed(19) #muudab simulatsiooni korratavaks
 #tõmbame 3 juhuslikku arvu normaalhaotusest, mille keskväärtus = 0 ja sd = 1.
 df <- tibble(sample_data=rnorm(3)) 
@@ -422,7 +412,7 @@ mode <-  function(x, adjust=1) {
 y_max <- dx$x[which.max(dx$y)] 
 y_max
 }
-mode(andmed)
+#mode(andmed)
 
 plot(density(andmed, adjust=1))
 abline(v=mode(andmed), col="red")
@@ -430,6 +420,7 @@ abline(v=median(andmed), col="blue")
 abline(v=mean(andmed))
 
 ```
+
 Joonis: Simuleeritud lognormaaljaotusega andmed. Punane joon - mood; sinine joon - mediaan; must joon - aritmeetiline keskmine (mean). Milline neist vastab parimini teie intuitsiooniga nende andmete "keskväärtusest"? Miks?
 
 
@@ -444,31 +435,33 @@ Näiteks: inimeste IQ on normaaljaotusega, mean=100, sd=15. See tähendab, et ku
 
 Kui aga “tegelikul” andmejaotusel on “paks saba” või esinevad outlierid, siis normaaljaotust eeldav mudel tagab ülehinnatud SD ja seega ülehinnatud varieeruvuse. Kui andmed saavad olla ainult positiivsed, siis SD > mean/2 viitab, et andmed ei sobi normaaljaotuse mudeliga (sest mudel ennustab negatiivsete andmete esinemist küllalt suure sagedusega). 
 
-    Normaaljaotus on defineeritud ka mõnede teiste jaotuste jaoks peale normaaljaotuse 
-    (Poissioni jaotus, binoomjaotus). 
-    Funktsioon sd() ja selle taga olev valem, mis on loodud normaaljaotuse tarbeks, 
-    ja neid alternatiivseid standardhälbeid ei arvuta. 
-    Seega tasub meeles pidada, et tavapärane sd kehtib normaaljaotuse mudeli piirides ja ei kusagil mujal!
+> Standardhälve on defineeritud ka mõnede teiste jaotuste jaoks peale normaaljaotuse 
+  (Poissioni jaotus, binoomjaotus). Funktsioon sd() ja selle taga olev valem on 
+  loodud normaaljaotuse tarbeks ja neid alternatiivseid standardhälbeid ei arvuta. Igale jaotusele, mida me oskame integreerida, saab ka integraali abil standardhälbe arvutada, mis on täpselt õige katvusega. 
+    Seega tasub meeles pidada, et tavapärane viis sd arvutamiseks kehtib normaaljaotuse mudeli piirides 
+    ja ei kusagil mujal!
 
-Kui andmed ei sobi normaaljaotusesse siis võib pakkuda kahte alternatiivset lahendust: 
+Kui andmed ei sobi normaaljaotusesse, võib pakkuda kahte alternatiivset lahendust: 
 
 ####	(1) logaritmi andmed. 
 
-Kui logaritmimine muudab andmed normaalseks, siis saab logaritmitud andmetest arvutada mean-i ja SD ja seejärel mõlemad anti-logaritmida. Sellisel juhul avaldad sa lõpuks geomeetrilise keskmise ja multiplikatiivse SD (multiplikatiivne SD = geom mean x SD; geom mean/SD). Geomeetriline keskmine on alati väiksem kui aritmeetiline keskmine. Lisaks on SD interval nüüd asümmeetriline ja SD on alati > 0. Nagu ennegi, 68% lognormaalsetest andmetest jääb 1SD vahemikku ning 95.5% andmetest jääb 2SD vahemikku.
+Kui kõik andmeväärtused on positiivsed ja andmed on lognormaaljaotusega, siis logaritmimine muudab andmed normaalseks. Logaritmitud andmetest tuleks arvutada aritmeetiline keskmine ja SD ning seejärel mõlemad anti-logaritmida (näiteks kui log2(10) = 3.32, siis antilogaritm sellest on 2**3.32 = 10). Sellisel juhul avaldatakse lõpuks geomeetriline keskmine ja multiplikatiivne SD algses lineaarses skaalas (multiplikatiivne SD = geom mean x SD; geom mean/SD). Geomeetriline keskmine on alati väiksem kui aritmeetiline keskmine. Lisaks on SD intervall nüüd asümmeetriline ja SD on alati > 0. See protseduur tagab, et 68% lognormaalsetest andmetest jääb 1 SD vahemikku ning 96% andmetest jääb 2 SD vahemikku.
 
-lognormaalsete andmete tavapärane iseloomustus keskmise ja standardhälbega: mean(sd) on 1.8(1.9). See sd interval on sümmeetriline, ehkki andmete jaotus on vägagi ebasümmeetriline. Lisaks ennustab standardhälve, mis on suurem kui keskväärtus, suure sagedusega negatiivseid väärtusi. Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suitsetatud sigarettide arv). See on näide halvast mudelist!
+Kui lognormaalsetele andmetele arvutada tavaline sd lineaarses skaalas kasutades sd() funktsiooni, mille algoritm on välja töötatud spetsiifiliselt normaalsete andemete jaoks, siis tuleb SD sageli palju laiem kui peaks ja hõlmab ka negatiivseid väärtusi (pea meeles, et SD definitsiooni järgi jääb 96% populatsioonist 2 SD vahemikku).   
+Sageli on aga negatiivsed muutuja väärtused võimatud (näiteks nädalas suitsetatud sigarettide arv). 
+See on näide halvast mudelist! Kui te rakendate tavapärast sd() funktsiooni teadmata jaotusega andmetele, võite siiski kindel olla, et 2 SD hõlmab mitte vähem kui 75% populatsiooni andmetest.
 
-Juhul kui tegu lognormaalsete andmetega on meil võimalus kasutada palju paremat mudelit varieeruvusele - multiplikatiivset standardhälvet:
+Kirjutame logaritmimise kaudu avaldatud multiplikatsiivse SD arvutamiseks funktsiooni mulitplicative_sd(): 
 
-```{r echo=FALSE}
+```{r }
 
 multiplicative_sd <- function(x) {
   x <- na.omit(x)
-  a <- log10(x)
-  b <- mean(a)
-  c <- sd(a)
-  geom_mean <- 10**b
-  mult_sd <- 10**c
+  log_data <- log10(x)
+  log_mean <- mean(log_data)
+  log_sd <- sd(log_data)
+  geom_mean <- 10**log_mean
+  mult_sd <- 10**log_sd
   lower1 <- geom_mean/mult_sd
   upper1 <- geom_mean * mult_sd
   lower2 <- geom_mean/(mult_sd**2)
@@ -479,9 +472,9 @@ multiplicative_sd <- function(x) {
   lower4 <- mean(x) - sd(x)*2
   upper4 <- mean(x) + sd(x)*2
   results <- tibble(SD=c("multiplicative_SD", 
-                         "multiplicative_2SD", 
+                         "multiplicative_2_SD", 
                          "additive_SD", 
-                         "additive_2SD"), 
+                         "additive_2_SD"), 
                     MEAN=c(geom_mean, 
                            geom_mean, 
                            Mean, 
@@ -503,19 +496,39 @@ multiplicative_sd(andmed)
 Tavalise aritmeetitilise keskmise asemel on meil nüüd geomeetriline keskmine.  Võrdluseks on antud ka tavaline (aritmeetiline) keskmine ja (aditiivne) SD. Additiivne SD on selle jaotuse kirjeldamiseks selgelt ebaadekvaatne (vt jaotuse pilti ülalpool ja võrdle mulitplikatiivse SD-ga).
 
 
-Kuidas aga töötab multiplikatiivne standardhälve normaaljaotusest pärit andmetega? Kui normaalsete andmete peal multiplikatiivse sd rakendamine viib katastroofini, siis pole sel statistikul suurt praktilist kasutusruumi.
+Kuidas aga töötab multiplikatiivne standardhälve normaaljaotusest pärit andmetega? Kui multiplikatiivse sd rakendamine normaalsete andmete peal viib katastroofini, siis pole sel statistikul suurt kasutusruumi.
 ```{r}
 set.seed(5363)
 norm_andmed <- rnorm(3, 100, 20)
 multiplicative_sd(norm_andmed)
 ```
 
-Nagu näha, on multiplikatiivse sd kasutamine normaalsete andmetega üsna ohutu (kuigi, ainult niikaua, kuni meil puuduvad negatiivsed andmed). Seega, kui sa ei ole kindel, kas tegu on normaaljaotusega või lognormaaljaotusega, arvesta, et lognormaaljaotus on bioloogias üsna tavaline (eriti ensüümreaktsioonide ja kasvuprotsesside juures). Seega on mõistlik alati kasutada multiplicative_sd() funktsiooni ja kui mõlema SD väärtused on sarnased, siis võib loota, et andmed on normaalsed ning saab avaldada tavapärase additiivse SD refereede rõõmuks.
+Nagu näha, on multiplikatiivse sd kasutamine normaalsete andmetega pigem ohutu (kui andmed on positiivsed). Arvestades, et additiivne SD on lognormaalsete andmete korral kõike muud kui ohutu ning et lognormaaljaotus on bioloogias üsna tavaline (eriti ensüümreaktsioonide ja kasvuprotsesside juures), on mõistlik alati kasutada multiplicative_sd() funktsiooni. Kui mõlema SD väärtused on sarnased, siis võib loota, et andmed on normaalsed ning saab refereede rõõmuks avaldada tavapärase additiivse SD.
 
 > kui n < 10, siis mõlemad SD-d alahindavad tehnilistel põhjustel tegelikku sd-d.  Ettevaatust väikeste valimitega!
 
+Vahest tekkib teil vajadus empiiriliselt määrata, kas teie andmed on normaaljaotusega. 
+Enne kui seda tegema asute, peaksite mõistma, et see, et teie valim ei ole normaalne, ei tähenda automaatselt, et populatsioon, millest see valim tõmmati, ei oleks normaaljaotusega.
+Igal juhul, valimiandmete normaalsuse määramiseks on kõige mõistlikum kasutada qq-plotti. 
+QQ-plot (kvantiil-kvantiil plot) võrdleb andmete jaotust ideaalse normaaljaotusega andmepunkti haaval. Kui empiiriline jaotus kattub referentsjaotusega, siis on tulemuseks sirgel paiknevad punktid. Järgneval qq plotil on näha, mis juhtub, kui plottida lognormaalseid andmeid normaaljaotuse vastu: 
+```{r message=FALSE, fig.height=4, fig.width=4}
+library(car)
+qqPlot(andmed)
+```
 
-#### (2) iseloomusta andmeid algses skaalas: median (MAD). 
+Nüüd joonistame qq-ploti logaritmitud andmetele. 
+
+```{r fig.height=4, fig.width=4}
+qqPlot(log2(andmed))
+```
+
+Pole kahtlust, andmed on logaritmitud kujul normaaljaotusega.
+
+> qqPlot() võimaldab võrrelda teie andmeid ükskõik millise R-is leiduva jaotusega (?car::qqPlot). 
+
+Normaaljaotuse kindlakstegemiseks on loodud ka peotäis sageduslikke teste, mis annavad väljundina p väärtuse. Nende kasutamisest soovitame siiski hoiduda, sest tulemused on sageli ebakindlad, eriti väikestel ja suurtel valimitel. Mõistlikum on vaadata kõikide andmepunktide plotti normaaljaotuse vastu, kui jõllitada ühte numbrit (p), mille väärtus, muuseas, monotooniliselt langeb koos valimi suuruse kasvuga.
+
+#### (2) iseloomusta andmeid algses skaalas: mediaan (MAD). 
 
 MAD –-- median absolute deviation --- on vähem tundlik outlierite suhtes ja ei eelda normaaljaotust. Puuduseks on, et MAD ei oma tõlgendust, mille kohaselt ta hõlmaks kindlat protsenti populatsiooni või valimi andmejaotusest. Seevastu sd puhul võime olla kindlad, et isegi kõige hullema jaotuse korral jäävad vähemalt 75% andmetest 2 SD piiridesse.
 
@@ -525,8 +538,8 @@ mad(andmed, constant = 1)
 
 
 
-     Ära kunagi avalda andmeid vormis: mean (MAD) või median (SD). 
-     Korrektne vorm on mean(SD) või median(MAD).
+> Ära kunagi avalda andmeid vormis: mean (MAD) või median (SD). 
+  Korrektne vorm on mean (SD) või median (MAD).
 
 
 
@@ -534,25 +547,40 @@ mad(andmed, constant = 1)
 
 Andmete koos-varieeruvust mõõdetakse korrelatsiooni abil. Tulemuseks on üks number - korrelatsioonikordaja r, mis varieerub -1 ja 1 vahel. 
 
-    r = 0 – kahte tüüpi mõõtmised (x=pikkus, y=kaal) samadest mõõteobjektidest varieeruvad üksteisest sõltumatult. 
-    r = 1: kui ühe muutuja väärtus kasvab, kasvab ka teise muutuja väärtus alati täpselt samas proportsioonis. 
-    r = -1: kui ühe muutuja väärtus kasvab, kahaneb teise muutuja väärtus alati täpselt samas proportsioonis. 
+> r = 0 – kahte tüüpi mõõtmised (x=pikkus, y=kaal) samadest 
+  mõõteobjektidest varieeruvad üksteisest sõltumatult. 
+  r = 1: kui ühe muutuja väärtus kasvab, kasvab ka teise 
+  muutuja väärtus alati täpselt samas proportsioonis. 
+  r = -1: kui ühe muutuja väärtus kasvab, kahaneb teise 
+  muutuja väärtus alati täpselt samas proportsioonis. 
     
 Kui r on -1 või 1, saame me x väärtust teades täpselt ennustada y väärtuse (ja vastupidi, teades y väärrust saame täpselt ennustada x väärtuse).    
 Kuidas tõlgendame aga tulemust r = 0.9? Mitte kuidagi. Selle asemel tõlgendame r2 = 0.9**2 = 0.81 – mis tähendab, et x-i varieeruvus suudab seletada 81% y varieeruvusest ja vastupidi, et Y-i varieeruvus suudab seletada 81% X-i varieeruvusest. 
 
+Korrelatsiooni saab mõõta mitmel viisil (?cor.test, method=). Kõige levinum on Pearsoni korrelatsioonikoefitsient, mis eeldab, *(i)* et me mõõdame pidevaid muutujaid, *(ii)* et valim on esinduslik populatsiooni suhtes, *(iii)* et populatsiooniandmed on normaaljaotusega ja *(iv)* et igal mõõteobjektil on mõõdetud 2 omadust (pikkus ja kaal, näiteks). Tuntuim alternatiiv on mitteparameetriline Spearmani korrelatsioon, mis ei eelda andmete normaaljaotust ega seda, et mõõdetakse pidevaid suurusi (ordinaalsed andmed käivad kah). Kui kõik Pearsoni korrelatsiooni eeldused on täidetud ja te kasutate siiski Spearmani korrelatsiooni, siis on teie arvutus ca 10% vähemefektiivne.  
+
+
 ```{r}
-#correlation<-cor.test(iris$Sepal.Length, iris$Sepal.Width, na.rm=T, method = "pearson") # a list of 9
+#correlation<-cor.test(iris$Sepal.Length, 
+# iris$Sepal.Width, na.rm=T, method = "pearson") 
 #names(correlation)
 #str(correlation)
 #correlation$conf.int
 cor(iris$Sepal.Length, iris$Sepal.Width, use="complete.obs") 
+#complete.obs uses only such observations where neither x or y value is NA
 ```
 
 
 Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koos-varieeruvusest vaid ka andmete ulatusest. Suurema ulatusega andmed X ja/või Y teljel annavad keskeltläbi 0-st kaugemal oleva korrelatsioonikordaja. Selle pärast sobib korrelatsioon halvasti näiteks korduskatsete kooskõla mõõtmiseks. 
 
 Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvust: kui andmed koos-varieeruvad mitte-lineaarselt, siis võivad ka väga tugevad koos-varieeruvused jääda märkamatuks.
+
+![Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja, ehkki tegelikud seosed andmete vahel on täiesti erinevad.](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/anscombe/Slide1.jpg)
+
+Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb kindlasti eksitav.
+Kordamisküsimus: miks on paneelil a) r ligikaudu 0?
+
+Korrelatsioonikordaja mõõdab pelgalt määra, mil üks muutuja muutub siis, kui teine muutuja muutub. Seega ei ole suurt mõtet arvutada korrelatsioonikordajat juhul kui me teame ette seose olemasolust kahe muutuja vahel. Näiteks, kui sama entiteeti mõõdetakse kahel erineval viisil, või kahes korduses, või kui esimene muutuja arvutatakse teise muutuja kaudu.
 
 > Kõik summaarsed statistikud kaotavad enamuse teie andmetes leiduvast infost – see kaotus on õigustatud ainult siis, kui teie poolt valitud statistik iseloomustab hästi andmete sügavamat olemust (näiteks tüüpilist mõõtmistulemust või andmete varieeruvust).
 
@@ -566,15 +594,15 @@ print(psych::corr.test(iris[-5], use="complete"), short = FALSE)
   
 ## 3.2 EDA --- eksploratoorne andmeanalüüs
 
-Kui ühenumbriline andmete summeerimine täidab eelkõige kokkuvõtliku kommunikatsiooni eesmärki, siis EDA on suunatud teadlasele endale. EDA eesmärk on andmeid eelkõige graafiliselt vaadata, et saada aimu 1) andmete kvaliteedist ja 2) lasta andmetel "sellisena nagu nad on" kõneleda ja sugereerida uudseid teaduslikke hüpoteese. Neid hüpoteese peaks siis testima formaalse statistilise analüüsi abil.
+Kui ühenumbriline andmete summeerimine täidab eelkõige kokkuvõtliku kommunikatsiooni eesmärki, siis EDA on suunatud teadlasele endale. EDA eesmärk on andmeid eelkõige graafiliselt vaadata, et saada aimu 1) andmete kvaliteedist ja 2) lasta andmetel kõneleda "sellisena nagu nad on" ja sugereerida uudseid teaduslikke hüpoteese. Neid hüpoteese peaks siis testima formaalse statistilise analüüsi abil (ptk järeldav statistika). Näiteid erinevate graafiliste lahenduste kohta vt graafika peatükist.
 
 > EDA: mida rohkem graafikuid, seda rohkem võimalusi uute mõtete tekkeks!
 
-Kõigepealt vaatame andmeid numbrilise kokkuvõttena:
-```{r}
-psych::describe(iris)
+EDA on rohkem kunst kui teadus selles mõttes, et teil on suur vabadus küsida selle abil erinevaid küsimusi oma andmete kohta. Ja seda nii tehnilisest aspektist lähtuvalt (milline on minu andmete kvaliteet?), kui teaduslikke küsimusi küsides (kas muutuja A võiks põhjustada muutusi muutujas B?).
 
-```
+Mõned üldised soovitused võib siiski anda.
+
+1. alusta analüüsi tasemest, kus andmed on kõige inforikkamad --- toorandmete plottimisest punktidena. Kui andmehulk ei ole väga massiivne, näitab see hästi nii andmete kvaliteeti, kui ka võimalikke sõltuvussuhteid erinevate muutujate vahel.
 
 Millised korrelatsioonid võiksid andmetes esineda?
 ```{r}
@@ -587,63 +615,43 @@ corrgram(iris, order=TRUE,
          main="Correlogram of Iris dataset")
 ```
 
-### 3.2.1. Kuidas uurida muutuja sisest varieeruvust
-
-Muutuja - midagi, mida mõõdeti (näiteks mõõteobjektide kaal). 
-Kui iga muutuja kohta on vaid üks number, mida plottida, kasuta Cleveland plotti:
+2. vaata andmeid numbrilise kokkuvõttena.
 
 ```{r}
-dd <- diamonds %>% group_by(clarity) %>% summarise(number_of_diamonds=n())
-dd %>% ggplot(aes(x=number_of_diamonds, 
-                  y=reorder(clarity, number_of_diamonds))) +
-  geom_point(size=3) +
-  theme_bw() +
-  theme(panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.y = element_line(colour="grey60", linetype="dashed")) +
-  labs(y="clarity")
+psych::describe(iris)
+
 ```
 
-#### 3.2.2. Ploti valik sõltub valimi suurusest.
+Siin pööra kindlasti tähelepanu tulpadele min ja max, mis annavad kiire võimalusi outliereid ära tunda. Kontrolli, kas andmete keskmised (mediaan, mean ja trimmed mean) on üksteisele piisavalt lähedal --- kui ei ole, siis on andmete jaotus pika õlaga, ja kindlasti mitte normaalne. 
+Kontrolli, kas erinevate muutujate keskväärtused ja hälbed on teaduslikus mõttes usutavas vahemikus. Ära unusta, et ka väga väike standardhälve võib tähendada, et teie valim ei peegelda bioloogilist varieeruvust populatsioonis, mis teile teaduslikku huvi pakub. 
+NB! selles psych::describe() väljundis on mad läbi korrutatud konstandiga 1.4826, mis toob selle väärtuse lähemale sd-le. Seega on mad siin sd robustne analoog --- kui mad on palju väiksem sd-st, siis on karta, et muutujas on outliereid.
 
-1) N < 20 - ploti iga andmepunkt eraldi (stripchart(), plot()) ja keskmine või mediaan. 
+3. kontrolli NA-de esinemist oma andmetes VIM paketi abil või käsitsi (vt esimene ptk). Kontrolli, et NA-d ei oleks tähistatud mingil muul viisil (näiteks 0-i või mõne muu numbriga). Kui vaja, rekodeeri NAd. Mõtle selle peale, millised protsessid looduses võiksid genreerida puuduvaid andmeid. Kui NA-d ei jaotu andmetes juhuslikult, võib olla hea mõte andmeid imputeerida (vt hilisemaid ptk, bayesiaanlik imputeerimine). Näiteks, kui ravimiuuringust kukuvad eeskätt välja patsiendid, kellel ravim ei tööta, on ilmselt halb mõte nende patsientide andmed lihtsalt uuringust välja vistata (muidugi, kui te ei esinda kasumit taotleva ettevõtte huve). Kui NA-d jaotuvad juhuslikult, mõtle sellele, kas sa tahad NA-dega read tabelist välja visata, või hoopis osad muutujad, mis sisaldavad liiga palju NA-sid, või mitte midagi välja vistata. NB! NA-dega andmed ei sobi hästi regresiooniks.
 
-2) 20 > N > 100: geom_dotplot() histogrammi vaates
+4. Kui andmeid on nii palju, et üksikute andmepunktide vaatlemine paneb pea valutama, siis järgmine informatiivsuse tase on histogramm. 
 
-3) N > 100: geom_histogram(), geom_density() --- nende abil saab ka 2 kuni 6 jaotust võrrelda
+5. kui tahame kõrvuti vaadata paljude erinevate muutujate varieeruvust ja keskväärtusi, siis on head valikud joyplot, violin plot, ja vähem hea valik (sest ta kaotab andmetest rohkem infot) on boxplot. Kui meil on vaid 2-4 jaotust, mida võrrelda, siis saab mängida histogramme facetisse või üksteise otsa pannes (vt ptk graphics).
 
-4) Mitme jaotuse kõrvuti vaatamiseks kui N > 15: geom_boxplot() or, when N > 50, geom_violin(), geom_joy() 
+6. Tulpdiagramm on hea valik siis, kui tahate kõrvuti näidata proportsioonide erinevust. Näiteks, kui meil on 3 liiki kalu, millest igas on erinevas proporstioonis parasiidid, võime joonistada 3 tulpa, millest igas on näidatud ühe kalaliigi parasiitide omavaheline proportsioon. 
 
- 
+7. Tulpdiagramm on hädaga pooleks kasutuskõlblik, kui iga muutuja kohta on vaid üks number, mida plottida. Kuigi, siin on meil parem võimalus --- clevelend plot. Me ei õpeta tulpade joonistamist olukorras, kus te tahate plottida valimi keskväärtust ja usalduspiire või varieeruvusnäitajat (sd, mad), sest selle jaoks on olemas palju paremad graafilised meetodid. Samas, ehki tulpdiagrammide kasutamine teaduskirjanduses on pikas langustrendis, kasutatakse neid ikkagi liiga palju just eelpoolmainitud viisil. 
 
-```{r}
-ToothGrowth <- ToothGrowth
-ToothGrowth$dose <- as.factor(ToothGrowth$dose)
-p<-ggplot(ToothGrowth, aes(x=dose, y=len)) + 
-  geom_dotplot(binaxis='y', stackdir='center')
-p
-# Change dotsize and stack ratio, add line or dot for median
-ggplot(ToothGrowth, aes(x=dose, y=len)) + 
-  geom_dotplot(binaxis='y', stackdir='center',
-               stackratio=1.5, dotsize=0.7)+
-  stat_summary(fun.y = median, geom = "point", shape = 95, 
-               color = "red", size = 15) +
-  theme_tufte()
+8. Ära piirdu muutuja tasemel varieeruvuse plottimisega. Teaduslikult on sageli huvitavam mimte muutuja koosvarieerumine. Järgmistes peatükkides modelleerime seda formaalselt regresioonanalüüsis aga alati tasub alustada lihtsatest plottidest. Scatterplot on lihtne viis kovarieeruvuse vaatamiseks. 
 
-p + stat_summary(fun.y=median, geom="point", shape=18,
-                 size=5, color="red")
 
-#add mean and SD, use pointrange
-p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), 
-                 geom="pointrange", color="red")
-#use errorbars
-p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), 
-        geom="errorbar", color="red", width=0.2) +
-  stat_summary(fun.y=mean, geom="point", size=3, color="red")
-```
+9. Ploti valik sõltub valimi suurusest. Väikse valimi korral (N<10) boxploti, histogrammi vms kasutamine on selge idiootsus. Ära mängi lolli ja kasuta parem punkti kaupa plottimist.
 
-Nii saab plottida multiplikatiivse sd:
-```{r}
++ N < 20 - ploti iga andmepunkt eraldi (stripchart(), plot()) ja keskmine või mediaan. 
+
++ 20 > N > 100: geom_dotplot() histogrammi vaates
+
++ N > 100: geom_histogram(), geom_density() --- nende abil saab ka 2 kuni 6 jaotust võrrelda
+
++ Mitme jaotuse kõrvuti vaatamiseks kui N > 15: geom_boxplot() or, when N > 50, geom_violin(), geom_joy() 
+
+
+10. Nii saab plottida multiplikatiivse sd:
+```{r fig.height=3, fig.width=4}
 # Function to produce summary statistics (geometric mean and multipülicative sd)
 multi_sd <- function(x) {
   x <- na.omit(x)
@@ -656,105 +664,17 @@ multi_sd <- function(x) {
   ymax <- g_mean * msd
  return(c(y = g_mean, ymin = ymin, ymax = ymax)) 
 }
-p + stat_summary(fun.data=multi_sd, color="blue", size=1.1) + theme_tufte()
-```
 
-```{r}
-# Change dot plot colors by groups
-p<-ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
-  geom_dotplot(binaxis='y', stackdir='center')
-p
-```
+ToothGrowth <- ToothGrowth
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
 
-It is also possible to change manually dot plot colors using the functions :
-
-scale_fill_manual() : to use custom colors
-
-scale_fill_brewer() : to use color palettes from RColorBrewer package
-
-scale_fill_grey() : to use grey color palettes
-
-
-```{r}
-#Choose which items to display :
-p + scale_x_discrete(limits=c("0.5", "2"))
-```
-
-
-
-Dotplot kui histogram:
-```{r}
-ggplot(iris, aes(Sepal.Length)) + geom_dotplot()
-```
-
-Histogram:
-
-```{r}
-ggplot(iris, aes(Sepal.Length)) + 
-  geom_histogram(bins = 10, color="white", fill = "navyblue") 
-```
-
-```{r}
-library(ggthemes)
-d <- iris        # Full data set
-d_bg <- d[, -5]  # Background Data - full without the 5th column (Species)
-
-ggplot(data = d, aes(x = Sepal.Width, fill = Species)) +
-  geom_histogram(data = d_bg, fill = "grey", alpha=0.8, bins=10) +
-  geom_histogram(colour = "black", bins=10) +
-  facet_grid(Species~.) +
-  guides(fill = FALSE) +  # to remove the legend
-  theme_tufte()          # for clean look overall
-
-```
-
-density plot:
-```{r}
-iris%>%ggplot()+
-  geom_density(aes(Sepal.Width, fill=Species, color=Species, alpha=0.5))+
+ggplot(ToothGrowth, aes(x=dose, y=len)) + 
+  geom_dotplot(binaxis='y', stackdir='center',
+               stackratio=1.5, dotsize=0.6, fill="grey") + 
+  stat_summary(fun.data=multi_sd, color="red", size=0.6, alpha=0.6) + 
   theme_tufte()
-
 ```
 
-joyplot võimaldab kõrvuti panna isegi sadu density plotte
-
-```{r}
-library(ggjoy)
-ggplot(iris, aes(x=Sepal.Length, y=Species, fill=Species)) + 
-  geom_joy(scale=4, rel_min_height=0.01, alpha=0.9) +
-  theme_joy(font_size = 13, grid=TRUE) + 
-  theme(legend.position = "none")
-```
-
-Boxplot:
-```{r}
-ggplot(iris, aes(Species, Sepal.Width, fill=Species)) + geom_boxplot()
-```
-
-violin plot plus jitterplot:
-```{r}
-ggplot(iris, aes(Species, Sepal.Width)) + 
-  geom_violin(aes(fill=Species)) +
-  geom_jitter(width = 0.1, alpha=0.4, size=0.5)
-```
-
-
-### 3.2.3. Kahe muutuja koos-varieeruvus 
-
-```{r}
-  
-ggplot(data = diamonds, aes(x = depth, y = price)) +
-  geom_point(size=0.1, alpha=0.1) +
-  geom_density2d()
-```
-
-
-Fit a linear model and plot the dots and model:
-```{r}
-ggplot(data=iris, aes(Sepal.Width, Petal.Width))+
-  geom_point()+
-  geom_smooth(method="lm", color="red") 
-```
 
 
 
@@ -774,18 +694,19 @@ f.	Line plot – kasuta ainult siis kui nii X kui Y teljele on kantud pidev vä�
 
 g.	Suhete võrdlemine (pie vs bar)
 
-h.	Cleveland plot countide jaoks. Kasuta Barplotti ainult siis, kui Cleveland plot vm plot mingil põhjusel ei sobi. Barplot võiks olla viimane valik.
+h.	Cleveland plot on hea countide jaoks. Kasuta Barplotti ainult siis, kui Cleveland plot vm plot mingil põhjusel ei sobi. 
 
-> Informatsiooni hulk kahanevalt: 
-iga andmepunkt plotitud (dot plot) -> 
-histogram -> 
-density plot/violin plot -> 
-box plot -> 
-bar plot standardhälvetega -> 
-Cleveland plot (barplot ilma veapiirideta) 
+i. Pie chart on proportsioonide vaatamiseks enam-vähem kõlblik ainult siis, kui teil pole vaja võrrelda proportsioone erinevates objektides. Kõik graafikud, kus lugeja peab võrdlema pindalasid, on inimmõistusele petlikud --- lugeja alahindab süstemaatiliselt erinevuste suurusi! Selle pärast on proportsioonide võrdlemiseks palju parem tulpdiagramm, kus võrreldavad tulbad on ühekõrgused, et proportsioonide erinevused iga tulba sees paremini tulpade vahel võrreldavad oleks.  
+
+Informatsiooni hulk kahanevalt: 
+iga andmepunkt plotitud ---> 
+histogramm ---> 
+density plot & violin plot ---> 
+box plot ---> 
+tulpdiagramm standardhälvetega ---> 
+cleveland plot (ilma veapiirideta) 
 
 ##Jäta meelde:
-
 
 1. Statistika jagatakse kolme ossa: kirjeldav (summary), uuriv (exploratory) ja järeldav (inferential).
 
@@ -793,39 +714,49 @@ Cleveland plot (barplot ilma veapiirideta)
 
 3. uuriv statistika püstitab valimi põhjal uusi teaduslikke hüpoteese, kasutades selleks põhiliselt graafilisi meetodeid
 
-3. Järeldav statistika kontrollib formaalsete mudelite abil uuriva statistika abil püsitatud hüpoteese. Järeldav statistika teeb valimi põhjal järeldusi statistilise populatsiooni kohta, millest see valim pärineb. 
+3. Järeldav statistika kasutab formaalseid mudeleid, et kontrollida uuriva statistika abil püsitatud hüpoteese. Järeldav statistika teeb valimi põhjal järeldusi statistilise populatsiooni kohta, millest see valim pärineb. 
 
-4. Need järeldused on alati ebakindlad, ka siis kui need esitatakse punkthinnanguna parameetriväärtusele. Nii punkthinnangud kui intervall-hinnangud on lihtsustused; tegelik ebakindluse määr on n-dimensionaalne tõenäosuspilv, kus n on mudeli parameetrite arv.
+4. Need järeldused on alati ebakindlad; ka siis kui need esitatakse punkthinnanguna parameetriväärtusele. Nii punkthinnangud kui intervall-hinnangud on lihtsustused: tegelik ebakindluse määr on n-dimensionaalne tõenäosuspilv, kus n on mudeli parameetrite arv.
 
-4. Statistika põhiline ülesanne on kvantifitseerida ebakindlust, mis ümbritseb neid järeldusi. Selle ebakindluse numbriline mõõt on tõenäosus, mis jääb 0 ja 1 vahele.
+4. Statistika põhiline ülesanne on kvantifitseerida ebakindlust, mis ümbritseb järeldava statistika abil saadud hinnanguid. Selle ebakindluse numbriline mõõt on tõenäosus, mis jääb 0 ja 1 vahele.
 
-5. tõenäosus annab numbri sellele, kui palju me usuksime hüpoteesi x kehtimisse, juhul kui me usuksime, et selle tõenäosuse arvutamiseks kasutatud statistilised mudelid vastavad tegelikkusele.
+5. tõenäosus omistab numbrilise väärtuse sellele, kui palju me usuksime hüpoteesi x kehtimisse, juhul kui me usuksime, et selle tõenäosuse arvutamiseks kasutatud statistilised mudelid vastavad tegelikkusele.
 
 6. ükski statistiline mudel ei vasta tegelikkusele.
 
 ## 3.4. Sõnastik
 
-* Statistiline populatsioon – objektide kogum, millele soovime teha statistilist üldistust. Näiteks hinnata keskmist ravimi mõju patsiendipopulatsioonis. Või Escherichia coli ensüümi X keskmist Kcat-i. 
+* Statistiline populatsioon (statistical population) – objektide kogum, millele soovime teha statistilist üldistust. Näiteks hinnata keskmist ravimi mõju patsiendipopulatsioonis. Või alkoholi dehüdrogenaasi keskmist Kcat-i. 
 
-* Valim – need objektid (patsiendid, ensüümiprepid), mida me reaalselt mõõdame. 
+* Valim (sample) – need objektid (patsiendid, ensüümiprepid), mida me reaalselt mõõdame. 
 
-* Juhuvalim – valim, mille liikmed on populatsioonist valitud juhuslikult ja iseseisvalt. See tähendab, et kõigil populatsiooni liikmetel (kõikidel patsientidel või kõikidel võimalikel ensüümipreparatsioonidel) on võrdne võimalus sattuda valimisse JA, et valimisse juba sattunud liikme(te) põhjal ei ole võimalik ennustada järgmisena valimisse sattuvat liiget. 
+* Juhuvalim (random sample) – valim, mille liikmed on populatsioonist valitud juhuslikult ja iseseisvalt. See tähendab, et kõigil populatsiooni liikmetel (kõikidel patsientidel või kõikidel võimalikel ensüümipreparatsioonidel) on võrdne võimalus sattuda valimisse JA, et valimisse juba sattunud liikme(te) põhjal ei ole võimalik ennustada järgmisena valimisse sattuvat liiget. Juhuvalim muudab lihtsamaks normaaljaotuse mudeli kasutamise bayesiaanlikes arvutustes, aga ta ei ole seal selleks absoluutselt vajalik. Seevastu pea kogu sageduslik statistika põhineb juhuvalimitel.
 
-* Esinduslik valim – Valim on esinduslik, kui ta peegeldab hästi statistilist populatsiooni. Ka juhuvalim ei pruugi olla esinduslik (juhuslikult).
+* Esinduslik valim (representative sample) – Valim on esinduslik, kui ta peegeldab hästi statistilist populatsiooni. Ka juhuvalim ei pruugi olla esinduslik (juhuslikult).
 
-* Statistik – midagi, mis on täpselt arvutatud valimi põhjal (näiteks pikkuste keskmine)
+* valimiviga (sampling error, sampling effect) - määr, millega juhuvalimi põhjal arvutatud statistiku väärtus (näit keskväärtus) erineb populatsiooni parameetri väärtusest. valimiviga kutsutakse sageli ka juhuslikuks müraks.
 
-* Parameetri väärtus – teadmata suurus, mille täpset väärtust me saame ainult umbkaudu ennustada aga mitte kunagi täpselt teada. (näiteks mudeli intercept, populatsiooni keskmine pikkus; efekti suurus = katsegrupi keskmine – kontrollgrupi keskmine)
+* Statistik (statistic) – midagi, mis on täpselt arvutatud valimi põhjal (näiteks pikkuste keskmine)
 
-* Statistiline mudel – matemaatiline formaliseering, mis sageli koosneb 2st osast: determinismlik protsessi-mudel pluss juhuslik vea/varieeruvuse-mudel. 
-Protsessi-mudeli näiteks kujutle, et mõõdad mitme inimese pikkust (X muutuja) ja kaalu (Y muutuja). Sirge võrrandiga Y = a + b * X (kaal = a + b * pikkus) saab anda determinismliku lineaarse ennustuse kaalu kohta: kui X (pikkus) muutub ühe ühiku (cm) võrra, siis muutub Y (kaal) väärtus keskmiselt b ühiku (kg) võrra. Seevastu varieeruvuse-mudel on tõenäosusjaotus (näit normaaljaotus). Selle abil modelleeritakse Y-suunalist andmete varieeruvust igal X väärtusel (näiteks, milline on 182 cm pikkuste inimeste oodatav kaalujaotus).  Mudel on seega tõenäosuslik: me saame näiteks küsida: millise tõenäosusega kaalub 182 cm pikkune inimene üle 100 kilo. Mida laiem on varieeruvuse mudeli Y-i suunaline jaotus igal X-i väärtusel, seda kehvemini ennustab mudel, millist Y väärtust võime konkreetselt oodata mingi X-i väärtuse korral. Lineaarsete mudelite eesmärk ei ole siiski mitte niivõrd uute andmete ennustamine (seda teevad paremini keerulised mudelid), vaid mudeli struktuurist lähtuvalt põhjuslike hüpoteeside püstitamine/kontrollimine (kas inimese pikkus võiks otseselt reguleerida/kontrollida tema kaalu?). Kuna selline viis teadust teha töötab üksnes lihtsate mudelite korral, on enamkasutatud statistilised mudelid taotluslikult lihtsustavad ja ei pretendeeri tõelähedusele. 
+* Parameetri väärtus (parameter value) – teadmata suurus, mille täpset väärtust me saame ainult umbkaudu ennustada aga mitte kunagi täpselt teada. (näiteks mudeli intercept, populatsiooni keskmine pikkus; efekti suurus = katsegrupi keskmine – kontrollgrupi keskmine)
 
-* Tehniline replikatsioon – sama proovi (patsienti, ensüümipreparatsiooni, hiire pesakonna liiget) mõõdetakse mitu korda. Mõõdab tehnilist varieeruvust ehk mõõtmisviga. Seda püüame kontrollida parandades mõõtmisaparatuuri/protokolle või siis juba andmete tasemel, statistilise analüüsiga. Näiteks saame andmeid agregeerida ja arvutada keskväärtuse. Kui andmepunkte on piisavalt ja varieeruvus on sümmeetriline ümber tõelise populatsiooniväärtuse, siis annab keksväärtus meile hea hinnangu parameetri tõelisele väärtusele.
+* Statistiline mudel (statistica model) – matemaatiline formaliseering, mis koosneb 2st osast: deterministlik protsessi-mudel pluss juhuslik vea/varieeruvuse-mudel. 
+Protsessi-mudeli näiteks kujutle, et mõõdad mitme inimese pikkust (x muutuja) ja kaalu (y muutuja). Sirge võrrandiga y = a + bx (kaal = a + b * pikkus) saab anda determinismliku lineaarse ennustuse kaalu kohta: kui x (pikkus) muutub ühe ühiku (cm) võrra, siis muutub y (kaal) väärtus keskmiselt b ühiku (kg) võrra. Seevastu varieeruvuse-mudel on tõenäosusjaotus (näit normaaljaotus). Selle abil modelleeritakse
+y-suunalist andmete varieeruvust igal x väärtusel (näiteks, milline on 182 cm pikkuste inimeste oodatav kaalujaotus).  Mudel on seega tõenäosuslik: me saame näiteks küsida: millise tõenäosusega kaalub 182 cm pikkune inimene üle 100 kilo. Mida laiem on varieeruvuse mudeli y-i suunaline jaotus igal x-i väärtusel, seda kehvemini ennustab mudel, millist y väärtust võime konkreetselt oodata mingi x-i väärtuse korral. Lineaarsete mudelite eesmärk ei ole siiski mitte niivõrd uute andmete ennustamine (seda teevad paremini keerulised mudelid), vaid mudeli struktuurist lähtuvalt põhjuslike hüpoteeside püstitamine/kontrollimine (kas inimese pikkus võiks otseselt reguleerida/kontrollida tema kaalu?). Kuna selline viis teadust teha töötab üksnes lihtsate mudelite korral, on enamkasutatud statistilised mudelid taotluslikult lihtsustavad ja ei pretendeeri tõelähedusele. 
 
-* Bioloogiline replikatsioon – erinevaid patsiente, ensüümipreppe, erinevate hiirepesakondade liikmeid mõõdetakse, igaüht üks kord. Eesmärk on mõõta Bioloogilist varieeruvust, mis tuleneb mõõteobjektide reaalsetest erinevustest: iga patsient ja iga ensüümimolekul on erinev kõigist teistest omasugustest. Bioloogiline varieeruvus on teaduslikult huvitav ja seda saab visualiseerida algandmete tasemel (mitte keskväärtuse tasemel) näiteks histogrammina.
+* tõepära (likelihood)
+
+* prior e eeljaotus
+
+* posteerior e järeljaotus (posterior)
+
+* Tehniline replikatsioon (technical replication) – sama proovi (patsienti, ensüümipreparatsiooni, hiire pesakonna liiget) mõõdetakse mitu korda. Mõõdab tehnilist varieeruvust ehk mõõtmisviga. Seda püüame kontrollida parandades mõõtmisaparatuuri või protokolle. 
+
+* Bioloogiline replikatsioon (biological replication) – erinevaid patsiente, ensüümipreppe, erinevate hiirepesakondade liikmeid mõõdetakse, igaüht üks kord. Eesmärk on mõõta bioloogilist varieeruvust, mis tuleneb mõõteobjektide reaalsetest erinevustest: iga patsient ja iga ensüümimolekul on erinev kõigist teistest omasugustest. Bioloogiline varieeruvus on teaduslikult huvitav ja seda saab visualiseerida algandmete tasemel (mitte keskväärtuse tasemel) näiteks histogrammina.
 Teaduslikke järeldusi tehakse bioloogiliste replikaatide põhjal. Tehnilised replikaadid seevastu kalibreerivad mõõtesüsteemi täpsust. Kui te uurite soolekepikest E. coli, ei saa te teha formaalset järeldust kõigi bakterite kohta. Samamoodi, kui te uurite vaid ühe hiirepesakonna/puuri liikmeid, ei saa te teha järeldusi kõikide hiirte kohta. Kui teie katseskeem sisaldab nii tehnilisi kui bioloogilisi replikaate on lihtsaim viis neid andmeid analüüsida kõigepealt keskmistada üle tehniliste replikaatide ning seejärel kasutada saadud keskmisi edasistes arvutustes üle bioloogiliste replikaatide (näiteks arvutada nende pealt uue keskmise, standardhälve ja/või usaldusintervalli). Selline kahe-etapiline arvutuskäik ei ole siiski optimaalne. Optimaalne, kuid keerukam, on panna mõlemat tüüpi andmed ühte hierarhilisse mudelisse.
 
-####Tõenäosuse (P) reeglid on ühised kogu statistikale: 
+####Tõenäosuse (P) reeglid on ühised kogu statistikale:
+
 * P jääb 0 ja 1 vahele; P(A) = 1 tähendab, et sündmus A toimub kindlasti. 
 * kui sündmused A ja B on üksteist välistavad, siis tõenäosus, et toimub sündmus A või sündmus B on nende kahe sündmuse tõenäosuste summa --- P(A v B) = P(A) + P(B).
 * Kui A ja B ei ole üksteist välistavad, siis P(A v B) = P(A) + P(B) – P(A & B).
@@ -837,9 +768,11 @@ Teaduslikke järeldusi tehakse bioloogiliste replikaatide põhjal. Tehnilised re
 
 Kuigi kõik statistikud lähtuvad tõenäosustega töötamisel täpselt samadest matemaatilistest reeglitest, tõlgendavad erinevad koolkonnad saadud numbreid erinevalt. Kaks põhilist koolkonda on sageduslikud statistikud ja Bayesiaanid. 
 
-* Tõenäosus, sageduslik tõlgendus – pikaajaline sündmuste suhteline sagedus. Näiteks 6-te sagedus paljudel täringuvisetel. Sageduslik tõenäosus on teatud tüüpi andmete sagedus, tingimusel et nullhüpotees (H0) kehtib; ehk P(andmed | H0). Nullhüpotees ütleb enamasti, et uuritava parameetri (näiteks ravimiefekti suurus) väärtus on null. Seega, kui P on väike, ei ole seda tüüpi andmed kooskõlas arvamusega, et parameetri väärtus on null (mis aga ei tähenda automaatselt, et sa peaksid uskuma, et parameetri väärtus ei ole null). 
+* Tõenäosus, Bayesi tõlgendus (Bayesian probability) – usu määr mingisse hüpoteesi. Näiteks 62% tõenäosus (et populatsiooni keskmine pikkus < 180 cm) tähendab, et sa oled ratsionaalse olendina nõus kulutama mitte rohkem kui 62 senti kihlveo peale, mis võidu korral toob sulle sisse 1 EUR (ja 38 senti kasumit). Bayesi tõenäosus omistatakse statistilisele hüpoteesile (näiteks, et ravimiefekti suurus jääb vahemikku a kuni b), tingimusel, et sul on täpselt need andmed, mis sul on; ehk P(hüpotees | andmed). 
 
-* Tõenäosus, Bayesi tõlgendus – usu määr mingisse hüpoteesi. Näiteks 62% tõenäosus (et populatsiooni keskmine pikkus < 180 cm) tähendab, et sa oled ratsionaalse olendina nõus kulutama mitte rohkem kui 62 senti kihlveo peale, mis võidu korral toob sulle sisse 1 EUR (ja 38 senti kasumit). Bayesi tõenäosus omistatakse statistilisele hüpoteesile (näiteks, et ravimiefekti suurus jääb vahemikku a kuni b), tingimusel, et sul on täpselt need andmed, mis sul on; ehk P(hüpotees | andmed). 
+* Tõenäosus, sageduslik tõlgendus (Frequentist probability) – pikaajaline sündmuste suhteline sagedus. Näiteks 6-te sagedus paljudel täringuvisetel. Sageduslik tõenäosus on teatud tüüpi andmete sagedus, tingimusel et nullhüpotees (H0) kehtib; ehk P(andmed | H0). Nullhüpotees ütleb enamasti, et uuritava parameetri (näiteks ravimiefekti suurus) väärtus on null. Seega, kui P on väike, ei ole seda tüüpi andmed kooskõlas arvamusega, et parameetri väärtus on null (mis aga ei tähenda automaatselt, et sa peaksid uskuma, et parameetri väärtus ei ole null). 
+
+
 
 
 
