@@ -638,8 +638,10 @@ NB! selles psych::describe() väljundis on mad läbi korrutatud konstandiga 1.48
 
 8. Ära piirdu muutuja tasemel varieeruvuse plottimisega. Teaduslikult on sageli huvitavam mimte muutuja koosvarieerumine. Järgmistes peatükkides modelleerime seda formaalselt regresioonanalüüsis aga alati tasub alustada lihtsatest plottidest. Scatterplot on lihtne viis kovarieeruvuse vaatamiseks. 
 
+9. Kui erinevad muutujad on mõõdetud erinevates skaalades (ühikutes), siis võib nende koosvarieeruvust olla kergem võrrelda, kui nad eelnevalt normaliseerida (kõigi muutujate keskväärtus = 0, aga varieeruvus jääb algsesse skaalasse), või standardiseerida (kõik keskväärtused = 0-ga ja sd-d = 1-ga). Standardiseerida tohib ainult normaaljaotusega muutujaid (seega võib olla vajalik muutuja kõigepealt logaritmida). normaliseerimine --- igale valimi väärtusele arvuta *mean(x) - x*; standardiseerimine --- *(mean(x) - x)/sd(x)*.
 
-9. Ploti valik sõltub valimi suurusest. Väikse valimi korral (N<10) boxploti, histogrammi vms kasutamine on selge idiootsus. Ära mängi lolli ja kasuta parem punkti kaupa plottimist.
+
+10. Visualiseeringu valik sõltub valimi suurusest. Väikse valimi korral (N<10) boxploti, histogrammi vms kasutamine on selge idiootsus. Ära mängi lolli ja kasuta parem punkti kaupa plottimist.
 
 + N < 20 - ploti iga andmepunkt eraldi (stripchart(), plot()) ja keskmine või mediaan. 
 
@@ -650,7 +652,7 @@ NB! selles psych::describe() väljundis on mad läbi korrutatud konstandiga 1.48
 + Mitme jaotuse kõrvuti vaatamiseks kui N > 15: geom_boxplot() or, when N > 50, geom_violin(), geom_joy() 
 
 
-10. Nii saab plottida multiplikatiivse sd:
+11. Nii saab plottida multiplikatiivse sd:
 ```{r fig.height=3, fig.width=4}
 # Function to produce summary statistics (geometric mean and multipülicative sd)
 multi_sd <- function(x) {
@@ -736,11 +738,21 @@ cleveland plot (ilma veapiirideta)
 
 * valimiviga (sampling error, sampling effect) - määr, millega juhuvalimi põhjal arvutatud statistiku väärtus (näit keskväärtus) erineb populatsiooni parameetri väärtusest. valimiviga kutsutakse sageli ka juhuslikuks müraks.
 
+* kallutatus e süstemaatiline viga (bias) - see osa statistiku väärtuse erinevusest katsetingimuse ja kontrolltingimuse vahel, mis on põhjustatud millegi muu poolt, kui deklareeritud katse-interventsioon. 
+
 * Statistik (statistic) – midagi, mis on täpselt arvutatud valimi põhjal (näiteks pikkuste keskmine)
 
-* Parameetri väärtus (parameter value) – teadmata suurus, mille täpset väärtust me saame ainult umbkaudu ennustada aga mitte kunagi täpselt teada. (näiteks mudeli intercept, populatsiooni keskmine pikkus; efekti suurus = katsegrupi keskmine – kontrollgrupi keskmine)
+* Parameeter (parameter) – teadmata suurus populatsiooni tasemel, mille täpset väärtust me saame umbkaudu ennustada, aga mitte kunagi täpselt teada. Näiteks mudeli intercept, populatsiooni keskmine pikkus.
 
-* Statistiline mudel (statistica model) – matemaatiline formaliseering, mis koosneb 2st osast: deterministlik protsessi-mudel pluss juhuslik vea/varieeruvuse-mudel. 
+* Efekti suurus (effect size) - siin võrdub katsegrupi keskmine – kontrollgrupi keskmine. Leidub ka teistsuguseid es mõõte, millest levinuim on coheni d.
+
+* standardhälve
+
+* mad
+
+* variatsiooni koefitsient
+
+* Statistiline mudel (statistical model) – matemaatiline formaliseering, mis koosneb 2st osast: deterministlik protsessi-mudel pluss juhuslik vea/varieeruvuse-mudel. 
 Protsessi-mudeli näiteks kujutle, et mõõdad mitme inimese pikkust (x muutuja) ja kaalu (y muutuja). Sirge võrrandiga y = a + bx (kaal = a + b * pikkus) saab anda determinismliku lineaarse ennustuse kaalu kohta: kui x (pikkus) muutub ühe ühiku (cm) võrra, siis muutub y (kaal) väärtus keskmiselt b ühiku (kg) võrra. Seevastu varieeruvuse-mudel on tõenäosusjaotus (näit normaaljaotus). Selle abil modelleeritakse
 y-suunalist andmete varieeruvust igal x väärtusel (näiteks, milline on 182 cm pikkuste inimeste oodatav kaalujaotus).  Mudel on seega tõenäosuslik: me saame näiteks küsida: millise tõenäosusega kaalub 182 cm pikkune inimene üle 100 kilo. Mida laiem on varieeruvuse mudeli y-i suunaline jaotus igal x-i väärtusel, seda kehvemini ennustab mudel, millist y väärtust võime konkreetselt oodata mingi x-i väärtuse korral. Lineaarsete mudelite eesmärk ei ole siiski mitte niivõrd uute andmete ennustamine (seda teevad paremini keerulised mudelid), vaid mudeli struktuurist lähtuvalt põhjuslike hüpoteeside püstitamine/kontrollimine (kas inimese pikkus võiks otseselt reguleerida/kontrollida tema kaalu?). Kuna selline viis teadust teha töötab üksnes lihtsate mudelite korral, on enamkasutatud statistilised mudelid taotluslikult lihtsustavad ja ei pretendeeri tõelähedusele. 
 
