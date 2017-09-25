@@ -318,8 +318,6 @@ ggplot(dfs2, aes(x=time, y=bill, group=sex)) +
 ```
 
 
-
-
 ### Punktide tähistamise trikid
 
 aes() töötab nii ggplot() kui geom_ funktsioonides
@@ -442,26 +440,21 @@ seda saab teha ka x ja y teljele eraldi
 
 ### log skaalas teljed
 
-1. logaritmi andmed aes()-s 
-
-```{r}
-ggplot(cars, aes(x = log10(speed), y = log10(dist))) + geom_point()
-```
-
-Kahjuks on nüüd telgede tähistus log skaalas.
-Järgnev plot on identne, välja arvatud, et teljed on originaalses lineaarses skaalas
-
-```{r}
-  ggplot(cars, aes(x = speed, y = dist)) + geom_point()+ scale_x_log10(breaks=seq(0, 25, by=5)) + 
-  scale_y_log10()
-```
-
-
+1. lineaarsed andmed lineaarses skaalas
 ```{r}
 #data and scale are linear
 (sp <- ggplot(cars, aes(x = speed, y = dist)) + geom_point())
-#data and scale are both logarithmic
-sp + scale_x_continuous(trans='log2') + scale_y_continuous(trans='log2')
+```
+
+2. logaritmi andmed aes()-s: andmed ja skaala on logaritmitud 
+
+```{r}
+ggplot(cars, aes(x = log2(speed), y = log2(dist))) + geom_point()
+```
+
+3. Andmed on logaritmitud, aga skaala mitte
+
+```{r}
 #data is log transformed but the scale is linear
 sp + coord_trans(x="log2", y="log2") 
 ```
