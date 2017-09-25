@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 
 # Graafilised lahendused
 
@@ -949,6 +954,15 @@ ggplot(iris, aes(x=Sepal.Length, y=Species, fill=Species)) +
   theme(legend.position = "none")
 ```
 
+Joyplot, kui meil on väga palju kõrvuti tihedusjaotusi võrrelda
+```{r fig.height= 8}
+sch <- read.csv("data/schools.csv")
+sch$school <- as.factor(sch$school)
+ggplot(sch, aes(score1, y=reorder(school, score1))) + 
+  geom_joy() + theme_tufte()
+
+```
+
 
 Boxplot:
 ```{r}
@@ -964,14 +978,18 @@ ggplot(iris, aes(Species, Sepal.Width)) +
 
 #### Kahe muutuja koos-varieeruvus 
 
+X teljel on geisri Old Faithful pursete tugevus ja Y teljel pursete vaheline aeg. Kui kahe purske vahel kulub rohkem aega, siis on oodata tugevamat purset. Tundub, et see süsteem töötab kahes diskreetses reziimis.
+
 ```{r}
-  
-ggplot(data = diamonds, aes(x = depth, y = price)) +
-  geom_point(size=0.1, alpha=0.1) +
-  geom_density2d()
+m <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
+  geom_point() +
+  xlim(0.5, 6) +
+  ylim(40, 110)
+#m + stat_density_2d(aes(fill = ..level..), geom = "polygon")
+m + geom_density_2d()
 ```
 
-
+Kui punkte on liiga palju, et välja trükkida, kasuta geom = "polygon" varianti.
 
 
 
