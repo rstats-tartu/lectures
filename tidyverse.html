@@ -6,33 +6,33 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
-  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid.">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
+  <meta name="generator" content="bookdown 0.5.1 and GitBook 2.6.7">
 
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="assets/img/cover.png" />
-  <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid." />
+  <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
   <meta name="github-repo" content="rstats-tartu/lectures" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   
-  <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs kasutades R programmi’ materjalid." />
+  <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
   <meta name="twitter:image" content="assets/img/cover.png" />
 
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2017-09-19">
+<meta name="date" content="2017-09-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="funs.html">
+<link rel="prev" href="graafilised-lahendused.html">
 <link rel="next" href="bibliograafia.html">
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -150,29 +150,57 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6" data-path="funs.html"><a href="funs.html"><i class="fa fa-check"></i><b>6</b> Funktsioonid on R keele verbid</a><ul>
 <li class="chapter" data-level="6.1" data-path="funs.html"><a href="funs.html#kirjutame-r-funktsiooni"><i class="fa fa-check"></i><b>6.1</b> Kirjutame R funktsiooni</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>7</b> Tidyverse</a><ul>
-<li class="chapter" data-level="7.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>7.1</b> Tidy tabeli struktuur</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>7.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
-<li class="chapter" data-level="7.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>7.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
+<li class="chapter" data-level="7" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html"><i class="fa fa-check"></i><b>7</b> Graafilised lahendused</a><ul>
+<li class="chapter" data-level="7.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#baasgraafika"><i class="fa fa-check"></i><b>7.1</b> Baasgraafika</a></li>
+<li class="chapter" data-level="7.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#ggplot2"><i class="fa fa-check"></i><b>7.2</b> ggplot2</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#regressioonisirgete-plottimine"><i class="fa fa-check"></i><b>7.2.1</b> Regressioonisirgete plottimine</a></li>
+<li class="chapter" data-level="7.2.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#lisame-plotile-sirgjooni"><i class="fa fa-check"></i><b>7.2.2</b> Lisame plotile sirgjooni</a></li>
+<li class="chapter" data-level="7.2.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#segmendid-ja-nooled"><i class="fa fa-check"></i><b>7.2.3</b> Segmendid ja nooled</a></li>
+<li class="chapter" data-level="7.2.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#joongraafikud"><i class="fa fa-check"></i><b>7.2.4</b> Joongraafikud</a></li>
+<li class="chapter" data-level="7.2.5" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#punktide-tahistamise-trikid"><i class="fa fa-check"></i><b>7.2.5</b> Punktide tähistamise trikid</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>7.2</b> dplyr ja selle viis verbi</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>7.2.1</b> <code>select()</code> columns</a></li>
-<li class="chapter" data-level="7.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>7.2.2</b> <code>filter()</code> rows</a></li>
-<li class="chapter" data-level="7.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>7.2.3</b> <code>summarise()</code></a></li>
-<li class="chapter" data-level="7.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>7.2.4</b> <code>group_by()</code></a></li>
-<li class="chapter" data-level="7.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>7.2.5</b> <code>mutate()</code></a></li>
+<li class="chapter" data-level="7.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#facet"><i class="fa fa-check"></i><b>7.3</b> Facet</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#telgede-ulatus"><i class="fa fa-check"></i><b>7.3.1</b> Telgede ulatus</a></li>
+<li class="chapter" data-level="7.3.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#log-skaalas-teljed"><i class="fa fa-check"></i><b>7.3.2</b> log skaalas teljed</a></li>
+<li class="chapter" data-level="7.3.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#muudame-telgede-markeeringuid"><i class="fa fa-check"></i><b>7.3.3</b> Muudame telgede markeeringuid</a></li>
+<li class="chapter" data-level="7.3.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#muudame-telgede-ja-legendi-nimed"><i class="fa fa-check"></i><b>7.3.4</b> Muudame telgede ja legendi nimed</a></li>
+<li class="chapter" data-level="7.3.5" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#koordinaatsusteemid"><i class="fa fa-check"></i><b>7.3.5</b> Koordinaatsüsteemid</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="tidyverse.html"><a href="tidyverse.html#grouped-filters"><i class="fa fa-check"></i><b>7.3</b> Grouped filters</a></li>
-<li class="chapter" data-level="7.4" data-path="tidyverse.html"><a href="tidyverse.html#separate-one-column-into-several"><i class="fa fa-check"></i><b>7.4</b> <code>separate()</code> one column into several</a></li>
-<li class="chapter" data-level="7.5" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>7.5</b> Faktorid</a><ul>
-<li class="chapter" data-level="7.5.1" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>7.5.1</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
-<li class="chapter" data-level="7.5.2" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>7.5.2</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
-<li class="chapter" data-level="7.5.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>7.5.3</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
-<li class="chapter" data-level="7.5.4" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>7.5.4</b> Rekodeerime pideva muutuja faktoriks</a></li>
-<li class="chapter" data-level="7.5.5" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>7.5.5</b> Muudame faktori tasemete järjekorda joonisel</a></li>
-<li class="chapter" data-level="7.5.6" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>7.5.6</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
-<li class="chapter" data-level="7.5.7" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>7.5.7</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
-<li class="chapter" data-level="7.5.8" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>7.5.8</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
+<li class="chapter" data-level="7.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#pealkirjad-ja-muu-selline"><i class="fa fa-check"></i><b>7.4</b> Pealkirjad ja muu selline</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#graafiku-legend"><i class="fa fa-check"></i><b>7.4.1</b> Graafiku legend</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad"><i class="fa fa-check"></i><b>7.5</b> Värviskaalad</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#pidevatele-muutujatele"><i class="fa fa-check"></i><b>7.5.1</b> Pidevatele muutujatele</a></li>
+<li class="chapter" data-level="7.5.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#faktormuutujatele-4-varviskaalat"><i class="fa fa-check"></i><b>7.5.2</b> Faktormuutujatele 4 värviskaalat</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#a-complex-ggplot"><i class="fa fa-check"></i><b>7.6</b> A complex ggplot</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#erinevad-ggplot-geom_-id"><i class="fa fa-check"></i><b>7.6.1</b> Erinevad ggplot geom_-id</a></li>
+<li class="chapter" data-level="7.6.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#tulpdiagrammid-moodavad-counte-ja-proportsioone"><i class="fa fa-check"></i><b>7.6.2</b> Tulpdiagrammid mõõdavad counte ja proportsioone</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>8</b> Tidyverse</a><ul>
+<li class="chapter" data-level="8.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>8.1</b> Tidy tabeli struktuur</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>8.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
+<li class="chapter" data-level="8.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>8.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>8.2</b> dplyr ja selle viis verbi</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>8.2.1</b> <code>select()</code> columns</a></li>
+<li class="chapter" data-level="8.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>8.2.2</b> <code>filter()</code> rows</a></li>
+<li class="chapter" data-level="8.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>8.2.3</b> <code>summarise()</code></a></li>
+<li class="chapter" data-level="8.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>8.2.4</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="8.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>8.2.5</b> <code>mutate()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="tidyverse.html"><a href="tidyverse.html#grouped-filters"><i class="fa fa-check"></i><b>8.3</b> Grouped filters</a></li>
+<li class="chapter" data-level="8.4" data-path="tidyverse.html"><a href="tidyverse.html#separate-one-column-into-several"><i class="fa fa-check"></i><b>8.4</b> <code>separate()</code> one column into several</a></li>
+<li class="chapter" data-level="8.5" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>8.5</b> Faktorid</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>8.5.1</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
+<li class="chapter" data-level="8.5.2" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>8.5.2</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
+<li class="chapter" data-level="8.5.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>8.5.3</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
+<li class="chapter" data-level="8.5.4" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>8.5.4</b> Rekodeerime pideva muutuja faktoriks</a></li>
+<li class="chapter" data-level="8.5.5" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>8.5.5</b> Muudame faktori tasemete järjekorda joonisel</a></li>
+<li class="chapter" data-level="8.5.6" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>8.5.6</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
+<li class="chapter" data-level="8.5.7" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>8.5.7</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
+<li class="chapter" data-level="8.5.8" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>8.5.8</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bibliograafia.html"><a href="bibliograafia.html"><i class="fa fa-check"></i>Bibliograafia</a></li>
@@ -197,10 +225,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="tidyverse" class="section level1">
-<h1><span class="header-section-number">7</span> Tidyverse</h1>
+<h1><span class="header-section-number">8</span> Tidyverse</h1>
 <p>Tidyverse on osa R-i ökosüsteemist, kus kehtivad omad reeglid. Tidyverse raamatukogud lähtuvad ühtsest filosoofiast ja töötavad hästi koos. Tidyverse algab andmetabeli struktuurist ja selle funktsioonid võtavad reeglina sisse õige struktuuriga tibble ja väljastavad samuti tibble, mis sobib hästi järgmise tidyverse funktsiooni sisendiks. Seega on tidyverse hästi sobiv läbi torude %&gt;% laskmiseks. Tidyverse-ga sobib hästi kokku ka ggplot2 graafikasüsteem.</p>
 <div id="tidy-tabeli-struktuur" class="section level2">
-<h2><span class="header-section-number">7.1</span> Tidy tabeli struktuur</h2>
+<h2><span class="header-section-number">8.1</span> Tidy tabeli struktuur</h2>
 <ul>
 <li><strong>väärtus</strong> (<em>value</em>) — ühe mõõtmise tulemus (183 cm)</li>
 <li><strong>muutuja</strong> (<em>variable</em>) — see, mida sa mõõdad (pikkus) või faktor (sex)</li>
@@ -228,7 +256,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 2       2 placebo     M     3    176     91</code></pre>
 <p>Nii näeb välja tidy tibble. Kõik analüüsil vajalikud parameetrid tuleks siia tabelisse veeru kaupa sisse tuua. Näiteks, kui mõõtmised on sooritatud erinevates keskustes erinevate inimeste poolt kasutades sama ravimi erinevaid preparaate, oleks hea siia veel 3 veergu lisada (center, experimenter, batch).</p>
 <div id="tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat" class="section level3">
-<h3><span class="header-section-number">7.1.1</span> Tabeli dimensioonide muutmine (pikk ja lai formaat)</h3>
+<h3><span class="header-section-number">8.1.1</span> Tabeli dimensioonide muutmine (pikk ja lai formaat)</h3>
 <p>Väga oluline osa tidyverses töötamisest on tabelite pika ja laia formaadi vahel viimine.</p>
 <p>See on laias formaadis tabel df, mis ei ole tidy</p>
 <pre><code>## # A tibble: 3 x 5
@@ -265,7 +293,7 @@ dat_lng</code></pre></div>
 <p>key viitab pika tabeli veerule, mille väärtustest tulevad laias tabelis uute veergude nimed. value viitab pika tabeli veerule, kust võetakse arvud, mis uues laias tabelis uute veergude vahel laiali jagatakse.</p>
 </div>
 <div id="tibble-transpose-read-veergudeks-ja-vastupidi" class="section level3">
-<h3><span class="header-section-number">7.1.2</span> Tibble transpose — read veergudeks ja vastupidi</h3>
+<h3><span class="header-section-number">8.1.2</span> Tibble transpose — read veergudeks ja vastupidi</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a =</span> <span class="kw">c</span>(<span class="st">&quot;tim&quot;</span>, <span class="st">&quot;tom&quot;</span>, <span class="st">&quot;jill&quot;</span>), <span class="dt">b1 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">b2 =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>))
 dat</code></pre></div>
 <pre><code>## # A tibble: 3 x 3
@@ -284,10 +312,10 @@ dat1</code></pre></div>
 </div>
 </div>
 <div id="dplyr-ja-selle-viis-verbi" class="section level2">
-<h2><span class="header-section-number">7.2</span> dplyr ja selle viis verbi</h2>
+<h2><span class="header-section-number">8.2</span> dplyr ja selle viis verbi</h2>
 <p>Need tuleb teil omale pähe ajada sest nende 5 verbiga (pluss gather ja spread) saab lihtsalt teha 90% andmeväänamisest, mida teil elus vaja läheb. NB! Check the data wrangling cheatsheet and dplyr help for further details. dplyr laetakse koos tidyverse-ga automaatselt teie workspace.</p>
 <div id="select-columns" class="section level3">
-<h3><span class="header-section-number">7.2.1</span> <code>select()</code> columns</h3>
+<h3><span class="header-section-number">8.2.1</span> <code>select()</code> columns</h3>
 <p><code>select()</code> selects, renames, and re-orders columns.</p>
 <p>Select columns from sex to value:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris
@@ -369,32 +397,32 @@ dat1</code></pre></div>
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)</code></pre></div>
 <pre><code>## # A tibble: 10 x 5
-##         V9     V8      V5     V2      V6
-##      &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-##  1 0.51502 0.7071 0.91824 0.3629 0.23244
-##  2 0.40062 0.7479 0.36441 0.8079 0.77043
-##  3 0.57236 0.3280 0.24827 0.4356 0.19992
-##  4 0.39159 0.4651 0.39239 0.4262 0.34117
-##  5 0.81634 0.6054 0.49056 0.1186 0.87146
-##  6 0.21121 0.4576 0.43537 0.5009 0.01517
-##  7 0.60405 0.5875 0.02298 0.1704 0.96598
-##  8 0.86714 0.2944 0.02522 0.2539 0.67663
-##  9 0.04453 0.9104 0.19554 0.1903 0.88319
-## 10 0.03943 0.4583 0.16339 0.1815 0.43436</code></pre>
+##          V9      V8      V5       V2      V6
+##       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+##  1 0.877781 0.18312 0.45078 0.001344 0.47636
+##  2 0.476330 0.17310 0.15425 0.684717 0.71966
+##  3 0.063831 0.68195 0.82482 0.038198 0.84313
+##  4 0.243152 0.31417 0.76069 0.556393 0.64210
+##  5 0.005896 0.91751 0.50778 0.357616 0.08413
+##  6 0.975002 0.40775 0.92881 0.403115 0.93476
+##  7 0.239619 0.51386 0.79697 0.645996 0.15764
+##  8 0.563414 0.69542 0.89111 0.157689 0.57536
+##  9 0.386890 0.09808 0.38038 0.108587 0.49071
+## 10 0.257517 0.75442 0.04373 0.560223 0.71875</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))</code></pre></div>
 <pre><code>## # A tibble: 10 x 4
-##         V9     V8     V7      V6
-##      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-##  1 0.51502 0.7071 0.5982 0.23244
-##  2 0.40062 0.7479 0.4220 0.77043
-##  3 0.57236 0.3280 0.2635 0.19992
-##  4 0.39159 0.4651 0.4843 0.34117
-##  5 0.81634 0.6054 0.6893 0.87146
-##  6 0.21121 0.4576 0.8237 0.01517
-##  7 0.60405 0.5875 0.6368 0.96598
-##  8 0.86714 0.2944 0.2862 0.67663
-##  9 0.04453 0.9104 0.2862 0.88319
-## 10 0.03943 0.4583 0.3451 0.43436</code></pre>
+##          V9      V8     V7      V6
+##       &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+##  1 0.877781 0.18312 0.9390 0.47636
+##  2 0.476330 0.17310 0.5212 0.71966
+##  3 0.063831 0.68195 0.2238 0.84313
+##  4 0.243152 0.31417 0.8222 0.64210
+##  5 0.005896 0.91751 0.8430 0.08413
+##  6 0.975002 0.40775 0.5577 0.93476
+##  7 0.239619 0.51386 0.6080 0.15764
+##  8 0.563414 0.69542 0.1877 0.57536
+##  9 0.386890 0.09808 0.4680 0.49071
+## 10 0.257517 0.75442 0.6480 0.71875</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Drop variables with -</span>
 <span class="kw">select</span>(iris, <span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;Petal&quot;</span>))</code></pre></div>
 <pre><code>## # A tibble: 150 x 3
@@ -432,7 +460,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 ## #   Species &lt;fctr&gt;</code></pre>
 </div>
 <div id="filter-rows" class="section level3">
-<h3><span class="header-section-number">7.2.2</span> <code>filter()</code> rows</h3>
+<h3><span class="header-section-number">8.2.2</span> <code>filter()</code> rows</h3>
 <p>Keep rows in Iris that have Species level “setosa” <strong>and</strong> Sepal.Length value &lt;4.5.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Sepal.Length <span class="op">&lt;</span><span class="st"> </span><span class="fl">4.5</span>)</code></pre></div>
 <pre><code>## # A tibble: 4 x 5
@@ -504,7 +532,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(flights, <span class="op">!</span><span class="kw">is.na</span>(dep_delay), <span class="op">!</span><span class="kw">is.na</span>(arr_delay))</code></pre></div>
 </div>
 <div id="summarise" class="section level3">
-<h3><span class="header-section-number">7.2.3</span> <code>summarise()</code></h3>
+<h3><span class="header-section-number">8.2.3</span> <code>summarise()</code></h3>
 <p>Many rows summarised to a single value</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summarise</span>(iris, 
           <span class="dt">MEAN =</span> <span class="kw">mean</span>(Sepal.Length), 
@@ -520,7 +548,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <p>summarise on kasulikum, kui teda kasutada koos järgmise verbi, group_by-ga.</p>
 </div>
 <div id="group_by" class="section level3">
-<h3><span class="header-section-number">7.2.4</span> <code>group_by()</code></h3>
+<h3><span class="header-section-number">8.2.4</span> <code>group_by()</code></h3>
 <p><code>group_by()</code> groups values for summarising or mutating-</p>
 <p>When we summarise by <em>sex</em> we will get two values for each summary statistic: for males and females. Aint that sexy?!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species) 
@@ -607,7 +635,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <span class="kw">top_n</span>(iris_grouped, <span class="op">-</span><span class="dv">2</span>, Sepal.Length)</code></pre></div>
 </div>
 <div id="mutate" class="section level3">
-<h3><span class="header-section-number">7.2.5</span> <code>mutate()</code></h3>
+<h3><span class="header-section-number">8.2.5</span> <code>mutate()</code></h3>
 <p>Mutate põhikasutus on siiski uute veergude tekitamine, mis võtavad endale inputi rea kaupa. Seega tabeli ridade arv ei muutu.</p>
 <p>If in your tibble called ‘df’ you have a column called ‘value’, you can create a new log2 transformed value value column called log_value by <code>df %&gt;% mutate(log_value = log2(value))</code>. Or you can create a new column where a constant is substracted from the value column: <code>df %&gt;% mutate(centered_value = value - mean(value) )</code>. Here the mean value is substracted from each individual value.</p>
 <p><strong>Mutate adds new columns (and <code>transmute()</code> creates new columns while losing the previous columns)</strong></p>
@@ -684,7 +712,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 </div>
 </div>
 <div id="grouped-filters" class="section level2">
-<h2><span class="header-section-number">7.3</span> Grouped filters</h2>
+<h2><span class="header-section-number">8.3</span> Grouped filters</h2>
 <p>Keep all groups bigger than a threshold:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">popular_dests &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(dest) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -730,7 +758,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <p>Here we did the same thing more elegantly by directly parsing numbers from a character string.</p>
 </div>
 <div id="separate-one-column-into-several" class="section level2">
-<h2><span class="header-section-number">7.4</span> <code>separate()</code> one column into several</h2>
+<h2><span class="header-section-number">8.4</span> <code>separate()</code> one column into several</h2>
 <p>Siin on veel üks verb, mida aeg-ajalt kõigil vaja läheb. <code>separate()</code> võtab ühe veeru sisu (mis peab olema character string) ning jagab selle laiali mitme uue veeru vahel. Kui teda kasutada vormis <code>separate(df, old_Column, into=c(&quot;new_col1&quot;, &quot;new_col2&quot;, &quot;ja_nii_edasi&quot;))</code> siis püüab programm ise ära arvata, kustkohalt veeru sisu hakkida (tühikud, komad, semikoolonid, koolonid jne). Aga te võite eksplitsiitselt ette anda separaatori sep = “”. sep = 2 tähendab “peale 2. tähemärki”. sep = -6 tähendab “enne tagantpoolt 6. tähemärki”</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">country =</span> <span class="kw">c</span>(<span class="st">&quot;Albania&quot;</span>), <span class="dt">disease.cases =</span> <span class="kw">c</span>(<span class="st">&quot;80/1000&quot;</span>)))</code></pre></div>
 <pre><code>## # A tibble: 1 x 2
@@ -815,7 +843,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <p>The companion FUN to separate is <code>unite()</code> - see help.</p>
 </div>
 <div id="faktorid" class="section level2">
-<h2><span class="header-section-number">7.5</span> Faktorid</h2>
+<h2><span class="header-section-number">8.5</span> Faktorid</h2>
 <p>Faktor on andmetüüp, mis oli ajalooliselt tähtsam kui ta praegu on. Sageli saame oma asja ära ajada character vectori andmetüübiga ja ei vaja faktorit. Aga siiski läheb faktoreid aeg-ajalt kõigil vaja.</p>
 <blockquote>
 <p>Faktorite abil töötame kategooriliste muutujatega, millel on fikseeritud hulk võimalikke väärtusi, mida me kõiki teame.</p>
@@ -868,7 +896,7 @@ f2</code></pre></div>
 ## 3  White 16395</code></pre>
 <p>Nii saame ka teada, mitu korda iga faktori tase selles tabelis esineb.</p>
 <div id="fct_recode-rekodeerib-faktori-tasemed" class="section level3">
-<h3><span class="header-section-number">7.5.1</span> <code>fct_recode()</code> rekodeerib faktori tasemed</h3>
+<h3><span class="header-section-number">8.5.1</span> <code>fct_recode()</code> rekodeerib faktori tasemed</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(partyid)</code></pre></div>
 <pre><code>## # A tibble: 10 x 2
 ##               partyid     n
@@ -910,7 +938,7 @@ f2</code></pre></div>
 <p><code>fct_recode()</code> ei puuduta neid tasemeid, mida selle argumendis ei mainita. Lisaks saab mitu vana taset muuta üheks uueks tasemeks.</p>
 </div>
 <div id="fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid." class="section level3">
-<h3><span class="header-section-number">7.5.2</span> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</h3>
+<h3><span class="header-section-number">8.5.2</span> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">partyid =</span> <span class="kw">fct_collapse</span>(partyid,
                                 <span class="dt">other =</span> <span class="kw">c</span>(<span class="st">&quot;No answer&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>, <span class="st">&quot;Other party&quot;</span>),
@@ -921,7 +949,7 @@ f2</code></pre></div>
 <span class="st">  </span><span class="kw">count</span>(partyid)</code></pre></div>
 </div>
 <div id="fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed." class="section level3">
-<h3><span class="header-section-number">7.5.3</span> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</h3>
+<h3><span class="header-section-number">8.5.3</span> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</h3>
 <p>n parameeter ütleb, mitu algset taset tuleb alles jätta:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">relig =</span> <span class="kw">fct_lump</span>(relig, <span class="dt">n =</span> <span class="dv">5</span>)) <span class="op">%&gt;%</span>
@@ -938,7 +966,7 @@ f2</code></pre></div>
 ## 6     Jewish   388</code></pre>
 </div>
 <div id="rekodeerime-pideva-muutuja-faktoriks" class="section level3">
-<h3><span class="header-section-number">7.5.4</span> Rekodeerime pideva muutuja faktoriks</h3>
+<h3><span class="header-section-number">8.5.4</span> Rekodeerime pideva muutuja faktoriks</h3>
 <p><code>cut()</code> jagab meie muutuja väärtused intervallidesse ja annab igale intervallile faktori taseme.</p>
 <p><code>cut(x, breaks, labels = NULL, ordered_result = FALSE, ...)</code></p>
 <p>breaks - either a numeric vector of two or more unique cut points or a single number &gt;1, giving the number of intervals into which x is to be cut. labels - labels for the levels of the resulting category. ordered_result - logical: should the result be an ordered factor?</p>
@@ -973,7 +1001,7 @@ x</code></pre></div>
 <pre><code>## [1] &quot;A&quot; &quot;A&quot; &quot;B&quot; &quot;A&quot; &quot;A&quot; &quot;B&quot; &quot;A&quot; &quot;A&quot; &quot;B&quot;</code></pre>
 </div>
 <div id="muudame-faktori-tasemete-jarjekorda-joonisel" class="section level3">
-<h3><span class="header-section-number">7.5.5</span> Muudame faktori tasemete järjekorda joonisel</h3>
+<h3><span class="header-section-number">8.5.5</span> Muudame faktori tasemete järjekorda joonisel</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summeerime andmed
 gsscat_sum  &lt;-<span class="st"> </span><span class="kw">group_by</span>(gss_cat, relig) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">age =</span> <span class="kw">mean</span>(age, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),
@@ -983,17 +1011,17 @@ gsscat_sum  &lt;-<span class="st"> </span><span class="kw">group_by</span>(gss_c
 p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gsscat_sum, <span class="kw">aes</span>(tvhours, <span class="kw">fct_reorder</span>(relig, tvhours))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()
 p</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-227-1.png" width="672" /></p>
 </div>
 <div id="fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole" class="section level3">
-<h3><span class="header-section-number">7.5.6</span> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</h3>
+<h3><span class="header-section-number">8.5.6</span> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</h3>
 <p>Argumendid on faktor f ja need tasemed (jutumärkides), mida sa tahad tõsta.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## täiendame eelmist graafikut ümberkorraldatud andmetega
 p <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(tvhours, <span class="kw">fct_relevel</span>(relig, <span class="st">&quot;None&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>))</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-228-1.png" width="672" /></p>
 </div>
 <div id="joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega" class="section level3">
-<h3><span class="header-section-number">7.5.7</span> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</h3>
+<h3><span class="header-section-number">8.5.7</span> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</h3>
 <p>See muudab ploti paremini jälgitavaks:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summeerime andmed
 gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat, <span class="op">!</span><span class="kw">is.na</span>(age)) <span class="op">%&gt;%</span>
@@ -1003,14 +1031,14 @@ gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat,
 <span class="kw">ggplot</span>(gsscat_sum, <span class="kw">aes</span>(age, N, <span class="dt">colour =</span> <span class="kw">fct_reorder2</span>(marital, age, N))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;marital&quot;</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-229-1.png" width="672" /></p>
 </div>
 <div id="tulpdiagrammide-korral-kasuta-fct_infreq" class="section level3">
-<h3><span class="header-section-number">7.5.8</span> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></h3>
+<h3><span class="header-section-number">8.5.8</span> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></h3>
 <p>Loeme kokku erineva perekondliku staatusega isikud ja paneme need andmed tulpdiagrammi grupi suurusele vastupidises järjekorras st. väiksemad grupid tulevad enne.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(gss_cat, <span class="dt">marital =</span> <span class="kw">fct_infreq</span>(marital) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">fct_rev</span>()) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(marital)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-230-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -1020,7 +1048,7 @@ gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat,
           </div>
         </div>
       </div>
-<a href="funs.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="graafilised-lahendused.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="bibliograafia.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -1050,7 +1078,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstats-tartu/lectures/edit/master/06-tidyverse.Rmd",
+"link": "https://github.com/rstats-tartu/lectures/edit/master/07-tidyverse.Rmd",
 "text": "Edit"
 },
 "download": ["main.pdf", "main.epub"],
