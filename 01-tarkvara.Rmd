@@ -128,7 +128,7 @@ knitr::include_graphics("assets/img/RStudio_package.install.png")
 Peale installeerimist lae pakett oma R sessiooni kasutades `library()` käsku, näiteks:
 
 ```{r eval=FALSE}
-## Load library/package tidyr
+## Load library/package dplyr
 library(dplyr)
 ```
 
