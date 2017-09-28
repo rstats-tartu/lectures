@@ -128,7 +128,7 @@ knitr::include_graphics("assets/img/RStudio_package.install.png")
 Peale installeerimist lae pakett oma R sessiooni kasutades `library()` käsku, näiteks:
 
 ```{r eval=FALSE}
-## Load library/package tidyr
+## Load library/package dplyr
 library(dplyr)
 ```
 
@@ -167,7 +167,7 @@ install.packages("ggplot2")
 # First run biocLite script fron bioconductor.org
 source("https://bioconductor.org/biocLite.R")  
 # use 'http' in url if 'https' is unavailable. 
-biocLite("GenomicRanges", suppressUpdates = TRUE)
+biocLite("edgeR")
 ```
 
 3. __GitHub__ https://github.com
