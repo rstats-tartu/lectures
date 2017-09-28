@@ -1,105 +1,116 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 
 # Graafilised lahendused
 
-```{r message=FALSE, error=FALSE}
+R-s on kaks olulisemat graafikasüsteemi mida võib vaadata nagu kaht eraldi keelt mis mõlemad elavad R keele sees. 
+
+- **Baasgraafika** võimaldab väga lihtsate vahenditega teha kiireid ja suhteliselt ilusaid graafikuid. 
+Seda kasutame sageli enda tarbeks kiirete plottide tegemiseks.
+Baasgraafika abil saab teha ka väga keerukaid ja kompleksseid publitseerimiskavaliteedis graafikuid.
+- **"ggplot2"** raamatukogu on hea ilupiltide vormistamiseks ja keskmiselt keeruliste visualiseeringute tegemiseks.
+
+
+Kuigi "ggplot2" ja tema sateliit-raamatukogud on meie põhilised huviobjekid, alustame siiski baasgraafikast. 
+Ehki me piirdume vaid väga lihtsate näidetega tasub teada, et baasgraafikas saab teha ka komplekseid visualiseeringuid: http://shinyapps.org/apps/RGraphCompendium/index.php
+
+Laadime peatükis edaspidi vajalikud libraryd:
+```{r}
 library(tidyverse)
 library(ggthemes)
+library(ggrepel)
 library(ggjoy)
 library(wesanderson)
 ```
 
-
-R-s on kaks olulisemat graafikasüsteemi (ja veel paar-kolm vähemtähtsat), mida võib vaadata nagu kaht eraldi keelt, mis mõlemad elavad R keele sees. Baasgraafika võimaldab väga lihtsate vahenditega teha kiireid ja suhteliselt ilusaid graafikuid. Seda kasutame sageli enda tarbeks kiirete plottide tegemiseks. Ja ggplot2 raamatukogu on hea ilupiltide vormistamiseks ja keskmiselt keeruliste visualiseeringute tegemiseks. Kuigi ggplot2 ja tema sateliit-raamatukogud on meie põhilised huviobjekid, alustame siiski baasgraafikast. Ehki me piirdume vaid väga lihtsate näidetega tasub teada, et baasgraafikas saab teha ka komplekseid visualiseeringuid: http://shinyapps.org/apps/RGraphCompendium/index.php
-
-
-
 ## Baasgraafika
 
-Kõigepealt tabel, mida me analüüsima hakkame:
+Kõigepealt laadime tabeli, mida me visuaalselt analüüsima hakkame:
 ```{r}
 iris <- as_tibble(iris)
 iris
 ```
 
-See sisaldab mõõtmistulemusi sentimeetrites kolme Irise perekonna liigi kohta. Esimest korda avaldati need andmed 1936 aastal R.A. Fisheri poolt. 
+See sisaldab mõõtmistulemusi sentimeetrites kolme iirise perekonna liigi kohta.
+Esimest korda avaldati need andmed 1936. aastal R.A. Fisheri poolt. 
 
-Baasgraafika põhiverb on plot(). See püüab teie poolt ette antud andmete pealt ära arvata, millist plotti te soovite. plot() põhiargumendid on x ja y, mis määravad selle, mida plotitakse x teljele ja mida y teljele. Esimene argument on vaikimisi x ja teine y.
+Baasgraafika põhiverb on `plot()`. 
+See püüab teie poolt ette antud andmete pealt ära arvata, millist graafikut te soovite. 
+`plot()` põhiargumendid on x ja y, mis määravad selle, mis väärtused asetatakse x-teljele ja mis läheb y-teljele. 
+Esimene argument on vaikimisi x ja teine y.
 
-Kui te annate ette faktor-andmed, on vastuseks tulpdiagramm, kus tulbad loevad üles selle faktori kõigi tasemete esinemiste arvu. Antud juhul on meil igast liigist mõõdetud 50 isendit.
+
+Kui te annate ette faktorandmed, on vastuseks tulpdiagramm, kus tulbad loevad üles selle faktori kõigi tasemete esinemiste arvu. 
+Antud juhul on meil igast liigist mõõdetud 50 isendit.
 ```{r}
 plot(iris$Species)
 ```
 
-Kui te annate ette ühe pideva muutuja
+Kui te annate ette ühe pideva muutuja:
 ```{r}
 plot(iris$Sepal.Length)
 ```
 
-Nüüd on tulemuseks plot, kus on näha mõõtmisete rea (ehk tabeli) iga järgmise liikme (tablei rea) väärtus. Siin on meil kokku 150 mõõtmist muutujale Sepal.Length.
+Nüüd on tulemuseks graafik, kus on näha mõõtmisete rea (ehk tabeli) iga järgmise liikme (tabeli rea) väärtus. 
+Siin on meil kokku 150 mõõtmist muutujale `Sepal.Length`.
 
-Alternatiiv sellele vaatele on stripchart
+
+Alternatiiv sellele vaatele on `stripchart()`
 ```{r}
 stripchart(iris$Sepal.Length)
 ```
 
 Enam lihtsamaks üks joonis ei lähe!
 
-Mis juhtub, kui me x-teljele paneme faktortunnuse ja y teljele pideva tunnuse?
+
+Mis juhtub, kui me x-teljele paneme faktortunnuse ja y-teljele pideva tunnuse?
 ```{r}
 plot(iris$Species, iris$Sepal.Length)
 ```
 
-Vastuseks on boxplot. Sama ploti saame ka nii: 
+Vastuseks on boxplot. Sama graafiku saame ka nii: 
 ```{r eval=FALSE}
-boxplot(iris$Sepal.Length~iris$Species).
+boxplot(iris$Sepal.Length ~ iris$Species).
 ```
 
-Siin on tegu R-i mudeli notatsiooniga: y telje muutuja, tilde, x telje muutuja. Tilde näitab, et y sõltub x-st stohhastiliselt, mitte deterministlikult. Deterministliku seost tähistatakse võrdusmärgiga (=).
+Siin on tegu R-i mudeli notatsiooniga: y-telje muutuja, tilde, x-telje muutuja. Tilde näitab, et y sõltub x-st stohhastiliselt, mitte deterministlikult. Deterministliku seost tähistatakse võrdusmärgiga (=).
 
-Aga vastipidi?
+Aga vastupidi?
 ```{r}
-plot( iris$Sepal.Length, iris$Species )
+plot(iris$Sepal.Length, iris$Species)
 ```
 
 Pole paha, see on üsna informatiivne scatterplot.
 
-Järgmiseks kahe pideva muutuja scatterplot, kus me veel lisaks värvime punktid liigi järgi
-
+Järgmiseks kahe pideva muutuja scatterplot, kus me veel lisaks värvime punktid iiriseliigi järgi.
 ```{r}
-plot(iris$Sepal.Length, iris$Sepal.Width, col=iris$Species)
+plot(iris$Sepal.Length, iris$Sepal.Width, col = iris$Species)
 ```
 
-Ja lõpuks tõmbame läbi punktide punase regressioonijoone 
+Ja lõpuks tõmbame läbi punktide punase regressioonijoone: 
 ```{r}
 plot(iris$Sepal.Length, iris$Sepal.Width)
-abline(
-  lm(iris$Sepal.Width~iris$Sepal.Length), 
-  col="red", 
-  lwd=2
-  )
+model <- lm(iris$Sepal.Width ~ iris$Sepal.Length)
+abline(model, col = "red", lwd = 2)
 ```
 
-lwd parameeter reguleerib joone laiust. lm() on funktsioon, mis fitib sirge vähimruutude meetodil (vt ptk ...).
+"lwd" parameeter reguleerib joone laiust. 
+`lm()` on funktsioon, mis fitib sirge vähimruutude meetodil.
 
-Mis juhtub, kui me anname plot() funtsioonile sisse kogu irise tibble?
+Mis juhtub, kui me anname `plot()` funktsioonile sisse kogu irise tibble?
 ```{r}
-plot(iris, col=iris$Species)
+plot(iris, col = iris$Species)
 ```
 
-Juhhei, tulemus on paariviisiline plot kõigist muutujate kombinatsioonidest.
+Juhhei, tulemus on paariviisiline graafik kõigist muutujate kombinatsioonidest.
 
-Ainus  mitte-plot verb, mida baasgraafikas vajame, on hist(), mis joonistab histogrammi
+Ainus  mitte-plot verb, mida baasgraafikas vajame, on `hist()`, mis joonistab histogrammi.
 ```{r}
 hist(iris$Sepal.Length)
 ```
 
-Histogrammi tegemiseks jagatakse andmepunktid nende väärtuste järgi bin-idesse ja plotitakse igasse bin-i sattunud andmepunktide arv. Näiteks esimeses bin-is on Sepal.Length muutuja väärtused, mis jäävad 4 ja 4.5 cm vahele ja selliseid väärtusi on kokku viis. Histogrammi puhul on oluline teada, et selle kuju sõltub bin-ide laiusest.
-Bini laiust saab muuta kahel viisil:
+Histogrammi tegemiseks jagatakse andmepunktid nende väärtuste järgi bin-idesse ja plotitakse igasse bin-i sattunud andmepunktide arv. 
+Näiteks esimeses bin-is on "Sepal.Length" muutuja väärtused, mis jäävad 4 ja 4.5 cm vahele ja selliseid väärtusi on kokku viis. 
+Histogrammi puhul on oluline teada, et selle kuju sõltub bin-ide laiusest.
+Bini laiust saab muuta kahel viisil, andes ette bin-ide piirid või arvu:
 ```{r}
 hist(iris$Sepal.Length, breaks = seq(4, 9, by = 0.25))
 ```
@@ -109,235 +120,262 @@ või
 hist(iris$Sepal.Length, breaks = 15)
 ```
 
-See viimane on kiire viis bin-i laiust reguleerida, aga arvestage, et sõltuvalt andmetest ei pruugi breaks=15 tähendada, et teie histogrammil on 15 bin-i.
+See viimane on kiire viis bin-i laiust reguleerida, aga arvestage, et sõltuvalt andmetest ei pruugi "breaks = 15" tähendada, et teie histogrammil on 15 bin-i.
 
-Ja lõpuks veel üks histogramm, et demonstreerida baas R-i võimalusi (samad argumendid töötavad ka plot funktsioonis)
+Ja lõpuks veel üks histogramm, et demonstreerida baas R-i võimalusi (samad argumendid töötavad ka `plot()` funktsioonis):
 ```{r}
 hist(iris$Sepal.Length,
-     freq = FALSE, #if TRUE, the histogram graphic is a representation of frequencies, the counts component of the result; if FALSE, probability densities are plotted so that the histogram has a total area of one
+     freq = FALSE, 
      col="red",
      breaks = 15,
-     xlim = c(3, 9), #limits the X axis from 3 to 9
-     ylim = c(0, 0.6), #limits the Y axis from 0 to 0.6
+     xlim = c(3, 9), 
+     ylim = c(0, 0.6), 
      main = "Iris",
      xlab = "sepal length",
-     ylab="probability density")
+     ylab = "probability density")
 
-abline(v = median(iris$Sepal.Length), col = "blue", lwd = 2) #vertical line that intercepts x at median sepal length
-abline(h = 0.3, col = "cyan", lwd = 2) #horisontal line that intercepts y at 0.3
+abline(v = median(iris$Sepal.Length), col = "blue", lwd = 2) 
+abline(h = 0.3, col = "cyan", lwd = 2)
 ```
 
 ## ggplot2
 
-Ggplot on avaldamiseks sobiva tasemega lihtne aga võimas graafikasüsteem. Näiteid selle abil tehtud visualiseeringutest leiab siit: http://ggplot2.tidyverse.org/reference/ 
-http://www.r-graph-gallery.com
-http://www.ggplot2-exts.org
-http://www.cookbook-r.com
+Ggplot on avaldamiseks sobiva tasemega lihtne aga võimas graafikasüsteem. 
+Näiteid selle abil tehtud visualiseeringutest leiab näiteks järgnevatelt linkidelt: 
+
+- http://ggplot2.tidyverse.org/reference/ 
+- http://www.r-graph-gallery.com
+- http://www.ggplot2-exts.org
+- http://www.cookbook-r.com
 
 
-ggplot2 põhiverb on ggplot(). See graafikasüsteem töötab kiht-kihi-haaval ja uusi kihte lisatakse pluss-märgi abil. See annab modulaarsuse kaudu lihtsuse ja võimaluse luua ka keerulisi taieseid. Tõenäoliselt on ggplot hetkel kättesaadavatest graafikasüsteemidest parim (kaasa arvates tasulised programmid!).
+"ggplot2" paketi põhiverb on `ggplot()`. 
+See graafikasüsteem töötab kiht-kihi-haaval ja uusi kihte lisatakse pluss-märgi abil. 
+See annab modulaarsuse kaudu lihtsuse ja võimaluse luua ka keerulisi taieseid. 
+Tõenäoliselt on ggplot hetkel kättesaadavatest graafikasüsteemidest parim (kaasa arvates tasulised programmid!).
 
-ggploti töövoog on järgmine:
+ggploti töövoog on järgmine, minimaalselt pead ette andma kolm asja: 
 
-minimaalselt pead ette andma kolm asja: 1. andmed, mida visualiseeritakse, 2. aes() inputi, mis määrab, milline muutuja läheb x teljele ja milline y teljele, ning 3. geom-i, mis määrab, mis tüüpi visualiseeringut sa tahad. Lisaks määrad sa aes()-is, kas ja kuidas sa tahad grupeerida pidevaid muutujaid faktori tasemete järgi.
+1. **andmed**, mida visualiseeritakse, 
 
-Kõigepealt suuname oma andmed ggplot() funktsiooni
-                    
+2. `aes()` funktsiooni, mis määrab, milline muutuja läheb x-teljele ja milline y-teljele, ning 
+
+3. **geom**-i, mis määrab, mis tüüpi visualiseeringut sa tahad. 
+
+
+Lisaks määrad sa `aes()`-is, kas ja kuidas sa tahad grupeerida pidevaid muutujaid faktori tasemete järgi.
+
+
+Kõigepealt suuname oma andmed `ggplot()` funktsiooni:
 ```{r}
-iris %>% ggplot()
+ggplot(iris)
 ```
 
-Saime tühja ploti.
+Saime tühja ploti. 
+Erinevalt baasgraafikast, ggplot-i puhul ainult andmetest ei piisa, et graafik valmis joonistataks.
+Vaja on lisada kiht-kihilt instruktsioonid, kuidas andmed graafikule paigutada ja missugust graafikutüüpi visualiseerimiseks kasutada.
 
-Nüüd ütleme, et x teljele pannakse Sepal.Length ja y teljele Sepal.Width andmed.
- 
-
+Nüüd ütleme, et x-teljele pannakse "Sepal.Length" ja y-teljele "Sepal.Width" andmed.
 ```{r}
-iris %>% ggplot(aes(x=Sepal.Length, y=Sepal.Width))
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width))
 ```
 
-Aga plot on ikka tühi sest me pole ggplotile öelnud, millist visualiseeringut me tahame. Teeme seda nüüd.
-
+Aga graafik on ikka tühi sest me pole ggplotile öelnud, millist visualiseeringut me tahame. 
+Teeme seda nüüd.
 ```{r}
-iris %>% ggplot(aes(x=Sepal.Length, y=Sepal.Width)) + 
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) + 
   geom_point() + 
   geom_smooth(method = "lm")
 ```
 
-Me lisasime kaks kihti: esimene visualiseerib andmepunktid ja teine joonistab regressioonisirge koos usaldusintervalliga (standardviga).
+Me lisasime kaks kihti: esimene kiht `geom_point()` visualiseerib andmepunktid ja teine `geom_smooth(method = "lm")` joonistab regressioonisirge koos usaldusintervalliga (standardviga).
 
-    plussmärk peab olema vana rea lõpus, mitte uue rea (kihi) alguses
+>Plussmärk peab ggplot-i koodireas olema vana rea lõpus, mitte uue rea (kihi) alguses
 
-### Regressioonisirgete plottimine
+## Regressioonisirgete plottimine
 
-Järgmiseks värvime punktid liigi kaupa aga joonistame ikkagi regressioonisirge läbi kõikide punktide. Vt mis juhtub, kui värvide lahutamine toimub ggplot()-i enda aes()-s. Theme_classic muudab graafiku üldist väljanägemist. Proovi ka theme_bw().
+Järgmiseks värvime eelnevalt tehtud plotil punktid iirise liigi kaupa aga joonistame ikkagi regressioonisirge läbi kõikide punktide. 
+Vaata mis juhtub, kui värvide lahutamine toimub `ggplot()`-i enda `aes()`-s. `theme_classic()` muudab graafiku üldist väljanägemist.
 
 ```{r}
-iris %>% ggplot(aes(x=Sepal.Length, y=Sepal.Width)) +
-  geom_point(aes(color=Species)) + 
-  geom_smooth(method = "lm", color="black", se=FALSE) +
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point(aes(color = Species)) + 
+  geom_smooth(method = "lm", color = "black") +
   theme_classic()
 ```
 
-Me võime geom_smooth-i anda erineva andmeseti kui ggplot() põhifunktsiooni. Nii joonistame me regressioonisirge ainult nendele andmetele.
-
+Me võime `geom_smooth()`-i anda erineva andmeseti kui `ggplot()` põhifunktsiooni. 
+Nii joonistame me regressioonisirge ainult nendele andmetele.
+Proovi ka `theme_bw()`.
 ```{r}
-ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width)) +
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   geom_point() +
-  geom_smooth(data=filter(iris, Species =="setosa"), method = lm) +
-  theme_classic()
-```
-
-Siin viis kuidas öelda, et me jätame sisse andmed, kus liik on virginica või versicolor.
-
-```{r}
-ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width)) +
-  geom_point() +
-  geom_smooth(data=filter(iris, Species %in% c("virginica", "versicolor")), method = lm) + 
+  geom_smooth(data = filter(iris, Species == "setosa"), method = lm) +
   theme_bw()
 ```
 
-Ja lõpuks joonistame 3 sirget; üks igale liigile.
+Alljärgnevalt näiteks moodus kuidas öelda, et me soovime regressioonijoont näidata ainult iiriseliikide virginica või versicolor andmetele.
+
 ```{r}
-ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width, color=Species)) +
+## First we filter only data that we want to use for regressionline
+smooth_data <- filter(iris, Species %in% c("virginica", "versicolor"))
+## Then we use this filtered dataset in geom_smooth
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   geom_point() +
-  geom_smooth(method = "lm", se=F) +
-  theme_tufte()
+  geom_smooth(data = smooth_data, method = lm)
 ```
 
-Kaalutud lineaarne mudel on viis anda andmepunktidele, mida me tähtsamaks peame (või mis on täpsemalt mõõdetud) suurem kaal. Kõigepealt, siin on USA demograafilised andmed erinevate kesk-lääne omavalitsuste kohta (437 omavalitsust).  
-
+Ja lõpuks joonistame kolm regressioonisirget -- üks igale liigile.
 ```{r}
-(midwest <- as_tibble(midwest) %>% select(percwhite, percbelowpoverty, poptotal))
+iris %>% ggplot(aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+**Nüüd üks näide teiste andmetega.**
+Kaalutud lineaarne mudel on viis anda andmepunktidele, mida me tähtsamaks peame (või mis on täpsemalt mõõdetud) suurem kaal. 
+Kõigepealt, siin on USA demograafilised andmed `midwest` "ggplot2" library-st erinevate kesk-lääne omavalitsuste kohta (437 omavalitsust).
+
+Me valime `midwest` andmetest välja kolm muutujat: "percwhite", "percbelowpoverty", "poptotal".
+```{r}
+midwest_subset <- midwest %>% select(percwhite, percbelowpoverty, poptotal)
+midwest_subset
 ```
 
 Me tahame teada, kuidas valge rassi osakaal ennustab vaesust, aga me arvame, et suurematel omavalitsustel peaks selles ennustuses olema suurem kaal kui väiksematel.
-Selleks lisame geom_smooth-i lisaargumendi weight. Punane on kaalumata regressioonisirge. Kaalumine mitte ainult ei muutnud sirge asukohta vaid vähendas ka ebakindlust sirge asukoha kohta.
-```{r}
+Selleks lisame `geom_smooth()`-i lisaargumendi "weight". 
 
-ggplot(midwest, aes(percwhite, percbelowpoverty)) +
+```{r}
+ggplot(midwest_subset, aes(percwhite, percbelowpoverty)) +
   geom_point(aes(size = poptotal)) +
   geom_smooth(aes(weight = poptotal), method = lm, size = 1) + 
-  geom_smooth(method = lm, color="red") +
-  labs(x="percent white", y="percent below poverty")
+  geom_smooth(method = lm, color = "red") +
+  labs(x = "Percent white", y = "Percent below poverty")
 ```
 
+Punane on kaalumata regressioonisirge ja sinine on populatsioonisuuruse suhtes kaalutud regressioonisirge. 
+Kaalumine mitte ainult ei muutnud sirge asukohta vaid vähendas ka ebakindlust sirge asukoha kohta.
 
-Regeressioonijoone saab eksplitsiitselt määrata intercepti ja slope abil. See on eriti kasulik bayesi mudelite visualiseerimisel mudeli koefitsientide põhjal. Kasuta geom_abline().
+
+Regeressioonijoone saab ggplotil määrata ka x-telje lõikumispunkti ja tõusu abil. 
+See on kasulik mudelite visualiseerimisel mudeli koefitsientide põhjal. 
+Kasuta `geom_abline()`.
 
 ```{r}
-sp <- ggplot(data=mtcars, aes(x=wt, y=mpg)) + geom_point()
-reg<-lm(mpg ~ wt, data = mtcars)
-reg
-coeff=coefficients(reg)
-# Equation of the line : 
-sp + geom_abline(intercept = coeff[1], slope = coeff[2], color="red", 
-                 linetype="dashed", size=1.5)
+## Create plot
+p <- ggplot(data = mtcars, aes(x = wt, y = mpg)) + 
+  geom_point()
+## Fit model and extract coefficients
+model <- lm(mpg ~ wt, data = mtcars)
+coefs  <- coef(model)
+## Add regressionline to the plot
+p + geom_abline(intercept = coefs[1], 
+                 slope = coefs[2], 
+                 color = "red", 
+                 linetype = "dashed", 
+                 size = 1.5)
 ```
 
 ### Lisame plotile sirgjooni
 
-Horisontaalsed sirged geom_hline() abil.
-Pane tähele, et me anname oma ggplot-i põhikihtidele nime ja seega paneme selle aluploti oma töökeskkonda, et saaksime seda korduvkasutada.  
+Horisontaalsed sirged saab graafikule lisada `geom_hline()` abil.
+Pane tähele, et eelnevalt me andsime oma ggplot-i põhikihtidele nime "p" ja seega panime selle alusploti oma töökeskkonda, et saaksime seda korduvkasutada.
 
+Lisame graafikule horisontaaljoone y = 20:
 ```{r}
-# Simple scatter plot
-sp <- ggplot(data=mtcars, aes(x=wt, y=mpg)) + geom_point()
 # Add horizontal line at y = 2O
-sp + geom_hline(yintercept=20, linetype="dashed", 
-                color = "red", size=2)
+p + geom_hline(yintercept = 20)
 ```
 
-ja vertikaalsed sirged geom_vline abil
+Vertikaalseid sirgeid saab lisada `geom_vline()` abil, näiteks vertikaalne sirge asukohas x = 3:
 ```{r}
 # Add a vertical line at x = 3
-sp + geom_vline(xintercept = 3, linetype="dotted", 
-                color = "blue", size=1.5)
+p + geom_vline(xintercept = 3)
 ```
 
 ### Segmendid ja nooled 
 
-**geom_segment** : lisab joonejupi, mille algus ja lõpp on ette antud
+"ggplot2" funktsioon `geom_segment()` lisab joonejupi, mille algus ja lõpp on ette antud.
 
-geom_segment(aes(x, y, xend, yend))
-
-```{r}
+```{r,fig.width='.49\\linewidth'}
 # Add a vertical line segment
-sp + geom_segment(aes(x = 4, y = 15, xend = 4, yend = 27))
+p + geom_segment(aes(x = 4, y = 15, xend = 4, yend = 27))
+
 # Add horizontal line segment
-sp + geom_segment(aes(x = 2, y = 15, xend = 3, yend = 15))
+p + geom_segment(aes(x = 2, y = 15, xend = 3, yend = 15))
 ```
 
-**arrow** läheb argumendina geom_segment-i
+Saab joonistada ka **nooli**, kasutades arumenti "arrow" funktsioonis `geom_segment()`
 
 ```{r}
-library(grid)
-sp + geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
-                  arrow = arrow(length = unit(0.5, "cm")))
+p + geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
+                 arrow = arrow(length = unit(0.5, "cm")))
 ```
 
 
 ### Joongraafikud
 
-Joonetüübid on “blank”, “solid”, “dashed”, “dotted”, “dotdash”, “longdash”, “twodash”.
+"ggplot2"-s on näiteks joonetüübid on "blank", "solid", "dashed", "dotted", "dotdash", "longdash", "twodash".
 
-```{r eval=FALSE}
-dfs2 <- data.frame(sex = rep(c("Female", "Male"), each=3),
-                  time=c("breakfeast", "Lunch", "Dinner"),
-                  bill=c(10, 30, 15, 13, 40, 17) )
+```{r eval = FALSE}
+meals <- data.frame(sex = rep(c("Female", "Male"), each = 3),
+                  time = c("breakfeast", "Lunch", "Dinner"),
+                  bill = c(10, 30, 15, 13, 40, 17) )
 
 # Change line colors and sizes
-ggplot(data=dfs2, aes(x=time, y=bill, group=sex)) +
-  geom_line(linetype="dotted", color="red", size=2)+
-  geom_point(color="blue", size=3)
+ggplot(data = meals, aes(x = time, y = bill, group = sex)) +
+  geom_line(linetype = "dotted", color = "red", size = 2) +
+  geom_point(color = "blue", size = 3)
 ```
 
-Muudab tüüpi automaatselt muutuja sex taseme järgi
-```{r eval=FALSE}
+Järgneval graafikul muudame joonetüüpi automaatselt muutuja sex taseme järgi:
+```{r}
 # Change line types + colors
-ggplot(dfs2, aes(x=time, y=bill, group=sex)) +
-  geom_line(aes(linetype=sex, color=sex))+
-  geom_point(aes(color=sex))+
-  theme(legend.position="top")
+ggplot(meals, aes(x = time, y = bill, group = sex)) +
+  geom_line(aes(linetype = sex, color = sex)) +
+  geom_point(aes(color = sex)) +
+  theme(legend.position = "top")
 ```
 
 Muuda jooni käsitsi:
 
-scale_linetype_manual() : joone tüüp
+- `scale_linetype_manual()`: joone tüüp
 
-scale_color_manual() : joone värv
+- `scale_color_manual()`: joone värv
 
-scale_size_manual() : joone laius
-```{r eval=FALSE}
-ggplot(dfs2, aes(x=time, y=bill, group=sex)) +
-  geom_line(aes(linetype=sex, color=sex, size=sex))+
-  geom_point()+
-  scale_linetype_manual(values=c("twodash", "dotted"))+
-  scale_color_manual(values=c('#999999','#E69F00'))+
-  scale_size_manual(values=c(1, 1.5))
+- `scale_size_manual()`: joone laius
+
+
+```{r}
+ggplot(meals, aes(x = time, y = bill, group = sex)) +
+  geom_line(aes(linetype = sex, color = sex, size = sex)) +
+  geom_point() +
+  scale_linetype_manual(values = c("twodash", "dotted")) +
+  scale_color_manual(values = c('#999999', '#E69F00')) +
+  scale_size_manual(values = c(1, 1.5)) +
+  theme(legend.position = "top")
 ```
 
 
 ### Punktide tähistamise trikid
 
-aes() töötab nii ggplot() kui geom_ funktsioonides
-
+`aes()` töötab nii `ggplot()` kui `geom_` funktsioonides.
 ```{r}
 ggplot(iris) +
-  geom_point(aes(x=Sepal.Length, y=Sepal.Width, size = Petal.Length, color= Species))
+  geom_point(aes(x = Sepal.Length, y = Sepal.Width, size = Petal.Length, color = Species))
 ```
 
-kui me kasutame color argumenti aes()st väljaspool, siis värvime kõik punktid sama värvi.
+Kui me kasutame color argumenti `aes()`-st väljaspool, siis värvime kõik punktid sama värvi.
 ```{r}
 ggplot(iris) +
-  geom_point(aes(x=Sepal.Length, y=Sepal.Width, size = Petal.Length), color= "red")
+  geom_point(aes(x = Sepal.Length, y = Sepal.Width, size = Petal.Length), color = "red")
 ```
 
 
-Kasulik trikk on kasutada mitut andmesetti sama ploti tegemiseks. Uus andmestik - mpg - on autode kütusekulu kohta.
+Kasulik trikk on kasutada mitut andmesetti sama ploti tegemiseks. 
+Uus andmestik -- "mpg" -- on autode kütusekulu kohta.
 ```{r}
 head(mpg, 2)
-mpg<-mpg
 
 best_in_class <- mpg %>%
   group_by(class) %>%
@@ -346,16 +384,17 @@ best_in_class <- mpg %>%
 head(best_in_class)
 ```
 
-Siin läheb kitsam andmeset uude geom_point kihti ja teeb osad punktid teistsuguseks. Need on oma klassi parimad autod.
+Siin läheb kitsam andmeset uude `geom_point()` kihti ja teeb osad punktid teistsuguseks. 
+Need on oma klassi parimad autod.
 ```{r}
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(colour = class))+
   geom_point(size = 3, shape = 1, data = best_in_class) 
 ```
 
-Lõpuks lisame teksti neile parimatele autodele. Selleks kasutame ggrepel raamatukogu funktsiooni geom_label_repel
+Lõpuks toome graafikul eraldi välja neile parimatele autodele. 
+Selleks kasutame "ggrepel" raamatukogu funktsiooni `geom_label_repel()`.
 ```{r}
-library(ggrepel)
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(colour = class))+
   geom_point(size = 3, shape = 1, data = best_in_class) +
@@ -424,13 +463,13 @@ Telgede ulatust saab määrata 3-l erineval viisil
 
 1. filtreeri andmeid, mida plotid
 
-2. pane x ja y teljele piirangud `xlim()`, `ylim()`
+2. pane x- ja y-teljele piirangud `xlim()`, `ylim()`
 
 3. kasuta `coord_cartesian()` ja xlim, ylim on parameetrid selle sees
 
 `coord_cartesian(xlim = c(5, 7), ylim = c(10, 30))`
 
-seda saab teha ka x ja y teljele eraldi
+seda saab teha ka x- ja y-teljele eraldi
 
 `scale_x_continuous(limits = range(mpg$displ))`
 
@@ -471,7 +510,7 @@ ggplot(iris, mapping = aes(x = Species, y = Sepal.Length)) +
 
 ### Muudame telgede markeeringuid
 
-Y telje markeeringud 15st kuni 40-ni, 5-te vahedega 
+Y-telje markeeringud 15st kuni 40-ni, 5-te vahedega 
 
 ```{r}
 ggplot(mpg, aes(displ, hwy)) +
@@ -816,7 +855,7 @@ ggMarginal(diffplotp, type="histogram", bins = 25)
 
 ### Kui iga muutja kohta on üks andmepunkt
 
-Siis kasuta cleveland plotti. See on parem kui barplot. 
+Siis kasuta cleveland graafikut. See on parem kui barplot. 
 
 ```{r}
 dd <- diamonds %>% group_by(clarity) %>% summarise(number_of_diamonds=n())
@@ -845,7 +884,7 @@ ggplot(diamonds) +
   theme(legend.position="none")
 ```
 
-Pane tähele, et y teljel on arv, mitu korda esineb tabelis iga cut. See arv ei ole tabelis muutuja. geom_bar, geom_hist, geom_dens arvutavad plotile uued y väärtused --- nad jagavad andmed binidesse ja loevad üles, mitu andmepunkti sattus igasse bini.
+Pane tähele, et y-teljel on arv, mitu korda esineb tabelis iga cut. See arv ei ole tabelis muutuja. geom_bar, geom_hist, geom_dens arvutavad plotile uued y väärtused --- nad jagavad andmed binidesse ja loevad üles, mitu andmepunkti sattus igasse bini.
 
 Kui tahad tulpdiagrammi proportsioonidest, mitu korda eineb tabelis igat cut-i, siis tee nii:
   
@@ -854,7 +893,7 @@ ggplot(diamonds) +
   geom_bar(aes(x = cut, y = ..prop.., group = 1))
 ```
 
-Pane tähele et tulpade omavahelised suhted jäid samaks. Muutus ainult y telje tähistus.
+Pane tähele et tulpade omavahelised suhted jäid samaks. Muutus ainult y-telje tähistus.
 
 Edasi lisame eelnevale veel ühe muutuja: clarity. Nii saame üles lugeda kõigi cut-i ja clarity kombinatsioonide esinemise arvu või sageduse. Erinvate clarity tasemete esinemiste arv samal cut-i tasemel on siin üksteise otsa kuhjatud, mis tähendab, et tulpade kõrgus ei muutu võrreldes eelnevaga.
 
@@ -1021,7 +1060,7 @@ ggplot(iris, aes(Species, Sepal.Width)) +
 
 ### Kahe muutuja koos-varieeruvus 
 
-X teljel on geisri Old Faithful pursete tugevus ja Y teljel pursete vaheline aeg. Kui kahe purske vahel kulub rohkem aega, siis on oodata tugevamat purset. Tundub, et see süsteem töötab kahes diskreetses reziimis.
+X-teljel on geisri Old Faithful pursete tugevus ja y-teljel pursete vaheline aeg. Kui kahe purske vahel kulub rohkem aega, siis on oodata tugevamat purset. Tundub, et see süsteem töötab kahes diskreetses reziimis.
 
 ```{r}
 m <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
@@ -1033,6 +1072,3 @@ m + geom_density_2d()
 ```
 
 Kui punkte on liiga palju, et välja trükkida, kasuta geom = "polygon" varianti.
-
-
-
