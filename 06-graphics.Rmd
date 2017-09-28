@@ -317,7 +317,7 @@ p + geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
 
 "ggplot2"-s on näiteks joonetüübid on "blank", "solid", "dashed", "dotted", "dotdash", "longdash", "twodash".
 
-```{r eval = FALSE}
+```{r}
 meals <- data.frame(sex = rep(c("Female", "Male"), each = 3),
                   time = c("breakfeast", "Lunch", "Dinner"),
                   bill = c(10, 30, 15, 13, 40, 17) )
@@ -475,7 +475,8 @@ Telgede ulatust saab muuta ka x- ja y-teljele eraldi:
 ```{r, out.width='32%'}
 #data and scale are linear
 ggplot(cars, aes(x = speed, y = dist)) + 
-  geom_point() + ggtitle("Lineaarsed andmed ja teljed")
+  geom_point() + 
+  ggtitle("Lineaarsed andmed ja teljed")
 ggplot(cars, aes(x = log2(speed), y = log2(dist))) + 
   geom_point() +
   ggtitle("Andmed ja teljed on logaritmitud")
@@ -490,7 +491,7 @@ ggplot(cars, aes(x = speed, y = dist)) +
 ### Pöörame graafikut 90 kraadi
 
 
-```{r eval=FALSE}
+```{r}
 ggplot(iris, mapping = aes(x = Species, y = Sepal.Length)) + 
   geom_boxplot() +
   coord_flip()
@@ -500,28 +501,26 @@ ggplot(iris, mapping = aes(x = Species, y = Sepal.Length)) +
 
 ### Muudame telgede markeeringuid
 
-Y-telje markeeringud 15st kuni 40-ni, 5-te vahedega 
-
+Muudame y-telje markeeringut:
 ```{r}
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
-  scale_y_continuous(breaks = seq(15, 40, by = 5))
+  scale_y_continuous(breaks = seq(15, 40, by = 5)) +
+  ggtitle("y-telje markeeringud\n15 kuni 40, viieste vahedega")
 ```
 
-muuda teljemarkeeringute nurka
-
-```{r, eval=FALSE}
+Muudame x-telje markeeringute nurka muutes `theme()` funktsiooni argumenti "axis.text.x":
+```{r}
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
-  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=0.5))
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 ```
 
-eemaldame telgede markeeringud
-```{r eval=FALSE}
+Eemaldame telgede markeeringud, ka läbi `theme()` funktsiooni:
+```{r}
 ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
-  scale_x_continuous(labels = NULL) +
-  scale_y_continuous(labels = NULL)
+  theme(axis.text = element_blank())
 ```
 
 
