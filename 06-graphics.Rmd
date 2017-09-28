@@ -297,7 +297,7 @@ p + geom_vline(xintercept = 3)
 
 "ggplot2" funktsioon `geom_segment()` lisab joonejupi, mille algus ja lõpp on ette antud.
 
-```{r, out.width='49%'}
+```{r}
 # Add a vertical line segment
 p + geom_segment(aes(x = 4, y = 15, xend = 4, yend = 27))
 
@@ -468,24 +468,28 @@ Telgede ulatust saab muuta ka x- ja y-teljele eraldi:
 
 1. Lineaarsed andmed lineaarsetel telgedel.
 
-2. Logaritmi andmed `aes()`-s.
-
-3. Andmed on logaritmitud, aga teljed mitte.
-
-```{r,fig.show='hold', fig.width=2.75, out.width=2.75}
-#data and scale are linear
+```{r}
 ggplot(cars, aes(x = speed, y = dist)) + 
   geom_point() + 
   ggtitle("Lineaarsed andmed ja teljed")
+```
+
+2. Logaritmi andmed `aes()`-s.
+
+```{r}
 ggplot(cars, aes(x = log2(speed), y = log2(dist))) + 
   geom_point() +
   ggtitle("Andmed ja teljed on logaritmitud")
+```
+
+3. Andmed on logaritmitud, aga teljed mitte.
+
+```{r}
 ggplot(cars, aes(x = speed, y = dist)) + 
   geom_point() + 
   coord_trans(x = "log2", y = "log2") + 
   ggtitle("Andmed on logaritmitud, aga teljed mitte")
 ```
-
 
 
 ### Pöörame graafikut 90 kraadi
