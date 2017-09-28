@@ -80,7 +80,7 @@ plot(iris$Sepal.Length, iris$Species)
 
 Pole paha, see on üsna informatiivne scatterplot.
 
-Järgmiseks kahe pideva muutuja scatterplot, kus me veel lisaks värvime punktid iiriseliigi järgi.
+Järgmiseks kahe pideva muutuja scatterplot, kus me veel lisaks värvime punktid liikide järgi.
 ```{r}
 plot(iris$Sepal.Length, iris$Sepal.Width, col = iris$Species)
 ```
@@ -131,8 +131,8 @@ hist(iris$Sepal.Length,
      xlim = c(3, 9), 
      ylim = c(0, 0.6), 
      main = "Iris",
-     xlab = "sepal length",
-     ylab = "probability density")
+     xlab = "Sepal length",
+     ylab = "Probability density")
 
 abline(v = median(iris$Sepal.Length), col = "blue", lwd = 2) 
 abline(h = 0.3, col = "cyan", lwd = 2)
@@ -160,7 +160,7 @@ ggploti töövoog on järgmine, minimaalselt pead ette andma kolm asja:
 
 2. `aes()` funktsiooni, mis määrab, milline muutuja läheb x-teljele ja milline y-teljele, ning 
 
-3. **geom**-i, mis määrab, mis tüüpi visualiseeringut sa tahad. 
+3. **geom**, mis määrab, mis tüüpi visualiseeringut sa tahad. 
 
 
 Lisaks määrad sa `aes()`-is, kas ja kuidas sa tahad grupeerida pidevaid muutujaid faktori tasemete järgi.
@@ -424,7 +424,7 @@ p + geom_point() +
 
 ```{r}
 p + geom_point() +
-  facet_wrap(~ class, ncol = 3)
+  facet_wrap(~ class, nrow = 2)
 ```
 
 Kui me tahame kahe muutuja kõigi kombinatsioonide vastu paneele, siis kasuta `facet_grid()` funktsiooni.
@@ -472,7 +472,7 @@ Telgede ulatust saab muuta ka x- ja y-teljele eraldi:
 
 3. Andmed on logaritmitud, aga teljed mitte.
 
-```{r, out.width='32%'}
+```{r,fig.show='hold', out.width='32%'}
 #data and scale are linear
 ggplot(cars, aes(x = speed, y = dist)) + 
   geom_point() + 
@@ -528,41 +528,39 @@ ggplot(mpg, aes(displ, hwy)) +
 ## Telgede tekst ja pealkirjad
 
 ### Muudame telgede ja legendi nimed
-```{r }
-a1 <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + 
+```{r}
+p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + 
   geom_point()
-a1 + labs(
+p + labs(
      x = "Length",
      y = "Width",
      color = "Iris sp."
      )
 ```
 
-eemaldame telgede nimed
-```{r, eval=FALSE}
-a1 +
-  xlab(NULL) +
-  ylab(NULL)
+Eemaldame telgede nimed:
+```{r}
+p + theme(axis.title = element_blank())
 ```
 
 
-### graafiku pealkiri, ala-peakiri ja allkiri
-```{r eval=FALSE}
+### Graafiku pealkiri, alapeakiri ja allkiri
+
+```{r}
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + 
   geom_point() + 
   labs(
-     title = "Title",
-     subtitle = "subtitle",
-     caption = "caption"
+     title = "Main Title",
+     subtitle = "Subtitle",
+     caption = "Figure caption"
       )
 ```
-
 
 `ggtitle()`  annab graafikule pealkirja
 
 ### Graafiku legend
 
-legend ei ole pool-läbipaistev, samas kui graafik on seda
+Legend erinevalt graafikust endast ei ole pool-läbipaistev.
 ```{r, eval=FALSE}
 norm <- tibble(x = rnorm(1000), y = rnorm(1000))
 norm$z <- cut(norm$x, 3, labels = c( "a" ,  "b" ,  "c" )) #creates a new column
