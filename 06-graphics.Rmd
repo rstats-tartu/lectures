@@ -297,7 +297,7 @@ p + geom_vline(xintercept = 3)
 
 "ggplot2" funktsioon `geom_segment()` lisab joonejupi, mille algus ja lõpp on ette antud.
 
-```{r,fig.width='49%'}
+```{r, out.width='49%'}
 # Add a vertical line segment
 p + geom_segment(aes(x = 4, y = 15, xend = 4, yend = 27))
 
@@ -472,7 +472,7 @@ Telgede ulatust saab muuta ka x- ja y-teljele eraldi:
 
 3. Andmed on logaritmitud, aga teljed mitte.
 
-```{r,fig.width='32%'}
+```{r, out.width='32%'}
 #data and scale are linear
 ggplot(cars, aes(x = speed, y = dist)) + 
   geom_point() + ggtitle("Lineaarsed andmed ja teljed")
