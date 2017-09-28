@@ -472,7 +472,7 @@ Telgede ulatust saab muuta ka x- ja y-teljele eraldi:
 
 3. Andmed on logaritmitud, aga teljed mitte.
 
-```{r,fig.show='hold', out.width='32%'}
+```{r,fig.show='hold', fig.width=2.75, out.width=2.75}
 #data and scale are linear
 ggplot(cars, aes(x = speed, y = dist)) + 
   geom_point() + 
