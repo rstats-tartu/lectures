@@ -392,17 +392,16 @@ ggplot(mpg, aes(displ, hwy)) +
   geom_point(size = 3, shape = 1, data = best_in_class) 
 ```
 
-Lõpuks toome graafikul eraldi välja neile parimatele autodele. 
+Lõpuks toome graafikul eraldi välja nende parimate autode mudelite nimed. 
 Selleks kasutame "ggrepel" raamatukogu funktsiooni `geom_label_repel()`.
 ```{r}
 ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(colour = class))+
   geom_point(size = 3, shape = 1, data = best_in_class) +
-  geom_label_repel(aes(label = model), data = best_in_class, cex=2)
-
+  geom_label_repel(aes(label = model), data = best_in_class, cex = 2)
 ```
 
-## Facet
+## _Facet_ -- pisigraafik
 
 Kui teil on mitmeid muutujaid või nende alamhulki, on teil kaks võimalust.
 
@@ -413,91 +412,82 @@ Kui teil on mitmeid muutujaid või nende alamhulki, on teil kaks võimalust.
  
 ```{r}
 #here we separate different classes of cars into different colors
-ggplot(mpg, aes(displ, hwy)) +
-  geom_point(aes(colour = class))
+p <- ggplot(mpg, aes(displ, hwy)) 
+p + geom_point(aes(colour = class))
 ```
 
 
-
 ```{r}
-ggplot(mpg, aes(displ, hwy)) +
-   geom_point()+
-  facet_wrap(~class, nrow=2)
+p + geom_point() + 
+  facet_wrap(~ class)
 ```
 
 ```{r}
-ggplot(mpg, aes(displ, hwy)) +
-   geom_point()+
-  facet_wrap(~class, ncol=3)
+p + geom_point() +
+  facet_wrap(~ class, ncol = 3)
 ```
 
-Kui me tahame kahe muutuja kõigi kombinatsioonide vastu paneele, siis kasuta facet_grid
-
+Kui me tahame kahe muutuja kõigi kombinatsioonide vastu paneele, siis kasuta `facet_grid()` funktsiooni.
 ```{r}
-ggplot(mpg, aes(displ, hwy)) +
-   geom_point()+
+p + geom_point() +
   facet_grid(drv ~ cyl)
 ```
 
-drv --- drive - 4(-wheel), f(orward), r(ear)
-cyl --- cylinders - 4, 5, 6, or 8
+- "drv" -- drive - 4(-wheel), f(orward), r(ear).
+- "cyl" -- cylinders - 4, 5, 6, or 8.
 
-By using a dot in the equations you can set the facets side-by-side (.~var) or on top of each other (var~.)
+Kasutades punkti `.` on võimalik asetada kõik alamgraafikud kõrvuti `(. ~ var)` või üksteise peale `(var ~ .)`.
 
 ```{r}
-ggplot(mpg, aes(displ, hwy)) +
-   geom_point()+
+p + geom_point() +
   facet_grid(. ~ drv)
 ```
 
 ```{r}
-ggplot(mpg, aes(displ, hwy)) +
-   geom_point()+
+p + geom_point() +
   facet_grid(drv ~ .)
 ```
 
-##Teljed
 ### Telgede ulatus
 
-Telgede ulatust saab määrata 3-l erineval viisil
+Telgede ulatust saab määrata kolmel erineval viisil
 
 1. filtreeri andmeid, mida plotid
 
 2. pane x- ja y-teljele piirangud `xlim()`, `ylim()`
 
-3. kasuta `coord_cartesian()` ja xlim, ylim on parameetrid selle sees
+3. kasuta `coord_cartesian()` ja xlim, ylim on parameetrid selle sees: `coord_cartesian(xlim = c(5, 7), ylim = c(10, 30))`
 
-`coord_cartesian(xlim = c(5, 7), ylim = c(10, 30))`
+Telgede ulatust saab muuta ka x- ja y-teljele eraldi:
 
-seda saab teha ka x- ja y-teljele eraldi
-
-`scale_x_continuous(limits = range(mpg$displ))`
-
-`scale_y_continuous(limits = range(mpg$hwy))`
+- `scale_x_continuous(limits = range(mpg$displ))`
+- `scale_y_continuous(limits = range(mpg$hwy))`
 
 
-### log skaalas teljed
+### Log skaalas teljed
 
-1. lineaarsed andmed lineaarsetel telgedel
-```{r}
+1. Lineaarsed andmed lineaarsetel telgedel.
+
+2. Logaritmi andmed `aes()`-s.
+
+3. Andmed on logaritmitud, aga teljed mitte.
+
+```{r,fig.width='.32\\linewidth'}
 #data and scale are linear
-(sp <- ggplot(cars, aes(x = speed, y = dist)) + geom_point())
+ggplot(cars, aes(x = speed, y = dist)) + 
+  geom_point() + ggtitle("Lineaarsed andmed ja teljed")
+ggplot(cars, aes(x = log2(speed), y = log2(dist))) + 
+  geom_point() +
+  ggtitle("Andmed ja teljed on logaritmitud")
+ggplot(cars, aes(x = speed, y = dist)) + 
+  geom_point() + 
+  coord_trans(x = "log2", y = "log2") + 
+  ggtitle("Andmed on logaritmitud, aga teljed mitte")
 ```
 
-2. logaritmi andmed aes()-s: andmed ja teljed on logaritmitud 
 
-```{r}
-ggplot(cars, aes(x = log2(speed), y = log2(dist))) + geom_point()
-```
 
-3. Andmed on logaritmitud, aga teljed mitte
-
-```{r}
-#data is log transformed but the scale is linear
-sp + coord_trans(x="log2", y="log2") 
-```
-
-### Põõrame graafikut 90 kraadi
+### Pöörame graafikut 90 kraadi
 
 
 ```{r eval=FALSE}
