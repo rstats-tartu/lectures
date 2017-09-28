@@ -84,9 +84,9 @@ dat1
 
 ## dplyr ja selle viis verbi
 
-Need tuleb teil omale pähe ajada sest nende 5 verbiga (pluss gather ja spread) saab lihtsalt teha 90% andmeväänamisest, mida teil elus vaja läheb. 
+Need tuleb teil omale pähe ajada sest nende 5 verbiga (pluss gather ja spread) saab lihtsalt teha 90% andmeväänamisest, mida teil elus ette tuleb. 
 NB! Check the data wrangling cheatsheet and dplyr help for further details. 
-dplyr laetakse koos tidyverse-ga automaatselt teie workspace.
+dplyr laetakse koos tidyverse-ga automaatselt teie workspace-i.
 
 ### `select()` columns
 
