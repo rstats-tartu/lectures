@@ -17,6 +17,7 @@ library(corrgram)
 library(modelr)
 library(broom)
 library(car)
+library(scatterplot3d)
 ```
 
 
@@ -183,17 +184,33 @@ plot(y~x1,
 lines(y1~x1)
 ```
 
-Nagu näha, tulemuseks on ikkagi sirge. Veelgi enam, tulemuseks on paralleelne sirge mudeliga y=x1, mille intercept = mean(x2). Muidugi võime me plottida selle mudeli suvalise x2 väärtuse korral või lasta varieeruma hoopis x2 ja fikseerides x1 väärtuse, või plottida 3D mudel, kus nii x1 kui x2 saavad omandada rea väärtusi. Viimasel juhul ei ole enam tegu regressioonisirgega vaid regressioonitasandiga (aga see tasand on laudsirge)
+Nagu näha, tulemuseks on ikkagi sirge. Veelgi enam, tulemuseks on paralleelne sirge mudeliga y=x1, mille intercept = mean(x2). Muidugi võime me plottida selle mudeli suvalise x2 väärtuse korral või lasta muutuma hoopis x2 ja fikseerida x1 väärtuse. 
+
+Me võime ka joonistada 3D pildi olukorrast, kus nii x1 kui x2 omandavad rea väärtusi:
+
+```{r}
+#library(rgl) #plot3d()
+library(scatterplot3d)
+x1 <-  1:100 
+x2 <-  1:100
+b3 <- 0.1
+y <-   x1 + x2 
+df <- data.frame(y=y, x1=x1, x2=x2)
+scatterplot3d(df$x1, df$x2, df$y, highlight.3d=TRUE, col.axis="blue",
+      col.grid="lightblue")
+```
+
+Selles mudelis erineb sirge y = x1 + x2 tõus sirge y= x1 tõusust, aga tegemist on ikkagi sirgega 3D ruumis.
 
 
 Nüüd lisame eelmisele mudelile interaktsiooni kahe muutuja (x1 ja x2) vahel.
 
 *y = y = x1 + x2 + b3x1x2*
 
-Interaktsiooni modelleerime korrutades läbi x1 ja x2 ja andes sellele korrutisele kaalu b3 (antud juhul 0.1).
+Interaktsiooni modelleerime korrutades läbi x1 ja x2 ja andes sellele korrutisele kaalu b3 (antud juhul 0.1). Jällegi plotime kõigepealt olukorra, kus x1 omab rida väärtusi, aga x2 on fikseeritud oma keskväärtusele.
 ```{r fig.height=3, fig.width=3}
-x1 <-  0:100 
-x2 <-  0:100
+x1 <-  1:100 
+x2 <-  1:100
 b3 <- 0.1
 y <-   x1 + mean(x2) + b3*x1*mean(x2)
 y1 <-  x1 + mean(x2) 
@@ -203,7 +220,18 @@ plot(y~x1,
 lines(y1~x1)
 ```
 
-Nagu näha, interaktsioon viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. Kui see mudel plottida välja 3D-s üle paljude x1 ja x2 väärtuste, saame me 2D regressioonitasapinna, mis on kõver (b3 annab kurvatuuri).
+Nagu näha, interaktsioon viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x1 ja x2 väärtuste, saame me regressioonikurvi (mitte sirge), kus b3 annab kurvatuuri.
+
+```{r}
+x1 <-  1:100 
+x2 <-  1:100
+b3 <- 0.1
+y <-   x1 + x2 + b3*x1*x2
+y1 <-  x1 + x2 
+df <- data.frame(y=y, y1=y1, x1=x1, x2=x2)
+scatterplot3d(df$x1, df$x2, df$y, highlight.3d=TRUE, col.axis="blue",
+      col.grid="lightblue")
+```
 
 
 ### Neli mõistet 
