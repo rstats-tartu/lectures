@@ -167,6 +167,44 @@ plot(y~x,
 
 See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline, olukord. Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu. Meie valimiandmed ei peegelda täpselt inimpopulatsiooni. Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole. Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.  
 
+**Ja lõpuks kaks tavalist lineaarse mudeli laiendust.** Esiteks, mudel, kus meil on mitu prediktorit x1, x2, ... xn, mis on additiivse mõjuga. Additiivne tähendab, et me liidame nende mõjud, mis omakorda tähendab, et me usume, et x1...xn mõjud y-i väärtusele on üksteisest sõltumatud. Mudel on siis kujul *y = a + b1x1 + b2x2 + ... + bnxn*
+
+me ehitame lihtsa variandi sellest mudelist *y = x1 + x2* (a = b1 = b2 = 0) ja plotime selle mudeli y sõltuvusena x1-st juhul, kus x2 on fikeeritud oma keskmisele väärtusele 
+
+```{r fig.height=3, fig.width=3}
+x1 <-  0:100 
+x2 <- 0:100
+
+y <-   x1 + mean(x2)
+y1 <- x1
+plot(y~x1, 
+     type="l", 
+     ylim=c(0, 200), col="red")
+lines(y1~x1)
+```
+
+Nagu näha, tulemuseks on ikkagi sirge. Veelgi enam, tulemuseks on paralleelne sirge mudeliga y=x1, mille intercept = mean(x2). Muidugi võime me plottida selle mudeli suvalise x2 väärtuse korral või lasta varieeruma hoopis x2 ja fikseerides x1 väärtuse, või plottida 3D mudel, kus nii x1 kui x2 saavad omandada rea väärtusi. Viimasel juhul ei ole enam tegu regressioonisirgega vaid regressioonitasandiga (aga see tasand on laudsirge)
+
+
+Nüüd lisame eelmisele mudelile interaktsiooni kahe muutuja (x1 ja x2) vahel.
+
+*y = y = x1 + x2 + b3x1x2*
+
+Interaktsiooni modelleerime korrutades läbi x1 ja x2 ja andes sellele korrutisele kaalu b3 (antud juhul 0.1).
+```{r fig.height=3, fig.width=3}
+x1 <-  0:100 
+x2 <-  0:100
+b3 <- 0.1
+y <-   x1 + mean(x2) + b3*x1*mean(x2)
+y1 <-  x1 + mean(x2) 
+plot(y~x1, 
+     type="l", 
+     ylim=c(0, 300), col="red")
+lines(y1~x1)
+```
+
+Nagu näha, interaktsioon viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. Kui see mudel plottida välja 3D-s üle paljude x1 ja x2 väärtuste, saame me 2D regressioonitasapinna, mis on kõver (b3 annab kurvatuuri).
+
 
 ### Neli mõistet 
 
