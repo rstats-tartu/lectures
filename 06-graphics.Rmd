@@ -886,7 +886,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "fill")
 ```
 
-Ja lõpuks, kui te ikkagi tahate plottida tulpdiagrammi, nii et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasuta: `geom_bar(stat = "identity")`
+Ja lõpuks, kui te tahate teha midagi, mis on enamasti keskmiselt rumal valik, ehk plottida tulpdiagrammi viisil, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: `geom_bar(stat = "identity")`
 
 ```{r, fig.height=3, fig.width=3}
 df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
