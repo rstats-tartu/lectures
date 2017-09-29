@@ -818,7 +818,7 @@ ggMarginal(diffplotp, type="histogram", bins = 25)
 
 Siis kasuta cleveland plotti. See on parem kui barplot. 
 
-```{r}
+```{r fig.height=3, fig.width=4}
 dd <- diamonds %>% group_by(clarity) %>% summarise(number_of_diamonds=n())
 dd %>% ggplot(aes(x=number_of_diamonds, 
                   y=reorder(clarity, number_of_diamonds))) +
@@ -839,7 +839,7 @@ str(diamonds)
 
 
 loeb üles, mitu korda esineb iga cut
-```{r}
+```{r fig.height=3, fig.width=4}
 ggplot(diamonds) + 
   geom_bar(aes(x = cut, fill = cut)) + 
   theme(legend.position="none")
@@ -858,21 +858,21 @@ Pane tähele et tulpade omavahelised suhted jäid samaks. Muutus ainult y telje 
 
 Edasi lisame eelnevale veel ühe muutuja: clarity. Nii saame üles lugeda kõigi cut-i ja clarity kombinatsioonide esinemise arvu või sageduse. Erinvate clarity tasemete esinemiste arv samal cut-i tasemel on siin üksteise otsa kuhjatud, mis tähendab, et tulpade kõrgus ei muutu võrreldes eelnevaga.
 
-```{r}
+```{r fig.height=3, fig.width=4}
 ggplot(diamonds) + 
   geom_bar(aes(x = cut, fill = clarity))
 ```
 
 Kui me tahame, et cut-i ja clarity kombinatsioonid oleks kastidena ükteise sees, pigem kui üksteise otsa kuhjatud, siis kasutame position = "identity" argumenti. 
 
-```{r}
+```{r fig.height=3, fig.width=4}
 ggplot(diamonds, aes(x = cut, fill = clarity)) + 
   geom_bar(alpha = 0.7, position = "identity") 
 ```
 
 ka see graafik pole väga lihtne lugeda. Parem viime clarity klassid üksteise kõrvale
 
-```{r}
+```{r fig.height=3, fig.width=4}
 ggplot(data = diamonds, aes(x = cut, fill = clarity)) + 
   geom_bar(position = "dodge")
 ```
@@ -881,11 +881,17 @@ Eelnev on hea viis kuidas võrrelda clarity tasemete esinemis-sagedusi ühe cut-
 
 Ja lõpuks, position="fill" normaliseerib tulbad, mis muudab selle, mis toimub iga cut-i sees, hästi võrreldavaks. See on hea viis, kuidas võrrelda clarity tasemete proportsioone erinevate cut-i tasemete vahel. 
 
-```{r}
+```{r fig.height=3, fig.width=4}
 ggplot(data = diamonds, aes(x = cut, fill = clarity)) + 
   geom_bar(position = "fill")
 ```
 
+Ja lõpuks, kui te ikkagi tahate plottida tulpdiagrammi, nii et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasuta: `geom_bar(stat = "identity")`
+
+```{r, fig.height=3, fig.width=3}
+df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
+ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
+```
 
 
 ### Andmepunktid on ükshaaval välja plotitud

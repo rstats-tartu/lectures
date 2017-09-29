@@ -23,8 +23,8 @@ library(car)
 
 ## 2.2 Suur ja väike maailm
 
-Statistika on lahutamatu loodusteadusest. Järgnevalt seletan, miks.
-  Kuna maailmas on kõik kõigega seotud, on seda raske otse uurida. Teadus töötab tänu sellele, et teadlased lõikavad reaalsuse väikesteks tükkideks, kasutades tordilabidana teaduslike hüpoteese, ning uurivad seda tükikaupa. Tüüpiline bioloogiline hüpotees pakub välja mittematemaatilise seletuse mõnele piiritletud loodusnähtusele. Näiteks darvinistlik evolutsiooniteooria püüab seletada evolutsiooni toimemehhanisme. Seda teooriat võib võrrelda empiiriliste andmetega. 
+
+  Kuna maailmas on kõik kõigega seotud, on seda raske otse uurida. Teadus töötab tänu sellele, et teadlased lõikavad reaalsuse väikesteks tükkideks, kasutades tordilabidana teaduslike hüpoteese, ning uurivad seda tükikaupa lootuses, et kui kõik tükid on korralikult läbi nätsutatud, saab sellest taas tordi kokku panna. Tüüpiline bioloogiline hüpotees pakub välja mittematemaatilise seletuse mõnele piiritletud loodusnähtusele. Näiteks darvinistlik evolutsiooniteooria püüab seletada evolutsiooni toimemehhanisme. Seda teooriat võib võrrelda empiiriliste andmetega. 
 
 Mis juhtub, kui teie hüpotees on andmetega kooskõlas? Kas see tähendab, et see hüpotees vastab tõele? Või, et see on tõenäoliselt tõene? Kahjuks on vastus mõlemale küsimusele eitav. Põhjuseks on asjaolu, et enamasti leiab iga nähtuse seletamiseks rohkem kui ühe alternatiivse teadusliku hüpoteesi (näit. lamarksistlik evolutsiooniteooria) ning rohkem kui üks üksteist välistav hüpotees võib olla olemasolevate andmetega võrdses kooskõlas. Asja teeb veel hullemaks, et teoreetiliselt on võimalik sõnastada lõpmata palju erinevaid teooriaid, mis kõik pakuvad alternatiivseid ja üksteist välistavaid seletusi samale nähtusele. Kuna hüpoteese on lõpmatu hulk, aga andmeid on alalti lõplik hulk, siis saab igas teaduslikus "faktis" kahelda.  
 Kunagi ei või kindel olla, et parimad teooriad ei ole täiesti tähelepanuta jäänud ning, et meie poolt kogutud vähesed andmed kajastavad hästi kõiki võimalikke andmeid. 
@@ -33,9 +33,10 @@ Kunagi ei või kindel olla, et parimad teooriad ei ole täiesti tähelepanuta j�
 
   Ülalmainitud teadusliku meetodi puudused tingivad, et meie huvides on oma teaduslikke probleeme veel ühe taseme võrra lihtsustada, taandades need statistilisteks probleemideks. Selleks tuletame me tavakeelsest teaduslikust teooriast täpselt formuleeritud matemaatilise mudeli ning seejärel asume uurima oma mudelit lootuses, et mudeli kooskõla andmetega ütleb meile midagi teadusliku hüpoteesi kohta. Enamasti töötab selline lähenemine siis, kui mudeli ehitamisel arvestati võimaliku andmeid genereeriva mehhanismiga -- ehk, kui mudeli matemaatiline struktuur koostati teaduslikku hüpoteesi silmas pidades. Mudelid, mis ehitatakse silmas pidades puhtalt matemaatilist sobivust andmetega, ei kipu omama teaduslikku seletusjõudu. 
   
-  > Meil on kaks hüpoteesi, A ja B. Juhul kui A on tõene ja B on väär, kas on võimalik, et B on tõele lähemal kui A? Kui A ja B on punkthüpoteesid parameetriväärtuse kohta, siis on vastus eitav. Aga kui A ja B on antud statistiliste mudelite kujul, siis on vastus jaatav. Näiteks, kui tõde on, et eesti meeste keskmine pikkus on 178.3 cm ja A ütleb, et keskmine pikkus jääb kuhugi 150 cm ja 220 cm vahele ning B ütleb, et see jääb kuhugi 179 cm ja 182 cm vahele, siis on B tõele lähemal selles mõttes, et meil on temast teaduslikus mõttes rohkem kasu. Siit on näha oluline erinevus teadusliku hüpoteesi ja statistilise mudeli vahel: mudel on orienteeritud kasule, samal ajal kui hüpotees on orienteeritud tõele.  
+  > Meil on kaks hüpoteesi, A ja B. Juhul kui A on tõene ja B on väär, kas on võimalik, et B on tõele lähemal kui A? Kui A ja B on teineteist välistavad punkthüpoteesid parameetri väärtuse kohta, siis on vastus eitav. Aga mis juhtub, kui A ja B on statistilised mudelid? Näiteks, kui tõde on, et eesti meeste keskmine pikkus on 178.3 cm ja A ütleb, et keskmine pikkus jääb kuhugi 150 cm ja 220 cm vahele ning B ütleb, et see jääb kuhugi 179 cm ja 182 cm vahele, siis on B tõele lähemal selles mõttes, et meil on temast teaduslikus mõttes rohkem kasu. Siit on näha oluline erinevus teadusliku hüpoteesi ja statistilise mudeli vahel: hüpotees on orienteeritud tõele, samal ajal kui mudel on orienteeritud kasule.  
   
-  Mudeli maailm erineb päris maailmast selle poolest, et mudeli maailmas on kõik sündmused, mis põhimõtteliselt võivad juhtuda, juba ette teada ja üles loendatud (seda sündmuste kogu kutsutakse parameetriruumiks). Tehniliselt on mudeli maailmas üllatused võimatud.
+  Mudeli maailm erineb päris maailmast selle poolest, et mudeli maailmas on kõik sündmused, mis põhimõtteliselt võivad juhtuda, juba ette teada ja üles loendatud (seda sündmuste kogu kutsutakse parameetriruumiks). Tehniliselt on mudeli maailmas üllatused võimatud. 
+  Lisaks, tõenäosusteooria ütleb, et Bayesi teoreemi kasutades töötame me mudelis leiduva informatsiooniga parimal võimalikul viisil. Aga kogu see rõõm jääb ikkagi meie mudeli piiridesse.
 Mudeli eeliseks teooria ees on, et hästi konstrueeritud mudel on lihtsamini mõistetav --- erinevalt vähegi keerulisemast teaduslikust hüpoteesist on mudeli eeldused ja ennustused läbinähtavad ja täpselt formuleeritavad. Mudeli puuduseks on aga, et erinevalt teooriast ei ole mingit võimalust, et mudel vastaks tegelikkusele. Seda sellepärast, et mudel on taotluslikult lihtsustav (erandiks on puhtalt ennustuslikud mudelid, mis on aga enamasti läbinähtamatu struktuuriga). Mudel on kas kasulik või kasutu; teooria on kas tõene või väär. Mudeli ja maailma vahel võib olla kaudne peegeldus, aga mitte kunagi otsene side. Seega, ükski number, mis arvutatakse mudeli raames, ei kandu sama numbrina üle teaduslikku ega päris maailma. Ja kogu statistika (ka mitteparameetriline) toimub mudeli väikses maailmas. Arvud, mida statistika teile pakub, elavad mudeli maailmas; samas kui teie teaduslik huvi on suunatud päris maailmale. Näiteks 95% usaldusintervall ei tähenda, et te peaksite olema 95% kindel, et tõde asub selles intervallis – sageli ei tohiks te seda nii julgelt tõlgendada isegi kitsas mudeli maailmas. 
   
 #### 2.2.2. Näide: Aristoteles, Ptolemaios ja Kopernikus
@@ -88,7 +89,7 @@ Kui vaadata Koperniku produkti teooriana, mitte mudelina, siis oli sellel küll 
 Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab, kuidas inimeste pikkus sõltub nende kaalust. Lihtsaim mudel pikkuse sõltuvusest kaalust on pikkus = kaal (formaliseeritult: y = x) ja see mudel ennustab, et kui Johni kaal = 80 kg, siis John on 80 cm pikkune. siin on pikkus muutuja, mille väärtust ennustatakse ja kaal muutuja, mille väärtuste põhjal ennustatakse pikkusi. Selle mudeli saame graafiliselt kujutada nii:
  
 ```{r fig.height=3, fig.width=3}
-x <- 50:200 #y = kaal
+x <- 0:200 #y = kaal
 y <- x # x = pikkus 
 plot(y~x, 
      type="l", 
@@ -102,16 +103,52 @@ Mudeli keeles tähistame me seda, mida me ennustame (antud juhul pikkus) Y-ga ja
 ```{r fig.height=3, fig.width=3}
 x <- 50:200
 y <- x - x**2
-plot(y~x, type="l")
+plot(y~x, 
+     type="l")
 ```
 
 See on äärmiselt jäik mudel: sirge, mille asukoht on rangelt fikseeritud. Sirge lõikab y telge alati 0-s (mudeli keeles: sirge intercept ehk lõikepunkt Y teljel = 0) ja tema tõusunurk saab olla ainult 45 kraadi (mudeli keeles: mudeli slope ehk tõus = 1). Selle mudeli jäikus tuleneb sellest, et temas ei ole parameetreid, mille väärtusi me saaksime muuta ehk tuunida.  
 
-Kuidas aga kirjeldada sirget, mis võib paikneda 2-mõõtmelises ruumis ükskõik millises asendis? Selleks lisame mudelisse kaks parameetrit, intercept (a) ja tõus (b). Kui a = 0 ja b = 1, saame me eelpool kirjeldatud mudeli y = x. Kui a = 102, siis sirge lõikab y telge väärtusel 102. Kui b = 0.8, siis x-i tõustes 1 ühiku võrra tõuseb y-i väärtus 0.8 ühiku võrra. Kui a = 100 ja b = 0, siis saame sirge, mis on paraleelne x-teljega ja lõikab y telge väärtusel 100. Seega, Teades a ja b väärtusi ning omistades x-le suvalise meid huvitava väärtuse, saab ennustada y-i keskmist väärtust. Näiteks, olgu andmete vastu fititud mudel: 
+Aga mis juhtub, kui me lisame mudelile konstandi: *y = a + x*?
+```{r fig.height=3, fig.width=3}
+x <- 0:200 
+a <- 30
+y <- a + x 
+plot(y~x, 
+     xlim=c(0, 100), 
+     ylim=c(0, 130), 
+     col="red",
+     type="l")
+abline(c(0,1), lty=2)
+
+```
+
+
+
+Meie konstant a määrab *y* väärtuse, kui *x=0*, ehk sirge lõikepunkti *y* teljel. 
+Teisisõnu, a = mudeli intercept
+
+Mis juhtub, kui me mitte ei liida vaid korrutame *x*-i konstandiga: *y =  bx*?
+
+```{r fig.height=3, fig.width=3}
+x <- 0:200 #y = kaal
+b <- 3
+y <- b*x # x = pikkus 
+plot(y~x, 
+     xlim=c(0, 100), 
+     ylim=c(0, 100), 
+     col="red",
+     type="l")
+abline(c(0,1), lty=2)
+```
+
+Nüüd muutub sirge tõusunurk, ehk kui palju me ootame *y*-t muutumas, kui *x* muutub näiteks ühe ühiku võrra. Kui b=3, siis x-i tõustes ühe ühiku võrra suureneb y kolme ühiku võrra. Proovi järgi, mis juhtub, kui b = -3.
+
+Selleks, et sirget kahes dimensioonis vabalt liigutada, piisab kui me kombineerime eelnevad näited ühte: *y = a + bx*. Selleks lisame mudelisse kaks parameetrit, intercept (a) ja tõus (b). Kui *a = 0* ja *b = 1*, saame me eelpool kirjeldatud mudeli *y = x*. Kui *a = 102*, siis sirge lõikab *y* telge väärtusel 102. Kui *b = 0.8*, siis *x*-i tõustes 1 ühiku võrra tõuseb *y*-i väärtus 0.8 ühiku võrra. Kui *a = 100* ja *b = 0*, siis saame sirge, mis on paraleelne x-teljega ja lõikab y-telge väärtusel 100. Seega, Teades a ja b väärtusi ning omistades x-le suvalise meid huvitava väärtuse, saab ennustada y-i keskmist väärtust. Näiteks, olgu andmete vastu fititud mudel: 
 
 pikkus(cm) = 102 + 0.8 * kaal(kg) ehk 
 
-y = 102 + 0.8x. 
+*y = 102 + 0.8x*. 
 
 Omistades nüüd kaalule väärtuse 80 kg, tuleb mudeli poolt ennustatud keskmine pikkus 102 + 0.8 * 80 = 166 cm. Iga kg lisakaalu ennustab mudeli kohaselt 0.8 cm võrra suuremat pikkust.
 
