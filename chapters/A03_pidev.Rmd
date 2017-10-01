@@ -290,13 +290,13 @@ sum(s$es<0)/nrow(s)
 USA presidendid on keskeltläbi 8 cm pikemad kui euroopa omad, aga ebakindlus selle hinnangu ümber on suur (0-16 cm).
 Tõenäosus, et USA presidentide keskmine pikkus on väiksem kui euroopa presidentide keskmine pikkus on selle mudeli järgi 3%. See ei ole tegelikult parim mudel, milleks me võimelised oleme (meie mudel eeldab pahasti, et mõlema grupi varieeruvus on sama), aga jätame praegu asja nii.
 
-## 4.9. lineaarne regressioon
+## lineaarne regressioon
 
 Eelmises peatükis hindasime ühe andmekogu (näiteks mõõdetud pikkuste) põhjal ehitatud mudelite parameetreid (näiteks keskmist ja statndardhälvet). Nüüd astume sammu edasi ja hindame kahe muutuja (näiteks pikkuse ja kaalu) koos-varieeruvust. Selleks ehitame mudeli, mis sisaldab mõlemaid muutujaid ja küsime: kui palju sõltub y varieeruvus x varieeruvusest. Lihtsaim viis sellele küsimusele läheneda on lineaarse regressiooni kaudu. Me ehitame lineaarse mudeli, mis vaatab kaalu-pikkuse paare (igal subjektil mõõdeti kaal ja pikkus ning mudel vaatab kaalu ja pikkuse koos-varieeruvust subjektide vahel). Enam ei tohiks tulla üllatusena, et meie arvutused ei anna numbrilist hinnangut mitte teaduslikule küsimusele selle kohta kuidas y-i väärtused sõltuvad x-i väärtustest, vaid mudeli parameetritele. Meie mudel on sirge võrrand y = a + b*x ja tavapärases R-i notatsioonis kirjutatakse see y~x. 
 
 Kuna pikkused ja kaalud on igavad, proovime vaadata kuidas riigi keskmine eluiga on seotud riigi rikkusega.
 
-## 4.10. lm() - vähimruutude meetodiga fititud lineaarsed mudelid
+### kordamine: lm()
 
 ```{r}
 library(gapminder)
@@ -362,8 +362,24 @@ AIC on Aikake Informatsiooni Kriteerium, mis võtab arvesse nii R-ruudu kui mude
 
 Seega parim mudel on m3 ja kõige kehvem on m2, mille intercept on realistlikult nulli fikseeritud! 
 
+### R-i lm() mudeli süntaks
 
-## 4.11. Bayesi kaudu lineaarse mudeli fittimine
+ (+X) lisa see muutuja mudelisse
+
+ (-X) eemalda see muutuja
+
+(X:Z) mudelda interaktsioon X1 ja X2 vahel (y~ x1:x2 tähendab y = a + b1x1x2)
+
+(X*Z) lisa nii X kui Z kui nende vaheline interaktsioon:
+  (y ~ x1*x2 tähendab y = a + b1x1 + b2x2 + b3x1x2)
+  
+  (y ~ 1) - mudelis on ainult intercept
+
+ (y ~ x - 1) - võtab intercepti maha (intercept=0).  y ~ x + 0 ja y ~ 0 + x teevad sedasama.
+
+Mudeli kontekstis tähendavad +, - ja * midagi muud, kui aritmeetikas. Need mudeli osad, kus operaatoreid kasutatakse nende aritmeetilises vormis tuleb panna funktsiooni  I(). Näiteks mudelis y ~ a + I(b+c) on b+c b ja c summa.
+
+## Bayesi kaudu lineaarse mudeli fittimine
 
 Nüüd Bayesi mudelid. Glimmer on abivahend, mis konverteerib lm() mudeli kirjelduse Bayesi mudeli kirjelduseks kasutades normaaljaotusega tõepära mudelit.
 ```{r}
