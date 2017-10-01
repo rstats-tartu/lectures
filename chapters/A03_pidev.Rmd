@@ -572,10 +572,10 @@ Meil on võimalik lisada regressioonivõrrandisse lisaprediktoreid. Nüüd ei k�
 
 Sellise mudeli tõlgendus on suhteliselt lihtne: 
 
-      **koef b1 ütleb meile, 
+  > koef b1 ütleb meile, 
       kui mitme ühiku võrra tõuseb/langeb muutuja y (eluiga) 
       kui muutuja x1 (l_GDP) tõuseb 1 ühiku võrra; 
-      tingimusel, et me teame kõigi teiste muutujate väärtusi.** 
+      tingimusel, et me hoiame kõigi teiste muutujate väärtused konstantsed. 
       
       
 Sarnane definitsioon kehtib ka kõigi teiste prediktorite (x-de) kohta.
@@ -823,7 +823,7 @@ Eelnevad mudelid eeldavad, et prediktorite varieeruvused on üksteisest sõltuma
 
 y = a + b1x1 + b2x2 + b3x1x2
 
-Sellise mudeli järgi erineb sirge tõus erinevatel b2 väärtustel, ja erinevuse määr sõltub b3-st sõltuvalt interaktsiooni tugevusest. Samamoodi ja sümmeetriliselt erineb ka b2 väärtus erinevatel b1 väärtustel. Lisaks muutub muidugi ka intercept. Seega tähendab interaktsiooni mudel, et sirge tõusunurk ei ole alati sama. See on ühine paljude hierarhiliste mudelitega, mida võib omakorda vaadelda massivsete interaktsioonimudelitena. Seevastu y = a + b1x1 + b2x2 tüüpi mudel annab b1-le konstantse tõusunurga, kuid laseb intercepti muutuma sõltuvalt b2 väärtusest (ja vastupidi) 
+Sellise mudeli järgi erineb sirge tõus b1 erinevatel b2 väärtustel, ja erinevuse määr sõltub b3-st sõltuvalt interaktsiooni tugevusest. Samamoodi ja sümmeetriliselt erineb ka b2 väärtus erinevatel b1 väärtustel. Seega tähendab interaktsiooni mudel, et sirge tõusunurk ei ole alati sama. See on ühine paljude hierarhiliste mudelitega, mida võib omakorda vaadelda massivsete interaktsioonimudelitena. Seevastu y = a + b1x1 + b2x2 tüüpi mudel annab b1-le konstantse tõusunurga, kuid laseb intercepti muutuma sõltuvalt b2 väärtusest (ja vastupidi) 
 
 Sellise mudeli fittimises pole midagi erilist võrreldes sellega, mida me oleme juba õppinud. Aga selle fititud parameetrite tõlgendamine on keeruline. 
 alustame diskreetse muutujaga, continent. Selle interaktsioon SKP-ga.

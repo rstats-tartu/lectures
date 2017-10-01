@@ -13,11 +13,11 @@ library(tidyverse)
 library(rethinking)
 library(ggthemes)
 library(psych)
-library(corrgram)
-library(modelr)
-library(broom)
-library(car)
-library(scatterplot3d)
+library(corrgram) 
+library(modelr) #you may skip this
+library(broom) #you may skip this
+library(car) 
+library(scatterplot3d) #you may skip this
 ```
 
 
@@ -27,7 +27,7 @@ library(scatterplot3d)
 
   Kuna maailmas on kõik kõigega seotud, on seda raske otse uurida. Teadus töötab tänu sellele, et teadlased lõikavad reaalsuse väikesteks tükkideks, kasutades tordilabidana teaduslike hüpoteese, ning uurivad seda tükikaupa lootuses, et kui kõik tükid on korralikult läbi nätsutatud, saab sellest taas tordi kokku panna. Tüüpiline bioloogiline hüpotees pakub välja mittematemaatilise seletuse mõnele piiritletud loodusnähtusele. 
   
-  Näiteks antibiootikume uuritakse palju keemilise sideme tasemel kasutades orgaanilise keemia meetodeid. Antibiootikumide molekulaarseid märklaudu uuritakse molekulaarbioloogiliste meetoditega, nende toimet uuritakse rakubioloogia ja füsioloogia meetoditega, aga kaasajal on väga olulised ka ökoloogilised, evolutsioonilised, meditsiinilised, põllumajanduslikud, majanduslikud ja psühholoogilised aspektid. Kõigil neil tasanditel on loodud palju hüpoteese, millest kokku moodustub meie teadmine antibiootikumide kohta. Neid väga erinevaid asju, mida me kutsume hüpoteesideks, ühendab see, et neist igaüht võib võrrelda empiiriliste andmetega. Samuti, enamust neist saab kirjeldada matemaatiliste formalismide ehk mudelite abil, ja neid mudeleid saab omakorda võrrelda andmetega. Kuigi erinevate tasemete hüpoteesid on tavakeeles üksteisest väga erinevad, on neid kirjeldavad mudelid sageli matemaatiliselt üllatavalt sarnased.
+  Näiteks antibiootikume uuritakse palju keemilise sideme tasemel kasutades orgaanilise keemia meetodeid. Antibiootikumide molekulaarseid märklaudu uuritakse molekulaarbioloogiliste meetoditega, nende toimet uuritakse rakubioloogia ja füsioloogia meetoditega, aga kaasajal on väga olulised ka ökoloogilised, evolutsioonilised, meditsiinilised, põllumajanduslikud, majanduslikud ja psühholoogilised aspektid. Kõigil neil tasanditel on loodud palju hüpoteese, millest kokku moodustub meie teadmine antibiootikumide kohta. Neid väga erinevaid asju, mida me kutsume hüpoteesideks, ühendab see, et neist igaüht võib võrrelda empiiriliste andmetega. Samuti, enamust neist saab kirjeldada matemaatiliste formalismide ehk mudelite abil, ja neid mudeleid saab omakorda võrrelda andmetega. Kuigi erinevate tasemete hüpoteesid on tavakeeles üksteisest väga erinevad, on neid kirjeldavad mudelid sageli matemaatiliselt sarnased.
   
   > Kui mudel on teooria lihtsustus, siis teooria on maailma lihtsustus.
 
@@ -36,7 +36,7 @@ Kunagi ei või kindel olla, et parimad teooriad ei ole täiesti tähelepanuta j�
 
 ## Mudeli väike maailm
 
-  Ülalmainitud teadusliku meetodi puudused tingivad, et meie huvides on oma teaduslikke probleeme veel ühe taseme võrra lihtsustada, taandades need statistilisteks probleemideks. Selleks tuletame tavakeelsest teaduslikust teooriast täpselt formuleeritud matemaatilise mudeli ning seejärel asume uurima oma mudelit lootuses, et mudeli kooskõla andmetega ütleb meile midagi teadusliku hüpoteesi kohta. Enamasti töötab selline lähenemine siis, kui mudeli ehitamisel arvestati võimaliku andmeid genereeriva mehhanismiga -- ehk, kui mudeli matemaatiline struktuur koostati teaduslikku hüpoteesi silmas pidades. Mudelid, mis ehitatakse silmas pidades puhtalt matemaatilist sobivust andmetega, ei kipu omama teaduslikku seletusjõudu. 
+  Ülalmainitud teadusliku meetodi puudused tingivad, et meie huvides on oma teaduslikke probleeme veel ühe taseme võrra lihtsustada, taandades need statistilisteks probleemideks. Selleks tuletame tavakeelsest teaduslikust teooriast täpselt formuleeritud matemaatilise mudeli ning seejärel asume uurima oma mudelit lootuses, et mudeli kooskõla andmetega ütleb meile midagi teadusliku hüpoteesi kohta. Enamasti töötab selline lähenemine siis, kui mudeli ehitamisel arvestati võimaliku andmeid genereeriva mehhanismiga -- ehk, kui mudeli matemaatiline struktuur koostati teaduslikku hüpoteesi silmas pidades. Mudelid, mis ehitatakse silmas pidades puhtalt matemaatilist sobivust andmetega, ei kipu omama teaduslikku seletusjõudu, kuigi neil võib olla väga hea ennustusjõud. 
   
   > Meil on kaks hüpoteesi, A ja B. Juhul kui A on tõene ja B on väär, kas on võimalik, et B on tõele lähemal kui A? Kui A ja B on teineteist välistavad punkthüpoteesid parameetri väärtuse kohta, siis on vastus eitav. Aga mis juhtub, kui A ja B on statistilised mudelid? Näiteks, kui tõde on, et eesti meeste keskmine pikkus on 178.3 cm ja A ütleb, et keskmine pikkus jääb kuhugi 150 cm ja 220 cm vahele ning B ütleb, et see jääb kuhugi 179 cm ja 182 cm vahele, siis on B tõele lähemal selles mõttes, et meil on temast teaduslikus mõttes rohkem kasu. Siit on näha oluline erinevus teadusliku hüpoteesi ja statistilise mudeli vahel: hüpotees on orienteeritud tõele, samal ajal kui mudel on orienteeritud kasule.  
   
@@ -178,93 +178,35 @@ plot(y~x,
 
 See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline, olukord. Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu. Meie valimiandmed ei peegelda täpselt inimpopulatsiooni. Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole. Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.  
 
-**Järgmiseks näitame kaht tavalist lineaarse mudeli laiendust.** 
-
-Esiteks, mudel, kus meil on mitu prediktorit x1, x2, ... xn, mis on additiivse mõjuga. Additiivne tähendab, et me liidame nende mõjud, mis omakorda tähendab, et me usume, et x1...xn mõjud y-i väärtusele on üksteisest sõltumatud. Mudel on siis kujul 
-
-*y = a + b1x1 + b2x2 + ... + bnxn*
-
-me ehitame lihtsa variandi sellest mudelist *y = x1 + x2* (a = b1 = b2 = 0) ja plotime selle mudeli y sõltuvusena x1-st juhul, kus x2 on fikeeritud oma keskmisele väärtusele 
-
-```{r fig.height=3, fig.width=3}
-x1 <-  1:100 
-x2 <-  101:200
-
-y <-   x1 + mean(x2)
-plot(y~x1, 
-     type="l", 
-     ylim=c(0, 300), col="red")
-abline(c(0,1), lty=2)
-```
-
-Nagu näha, tulemuseks on ikkagi sirge. Veelgi enam, tulemuseks on paralleelne sirge mudeliga *y = x1*, mille *intercept = mean(x2)*. Muidugi võime me plottida selle mudeli suvalise *x2* väärtuse korral või lasta muutuma hoopis *x2* ja fikseerida *x1* väärtuse. 
-
-Me võime ka joonistada 3D pildi olukorrast, kus nii *x1* kui *x2* omandavad rea väärtusi:
-
+Kahe parameetriga sirge mudel ongi see, mida me fitime kahedimensiooniliste andmetega.
+Näiteks nii:
 ```{r}
-#library(rgl) #plot3d()
-library(scatterplot3d)
-x1 <-  1:100 
-x2 <-  1:100 
-y <-   x1 + x2 
-df <- data.frame(y=y, x1=x1, x2=x2)
-scatterplot3d(df$x1, df$x2, df$y, 
-              col.axis="blue", 
-              col.grid="lightblue", 
-              type="l", lwd=2, 
-      zlim=c(0, 150), xlim=c(0, 150), ylim=c(0, 150))
+#read in the internal dataset iris
+data(iris)
+# fit a linear model and name the model object as m1
+m1 <- lm(data=iris, Sepal.Length ~ Petal.Length)
+# make a scatter plot, colored by the var called "Species"
+plot(iris$Sepal.Length~iris$Petal.Length, col=iris$Species)
+# draw the fitted regression line from m1
+abline(m1)
 ```
 
-Selles mudelis erineb sirge *y = x1 + x2* tõus sirge *y= x1* tõusust, aga tegemist on ikkagi sirgega -- mis sest, et 3D ruumis.
+Mudeli fittimine tähendab siin lihtsalt, et sirge on 2D ruumi asetatud nii, et see oleks võimalikult lähedal kõikidele punktidele.
 
+> oletame, et meil on n andmepunkti ja et me fitime neile sirge. Nüüd plotime fititud sirge koos punktidega ja tõmbame igast punktist mudelsirgeni joone, mis on paraleelne y-teljega. Seejärel mõõdame nende n joone pikkused. Olgu need pikkused a, b, ... i. lm() funktsioon fitib sirge niimoodi, et summa a^2^ + b^2^ + ... i^2^ oleks minimaalne. Seda kutsutakse vähimruutude meetodiks.
 
-Nüüd lisame eelmisele mudelile interaktsiooni kahe muutuja (x1 ja x2) vahel.
-
-*y = y = x1 + x2 + b3x1x2*
-
-Interaktsiooni modelleerime korrutades läbi x1 ja x2 ja andes sellele korrutisele kaalu b3 (antud juhul 0.1). Jällegi plotime kõigepealt olukorra, kus x1 omab rida väärtusi, aga x2 on fikseeritud oma keskväärtusele.
-```{r fig.height=3, fig.width=3}
-x1 <-  1:100 
-x2 <-  1:100
-b3 <- 0.1
-y <-   x1 + mean(x2) + b3*x1*mean(x2)
-y1 <-  x1 + mean(x2) 
-plot(y~x1, 
-     type="l", 
-     ylim=c(0, 300), col="red")
-lines(y1~x1)
-```
-
-Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x1 ja x2 väärtuste, saame me regressioonikurvi (mitte sirge), kus b3 annab kurvatuuri.
-
+Fititud koefitsientide väärtused saame nii
 ```{r}
-x1 <-  1:100 
-x2 <-  1:100
-b3 <- 0.03
-y <-   x1 + x2 + b3*x1*x2
-df <- data.frame(y=y,  x1=x1, x2=x2)
-scatterplot3d(df$x1, df$x2, df$y, col.axis="blue",
-      col.grid="lightblue", type="l", lwd=2,
-      zlim=c(0, 150), xlim=c(0, 150), ylim=c(0, 150))
+coef(m1)
 ```
 
-Ja lõpuks painutame oma sirge mudelit polünoomide abil.
-
-*y = a + bx + b1x^2 + b2x^3 + ... + bnx^n*
-
-See joon on ikka veel täielikult fikseeritud, aga ta pole enam sirge (ehkki tehniliselt on meil ikka lineaarne seos x ja y vahel). Me kasutame konstanti -0.012, et saada meile meeldiva kujuga joont, aga isegi kui see joon sobib hästi andmetega, on vähetõenäoline, et selle mudeli matemaatiline formalism aitaks meil oma teaduslikku teooriat paremini mõista. Polünoomsed mudelid on äärmiselt paindlikud, kuid teaduslikus mõttes ebahuvitavad senikaua, kui nende struktuur ei kajasta tuntud füüsikalisi protsesse. 
-```{r fig.height=3, fig.width=3}
-x <- 0:100
-y <- x - 0.012*x**2  
-plot(y~x, 
-     type="l")
-```
+Siin a = (Intercept) ja b = Petal.Length ehk 0.41.
 
 ### Neli mõistet 
 
 Mudelis *y = a + bx* on *x* ja *y* muutujad, ning *a* ja *b* on parameetrid. Muutujate väärtused fikseeritakse andmete poolt, parameetrid fititakse andmete põhjal. Fititud mudel ennustab igale *x*-i väärtusele vastava kõige tõenäolisema *y* väärtuse (*y* keskväärtuse sellel *x*-i väärtusel).
  
- > Y - mida me ennustame (dependent variable, predicted varable)
+ > Y - mida me ennustame (dependent variable, predicted variable)
  
  > X - mille põhjal me ennustame (independent variable, predictor)
  
@@ -342,6 +284,83 @@ AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel?
     mis välistavad ekstreemsed parameetriväärtused. 
     Vt http://elevanth.org/blog/2017/08/22/there-is-always-prior-information/ 
 
+
+
+
+### kaks lineaarse mudeli laiendust. 
+
+#### mitme sõltumatu prediktoriga mudel
+
+Esiteks vaatame mudelit, kus on mitu prediktorit x1, x2, ... xn, mis on additiivse mõjuga. See tähendab, et me liidame nende mõjud, mis omakorda tähendab, et me usume, et x1...xn mõjud y-i väärtusele on üksteisest sõltumatud. Mudel on siis kujul 
+
+*y = a + b1x1 + b2x2 + ... + bnxn*
+
+
+> mitme prediktoriga mudeli iga prediktori tõus (beta koefitsient) ütleb, mitme ühiku võrra ennustab mudel y muutumist juhul kui see prediktor muutub ühe ühiku võrra ja kõik teised prediktorid ei muutu üldse. Seega pole teiste (kollapseeritud) prediktorite absoluutväärtus ennustusel oluline.
+
+
+Kui meie andmed on mõõdetud 3D-s ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on 4 prediktoriga mudel, siis me liigume 4-mõõtmelisse ruumi, jne. 3D ruumi on veel võimalik mõistlikult plottida.
+
+```{r echo=FALSE}
+library(scatterplot3d)  
+data(iris)
+# prepare a df of 3 cols: 
+# Sepal.Length -- Sepal.Width -- Petal.Length (x -- y -- z)
+  iris1 <- iris[,1:3]
+   s3d <- scatterplot3d(iris1, angle=55, scale.y=0.7, pch=20, 
+                        col.axis="blue", col.grid="lightblue" )
+  my.lm <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data= iris1)
+  s3d$plane3d(my.lm, lty.box = "solid")
+
+```
+
+Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile. 
+
+```{r}
+data(iris)
+m1 <- lm(data=iris, Sepal.Width~Sepal.Length + Petal.Length)
+plot(iris$Sepal.Width~iris$Sepal.Length, ylim=c(2,8), col=Species)
+abline(m1)
+```
+
+Enam ei läbi sirge punkte, nagu ta seda 3D ruumis tegi.
+
+Võrlduseks ühe prediktoriga mudel
+```{r}
+m <- lm(data=iris, Sepal.Width~Sepal.Length)
+plot(iris$Sepal.Width~iris$Sepal.Length, ylim=c(2,8), col=Species)
+abline(m)
+```
+
+
+Nõnda võrdleme kahe mudeli koefitsiente
+
+```{r}
+coef(m); coef(m1)
+```
+
+Nagu näha, mudeli m b1 koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist.
+
+Kumb mudel on siis parem? AIC-i järgi on m1 kõvasti parem, kui m.
+```{r}
+AIC(m, m1)
+```
+
+#### Interaktsioonimudel - ühe prediktori mõju sõltub teise prediktori väärtusest
+
+*y = a + b1x1 + b2x2 + b3x1x2*
+
+Interaktsioonimudeli koefitsientide tõlgendamine on keerulisem. Hiljem õpime selliseid mudeleid graafiliselt tõlgendama. Mudeli koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
+
+> Interaktsioonimudelis sõltub x1 mõju tugevus Y-le (ehk b1) x2 väärtusest. Selle sõltuvuse määra kirjeldab b3 (x1 & x2 interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x2 mõju erinevatel x1 väärtustel. 
+
+Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b3. 
+
+Interaktsiooniga mudel on AIC-i järgi pisut vähem eelistatud võrreldes m1-ga. Seega, eriti lihtsuse huvides, eelistame m1-e.
+```{r}
+m2 <- lm(data=iris, Sepal.Width~Sepal.Length + Petal.Length + Sepal.Length*Petal.Length) 
+AIC(m, m1, m2)
+```
 
 
 ## Veamudel
