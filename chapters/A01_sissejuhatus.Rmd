@@ -1,9 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-
 
 # Bayesiaanlik statistika
 
@@ -48,19 +42,29 @@ Mudeli eeliseks teooria ees on, et hästi konstrueeritud mudel on lihtsamini mõ
 
 Aristoteles lõi teooria maailma toimimise kohta, mis domineeris haritud eurooplase maailmapilti enam kui 1200 aasta vältel. Selle kohaselt asub universumi keskpunktis maakera ning kõik, mida siin leida võib, on tehtud neljast elemendist: maa, vesi, õhk ja tuli. Samas, kogu maailmaruum alates kuu sfäärist on tehtud viiendast elemendist (eeter), mida aga ei leidu maal (nagu nelja elementi ei leidu kuu peal ja sealt edasi). Taevakehad (kuu, päike, planeedid ja kinnistähed) tiirlevad ümber maa kontsentrilistes sfäärides, mille vahel pole vaba ruumi. Seega on kogu liikumine eetri sfäärides ühtlane ja ringikujuline ja see liikumine põhjustab pika põhjus-tagajärg ahela kaudu kõiki liikumisi, mida maapeal kohtame. Kaasa arvatud meie sündimine, elukäik ja surm. Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimese liikumise poolt, mille käivitab kõige välimises sfääris paiknev meie jaoks mõistetamatu intellektiga "olend".  
 
-![Keskaegne aristotellik maailm.](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/arist.jpg)
+```{r, fig.cap="Keskaegne aristotellik maailm.",fig.align='center',out.width=600}
+knitr::include_graphics("img/arist.jpg")
+```
+
 
 Aristotelese suur teooria ühendab kogu maailmapildi alates kaasaegses mõistes keemiast ja kosmoloogiast kuni bioloogia, maateaduse ja isegi geograafiani. Sellised ühendteooriad on nagu 500-aastased sekvoiad; nad on erakordselt rasked langetada, aga kui mõni siiski kukub, kostab ragin kaugele. Ühte Aristotelese kosmoloogia olulist puudust nähti siiski kohe. Nimelt ei suuda Aristoteles seletada, miks osad planeedid teavavõlvil vahest suunda muudavad ja mõnda aega lausa vastupidises suunas liiguvad (retrogressioon). Kuna astronoomiat kasutasid põhiliselt astroloogid, siis põõrati planeetide liikumisele suurt tähelepanu. Lahenduseks ei olnud aga mitte suure teooria ümbertegemine või ümberlükkamine, uue teaduse nõudmine, mis "päästaks fenomenid". Siin tuli appi Ptolemaios, kes lõi matemaatilise mudeli, kus planeedid mitte lihtsalt ei liigu ringtrajektoori mõõda, vaid samal ajal teevad ka väiksemaid ringe ümber esimese suure ringjoone. Neid väiksemaid ringe kutsutakse epitsükliteks. See mudel suutis planeetide liikumist taevavõlvil piisavalt hästi ennustada, et astroloogide seltskond sellega rahule jäi. 
 
 Ptolemaiosel ja tema järgijatel oli tegelikult mitu erinevat mudelit. Osad neist ei sisaldanud epitsükleid ja maakera ei asunud tema mudelites universumi keskel, vaid oli sellest punktist eemale nihutatud --- nii et päike ei teinud ringe ümber maakera vaid ümber tühja punkti. Kuna leidus epitsüklitega mudel ja ilma epitsükliteta mudel, mis andsid identseid ennustusi, on selge, et Aristotelese teooria ja fenomenide päästmise mudelid on põhimõtteliselt erinevad asjad. Samal ajal, kui Aritoteles **seletas** maailma põhiolemust põhjuslike seoste jadana (mitte matemaatiliselt), **kirjeldas/ennustas** Ptolemaios sellesama maailma käitumist matemaatiliste (mitte põhjuslike) struktuuride abil.
 
-![ilma epitsükliteta ptolemailine mudel.](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/dante/dante/pt2.jpg)
+```{r, fig.cap="Ilma epitsükliteta ptolemailine mudel.", fig.align='center',out.width=600}
+knitr::include_graphics("img/pt2.jpg")
+```
+
 
 Nii tekkis olukord, kus maailma mõistmiseks kasutati Aristotelese ühendteooriat, aga selle kirjeldamiseks ja tuleviku ennustamiseks hoopis ptolemailisi mudeleid, mida keegi päriselt tõeks ei pidanud ja mida hinnati selle järgi, kui hästi need "päästsid fenomene". 
 
 See toob meid Koperniku juurde, kes teadusajaloolaste arvates vallandas 17. sajandi teadusliku revolutsiooni avaldades raamatu, kus ta asetab päikese universumi keskele ja paneb maa selle ümber ringtrajektooril tiirlema. Kas Kopernikus tõrjus sellega kõrvale Aristotelese, Ptolemaiose või mõlemad? Kaasaegne seisukoht on, et Kopernikus soovis kolmandat, suutis esimest, ning et tema kaasaegsete lugejate arvates üritas ta teha teist --- ehk välja pakkuda alternatiivi ptolemailistele mudelitele, mis selleks ajaks olid muutunud väga keerukaks (aga ka samavõrra ennustustäpseks). Kuna Kopernikuse raamat läks trükki ajal, mil selle autor oli juba oma surivoodil, kirjutas sellele eessõna üks tema vaimulikust sõber, kes püüdis oodatavat kiriklikku pahameelt leevendada vihjates, et päikese keskele viimine on vaid mudeldamise trikk, millest ei tasu järeldada, et maakera ka tegelikult ümber päikese tiirleb (piibel räägib, kuidas jumal peatas taevavõlvil päikese, mitte maa). Ja kuna eessõna oli anonüümne, eeldasid lugejad muidugi, et selle kirjutas autor. Lisaks, kuigi Kopernikus tõstis päikese keskele, jäi ta planeetide ringikujuliste trajektooride juurde, mis tähendas, et selleks, et tema teooria fenomenide päästmisel hätta ei jääks, oli ta sunnitud maad ja planeete liigutama ümber päikese mõõda epitsükleid. Kokkuvõttes oli Kopernikuse mudel pea-aegu sama keeruline kui Ptolemaiose standardmudel ja selle abil tehtud ennustused planeetide liikumise kohta olid väiksema täpsusega. Seega, ennustava mudelina ei olnud tal suuri eeliseid ptolemailike mudelite ees.
 
-![Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/dante/dante/kop.jpg)
+
+```{r, fig.cap="Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.", fig.align='center',out.width=600}
+knitr::include_graphics("img/kop.jpg")
+```
+
 
 > Koperniku mudel suutis siiski ennustada mõningaid nähtusi (planeetide näiv
     heledus jõuab maksimumi nende lähimas asukohas maale), mida
@@ -812,7 +816,10 @@ Korrelatsioonikordaja väärtus sõltub mitte ainult andmete koos-varieeruvusest
 
 Lisaks, korrelatsioonikordaja mõõdab vaid andmete *lineaarset* koos-varieeruvust: kui andmed koos-varieeruvad mitte-lineaarselt, siis võivad ka väga tugevad koos-varieeruvused jääda märkamatuks.
 
-![Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja, ehkki tegelikud seosed andmete vahel on täiesti erinevad.](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/anscombe/Slide1.jpg)
+```{r,fig.cap="Anscombe'i kvartett illustreerib korrelatsioonikordaja lineaarset olemust: 4 andmestikku annavad identse nullilähedase korrelatsioonikordaja, ehkki tegelikud seosed andmete vahel on täiesti erinevad.",fig.align='center',out.width=600}
+knitr::include_graphics("img/Slide1.jpg")
+```
+
 
 Moraal seisneb selles, et enne korrelatsioonikordaja arvutamist tasub alati plottida andmed, et veenduda võimaliku seose lineaarsuses. Lineaarsuse puudumine andmete koosvarieeruvuse mustris tähendab, et korrelatsioonikordaja tuleb kindlasti eksitav.
 Kordamisküsimus: miks on paneelil a) r ligikaudu 0?
