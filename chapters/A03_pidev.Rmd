@@ -373,9 +373,23 @@ Seega parim mudel on m3 ja kõige kehvem on m2, mille intercept on realistlikult
 (X*Z) lisa nii X kui Z kui nende vaheline interaktsioon:
   (y ~ x1*x2 tähendab y = a + b1x1 + b2x2 + b3x1x2)
   
-  (y ~ 1) - mudelis on ainult intercept
+(X|Z) lisa X tingimusel, et Z
 
- (y ~ x - 1) - võtab intercepti maha (intercept=0).  y ~ x + 0 ja y ~ 0 + x teevad sedasama.
+(y ~ 1) - mudelis on ainult intercept
+
+(y ~ x - 1) - võtab intercepti maha (intercept=0).  y ~ x + 0 ja y ~ 0 + x teevad sedasama.
+ 
+ Hierarhilised mudelid:
+ 
+ (1 / subject)	lase interceptid vabaks igale subjektile 
+ 
+ (1+ time / subject)	lase nii interceptid kui tõusud vabaks subjekti kaupa
+ 
+ (1 + state + state:county)	nested ANOVA
+ 
+(1 + state + county%in%state)	nested ANOVA emphasizing county nested in state
+
+(state / county)	nested ANOVA
 
 Mudeli kontekstis tähendavad +, - ja * midagi muud, kui aritmeetikas. Need mudeli osad, kus operaatoreid kasutatakse nende aritmeetilises vormis tuleb panna funktsiooni  I(). Näiteks mudelis y ~ a + I(b+c) on b+c b ja c summa.
 
