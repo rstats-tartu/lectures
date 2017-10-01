@@ -319,7 +319,7 @@ Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 ```{r}
 data(iris)
 m1 <- lm(data=iris, Sepal.Width~Sepal.Length + Petal.Length)
-plot(iris$Sepal.Width~iris$Sepal.Length, ylim=c(2,8), col=Species)
+plot(iris$Sepal.Width~iris$Sepal.Length, ylim=c(2,8), col=iris$Species)
 abline(m1)
 ```
 
@@ -328,7 +328,7 @@ Enam ei läbi sirge punkte, nagu ta seda 3D ruumis tegi.
 Võrlduseks ühe prediktoriga mudel
 ```{r}
 m <- lm(data=iris, Sepal.Width~Sepal.Length)
-plot(iris$Sepal.Width~iris$Sepal.Length, ylim=c(2,8), col=Species)
+plot(iris$Sepal.Width~iris$Sepal.Length, ylim=c(2,8), col=iris$Species)
 abline(m)
 ```
 
@@ -346,13 +346,67 @@ Kumb mudel on siis parem? AIC-i järgi on m1 kõvasti parem, kui m.
 AIC(m, m1)
 ```
 
+**Ennustused sõltumatute prediktoritega mudelist**
+
+Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel x1 ja x2 väärtustel. Kuna mudel on fititud, on parameetrite väärtused fikseeritud. 
+
+Mudeli, kust me ennustusi tõmbame, *y = x1 + x2*, koefitsiendid on a = 0 ning b1 = b2 = 1. Me anname x1-e rea väärtusi 1 ja 100 vahel ning x2 on fikeeritud oma keskmisele väärtusele.
+
+```{r fig.height=3, fig.width=3}
+Sepal_length <-  seq(min(iris$Sepal.Length), 
+                     max(iris$Sepal.Length), 
+                     length.out = 10) 
+Petal_length <-  mean(iris$Petal.Length)
+a <- coef(m1)[1]
+b1 <- coef(m1)[2]
+b2 <- coef(m1)[3]
+Sepal_width <-   a + b1*Sepal_length + b2*Petal_length
+plot(Sepal_width~Sepal_length, 
+     type="b", 
+     ylim=c(0, 5), 
+     col="red")
+abline(c(coef(m)[1], coef(m)[2]), lty=2) #prediction from the single predictor model
+```
+
+Nagu näha, tulemuseks on paraleelne sirge mudeliga *y = x1*, mille *intercept = mean(x2)*. Muidugi võime me plottida selle mudeli suvalise *x2* väärtuse korral või lasta muutuma hoopis *x2* ja fikseerida *x1* väärtuse. 
+
+
+Nüüd joonistame 3D pildi olukorrast, kus nii *x1* kui *x2* omandavad rea väärtusi. Selles mudelis erineb sirge *y = x1 + x2* tõus sirge *y = x1* tõusust, aga tegemist on ikkagi sirgega -- mis sest, et 3D ruumis.
+
+```{r}
+#library(rgl) #plot3d()
+library(scatterplot3d)
+Sepal_length <-  seq(min(iris$Sepal.Length), 
+                     max(iris$Sepal.Length), 
+                     length.out = 10) 
+Petal_length <-  seq(min(iris$Petal.Length), 
+                     max(iris$Petal.Length), 
+                     length.out = 10) 
+a <- coef(m1)[1]
+b1 <- coef(m1)[2]
+b2 <- coef(m1)[3]
+Sepal_width <-   a + b1*Sepal_length + b2*Petal_length
+df <- data.frame(Sepal_width=Sepal_width, 
+                 Sepal_length=Sepal_length, 
+                 Petal_length=Petal_length)
+scatterplot3d(df$Sepal_length, 
+              df$Petal_length, 
+              df$Sepal_width, 
+              col.axis="blue", 
+              col.grid="lightblue", 
+              type="l", lwd=2)
+```
+
+
+
+
 #### Interaktsioonimudel - ühe prediktori mõju sõltub teise prediktori väärtusest
 
 *y = a + b1x1 + b2x2 + b3x1x2*
 
-Interaktsioonimudeli koefitsientide tõlgendamine on keerulisem. Hiljem õpime selliseid mudeleid graafiliselt tõlgendama. Mudeli koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
+Interaktsioonimudeli koefitsientide tõlgendamine on keerulisem. b1 on otse tõlgendatav ainult siis, kui x2=0 (ja b2 ainult siis, kui x1=0).  Hiljem õpime selliseid mudeleid graafiliselt tõlgendama. Mudeli koefitsientide otse tõlgendamine ei ole siin sageli perspektiivikas.
 
-> Interaktsioonimudelis sõltub x1 mõju tugevus Y-le (ehk b1) x2 väärtusest. Selle sõltuvuse määra kirjeldab b3 (x1 & x2 interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x2 mõju erinevatel x1 väärtustel. 
+> Interaktsioonimudelis sõltub x1 mõju tugevus Y-le (ehk b1) x2 väärtusest. Selle sõltuvuse määra kirjeldab b3 (x1 & x2 interaktsiooni tugevus). Samamoodi ja sümmeetriliselt erineb ka x2 mõju erinevatel x1 väärtustel. Juhul kui x2=0, siis ennustab x1 tõus 1 ühiku võrra y muutust keskmiselt b1 ühiku võrra.
 
 Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri määrab b3. 
 
@@ -362,6 +416,38 @@ m2 <- lm(data=iris, Sepal.Width~Sepal.Length + Petal.Length + Sepal.Length*Petal
 AIC(m, m1, m2)
 ```
 
+
+**ennustused interaktsioonimudelist**
+
+Kõigepealt anname rea väärtusi x1-le ja hoiame x2 konstantsena. Mudelis, millest me ennustusi tõmbame, on a = 0, b1 = b2 = 1 ja b3 = 0.1
+x1 omab rida väärtusi 1 ja 100 vahel ja x2 on fikseeritud oma keskväärtusele.
+
+```{r fig.height=3, fig.width=3}
+x1 <-  1:100 
+x2 <-  1:100
+b3 <- 0.1
+y <-   x1 + mean(x2) + b3*x1*mean(x2)
+y1 <-  x1 + mean(x2) 
+plot(y~x1, 
+     type="l", 
+     ylim=c(0, 300), col="red")
+lines(y1~x1)
+```
+
+Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust. 
+
+Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x1 ja x2 väärtuste, saame me regressioonikurvi (mitte sirge), kus b3 annab kurvatuuri.
+
+```{r}
+x1 <-  1:100 
+x2 <-  1:100
+b3 <- 0.03
+y <-   x1 + x2 + b3*x1*x2
+df <- data.frame(y=y,  x1=x1, x2=x2)
+scatterplot3d(df$x1, df$x2, df$y, col.axis="blue",
+      col.grid="lightblue", type="l", lwd=2,
+      zlim=c(0, 150), xlim=c(0, 150), ylim=c(0, 150))
+```
 
 ## Veamudel
   
