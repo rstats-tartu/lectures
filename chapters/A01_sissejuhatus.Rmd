@@ -206,6 +206,25 @@ coef(m1)
 
 Siin a = (Intercept) ja b = Petal.Length ehk 0.41.
 
+**ennustus lineaarsest mudelist**
+
+anname x-le rea väärtusi ja ennustame y keskmisi väärtusi nendel x-i väärtustel.  Järgnev kood on sisuliselt sama, millega me üle-eelmisel plotil joonistasime mudeli y = a + bx. Me fikseerime mudeli koefitsiendid fititud irise mudeli omadega ja anname Petal_length muutujale 10 erinevat väärtust originaalse muutuja mõõtmisvahemikus. Aga sama hästi võiksime ekstrapoleerida ja küsida, mis on oodatav Sepal_length, kui Petal_length on 100 cm? Loll küsimus, aga mudel ei tea seda. Proovi seda kodus. 
+
+```{r}
+Petal_length <- seq(min(iris$Petal.Length), 
+                    max(iris$Petal.Length), 
+                    length.out = 10)
+a <- coef(m1)[1]
+b <- coef(m1)[2]
+
+Sepal_length <-  a + b*Petal_length
+
+plot(Sepal_length~Petal_length, type="b")
+```
+
+Siin ennustasime 10 y väärtust 10-l x-i väärtusel.
+
+
 ### Neli mõistet 
 
 Mudelis *y = a + bx* on *x* ja *y* muutujad, ning *a* ja *b* on parameetrid. Muutujate väärtused fikseeritakse andmete poolt, parameetrid fititakse andmete põhjal. Fititud mudel ennustab igale *x*-i väärtusele vastava kõige tõenäolisema *y* väärtuse (*y* keskväärtuse sellel *x*-i väärtusel).
@@ -442,16 +461,36 @@ Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb il
 
 Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x1 ja x2 väärtuste, saame me regressioonikurvi (mitte sirge), kus b3 annab kurvatuuri.
 
+
 ```{r}
-x1 <-  1:100 
-x2 <-  1:100
-b3 <- 0.03
-y <-   x1 + x2 + b3*x1*x2
-df <- data.frame(y=y,  x1=x1, x2=x2)
-scatterplot3d(df$x1, df$x2, df$y, col.axis="blue",
-      col.grid="lightblue", type="l", lwd=2,
-      zlim=c(0, 150), xlim=c(0, 150), ylim=c(0, 150))
+Sepal_length <-  seq(min(iris$Sepal.Length), 
+                     max(iris$Sepal.Length), 
+                     length.out = 100) 
+Petal_length <-  seq(min(iris$Petal.Length), 
+                     max(iris$Petal.Length), 
+                     length.out = 100) 
+a <- coef(m2)[1]
+b1 <- coef(m2)[2]
+b2 <- coef(m2)[3]
+b3 <- coef(m2)[4]
+
+Sepal_width <-   a + b1*Sepal_length + 
+  b2*Petal_length + 
+  b3*Sepal_length*Petal_length
+
+df <- data.frame(Sepal_width=Sepal_width, 
+                 Sepal_length=Sepal_length, 
+                 Petal_length=Petal_length)
+scatterplot3d(df$Sepal_length, 
+              df$Petal_length, 
+              df$Sepal_width, 
+              col.axis="blue", 
+              col.grid="lightblue", 
+              type="l", lwd=2)
 ```
+
+Vau! See on alles ennustus!
+
 
 ## Veamudel
   
