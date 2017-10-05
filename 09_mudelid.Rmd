@@ -1,12 +1,7 @@
----
-title: "models"
-output:
-  pdf_document: default
-  html_notebook: default
----
 
+# Statistilised mudelid
 
-```{r introlibs}
+```{r}
 library(tidyverse)
 library(ggthemes)
 library(scatterplot3d)
@@ -15,14 +10,13 @@ library(broom)
 ```
 
 
-
 ## Suur ja väike maailm
 
 Kuna maailmas on kõik kõigega seotud, on seda raske otse uurida. Teadus töötab tänu sellele, et teadlased lõikavad reaalsuse väikesteks tükkideks, kasutades tordilabidana teaduslike hüpoteese, ning uurivad seda tükikaupa lootuses, et kui kõik tükid on korralikult läbi nätsutatud, saab sellest taas tordi kokku panna. Tüüpiline bioloogiline hüpotees pakub välja tavakeelse (mitte matemaatilise) seletuse mõnele piiritletud loodusnähtusele. 
   
 Näiteks antibiootikume uuritakse keemilise sideme tasemel kasutades orgaanilise keemia meetodeid. Antibiootikumide molekulaarseid märklaudu uuritakse molekulaarbioloogiliste meetoditega, nende toimet uuritakse rakubioloogia ja füsioloogia meetoditega, aga kaasajal on väga olulised ka ökoloogilised, evolutsioonilised, meditsiinilised, põllumajanduslikud, majanduslikud ja psühholoogilised aspektid. Kõigil neil tasanditel on loodud palju hüpoteese, millest kokku moodustub meie teadmine antibiootikumide kohta. Neid väga erinevaid asju, mida me kutsume hüpoteesideks, ühendab see, et neist igaüht võib võrrelda empiiriliste andmetega. Samuti, enamust neist saab kirjeldada matemaatiliste formalismide ehk mudelite abil, ja neid mudeleid saab omakorda võrrelda andmetega. Kuigi erinevate tasemete hüpoteesid on tavakeeles üksteisest väga erinevad, on neid kirjeldavad mudelid sageli matemaatiliselt sarnased.
   
-  > Kui mudel on teooria lihtsustus, siis teooria on maailma lihtsustus.
+> Kui mudel on teooria lihtsustus, siis teooria on maailma lihtsustus.
   
 Mis juhtub, kui teie hüpotees on andmetega kooskõlas? Kas see tähendab, et see hüpotees vastab tõele? Või, et see on tõenäoliselt tõene? Kahjuks on vastus mõlemale küsimusele eitav. Põhjuseks on asjaolu, et enamasti leiab iga nähtuse seletamiseks rohkem kui ühe alternatiivse teadusliku hüpoteesi ning rohkem kui üks üksteist välistav hüpotees võib olla olemasolevate andmetega võrdses kooskõlas. Asja teeb veelgi hullemaks, et teoreetiliselt on võimalik sõnastada lõpmata palju erinevaid teooriaid, mis kõik pakuvad alternatiivseid ja üksteist välistavaid seletusi samale nähtusele. Kuna hüpoteese on lõpmatu hulk, aga andmeid on alalti lõplik hulk, siis saab igas teaduslikus "faktis" kahelda.  
 Kunagi ei või kindel olla, et parimad teooriad ei ole täiesti tähelepanuta jäänud ning, et meie poolt kogutud vähesed andmed kajastavad hästi kõiki võimalikke andmeid.
@@ -33,12 +27,14 @@ Teeoria ja mudeli seose kohta selline näide. Meil on hüpotees, mille kohaselt 
 
 ## Mudeli väike maailm
 
-  Ülalmainitud teadusliku meetodi puudused tingivad, et meie huvides on oma teaduslikke probleeme veel ühe taseme võrra lihtsustada, taandades need statistilisteks probleemideks. Selleks tuletame tavakeelsest teaduslikust teooriast täpselt formuleeritud matemaatilise mudeli ning seejärel asume uurima oma mudelit lootuses, et mudeli kooskõla andmetega ütleb meile midagi teadusliku hüpoteesi kohta. Enamasti töötab selline lähenemine siis, kui mudeli ehitamisel arvestati võimaliku andmeid genereeriva mehhanismiga -- ehk, kui mudeli matemaatiline struktuur koostati teaduslikku hüpoteesi silmas pidades. Mudelid, mis ehitatakse silmas pidades puhtalt matemaatilist sobivust andmetega, ei kipu omama teaduslikku seletusjõudu, kuigi neil võib olla väga hea ennustusjõud. 
+Ülalmainitud teadusliku meetodi puudused tingivad, et meie huvides on oma teaduslikke probleeme veel ühe taseme võrra lihtsustada, taandades need statistilisteks probleemideks. Selleks tuletame tavakeelsest teaduslikust teooriast täpselt formuleeritud matemaatilise mudeli ning seejärel asume uurima oma mudelit lootuses, et mudeli kooskõla andmetega ütleb meile midagi teadusliku hüpoteesi kohta. Enamasti töötab selline lähenemine siis, kui mudeli ehitamisel arvestati võimaliku andmeid genereeriva mehhanismiga -- ehk, kui mudeli matemaatiline struktuur koostati teaduslikku hüpoteesi silmas pidades. Mudelid, mis ehitatakse silmas pidades puhtalt matemaatilist sobivust andmetega, ei kipu omama teaduslikku seletusjõudu, kuigi neil võib olla väga hea ennustusjõud. 
   
-  > Meil on kaks hüpoteesi, A ja B. Juhul kui A on tõene ja B on väär, kas on võimalik, et B on tõele lähemal kui A? Kui A ja B on teineteist välistavad punkthüpoteesid parameetri väärtuse kohta, siis on vastus eitav. Aga mis juhtub, kui A ja B on statistilised mudelid? Näiteks, kui tõde on, et eesti meeste keskmine pikkus on 178.3 cm ja A ütleb, et keskmine pikkus jääb kuhugi 150 cm ja 220 cm vahele ning B ütleb, et see jääb kuhugi 179 cm ja 182 cm vahele, siis on B tõele lähemal selles mõttes, et meil on temast teaduslikus mõttes rohkem kasu. Siit on näha oluline erinevus teadusliku hüpoteesi ja statistilise mudeli vahel: hüpotees on orienteeritud tõele, samal ajal kui mudel on orienteeritud kasule.  
+> Meil on kaks hüpoteesi, A ja B. Juhul kui A on tõene ja B on väär, kas on võimalik, et B on tõele lähemal kui A? Kui A ja B on teineteist välistavad punkthüpoteesid parameetri väärtuse kohta, siis on vastus eitav. Aga mis juhtub, kui A ja B on statistilised mudelid? Näiteks, kui tõde on, et eesti meeste keskmine pikkus on 178.3 cm ja A ütleb, et keskmine pikkus jääb kuhugi 150 cm ja 220 cm vahele ning B ütleb, et see jääb kuhugi 179 cm ja 182 cm vahele, siis on B tõele lähemal selles mõttes, et meil on temast teaduslikus mõttes rohkem kasu. Siit on näha oluline erinevus teadusliku hüpoteesi ja statistilise mudeli vahel: hüpotees on orienteeritud tõele, samal ajal kui mudel on orienteeritud kasule.  
   
-  Mudeli maailm erineb päris maailmast selle poolest, et mudeli maailmas on kõik sündmused, mis põhimõtteliselt võivad juhtuda, juba ette teada ja üles loendatud (seda sündmuste kogu kutsutakse parameetriruumiks). Tehniliselt on mudeli maailmas üllatused võimatud. 
-  Lisaks, tõenäosusteooriat, ja eriti Bayesi teoreemi, kasutades on meil garantii, et me suudame mudelis leiduva informatsiooniga ümber käia parimal võimalikul viisil. Kõik see rõõm jääb siiski mudeli piiridesse.
+Mudeli maailm erineb päris maailmast selle poolest, et mudeli maailmas on kõik sündmused, mis põhimõtteliselt võivad juhtuda, juba ette teada ja üles loendatud (seda sündmuste kogu kutsutakse parameetriruumiks). Tehniliselt on mudeli maailmas üllatused võimatud. 
+
+
+Lisaks, tõenäosusteooriat, ja eriti Bayesi teoreemi, kasutades on meil garantii, et me suudame mudelis leiduva informatsiooniga ümber käia parimal võimalikul viisil. Kõik see rõõm jääb siiski mudeli piiridesse.
 Mudeli eeliseks teooria ees on, et hästi konstrueeritud mudel on lihtsamini mõistetav --- erinevalt vähegi keerulisemast teaduslikust hüpoteesist on mudeli eeldused ja ennustused läbinähtavad ja täpselt formuleeritavad. Mudeli puuduseks on aga, et erinevalt teooriast ei ole mingit võimalust, et mudel vastaks tegelikkusele. Seda sellepärast, et mudel on taotluslikult lihtsustav (erandiks on puhtalt ennustuslikud mudelid, mis on aga enamasti läbinähtamatu struktuuriga). Mudel on kas kasulik või kasutu; teooria on kas tõene või väär. Mudeli ja maailma vahel võib olla kaudne peegeldus, aga mitte kunagi otsene side. Seega, ükski number, mis arvutatakse mudeli raames, ei kandu sama numbrina üle teaduslikku ega päris maailma. Ja kogu statistika (ka mitteparameetriline) toimub mudeli väikses maailmas. Arvud, mida statistika teile pakub, elavad mudeli maailmas; samas kui teie teaduslik huvi on suunatud päris maailmale. Näiteks 95% usaldusintervall ei tähenda, et te peaksite olema 95% kindel, et tõde asub selles intervallis – sageli ei tohiks te seda nii julgelt tõlgendada isegi kitsas mudeli maailmas. 
   
 ### Näide: Aristoteles, Ptolemaios ja Kopernikus
@@ -97,10 +93,10 @@ Oletame, et me mõõtsime N inimese pikkuse cm-s ja kaalu kg-s ning meid huvitab
 ```{r fig.height=3, fig.width=3}
 x <- 0:100 #y = kaal
 y <- x # x = pikkus 
-plot(y~x, 
-     type="l", 
-     xlab="weight in kg", 
-     ylab="heigth in cm")
+plot(y ~ x, 
+     type = "l", 
+     xlab = "weight in kg", 
+     ylab = "heigth in cm")
 ```
 
 
@@ -118,13 +114,12 @@ See konstant on mudeli parameeter, mille väärtuse võime vabalt valida. Järgn
 x <- 0:100 
 a <- 30
 y <- a + x 
-plot(y~x, 
-     xlim=c(0, 100), 
-     ylim=c(0, 150), 
-     col="red",
-     type="l")
-abline(c(0,1), lty=2)
-
+plot(y ~ x, 
+     xlim = c(0, 100), 
+     ylim = c(0, 150), 
+     col = "red",
+     type = "l")
+abline(c(0, 1), lty = 2)
 ```
 
 
@@ -170,11 +165,11 @@ a <- 102
 b <- 0.8
 x <-  0:100 
 y <-  a + b * x
-plot(y~x, 
-     type="l", 
-     xlab="weight in kg", 
-     ylab="heigth in cm", 
-     ylim=c(50, 200))
+plot(y ~ x, 
+     type = "l", 
+     xlab = "weight in kg", 
+     ylab = "heigth in cm", 
+     ylim = c(50, 200))
 ```
 
 See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline, olukord. Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu. Meie valimiandmed ei peegelda täpselt inimpopulatsiooni. Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole. Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.  
@@ -182,12 +177,10 @@ See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelit
 Kahe parameetriga sirge mudel ongi see, mida me fitime kahedimensiooniliste andmetega.
 Näiteks nii:
 ```{r}
-#read in the internal dataset iris
-data(iris)
 # fit a linear model and name the model object as m1
-m1 <- lm(data=iris, Sepal.Length ~ Petal.Length)
+m1 <- lm(Sepal.Length ~ Petal.Length, iris)
 # make a scatter plot, colored by the var called "Species"
-plot(iris$Sepal.Length~iris$Petal.Length, col=iris$Species)
+plot(iris$Sepal.Length ~ iris$Petal.Length, col = iris$Species)
 # draw the fitted regression line from m1
 abline(m1)
 ```
@@ -198,12 +191,12 @@ Mudeli fittimine tähendab siin lihtsalt, et sirge on 2D ruumi asetatud nii, et 
 
 Fititud koefitsientide väärtused saame nii
 ```{r}
-coef(m1)
+coef(m1) 
 ```
 
-Siin a = (Intercept) ja b = Petal.Length ehk 0.41.
+Siin a = (Intercept) ehk `r round(coef(m1)[2], 2)` ja b = Petal.Length ehk `r round(coef(m1)[2], 2)`.
 
-**ennustus lineaarsest mudelist**
+**Ennustus lineaarsest mudelist**
 
 Anname x-le rea väärtusi, et ennustada y keskmisi väärtusi nendel x-i väärtustel. 
 Siin me ennustame y (Sepal_length) keskväärtusi erinevatel x-i (Petal_length) väärtustel, mitte individuaalseid Sepal_length väärtusi. Me kasutame selleks deterministlikku mudelit kujul Sepal_length =  a + b*Petal_length. Hiljem õpime ka bayesiaanlike meetoditega individuaalseid Sepal_length-e ennustama. 
@@ -273,26 +266,25 @@ Seda tuunimist nimetatakse mudeli fittimiseks. Mudelit fittides on eesmärk saav
   Osad mudelite tüübid on vähem paindlikud kui teised (parameetreid tuunides on neil vähem liikumisruumi). Kuigi sellised mudelid sobituvad halvemini andmetega, võivad need  ikkagi paremini kui mõni paindlikum mudel välja tuua andmete peidetud olemuse. Mudeldamine eeldab, et me usume, et meie andmetes leidub nii müra (mida mudel võiks ignoreerida), kui signaal (mida mudel püüab tabada). Kuna mudeli jaoks näeb müra samamoodi välja, kui signaal, on iga mudel kompromiss üle- ja alafittimise vahel. Me lihtsalt loodame, et meie mudel on piisavalt jäik, et mitte liiga palju müra modelleerida ja samas piisavalt paindlik, et piisaval määral signaali tabada.
   
   Üks kõige jäigemaid mudeleid on sirge, mis tähendab, et sirge mudel on suure tõenäosusega alafittitud. Keera sirget kuipalju tahad, ikka ei sobitu ta enamiku andmekogudega. Ja need vähesed andmekogud, mis sirge mudeliga sobivad, on genereeritud teatud tüüpi lineaarsete protsesside poolt. Sirge on seega üks kõige paremini tõlgendatavaid mudeleid. Teises äärmuses on polünoomsed mudelid, mis on väga paindlikud, mida on väga raske tõlgendada ja mille puhul esineb suur mudeli ülefittimise oht. Ülefititud mudel järgib nii täpselt valimiandmeid, et sobitub hästi valimis leiduva juhusliku müraga ning seetõttu sobitub halvasti järgmise valimiga samast populatsioonist (igal valimil on oma juhuslik müra). Üldiselt, mida rohkem on mudelis tuunitavaid parameetreid, seda paindlikum on mudel, seda kergem on seda valimiandmetega sobitada ja seda raskem on seda tõlgendada. Veelgi enam, alati on võimalik konstrueerida mudel, mis sobitub täiuslikult kõikide andmepunktidega (selle mudeli parameetrite arv = N). Selline mudel on täpselt sama informatiivne kui andmed, mille põhjal see fititi --- ja täiesti kasutu.
-  
-  
-```{r echo=FALSE, fig.height=3, fig.width=6}
-df <- tibble(x=c(2, 3, 2.2, 5, 7, 8), 
-             y=c(8, 5, 9, 10, 11, 10.1))
-mod_e1 <- lm(y ~ x, data = df)
-mod_e2 <- lm(y ~ poly(x, 2), data = df)
-mod_e3 <- lm(y ~ poly(x, 3), data = df)
-mod_e4 <- lm(y ~ poly(x, 4), data = df)
-mod_e5 <- lm(y ~ poly(x, 5), data = df)
 
-df %>% 
-  tidyr::expand(df) %>% 
+(ref:polymods) __Kasvava paindlikusega polünoomsed mudelid.__ mod_e1 on sirge võrrand y = a + b~1~x (2 parameetrit: a ja b~1~), mod_e2 on lihtsaim võimalik polünoom: y= a + b~1~x + b~2~x^2 (3 parameetrit), ..., mod_e5: y= a + b~1~x + b~2~x^2 + b~3~x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6).
+  
+```{r polymods, fig.cap="(ref:polymods)", fig.height=3, fig.width=6}
+dfr <- tibble(x = c(2, 3, 2.2, 5, 7, 8), 
+             y = c(8, 5, 9, 10, 11, 10.1))
+mod_e1 <- lm(y ~ x, data = dfr)
+mod_e2 <- lm(y ~ poly(x, 2), data = dfr)
+mod_e3 <- lm(y ~ poly(x, 3), data = dfr)
+mod_e4 <- lm(y ~ poly(x, 4), data = dfr)
+mod_e5 <- lm(y ~ poly(x, 5), data = dfr)
+
+dfr %>%
   gather_predictions(mod_e1, mod_e2, mod_e3, mod_e4, mod_e5) %>% 
   ggplot(aes(x, pred, colour = model)) +
   geom_line() +
-  geom_point(aes(x, y), color="black", size=2) + theme_tufte() + xlab(NULL) + ylab(NULL)
-
+  geom_point(aes(x, y), color = "black", size = 2) +
+  theme(axis.title = element_blank())
 ```
-*Joonis: Kasvava paindlikusega polünoomsed mudelid. mod_e1 on sirge võrrand y = a + b~1~x (2 parameetrit: a ja b~1~), mod_e2 on lihtsaim võimalik polünoom: y= a + b~1~x + b~2~x^2 (3 parameetrit), ..., mod_e5: y= a + b~1~x + b~2~x^2 + b~3~x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6).*
 
 Vähimruutude meetodil fititud mudeleid saame võrrelda AIC-i näitaja järgi. AIC  - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega ja mudeli parameetrite arvu. 
 Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.
@@ -324,25 +316,22 @@ Esiteks vaatame mudelit, kus on mitu prediktorit x~1~, x~2~, ... xn, mis on addi
 
 Kui meie andmed on mõõdetud 3D-s ja me tahame ennnustada ühe muutuja väärtust kahe teise muutuja väärtuste põhjal (meil on 2 prediktorit), siis tuleb meie 3 parameetriga lineaarne regressioonimudel tasapinna kujul. Kui meil on 4 prediktoriga mudel, siis me liigume 4-mõõtmelisse ruumi, jne. 3D ruumi on veel võimalik mõistlikult plottida.
 
-```{r echo=FALSE}
+```{r}
 library(scatterplot3d)  
-data(iris)
 # prepare a df of 3 cols: 
 # Sepal.Length -- Sepal.Width -- Petal.Length (x -- y -- z)
-  iris1 <- iris[,1:3]
-   s3d <- scatterplot3d(iris1, angle=55, scale.y=0.7, pch=20, 
-                        col.axis="blue", col.grid="lightblue" )
-  my.lm <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data= iris1)
-  s3d$plane3d(my.lm, lty.box = "solid")
-
+iris1 <- iris[, 1:3]
+s3d <- scatterplot3d(iris1, angle = 55, scale.y = 0.7, pch = 20, 
+                     col.axis = "blue", col.grid = "lightblue" )
+my.lm <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris1)
+s3d$plane3d(my.lm, lty.box = "solid")
 ```
 
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile. 
 
 ```{r}
-data(iris)
-m1 <- lm(data=iris, Sepal.Width~Sepal.Length + Petal.Length)
-plot(iris$Sepal.Width~iris$Sepal.Length, ylim=c(2,8), col=iris$Species)
+m1 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris)
+plot(iris$Sepal.Width ~ iris$Sepal.Length, ylim = c(2, 8), col = iris$Species)
 abline(m1)
 ```
 
@@ -350,8 +339,8 @@ Enam ei läbi sirge punkte, nagu ta seda 3D ruumis tegi.
 
 Võrlduseks ühe prediktoriga mudel
 ```{r}
-m <- lm(data=iris, Sepal.Width~Sepal.Length)
-plot(iris$Sepal.Width~iris$Sepal.Length, ylim=c(2,8), col=iris$Species)
+m <- lm(Sepal.Width ~ Sepal.Length, data = iris)
+plot(iris$Sepal.Width ~ iris$Sepal.Length, ylim = c(2, 8), col = iris$Species)
 abline(m)
 ```
 
@@ -359,7 +348,8 @@ abline(m)
 Nõnda võrdleme kahe mudeli koefitsiente
 
 ```{r}
-coef(m); coef(m1)
+coef(m)
+coef(m1)
 ```
 
 Nagu näha, mudeli m b~1~ koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist.
@@ -374,52 +364,50 @@ AIC(m, m1)
 Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel x~1~ ja x~2~ väärtustel. Kuna mudel on fititud, on parameetrite väärtused fikseeritud. 
 
 ```{r fig.height=3, fig.width=3}
-Sepal_length <-  seq(min(iris$Sepal.Length), 
-                     max(iris$Sepal.Length), 
-                     length.out = 10) 
+Sepal_length <- seq(min(iris$Sepal.Length), 
+                    max(iris$Sepal.Length), 
+                    length.out = 10) 
 Petal_length <-  mean(iris$Petal.Length)
 a <- coef(m1)[1]
 b1 <- coef(m1)[2]
 b2 <- coef(m1)[3]
-Sepal_width <-   a + b1*Sepal_length + b2*Petal_length
-plot(Sepal_width~Sepal_length, 
-     type="b", 
-     ylim=c(0, 5), 
-     col="red")
-abline(c(coef(m)[1], coef(m)[2]), lty=2) #prediction from the single predictor model
+Sepal_width <- a + b1 * Sepal_length + b2 * Petal_length
+plot(Sepal_width ~ Sepal_length, 
+     type = "b",
+     ylim = c(0, 5),
+     col = "red")
+abline(c(coef(m)[1], coef(m)[2]), lty = 2) # prediction from the single predictor model
 ```
 
 
 Nüüd joonistame 3D pildi olukorrast, kus nii *x~1~* kui *x~2~* omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
 
 ```{r}
-#library(rgl) #plot3d()
-library(scatterplot3d)
-Sepal_length <-  seq(min(iris$Sepal.Length), 
+Sepal_length <- seq(min(iris$Sepal.Length), 
                      max(iris$Sepal.Length), 
                      length.out = 10) 
-Petal_length <-  seq(min(iris$Petal.Length), 
+Petal_length <- seq(min(iris$Petal.Length), 
                      max(iris$Petal.Length), 
                      length.out = 10) 
 a <- coef(m1)[1]
 b1 <- coef(m1)[2]
 b2 <- coef(m1)[3]
-Sepal_width <-   a + b1*Sepal_length + b2*Petal_length
-df <- data.frame(Sepal_width=Sepal_width, 
-                 Sepal_length=Sepal_length, 
-                 Petal_length=Petal_length)
-scatterplot3d(df$Sepal_length, 
-              df$Petal_length, 
-              df$Sepal_width, 
-              col.axis="blue", 
-              col.grid="lightblue", 
-              type="l", lwd=2)
+Sepal_width <- a + b1 * Sepal_length + b2 * Petal_length
+df <- data.frame(Sepal_width = Sepal_width, 
+                 Sepal_length = Sepal_length, 
+                 Petal_length = Petal_length)
+scatterplot3d(df$Sepal_length,
+              df$Petal_length,
+              df$Sepal_width,
+              col.axis = "blue", 
+              col.grid = "lightblue", 
+              type = "l", lwd = 2)
 ```
 
 
 
 
-#### Interaktsioonimudel - ühe prediktori mõju sõltub teise prediktori väärtusest
+### Interaktsioonimudel - ühe prediktori mõju sõltub teise prediktori väärtusest
 
 *y = a + b~1~x~1~ + b~2~x~2~ + b~3~x~1~x~2~*
 
@@ -431,10 +419,9 @@ Interaktsioonimudeli 2D avaldus on kurvatuuriga tasapind, kusjuures kurvatuuri m
 
 Interaktsiooniga mudel on AIC-i järgi pisut vähem eelistatud võrreldes m1-ga. Seega, eriti lihtsuse huvides, eelistame m1-e.
 ```{r}
-m2 <- lm(data=iris, 
-         Sepal.Width~Sepal.Length + 
+m2 <- lm(Sepal.Width~Sepal.Length + 
            Petal.Length + 
-           Sepal.Length*Petal.Length) 
+           Sepal.Length*Petal.Length, data = iris)
 AIC(m, m1, m2)
 ```
 
@@ -444,22 +431,22 @@ AIC(m, m1, m2)
 Kõigepealt anname rea väärtusi x~1~-le ja hoiame x~2~ konstantsena. 
 
 ```{r}
-Sepal_length <-  seq(min(iris$Sepal.Length), 
+Sepal_length <- seq(min(iris$Sepal.Length), 
                      max(iris$Sepal.Length), 
                      length.out = 100) 
-Petal_length <-  mean(iris$Petal.Length)
+Petal_length <- mean(iris$Petal.Length)
 
 a <- coef(m2)[1]
 b1 <- coef(m2)[2]
 b2 <- coef(m2)[3]
 b3 <- coef(m2)[4]
 
-Sepal_width <-   a + b1*Sepal_length + 
-  b2*Petal_length + 
-  b3*Sepal_length*Petal_length
+Sepal_width <-   a + b1 * Sepal_length + 
+  b2 * Petal_length + 
+  b3 * Sepal_length * Petal_length
 
-plot(Sepal_width ~ Sepal_length, type="l", ylim=c(2, 6))
-abline(m1, lty=2)
+plot(Sepal_width ~ Sepal_length, type = "l", ylim = c(2, 6))
+abline(m1, lty = 2)
 ```
 
 Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)
@@ -469,12 +456,11 @@ Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb il
 
 Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x~1~ ja x~2~ väärtuste, saame me regressioonikurvi (mitte sirge), kus b~3~ annab kurvatuuri.
 
-
 ```{r}
-Sepal_length <-  seq(min(iris$Sepal.Length), 
+Sepal_length <- seq(min(iris$Sepal.Length), 
                      max(iris$Sepal.Length), 
                      length.out = 100) 
-Petal_length <-  seq(min(iris$Petal.Length), 
+Petal_length <- seq(min(iris$Petal.Length), 
                      max(iris$Petal.Length), 
                      length.out = 100) 
 a <- coef(m2)[1]
@@ -482,19 +468,19 @@ b1 <- coef(m2)[2]
 b2 <- coef(m2)[3]
 b3 <- coef(m2)[4]
 
-Sepal_width <-   a + b1*Sepal_length + 
-  b2*Petal_length + 
-  b3*Sepal_length*Petal_length
+Sepal_width <- a + b1 * Sepal_length + 
+  b2 * Petal_length + 
+  b3 * Sepal_length * Petal_length
 
-df <- data.frame(Sepal_width=Sepal_width, 
-                 Sepal_length=Sepal_length, 
-                 Petal_length=Petal_length)
-scatterplot3d(df$Sepal_length, 
-              df$Petal_length, 
-              df$Sepal_width, 
-              col.axis="blue", 
-              col.grid="lightblue", 
-              type="l", lwd=2)
+df <- data.frame(Sepal_width = Sepal_width, 
+                 Sepal_length = Sepal_length, 
+                 Petal_length = Petal_length)
+scatterplot3d(df$Sepal_length,
+              df$Petal_length,
+              df$Sepal_width,
+              col.axis = "blue", 
+              col.grid = "lightblue", 
+              type = "l", lwd = 2)
 ```
 
 Vau! See on alles ennustus!
