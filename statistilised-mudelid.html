@@ -247,11 +247,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(scatterplot3d)
 <span class="kw">library</span>(modelr)
 <span class="kw">library</span>(broom)</code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;broom&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:modelr&#39;:
-## 
-##     bootstrap</code></pre>
 <div id="suur-ja-vaike-maailm" class="section level2">
 <h2><span class="header-section-number">9.1</span> Suur ja väike maailm</h2>
 <p>Kuna maailmas on kõik kõigega seotud, on seda raske otse uurida. Teadus töötab tänu sellele, et teadlased lõikavad reaalsuse väikesteks tükkideks, kasutades tordilabidana teaduslike hüpoteese, ning uurivad seda tükikaupa lootuses, et kui kõik tükid on korralikult läbi nätsutatud, saab sellest taas tordi kokku panna. Tüüpiline bioloogiline hüpotees pakub välja tavakeelse (mitte matemaatilise) seletuse mõnele piiritletud loodusnähtusele.</p>
@@ -278,7 +273,7 @@ Kunagi ei või kindel olla, et parimad teooriad ei ole täiesti tähelepanuta j�
 <h3><span class="header-section-number">9.2.1</span> Näide: Aristoteles, Ptolemaios ja Kopernikus</h3>
 <p>Aristoteles (384–322 BC) lõi teooria maailma toimimise kohta, mis domineeris haritud eurooplase maailmapilti enam kui 1200 aasta vältel. Tema ühendteooria põhines maailmapildil, mis oli üldtunnustatud juba sajandeid enne Aristotelest ja järgneva 1500 aasta jooksul kahtlesid selles vähesed mõistlikud inimesed. Selle kohaselt asub universumi keskpunktis statsionaarne maakera ning kõik, mida siin leida võib, on tehtud neljast elemendist: maa, vesi, õhk ja tuli. Samas, kogu maailmaruum alates kuu sfäärist on tehtud viiendast elemendist (eeter), mida aga ei leidu maal (nagu nelja elementi ei leidu kuu peal ja sealt edasi). Taevakehad (kuu, päike, planeedid ja kinnistähed) tiirlevad ümber maa kontsentrilistes sfäärides, mille vahel pole vaba ruumi. Seega on kogu liikumine eetri sfäärides ühtlane ja ringikujuline ja see liikumine põhjustab pika põhjus-tagajärg ahela kaudu kõiki liikumisi, mida maapeal kohtame. Kaasa arvatud sündimine, elukäik ja surm. Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimese liikumise poolt, mille käivitab kõige välimises sfääris paiknev meie jaoks mõistetamatu intellektiga “olend”.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
-<img src="img/arist.jpg" alt="Keskaegne aristotellik maailm." width="600" />
+<img src="assets/img/arist.jpg" alt="Keskaegne aristotellik maailm." width="600" />
 <p class="caption">
 Joonis 9.1: Keskaegne aristotellik maailm.
 </p>
@@ -290,7 +285,7 @@ Joonis 9.1: Keskaegne aristotellik maailm.
 <p>Ühte Aristotelese kosmoloogia olulist puudust nähti siiski kohe. Nimelt ei suuda Aristoteles seletada, miks osad planeedid teavavõlvil vahest suunda muudavad ja mõnda aega lausa vastupidises suunas liiguvad (retrogressioon). Kuna astronoomiat kasutasid põhiliselt astroloogid, siis põõrati planeetide liikumisele suurt tähelepanu. Lahenduseks ei olnud aga mitte suure teooria ümbertegemine või ümberlükkamine, vaid uue teaduse nõudmine, mis “päästaks fenomenid”. Siin tuli appi Ptolemaios (c. AD 100 – c. 170), kes lõi matemaatilise mudeli, kus planeedid mitte lihtsalt ei liigu ringtrajektoori mõõda, vaid samal ajal teevad ka väiksemaid ringe ümber esimese suure ringjoone. Neid väiksemaid ringe kutsutakse epitsükliteks. See mudel suutis planeetide liikumist taevavõlvil piisavalt hästi ennustada, et astroloogide seltskond sellega rahule jäi.</p>
 <p>Ptolemaiosel ja tema järgijatel oli tegelikult mitu erinevat mudelit. Osad neist ei sisaldanud epitsükleid ja maakera ei asunud tema mudelites universumi keskel, vaid oli sellest punktist eemale nihutatud — nii et päike ei teinud ringe ümber maakera vaid ümber tühja punkti. Kuna leidus epitsüklitega mudel ja ilma epitsükliteta mudel, mis andsid identseid ennustusi, on selge, et Aristotelese teooria ja fenomenide päästmise mudelid on põhimõtteliselt erinevad asjad. Samal ajal, kui Aritoteles <strong>seletas</strong> maailma põhiolemust põhjuslike seoste jadana (mitte matemaatiliselt), <strong>kirjeldas/ennustas</strong> Ptolemaios sellesama maailma käitumist matemaatiliste (mitte põhjuslike) struktuuride abil.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
-<img src="img/pt2.jpg" alt="Ilma epitsükliteta ptolemailine mudel." width="600" />
+<img src="assets/img/pt2.jpg" alt="Ilma epitsükliteta ptolemailine mudel." width="600" />
 <p class="caption">
 Joonis 9.2: Ilma epitsükliteta ptolemailine mudel.
 </p>
@@ -298,7 +293,7 @@ Joonis 9.2: Ilma epitsükliteta ptolemailine mudel.
 <p>Nii tekkis olukord, kus maailma mõistmiseks kasutati Aristotelese ühendteooriat, aga selle kirjeldamiseks ja tuleviku ennustamiseks hoopis ptolemailisi mudeleid, mida keegi päriselt tõeks ei pidanud ja mida hinnati selle järgi, kui hästi need “päästsid fenomene”.</p>
 <p>See toob meid Kopernikuse (1473 – 1543) juurde, kes teadusajaloolaste arvates vallandas 17. sajandi teadusliku revolutsiooni, avaldades raamatu, kus ta asetab päikese universumi keskele ja paneb maa selle ümber ringtrajektooril tiirlema. Kas Kopernikus tõrjus sellega kõrvale Aristotelese, Ptolemaiose või mõlemad? Tubdub, et Kopernikus soovis kolmandat, suutis esimest, ning et tolleaegsete lugejate arvates üritas ta teha teist — ehk välja pakkuda alternatiivi ptolemailistele mudelitele, mis selleks ajaks olid muutunud väga keerukaks (aga ka samavõrra ennustustäpseks). Kuna Kopernikuse raamat läks trükki ajal, mil selle autor oli juba oma surivoodil, kirjutas sellele eessõna üks tema vaimulikust sõber, kes püüdis oodatavat kiriklikku pahameelt leevendada vihjates, et päikese keskele viimine on vaid mudeldamise trikk, millest ei tasu järeldada, et maakera ka tegelikult ümber päikese tiirleb (piibel räägib, kuidas jumal peatas taevavõlvil päikese, mitte maa). Ja kuna eessõna oli anonüümne, eeldasid lugejad muidugi, et selle kirjutas autor. Lisaks, kuigi Kopernikus tõstis päikese keskele, jäi ta planeetide ringikujuliste trajektooride juurde, mis tähendas, et selleks, et tema teooria fenomenide päästmisel hätta ei jääks, oli ta sunnitud maad ja planeete liigutama ümber päikese mõõda epitsükleid. Kokkuvõttes oli Kopernikuse mudel pea-aegu sama keeruline kui Ptolemaiose standardmudel ja selle abil tehtud ennustused planeetide liikumise kohta olid väiksema täpsusega. Seega, ennustava mudelina ei olnud tal suuri eeliseid ptolemailike mudelite ees.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-238"></span>
-<img src="img/kop.jpg" alt="Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased." width="600" />
+<img src="assets/img/kop.jpg" alt="Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased." width="600" />
 <p class="caption">
 Joonis 9.3: Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.
 </p>
