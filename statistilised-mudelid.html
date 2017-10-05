@@ -377,7 +377,7 @@ m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length <span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(m1) </code></pre></div>
 <pre><code>##  (Intercept) Petal.Length 
 ##       4.3066       0.4089</code></pre>
-<p>Siin a = (Intercept) ehk 0.41 ja b = Petal.Length ehk 0.41.</p>
+<p>Siin a = (Intercept) ehk 4.31 ja b = Petal.Length ehk 0.41.</p>
 <p><strong>Ennustus lineaarsest mudelist</strong></p>
 <p>Anname x-le rea väärtusi, et ennustada y keskmisi väärtusi nendel x-i väärtustel. Siin me ennustame y (Sepal_length) keskväärtusi erinevatel x-i (Petal_length) väärtustel, mitte individuaalseid Sepal_length väärtusi. Me kasutame selleks deterministlikku mudelit kujul Sepal_length = a + b*Petal_length. Hiljem õpime ka bayesiaanlike meetoditega individuaalseid Sepal_length-e ennustama.</p>
 <p>Järgnev kood on sisuliselt sama, millega me üle-eelmisel plotil joonistasime mudeli y = a + bx. Me fikseerime mudeli koefitsiendid fititud irise mudeli omadega ja anname Petal_length muutujale 10 erinevat väärtust originaalse muutuja mõõtmisvahemikus. Aga sama hästi võiksime ekstrapoleerida ja küsida, mis on oodatav Sepal_length, kui Petal_length on 100 cm? Loll küsimus, aga mudel ei tea seda. Proovi seda kodus.</p>
