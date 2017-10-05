@@ -194,7 +194,7 @@ Fititud koefitsientide väärtused saame nii
 coef(m1) 
 ```
 
-Siin a = (Intercept) ehk `r round(coef(m1)[2], 2)` ja b = Petal.Length ehk `r round(coef(m1)[2], 2)`.
+Siin a = (Intercept) ehk `r round(coef(m1)[1], 2)` ja b = Petal.Length ehk `r round(coef(m1)[2], 2)`.
 
 **Ennustus lineaarsest mudelist**
 
