@@ -23,11 +23,11 @@ library(rethinking) #HPDI() and PI(). Requires Stan.
 Järeldav statistika püüab, kasutades keerulisi algoritme, teha valimi põhjal järeldusi statistilise populatsiooni kohta, millest see valim pärineb. 
 Sellisel tegevusel on mõtet ainult siis, kui ühest küljest valim peegeldab populatsiooni ja teisest küljest valim ei ole sama asi, mis populatsioon. 
 Kui valim = populatsioon, siis pole mõtet keerulisi mudeleid kasutada, et valimi põhjal populatsiooni omadusi ennustada --- seda saab teha lihtsalt valimit kirjeldades. 
-Ja kui valimil ning populatsioonil pole suurt midagi ühist, siis on valim lihtsalt ebarelevatne populatsiooni kirjeldamiseks. 
+Ja kui valimil ning populatsioonil pole palju ühist, siis on valim lihtsalt ebasobiv populatsiooni kirjeldamiseks. 
 Seega on järeldava statistika abil tehtud järeldused alati rohkem või vähem ebamäärased ning meil on vaja meetodit selle ebamäärasuse mõõtmiseks. 
 Aga kõigepealt illustreerime valimi ja populatsiooni erinevust.
 
-###4.1. Valim ei ole sama, mis populatsioon
+## Valim ei ole sama, mis populatsioon
 
     Simuleerimine on lahe sest simulatsioonid elavad mudeli väikeses maailmas, kus me teame 
     täpselt, mida me teeme ja mida on selle tagajärjel oodata. Simulatsioonidega saame me 
@@ -83,13 +83,14 @@ SD-de jaotus on ebasümmeetriline ja mood ehk kõige tõenäolisem valimi sd vä
 
 Arvutame, mitu % valimite sd-e keskmistest on > 25
 ```{r}
-sum(Summary$SD>25)/10000
+sum(Summary$SD > 25)/10000
+mean(Summary$SD > 25)
 ```
 
 Me saame >20% tõenäosusega pahasti ülehinnatud SD.
 
 ```{r}
-sum(Summary$SD<15)/10000
+mean(Summary$SD < 15)
 ```
 
 Ja me saame >40% tõenäosusega pahasti alahinnatud sd. Selline on väikeste valimite traagika.
@@ -101,7 +102,7 @@ Statistika tõmbas oma saapaid pidi mülkast välja Brad Efron 1979 aastal.
 
 ![Bootstrap päästab, kui muu ei aita](/Users/ulomaivali/Dropbox/loengud/2017-R-course/loengu-rmd-konspektid/munchausen.jpg)
 
-### 4.2.Bootstrappimine
+## Bootstrappimine
 
 > Populatsioon on valimile sama, mis valim on bootstrappitud valimile. 
 
@@ -187,7 +188,7 @@ mode(a1$Value)
 ```
 Ligikaudu 100% tõenäosusega (valimis on 1 mees alla 182 cm, ja tema on 177 cm). Lühikesed jupatsid ei saa Ameerikamaal presidendiks!
 
-#### veidi keerulisem bootsrap
+### veidi keerulisem bootsrap
 Eelnevalt tutvustasime nn percentiilmeetodit mootstrapi arvutamiseks. See lihtne meetod on küll populaarne ja annab sageli häid tulemusi, aga parim meetod bootstrappimiseks, empiiriline bootstrap, on siiski veidi keerulisem. Nimelt ei ploti me enam mitte 10 000 statistiku väärtust vaid 10 000 erinevust bootstrapitud statistiku väärtuse ja empiirilise valimi põhjal arvutatud statistiku väärtuse vahel.
 ```{r}
 heights <- c(183, 192, 182, 183, 177, 185, 188, 188, 182, 185) %>% as_tibble() 
@@ -317,7 +318,7 @@ plot(b5)
 
 Bootstrappimine on väga hea meetod, mis sõltub väiksemast arvust eeldustest kui statistikas tavaks. Bootstrap ei eelda, et andmed on normaaljaotusega või mõne muu matemaatiliselt lihtsa jaotusega. Tema põhiline eeldus on, et valim peegeldab populatsiooni --- mis ei pruugi kehtida väikeste valimite korral ja kallutatud (mitte-juhuslike) valimite korral.
 
-####Parameetriline bootstrap
+### Parameetriline bootstrap
 
 Kui me arvame, et me teame, mis jaotusega on meie andmed, ja meil on suhteliselt vähe andmepunkte, võib olla mõistlik lisada bootstrapile andmete jaotuse mudel. Näiteks, meie USA presidentide pikkused võiksid olla umbkaudu normaaljaotusega (sest me teame, et USA meeste pikkused on seda). Seega fitime kõigepealt presidentide pikkusandmetega normaaljaotuse ja seejärel tõmbame bootsrap valimid sellest normaaljaotuse mudelist.
 Normaaljaotuse mudelil on 2 parameetrit: keskmine (mu) ja standardhälve (sigma), mida saame fittida valimiandmete põhjal:
@@ -343,7 +344,7 @@ Bootstrappimisel (nii parameetrilisel kui mitteparameetrilisel versioonil) on ü
 
 Siin tuleb appi Bayesi statistika oma täies hiilguses. Selles paradigmas ei arvesta me mitte ainult andmetega vaid ka taustateadmistega, sünteesides need kokku üheks posterioorseks jaotuseks ehk järeljaotuseks. Selle jaotuse arvutamine erineb bootstrapist, kuid tema tõlgendus ja praktiline töö sellega on samasugune. Erinevalt tavapärasest bootstrapist on Bayes parameetriline meetod, mis sõltub andmete modelleerimisest modeleerija poolt ette antud jaotustesse (normaaljaotus, t jaotus jne). Tegelikult peame me Bayesi arvutuseks modelleerima vähemalt kaks erinevat jaotust: andmete jaotus, mida me kutsume likelihoodiks ehk tõepäraks, ning eelneva teadmise mudel ehk prior, mida samuti modeleeritakse tõenäosusjaotusena.
 
-## 4.3. Bayesi põhimõte
+## Bayesi põhimõte
 
 Bayesi arvutuseks on meil vaja teada
 
@@ -363,7 +364,7 @@ Me teame juba pool sajandit, et Bayesi teoreem on sellisele ülesandele parim v�
 
 Alustame siiski lihtsa näitega, mida saab käsitsi läbi arvutada.
 
-###1. näide
+### 1. näide
 
 Me teame, et suremus haigusesse on 50% ja meil on palatis 3 patsienti, kes seda haigust põevad. Seega on meil kaks andmetükki (50% ja n=3). Küsimus: mitu meie patsienti oodatavalt hinge heidavad? Eeldusel, et meie patsiendid on iseseisvad (näiteks ei ole sugulased), on meil tüüpiline mündiviske olukord.
 
@@ -492,7 +493,7 @@ Nüüd on meil posterioorne tõenäosusfunktsioon, mis summeerub 1-le ja mis sis
 > Alati on kasulik plottida kõik kolm funktsiooni (tõepära, prior ja posteerior).
 
 
-####Kui n=1
+### Kui n=1
 
 Bayes on lahe sest tema hinnangud väiksele N-le on loogiliselt sama pädevad kui suurele N-le. See ei ole nii klassikalises sageduslikus statistikas, kus paljud testid on välja töötatud N = Inf eeldusel ja töötavad halvasti väikeste valimitega.
 
@@ -600,7 +601,7 @@ plot( x = p_grid , y = posterior2 , type="b" ,
 ```
 3. patsient jäi ellu. Nüüd on posteeriori tipp mitte 75% juures nagu ennist, vaid kuskil 50% juures --- tänu priorile.
 
-## 4.4. Mudelite keel
+## Mudelite keel
 
 Siin vaatame kuidas kirjeldada mudelit nii, et masin selle ära tunneb. Meie mudelid töötavad läbi rethinking() paketi. See raamatukogu pakub kaks võimalust, kuidas mudelit arvutada, mis mõlemad kasutavad sama notatsiooni. Mõlemad võimalused arvutavad posteeriori mitte Bayesi teoreemi kasutades (nagu me ennist tegime), vaid kasutades stohhastilisi meetodeid, mis iseloomustavad posteeriori umbkaudu (aga piisavalt täpselt). Põhjuseks on, et keerulisemate mudelite korral on Bayesi teoreemi kasutamine liialt arvutusmahukas. 
 
@@ -665,7 +666,7 @@ HPDI(samples$p, prob = 0.95) #highest density 95% at the center
 
 10 korda rohkem andmeid: nüüd on suremus määratud kuskile 57% ja 77% vahele (suure tõenäosusega)
 
-## 4.5. beta prior 
+## beta prior 
 
 Nüüd anname sisse mõistlikuma struktuuriga priori: beta-jaotuse
 
@@ -735,7 +736,7 @@ HPDI(samples$p, prob = 0.95) #highest density 95% at the center
 
 Nagu näha on ka kitsa priori mõju üsna väika, isegi kui kui n=9.
 
-## 4.6. Lõpetuseks veel prioritest üldiselt. 
+## Lõpetuseks veel prioritest üldiselt. 
 
 Neid võib jagada kolmeks: mitteinformatiivsed, väheinformatiivsed ehk "regularizing" ja informatiivsed. 
 
