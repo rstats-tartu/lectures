@@ -1,7 +1,7 @@
 
 # Statistilised mudelid
 
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 library(ggthemes)
 library(scatterplot3d)
@@ -42,7 +42,7 @@ Mudeli eeliseks teooria ees on, et hästi konstrueeritud mudel on lihtsamini mõ
 Aristoteles (384–322 BC) lõi teooria maailma toimimise kohta, mis domineeris haritud eurooplase maailmapilti enam kui 1200 aasta vältel. Tema ühendteooria põhines maailmapildil, mis oli üldtunnustatud juba sajandeid enne Aristotelest ja järgneva 1500 aasta jooksul kahtlesid selles vähesed mõistlikud inimesed. Selle kohaselt asub universumi keskpunktis statsionaarne maakera ning kõik, mida siin leida võib, on tehtud neljast elemendist: maa, vesi, õhk ja tuli. Samas, kogu maailmaruum alates kuu sfäärist on tehtud viiendast elemendist (eeter), mida aga ei leidu maal (nagu nelja elementi ei leidu kuu peal ja sealt edasi). Taevakehad (kuu, päike, planeedid ja kinnistähed) tiirlevad ümber maa kontsentrilistes sfäärides, mille vahel pole vaba ruumi. Seega on kogu liikumine eetri sfäärides ühtlane ja ringikujuline ja see liikumine põhjustab pika põhjus-tagajärg ahela kaudu kõiki liikumisi, mida maapeal kohtame. Kaasa arvatud sündimine, elukäik ja surm. Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimese liikumise poolt, mille käivitab kõige välimises sfääris paiknev meie jaoks mõistetamatu intellektiga "olend".  
 
 ```{r, fig.cap="Keskaegne aristotellik maailm.",fig.align='center',out.width=600, echo=FALSE}
-knitr::include_graphics("img/arist.jpg")
+knitr::include_graphics("assets/img/arist.jpg")
 ```
 
 
@@ -61,7 +61,7 @@ Aristotelese suur teooria ühendab kogu maailmapildi alates meie mõistes keemia
 Ptolemaiosel ja tema järgijatel oli tegelikult mitu erinevat mudelit. Osad neist ei sisaldanud epitsükleid ja maakera ei asunud tema mudelites universumi keskel, vaid oli sellest punktist eemale nihutatud --- nii et päike ei teinud ringe ümber maakera vaid ümber tühja punkti. Kuna leidus epitsüklitega mudel ja ilma epitsükliteta mudel, mis andsid identseid ennustusi, on selge, et Aristotelese teooria ja fenomenide päästmise mudelid on põhimõtteliselt erinevad asjad. Samal ajal, kui Aritoteles **seletas** maailma põhiolemust põhjuslike seoste jadana (mitte matemaatiliselt), **kirjeldas/ennustas** Ptolemaios sellesama maailma käitumist matemaatiliste (mitte põhjuslike) struktuuride abil.
 
 ```{r, fig.cap="Ilma epitsükliteta ptolemailine mudel.", fig.align='center',out.width=600, echo=FALSE}
-knitr::include_graphics("img/pt2.jpg")
+knitr::include_graphics("assets/img/pt2.jpg")
 ```
 
 
@@ -71,7 +71,7 @@ See toob meid Kopernikuse (1473 – 1543) juurde, kes teadusajaloolaste arvates 
 
 
 ```{r, fig.cap="Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.", fig.align='center',out.width=600, echo=FALSE}
-knitr::include_graphics("img/kop.jpg")
+knitr::include_graphics("assets/img/kop.jpg")
 ```
 
 
