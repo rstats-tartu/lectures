@@ -11,14 +11,19 @@ link-citations: yes
 colorlinks: yes
 github-repo: rstats-tartu/lectures
 description: "Praktilise kursuse 'Reprodutseeritav andmeanalüüs R keeles' materjalid."
-cover-image: assets/img/cover2.png
+cover-image: assets/img/cover.png
 ---
 
 
 ```{r setup, include=FALSE}
 knitr::write_bib(c(.packages(), 'bookdown', 'knitr', 'rmarkdown'), 'packages.bib')
-knitr::opts_chunk$set(dev='svg')
-options(htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE)
+knitr::opts_chunk$set(dev = 'pdf')
+options(htmltools.dir.version = FALSE, 
+        formatR.indent = 2, 
+        width = 55, 
+        digits = 4, 
+        warnPartialMatchAttr = FALSE, 
+        warnPartialMatchDollar = FALSE)
 ```
 
 # Haara kannel, Vanemuine! {-}

@@ -466,7 +466,7 @@ class(fruits)
 
 ## Tabelit sisse lugedes vaata üle NA-d
 
-```{r}
+```{r, dev = 'png'}
 diabetes <- read.table(file = "data/diabetes.csv", sep = ";", dec = ",", header = TRUE)
 str(diabetes)
 aggr(diabetes, prop = FALSE, numbers = TRUE)
@@ -488,7 +488,7 @@ sapply(diabetes, function(x) sum(is.na(x)))
 ```
 
 Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:
-```{r}
+```{r, dev='png'}
 matrixplot(diabetes) 
 ```
 
