@@ -17,8 +17,13 @@ cover-image: assets/img/cover.png
 
 ```{r setup, include=FALSE}
 knitr::write_bib(c(.packages(), 'bookdown', 'knitr', 'rmarkdown'), 'packages.bib')
-knitr::opts_chunk$set(dev='svg')
-options(htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE)
+knitr::opts_chunk$set(dev = 'pdf')
+options(htmltools.dir.version = FALSE, 
+        formatR.indent = 2, 
+        width = 55, 
+        digits = 4, 
+        warnPartialMatchAttr = FALSE, 
+        warnPartialMatchDollar = FALSE)
 ```
 
 # Haara kannel, Vanemuine! {-}
