@@ -132,8 +132,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.6.1" data-path="obj.html"><a href="obj.html#rekodeerime-tibble-vaartusi"><i class="fa fa-check"></i><b>4.6.1</b> Rekodeerime tibble väärtusi</a></li>
 <li class="chapter" data-level="4.6.2" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-rea-kaupa"><i class="fa fa-check"></i><b>4.6.2</b> Ühendame kaks tibblet rea kaupa</a></li>
 <li class="chapter" data-level="4.6.3" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-veeru-kaupa"><i class="fa fa-check"></i><b>4.6.3</b> ühendame kaks tibblet veeru kaupa</a></li>
-<li class="chapter" data-level="4.6.4" data-path="obj.html"><a href="obj.html#nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha."><i class="fa fa-check"></i><b>4.6.4</b> Nii saab tibblest kätte vektori, millega saab tehteid teha.</a></li>
-<li class="chapter" data-level="4.6.5" data-path="obj.html"><a href="obj.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>4.6.5</b> Andmeraamide salvestamine (eksport-import)</a></li>
+<li class="chapter" data-level="4.6.4" data-path="obj.html"><a href="obj.html#tabelite-uhendamine-join-ga"><i class="fa fa-check"></i><b>4.6.4</b> tabelite ühendamine join()-ga</a></li>
+<li class="chapter" data-level="4.6.5" data-path="obj.html"><a href="obj.html#nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha."><i class="fa fa-check"></i><b>4.6.5</b> Nii saab tibblest kätte vektori, millega saab tehteid teha.</a></li>
+<li class="chapter" data-level="4.6.6" data-path="obj.html"><a href="obj.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>4.6.6</b> Andmeraamide salvestamine (eksport-import)</a></li>
 </ul></li>
 <li class="chapter" data-level="4.7" data-path="obj.html"><a href="obj.html#tabelit-sisse-lugedes-vaata-ule-na-d"><i class="fa fa-check"></i><b>4.7</b> Tabelit sisse lugedes vaata üle NA-d</a></li>
 <li class="chapter" data-level="4.8" data-path="obj.html"><a href="obj.html#matrix"><i class="fa fa-check"></i><b>4.8</b> Matrix</a></li>
@@ -725,6 +726,26 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 ## 7     Tim     M experiment_2    40     1.1321  6.047
 ## 8     Ann     F experiment_2    42     1.1887  6.350
 ## 9    Jill     F experiment_2    44     1.2453  6.652</code></pre>
+<div id="summarise-mutate-transmute-ja-filter-tootavad-ka-mitme-veeru-kaupa." class="section level4">
+<h4><span class="header-section-number">8.2.5.1</span> Summarise(), mutate(), transmute() ja filter() töötavad ka mitme veeru kaupa.</h4>
+<p>Need variandid sisaldavad suffikseid _if, _at ja _all.</p>
+<p>_if võimaldab valida veerge teise funktsiooni, nagu näiteks is.numeric() või is.character() alusel.</p>
+<p>_at võimaldab valida veerge sama süntaksiga, mis select().</p>
+<p>_all valib kõik veerud.</p>
+<p><code>summarise_all(df, mean)</code> teeb sama asja, mis colMeans().</p>
+<p><code>summarise_all(df, funs(min, max))</code> võtab iga veeru min ja max väärtuse.</p>
+<p><code>summarise_all(df, ~ sd(.) / mean(.))</code> arvutab iga veeru CV (pane tähele ~ kasutust)</p>
+<p><code>summarise_all(df, funs(cv = sd(.) / mean(.), mean))</code> arvutab iga veeru CV ja keskmise (~ puudub, kui meil on &gt;1 funktsiooni)</p>
+<p><code>summarise_at(df, vars(-z), mean)</code> keskmine kõigist veergudest, v.a. z.</p>
+<p><code>summarise_at(df, vars(x, y), funs(min, max))</code> kahe veeru min ja max.</p>
+<p><code>summarise_if(is.numeric, mean, na.rm = TRUE)</code> ainult numbritega veerud</p>
+<p><code>mutate_all(df, log10)</code> võta log10 kõikidest veergudest</p>
+<p><code>mutate_all(df, ~ round(. * 25))</code> teeb kõik veerud täisarvulisteks ja korrutab 25-ga</p>
+<p><code>mutate_all(df, funs(half = . / 2, double = . * 2))</code> rakendab 2 funktsiooni</p>
+<p><code>transmute_all(df, funs(half = . / 2, double = . * 2))</code> jätab alles ainult uued veerud</p>
+<p><code>filter_all(weather, any_vars(is.na(.)))</code> näitab ridu, mis sisaldavad NA-sid</p>
+<p><code>filter_at(weather, vars(starts_with(&quot;wind&quot;)), all_vars(is.na(.)))</code> read, kus veerg, mis sisaldab wind, on NA.</p>
+</div>
 </div>
 </div>
 <div id="grouped-filters" class="section level2">
@@ -1027,14 +1048,14 @@ gsscat_sum  &lt;-<span class="st"> </span><span class="kw">group_by</span>(gss_c
 p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gsscat_sum, <span class="kw">aes</span>(tvhours, <span class="kw">fct_reorder</span>(relig, tvhours))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()
 p</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-231-1.pdf" width="672" type="application/pdf" />
+<embed src="main_files/figure-html/unnamed-chunk-237-1.pdf" width="672" type="application/pdf" />
 </div>
 <div id="fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole" class="section level3">
 <h3><span class="header-section-number">8.5.6</span> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</h3>
 <p>Argumendid on faktor f ja need tasemed (jutumärkides), mida sa tahad tõsta.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## täiendame eelmist graafikut ümberkorraldatud andmetega
 p <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(tvhours, <span class="kw">fct_relevel</span>(relig, <span class="st">&quot;None&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>))</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-232-1.pdf" width="672" type="application/pdf" />
+<embed src="main_files/figure-html/unnamed-chunk-238-1.pdf" width="672" type="application/pdf" />
 </div>
 <div id="joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega" class="section level3">
 <h3><span class="header-section-number">8.5.7</span> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</h3>
@@ -1047,14 +1068,14 @@ gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat,
 <span class="kw">ggplot</span>(gsscat_sum, <span class="kw">aes</span>(age, N, <span class="dt">colour =</span> <span class="kw">fct_reorder2</span>(marital, age, N))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;marital&quot;</span>)</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-233-1.pdf" width="672" type="application/pdf" />
+<embed src="main_files/figure-html/unnamed-chunk-239-1.pdf" width="672" type="application/pdf" />
 </div>
 <div id="tulpdiagrammide-korral-kasuta-fct_infreq" class="section level3">
 <h3><span class="header-section-number">8.5.8</span> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></h3>
 <p>Loeme kokku erineva perekondliku staatusega isikud ja paneme need andmed tulpdiagrammi grupi suurusele vastupidises järjekorras st. väiksemad grupid tulevad enne.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(gss_cat, <span class="dt">marital =</span> <span class="kw">fct_infreq</span>(marital) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">fct_rev</span>()) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(marital)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-234-1.pdf" width="672" type="application/pdf" />
+<embed src="main_files/figure-html/unnamed-chunk-240-1.pdf" width="672" type="application/pdf" />
 
 </div>
 </div>

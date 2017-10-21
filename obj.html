@@ -132,8 +132,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.6.1" data-path="obj.html"><a href="obj.html#rekodeerime-tibble-vaartusi"><i class="fa fa-check"></i><b>4.6.1</b> Rekodeerime tibble väärtusi</a></li>
 <li class="chapter" data-level="4.6.2" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-rea-kaupa"><i class="fa fa-check"></i><b>4.6.2</b> Ühendame kaks tibblet rea kaupa</a></li>
 <li class="chapter" data-level="4.6.3" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-veeru-kaupa"><i class="fa fa-check"></i><b>4.6.3</b> ühendame kaks tibblet veeru kaupa</a></li>
-<li class="chapter" data-level="4.6.4" data-path="obj.html"><a href="obj.html#nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha."><i class="fa fa-check"></i><b>4.6.4</b> Nii saab tibblest kätte vektori, millega saab tehteid teha.</a></li>
-<li class="chapter" data-level="4.6.5" data-path="obj.html"><a href="obj.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>4.6.5</b> Andmeraamide salvestamine (eksport-import)</a></li>
+<li class="chapter" data-level="4.6.4" data-path="obj.html"><a href="obj.html#tabelite-uhendamine-join-ga"><i class="fa fa-check"></i><b>4.6.4</b> tabelite ühendamine join()-ga</a></li>
+<li class="chapter" data-level="4.6.5" data-path="obj.html"><a href="obj.html#nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha."><i class="fa fa-check"></i><b>4.6.5</b> Nii saab tibblest kätte vektori, millega saab tehteid teha.</a></li>
+<li class="chapter" data-level="4.6.6" data-path="obj.html"><a href="obj.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>4.6.6</b> Andmeraamide salvestamine (eksport-import)</a></li>
 </ul></li>
 <li class="chapter" data-level="4.7" data-path="obj.html"><a href="obj.html#tabelit-sisse-lugedes-vaata-ule-na-d"><i class="fa fa-check"></i><b>4.7</b> Tabelit sisse lugedes vaata üle NA-d</a></li>
 <li class="chapter" data-level="4.8" data-path="obj.html"><a href="obj.html#matrix"><i class="fa fa-check"></i><b>4.8</b> Matrix</a></li>
@@ -266,7 +267,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(readxl) 
 ## Install gotta read em all as R studio addin
 ## install.packages(&quot;devtools&quot;)
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;Stan125/GREA&quot;</span>)</code></pre></div>
+<span class="co">#devtools::install_github(&quot;Stan125/GREA&quot;)</span></code></pre></div>
 <div id="objekt-ja-nimi" class="section level2">
 <h2><span class="header-section-number">4.1</span> Objekt ja nimi</h2>
 <p>Kui teil sünnib laps, annate talle nime. R-s on vastupidi: nimele antakse objekt</p>
@@ -438,15 +439,15 @@ grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
 happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
 happy_list</code></pre></div>
 <pre><code>## [[1]]
-## [1] 0.30461 0.91813 0.05504 0.53056 0.71838
+## [1] 0.5517 0.1840 0.4556 0.2779 0.6568
 ## 
 ## [[2]]
-##         a        b
-## 1 0.30461  0.24952
-## 2 0.91813 -0.09074
-## 3 0.05504  0.66859
-## 4 0.53056 -0.54353
-## 5 0.71838  2.27191
+##        a        b
+## 1 0.5517 -0.52697
+## 2 0.1840 -1.25111
+## 3 0.4556  0.04916
+## 4 0.2779  1.02315
+## 5 0.6568 -0.15098
 ## 
 ## [[3]]
 ## 
@@ -644,7 +645,7 @@ dfs1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="d
 ## 2     1     b     2
 ## 3     1     c     3
 ## 4     2     d     4</code></pre>
-<p>Vaata Environmendist need tabelid üle ja mõtle järgi, mis juhtus.</p>
+<p>Vaata Environmentist need tabelid üle ja mõtle järgi, mis juhtus.</p>
 <p>Kui <code>bind_rows()</code> miskipärast ei tööta, proovi <code>do.call(rbind, dfs)</code>, mis on väga sarnane.</p>
 <p>NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!</p>
 <p>Näiteks, võib-olla te tahtsite järgnevat tabelit saada, aga võib-olla ka mitte:</p>
@@ -669,8 +670,69 @@ dfs1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="d
 ## 2     b     2     5
 ## 3     c     3     6</code></pre>
 </div>
+<div id="tabelite-uhendamine-join-ga" class="section level3">
+<h3><span class="header-section-number">4.6.4</span> tabelite ühendamine join()-ga</h3>
+<p>Kõigepealt 2 tabelit: df1 ja df2.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df1 &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span><span class="st"> </span>Member,         <span class="op">~</span><span class="st"> </span>yr_of_birth,
+  <span class="st">&quot;John Lennon&quot;</span>,    <span class="dv">1940</span>,
+  <span class="st">&quot;Paul McCartney&quot;</span>, <span class="dv">1942</span>
+)
+
+df1</code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##           Member yr_of_birth
+##            &lt;chr&gt;       &lt;dbl&gt;
+## 1    John Lennon        1940
+## 2 Paul McCartney        1942</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df2 &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span><span class="st"> </span>Member,            <span class="op">~</span><span class="st"> </span>instrument,    <span class="op">~</span><span class="st"> </span>yr_of_birth,
+  <span class="st">&quot;John Lennon&quot;</span>,      <span class="st">&quot;guitar&quot;</span>,         <span class="dv">1940</span>,
+  <span class="st">&quot;Ringo Starr&quot;</span>,      <span class="st">&quot;drums&quot;</span>,          <span class="dv">1940</span>,
+  <span class="st">&quot;George Harrisson&quot;</span>, <span class="st">&quot;guitar&quot;</span>,         <span class="dv">1942</span>
+)
+df2</code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##             Member instrument yr_of_birth
+##              &lt;chr&gt;      &lt;chr&gt;       &lt;dbl&gt;
+## 1      John Lennon     guitar        1940
+## 2      Ringo Starr      drums        1940
+## 3 George Harrisson     guitar        1942</code></pre>
+<p>Ühendan 2 tabelit nii, et mõlema tabeli kõik read ilmuvad uude tabelisse.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">full_join</span>(df1, df2)</code></pre></div>
+<pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
+<pre><code>## # A tibble: 4 x 3
+##             Member yr_of_birth instrument
+##              &lt;chr&gt;       &lt;dbl&gt;      &lt;chr&gt;
+## 1      John Lennon        1940     guitar
+## 2   Paul McCartney        1942       &lt;NA&gt;
+## 3      Ringo Starr        1940      drums
+## 4 George Harrisson        1942     guitar</code></pre>
+<p>Ühendan esimese tabeliga df2 nii, et ainult df1 read säilivad, aga df2-lt võetakse sisse veerud, mis df1-s puuduvad. See on hea join, kui on vaja algtabelile lisada infot teistest tabelitest.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(df1, df2)</code></pre></div>
+<pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##           Member yr_of_birth instrument
+##            &lt;chr&gt;       &lt;dbl&gt;      &lt;chr&gt;
+## 1    John Lennon        1940     guitar
+## 2 Paul McCartney        1942       &lt;NA&gt;</code></pre>
+<p>Filtreerin välja need df1 read, millele vastab rida df2-s.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">semi_join</span>(df1, df2)</code></pre></div>
+<pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##        Member yr_of_birth
+##         &lt;chr&gt;       &lt;dbl&gt;
+## 1 John Lennon        1940</code></pre>
+<p>Filtreerin välja need df1 read, millele ei vasta rida df2-s.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anti_join</span>(df1, df2)</code></pre></div>
+<pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##           Member yr_of_birth
+##            &lt;chr&gt;       &lt;dbl&gt;
+## 1 Paul McCartney        1942</code></pre>
+</div>
 <div id="nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha." class="section level3">
-<h3><span class="header-section-number">4.6.4</span> Nii saab tibblest kätte vektori, millega saab tehteid teha.</h3>
+<h3><span class="header-section-number">4.6.5</span> Nii saab tibblest kätte vektori, millega saab tehteid teha.</h3>
 <p>Tibble jääb muidugi endisel kujul alles.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ubinad &lt;-<span class="st"> </span>fruits<span class="op">$</span>apples
 ubinad &lt;-<span class="st"> </span>ubinad <span class="op">+</span><span class="st"> </span><span class="dv">2</span>
@@ -681,7 +743,7 @@ ubinad</code></pre></div>
 <pre><code>##  num [1:4] 3 6 NA NA</code></pre>
 </div>
 <div id="andmeraamide-salvestamine-eksport-import" class="section level3">
-<h3><span class="header-section-number">4.6.5</span> Andmeraamide salvestamine (eksport-import)</h3>
+<h3><span class="header-section-number">4.6.6</span> Andmeraamide salvestamine (eksport-import)</h3>
 <p>Andmeraami saame salvestada näiteks csv-na (comma separated file) oma kõvakettale, kasutame “tidyverse” analooge paketist “readr”, mille nimed on baas R funktsioonidest eristatavad alakriipsu “_&quot; kasutamisega. “readr” laaditakse “tidyverse” laadimisega.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## loome uuesti fruits data tibble
 shop &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;maxima&quot;</span>, <span class="st">&quot;tesco&quot;</span>, <span class="st">&quot;lidl&quot;</span>)
@@ -746,7 +808,7 @@ dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class
 ##  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...
 ##  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggr</span>(diabetes, <span class="dt">prop =</span> <span class="ot">FALSE</span>, <span class="dt">numbers =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-62-1.png" width="672" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
+<p><img src="main_files/figure-html/unnamed-chunk-68-1.png" width="672" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
 <p>Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nrows &lt;-<span class="st"> </span><span class="kw">nrow</span>(diabetes)
   ncomplete &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">complete.cases</span>(diabetes))
@@ -766,12 +828,14 @@ dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class
 ##        3</code></pre>
 <p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<p><img src="main_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
 <p>Kuidas rekodeerida NA-d näiteks 0-ks:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> </span><span class="dv">0</span>
 dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> &quot;other&quot;</span>
 dfs[dfs <span class="op">==</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span> <span class="co"># teeb vastupidi 0-d NA-deks</span></code></pre></div>
 <p>Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud <code>is.na()</code> funktsiooniga.</p>
+<p><code>filter_all(weather, any_vars(is.na(.)))</code> näitab ridu, mis sisaldavad NA-sid</p>
+<p><code>filter_at(weather, vars(starts_with(&quot;wind&quot;)), all_vars(is.na(.)))</code> read, kus veerg, mis sisaldab wind, on NA.</p>
 </div>
 <div id="matrix" class="section level2">
 <h2><span class="header-section-number">4.8</span> Matrix</h2>
