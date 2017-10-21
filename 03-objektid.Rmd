@@ -34,7 +34,7 @@ library(VIM)
 library(readxl) 
 ## Install gotta read em all as R studio addin
 ## install.packages("devtools")
-devtools::install_github("Stan125/GREA")
+#devtools::install_github("Stan125/GREA")
 ```
 
 
@@ -367,7 +367,7 @@ dfs1 <- tibble(colA = "d", colB =  4)
 bind_rows(dfs, dfs1, .id = "id")
 ```
 
-Vaata Environmendist need tabelid üle ja mõtle järgi, mis juhtus.
+Vaata Environmentist need tabelid üle ja mõtle järgi, mis juhtus.
 
 Kui `bind_rows()` miskipärast ei tööta, proovi `do.call(rbind, dfs)`, mis on väga sarnane.
 
@@ -387,6 +387,50 @@ Meil on 2 verbi: bind_cols ja cbind, millest esimene on konservatiivsem. Proovig
 ```{r}
 dfx <- tibble(colC = c(4, 5, 6))
 bind_cols(dfs, dfx)
+```
+
+### tabelite ühendamine join()-ga
+
+Kõigepealt 2 tabelit: df1 ja df2.
+
+```{r}
+df1 <- tribble(
+  ~ Member,         ~ yr_of_birth,
+  "John Lennon",    1940,
+  "Paul McCartney", 1942
+)
+
+df1
+```
+
+```{r}
+df2 <- tribble(
+  ~ Member,            ~ instrument,    ~ yr_of_birth,
+  "John Lennon",      "guitar",         1940,
+  "Ringo Starr",      "drums",          1940,
+  "George Harrisson", "guitar",         1942
+)
+df2
+```
+
+Ühendan 2 tabelit nii, et mõlema tabeli kõik read ilmuvad uude tabelisse.
+```{r}
+full_join(df1, df2)
+```
+
+Ühendan esimese tabeliga df2 nii, et ainult df1 read säilivad, aga df2-lt võetakse sisse veerud, mis df1-s puuduvad. See on hea join, kui on vaja algtabelile lisada infot teistest tabelitest.
+```{r}
+left_join(df1, df2)
+```
+
+Filtreerin välja need df1 read, millele vastab rida df2-s. 
+```{r}
+semi_join(df1, df2)
+```
+
+Filtreerin välja need df1 read, millele ei vasta rida df2-s.
+```{r}
+anti_join(df1, df2)
 ```
 
 
@@ -501,6 +545,10 @@ dfs[dfs == 0] <- NA # teeb vastupidi 0-d NA-deks
 ```
 
 Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud `is.na()` funktsiooniga.
+
+`filter_all(weather, any_vars(is.na(.)))` näitab ridu, mis sisaldavad NA-sid
+
+`filter_at(weather, vars(starts_with("wind")), all_vars(is.na(.)))` read, kus veerg, mis sisaldab wind, on NA. 
 
 ## Matrix
 

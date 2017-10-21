@@ -311,6 +311,43 @@ mutate(dat_lng,
 ```
 
 
+#### Summarise(), mutate(), transmute() ja filter() töötavad ka mitme veeru kaupa. 
+
+Need variandid sisaldavad suffikseid _if, _at ja _all. 
+
+_if võimaldab valida veerge teise funktsiooni, nagu näiteks is.numeric() või is.character() alusel. 
+
+_at võimaldab valida veerge sama süntaksiga, mis select().
+
+_all valib kõik veerud.
+
+`summarise_all(df, mean)` teeb sama asja, mis colMeans(). 
+
+`summarise_all(df, funs(min, max))` võtab iga veeru min ja max väärtuse.
+
+`summarise_all(df, ~ sd(.) / mean(.))` arvutab iga veeru CV (pane tähele ~ kasutust)
+
+`summarise_all(df, funs(cv = sd(.) / mean(.), mean))` arvutab iga veeru CV ja keskmise (~ puudub, kui meil on >1 funktsiooni)
+
+`summarise_at(df, vars(-z), mean)` keskmine kõigist veergudest, v.a. z.
+
+`summarise_at(df, vars(x, y), funs(min, max))` kahe veeru min ja max.
+
+`summarise_if(is.numeric, mean, na.rm = TRUE)` ainult numbritega veerud
+
+`mutate_all(df, log10)` võta log10 kõikidest veergudest
+
+`mutate_all(df, ~ round(. * 25))` teeb kõik veerud täisarvulisteks ja korrutab 25-ga
+
+`mutate_all(df, funs(half = . / 2, double = . * 2))` rakendab 2 funktsiooni
+
+`transmute_all(df, funs(half = . / 2, double = . * 2))` jätab alles ainult uued veerud
+
+`filter_all(weather, any_vars(is.na(.)))` näitab ridu, mis sisaldavad NA-sid
+
+`filter_at(weather, vars(starts_with("wind")), all_vars(is.na(.)))` read, kus veerg, mis sisaldab wind, on NA. 
+
+
 ## Grouped filters
 
 Keep all groups bigger than a threshold:
@@ -349,6 +386,8 @@ mutate_at(bad.df, "time", parse_number)
 ```
 
 Here we did the same thing more elegantly by directly parsing numbers from a character string.
+
+
 
 ## `separate()` one column into several
 
