@@ -1,0 +1,110 @@
+---
+title: "models"
+output: html_notebook
+---
+
+
+world --> word (theory) --> equation (model)
+
+1. every statistic is calculated within a model - there is no statistics that is independent of models
+
+2. model is not the same thing as theory/hypothesis
+
+if a theory directly corresopnds to reality, then this theory is true
+
+a model cannot directly correspond to reality.
+
+a model can directly correspond to a theory
+
+model is an equation that tries to describe a theory (math that corresponds to words)
+
+
+
+```{r}
+x <- 1:100
+y <- x
+plot(y~x, type="l")
+```
+
+```{r}
+x <- 1:100
+a <- 30
+y <- a+ x
+plot(y~x, type="l", ylim=c(0, 100))
+abline(c(0,1), lty=2)
+```
+
+```{r}
+x <- 1:100
+b <- 0.5
+y <- b*x
+plot(y~x, type="l", ylim=c(0, 100))
+abline(c(0,1), lty=2)
+```
+
+```{r}
+x <- 1:100
+a <- 20
+b <- 0.5
+y <- a + b*x
+plot(y~x, type="l", ylim=c(0, 100))
+abline(c(0,1), lty=2)
+```
+
+```{r}
+data(iris)
+#head(iris)
+m <- lm(data=iris, Sepal.Length~Petal.Length)
+plot(iris$Sepal.Length~iris$Petal.Length, col=iris$Species)
+abline(m)
+```
+
+```{r}
+coef(m)
+```
+
+```{r}
+Petal_length <- seq(min(iris$Petal.Length), max(iris$Petal.Length), length.out = 10)
+a <- coef(m)[1]
+b <- coef(m) [2]
+Sepal_length <- a + b*Petal_length
+
+plot(Sepal_length~Petal_length, type="b")
+```
+
+```{r}
+m <- lm(data=iris, Sepal.Length~Sepal.Width)
+m1 <- lm(data=iris, Sepal.Length~Sepal.Width -1)
+coef(m); coef(m1)
+AIC(m, m1)
+```
+
+```{r}
+m2 <- lm(data=iris, Sepal.Length~Sepal.Width + Petal.Length)
+coef(m); coef(m2)
+```
+
+```{r}
+Sepal_width <- seq(min(iris$Sepal.Width), max(iris$Sepal.Width), length.out = 10)
+Petal_length <- median(iris$Petal.Length)
+Petal_length2 <- Petal_length + 1
+a <- coef(m2)[1]
+b1 <- coef(m2)[2]
+b2 <- coef(m2)[3]
+
+Sepal_length <- a + b1*Sepal_width + b2*Petal_length
+Sepal_length2 <- a + b1*Sepal_width + b2*Petal_length2
+
+plot(Sepal_length~Sepal_width, type="b")
+lines(Sepal_length2~Sepal_width, lty=2)
+
+```
+```{r}
+library(scatterplot3d)
+iris1 <- iris[,1:3]
+s3d <- scatterplot3d(iris1, angle=55, scale.y=0.7, pch=20,
+                     col.axis = "blue", col.grid = "lightblue")
+my.lm <- lm(data=iris, Sepal.Width~Sepal.Length + Petal.Length)
+s3d$plane3d(my.lm, lty.box="solid")
+```
+

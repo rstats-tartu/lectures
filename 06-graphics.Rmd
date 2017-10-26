@@ -448,6 +448,25 @@ p + geom_point() +
   facet_grid(drv ~ .)
 ```
 
+## Mitu graafikut paneelidena ühel joonisel
+
+Kõigepealt tooda komponentgraafikud ggplot() abil ja tee nendest graafilised objektid.
+Näiteks nii: 
+
+```{r}
+library(tidyverse)
+i1 <- ggplot(data= iris, aes(x=Sepal.Length)) + geom_histogram()
+i2 <- ggplot(data= iris, aes(x=Sepal.Length)) + geom_density()
+```
+
+Seejäral, kasuta funktsioon `gridExtra::grid.arrange()` et graafikud kõrvuti panna
+
+```{r}
+library(gridExtra)
+grid.arrange(i2, i1, nrow = 1) # ncol = 2 also works
+```
+
+
 ### Telgede ulatus
 
 Telgede ulatust saab määrata kolmel erineval viisil
