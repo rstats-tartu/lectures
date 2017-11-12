@@ -441,15 +441,15 @@ grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
 happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
 happy_list</code></pre></div>
 <pre><code>## [[1]]
-## [1] 0.9172 0.4490 0.5702 0.6206 0.3006
+## [1] 0.2440 0.7704 0.8696 0.3216 0.4171
 ## 
 ## [[2]]
 ##        a       b
-## 1 0.9172  1.3292
-## 2 0.4490 -0.5458
-## 3 0.5702  1.3223
-## 4 0.6206 -0.3708
-## 5 0.3006  0.5374
+## 1 0.2440  0.9949
+## 2 0.7704 -2.0034
+## 3 0.8696 -0.1150
+## 4 0.3216 -0.3603
+## 5 0.4171 -0.4464
 ## 
 ## [[3]]
 ## 
@@ -818,7 +818,7 @@ dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class
 <pre><code>## [1] 136</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  ncomplete<span class="op">/</span>nrows <span class="co">#34%</span></code></pre></div>
 <pre><code>## [1] 0.3375</code></pre>
-<p>Mitu NA-d on igas tulbas?</p>
+<p><strong>Mitu NA-d on igas tulbas?</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(diabetes, <span class="cf">function</span>(x) <span class="kw">sum</span>(<span class="kw">is.na</span>(x))) </code></pre></div>
 <pre><code>##       id     chol stab.glu      hdl    ratio    glyhb 
 ##        0        1        0        1        1       13 
@@ -831,13 +831,27 @@ dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class
 <p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
 <p><img src="main_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
-<p>Kuidas rekodeerida NA-d näiteks 0-ks:</p>
+<p><strong>Kuidas rekodeerida NA-d näiteks 0-ks:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> </span><span class="dv">0</span>
 dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> &quot;other&quot;</span>
 dfs[dfs <span class="op">==</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span> <span class="co"># teeb vastupidi 0-d NA-deks</span></code></pre></div>
 <p>Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud <code>is.na()</code> funktsiooniga.</p>
+<p>coalesce teeb seda peenemalt. kõigepealt kõik</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>)
+<span class="kw">coalesce</span>(x, 0L)</code></pre></div>
+<pre><code>## [1] 1 2 3 4 5 0 0 0</code></pre>
+<p>Nii saab 2 vektori põhjal kolmanda nii, et NA-d asendatakse vastava väärtusega:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">5</span>)
+z &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)
+<span class="kw">coalesce</span>(y, z)</code></pre></div>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
 <p><code>filter_all(weather, any_vars(is.na(.)))</code> näitab ridu, mis sisaldavad NA-sid</p>
 <p><code>filter_at(weather, vars(starts_with(&quot;wind&quot;)), all_vars(is.na(.)))</code> read, kus veerg, mis sisaldab wind, on NA.</p>
+<p><strong>Rekodeerime numbri vm NA-ks</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">na_if</span>(x, y)
+
+x <span class="op">-</span><span class="st"> </span>vektor ehk tabeli veerg, mida modifitseerime
+y <span class="op">-</span><span class="st"> </span>väärtus, mida soovime <span class="ot">NA</span><span class="op">-</span>ga asendada</code></pre></div>
 </div>
 <div id="matrix" class="section level2">
 <h2><span class="header-section-number">4.8</span> Matrix</h2>
