@@ -8,25 +8,143 @@ Regular expression annab võimaluse lühidalt kirjeldada mitte-üheseid otsingup
 
 A [regular expression](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html)  [Regular Expressions as used in R](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html)
 
-+ Most characters, including all letters and digits, are regular expressions that match themselves. 
-+ `.` matches any single character.
-+ You can refer also to a character class, which is a list of characters enclosed between `[` and `]`, e.g. `[[:alnum:]]` is same as `[A-z0-9]`.
-+ Most common character classes:
-  - `[:alnum:]` includes alphanumerics (`[:alpha:]` and `[:digit:]`); 
-- `[:alpha:]`, includes alphabetic characters (`[:upper:]` and `[:lower:]` case);
-- `[:punct:]` includes punctuation characters ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` ` { | } ~.; 
-- `[:blank:]` includes space and tab; etc. 
-+ The metacharacters in regular expressions are `. \ | ( ) [ { ^ $ * + ?`, whether these have a special meaning depends on the context. When matching a metacharacter as a regular character, precede it with a double backslash `\\`.
-+ Repetition quantifiers put after regex specify how many times regex is matched: `?`, optional, at most once; `*`, zero or more times; `+`, one or more times; `{n}`, n times; `{n,}`, n or more times; `{n,m}`, n to m times. 
+
+string on märkide järjestus, mis on jutumärkide vahel ("" või ''). 
+Osad märgid ei ole R stringis otse representeeritavad. 
+Neid representeerivad nn special characters ehk erimärgid.
+Iga kord kui te regular expressionis näete \ peate seda stringis, mis representeerib seda rexexp-i, kirjutama kui \\.
+
+`writeLines()` näitab kuidas R näeb su stringi peale seda, kui erimärgid on välja loetud (parsitud).  
+
+```{r eval=FALSE}
+
+writeLines("\\.") # \.
+writeLines("\\ is a backslash") # \ is a backslash
+```
+
+
+Enamus märke (k.a. tähed ja numbrid) tähistavad ainult iseennast. 
+
++ `.` tähistab igat märki.
+
+Märgiklass on märkide nimekiri nurksulgude vahel, nagu näiteks `[[:alnum:]]`, mis on sama kui `[A-z0-9]`. Enamasti tuleb need stringi kirjutada topelt nurksulgudes: [[:siia_märgiklass:]]. Aga näiteks [0-9] on üksik nurksulgudes.  
+
++ tavalised märgiklassid:
+- `[:alnum:]` numbrid ja tähed: AacF123 
+- `[:digit:]` numbrid: 123
+- `[:alpha:]` tähed: asdf
+- `[:upper:]` suured tähed: ASDF
+- `[:lower:]` väiksed tähed: asdf
+- `[:punct:]` ! " # $ % & ' ( ) * + , - / : ; < = > ? @ [ \ ] ^ _ ` ` { | } ~. 
+- `[:space:]` space, tab ja newline.
+- `[:blank:]` tab ja newline.
+
+Metamärgid on `. \ | ( ) [ { ^ $ * + ?`. Nende tähendus sõltub kontekstist. `\\` teeb metamärgist tavalise märgi.
+
+```{r eval=FALSE}
+
+trüki see   regex
+\\n         \n   new line (return)
+\\t         \t   tab
+\\s         \s   any whitespace (\S - any non-whitespace)
+\\d         \d   any digit (\D - any non-digit) 
+\\w         \w   any word character (\W - non-word char)
+\\b         \b   word boundaries
+
+Selleks, et trükkida erimärk tavalise märgina:
+  
+trüki  selleks  
+\\.    .
+\\!    !
+\\?    ?        
+\\\\   \
+\\(    (
+\\{    {
+
+```
+
+
+
++ Repetition quantifiers put after regex specify how many times regex is matched: `?`, zero or one; `*`, zero or more times; `+`, one or more times; `{n}`, n times; `{n,}`, n or more times; `{n,m}`, n to m times. 
 + ^ anchors the regular expression to the start of the string.
 + $ anchors the the regular expression to end of the string.
+
++ ab|d tähendab ab või d
++ [abe] tähendab ühte kolmest (kas a või b või e)
++ [^abe] tähendab kõike, mis ei ole a või b või e
++ [a-c] tähendab a või b või c
+
+Sulud annavad eelistuse
+
++ (ab|d)e tähendab abe või de
+
+Leia string, millele järgneb või eelneb mingi string
+
++ a(?=c) annab need a-d, millele järgneb c
++ a(?!c) annab need a-d, millele ei järgne c
++ (?<=b)a annab need a-d, millele eelneb b
++ (?<!b)a annab need a-d, millele ei eelne b
+
+**patterns that match more than one character:**
+
+
+```{r, eval=FALSE}
+
+. (dot): any character apart from a newline.
+
+\\d: any digit.
+
+\\s: any whitespace (space, tab, newline).
+
+\[abc]: match a, b, or c.
+
+\[!abc]: match anything except a, b, or c.
+
+To create a regular expression containing \d or \s, you???ll need to escape the \ for the string, so you will type "\\\\d" or "\\\\s".
+
+abc|d..f will match either "abc", or "deaf". 
+```
+
+
+
+Et mitte interpreteerida stringi tavalise regex-ina:
+ `regex(pattern, ignore_case = FALSE, multiline = FALSE, comments = FALSE, dotall = FALSE, ...)` ignore cases, match end of lines and end of strings, allow R comments within regex's , and/or to have . match everything including \n. Näiteks `str_detect("I", regex("i", TRUE))`
+
+
+
 
 ## Common operations with regular expressions
 
 + Locate a pattern match (positions)
+- str_detect() annab TRUE/FALSE
+- str_which() annab stringide, mis sisaldavad otsingumustrit, indeksinumbrid
+- str_count() annab esinemiste arvu stringis
+- str_locate_all() annab otsingumustri positsiooninumbri (indeksi) stringis
+
 + Extract a matched pattern
-+ Identify a match to a pattern
+- str_sub() võtab välja otsitud alamstringi; otsing indeksinumbrite järgi
+- str_subset() võtab välja terve stringi; regex otsing
+- str_extract_all() võtab välja mustri (alamstringi); regex otsing 
+- str_match_all() annab maatriksi, millel on veerg igale grupile regeximustris
+
 + Replace a matched pattern
+- str_replace_all()
+- str_to_lower()
+- str_to_upper()
+- str_to_title()
+
++ stringi pikkus
+- str_length() annab märkide arvu stringis
+- str_trim() võtab maha whitespace stringi algusest/lõpust
+
++ ühenda ja eralda stringe
+- str_c() ühendab, k.a. kollapseerib mitu stringi üheks (arg collapse=)
+- str_dup() kordab stringi n korda
+- str_split_fixed() jagab stringi alamstringide maatriksiks
+- glue::glue_data() teeb stringi df-st, listist v environmentist
+
++ järjesta stringe
+- str_sort() annab sorditud character vectori
 
 ## Find and replace
 
@@ -70,23 +188,25 @@ str_replace_all(x, "[apl]","_") #a or p or l to _
 str_replace_all(x, "[ap|p.e]","_") # ap or p.e to _
 ```
 
+näide: meil on vector v, milles täht tähistab katse tüüpi, number, mis on tähe ees, tähistab mõõtmisobjekti identiteeti ja tähe järel asuv number tähistab ajapunkti tundides (h). F ja f tähistavad sama asja. Kõigepealt võtame välja F-i mõõtmisojbekti ehk subjekti koodid
+```{r}
+library(stringr)
+v <- c("1F1", "12F2h", "13f1", "2S")
 
-**patterns that match more than one character:**
 
+v_f <- str_subset(v, "[Ff]") 
+#filtreerime F ja f sisaldavad stringid
+v_f
+v_f_subject <- str_replace_all(v_f, "[Ff][0-9]+h?", "") 
+#string "F või f, number üks või enam korda, h 0 või enam korda" asendada tühja stringiga
+v_f_subject
 
-```{r, eval=FALSE}
-
-. (dot): any character apart from a newline.
-
-\\d: any digit.
-
-\\s: any whitespace (space, tab, newline).
-
-\[abc]: match a, b, or c.
-
-\[!abc]: match anything except a, b, or c.
-
-To create a regular expression containing \d or \s, you???ll need to escape the \ for the string, so you will type "\\\\d" or "\\\\s".
-
-abc|d..f will match either "abc", or "deaf". 
 ```
+
+Ja nääd võtame välja ajapunktide koodid. Kõigepealt asendame stringid, mis sisaldavad vähemalt üht numbrit, millele järgneb F v f tühja stringiga. Seejärel asendame tühja stringiga h-d. Ja lõpuks avaldame iga ajapunkti numbrina (mitte enam stringina).
+
+```{r}
+library(tidyverse)
+str_replace_all(v_f, "[0-9]+[Ff]", "") %>% str_replace_all("h", "") %>% as.integer
+```
+
