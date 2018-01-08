@@ -12,7 +12,7 @@
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="assets/img/cover.png" />
+  <meta property="og:image" content="img/cover.png" />
   <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
   <meta name="github-repo" content="rstats-tartu/lectures" />
 
@@ -20,7 +20,7 @@
   <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="twitter:image" content="assets/img/cover.png" />
+  <meta name="twitter:image" content="img/cover.png" />
 
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
@@ -34,12 +34,12 @@
   
 <link rel="prev" href="obj.html">
 <link rel="next" href="funs.html">
-<script src="libs/jquery/jquery.min.js"></script>
-<link href="libs/gitbook/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 
 
 
@@ -322,7 +322,7 @@ trüki  selleks
 To create a regular expression containing \d or \s, you???ll need to escape the \ <span class="cf">for</span> the string, so you will type <span class="st">&quot;</span><span class="ch">\\\\</span><span class="st">d&quot;</span> or <span class="st">&quot;</span><span class="ch">\\\\</span><span class="st">s&quot;</span>.
 
 abc<span class="op">|</span>d..f will match either <span class="st">&quot;abc&quot;</span>, or <span class="st">&quot;deaf&quot;</span>. </code></pre></div>
-<p>Et mitte interpreteerida stringi tavalise regex-ina: <code>regex(pattern, ignore_case = FALSE, multiline = FALSE, comments = FALSE, dotall = FALSE, ...)</code> ignore cases, match end of lines and end of strings, allow R comments within regex’s , and/or to have . match everything including . Näiteks <code>str_detect(&quot;I&quot;, regex(&quot;i&quot;, TRUE))</code></p>
+<p>Et mitte interpreteerida stringi tavalise regex-ina: <code>regex(pattern, ignore_case = FALSE, multiline = FALSE, comments = FALSE, dotall = FALSE, ...)</code> ignore cases, match end of lines and end of strings, allow R comments within regex’s , and/or to have <code>.</code> match everything including <code>\n</code>. Näiteks <code>str_detect(&quot;I&quot;, regex(&quot;i&quot;, TRUE))</code></p>
 <div id="common-operations-with-regular-expressions" class="section level2">
 <h2><span class="header-section-number">5.1</span> Common operations with regular expressions</h2>
 <ul>
@@ -421,13 +421,13 @@ v_f_subject</code></pre></div>
 <a href="funs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/lunr.js"></script>
-<script src="libs/gitbook/js/plugin-search.js"></script>
-<script src="libs/gitbook/js/plugin-sharing.js"></script>
-<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

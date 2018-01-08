@@ -12,7 +12,7 @@
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="assets/img/cover.png" />
+  <meta property="og:image" content="img/cover.png" />
   <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
   <meta name="github-repo" content="rstats-tartu/lectures" />
 
@@ -20,7 +20,7 @@
   <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="twitter:image" content="assets/img/cover.png" />
+  <meta name="twitter:image" content="img/cover.png" />
 
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
@@ -34,12 +34,12 @@
   
 <link rel="prev" href="calc.html">
 <link rel="next" href="regex.html">
-<script src="libs/jquery/jquery.min.js"></script>
-<link href="libs/gitbook/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 
 
 
@@ -253,8 +253,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <p>Käsk <code>ls()</code> annab objektide nimed teie workspace-s:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre></div>
-<pre><code>## [1] &quot;a&quot;      &quot;a1&quot;     &quot;a2&quot;     &quot;a3&quot;     &quot;answer&quot;
-## [6] &quot;result&quot;</code></pre>
+<pre><code>## [1] &quot;a&quot;      &quot;a1&quot;     &quot;a2&quot;     &quot;a3&quot;     &quot;answer&quot; &quot;result&quot;</code></pre>
 <p><code>rm(a)</code> removes object a from the workspace</p>
 <p>Selleks, et salvestada töökeskkond faili kasuta <i class="fa fa-floppy-o" aria-hidden="true"></i> “Save” nuppu “Environment” akna servast või menüüst “Session” -&gt; “Save Workspace As”.</p>
 <p>Projekti sulgemisel salvestab RStudio vaikimisi töökeskkonna. <strong>Parema reprodutseeritavuse huvides pole siiski soovitav töökeskkonda peale töö lõppu projekti sulgemisel salvestada!</strong>. Lülitame automaatse salvestamise välja:</p>
@@ -403,8 +402,8 @@ a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>) 
 a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
-<pre><code>## Warning in a + b: longer object length is not a
-## multiple of shorter object length</code></pre>
+<pre><code>## Warning in a + b: longer object length is not a multiple of shorter object
+## length</code></pre>
 <pre><code>## [1] 5 7 7</code></pre>
 <p>Aga see töötab veateatega, sest vektorite pikkused ei ole üksteise kordajad 1 + 4; 2 + 5, 3 + 4</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
@@ -421,7 +420,7 @@ a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
 <span class="kw">sum</span>(a)</code></pre></div>
 <pre><code>## [1] 2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(a)</code></pre></div>
-<pre><code>## [1] 0.6667</code></pre>
+<pre><code>## [1] 0.6666667</code></pre>
 <p>Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 + 1 = 2. Seda loogiliste väärtuste omadust õpime varsti praktikas kasutama.</p>
 </div>
 </div>
@@ -441,15 +440,15 @@ grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
 happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
 happy_list</code></pre></div>
 <pre><code>## [[1]]
-## [1] 0.8655 0.5597 0.6902 0.8142 0.6296
+## [1] 0.6808615 0.6524196 0.7105349 0.2669943 0.4225497
 ## 
 ## [[2]]
-##        a       b
-## 1 0.8655  1.0611
-## 2 0.5597 -0.8205
-## 3 0.6902 -0.7072
-## 4 0.8142  0.9315
-## 5 0.6296 -0.2201
+##           a           b
+## 1 0.6808615  0.14116895
+## 2 0.6524196 -2.74751465
+## 3 0.7105349 -1.58647456
+## 4 0.2669943  0.07599495
+## 5 0.4225497 -1.37491976
 ## 
 ## [[3]]
 ## 
@@ -458,7 +457,7 @@ happy_list</code></pre></div>
 ## 
 ## Coefficients:
 ## (Intercept)           hp  
-##     30.0989      -0.0682  
+##    30.09886     -0.06823  
 ## 
 ## 
 ## [[4]]
@@ -572,11 +571,11 @@ dfs</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits_subset &lt;-<span class="st"> </span>fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]
 <span class="co"># 1 tähendab, et arvuta sd rea kaupa</span>
 <span class="kw">apply</span>(fruits_subset, <span class="dv">1</span>, sd)</code></pre></div>
-<pre><code>## [1]  0.7071 19.7990      NA</code></pre>
+<pre><code>## [1]  0.7071068 19.7989899         NA</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 2 tähendab, et arvuta sd veeru kaupa</span>
 <span class="kw">apply</span>(fruits_subset, <span class="dv">2</span>, sd) </code></pre></div>
-<pre><code>##  apples oranges 
-##   23.43      NA</code></pre>
+<pre><code>##   apples  oranges 
+## 23.43075       NA</code></pre>
 <p>Lisame käsitsi meie tabelile 1 rea:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st"> </span><span class="kw">add_row</span>(fruits, 
                   <span class="dt">shop =</span> <span class="st">&quot;konsum&quot;</span>, 
@@ -817,17 +816,15 @@ dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class
   ncomplete <span class="co">#136</span></code></pre></div>
 <pre><code>## [1] 136</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  ncomplete<span class="op">/</span>nrows <span class="co">#34%</span></code></pre></div>
-<pre><code>## [1] 0.3375</code></pre>
+<pre><code>## [1] 0.337469</code></pre>
 <p><strong>Mitu NA-d on igas tulbas?</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(diabetes, <span class="cf">function</span>(x) <span class="kw">sum</span>(<span class="kw">is.na</span>(x))) </code></pre></div>
-<pre><code>##       id     chol stab.glu      hdl    ratio    glyhb 
-##        0        1        0        1        1       13 
-## location      age   gender   height   weight    frame 
-##        0        0        0        5        1        0 
-##    bp.1s    bp.1d    bp.2s    bp.2d    waist      hip 
-##        5        5      262      262        2        2 
-## time.ppn 
-##        3</code></pre>
+<pre><code>##       id     chol stab.glu      hdl    ratio    glyhb location      age 
+##        0        1        0        1        1       13        0        0 
+##   gender   height   weight    frame    bp.1s    bp.1d    bp.2s    bp.2d 
+##        0        5        1        0        5        5      262      262 
+##    waist      hip time.ppn 
+##        2        2        3</code></pre>
 <p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
 <p><img src="main_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
@@ -972,13 +969,13 @@ aa3</code></pre></div>
 <a href="regex.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/lunr.js"></script>
-<script src="libs/gitbook/js/plugin-search.js"></script>
-<script src="libs/gitbook/js/plugin-sharing.js"></script>
-<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

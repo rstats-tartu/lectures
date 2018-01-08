@@ -12,7 +12,7 @@
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="assets/img/cover.png" />
+  <meta property="og:image" content="img/cover.png" />
   <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
   <meta name="github-repo" content="rstats-tartu/lectures" />
 
@@ -20,7 +20,7 @@
   <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="twitter:image" content="assets/img/cover.png" />
+  <meta name="twitter:image" content="img/cover.png" />
 
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
@@ -34,12 +34,12 @@
   
 <link rel="prev" href="regex.html">
 <link rel="next" href="graafilised-lahendused.html">
-<script src="libs/jquery/jquery.min.js"></script>
-<link href="libs/gitbook/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 
 
 
@@ -252,7 +252,7 @@ x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6</sp
 y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">7</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate correlation</span>
 <span class="kw">cor</span>(x, y)</code></pre></div>
-<pre><code>## [1] -0.1166</code></pre>
+<pre><code>## [1] -0.1166019</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate sum</span>
 <span class="kw">sum</span>(x)</code></pre></div>
 <pre><code>## [1] 21</code></pre>
@@ -267,7 +267,7 @@ y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</sp
 <pre><code>## [1] 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate standard deviation</span>
 <span class="kw">sd</span>(x)</code></pre></div>
-<pre><code>## [1] 1.304</code></pre>
+<pre><code>## [1] 1.30384</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># return quantiles</span>
 <span class="kw">quantile</span>(x)</code></pre></div>
 <pre><code>##   0%  25%  50%  75% 100% 
@@ -360,7 +360,7 @@ numbers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv"
 <p>Sellisel juhul tuleb NA väärtused vektorist enne selle funktsiooni kasutamist välja visata:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">numbers_filtered &lt;-<span class="st"> </span><span class="kw">na.omit</span>(numbers)
 <span class="kw">calc_sem</span>(numbers_filtered)</code></pre></div>
-<pre><code>## [1] 12.8</code></pre>
+<pre><code>## [1] 12.80338</code></pre>
 <p>On ka võimalus funktsiooni sisse kirjutada <strong>NA väärtuste käsitlemine</strong>. Näiteks, üks võimalus on <strong>anda viga</strong> ja funktsioon katkestada, et kasutaja saaks ise ühemõtteliselt oma andmetest NA väärtused eemaldada. Teine võimalus on funktsioonis <strong>NA-d vaikimisi eemaldada</strong> ja anda selle kohta näiteks teade.</p>
 <p>NA-de vaikimisi eemaldamiseks on hetkel mitu võimalust, kasutame kõigepealt nö. valet lahendust:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
@@ -371,7 +371,7 @@ numbers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv"
 }
 
 <span class="kw">calc_sem</span>(numbers)</code></pre></div>
-<pre><code>## [1] 11.45</code></pre>
+<pre><code>## [1] 11.4517</code></pre>
 <p>See annab meile vale tulemuse sest <code>na.rm = TRUE</code> viskab küll NA-d välja meie vektorist aga jätab vektori pikkuse muutmata (<code>length(x)</code> rida).</p>
 <p>Teeme uue versiooni oma funktsioonist, mis viskab vaikimisi välja puuduvad väärtused, kui need on olemas ja annab siis ka selle kohta hoiatuse.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## x on numbriline vektor
@@ -393,7 +393,7 @@ calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
 
 <span class="kw">calc_sem</span>(numbers)</code></pre></div>
 <pre><code>## Warning in calc_sem(numbers): Removed NAs from vector.</code></pre>
-<pre><code>## [1] 12.8</code></pre>
+<pre><code>## [1] 12.80338</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(numbers)</code></pre></div>
 <pre><code>## [1] 5</code></pre>
 <p>Missugune funktsiooni käitumine valida, sõltub kasutaja vajadusest. Rohkem infot NA käsitlemise funktsioonide kohta saab <code>?na.omit</code> abifailist.</p>
@@ -410,13 +410,13 @@ calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
 <a href="graafilised-lahendused.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/lunr.js"></script>
-<script src="libs/gitbook/js/plugin-search.js"></script>
-<script src="libs/gitbook/js/plugin-sharing.js"></script>
-<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

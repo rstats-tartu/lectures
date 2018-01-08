@@ -12,7 +12,7 @@
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="assets/img/cover.png" />
+  <meta property="og:image" content="img/cover.png" />
   <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
   <meta name="github-repo" content="rstats-tartu/lectures" />
 
@@ -20,7 +20,7 @@
   <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="twitter:image" content="assets/img/cover.png" />
+  <meta name="twitter:image" content="img/cover.png" />
 
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
@@ -34,12 +34,12 @@
   
 <link rel="prev" href="intro.html">
 <link rel="next" href="calc.html">
-<script src="libs/jquery/jquery.min.js"></script>
-<link href="libs/gitbook/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 
 
 
@@ -350,13 +350,11 @@ Joonis 2.2: RStudio ‘Install Packages’ dialoogiaken.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 ## let&#39;s look at the head of package list
 <span class="kw">head</span>(<span class="kw">ls</span>(<span class="st">&quot;package:dplyr&quot;</span>), <span class="dv">20</span>)</code></pre></div>
-<pre><code>##  [1] &quot;%&gt;%&quot;           &quot;add_count&quot;     &quot;add_count_&quot;   
-##  [4] &quot;add_row&quot;       &quot;add_rownames&quot;  &quot;add_tally&quot;    
-##  [7] &quot;add_tally_&quot;    &quot;all_equal&quot;     &quot;all_vars&quot;     
-## [10] &quot;anti_join&quot;     &quot;any_vars&quot;      &quot;arrange&quot;      
-## [13] &quot;arrange_&quot;      &quot;arrange_all&quot;   &quot;arrange_at&quot;   
-## [16] &quot;arrange_if&quot;    &quot;as_data_frame&quot; &quot;as_tibble&quot;    
-## [19] &quot;as.tbl&quot;        &quot;as.tbl_cube&quot;</code></pre>
+<pre><code>##  [1] &quot;%&gt;%&quot;           &quot;add_count&quot;     &quot;add_count_&quot;    &quot;add_row&quot;      
+##  [5] &quot;add_rownames&quot;  &quot;add_tally&quot;     &quot;add_tally_&quot;    &quot;all_equal&quot;    
+##  [9] &quot;all_vars&quot;      &quot;anti_join&quot;     &quot;any_vars&quot;      &quot;arrange&quot;      
+## [13] &quot;arrange_&quot;      &quot;arrange_all&quot;   &quot;arrange_at&quot;    &quot;arrange_if&quot;   
+## [17] &quot;as_data_frame&quot; &quot;as_tibble&quot;     &quot;as.tbl&quot;        &quot;as.tbl_cube&quot;</code></pre>
 <p>Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab <code>::</code> operaatorit kasutades kutsuda välja/importida funktsiooni spetsiifilisest paketist:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dplyr<span class="op">::</span><span class="kw">select</span>(df, my_var)</code></pre></div>
 <p>Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat funktsiooni sisaldavat raamatukogu töökeskkonda laadida.</p>
@@ -395,7 +393,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 
 </div>
 </div>
-<h3>References</h3>
+<h3>Bibliograafia</h3>
 <div id="refs" class="references">
 <div id="ref-roxygen2">
 <p>Wickham, Hadley, Peter Danenberg, and Manuel Eugster. 2017. <em>Roxygen2: In-Line Documentation for R</em>. <a href="https://CRAN.R-project.org/package=roxygen2" class="uri">https://CRAN.R-project.org/package=roxygen2</a>.</p>
@@ -413,13 +411,13 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <a href="calc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/lunr.js"></script>
-<script src="libs/gitbook/js/plugin-search.js"></script>
-<script src="libs/gitbook/js/plugin-sharing.js"></script>
-<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

@@ -12,7 +12,7 @@
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="assets/img/cover.png" />
+  <meta property="og:image" content="img/cover.png" />
   <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
   <meta name="github-repo" content="rstats-tartu/lectures" />
 
@@ -20,7 +20,7 @@
   <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="twitter:image" content="assets/img/cover.png" />
+  <meta name="twitter:image" content="img/cover.png" />
 
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
@@ -34,12 +34,12 @@
   
 <link rel="prev" href="tidyverse.html">
 <link rel="next" href="bibliograafia.html">
-<script src="libs/jquery/jquery.min.js"></script>
-<link href="libs/gitbook/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 
 
 
@@ -316,7 +316,7 @@ y &lt;-<span class="st"> </span>x <span class="co"># x = pikkus </span>
      <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, 
      <span class="dt">xlab =</span> <span class="st">&quot;weight in kg&quot;</span>, 
      <span class="dt">ylab =</span> <span class="st">&quot;heigth in cm&quot;</span>)</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-255-1.pdf" width="288" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-255-1.png" width="288" /></p>
 <p>Mudeli keeles tähistame me seda, mida me ennustame (antud juhul pikkus) Y-ga ja seda, mille väärtuse põhjal me ennustame (antud juhul kaal) X-ga. Seega sirge mudeli matemaatiline formalism on Y = X.</p>
 <p>See on äärmiselt jäik mudel: sirge, mille asukoht on rangelt fikseeritud. Sirge lõikab y telge alati 0-s (mudeli keeles: sirge intercept ehk lõikepunkt Y teljel = 0) ja tema tõusunurk saab olla ainult 45 kraadi (mudeli keeles: mudeli slope ehk tõus = 1). Selle mudeli jäikus tuleneb sellest, et temas ei ole parameetreid, mille väärtusi me saaksime vabalt muuta ehk tuunida.</p>
 <p>Mis juhtub, kui me lisame mudelisse konstandi, mille liidame x-i väärtustele?</p>
@@ -331,7 +331,7 @@ y &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </s
      <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>,
      <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)
 <span class="kw">abline</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-256-1.pdf" width="288" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-256-1.png" width="288" /></p>
 <p>Meie konstant a määrab <em>y</em> väärtuse, kui <em>x = 0</em>, ehk sirge lõikepunkti <em>y</em> teljel. Teisisõnu, a = mudeli intercept</p>
 <p>Mis juhtub, kui me mitte ei liida, vaid korrutame <em>x</em>-i konstandiga?</p>
 <p><em>y = bx</em></p>
@@ -345,7 +345,7 @@ y &lt;-<span class="st"> </span>b<span class="op">*</span>x <span class="co"># x
      <span class="dt">col=</span><span class="st">&quot;red&quot;</span>,
      <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)
 <span class="kw">abline</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-257-1.pdf" width="288" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-257-1.png" width="288" /></p>
 <p>Nüüd muutub sirge tõusunurk, ehk kui palju me ootame <em>y</em>-t muutumas, kui <em>x</em> muutub näiteks ühe ühiku võrra. Kui b = 3, siis <em>x</em>-i tõustes ühe ühiku võrra suureneb <em>y</em> kolme ühiku võrra. Proovi järgi, mis juhtub, kui b = -3.</p>
 <p>Selleks, et sirget kahes dimensioonis vabalt liigutada, piisab kui me kombineerime eelnevad näited ühte:</p>
 <p><em>y = a + bx</em></p>
@@ -362,7 +362,7 @@ y &lt;-<span class="st">  </span>a <span class="op">+</span><span class="st"> </
      <span class="dt">xlab =</span> <span class="st">&quot;weight in kg&quot;</span>, 
      <span class="dt">ylab =</span> <span class="st">&quot;heigth in cm&quot;</span>, 
      <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">200</span>))</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-258-1.pdf" width="288" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-258-1.png" width="288" /></p>
 <p>See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline, olukord. Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu. Meie valimiandmed ei peegelda täpselt inimpopulatsiooni. Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole. Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.</p>
 <p>Kahe parameetriga sirge mudel ongi see, mida me fitime kahedimensiooniliste andmetega. Näiteks nii:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit a linear model and name the model object as m1</span>
@@ -371,7 +371,7 @@ m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length <span c
 <span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length <span class="op">~</span><span class="st"> </span>iris<span class="op">$</span>Petal.Length, <span class="dt">col =</span> iris<span class="op">$</span>Species)
 <span class="co"># draw the fitted regression line from m1</span>
 <span class="kw">abline</span>(m1)</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-259-1.pdf" width="672" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-259-1.png" width="672" /></p>
 <p>Mudeli fittimine tähendab siin lihtsalt, et sirge on 2D ruumi asetatud nii, et see oleks võimalikult lähedal kõikidele punktidele.</p>
 <blockquote>
 <p>oletame, et meil on n andmepunkti ja et me fitime neile sirge. Nüüd plotime fititud sirge koos punktidega ja tõmbame igast punktist mudelsirgeni joone, mis on paraleelne y-teljega. Seejärel mõõdame nende n joone pikkused. Olgu need pikkused a, b, … i. lm() funktsioon fitib sirge niimoodi, et summa a<sup>2</sup> + b<sup>2</sup> + … i<sup>2</sup> oleks minimaalne. Seda kutsutakse vähimruutude meetodiks.</p>
@@ -379,7 +379,7 @@ m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length <span c
 <p>Fititud koefitsientide väärtused saame nii</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(m1) </code></pre></div>
 <pre><code>##  (Intercept) Petal.Length 
-##       4.3066       0.4089</code></pre>
+##    4.3066034    0.4089223</code></pre>
 <p>Siin a = (Intercept) ehk 4.31 ja b = Petal.Length ehk 0.41.</p>
 <p><strong>Ennustus lineaarsest mudelist</strong></p>
 <p>Anname x-le rea väärtusi, et ennustada y keskmisi väärtusi nendel x-i väärtustel. Siin me ennustame y (Sepal_length) keskväärtusi erinevatel x-i (Petal_length) väärtustel, mitte individuaalseid Sepal_length väärtusi. Me kasutame selleks deterministlikku mudelit kujul Sepal_length = a + b*Petal_length. Hiljem õpime ka bayesiaanlike meetoditega individuaalseid Sepal_length-e ennustama.</p>
@@ -393,7 +393,7 @@ b &lt;-<span class="st"> </span><span class="kw">coef</span>(m1)[<span class="dv
 Sepal_length &lt;-<span class="st">  </span>a <span class="op">+</span><span class="st"> </span>b<span class="op">*</span>Petal_length
 
 <span class="kw">plot</span>(Sepal_length<span class="op">~</span>Petal_length, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>)</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-261-1.pdf" width="672" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-261-1.png" width="672" /></p>
 <p>Siin ennustasime 10 y väärtust 10-l x-i väärtusel.</p>
 <div id="neli-moistet" class="section level3">
 <h3><span class="header-section-number">9.3.1</span> Neli mõistet</h3>
@@ -453,19 +453,19 @@ dfr <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(x, y), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title =</span> <span class="kw">element_blank</span>())</code></pre></div>
 <div class="figure"><span id="fig:polymods"></span>
-<img src="main_files/figure-html/polymods-1.pdf" alt="Kasvava paindlikusega polünoomsed mudelid. mod_e1 on sirge võrrand y = a + b1x (2 parameetrit: a ja b1), mod_e2 on lihtsaim võimalik polünoom: y= a + b1x + b2x^2 (3 parameetrit), …, mod_e5: y= a + b1x + b2x^2 + b3x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6)." width="576" />
+<img src="main_files/figure-html/polymods-1.png" alt="Kasvava paindlikusega polünoomsed mudelid. mod_e1 on sirge võrrand y = a + b1x (2 parameetrit: a ja b1), mod_e2 on lihtsaim võimalik polünoom: y= a + b1x + b2x^2 (3 parameetrit), …, mod_e5: y= a + b1x + b2x^2 + b3x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6)." width="576" />
 <p class="caption">
 Joonis 9.4: <strong>Kasvava paindlikusega polünoomsed mudelid.</strong> mod_e1 on sirge võrrand y = a + b<sub>1</sub>x (2 parameetrit: a ja b<sub>1</sub>), mod_e2 on lihtsaim võimalik polünoom: y= a + b<sub>1</sub>x + b<sub>2</sub>x^2 (3 parameetrit), …, mod_e5: y= a + b<sub>1</sub>x + b<sub>2</sub>x^2 + b<sub>3</sub>x^3 + b4x^4 + b5x^5 (6 parameetrit). mod_e5 vastab täpselt andmepunktidele (N = 6).
 </p>
 </div>
 <p>Vähimruutude meetodil fititud mudeleid saame võrrelda AIC-i näitaja järgi. AIC - Akaike Informatsiooni Kriteerium - vaatab mudeli sobivust andmetega ja mudeli parameetrite arvu. Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompromissi) ja väikseima AIC-ga mudel on eelistatuim mudel. Aga seda ainult võrreldud mudelite hulgas. AIC-i absoluutväärtus ei loe - see on suhteline näitaja.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">AIC</span>(mod_e1, mod_e2, mod_e3, mod_e4, mod_e5)</code></pre></div>
-<pre><code>##        df   AIC
-## mod_e1  3 27.78
-## mod_e2  4 29.77
-## mod_e3  5 26.21
-## mod_e4  6 25.11
-## mod_e5  7  -Inf</code></pre>
+<pre><code>##        df      AIC
+## mod_e1  3 27.77993
+## mod_e2  4 29.76669
+## mod_e3  5 26.21330
+## mod_e4  6 25.11245
+## mod_e5  7     -Inf</code></pre>
 <p>AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?</p>
 <pre><code>Ülefittimise vältimiseks kasutavad Bayesi mudelid informatiivseid prioreid, 
 mis välistavad ekstreemsed parameetriväärtused. 
@@ -491,33 +491,33 @@ s3d &lt;-<span class="st"> </span><span class="kw">scatterplot3d</span>(iris1, <
 <pre><code>## Warning: Unknown or uninitialised column: &#39;color&#39;.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length <span class="op">+</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris1)
 s3d<span class="op">$</span><span class="kw">plane3d</span>(my.lm, <span class="dt">lty.box =</span> <span class="st">&quot;solid&quot;</span>)</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-263-1.pdf" width="672" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-263-1.png" width="672" /></p>
 <p>Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length <span class="op">+</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Width <span class="op">~</span><span class="st"> </span>iris<span class="op">$</span>Sepal.Length, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">8</span>), <span class="dt">col =</span> iris<span class="op">$</span>Species)
 <span class="kw">abline</span>(m1)</code></pre></div>
-<pre><code>## Warning in abline(m1): only using the first two of 3
-## regression coefficients</code></pre>
-<embed src="main_files/figure-html/unnamed-chunk-264-1.pdf" width="672" type="application/pdf" />
+<pre><code>## Warning in abline(m1): only using the first two of 3 regression
+## coefficients</code></pre>
+<p><img src="main_files/figure-html/unnamed-chunk-264-1.png" width="672" /></p>
 <p>Enam ei läbi sirge punkte, nagu ta seda 3D ruumis tegi.</p>
 <p>Võrlduseks ühe prediktoriga mudel</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length, <span class="dt">data =</span> iris)
 <span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Width <span class="op">~</span><span class="st"> </span>iris<span class="op">$</span>Sepal.Length, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">8</span>), <span class="dt">col =</span> iris<span class="op">$</span>Species)
 <span class="kw">abline</span>(m)</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-265-1.pdf" width="672" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-265-1.png" width="672" /></p>
 <p>Nõnda võrdleme kahe mudeli koefitsiente</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(m)</code></pre></div>
 <pre><code>##  (Intercept) Sepal.Length 
-##      3.41895     -0.06188</code></pre>
+##    3.4189468   -0.0618848</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(m1)</code></pre></div>
 <pre><code>##  (Intercept) Sepal.Length Petal.Length 
-##       1.0381       0.5612      -0.3353</code></pre>
+##    1.0380691    0.5611860   -0.3352667</code></pre>
 <p>Nagu näha, mudeli m b<sub>1</sub> koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist.</p>
 <p>Kumb mudel on siis parem? AIC-i järgi on m1 kõvasti parem, kui m.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">AIC</span>(m, m1)</code></pre></div>
-<pre><code>##    df    AIC
-## m   3 179.46
-## m1  4  92.12</code></pre>
+<pre><code>##    df       AIC
+## m   3 179.46442
+## m1  4  92.11691</code></pre>
 <p><strong>Ennustused sõltumatute prediktoritega mudelist</strong></p>
 <p>Siin on idee kasutada fititud mudeli struktuuri enustamaks y keskmisi väärtusi erinevatel x<sub>1</sub> ja x<sub>2</sub> väärtustel. Kuna mudel on fititud, on parameetrite väärtused fikseeritud.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Sepal_length &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Sepal.Length), 
@@ -533,7 +533,7 @@ Sepal_width &lt;-<span class="st"> </span>a <span class="op">+</span><span class
      <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),
      <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 <span class="kw">abline</span>(<span class="kw">c</span>(<span class="kw">coef</span>(m)[<span class="dv">1</span>], <span class="kw">coef</span>(m)[<span class="dv">2</span>]), <span class="dt">lty =</span> <span class="dv">2</span>) <span class="co"># prediction from the single predictor model</span></code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-268-1.pdf" width="288" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-268-1.png" width="288" /></p>
 <p>Nüüd joonistame 3D pildi olukorrast, kus nii <em>x<sub>1</sub></em> kui <em>x<sub>2</sub></em> omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul – mis sest, et 3D ruumis.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Sepal_length &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Sepal.Length), 
                      <span class="kw">max</span>(iris<span class="op">$</span>Sepal.Length), 
@@ -554,7 +554,7 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class=
               <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, 
               <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, 
               <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-269-1.pdf" width="672" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-269-1.png" width="672" /></p>
 </div>
 </div>
 <div id="interaktsioonimudel---uhe-prediktori-moju-soltub-teise-prediktori-vaartusest" class="section level3">
@@ -570,10 +570,10 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class=
 <span class="st">           </span>Petal.Length <span class="op">+</span><span class="st"> </span>
 <span class="st">           </span>Sepal.Length<span class="op">*</span>Petal.Length, <span class="dt">data =</span> iris)
 <span class="kw">AIC</span>(m, m1, m2)</code></pre></div>
-<pre><code>##    df    AIC
-## m   3 179.46
-## m1  4  92.12
-## m2  5  93.43</code></pre>
+<pre><code>##    df       AIC
+## m   3 179.46442
+## m1  4  92.11691
+## m2  5  93.42623</code></pre>
 <p><strong>ennustused interaktsioonimudelist</strong></p>
 <p>Kõigepealt anname rea väärtusi x<sub>1</sub>-le ja hoiame x<sub>2</sub> konstantsena.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Sepal_length &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Sepal.Length), 
@@ -592,9 +592,9 @@ Sepal_width &lt;-<span class="st">   </span>a <span class="op">+</span><span cla
 
 <span class="kw">plot</span>(Sepal_width <span class="op">~</span><span class="st"> </span>Sepal_length, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">6</span>))
 <span class="kw">abline</span>(m1, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>## Warning in abline(m1, lty = 2): only using the first
-## two of 3 regression coefficients</code></pre>
-<embed src="main_files/figure-html/unnamed-chunk-271-1.pdf" width="672" type="application/pdf" />
+<pre><code>## Warning in abline(m1, lty = 2): only using the first two of 3 regression
+## coefficients</code></pre>
+<p><img src="main_files/figure-html/unnamed-chunk-271-1.png" width="672" /></p>
 <p>Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)</p>
 <p>Nagu näha, korrutamistehe viib selleni, et interaktsioonimudeli tõus erineb ilma interaktsioonita mudeli tõusust.</p>
 <p>Kui aga interaktsioonimudel plottida välja 3D-s üle paljude x<sub>1</sub> ja x<sub>2</sub> väärtuste, saame me regressioonikurvi (mitte sirge), kus b<sub>3</sub> annab kurvatuuri.</p>
@@ -622,7 +622,7 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class=
               <span class="dt">col.axis =</span> <span class="st">&quot;blue&quot;</span>, 
               <span class="dt">col.grid =</span> <span class="st">&quot;lightblue&quot;</span>, 
               <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<embed src="main_files/figure-html/unnamed-chunk-272-1.pdf" width="672" type="application/pdf" />
+<p><img src="main_files/figure-html/unnamed-chunk-272-1.png" width="672" /></p>
 <p>Vau! See on alles ennustus!</p>
 
 </div>
@@ -637,13 +637,13 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class=
 <a href="bibliograafia.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/lunr.js"></script>
-<script src="libs/gitbook/js/plugin-search.js"></script>
-<script src="libs/gitbook/js/plugin-sharing.js"></script>
-<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
