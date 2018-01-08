@@ -1045,14 +1045,14 @@ gsscat_sum  &lt;-<span class="st"> </span><span class="kw">group_by</span>(gss_c
 p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gsscat_sum, <span class="kw">aes</span>(tvhours, <span class="kw">fct_reorder</span>(relig, tvhours))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()
 p</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-247-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-247-1.png" width="672" /></p>
 </div>
 <div id="fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole" class="section level3">
 <h3><span class="header-section-number">8.5.7</span> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</h3>
 <p>Argumendid on faktor f ja need tasemed (jutumärkides), mida sa tahad tõsta.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## täiendame eelmist graafikut ümberkorraldatud andmetega
 p <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(tvhours, <span class="kw">fct_relevel</span>(relig, <span class="st">&quot;None&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>))</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-248-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-248-1.png" width="672" /></p>
 </div>
 <div id="joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega" class="section level3">
 <h3><span class="header-section-number">8.5.8</span> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</h3>
@@ -1065,14 +1065,14 @@ gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat,
 <span class="kw">ggplot</span>(gsscat_sum, <span class="kw">aes</span>(age, N, <span class="dt">colour =</span> <span class="kw">fct_reorder2</span>(marital, age, N))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;marital&quot;</span>)</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-249-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-249-1.png" width="672" /></p>
 </div>
 <div id="tulpdiagrammide-korral-kasuta-fct_infreq" class="section level3">
 <h3><span class="header-section-number">8.5.9</span> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></h3>
 <p>Loeme kokku erineva perekondliku staatusega isikud ja paneme need andmed tulpdiagrammi grupi suurusele vastupidises järjekorras st. väiksemad grupid tulevad enne.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(gss_cat, <span class="dt">marital =</span> <span class="kw">fct_infreq</span>(marital) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">fct_rev</span>()) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(marital)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><img src="main_files/figure-html/unnamed-chunk-250-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-250-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -1115,7 +1115,7 @@ gitbook.start({
 "link": "https://github.com/rstats-tartu/lectures/edit/master/07-tidyverse.Rmd",
 "text": "Edit"
 },
-"download": ["main.pdf", "main.epub"],
+"download": ["_main.pdf", "_main.epub"],
 "toc": {
 "collapse": "subsection"
 }
