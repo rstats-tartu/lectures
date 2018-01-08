@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
-  <meta name="generator" content="bookdown 0.5.8 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5.15 and GitBook 2.6.7">
 
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2017-11-12">
+<meta name="date" content="2018-01-08">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -367,7 +367,7 @@ minu_vektor</code></pre></div>
 ## parse_number() is imported from tidyverse &#39;readr&#39; 
 minu_vektor &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">parse_number</span>(minu_vektor))</code></pre></div>
 <pre><code>## Warning: 1 parsing failure.
-## row # A tibble: 1 x 4 col     row   col expected actual expected   &lt;int&gt; &lt;int&gt;    &lt;chr&gt;  &lt;chr&gt; actual 1     4    NA a number    joe</code></pre>
+## row # A tibble: 1 x 4 col     row   col expected actual expected   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  actual 1     4    NA a number joe</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor</code></pre></div>
 <pre><code>## [1]  1  2  2 NA</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(minu_vektor)</code></pre></div>
@@ -441,15 +441,15 @@ grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
 happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
 happy_list</code></pre></div>
 <pre><code>## [[1]]
-## [1] 0.2440 0.7704 0.8696 0.3216 0.4171
+## [1] 0.6428 0.8950 0.5113 0.5716 0.8837
 ## 
 ## [[2]]
 ##        a       b
-## 1 0.2440  0.9949
-## 2 0.7704 -2.0034
-## 3 0.8696 -0.1150
-## 4 0.3216 -0.3603
-## 5 0.4171 -0.4464
+## 1 0.6428  0.6055
+## 2 0.8950 -0.7874
+## 3 0.5113 -0.4101
+## 4 0.5716 -0.3368
+## 5 0.8837  0.5250
 ## 
 ## [[3]]
 ## 
@@ -485,11 +485,11 @@ vabakava &lt;-<span class="st"> </span><span class="kw">list</span>(letters, <sp
 fruits &lt;-<span class="st"> </span><span class="kw">tibble</span>(shop, apples, oranges, vabakava)
 fruits</code></pre></div>
 <pre><code>## # A tibble: 3 x 4
-##     shop apples oranges   vabakava
-##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
-## 1 maxima      1       2 &lt;chr [26]&gt;
-## 2  tesco      4      32 &lt;dbl [10]&gt;
-## 3   lidl     43      NA   &lt;S3: lm&gt;</code></pre>
+##   shop   apples oranges vabakava  
+##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
+## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
+## 2 tesco    4.00   32.0  &lt;dbl [10]&gt;
+## 3 lidl    43.0    NA    &lt;S3: lm&gt;</code></pre>
 <p>Siin ta on, ilusti meie workspace-s. Pange tähele viimast tulpa “vabakava”, mis sisaldab <em>character</em> vectorit, numbrilist vektorit ja lineaarse mudeli objekti.</p>
 <p>Listi juba nii lihtsalt data.frame-i ei pane:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">data.frame</span>(shop, apples, oranges, vabakava))
@@ -504,16 +504,16 @@ dfs</code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   apples     n
 ##    &lt;dbl&gt; &lt;int&gt;
-## 1      1     1
-## 2      4     1
-## 3     43     1</code></pre>
+## 1   1.00     1
+## 2   4.00     1
+## 3  43.0      1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(fruits, shop)</code></pre></div>
 <pre><code>## # A tibble: 3 x 2
-##     shop     n
-##    &lt;chr&gt; &lt;int&gt;
-## 1   lidl     1
+##   shop       n
+##   &lt;chr&gt;  &lt;int&gt;
+## 1 lidl       1
 ## 2 maxima     1
-## 3  tesco     1</code></pre>
+## 3 tesco      1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fruits)</code></pre></div>
 <pre><code>##      shop               apples        oranges    
 ##  Length:3           Min.   : 1.0   Min.   : 2.0  
@@ -541,23 +541,23 @@ dfs</code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>(fruits, <span class="kw">desc</span>(apples)) <span class="co">#sorteerib tabeli veeru &quot;apples&quot; väärtuste järgi langevalt (default on tõusev sorteerimine). Võib argumendina anda mitu veergu.</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
-##     shop apples oranges   vabakava
-##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
-## 1   lidl     43      NA   &lt;S3: lm&gt;
-## 2  tesco      4      32 &lt;dbl [10]&gt;
-## 3 maxima      1       2 &lt;chr [26]&gt;</code></pre>
+##   shop   apples oranges vabakava  
+##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
+## 1 lidl    43.0    NA    &lt;S3: lm&gt;  
+## 2 tesco    4.00   32.0  &lt;dbl [10]&gt;
+## 3 maxima   1.00    2.00 &lt;chr [26]&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">top_n</span>(fruits, <span class="dv">2</span>, apples) <span class="co">#saab 2 rida, milles on kõige rohkem õunu</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
-##    shop apples oranges   vabakava
-##   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
-## 1 tesco      4      32 &lt;dbl [10]&gt;
-## 2  lidl     43      NA   &lt;S3: lm&gt;</code></pre>
+##   shop  apples oranges vabakava  
+##   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
+## 1 tesco   4.00    32.0 &lt;dbl [10]&gt;
+## 2 lidl   43.0     NA   &lt;S3: lm&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">top_n</span>(fruits, <span class="op">-</span><span class="dv">2</span>, apples) <span class="co">#saab 2 rida, milles on kõige vähem õunu</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
-##     shop apples oranges   vabakava
-##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
-## 1 maxima      1       2 &lt;chr [26]&gt;
-## 2  tesco      4      32 &lt;dbl [10]&gt;</code></pre>
+##   shop   apples oranges vabakava  
+##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
+## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
+## 2 tesco    4.00   32.0  &lt;dbl [10]&gt;</code></pre>
 <p>Tibblega saab teha maatriksarvutusi, kui kasutada ainult arvudega ridu. <code>apply()</code> arvutab maatriksi rea (1) või veeru (2) kaupa, vastavalt funktsioonile, mille sa ette annad.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colSums</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
 <pre><code>##  apples oranges 
@@ -585,12 +585,12 @@ dfs</code></pre></div>
                   <span class="dt">.before =</span> <span class="dv">3</span>)
 fruits</code></pre></div>
 <pre><code>## # A tibble: 4 x 4
-##     shop apples oranges   vabakava
-##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
-## 1 maxima      1       2 &lt;chr [26]&gt;
-## 2  tesco      4      32 &lt;dbl [10]&gt;
-## 3 konsum    132      -5     &lt;NULL&gt;
-## 4   lidl     43      NA   &lt;S3: lm&gt;</code></pre>
+##   shop   apples oranges vabakava  
+##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
+## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
+## 2 tesco    4.00   32.0  &lt;dbl [10]&gt;
+## 3 konsum 132     - 5.00 &lt;NULL&gt;    
+## 4 lidl    43.0    NA    &lt;S3: lm&gt;</code></pre>
 <p>Proovi ise:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">add_column</span>()</code></pre></div>
 <p>Eelnevaid verbe ei kasuta me vist enam kunagi sest tavaliselt loeme me andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:</p>
@@ -599,30 +599,30 @@ fruits</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits<span class="op">$</span>apples[fruits<span class="op">$</span>apples<span class="op">==</span><span class="dv">43</span>] &lt;-<span class="st"> </span><span class="dv">333</span>
 fruits</code></pre></div>
 <pre><code>## # A tibble: 4 x 4
-##     shop apples oranges   vabakava
-##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
-## 1 maxima      1       2 &lt;chr [26]&gt;
-## 2  tesco      4      32 &lt;dbl [10]&gt;
-## 3 konsum    132      -5     &lt;NULL&gt;
-## 4   lidl    333      NA   &lt;S3: lm&gt;</code></pre>
+##   shop   apples oranges vabakava  
+##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
+## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
+## 2 tesco    4.00   32.0  &lt;dbl [10]&gt;
+## 3 konsum 132     - 5.00 &lt;NULL&gt;    
+## 4 lidl   333      NA    &lt;S3: lm&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits<span class="op">$</span>shop[fruits<span class="op">$</span>shop<span class="op">==</span><span class="st">&quot;tesco&quot;</span>] &lt;-<span class="st"> &quot;TESCO&quot;</span>
 fruits</code></pre></div>
 <pre><code>## # A tibble: 4 x 4
-##     shop apples oranges   vabakava
-##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
-## 1 maxima      1       2 &lt;chr [26]&gt;
-## 2  TESCO      4      32 &lt;dbl [10]&gt;
-## 3 konsum    132      -5     &lt;NULL&gt;
-## 4   lidl    333      NA   &lt;S3: lm&gt;</code></pre>
+##   shop   apples oranges vabakava  
+##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
+## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
+## 2 TESCO    4.00   32.0  &lt;dbl [10]&gt;
+## 3 konsum 132     - 5.00 &lt;NULL&gt;    
+## 4 lidl   333      NA    &lt;S3: lm&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits<span class="op">$</span>apples[fruits<span class="op">$</span>apples<span class="op">&gt;</span><span class="dv">100</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
 fruits</code></pre></div>
 <pre><code>## # A tibble: 4 x 4
-##     shop apples oranges   vabakava
-##    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;     &lt;list&gt;
-## 1 maxima      1       2 &lt;chr [26]&gt;
-## 2  TESCO      4      32 &lt;dbl [10]&gt;
-## 3 konsum     NA      -5     &lt;NULL&gt;
-## 4   lidl     NA      NA   &lt;S3: lm&gt;</code></pre>
+##   shop   apples oranges vabakava  
+##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
+## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
+## 2 TESCO    4.00   32.0  &lt;dbl [10]&gt;
+## 3 konsum  NA     - 5.00 &lt;NULL&gt;    
+## 4 lidl    NA      NA    &lt;S3: lm&gt;</code></pre>
 <p>Remove duplicate rows where specific column (col1) contains duplicated values:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">distinct</span>(dat, col1, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)
 <span class="co"># kõikide col vastu</span>
@@ -641,12 +641,12 @@ dfs1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="d
 <span class="co">#id teeb veel ühe veeru, mis näitab, kummast algtabelist iga uue tabeli rida pärit on </span>
 <span class="kw">bind_rows</span>(dfs, dfs1, <span class="dt">.id =</span> <span class="st">&quot;id&quot;</span>)</code></pre></div>
 <pre><code>## # A tibble: 4 x 3
-##      id  colA  colB
+##   id    colA   colB
 ##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
-## 1     1     a     1
-## 2     1     b     2
-## 3     1     c     3
-## 4     2     d     4</code></pre>
+## 1 1     a      1.00
+## 2 1     b      2.00
+## 3 1     c      3.00
+## 4 2     d      4.00</code></pre>
 <p>Vaata Environmentist need tabelid üle ja mõtle järgi, mis juhtus.</p>
 <p>Kui <code>bind_rows()</code> miskipärast ei tööta, proovi <code>do.call(rbind, dfs)</code>, mis on väga sarnane.</p>
 <p>NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!</p>
@@ -655,10 +655,10 @@ dfs1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="d
 ## works by guessing your true intention
 <span class="kw">bind_rows</span>(dfs1, df2)</code></pre></div>
 <pre><code>## # A tibble: 2 x 4
-##    colA  colB  ColC  ColD
+##   colA   colB ColC   ColD
 ##   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
-## 1     d     4  &lt;NA&gt;    NA
-## 2  &lt;NA&gt;    NA     d     4</code></pre>
+## 1 d      4.00 &lt;NA&gt;  NA   
+## 2 &lt;NA&gt;  NA    d      4.00</code></pre>
 </div>
 <div id="uhendame-kaks-tibblet-veeru-kaupa" class="section level3">
 <h3><span class="header-section-number">4.6.3</span> ühendame kaks tibblet veeru kaupa</h3>
@@ -666,11 +666,11 @@ dfs1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="d
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfx &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colC =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>))
 <span class="kw">bind_cols</span>(dfs, dfx)</code></pre></div>
 <pre><code>## # A tibble: 3 x 3
-##    colA  colB  colC
+##   colA   colB  colC
 ##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     a     1     4
-## 2     b     2     5
-## 3     c     3     6</code></pre>
+## 1 a      1.00  4.00
+## 2 b      2.00  5.00
+## 3 c      3.00  6.00</code></pre>
 </div>
 <div id="tabelite-uhendamine-join-ga" class="section level3">
 <h3><span class="header-section-number">4.6.4</span> tabelite ühendamine join()-ga</h3>
@@ -683,9 +683,9 @@ dfs1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="d
 
 df1</code></pre></div>
 <pre><code>## # A tibble: 2 x 2
-##           Member yr_of_birth
-##            &lt;chr&gt;       &lt;dbl&gt;
-## 1    John Lennon        1940
+##   Member         yr_of_birth
+##   &lt;chr&gt;                &lt;dbl&gt;
+## 1 John Lennon           1940
 ## 2 Paul McCartney        1942</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df2 &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span><span class="st"> </span>Member,            <span class="op">~</span><span class="st"> </span>instrument,    <span class="op">~</span><span class="st"> </span>yr_of_birth,
@@ -695,42 +695,42 @@ df1</code></pre></div>
 )
 df2</code></pre></div>
 <pre><code>## # A tibble: 3 x 3
-##             Member instrument yr_of_birth
-##              &lt;chr&gt;      &lt;chr&gt;       &lt;dbl&gt;
-## 1      John Lennon     guitar        1940
-## 2      Ringo Starr      drums        1940
-## 3 George Harrisson     guitar        1942</code></pre>
+##   Member           instrument yr_of_birth
+##   &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;
+## 1 John Lennon      guitar            1940
+## 2 Ringo Starr      drums             1940
+## 3 George Harrisson guitar            1942</code></pre>
 <p>Ühendan 2 tabelit nii, et mõlema tabeli kõik read ilmuvad uude tabelisse.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">full_join</span>(df1, df2)</code></pre></div>
 <pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
 <pre><code>## # A tibble: 4 x 3
-##             Member yr_of_birth instrument
-##              &lt;chr&gt;       &lt;dbl&gt;      &lt;chr&gt;
-## 1      John Lennon        1940     guitar
-## 2   Paul McCartney        1942       &lt;NA&gt;
-## 3      Ringo Starr        1940      drums
-## 4 George Harrisson        1942     guitar</code></pre>
+##   Member           yr_of_birth instrument
+##   &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;     
+## 1 John Lennon             1940 guitar    
+## 2 Paul McCartney          1942 &lt;NA&gt;      
+## 3 Ringo Starr             1940 drums     
+## 4 George Harrisson        1942 guitar</code></pre>
 <p>Ühendan esimese tabeliga df2 nii, et ainult df1 read säilivad, aga df2-lt võetakse sisse veerud, mis df1-s puuduvad. See on hea join, kui on vaja algtabelile lisada infot teistest tabelitest.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(df1, df2)</code></pre></div>
 <pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
 <pre><code>## # A tibble: 2 x 3
-##           Member yr_of_birth instrument
-##            &lt;chr&gt;       &lt;dbl&gt;      &lt;chr&gt;
-## 1    John Lennon        1940     guitar
-## 2 Paul McCartney        1942       &lt;NA&gt;</code></pre>
+##   Member         yr_of_birth instrument
+##   &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;     
+## 1 John Lennon           1940 guitar    
+## 2 Paul McCartney        1942 &lt;NA&gt;</code></pre>
 <p>Filtreerin välja need df1 read, millele vastab rida df2-s.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">semi_join</span>(df1, df2)</code></pre></div>
 <pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
 <pre><code>## # A tibble: 1 x 2
-##        Member yr_of_birth
-##         &lt;chr&gt;       &lt;dbl&gt;
+##   Member      yr_of_birth
+##   &lt;chr&gt;             &lt;dbl&gt;
 ## 1 John Lennon        1940</code></pre>
 <p>Filtreerin välja need df1 read, millele ei vasta rida df2-s.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anti_join</span>(df1, df2)</code></pre></div>
 <pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
 <pre><code>## # A tibble: 1 x 2
-##           Member yr_of_birth
-##            &lt;chr&gt;       &lt;dbl&gt;
+##   Member         yr_of_birth
+##   &lt;chr&gt;                &lt;dbl&gt;
 ## 1 Paul McCartney        1942</code></pre>
 </div>
 <div id="nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha." class="section level3">
@@ -933,10 +933,10 @@ dat<span class="op">$</span>colB[dat<span class="op">$</span>colA <span class="o
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_tibble &lt;-<span class="st"> </span>my_list[[<span class="dv">1</span>]]
 my_tibble</code></pre></div>
 <pre><code>## # A tibble: 2 x 2
-##    colA  colB
+##   colA   colB
 ##   &lt;chr&gt; &lt;dbl&gt;
-## 1     A     1
-## 2     B     2</code></pre>
+## 1 A      1.00
+## 2 B      2.00</code></pre>
 <p>See ei ole enam list.</p>
 <p>Nüüd võtame üksiksuluga listist välja 1. elemendi, mis on tibble, aga output ei ole mitte tibble, vaid ikka list. Seekord ühe elemendiga, mis on tibble.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa &lt;-<span class="st"> </span>my_list[<span class="dv">1</span>]
@@ -948,15 +948,15 @@ my_tibble</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa1 &lt;-<span class="st"> </span>my_list<span class="op">$</span>a[<span class="dv">2</span>,] <span class="co">#class is df</span>
 aa1</code></pre></div>
 <pre><code>## # A tibble: 1 x 2
-##    colA  colB
+##   colA   colB
 ##   &lt;chr&gt; &lt;dbl&gt;
-## 1     B     2</code></pre>
+## 1 B      2.00</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa3 &lt;-<span class="st"> </span>my_list[[<span class="dv">1</span>]][<span class="dv">1</span>,]
 aa3</code></pre></div>
 <pre><code>## # A tibble: 1 x 2
-##    colA  colB
+##   colA   colB
 ##   &lt;chr&gt; &lt;dbl&gt;
-## 1     A     1</code></pre>
+## 1 A      1.00</code></pre>
 <p>Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välja objekti my_list 1. elemendi, tema algses tibble formaadis, (indeksi 1. dimensioon). Seejärel korjame sealt välja 1. rea, tibble formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).</p>
 <p>Pane tähele, et <code>[[ ]]</code> lubab ainult ühe elemendi korraga listist välja päästa.</p>
 

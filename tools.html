@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
-  <meta name="generator" content="bookdown 0.5.8 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5.15 and GitBook 2.6.7">
 
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2017-11-12">
+<meta name="date" content="2018-01-08">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -277,7 +277,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Ava “New Directory” &gt; “Empty Project” &gt; vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks “rstats2017”.</li>
 </ol>
 <div class="figure"><span id="fig:rstudiowindow"></span>
-<img src="assets/img/rstudio_screen_untitled.png" alt="RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt;. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt; menüüs on võimalik muutusi vaadata ja 'commit'ida ja &lt;i class='fa fa-github' aria-hidden='true'&gt;&lt;/i&gt;-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse)." width="\textwidth" />
+<img src="img/rstudio_screen_untitled.png" alt="RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt;. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt; menüüs on võimalik muutusi vaadata ja 'commit'ida ja &lt;i class='fa fa-github' aria-hidden='true'&gt;&lt;/i&gt;-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse)." width="\textwidth" />
 <p class="caption">
 Joonis 2.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga <i class='fa fa-git' aria-hidden='true'></i>. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. <i class='fa fa-git' aria-hidden='true'></i> menüüs on võimalik muutusi vaadata ja ’commit’ida ja <i class='fa fa-github' aria-hidden='true'></i>-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse).
 </p>
@@ -334,7 +334,7 @@ Joonis 2.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimeg
 <p>NB! Kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle nime + R ja vaadake instruktsioone installeerimiseks. Suure tõenäosusega on tegemist mõnes teises repos (näiteks Bioconductor) või ainult GitHubis asuva paketiga.</p>
 RStudio võimaldab ka <em>point-and-click</em> stiilis pakettide installeerimist:
 <div class="figure"><span id="fig:unnamed-chunk-3"></span>
-<img src="assets/img/RStudio_package.install.png" alt="RStudio 'Install Packages' dialoogiaken." width="\textwidth" />
+<img src="img/RStudio_package.install.png" alt="RStudio 'Install Packages' dialoogiaken." width="\textwidth" />
 <p class="caption">
 Joonis 2.2: RStudio ‘Install Packages’ dialoogiaken.
 </p>

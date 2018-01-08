@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
-  <meta name="generator" content="bookdown 0.5.8 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5.15 and GitBook 2.6.7">
 
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2017-11-12">
+<meta name="date" content="2018-01-08">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -269,20 +269,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(iris)
 iris</code></pre></div>
 <pre><code>## # A tibble: 150 x 5
-##    Sepal.Length Sepal.Width Petal.Length Petal.Width
-##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
-##  1          5.1         3.5          1.4         0.2
-##  2          4.9         3.0          1.4         0.2
-##  3          4.7         3.2          1.3         0.2
-##  4          4.6         3.1          1.5         0.2
-##  5          5.0         3.6          1.4         0.2
-##  6          5.4         3.9          1.7         0.4
-##  7          4.6         3.4          1.4         0.3
-##  8          5.0         3.4          1.5         0.2
-##  9          4.4         2.9          1.4         0.2
-## 10          4.9         3.1          1.5         0.1
-## # ... with 140 more rows, and 1 more variables:
-## #   Species &lt;fctr&gt;</code></pre>
+##    Sepal.Length Sepal.Width Petal.Length Petal.… Spec…
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;
+##  1         5.10        3.50         1.40   0.200 seto…
+##  2         4.90        3.00         1.40   0.200 seto…
+##  3         4.70        3.20         1.30   0.200 seto…
+##  4         4.60        3.10         1.50   0.200 seto…
+##  5         5.00        3.60         1.40   0.200 seto…
+##  6         5.40        3.90         1.70   0.400 seto…
+##  7         4.60        3.40         1.40   0.300 seto…
+##  8         5.00        3.40         1.50   0.200 seto…
+##  9         4.40        2.90         1.40   0.200 seto…
+## 10         4.90        3.10         1.50   0.100 seto…
+## # ... with 140 more rows</code></pre>
 <p>See sisaldab mõõtmistulemusi sentimeetrites kolme iirise perekonna liigi kohta. Esimest korda avaldati need andmed 1936. aastal R.A. Fisheri poolt.</p>
 <p>Baasgraafika põhiverb on <code>plot()</code>. See püüab teie poolt ette antud andmete pealt ära arvata, millist graafikut te soovite. <code>plot()</code> põhiargumendid on x ja y, mis määravad selle, mis väärtused asetatakse x-teljele ja mis läheb y-teljele. Esimene argument on vaikimisi x ja teine y.</p>
 <p>Kui te annate ette faktorandmed, on vastuseks tulpdiagramm, kus tulbad loevad üles selle faktori kõigi tasemete esinemiste arvu. Antud juhul on meil igast liigist mõõdetud 50 isendit.</p>
@@ -412,16 +411,16 @@ midwest_subset</code></pre></div>
 <pre><code>## # A tibble: 437 x 3
 ##    percwhite percbelowpoverty poptotal
 ##        &lt;dbl&gt;            &lt;dbl&gt;    &lt;int&gt;
-##  1     96.71           13.151    66090
-##  2     66.38           32.244    10626
-##  3     96.57           12.069    14991
-##  4     95.25            7.209    30806
-##  5     90.20           13.520     5836
-##  6     98.51           10.400    35688
-##  7     99.55           15.150     5322
-##  8     98.30           11.711    16805
-##  9     99.61           13.875    13437
-## 10     84.67           15.572   173025
+##  1      96.7            13.2     66090
+##  2      66.4            32.2     10626
+##  3      96.6            12.1     14991
+##  4      95.3             7.21    30806
+##  5      90.2            13.5      5836
+##  6      98.5            10.4     35688
+##  7      99.5            15.1      5322
+##  8      98.3            11.7     16805
+##  9      99.6            13.9     13437
+## 10      84.7            15.6    173025
 ## # ... with 427 more rows</code></pre>
 <p>Me tahame teada, kuidas valge rassi osakaal ennustab vaesust, aga me arvame, et suurematel omavalitsustel peaks selles ennustuses olema suurem kaal kui väiksematel. Selleks lisame <code>geom_smooth()</code>-i lisaargumendi “weight”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(midwest_subset, <span class="kw">aes</span>(percwhite, percbelowpoverty)) <span class="op">+</span>
@@ -518,12 +517,12 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">geom_segmen
 <p>Kasulik trikk on kasutada mitut andmesetti sama ploti tegemiseks. Uus andmestik – “mpg” – on autode kütusekulu kohta.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mpg, <span class="dv">2</span>)</code></pre></div>
 <pre><code>## # A tibble: 2 x 11
-##   manufacturer model displ  year   cyl      trans
-##          &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;      &lt;chr&gt;
-## 1         audi    a4   1.8  1999     4   auto(l5)
-## 2         audi    a4   1.8  1999     4 manual(m5)
-## # ... with 5 more variables: drv &lt;chr&gt;, cty &lt;int&gt;,
-## #   hwy &lt;int&gt;, fl &lt;chr&gt;, class &lt;chr&gt;</code></pre>
+##   manufac… model displ  year   cyl trans   drv     cty
+##   &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;
+## 1 audi     a4     1.80  1999     4 auto(l… f        18
+## 2 audi     a4     1.80  1999     4 manual… f        21
+## # ... with 3 more variables: hwy &lt;int&gt;, fl &lt;chr&gt;,
+## #   class &lt;chr&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best_in_class &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">top_n</span>(<span class="dv">1</span>, hwy)
@@ -531,16 +530,16 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">geom_segmen
 <span class="kw">head</span>(best_in_class)</code></pre></div>
 <pre><code>## # A tibble: 6 x 11
 ## # Groups:   class [2]
-##   manufacturer       model displ  year   cyl
-##          &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
-## 1    chevrolet    corvette   5.7  1999     8
-## 2    chevrolet    corvette   6.2  2008     8
-## 3        dodge caravan 2wd   2.4  1999     4
-## 4        dodge caravan 2wd   3.0  1999     6
-## 5        dodge caravan 2wd   3.3  2008     6
-## 6        dodge caravan 2wd   3.3  2008     6
-## # ... with 6 more variables: trans &lt;chr&gt;, drv &lt;chr&gt;,
-## #   cty &lt;int&gt;, hwy &lt;int&gt;, fl &lt;chr&gt;, class &lt;chr&gt;</code></pre>
+##   manufa… model   displ  year   cyl trans  drv     cty
+##   &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;int&gt;
+## 1 chevro… corvet…  5.70  1999     8 manua… r        16
+## 2 chevro… corvet…  6.20  2008     8 manua… r        16
+## 3 dodge   carava…  2.40  1999     4 auto(… f        18
+## 4 dodge   carava…  3.00  1999     6 auto(… f        17
+## 5 dodge   carava…  3.30  2008     6 auto(… f        17
+## 6 dodge   carava…  3.30  2008     6 auto(… f        17
+## # ... with 3 more variables: hwy &lt;int&gt;, fl &lt;chr&gt;,
+## #   class &lt;chr&gt;</code></pre>
 <p>Siin läheb kitsam andmeset uude <code>geom_point()</code> kihti ja teeb osad punktid teistsuguseks. Need on oma klassi parimad autod.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class))<span class="op">+</span>
