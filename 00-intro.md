@@ -1,4 +1,5 @@
 
+
 # Sissejuhatus {#intro}
 
 See õpik on kirjutatud inimestele, kes kasutavad, mitte ei uuri, statistikat. 

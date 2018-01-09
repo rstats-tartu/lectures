@@ -1,3 +1,4 @@
+
 --- 
 title: "Reprodutseeritav andmeanalüüs kasutades R keelt"
 author: "Taavi Päll, Ülo Maiväli"
@@ -17,6 +18,6 @@ cover-image: img/cover.png
 
 # Haara kannel, Vanemuine! {-}
 
-<img src="img/cover.png" style="display: block; margin: auto;" />
+<img src="img/cover.png" width="70%" style="display: block; margin: auto;" />
 
 

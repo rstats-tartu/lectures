@@ -1,4 +1,5 @@
 
+
 # Regular expression ja find & replace {#regex}
 
 Regular expression annab võimaluse lühidalt kirjeldada mitte-üheseid otsinguparameetreid.
@@ -43,6 +44,7 @@ Metamärgid on `. \ | ( ) [ { ^ $ * + ?`. Nende tähendus sõltub kontekstist. `
 
 
 ```r
+
 trüki see   regex
 \\n         \n   new line (return)
 \\t         \t   tab
@@ -60,6 +62,7 @@ trüki  selleks
 \\\\   \
 \\(    (
 \\{    {
+
 ```
 
 
@@ -89,6 +92,7 @@ Leia string, millele järgneb või eelneb mingi string
 
 
 ```r
+
 . (dot): any character apart from a newline.
 
 \\d: any digit.
@@ -153,74 +157,36 @@ x<- c("apple", "ananas", "banana")
 
 #replaces all a-s at the beginning of strings with e-s
 str_replace(x, "^a", "e") 
-```
+#> [1] "epple"  "enanas" "banana"
 
-```
-## [1] "epple"  "enanas" "banana"
-```
-
-```r
 # str_replace only replaces at the first occurence at each string
 str_replace(x, "a", "e") 
-```
+#> [1] "epple"  "enanas" "benana"
 
-```
-## [1] "epple"  "enanas" "benana"
-```
-
-```r
 #str_replace_all replaces all a-s anywhere in the strings
 str_replace_all(x, "a", "e") 
-```
+#> [1] "epple"  "enenes" "benene"
 
-```
-## [1] "epple"  "enenes" "benene"
-```
-
-```r
 #replaces a and the following character at the end of string with nothing (i.e. deletes 2 chars)
 str_replace(x, "a.$", "")
-```
+#> [1] "apple"  "anan"   "banana"
 
-```
-## [1] "apple"  "anan"   "banana"
-```
-
-```r
 #replaces a-s or s-s at the end of string with e-s
 str_replace(x, "(a|s)$", "e")
-```
+#> [1] "apple"  "ananae" "banane"
 
-```
-## [1] "apple"  "ananae" "banane"
-```
-
-```r
 #replaces a-s or s-s anywhere in the string with e-s
 str_replace_all(x, "a|s", "e")
-```
+#> [1] "epple"  "enenee" "benene"
 
-```
-## [1] "epple"  "enenee" "benene"
-```
-
-```r
 #remove all numbers. 
 y<-c("as1", "2we3w", "3e")
 str_replace_all(y, "\\d", "") 
-```
+#> [1] "as"  "wew" "e"
 
-```
-## [1] "as"  "wew" "e"
-```
-
-```r
 #remove everything, except numbers. 
 str_replace_all(y, "[A-Za-z_]", "") 
-```
-
-```
-## [1] "1"  "23" "3"
+#> [1] "1"  "23" "3"
 ```
 
 
@@ -229,34 +195,13 @@ str_replace_all(y, "[A-Za-z_]", "")
 ```r
 x<- c("apple", "apple pie")
 str_replace_all(x, "^apple$","m") #To force to only match a complete string:
-```
-
-```
-## [1] "m"         "apple pie"
-```
-
-```r
+#> [1] "m"         "apple pie"
 str_replace_all(x, "\\s","_") #space to _
-```
-
-```
-## [1] "apple"     "apple_pie"
-```
-
-```r
+#> [1] "apple"     "apple_pie"
 str_replace_all(x, "[apl]","_") #a or p or l to _
-```
-
-```
-## [1] "____e"     "____e _ie"
-```
-
-```r
+#> [1] "____e"     "____e _ie"
 str_replace_all(x, "[ap|p.e]","_") # ap or p.e to _
-```
-
-```
-## [1] "___l_"     "___l_ _i_"
+#> [1] "___l_"     "___l_ _i_"
 ```
 
 näide: meil on vector v, milles täht tähistab katse tüüpi, number, mis on tähe ees, tähistab mõõtmisobjekti identiteeti ja tähe järel asuv number tähistab ajapunkti tundides (h). F ja f tähistavad sama asja. Kõigepealt võtame välja F-i mõõtmisojbekti ehk subjekti koodid
@@ -269,20 +214,11 @@ v <- c("1F1", "12F2h", "13f1", "2S")
 v_f <- str_subset(v, "[Ff]") 
 #filtreerime F ja f sisaldavad stringid
 v_f
-```
-
-```
-## [1] "1F1"   "12F2h" "13f1"
-```
-
-```r
+#> [1] "1F1"   "12F2h" "13f1"
 v_f_subject <- str_replace_all(v_f, "[Ff][0-9]+h?", "") 
 #string "F või f, number üks või enam korda, h 0 või enam korda" asendada tühja stringiga
 v_f_subject
-```
-
-```
-## [1] "1"  "12" "13"
+#> [1] "1"  "12" "13"
 ```
 
 Ja nääd võtame välja ajapunktide koodid. Kõigepealt asendame stringid, mis sisaldavad vähemalt üht numbrit, millele järgneb F v f tühja stringiga. Seejärel asendame tühja stringiga h-d. Ja lõpuks avaldame iga ajapunkti numbrina (mitte enam stringina).
@@ -290,30 +226,7 @@ Ja nääd võtame välja ajapunktide koodid. Kõigepealt asendame stringid, mis 
 
 ```r
 library(tidyverse)
-```
-
-```
-## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──
-```
-
-```
-## ✔ ggplot2 2.2.1     ✔ readr   1.1.1
-## ✔ tibble  1.4.1     ✔ purrr   0.2.4
-## ✔ tidyr   0.7.2     ✔ dplyr   0.7.4
-## ✔ ggplot2 2.2.1     ✔ forcats 0.2.0
-```
-
-```
-## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-```
-
-```r
 str_replace_all(v_f, "[0-9]+[Ff]", "") %>% str_replace_all("h", "") %>% as.integer
-```
-
-```
-## [1] 1 2 1
+#> [1] 1 2 1
 ```
 

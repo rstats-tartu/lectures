@@ -252,8 +252,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Funktsioonid, mille oleme ise sisse lugenud.</li>
 </ul>
 <p>Käsk <code>ls()</code> annab objektide nimed teie workspace-s:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre></div>
-<pre><code>## character(0)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()
+<span class="co">#&gt; [1] &quot;old&quot;</span></code></pre></div>
 <p><code>rm(a)</code> removes object a from the workspace</p>
 <p>Selleks, et salvestada töökeskkond faili kasuta <i class="fa fa-floppy-o" aria-hidden="true"></i> “Save” nuppu “Environment” akna servast või menüüst “Session” -&gt; “Save Workspace As”.</p>
 <p>Projekti sulgemisel salvestab RStudio vaikimisi töökeskkonna. <strong>Parema reprodutseeritavuse huvides pole siiski soovitav töökeskkonda peale töö lõppu projekti sulgemisel salvestada!</strong>. Lülitame automaatse salvestamise välja:</p>
@@ -273,32 +273,32 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">4.1</span> Objekt ja nimi</h2>
 <p>Kui teil sünnib laps, annate talle nime. R-s on vastupidi: nimele antakse objekt</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">babe &lt;-<span class="st"> &quot;beebi&quot;</span>
-babe</code></pre></div>
-<pre><code>## [1] &quot;beebi&quot;</code></pre>
+babe
+<span class="co">#&gt; [1] &quot;beebi&quot;</span></code></pre></div>
 <p>Siin on kõigepealt nimi (babe), siis assingmenti sümbol <code>&lt;-</code> ja lõpuks objekt, mis on nimele antud (string “beebi”).</p>
 <p>NB! Stringid on jutumärkides, nimed mitte. Nimi üksi evalueeritakse kui “print object”, mis antud juhul on string “beebi”</p>
 <p>Nüüd muudame objekti nime taga:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">babe &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;saatan&quot;</span>, <span class="st">&quot;inglike&quot;</span>)
-babe</code></pre></div>
-<pre><code>## [1] &quot;saatan&quot;  &quot;inglike&quot;</code></pre>
+babe
+<span class="co">#&gt; [1] &quot;saatan&quot;  &quot;inglike&quot;</span></code></pre></div>
 <p>Tulemuseks on sama nimi, mis tähistab nüüd midagi muud (vektorit, mis koosneb 2st stringist). Objekt “beebi” kaotas oma nime ja on nüüd workspacest kadunud. <code>class()</code> annab meile objekti klassi.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(babe)</code></pre></div>
-<pre><code>## [1] &quot;character&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(babe)
+<span class="co">#&gt; [1] &quot;character&quot;</span></code></pre></div>
 <p>Antud juhul character.</p>
 <blockquote>
 <p>Ainult need objektid, mis on assigneeritud nimele, lähevad workspace ja on sellistena kasutatvad edasises analüüsis.</p>
 </blockquote>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">apples &lt;-<span class="st"> </span><span class="dv">2</span>
 bananas &lt;-<span class="st"> </span><span class="dv">3</span>
-apples <span class="op">+</span><span class="st"> </span>bananas</code></pre></div>
-<pre><code>## [1] 5</code></pre>
+apples <span class="op">+</span><span class="st"> </span>bananas
+<span class="co">#&gt; [1] 5</span></code></pre></div>
 <p>Selle ekspressiooni tulemus trükitakse ainult R konsooli, kuna teda ei määrata nimele siis ei ilmu see ka workspace.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="dv">2</span>
 b &lt;-<span class="st"> </span><span class="dv">3</span>
 a &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b
 <span class="co"># objekti nimega &#39;a&#39; struktuur</span>
-<span class="kw">str</span>(a)</code></pre></div>
-<pre><code>##  num 5</code></pre>
+<span class="kw">str</span>(a)
+<span class="co">#&gt;  num 5</span></code></pre></div>
 <p>Nüüd on nimega a seostatud uus objekt, mis sisaldab numbrit 5 (olles ühe elemendiga vektor). Ja nimega a eelnevalt seostatud objekt, mis koosnes numbrist 2, on workspacest lahkunud.</p>
 </div>
 <div id="nimede-vorm" class="section level2">
@@ -327,100 +327,100 @@ a &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </s
 <p>Vektor on rida kindlas järjekorras arve, sõnu või TRUE/FALSE loogilisi väärtusi. Iga vektor ja maatriks (2D vektor) sisaldab ainult ühte tüüpi andmeid. Vektor on elementaarüksus, millega me teeme tehteid. Andmetabelis ripuvad kõrvuti ühepikad vektorid (üks vektor = üks tulp) ja R-le meeldib arvutada vektori kaupa vasakult paremale (mis tabelis on ülevalt alla sest vektori algus on üleval tabeli peas). Pikema kui üheelemendise vektori loomiseks kasuta funktsiooni <code>c()</code> – combine</p>
 <p>Loome numbrilise vektori ja vaatame ta struktuuri:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>)
-<span class="kw">str</span>(minu_vektor)</code></pre></div>
-<pre><code>##  num [1:3] 1 3 4</code></pre>
+<span class="kw">str</span>(minu_vektor)
+<span class="co">#&gt;  num [1:3] 1 3 4</span></code></pre></div>
 <p>Loome vektori puuduva väärtusega, vaatame vektori klassi:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">4</span>)
-minu_vektor</code></pre></div>
-<pre><code>## [1]  1 NA  4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(minu_vektor)</code></pre></div>
-<pre><code>## [1] &quot;numeric&quot;</code></pre>
+minu_vektor
+<span class="co">#&gt; [1]  1 NA  4</span>
+<span class="kw">class</span>(minu_vektor)
+<span class="co">#&gt; [1] &quot;numeric&quot;</span></code></pre></div>
 <p>Klass jääb <em>numeric</em>-uks.</p>
 <p>Kui vektoris on segamini numbrid ja stringid, siis muudetakse numbrid ka stringideks:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="st">&quot;2&quot;</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="st">&quot;joe&quot;</span>)
-minu_vektor</code></pre></div>
-<pre><code>## [1] &quot;1&quot;   &quot;2&quot;   &quot;2&quot;   &quot;4&quot;   &quot;joe&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(minu_vektor)</code></pre></div>
-<pre><code>## [1] &quot;character&quot;</code></pre>
+minu_vektor
+<span class="co">#&gt; [1] &quot;1&quot;   &quot;2&quot;   &quot;2&quot;   &quot;4&quot;   &quot;joe&quot;</span>
+<span class="kw">class</span>(minu_vektor)
+<span class="co">#&gt; [1] &quot;character&quot;</span></code></pre></div>
 <p>Piisab ühest “tõrvatilgast meepotis”, et teie vektor ei sisaldaks enam numbreid.</p>
 <p>Eelnevast segavektorist on võimalik numbrid päästa kasutades käsku <code>as.numeric()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(minu_vektor)</code></pre></div>
-<pre><code>## Warning: NAs introduced by coercion</code></pre>
-<pre><code>## [1]  1  2  2  4 NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(minu_vektor)
+<span class="co">#&gt; Warning: NAs introduced by coercion</span>
+<span class="co">#&gt; [1]  1  2  2  4 NA</span></code></pre></div>
 <p>Väärtus “joe” muudeti NA-ks, kuna seda ei olnud võimalik numbriks muuta. Samuti peab olema tähelepanelik faktorite muutmisel numbriteks:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">9</span>, <span class="st">&quot;12&quot;</span>, <span class="dv">12</span>, <span class="fl">1.4</span>, <span class="st">&quot;joe&quot;</span>))
-minu_vektor</code></pre></div>
-<pre><code>## [1] 9   12  12  1.4 joe
-## Levels: 1.4 12 9 joe</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(minu_vektor)</code></pre></div>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Kui muudame faktori otse numbriks, saame faktori taseme numbri
-<span class="kw">as.numeric</span>(minu_vektor)</code></pre></div>
-<pre><code>## [1] 3 2 2 1 4</code></pre>
+minu_vektor
+<span class="co">#&gt; [1] 9   12  12  1.4 joe</span>
+<span class="co">#&gt; Levels: 1.4 12 9 joe</span>
+<span class="kw">class</span>(minu_vektor)
+<span class="co">#&gt; [1] &quot;factor&quot;</span>
+## Kui muudame faktori otse numbriks, saame faktori taseme numbri
+<span class="kw">as.numeric</span>(minu_vektor)
+<span class="co">#&gt; [1] 3 2 2 1 4</span></code></pre></div>
 <p>Faktorite muutmisel numbriteks tuleb need kõigepealt stringideks muuta:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(minu_vektor))</code></pre></div>
-<pre><code>## Warning: NAs introduced by coercion</code></pre>
-<pre><code>## [1]  9.0 12.0 12.0  1.4   NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(minu_vektor))
+<span class="co">#&gt; Warning: NAs introduced by coercion</span>
+<span class="co">#&gt; [1]  9.0 12.0 12.0  1.4   NA</span></code></pre></div>
 <p>Järgneva trikiga saab stringidest ekstraheerida numbrid:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="st">&quot;A2&quot;</span>, <span class="st">&quot;$2&quot;</span>, <span class="st">&quot;joe&quot;</span>)
 ## parse_number() is imported from tidyverse &#39;readr&#39; 
-minu_vektor &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">parse_number</span>(minu_vektor))</code></pre></div>
-<pre><code>## Warning: 1 parsing failure.
-## row # A tibble: 1 x 4 col     row   col expected actual expected   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  actual 1     4    NA a number joe</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">minu_vektor</code></pre></div>
-<pre><code>## [1]  1  2  2 NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(minu_vektor)</code></pre></div>
-<pre><code>##  num [1:4] 1 2 2 NA</code></pre>
+minu_vektor &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">parse_number</span>(minu_vektor))
+<span class="co">#&gt; Warning: 1 parsing failure.</span>
+<span class="co">#&gt; row # A tibble: 1 x 4 col     row   col expected actual expected   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  actual 1     4    NA a number joe</span>
+minu_vektor
+<span class="co">#&gt; [1]  1  2  2 NA</span>
+<span class="kw">str</span>(minu_vektor)
+<span class="co">#&gt;  num [1:4] 1 2 2 NA</span></code></pre></div>
 <p>R säilitab vektori algse järjekorra. Sageli on aga vaja tulemusi näiteks vaatamiseks ja presenteerimiseks sorteerida suuruse või tähestiku järjekorras:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sorts vector in ascending order
 <span class="kw">sort</span>(x, <span class="dt">decreasing =</span> <span class="ot">FALSE</span>, ...)</code></pre></div>
 <p>Vektori unikaalsed väärtused saab kätte käsuga <code>unique()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## returns a vector or data frame, but with duplicate elements/rows removed
-<span class="kw">unique</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>))</code></pre></div>
-<pre><code>## [1] 1 2 3 4 5</code></pre>
+<span class="kw">unique</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>))
+<span class="co">#&gt; [1] 1 2 3 4 5</span></code></pre></div>
 <div id="uus-vektor-seq-ja-rep" class="section level3">
 <h3><span class="header-section-number">4.4.1</span> Uus vektor: <code>seq()</code> ja <code>rep()</code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dt">by =</span> <span class="fl">0.5</span>)</code></pre></div>
-<pre><code>## [1] 2.0 2.5 3.0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>## [1] 2.00 2.25 2.50 2.75 3.00</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">times =</span> <span class="dv">3</span>)</code></pre></div>
-<pre><code>## [1] 1 2 1 2 1 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">each =</span> <span class="dv">3</span>)</code></pre></div>
-<pre><code>## [1] 1 1 1 2 2 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="dt">each =</span> <span class="dv">3</span>, <span class="dt">times =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>##  [1] &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dt">by =</span> <span class="fl">0.5</span>)
+<span class="co">#&gt; [1] 2.0 2.5 3.0</span>
+<span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)
+<span class="co">#&gt; [1] 2.00 2.25 2.50 2.75 3.00</span>
+<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">times =</span> <span class="dv">3</span>)
+<span class="co">#&gt; [1] 1 2 1 2 1 2</span>
+<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">each =</span> <span class="dv">3</span>)
+<span class="co">#&gt; [1] 1 1 1 2 2 2</span>
+<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="dt">each =</span> <span class="dv">3</span>, <span class="dt">times =</span> <span class="dv">2</span>)
+<span class="co">#&gt;  [1] &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot;</span></code></pre></div>
 </div>
 <div id="tehted-arvuliste-vektoritega" class="section level3">
 <h3><span class="header-section-number">4.4.2</span> Tehted arvuliste vektoritega</h3>
 <p>Vektoreid saab liita, lahutada, korrutada ja jagada.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 b &lt;-<span class="st"> </span><span class="dv">4</span>
-a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
-<pre><code>## [1] 5 6 7</code></pre>
+a <span class="op">+</span><span class="st"> </span>b
+<span class="co">#&gt; [1] 5 6 7</span></code></pre></div>
 <p>Kõik vektor a liikmed liideti arvuga 3 (kuna vektor b koosnes ühest liikmest, läks see kordusesse)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>) 
-a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
-<pre><code>## Warning in a + b: longer object length is not a multiple of shorter object
-## length</code></pre>
-<pre><code>## [1] 5 7 7</code></pre>
+a <span class="op">+</span><span class="st"> </span>b
+<span class="co">#&gt; Warning in a + b: longer object length is not a</span>
+<span class="co">#&gt; multiple of shorter object length</span>
+<span class="co">#&gt; [1] 5 7 7</span></code></pre></div>
 <p>Aga see töötab veateatega, sest vektorite pikkused ei ole üksteise kordajad 1 + 4; 2 + 5, 3 + 4</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
 b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">6</span>) 
-a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
-<pre><code>## [1]  6  8  8 10</code></pre>
+a <span class="op">+</span><span class="st"> </span>b
+<span class="co">#&gt; [1]  6  8  8 10</span></code></pre></div>
 <p>See töötab: 1 + 5; 2 + 6; 3 + 5; 4 + 6</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
 b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>) 
-a <span class="op">+</span><span class="st"> </span>b</code></pre></div>
-<pre><code>## [1]  6  8 10 12</code></pre>
+a <span class="op">+</span><span class="st"> </span>b
+<span class="co">#&gt; [1]  6  8 10 12</span></code></pre></div>
 <p>Samuti see (ühepikkused vektorid — igat liiget kasutatakse üks kord)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)
-<span class="kw">sum</span>(a)</code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(a)</code></pre></div>
-<pre><code>## [1] 0.6666667</code></pre>
+<span class="kw">sum</span>(a)
+<span class="co">#&gt; [1] 2</span>
+<span class="kw">mean</span>(a)
+<span class="co">#&gt; [1] 0.667</span></code></pre></div>
 <p>Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 + 1 = 2. Seda loogiliste väärtuste omadust õpime varsti praktikas kasutama.</p>
 </div>
 </div>
@@ -438,33 +438,33 @@ model &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="
 grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
 <span class="co"># let&#39;s creat list</span>
 happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
-happy_list</code></pre></div>
-<pre><code>## [[1]]
-## [1] 0.9675923 0.9316345 0.8436564 0.2153299 0.2966920
-## 
-## [[2]]
-##           a          b
-## 1 0.9675923  1.3218381
-## 2 0.9316345 -1.2294296
-## 3 0.8436564  0.4873404
-## 4 0.2153299  0.0317398
-## 5 0.2966920  1.1204760
-## 
-## [[3]]
-## 
-## Call:
-## lm(formula = mpg ~ hp, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)           hp  
-##    30.09886     -0.06823  
-## 
-## 
-## [[4]]
-## [1] &quot;your grandma on bongos&quot;</code></pre>
+happy_list
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 0.925 0.277 0.876 0.701 0.423</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt;       a      b</span>
+<span class="co">#&gt; 1 0.925 -1.212</span>
+<span class="co">#&gt; 2 0.277 -0.307</span>
+<span class="co">#&gt; 3 0.876 -1.218</span>
+<span class="co">#&gt; 4 0.701  2.282</span>
+<span class="co">#&gt; 5 0.423  0.213</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = mpg ~ hp, data = mtcars)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt; (Intercept)           hp  </span>
+<span class="co">#&gt;     30.0989      -0.0682  </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[4]]</span>
+<span class="co">#&gt; [1] &quot;your grandma on bongos&quot;</span></code></pre></div>
 <p>Võtame listist välja elemndi “ab”:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">happy_list<span class="op">$</span>ab</code></pre></div>
-<pre><code>## NULL</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">happy_list<span class="op">$</span>ab
+<span class="co">#&gt; NULL</span></code></pre></div>
 </div>
 <div id="data-frame-ja-tibble" class="section level2">
 <h2><span class="header-section-number">4.6</span> data frame ja tibble</h2>
@@ -482,146 +482,146 @@ oranges &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv"
 vabakava &lt;-<span class="st"> </span><span class="kw">list</span>(letters, <span class="kw">runif</span>(<span class="dv">10</span>), <span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>cyl, mtcars))
 ## paneme need vektorid kokku tibble-sse
 fruits &lt;-<span class="st"> </span><span class="kw">tibble</span>(shop, apples, oranges, vabakava)
-fruits</code></pre></div>
-<pre><code>## # A tibble: 3 x 4
-##   shop   apples oranges vabakava  
-##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
-## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
-## 2 tesco    4.00   32.0  &lt;dbl [10]&gt;
-## 3 lidl    43.0    NA    &lt;S3: lm&gt;</code></pre>
+fruits
+<span class="co">#&gt; # A tibble: 3 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 maxima   1.00    2.00 &lt;chr [26]&gt;</span>
+<span class="co">#&gt; 2 tesco    4.00   32.0  &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 lidl    43.0    NA    &lt;S3: lm&gt;</span></code></pre></div>
 <p>Siin ta on, ilusti meie workspace-s. Pange tähele viimast tulpa “vabakava”, mis sisaldab <em>character</em> vectorit, numbrilist vektorit ja lineaarse mudeli objekti.</p>
 <p>Listi juba nii lihtsalt data.frame-i ei pane:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">data.frame</span>(shop, apples, oranges, vabakava))
-dfs</code></pre></div>
-<pre><code>## [1] &quot;Error in as.data.frame.default(x[[i]], optional = TRUE, stringsAsFactors = stringsAsFactors) : \n  cannot coerce class \&quot;\&quot;lm\&quot;\&quot; to a data.frame\n&quot;
-## attr(,&quot;class&quot;)
-## [1] &quot;try-error&quot;
-## attr(,&quot;condition&quot;)
-## &lt;simpleError in as.data.frame.default(x[[i]], optional = TRUE, stringsAsFactors = stringsAsFactors): cannot coerce class &quot;&quot;lm&quot;&quot; to a data.frame&gt;</code></pre>
+dfs
+<span class="co">#&gt; [1] &quot;Error in as.data.frame.default(x[[i]], optional = TRUE, stringsAsFactors = stringsAsFactors) : \n  cannot coerce class \&quot;\&quot;lm\&quot;\&quot; to a data.frame\n&quot;</span>
+<span class="co">#&gt; attr(,&quot;class&quot;)</span>
+<span class="co">#&gt; [1] &quot;try-error&quot;</span>
+<span class="co">#&gt; attr(,&quot;condition&quot;)</span>
+<span class="co">#&gt; &lt;simpleError in as.data.frame.default(x[[i]], optional = TRUE, stringsAsFactors = stringsAsFactors): cannot coerce class &quot;&quot;lm&quot;&quot; to a data.frame&gt;</span></code></pre></div>
 <p><strong>Mõned asjad, mida tibblega (ja data framega) saab teha:</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(fruits, apples)</code></pre></div>
-<pre><code>## # A tibble: 3 x 2
-##   apples     n
-##    &lt;dbl&gt; &lt;int&gt;
-## 1   1.00     1
-## 2   4.00     1
-## 3  43.0      1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(fruits, shop)</code></pre></div>
-<pre><code>## # A tibble: 3 x 2
-##   shop       n
-##   &lt;chr&gt;  &lt;int&gt;
-## 1 lidl       1
-## 2 maxima     1
-## 3 tesco      1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fruits)</code></pre></div>
-<pre><code>##      shop               apples        oranges    
-##  Length:3           Min.   : 1.0   Min.   : 2.0  
-##  Class :character   1st Qu.: 2.5   1st Qu.: 9.5  
-##  Mode  :character   Median : 4.0   Median :17.0  
-##                     Mean   :16.0   Mean   :17.0  
-##                     3rd Qu.:23.5   3rd Qu.:24.5  
-##                     Max.   :43.0   Max.   :32.0  
-##                                    NA&#39;s   :1     
-##  vabakava.Length  vabakava.Class  vabakava.Mode
-##  26         -none-     character               
-##  10         -none-     numeric                 
-##  12         lm         list                    
-##                                                
-##                                                
-##                                                
-## </code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(fruits)</code></pre></div>
-<pre><code>## [1] &quot;shop&quot;     &quot;apples&quot;   &quot;oranges&quot;  &quot;vabakava&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(fruits)</code></pre></div>
-<pre><code>## [1] &quot;shop&quot;     &quot;apples&quot;   &quot;oranges&quot;  &quot;vabakava&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(fruits)</code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(fruits)</code></pre></div>
-<pre><code>## [1] 4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>(fruits, <span class="kw">desc</span>(apples)) <span class="co">#sorteerib tabeli veeru &quot;apples&quot; väärtuste järgi langevalt (default on tõusev sorteerimine). Võib argumendina anda mitu veergu.</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 4
-##   shop   apples oranges vabakava  
-##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
-## 1 lidl    43.0    NA    &lt;S3: lm&gt;  
-## 2 tesco    4.00   32.0  &lt;dbl [10]&gt;
-## 3 maxima   1.00    2.00 &lt;chr [26]&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">top_n</span>(fruits, <span class="dv">2</span>, apples) <span class="co">#saab 2 rida, milles on kõige rohkem õunu</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 4
-##   shop  apples oranges vabakava  
-##   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
-## 1 tesco   4.00    32.0 &lt;dbl [10]&gt;
-## 2 lidl   43.0     NA   &lt;S3: lm&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">top_n</span>(fruits, <span class="op">-</span><span class="dv">2</span>, apples) <span class="co">#saab 2 rida, milles on kõige vähem õunu</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 4
-##   shop   apples oranges vabakava  
-##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
-## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
-## 2 tesco    4.00   32.0  &lt;dbl [10]&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(fruits, apples)
+<span class="co">#&gt; # A tibble: 3 x 2</span>
+<span class="co">#&gt;   apples     n</span>
+<span class="co">#&gt;    &lt;dbl&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1   1.00     1</span>
+<span class="co">#&gt; 2   4.00     1</span>
+<span class="co">#&gt; 3  43.0      1</span>
+<span class="kw">count</span>(fruits, shop)
+<span class="co">#&gt; # A tibble: 3 x 2</span>
+<span class="co">#&gt;   shop       n</span>
+<span class="co">#&gt;   &lt;chr&gt;  &lt;int&gt;</span>
+<span class="co">#&gt; 1 lidl       1</span>
+<span class="co">#&gt; 2 maxima     1</span>
+<span class="co">#&gt; 3 tesco      1</span>
+<span class="kw">summary</span>(fruits)
+<span class="co">#&gt;      shop               apples        oranges    </span>
+<span class="co">#&gt;  Length:3           Min.   : 1.0   Min.   : 2.0  </span>
+<span class="co">#&gt;  Class :character   1st Qu.: 2.5   1st Qu.: 9.5  </span>
+<span class="co">#&gt;  Mode  :character   Median : 4.0   Median :17.0  </span>
+<span class="co">#&gt;                     Mean   :16.0   Mean   :17.0  </span>
+<span class="co">#&gt;                     3rd Qu.:23.5   3rd Qu.:24.5  </span>
+<span class="co">#&gt;                     Max.   :43.0   Max.   :32.0  </span>
+<span class="co">#&gt;                                    NA&#39;s   :1     </span>
+<span class="co">#&gt;  vabakava.Length  vabakava.Class  vabakava.Mode</span>
+<span class="co">#&gt;  26         -none-     character               </span>
+<span class="co">#&gt;  10         -none-     numeric                 </span>
+<span class="co">#&gt;  12         lm         list                    </span>
+<span class="co">#&gt;                                                </span>
+<span class="co">#&gt;                                                </span>
+<span class="co">#&gt;                                                </span>
+<span class="co">#&gt; </span>
+<span class="kw">names</span>(fruits)
+<span class="co">#&gt; [1] &quot;shop&quot;     &quot;apples&quot;   &quot;oranges&quot;  &quot;vabakava&quot;</span>
+<span class="kw">colnames</span>(fruits)
+<span class="co">#&gt; [1] &quot;shop&quot;     &quot;apples&quot;   &quot;oranges&quot;  &quot;vabakava&quot;</span>
+<span class="kw">nrow</span>(fruits)
+<span class="co">#&gt; [1] 3</span>
+<span class="kw">ncol</span>(fruits)
+<span class="co">#&gt; [1] 4</span>
+<span class="kw">arrange</span>(fruits, <span class="kw">desc</span>(apples)) <span class="co">#sorteerib tabeli veeru &quot;apples&quot; väärtuste järgi langevalt (default on tõusev sorteerimine). Võib argumendina anda mitu veergu.</span>
+<span class="co">#&gt; # A tibble: 3 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 lidl    43.0    NA    &lt;S3: lm&gt;  </span>
+<span class="co">#&gt; 2 tesco    4.00   32.0  &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 maxima   1.00    2.00 &lt;chr [26]&gt;</span>
+<span class="kw">top_n</span>(fruits, <span class="dv">2</span>, apples) <span class="co">#saab 2 rida, milles on kõige rohkem õunu</span>
+<span class="co">#&gt; # A tibble: 2 x 4</span>
+<span class="co">#&gt;   shop  apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 tesco   4.00    32.0 &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 2 lidl   43.0     NA   &lt;S3: lm&gt;</span>
+<span class="kw">top_n</span>(fruits, <span class="op">-</span><span class="dv">2</span>, apples) <span class="co">#saab 2 rida, milles on kõige vähem õunu</span>
+<span class="co">#&gt; # A tibble: 2 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 maxima   1.00    2.00 &lt;chr [26]&gt;</span>
+<span class="co">#&gt; 2 tesco    4.00   32.0  &lt;dbl [10]&gt;</span></code></pre></div>
 <p>Tibblega saab teha maatriksarvutusi, kui kasutada ainult arvudega ridu. <code>apply()</code> arvutab maatriksi rea (1) või veeru (2) kaupa, vastavalt funktsioonile, mille sa ette annad.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colSums</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
-<pre><code>##  apples oranges 
-##      48      NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowSums</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
-<pre><code>## [1]  3 36 NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowMeans</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
-<pre><code>## [1]  1.5 18.0   NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colMeans</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
-<pre><code>##  apples oranges 
-##      16      NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits_subset &lt;-<span class="st"> </span>fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colSums</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])
+<span class="co">#&gt;  apples oranges </span>
+<span class="co">#&gt;      48      NA</span>
+<span class="kw">rowSums</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])
+<span class="co">#&gt; [1]  3 36 NA</span>
+<span class="kw">rowMeans</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])
+<span class="co">#&gt; [1]  1.5 18.0   NA</span>
+<span class="kw">colMeans</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])
+<span class="co">#&gt;  apples oranges </span>
+<span class="co">#&gt;      16      NA</span>
+fruits_subset &lt;-<span class="st"> </span>fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]
 <span class="co"># 1 tähendab, et arvuta sd rea kaupa</span>
-<span class="kw">apply</span>(fruits_subset, <span class="dv">1</span>, sd)</code></pre></div>
-<pre><code>## [1]  0.7071068 19.7989899         NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 2 tähendab, et arvuta sd veeru kaupa</span>
-<span class="kw">apply</span>(fruits_subset, <span class="dv">2</span>, sd) </code></pre></div>
-<pre><code>##   apples  oranges 
-## 23.43075       NA</code></pre>
+<span class="kw">apply</span>(fruits_subset, <span class="dv">1</span>, sd)
+<span class="co">#&gt; [1]  0.707 19.799     NA</span>
+<span class="co"># 2 tähendab, et arvuta sd veeru kaupa</span>
+<span class="kw">apply</span>(fruits_subset, <span class="dv">2</span>, sd) 
+<span class="co">#&gt;  apples oranges </span>
+<span class="co">#&gt;    23.4      NA</span></code></pre></div>
 <p>Lisame käsitsi meie tabelile 1 rea:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st"> </span><span class="kw">add_row</span>(fruits, 
                   <span class="dt">shop =</span> <span class="st">&quot;konsum&quot;</span>, 
                   <span class="dt">apples =</span> <span class="dv">132</span>, 
                   <span class="dt">oranges =</span> <span class="op">-</span><span class="dv">5</span>, 
                   <span class="dt">.before =</span> <span class="dv">3</span>)
-fruits</code></pre></div>
-<pre><code>## # A tibble: 4 x 4
-##   shop   apples oranges vabakava  
-##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
-## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
-## 2 tesco    4.00   32.0  &lt;dbl [10]&gt;
-## 3 konsum 132     - 5.00 &lt;NULL&gt;    
-## 4 lidl    43.0    NA    &lt;S3: lm&gt;</code></pre>
+fruits
+<span class="co">#&gt; # A tibble: 4 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 maxima   1.00    2.00 &lt;chr [26]&gt;</span>
+<span class="co">#&gt; 2 tesco    4.00   32.0  &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 konsum 132     - 5.00 &lt;NULL&gt;    </span>
+<span class="co">#&gt; 4 lidl    43.0    NA    &lt;S3: lm&gt;</span></code></pre></div>
 <p>Proovi ise:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">add_column</span>()</code></pre></div>
 <p>Eelnevaid verbe ei kasuta me vist enam kunagi sest tavaliselt loeme me andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:</p>
 <div id="rekodeerime-tibble-vaartusi" class="section level3">
 <h3><span class="header-section-number">4.6.1</span> Rekodeerime tibble väärtusi</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits<span class="op">$</span>apples[fruits<span class="op">$</span>apples<span class="op">==</span><span class="dv">43</span>] &lt;-<span class="st"> </span><span class="dv">333</span>
-fruits</code></pre></div>
-<pre><code>## # A tibble: 4 x 4
-##   shop   apples oranges vabakava  
-##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
-## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
-## 2 tesco    4.00   32.0  &lt;dbl [10]&gt;
-## 3 konsum 132     - 5.00 &lt;NULL&gt;    
-## 4 lidl   333      NA    &lt;S3: lm&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits<span class="op">$</span>shop[fruits<span class="op">$</span>shop<span class="op">==</span><span class="st">&quot;tesco&quot;</span>] &lt;-<span class="st"> &quot;TESCO&quot;</span>
-fruits</code></pre></div>
-<pre><code>## # A tibble: 4 x 4
-##   shop   apples oranges vabakava  
-##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
-## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
-## 2 TESCO    4.00   32.0  &lt;dbl [10]&gt;
-## 3 konsum 132     - 5.00 &lt;NULL&gt;    
-## 4 lidl   333      NA    &lt;S3: lm&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits<span class="op">$</span>apples[fruits<span class="op">$</span>apples<span class="op">&gt;</span><span class="dv">100</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
-fruits</code></pre></div>
-<pre><code>## # A tibble: 4 x 4
-##   shop   apples oranges vabakava  
-##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    
-## 1 maxima   1.00    2.00 &lt;chr [26]&gt;
-## 2 TESCO    4.00   32.0  &lt;dbl [10]&gt;
-## 3 konsum  NA     - 5.00 &lt;NULL&gt;    
-## 4 lidl    NA      NA    &lt;S3: lm&gt;</code></pre>
+fruits
+<span class="co">#&gt; # A tibble: 4 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 maxima   1.00    2.00 &lt;chr [26]&gt;</span>
+<span class="co">#&gt; 2 tesco    4.00   32.0  &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 konsum 132     - 5.00 &lt;NULL&gt;    </span>
+<span class="co">#&gt; 4 lidl   333      NA    &lt;S3: lm&gt;</span>
+fruits<span class="op">$</span>shop[fruits<span class="op">$</span>shop<span class="op">==</span><span class="st">&quot;tesco&quot;</span>] &lt;-<span class="st"> &quot;TESCO&quot;</span>
+fruits
+<span class="co">#&gt; # A tibble: 4 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 maxima   1.00    2.00 &lt;chr [26]&gt;</span>
+<span class="co">#&gt; 2 TESCO    4.00   32.0  &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 konsum 132     - 5.00 &lt;NULL&gt;    </span>
+<span class="co">#&gt; 4 lidl   333      NA    &lt;S3: lm&gt;</span>
+fruits<span class="op">$</span>apples[fruits<span class="op">$</span>apples<span class="op">&gt;</span><span class="dv">100</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
+fruits
+<span class="co">#&gt; # A tibble: 4 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 maxima   1.00    2.00 &lt;chr [26]&gt;</span>
+<span class="co">#&gt; 2 TESCO    4.00   32.0  &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 konsum  NA     - 5.00 &lt;NULL&gt;    </span>
+<span class="co">#&gt; 4 lidl    NA      NA    &lt;S3: lm&gt;</span></code></pre></div>
 <p>Remove duplicate rows where specific column (col1) contains duplicated values:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">distinct</span>(dat, col1, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)
 <span class="co"># kõikide col vastu</span>
@@ -638,38 +638,38 @@ x[<span class="kw">is.na</span>(x)] &lt;-<span class="st"> </span><span class="d
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">colB =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))
 dfs1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">colB =</span>  <span class="dv">4</span>)
 <span class="co">#id teeb veel ühe veeru, mis näitab, kummast algtabelist iga uue tabeli rida pärit on </span>
-<span class="kw">bind_rows</span>(dfs, dfs1, <span class="dt">.id =</span> <span class="st">&quot;id&quot;</span>)</code></pre></div>
-<pre><code>## # A tibble: 4 x 3
-##   id    colA   colB
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
-## 1 1     a      1.00
-## 2 1     b      2.00
-## 3 1     c      3.00
-## 4 2     d      4.00</code></pre>
+<span class="kw">bind_rows</span>(dfs, dfs1, <span class="dt">.id =</span> <span class="st">&quot;id&quot;</span>)
+<span class="co">#&gt; # A tibble: 4 x 3</span>
+<span class="co">#&gt;   id    colA   colB</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 1     a      1.00</span>
+<span class="co">#&gt; 2 1     b      2.00</span>
+<span class="co">#&gt; 3 1     c      3.00</span>
+<span class="co">#&gt; 4 2     d      4.00</span></code></pre></div>
 <p>Vaata Environmentist need tabelid üle ja mõtle järgi, mis juhtus.</p>
 <p>Kui <code>bind_rows()</code> miskipärast ei tööta, proovi <code>do.call(rbind, dfs)</code>, mis on väga sarnane.</p>
 <p>NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!</p>
 <p>Näiteks, võib-olla te tahtsite järgnevat tabelit saada, aga võib-olla ka mitte:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df2 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">ColC =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">ColD =</span> <span class="dv">4</span>)
 ## works by guessing your true intention
-<span class="kw">bind_rows</span>(dfs1, df2)</code></pre></div>
-<pre><code>## # A tibble: 2 x 4
-##   colA   colB ColC   ColD
-##   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
-## 1 d      4.00 &lt;NA&gt;  NA   
-## 2 &lt;NA&gt;  NA    d      4.00</code></pre>
+<span class="kw">bind_rows</span>(dfs1, df2)
+<span class="co">#&gt; # A tibble: 2 x 4</span>
+<span class="co">#&gt;   colA   colB ColC   ColD</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 d      4.00 &lt;NA&gt;  NA   </span>
+<span class="co">#&gt; 2 &lt;NA&gt;  NA    d      4.00</span></code></pre></div>
 </div>
 <div id="uhendame-kaks-tibblet-veeru-kaupa" class="section level3">
 <h3><span class="header-section-number">4.6.3</span> ühendame kaks tibblet veeru kaupa</h3>
 <p>Meil on 2 verbi: bind_cols ja cbind, millest esimene on konservatiivsem. Proovige eelkõige bind_col-ga läbi saada, aga kui muidu ei saa, siis cbind ühendab vahest asju, mida bind_cols keeldub puutumast. NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfx &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colC =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>))
-<span class="kw">bind_cols</span>(dfs, dfx)</code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   colA   colB  colC
-##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 a      1.00  4.00
-## 2 b      2.00  5.00
-## 3 c      3.00  6.00</code></pre>
+<span class="kw">bind_cols</span>(dfs, dfx)
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;   colA   colB  colC</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 a      1.00  4.00</span>
+<span class="co">#&gt; 2 b      2.00  5.00</span>
+<span class="co">#&gt; 3 c      3.00  6.00</span></code></pre></div>
 </div>
 <div id="tabelite-uhendamine-join-ga" class="section level3">
 <h3><span class="header-section-number">4.6.4</span> tabelite ühendamine join()-ga</h3>
@@ -680,68 +680,64 @@ dfs1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="d
   <span class="st">&quot;Paul McCartney&quot;</span>, <span class="dv">1942</span>
 )
 
-df1</code></pre></div>
-<pre><code>## # A tibble: 2 x 2
-##   Member         yr_of_birth
-##   &lt;chr&gt;                &lt;dbl&gt;
-## 1 John Lennon           1940
-## 2 Paul McCartney        1942</code></pre>
+df1
+<span class="co">#&gt; # A tibble: 2 x 2</span>
+<span class="co">#&gt;   Member         yr_of_birth</span>
+<span class="co">#&gt;   &lt;chr&gt;                &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 John Lennon           1940</span>
+<span class="co">#&gt; 2 Paul McCartney        1942</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df2 &lt;-<span class="st"> </span><span class="kw">tribble</span>(
   <span class="op">~</span><span class="st"> </span>Member,            <span class="op">~</span><span class="st"> </span>instrument,    <span class="op">~</span><span class="st"> </span>yr_of_birth,
   <span class="st">&quot;John Lennon&quot;</span>,      <span class="st">&quot;guitar&quot;</span>,         <span class="dv">1940</span>,
   <span class="st">&quot;Ringo Starr&quot;</span>,      <span class="st">&quot;drums&quot;</span>,          <span class="dv">1940</span>,
   <span class="st">&quot;George Harrisson&quot;</span>, <span class="st">&quot;guitar&quot;</span>,         <span class="dv">1942</span>
 )
-df2</code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   Member           instrument yr_of_birth
-##   &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;
-## 1 John Lennon      guitar            1940
-## 2 Ringo Starr      drums             1940
-## 3 George Harrisson guitar            1942</code></pre>
+df2
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;   Member           instrument yr_of_birth</span>
+<span class="co">#&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 John Lennon      guitar            1940</span>
+<span class="co">#&gt; 2 Ringo Starr      drums             1940</span>
+<span class="co">#&gt; 3 George Harrisson guitar            1942</span></code></pre></div>
 <p>Ühendan 2 tabelit nii, et mõlema tabeli kõik read ilmuvad uude tabelisse.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">full_join</span>(df1, df2)</code></pre></div>
-<pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
-<pre><code>## # A tibble: 4 x 3
-##   Member           yr_of_birth instrument
-##   &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;     
-## 1 John Lennon             1940 guitar    
-## 2 Paul McCartney          1942 &lt;NA&gt;      
-## 3 Ringo Starr             1940 drums     
-## 4 George Harrisson        1942 guitar</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">full_join</span>(df1, df2)
+<span class="co">#&gt; # A tibble: 4 x 3</span>
+<span class="co">#&gt;   Member           yr_of_birth instrument</span>
+<span class="co">#&gt;   &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;     </span>
+<span class="co">#&gt; 1 John Lennon             1940 guitar    </span>
+<span class="co">#&gt; 2 Paul McCartney          1942 &lt;NA&gt;      </span>
+<span class="co">#&gt; 3 Ringo Starr             1940 drums     </span>
+<span class="co">#&gt; 4 George Harrisson        1942 guitar</span></code></pre></div>
 <p>Ühendan esimese tabeliga df2 nii, et ainult df1 read säilivad, aga df2-lt võetakse sisse veerud, mis df1-s puuduvad. See on hea join, kui on vaja algtabelile lisada infot teistest tabelitest.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(df1, df2)</code></pre></div>
-<pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
-<pre><code>## # A tibble: 2 x 3
-##   Member         yr_of_birth instrument
-##   &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;     
-## 1 John Lennon           1940 guitar    
-## 2 Paul McCartney        1942 &lt;NA&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(df1, df2)
+<span class="co">#&gt; # A tibble: 2 x 3</span>
+<span class="co">#&gt;   Member         yr_of_birth instrument</span>
+<span class="co">#&gt;   &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;     </span>
+<span class="co">#&gt; 1 John Lennon           1940 guitar    </span>
+<span class="co">#&gt; 2 Paul McCartney        1942 &lt;NA&gt;</span></code></pre></div>
 <p>Filtreerin välja need df1 read, millele vastab rida df2-s.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">semi_join</span>(df1, df2)</code></pre></div>
-<pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
-<pre><code>## # A tibble: 1 x 2
-##   Member      yr_of_birth
-##   &lt;chr&gt;             &lt;dbl&gt;
-## 1 John Lennon        1940</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">semi_join</span>(df1, df2)
+<span class="co">#&gt; # A tibble: 1 x 2</span>
+<span class="co">#&gt;   Member      yr_of_birth</span>
+<span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 John Lennon        1940</span></code></pre></div>
 <p>Filtreerin välja need df1 read, millele ei vasta rida df2-s.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anti_join</span>(df1, df2)</code></pre></div>
-<pre><code>## Joining, by = c(&quot;Member&quot;, &quot;yr_of_birth&quot;)</code></pre>
-<pre><code>## # A tibble: 1 x 2
-##   Member         yr_of_birth
-##   &lt;chr&gt;                &lt;dbl&gt;
-## 1 Paul McCartney        1942</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anti_join</span>(df1, df2)
+<span class="co">#&gt; # A tibble: 1 x 2</span>
+<span class="co">#&gt;   Member         yr_of_birth</span>
+<span class="co">#&gt;   &lt;chr&gt;                &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Paul McCartney        1942</span></code></pre></div>
 </div>
 <div id="nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha." class="section level3">
 <h3><span class="header-section-number">4.6.5</span> Nii saab tibblest kätte vektori, millega saab tehteid teha.</h3>
 <p>Tibble jääb muidugi endisel kujul alles.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ubinad &lt;-<span class="st"> </span>fruits<span class="op">$</span>apples
 ubinad &lt;-<span class="st"> </span>ubinad <span class="op">+</span><span class="st"> </span><span class="dv">2</span>
-ubinad</code></pre></div>
-<pre><code>## [1]  3  6 NA NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## see on jälle vektor
-<span class="kw">str</span>(ubinad)</code></pre></div>
-<pre><code>##  num [1:4] 3 6 NA NA</code></pre>
+ubinad
+<span class="co">#&gt; [1]  3  6 NA NA</span>
+## see on jälle vektor
+<span class="kw">str</span>(ubinad)
+<span class="co">#&gt;  num [1:4] 3 6 NA NA</span></code></pre></div>
 </div>
 <div id="andmeraamide-salvestamine-eksport-import" class="section level3">
 <h3><span class="header-section-number">4.6.6</span> Andmeraamide salvestamine (eksport-import)</h3>
@@ -754,8 +750,8 @@ fruits &lt;-<span class="st"> </span><span class="kw">tibble</span>(shop, apples
 ## kirjutame fruits tabeli csv faili fruits.csv kataloogi data 
 <span class="kw">write_csv</span>(fruits, <span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
 <p>Kuhu see fail läks? See läks meie projekti juurkataloogi kausta “data/”, juurkataloogi asukoha oma arvuti kõvakettal leiame käsuga:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getwd</span>()</code></pre></div>
-<pre><code>## [1] &quot;/home/travis/build/rstats-tartu/lectures&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getwd</span>()
+<span class="co">#&gt; [1] &quot;/home/travis/build/rstats-tartu/lectures&quot;</span></code></pre></div>
 <p>Andmete sisselugemine töökataloogist:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
 <p>MS exceli failist saab tabeleid importida “readxl” raamatukogu abil.</p>
@@ -774,60 +770,62 @@ dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class
 <p>NB! R ei muuda algandmeid, mille te näiteks csv-na sisse loete - need jäävad alati selliseks nagu need instrumendi või andmesisestaja poolt väljastati.</p>
 <p>Seega ei ole andmetabelite salvestamine töö vaheproduktidena sageli vajalik sest te jooksutate iga kord, kui te oma projekti juurde naasete, kogu analüüsi uuesti kuni kohani, kuhu te pooleli jäite. See tagab kõige paremini, et teie kood töötab tervikuna. Erandiks on tabelid, mille arvutamine võtab palju aega.</p>
 <p>Tibble konverteerimine data frame-ks ja tagasi tibbleks:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(fruits)</code></pre></div>
-<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(fruits)
-<span class="kw">class</span>(fruits)</code></pre></div>
-<pre><code>## [1] &quot;data.frame&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(fruits)
-<span class="kw">class</span>(fruits)</code></pre></div>
-<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(fruits)
+<span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span>
+fruits &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(fruits)
+<span class="kw">class</span>(fruits)
+<span class="co">#&gt; [1] &quot;data.frame&quot;</span>
+fruits &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(fruits)
+<span class="kw">class</span>(fruits)
+<span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span></code></pre></div>
 </div>
 </div>
 <div id="tabelit-sisse-lugedes-vaata-ule-na-d" class="section level2">
 <h2><span class="header-section-number">4.7</span> Tabelit sisse lugedes vaata üle NA-d</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diabetes &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> <span class="st">&quot;data/diabetes.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">dec =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
-<span class="kw">str</span>(diabetes)</code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    403 obs. of  19 variables:
-##  $ id      : int  1000 1001 1002 1003 1005 1008 1011 1015 1016 1022 ...
-##  $ chol    : int  203 165 228 78 249 248 195 227 177 263 ...
-##  $ stab.glu: int  82 97 92 93 90 94 92 75 87 89 ...
-##  $ hdl     : int  56 24 37 12 28 69 41 44 49 40 ...
-##  $ ratio   : num  3.6 6.9 6.2 6.5 8.9 ...
-##  $ glyhb   : num  4.31 4.44 4.64 4.63 7.72 ...
-##  $ location: Factor w/ 2 levels &quot;Buckingham&quot;,&quot;Louisa&quot;: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ age     : int  46 29 58 67 64 34 30 37 45 55 ...
-##  $ gender  : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 1 1 1 2 2 2 2 2 2 1 ...
-##  $ height  : int  62 64 61 67 68 71 69 59 69 63 ...
-##  $ weight  : int  121 218 256 119 183 190 191 170 166 202 ...
-##  $ frame   : Factor w/ 4 levels &quot;&quot;,&quot;large&quot;,&quot;medium&quot;,..: 3 2 2 2 3 2 3 3 2 4 ...
-##  $ bp.1s   : int  118 112 190 110 138 132 161 NA 160 108 ...
-##  $ bp.1d   : int  59 68 92 50 80 86 112 NA 80 72 ...
-##  $ bp.2s   : int  NA NA 185 NA NA NA 161 NA 128 NA ...
-##  $ bp.2d   : int  NA NA 92 NA NA NA 112 NA 86 NA ...
-##  $ waist   : int  29 46 49 33 44 36 46 34 34 45 ...
-##  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...
-##  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggr</span>(diabetes, <span class="dt">prop =</span> <span class="ot">FALSE</span>, <span class="dt">numbers =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="03-objektid_files/figure-html/unnamed-chunk-49-1.png" width="672" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
+<span class="kw">str</span>(diabetes)
+<span class="co">#&gt; &#39;data.frame&#39;:    403 obs. of  19 variables:</span>
+<span class="co">#&gt;  $ id      : int  1000 1001 1002 1003 1005 1008 1011 1015 1016 1022 ...</span>
+<span class="co">#&gt;  $ chol    : int  203 165 228 78 249 248 195 227 177 263 ...</span>
+<span class="co">#&gt;  $ stab.glu: int  82 97 92 93 90 94 92 75 87 89 ...</span>
+<span class="co">#&gt;  $ hdl     : int  56 24 37 12 28 69 41 44 49 40 ...</span>
+<span class="co">#&gt;  $ ratio   : num  3.6 6.9 6.2 6.5 8.9 ...</span>
+<span class="co">#&gt;  $ glyhb   : num  4.31 4.44 4.64 4.63 7.72 ...</span>
+<span class="co">#&gt;  $ location: Factor w/ 2 levels &quot;Buckingham&quot;,&quot;Louisa&quot;: 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;  $ age     : int  46 29 58 67 64 34 30 37 45 55 ...</span>
+<span class="co">#&gt;  $ gender  : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 1 1 1 2 2 2 2 2 2 1 ...</span>
+<span class="co">#&gt;  $ height  : int  62 64 61 67 68 71 69 59 69 63 ...</span>
+<span class="co">#&gt;  $ weight  : int  121 218 256 119 183 190 191 170 166 202 ...</span>
+<span class="co">#&gt;  $ frame   : Factor w/ 4 levels &quot;&quot;,&quot;large&quot;,&quot;medium&quot;,..: 3 2 2 2 3 2 3 3 2 4 ...</span>
+<span class="co">#&gt;  $ bp.1s   : int  118 112 190 110 138 132 161 NA 160 108 ...</span>
+<span class="co">#&gt;  $ bp.1d   : int  59 68 92 50 80 86 112 NA 80 72 ...</span>
+<span class="co">#&gt;  $ bp.2s   : int  NA NA 185 NA NA NA 161 NA 128 NA ...</span>
+<span class="co">#&gt;  $ bp.2d   : int  NA NA 92 NA NA NA 112 NA 86 NA ...</span>
+<span class="co">#&gt;  $ waist   : int  29 46 49 33 44 36 46 34 34 45 ...</span>
+<span class="co">#&gt;  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...</span>
+<span class="co">#&gt;  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...</span>
+<span class="kw">aggr</span>(diabetes, <span class="dt">prop =</span> <span class="ot">FALSE</span>, <span class="dt">numbers =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="03-objektid_files/figure-html/unnamed-chunk-50-1.png" width="70%" style="display: block; margin: auto;" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
 <p>Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nrows &lt;-<span class="st"> </span><span class="kw">nrow</span>(diabetes)
   ncomplete &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">complete.cases</span>(diabetes))
-  ncomplete <span class="co">#136</span></code></pre></div>
-<pre><code>## [1] 136</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  ncomplete<span class="op">/</span>nrows <span class="co">#34%</span></code></pre></div>
-<pre><code>## [1] 0.337469</code></pre>
+  ncomplete <span class="co">#136</span>
+<span class="co">#&gt; [1] 136</span>
+  ncomplete<span class="op">/</span>nrows <span class="co">#34%</span>
+<span class="co">#&gt; [1] 0.337</span></code></pre></div>
 <p><strong>Mitu NA-d on igas tulbas?</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(diabetes, <span class="cf">function</span>(x) <span class="kw">sum</span>(<span class="kw">is.na</span>(x))) </code></pre></div>
-<pre><code>##       id     chol stab.glu      hdl    ratio    glyhb location      age 
-##        0        1        0        1        1       13        0        0 
-##   gender   height   weight    frame    bp.1s    bp.1d    bp.2s    bp.2d 
-##        0        5        1        0        5        5      262      262 
-##    waist      hip time.ppn 
-##        2        2        3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(diabetes, <span class="cf">function</span>(x) <span class="kw">sum</span>(<span class="kw">is.na</span>(x))) 
+<span class="co">#&gt;       id     chol stab.glu      hdl    ratio    glyhb </span>
+<span class="co">#&gt;        0        1        0        1        1       13 </span>
+<span class="co">#&gt; location      age   gender   height   weight    frame </span>
+<span class="co">#&gt;        0        0        0        5        1        0 </span>
+<span class="co">#&gt;    bp.1s    bp.1d    bp.2s    bp.2d    waist      hip </span>
+<span class="co">#&gt;        5        5      262      262        2        2 </span>
+<span class="co">#&gt; time.ppn </span>
+<span class="co">#&gt;        3</span></code></pre></div>
 <p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
-<p><img src="03-objektid_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p><img src="03-objektid_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><strong>Kuidas rekodeerida NA-d näiteks 0-ks:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> </span><span class="dv">0</span>
 dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> &quot;other&quot;</span>
@@ -835,17 +833,18 @@ dfs[dfs <span class="op">==</span><span class="st"> </span><span class="dv">0</s
 <p>Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud <code>is.na()</code> funktsiooniga.</p>
 <p>coalesce teeb seda peenemalt. kõigepealt kõik</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>)
-<span class="kw">coalesce</span>(x, 0L)</code></pre></div>
-<pre><code>## [1] 1 2 3 4 5 0 0 0</code></pre>
+<span class="kw">coalesce</span>(x, 0L)
+<span class="co">#&gt; [1] 1 2 3 4 5 0 0 0</span></code></pre></div>
 <p>Nii saab 2 vektori põhjal kolmanda nii, et NA-d asendatakse vastava väärtusega:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">5</span>)
 z &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)
-<span class="kw">coalesce</span>(y, z)</code></pre></div>
-<pre><code>## [1] 1 2 3 4 5</code></pre>
+<span class="kw">coalesce</span>(y, z)
+<span class="co">#&gt; [1] 1 2 3 4 5</span></code></pre></div>
 <p><code>filter_all(weather, any_vars(is.na(.)))</code> näitab ridu, mis sisaldavad NA-sid</p>
 <p><code>filter_at(weather, vars(starts_with(&quot;wind&quot;)), all_vars(is.na(.)))</code> read, kus veerg, mis sisaldab wind, on NA.</p>
 <p><strong>Rekodeerime numbri vm NA-ks</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">na_if</span>(x, y)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">na_if</span>(x, y)
 
 x <span class="op">-</span><span class="st"> </span>vektor ehk tabeli veerg, mida modifitseerime
 y <span class="op">-</span><span class="st"> </span>väärtus, mida soovime <span class="ot">NA</span><span class="op">-</span>ga asendada</code></pre></div>
@@ -865,20 +864,20 @@ y <span class="op">-</span><span class="st"> </span>väärtus, mida soovime <spa
 <div id="vektorid-ja-nende-indeksid-on-uhedimensionaalsed" class="section level3">
 <h3><span class="header-section-number">4.9.1</span> Vektorid ja nende indeksid on ühedimensionaalsed</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">5</span> 
-my_vector</code></pre></div>
-<pre><code>## [1] 2 3 4 5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="dv">1</span>] <span class="co">#1. element ehk number 2</span></code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)] <span class="co">#1. ja 3. element </span></code></pre></div>
-<pre><code>## [1] 2 4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="op">-</span><span class="dv">1</span>] <span class="co">#kõik elemendid, v.a. element number 1</span></code></pre></div>
-<pre><code>## [1] 3 4 5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">3</span>)] <span class="co">#kõik elemendid, v.a. element number 1 ja 3</span></code></pre></div>
-<pre><code>## [1] 3 5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="dv">3</span><span class="op">:</span><span class="dv">5</span>] <span class="co">#elemendid 3, 4 ja 5 (element 5 on määramata, seega NA)</span></code></pre></div>
-<pre><code>## [1]  4  5 NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_vector[<span class="op">-</span>(<span class="dv">3</span><span class="op">:</span><span class="kw">length</span>(my_vector))] <span class="co">#1. ja 2. element</span></code></pre></div>
-<pre><code>## [1] 2 3</code></pre>
+my_vector
+<span class="co">#&gt; [1] 2 3 4 5</span>
+my_vector[<span class="dv">1</span>] <span class="co">#1. element ehk number 2</span>
+<span class="co">#&gt; [1] 2</span>
+my_vector[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)] <span class="co">#1. ja 3. element </span>
+<span class="co">#&gt; [1] 2 4</span>
+my_vector[<span class="op">-</span><span class="dv">1</span>] <span class="co">#kõik elemendid, v.a. element number 1</span>
+<span class="co">#&gt; [1] 3 4 5</span>
+my_vector[<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">3</span>)] <span class="co">#kõik elemendid, v.a. element number 1 ja 3</span>
+<span class="co">#&gt; [1] 3 5</span>
+my_vector[<span class="dv">3</span><span class="op">:</span><span class="dv">5</span>] <span class="co">#elemendid 3, 4 ja 5 (element 5 on määramata, seega NA)</span>
+<span class="co">#&gt; [1]  4  5 NA</span>
+my_vector[<span class="op">-</span>(<span class="dv">3</span><span class="op">:</span><span class="kw">length</span>(my_vector))] <span class="co">#1. ja 2. element</span>
+<span class="co">#&gt; [1] 2 3</span></code></pre></div>
 </div>
 <div id="andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-indeksid" class="section level3">
 <h3><span class="header-section-number">4.9.2</span> Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid</h3>
@@ -906,10 +905,10 @@ dat<span class="op">$</span>colB</code></pre></div>
 <p>Kui me indekseerimisega tibblest veeru ehk vektori välja võtame, on output class: tibble. Kui me teeme sama data frame-st, siis on output class: vector.</p>
 <p>Nüüd veidi keerulisemad konstruktsioonid, mis võimaldavad tabeli ühe kindla veeru väärtusi välja tõmmata teise veeru väärtuste järgi filteerides. Püüdke sellest koodist aru saada, et te hiljem ära tunneksite, kui midagi sellist vastu tuleb. Õnneks ei ole teil endil vaja sellist koodi kirjutada, me õpetame teile varsti lihtsama filtri meetodi.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">colB =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))
-dat<span class="op">$</span>colB[dat<span class="op">$</span>colA <span class="op">!=</span><span class="st"> &quot;a&quot;</span> ] <span class="co">#jätab sisse kõik vektori colB väärtused, kus samas tabeli reas olev colA väärtus ei ole &quot;a&quot;. output on vektor! </span></code></pre></div>
-<pre><code>## [1] 2 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat<span class="op">$</span>colA[dat<span class="op">$</span>colB <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>] <span class="co">#jätab sisse kõik vektori colA väärtused, kus samas tabeli reas olev colB väärtus &gt;1. output on vektor. </span></code></pre></div>
-<pre><code>## [1] &quot;b&quot; &quot;c&quot;</code></pre>
+dat<span class="op">$</span>colB[dat<span class="op">$</span>colA <span class="op">!=</span><span class="st"> &quot;a&quot;</span> ] <span class="co">#jätab sisse kõik vektori colB väärtused, kus samas tabeli reas olev colA väärtus ei ole &quot;a&quot;. output on vektor! </span>
+<span class="co">#&gt; [1] 2 3</span>
+dat<span class="op">$</span>colA[dat<span class="op">$</span>colB <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>] <span class="co">#jätab sisse kõik vektori colA väärtused, kus samas tabeli reas olev colB väärtus &gt;1. output on vektor. </span>
+<span class="co">#&gt; [1] &quot;b&quot; &quot;c&quot;</span></code></pre></div>
 </div>
 <div id="listide-indekseerimine" class="section level3">
 <h3><span class="header-section-number">4.9.3</span> Listide indekseerimine</h3>
@@ -920,40 +919,40 @@ dat<span class="op">$</span>colB[dat<span class="op">$</span>colA <span class="o
 </blockquote>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a =</span> <span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="dt">colB =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)), <span class="dt">b =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>, <span class="st">&quot;s&quot;</span>))
 ## this list has two elements, a data frame called &quot;a&quot; and a character vector called &quot;b&quot;.
-<span class="kw">str</span>(my_list)</code></pre></div>
-<pre><code>## List of 2
-##  $ a:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   2 obs. of  2 variables:
-##   ..$ colA: chr [1:2] &quot;A&quot; &quot;B&quot;
-##   ..$ colB: num [1:2] 1 2
-##  $ b: chr [1:3] &quot;1&quot; NA &quot;s&quot;</code></pre>
+<span class="kw">str</span>(my_list)
+<span class="co">#&gt; List of 2</span>
+<span class="co">#&gt;  $ a:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   2 obs. of  2 variables:</span>
+<span class="co">#&gt;   ..$ colA: chr [1:2] &quot;A&quot; &quot;B&quot;</span>
+<span class="co">#&gt;   ..$ colB: num [1:2] 1 2</span>
+<span class="co">#&gt;  $ b: chr [1:3] &quot;1&quot; NA &quot;s&quot;</span></code></pre></div>
 <p>Tõmbame listist välja tibble:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_tibble &lt;-<span class="st"> </span>my_list[[<span class="dv">1</span>]]
-my_tibble</code></pre></div>
-<pre><code>## # A tibble: 2 x 2
-##   colA   colB
-##   &lt;chr&gt; &lt;dbl&gt;
-## 1 A      1.00
-## 2 B      2.00</code></pre>
+my_tibble
+<span class="co">#&gt; # A tibble: 2 x 2</span>
+<span class="co">#&gt;   colA   colB</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 A      1.00</span>
+<span class="co">#&gt; 2 B      2.00</span></code></pre></div>
 <p>See ei ole enam list.</p>
 <p>Nüüd võtame üksiksuluga listist välja 1. elemendi, mis on tibble, aga output ei ole mitte tibble, vaid ikka list. Seekord ühe elemendiga, mis on tibble.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa &lt;-<span class="st"> </span>my_list[<span class="dv">1</span>]
-<span class="kw">str</span>(aa)</code></pre></div>
-<pre><code>## List of 1
-##  $ a:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   2 obs. of  2 variables:
-##   ..$ colA: chr [1:2] &quot;A&quot; &quot;B&quot;
-##   ..$ colB: num [1:2] 1 2</code></pre>
+<span class="kw">str</span>(aa)
+<span class="co">#&gt; List of 1</span>
+<span class="co">#&gt;  $ a:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   2 obs. of  2 variables:</span>
+<span class="co">#&gt;   ..$ colA: chr [1:2] &quot;A&quot; &quot;B&quot;</span>
+<span class="co">#&gt;   ..$ colB: num [1:2] 1 2</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa1 &lt;-<span class="st"> </span>my_list<span class="op">$</span>a[<span class="dv">2</span>,] <span class="co">#class is df</span>
-aa1</code></pre></div>
-<pre><code>## # A tibble: 1 x 2
-##   colA   colB
-##   &lt;chr&gt; &lt;dbl&gt;
-## 1 B      2.00</code></pre>
+aa1
+<span class="co">#&gt; # A tibble: 1 x 2</span>
+<span class="co">#&gt;   colA   colB</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 B      2.00</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aa3 &lt;-<span class="st"> </span>my_list[[<span class="dv">1</span>]][<span class="dv">1</span>,]
-aa3</code></pre></div>
-<pre><code>## # A tibble: 1 x 2
-##   colA   colB
-##   &lt;chr&gt; &lt;dbl&gt;
-## 1 A      1.00</code></pre>
+aa3
+<span class="co">#&gt; # A tibble: 1 x 2</span>
+<span class="co">#&gt;   colA   colB</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 A      1.00</span></code></pre></div>
 <p>Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välja objekti my_list 1. elemendi, tema algses tibble formaadis, (indeksi 1. dimensioon). Seejärel korjame sealt välja 1. rea, tibble formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).</p>
 <p>Pane tähele, et <code>[[ ]]</code> lubab ainult ühe elemendi korraga listist välja päästa.</p>
 

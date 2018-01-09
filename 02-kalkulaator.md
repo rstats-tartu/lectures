@@ -1,14 +1,12 @@
 
+
 # R on kalkulaator {#calc}
 
 Liidame `2 + 2`. 
 
 ```r
 2 + 2
-```
-
-```
-## [1] 4
+#> [1] 4
 ```
 
 Nüüd trükiti see vastus konsooli kujul `[1] 4`.
@@ -21,10 +19,7 @@ Kontrollime seda:
 answer <- (2 + 2) == 4
 ## Trükime vastuse välja
 answer
-```
-
-```
-## [1] TRUE
+#> [1] TRUE
 ```
 
 Vastus on TRUE, (logical). 
@@ -48,10 +43,7 @@ Seega on soovitav enda poolt loodavatele objektidele mitte panna nimeks "pi".
 ```r
 ## Ümarda pi neljale komakohale
 round(pi, 4)
-```
-
-```
-## [1] 3.1416
+#> [1] 3.14
 ```
 Ümardamine on oluline tulemuste väljaprintimisel.
 
@@ -71,23 +63,6 @@ Kõigepealt laadime vajalikud raamatukogud.
 library(dplyr)
 ```
 
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
 Esimene võimalus:
 
 ```r
@@ -96,10 +71,7 @@ a <- sum(a)
 a <- sqrt(a)
 a <- round(a, 2)
 a
-```
-
-```
-## [1] 2.24
+#> [1] 2.24
 ```
 
 Teine võimalus:
@@ -110,10 +82,7 @@ a1 <- sum(a)
 a2 <- sqrt(a1)
 a3 <- round(a2, 2)
 a3
-```
-
-```
-## [1] 2.24
+#> [1] 2.24
 ```
 
 Kolmas võimalus on lühem variant esimesest. 
@@ -130,10 +99,7 @@ See on hea lühike ja inimloetav viis koodi kirjutada, mis on masina jaoks ident
 a <- c(2, 3)
 result <- a %>% sum() %>% sqrt() %>% round(2)
 result
-```
-
-```
-## [1] 2.24
+#> [1] 2.24
 ```
 
 Neljas võimalus, klassikaline baas R lahendus:
@@ -142,10 +108,7 @@ Neljas võimalus, klassikaline baas R lahendus:
 a <- c(2, 3)
 a1 <- round(sqrt(sum(a)), 2)
 a1
-```
-
-```
-## [1] 2.24
+#> [1] 2.24
 ```
 Sellist koodi loetakse keskelt väljappoole ja kirjutatakse alates viimasest operatsioonist, mida soovitakse, et kood teeks. 
 Masina jaoks pole vahet. 

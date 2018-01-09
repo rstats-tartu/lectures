@@ -276,7 +276,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Ava RStudio akna (Joonis <a href="tools.html#fig:rstudiowindow">2.1</a>) paremalt ülevalt nurgast “Project” menüüst “New Project” dialoog.</li>
 <li>Ava “New Directory” &gt; “Empty Project” &gt; vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks “rstats2017”.</li>
 </ol>
-<div class="figure"><span id="fig:rstudiowindow"></span>
+<div class="figure" style="text-align: center"><span id="fig:rstudiowindow"></span>
 <img src="img/rstudio_screen_untitled.png" alt="RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt;. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt; menüüs on võimalik muutusi vaadata ja 'commit'ida ja &lt;i class='fa fa-github' aria-hidden='true'&gt;&lt;/i&gt;-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse)." width="\textwidth" />
 <p class="caption">
 Joonis 2.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga <i class='fa fa-git' aria-hidden='true'></i>. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. <i class='fa fa-git' aria-hidden='true'></i> menüüs on võimalik muutusi vaadata ja ’commit’ida ja <i class='fa fa-github' aria-hidden='true'></i>-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse).
@@ -333,7 +333,7 @@ Joonis 2.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimeg
 <span class="kw">install.packages</span>(<span class="st">&quot;packagename&quot;</span>)</code></pre></div>
 <p>NB! Kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle nime + R ja vaadake instruktsioone installeerimiseks. Suure tõenäosusega on tegemist mõnes teises repos (näiteks Bioconductor) või ainult GitHubis asuva paketiga.</p>
 RStudio võimaldab ka <em>point-and-click</em> stiilis pakettide installeerimist:
-<div class="figure"><span id="fig:unnamed-chunk-2"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
 <img src="img/RStudio_package.install.png" alt="RStudio 'Install Packages' dialoogiaken." width="\textwidth" />
 <p class="caption">
 Joonis 2.2: RStudio ‘Install Packages’ dialoogiaken.
@@ -349,12 +349,14 @@ Joonis 2.2: RStudio ‘Install Packages’ dialoogiaken.
 <p>Näiteks “dplyr” pakett sisaldab 237 funktsiooni:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 ## let&#39;s look at the head of package list
-<span class="kw">head</span>(<span class="kw">ls</span>(<span class="st">&quot;package:dplyr&quot;</span>), <span class="dv">20</span>)</code></pre></div>
-<pre><code>##  [1] &quot;%&gt;%&quot;           &quot;add_count&quot;     &quot;add_count_&quot;    &quot;add_row&quot;      
-##  [5] &quot;add_rownames&quot;  &quot;add_tally&quot;     &quot;add_tally_&quot;    &quot;all_equal&quot;    
-##  [9] &quot;all_vars&quot;      &quot;anti_join&quot;     &quot;any_vars&quot;      &quot;arrange&quot;      
-## [13] &quot;arrange_&quot;      &quot;arrange_all&quot;   &quot;arrange_at&quot;    &quot;arrange_if&quot;   
-## [17] &quot;as_data_frame&quot; &quot;as_tibble&quot;     &quot;as.tbl&quot;        &quot;as.tbl_cube&quot;</code></pre>
+<span class="kw">head</span>(<span class="kw">ls</span>(<span class="st">&quot;package:dplyr&quot;</span>), <span class="dv">20</span>)
+<span class="co">#&gt;  [1] &quot;%&gt;%&quot;           &quot;add_count&quot;     &quot;add_count_&quot;   </span>
+<span class="co">#&gt;  [4] &quot;add_row&quot;       &quot;add_rownames&quot;  &quot;add_tally&quot;    </span>
+<span class="co">#&gt;  [7] &quot;add_tally_&quot;    &quot;all_equal&quot;     &quot;all_vars&quot;     </span>
+<span class="co">#&gt; [10] &quot;anti_join&quot;     &quot;any_vars&quot;      &quot;arrange&quot;      </span>
+<span class="co">#&gt; [13] &quot;arrange_&quot;      &quot;arrange_all&quot;   &quot;arrange_at&quot;   </span>
+<span class="co">#&gt; [16] &quot;arrange_if&quot;    &quot;as_data_frame&quot; &quot;as_tibble&quot;    </span>
+<span class="co">#&gt; [19] &quot;as.tbl&quot;        &quot;as.tbl_cube&quot;</span></code></pre></div>
 <p>Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab <code>::</code> operaatorit kasutades kutsuda välja/importida funktsiooni spetsiifilisest paketist:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dplyr<span class="op">::</span><span class="kw">select</span>(df, my_var)</code></pre></div>
 <p>Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat funktsiooni sisaldavat raamatukogu töökeskkonda laadida.</p>

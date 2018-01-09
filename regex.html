@@ -271,7 +271,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><code>[:blank:]</code> tab ja newline.</li>
 </ul>
 <p>Metamärgid on <code>. \ | ( ) [ { ^ $ * + ?</code>. Nende tähendus sõltub kontekstist. <code>\\</code> teeb metamärgist tavalise märgi.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trüki see   regex
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+trüki see   regex
 \\n         \n   new <span class="kw">line</span> (return)
 \\t         \t   tab
 \\s         \s   any <span class="kw">whitespace</span> (\S <span class="op">-</span><span class="st"> </span>any non<span class="op">-</span>whitespace)
@@ -309,7 +310,8 @@ trüki  selleks
 <li>(?&lt;!b)a annab need a-d, millele ei eelne b</li>
 </ul>
 <p><strong>patterns that match more than one character:</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">. (dot)<span class="op">:</span><span class="st"> </span>any character apart from a newline.
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+. (dot)<span class="op">:</span><span class="st"> </span>any character apart from a newline.
 
 \\d<span class="op">:</span><span class="st"> </span>any digit.
 
@@ -359,39 +361,46 @@ abc<span class="op">|</span>d..f will match either <span class="st">&quot;abc&qu
 x&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;ananas&quot;</span>, <span class="st">&quot;banana&quot;</span>)
 
 <span class="co">#replaces all a-s at the beginning of strings with e-s</span>
-<span class="kw">str_replace</span>(x, <span class="st">&quot;^a&quot;</span>, <span class="st">&quot;e&quot;</span>) </code></pre></div>
-<pre><code>## [1] &quot;epple&quot;  &quot;enanas&quot; &quot;banana&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># str_replace only replaces at the first occurence at each string</span>
-<span class="kw">str_replace</span>(x, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;e&quot;</span>) </code></pre></div>
-<pre><code>## [1] &quot;epple&quot;  &quot;enanas&quot; &quot;benana&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#str_replace_all replaces all a-s anywhere in the strings</span>
-<span class="kw">str_replace_all</span>(x, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;e&quot;</span>) </code></pre></div>
-<pre><code>## [1] &quot;epple&quot;  &quot;enenes&quot; &quot;benene&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#replaces a and the following character at the end of string with nothing (i.e. deletes 2 chars)</span>
-<span class="kw">str_replace</span>(x, <span class="st">&quot;a.$&quot;</span>, <span class="st">&quot;&quot;</span>)</code></pre></div>
-<pre><code>## [1] &quot;apple&quot;  &quot;anan&quot;   &quot;banana&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#replaces a-s or s-s at the end of string with e-s</span>
-<span class="kw">str_replace</span>(x, <span class="st">&quot;(a|s)$&quot;</span>, <span class="st">&quot;e&quot;</span>)</code></pre></div>
-<pre><code>## [1] &quot;apple&quot;  &quot;ananae&quot; &quot;banane&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#replaces a-s or s-s anywhere in the string with e-s</span>
-<span class="kw">str_replace_all</span>(x, <span class="st">&quot;a|s&quot;</span>, <span class="st">&quot;e&quot;</span>)</code></pre></div>
-<pre><code>## [1] &quot;epple&quot;  &quot;enenee&quot; &quot;benene&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#remove all numbers. </span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;^a&quot;</span>, <span class="st">&quot;e&quot;</span>) 
+<span class="co">#&gt; [1] &quot;epple&quot;  &quot;enanas&quot; &quot;banana&quot;</span>
+
+<span class="co"># str_replace only replaces at the first occurence at each string</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;e&quot;</span>) 
+<span class="co">#&gt; [1] &quot;epple&quot;  &quot;enanas&quot; &quot;benana&quot;</span>
+
+<span class="co">#str_replace_all replaces all a-s anywhere in the strings</span>
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;e&quot;</span>) 
+<span class="co">#&gt; [1] &quot;epple&quot;  &quot;enenes&quot; &quot;benene&quot;</span>
+
+<span class="co">#replaces a and the following character at the end of string with nothing (i.e. deletes 2 chars)</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;a.$&quot;</span>, <span class="st">&quot;&quot;</span>)
+<span class="co">#&gt; [1] &quot;apple&quot;  &quot;anan&quot;   &quot;banana&quot;</span>
+
+<span class="co">#replaces a-s or s-s at the end of string with e-s</span>
+<span class="kw">str_replace</span>(x, <span class="st">&quot;(a|s)$&quot;</span>, <span class="st">&quot;e&quot;</span>)
+<span class="co">#&gt; [1] &quot;apple&quot;  &quot;ananae&quot; &quot;banane&quot;</span>
+
+<span class="co">#replaces a-s or s-s anywhere in the string with e-s</span>
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;a|s&quot;</span>, <span class="st">&quot;e&quot;</span>)
+<span class="co">#&gt; [1] &quot;epple&quot;  &quot;enenee&quot; &quot;benene&quot;</span>
+
+<span class="co">#remove all numbers. </span>
 y&lt;-<span class="kw">c</span>(<span class="st">&quot;as1&quot;</span>, <span class="st">&quot;2we3w&quot;</span>, <span class="st">&quot;3e&quot;</span>)
-<span class="kw">str_replace_all</span>(y, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">d&quot;</span>, <span class="st">&quot;&quot;</span>) </code></pre></div>
-<pre><code>## [1] &quot;as&quot;  &quot;wew&quot; &quot;e&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#remove everything, except numbers. </span>
-<span class="kw">str_replace_all</span>(y, <span class="st">&quot;[A-Za-z_]&quot;</span>, <span class="st">&quot;&quot;</span>) </code></pre></div>
-<pre><code>## [1] &quot;1&quot;  &quot;23&quot; &quot;3&quot;</code></pre>
+<span class="kw">str_replace_all</span>(y, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">d&quot;</span>, <span class="st">&quot;&quot;</span>) 
+<span class="co">#&gt; [1] &quot;as&quot;  &quot;wew&quot; &quot;e&quot;</span>
+
+<span class="co">#remove everything, except numbers. </span>
+<span class="kw">str_replace_all</span>(y, <span class="st">&quot;[A-Za-z_]&quot;</span>, <span class="st">&quot;&quot;</span>) 
+<span class="co">#&gt; [1] &quot;1&quot;  &quot;23&quot; &quot;3&quot;</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple pie&quot;</span>)
-<span class="kw">str_replace_all</span>(x, <span class="st">&quot;^apple$&quot;</span>,<span class="st">&quot;m&quot;</span>) <span class="co">#To force to only match a complete string:</span></code></pre></div>
-<pre><code>## [1] &quot;m&quot;         &quot;apple pie&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_replace_all</span>(x, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">s&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co">#space to _</span></code></pre></div>
-<pre><code>## [1] &quot;apple&quot;     &quot;apple_pie&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_replace_all</span>(x, <span class="st">&quot;[apl]&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co">#a or p or l to _</span></code></pre></div>
-<pre><code>## [1] &quot;____e&quot;     &quot;____e _ie&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_replace_all</span>(x, <span class="st">&quot;[ap|p.e]&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co"># ap or p.e to _</span></code></pre></div>
-<pre><code>## [1] &quot;___l_&quot;     &quot;___l_ _i_&quot;</code></pre>
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;^apple$&quot;</span>,<span class="st">&quot;m&quot;</span>) <span class="co">#To force to only match a complete string:</span>
+<span class="co">#&gt; [1] &quot;m&quot;         &quot;apple pie&quot;</span>
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">s&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co">#space to _</span>
+<span class="co">#&gt; [1] &quot;apple&quot;     &quot;apple_pie&quot;</span>
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;[apl]&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co">#a or p or l to _</span>
+<span class="co">#&gt; [1] &quot;____e&quot;     &quot;____e _ie&quot;</span>
+<span class="kw">str_replace_all</span>(x, <span class="st">&quot;[ap|p.e]&quot;</span>,<span class="st">&quot;_&quot;</span>) <span class="co"># ap or p.e to _</span>
+<span class="co">#&gt; [1] &quot;___l_&quot;     &quot;___l_ _i_&quot;</span></code></pre></div>
 <p>näide: meil on vector v, milles täht tähistab katse tüüpi, number, mis on tähe ees, tähistab mõõtmisobjekti identiteeti ja tähe järel asuv number tähistab ajapunkti tundides (h). F ja f tähistavad sama asja. Kõigepealt võtame välja F-i mõõtmisojbekti ehk subjekti koodid</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)
 v &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;1F1&quot;</span>, <span class="st">&quot;12F2h&quot;</span>, <span class="st">&quot;13f1&quot;</span>, <span class="st">&quot;2S&quot;</span>)
@@ -399,24 +408,16 @@ v &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot
 
 v_f &lt;-<span class="st"> </span><span class="kw">str_subset</span>(v, <span class="st">&quot;[Ff]&quot;</span>) 
 <span class="co">#filtreerime F ja f sisaldavad stringid</span>
-v_f</code></pre></div>
-<pre><code>## [1] &quot;1F1&quot;   &quot;12F2h&quot; &quot;13f1&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v_f_subject &lt;-<span class="st"> </span><span class="kw">str_replace_all</span>(v_f, <span class="st">&quot;[Ff][0-9]+h?&quot;</span>, <span class="st">&quot;&quot;</span>) 
+v_f
+<span class="co">#&gt; [1] &quot;1F1&quot;   &quot;12F2h&quot; &quot;13f1&quot;</span>
+v_f_subject &lt;-<span class="st"> </span><span class="kw">str_replace_all</span>(v_f, <span class="st">&quot;[Ff][0-9]+h?&quot;</span>, <span class="st">&quot;&quot;</span>) 
 <span class="co">#string &quot;F või f, number üks või enam korda, h 0 või enam korda&quot; asendada tühja stringiga</span>
-v_f_subject</code></pre></div>
-<pre><code>## [1] &quot;1&quot;  &quot;12&quot; &quot;13&quot;</code></pre>
+v_f_subject
+<span class="co">#&gt; [1] &quot;1&quot;  &quot;12&quot; &quot;13&quot;</span></code></pre></div>
 <p>Ja nääd võtame välja ajapunktide koodid. Kõigepealt asendame stringid, mis sisaldavad vähemalt üht numbrit, millele järgneb F v f tühja stringiga. Seejärel asendame tühja stringiga h-d. Ja lõpuks avaldame iga ajapunkti numbrina (mitte enam stringina).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
-<pre><code>## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 2.2.1     ✔ readr   1.1.1
-## ✔ tibble  1.4.1     ✔ purrr   0.2.4
-## ✔ tidyr   0.7.2     ✔ dplyr   0.7.4
-## ✔ ggplot2 2.2.1     ✔ forcats 0.2.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_replace_all</span>(v_f, <span class="st">&quot;[0-9]+[Ff]&quot;</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_replace_all</span>(<span class="st">&quot;h&quot;</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>as.integer</code></pre></div>
-<pre><code>## [1] 1 2 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">str_replace_all</span>(v_f, <span class="st">&quot;[0-9]+[Ff]&quot;</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_replace_all</span>(<span class="st">&quot;h&quot;</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>as.integer
+<span class="co">#&gt; [1] 1 2 1</span></code></pre></div>
 
 </div>
 </div>

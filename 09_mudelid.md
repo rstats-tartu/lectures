@@ -1,4 +1,5 @@
 
+
 # Statistilised mudelid
 
 
@@ -43,8 +44,8 @@ Mudeli eeliseks teooria ees on, et hästi konstrueeritud mudel on lihtsamini mõ
 Aristoteles (384–322 BC) lõi teooria maailma toimimise kohta, mis domineeris haritud eurooplase maailmapilti enam kui 1200 aasta vältel. Tema ühendteooria põhines maailmapildil, mis oli üldtunnustatud juba sajandeid enne Aristotelest ja järgneva 1500 aasta jooksul kahtlesid selles vähesed mõistlikud inimesed. Selle kohaselt asub universumi keskpunktis statsionaarne maakera ning kõik, mida siin leida võib, on tehtud neljast elemendist: maa, vesi, õhk ja tuli. Samas, kogu maailmaruum alates kuu sfäärist on tehtud viiendast elemendist (eeter), mida aga ei leidu maal (nagu nelja elementi ei leidu kuu peal ja sealt edasi). Taevakehad (kuu, päike, planeedid ja kinnistähed) tiirlevad ümber maa kontsentrilistes sfäärides, mille vahel pole vaba ruumi. Seega on kogu liikumine eetri sfäärides ühtlane ja ringikujuline ja see liikumine põhjustab pika põhjus-tagajärg ahela kaudu kõiki liikumisi, mida maapeal kohtame. Kaasa arvatud sündimine, elukäik ja surm. Kõik, mis maapeal huvitavat, ehk kogu liikumine, on algselt põhjustatud esimese liikumise poolt, mille käivitab kõige välimises sfääris paiknev meie jaoks mõistetamatu intellektiga "olend".  
 
 <div class="figure" style="text-align: center">
-<img src="img/arist.jpg" alt="Keskaegne aristotellik maailm."  />
-<p class="caption">(\#fig:unnamed-chunk-2)Keskaegne aristotellik maailm.</p>
+<img src="img/arist.jpg" alt="Keskaegne aristotellik maailm." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-3)Keskaegne aristotellik maailm.</p>
 </div>
 
 
@@ -63,8 +64,8 @@ Aristotelese suur teooria ühendab kogu maailmapildi alates meie mõistes keemia
 Ptolemaiosel ja tema järgijatel oli tegelikult mitu erinevat mudelit. Osad neist ei sisaldanud epitsükleid ja maakera ei asunud tema mudelites universumi keskel, vaid oli sellest punktist eemale nihutatud --- nii et päike ei teinud ringe ümber maakera vaid ümber tühja punkti. Kuna leidus epitsüklitega mudel ja ilma epitsükliteta mudel, mis andsid identseid ennustusi, on selge, et Aristotelese teooria ja fenomenide päästmise mudelid on põhimõtteliselt erinevad asjad. Samal ajal, kui Aritoteles **seletas** maailma põhiolemust põhjuslike seoste jadana (mitte matemaatiliselt), **kirjeldas/ennustas** Ptolemaios sellesama maailma käitumist matemaatiliste (mitte põhjuslike) struktuuride abil.
 
 <div class="figure" style="text-align: center">
-<img src="img/pt2.jpg" alt="Ilma epitsükliteta ptolemailine mudel."  />
-<p class="caption">(\#fig:unnamed-chunk-3)Ilma epitsükliteta ptolemailine mudel.</p>
+<img src="img/pt2.jpg" alt="Ilma epitsükliteta ptolemailine mudel." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-4)Ilma epitsükliteta ptolemailine mudel.</p>
 </div>
 
 
@@ -73,8 +74,8 @@ Nii tekkis olukord, kus maailma mõistmiseks kasutati Aristotelese ühendteooria
 See toob meid Kopernikuse (1473 – 1543) juurde, kes teadusajaloolaste arvates vallandas 17. sajandi teadusliku revolutsiooni, avaldades raamatu, kus ta asetab päikese universumi keskele ja paneb maa selle ümber ringtrajektooril tiirlema. Kas Kopernikus tõrjus sellega kõrvale Aristotelese, Ptolemaiose või mõlemad? Tubdub, et Kopernikus soovis kolmandat, suutis esimest, ning et tolleaegsete lugejate arvates üritas ta teha teist --- ehk välja pakkuda alternatiivi ptolemailistele mudelitele, mis selleks ajaks olid muutunud väga keerukaks (aga ka samavõrra ennustustäpseks). Kuna Kopernikuse raamat läks trükki ajal, mil selle autor oli juba oma surivoodil, kirjutas sellele eessõna üks tema vaimulikust sõber, kes püüdis oodatavat kiriklikku pahameelt leevendada vihjates, et päikese keskele viimine on vaid mudeldamise trikk, millest ei tasu järeldada, et maakera ka tegelikult ümber päikese tiirleb (piibel räägib, kuidas jumal peatas taevavõlvil päikese, mitte maa). Ja kuna eessõna oli anonüümne, eeldasid lugejad muidugi, et selle kirjutas autor. Lisaks, kuigi Kopernikus tõstis päikese keskele, jäi ta planeetide ringikujuliste trajektooride juurde, mis tähendas, et selleks, et tema teooria fenomenide päästmisel hätta ei jääks, oli ta sunnitud maad ja planeete liigutama ümber päikese mõõda epitsükleid. Kokkuvõttes oli Kopernikuse mudel pea-aegu sama keeruline kui Ptolemaiose standardmudel ja selle abil tehtud ennustused planeetide liikumise kohta olid väiksema täpsusega. Seega, ennustava mudelina ei olnud tal suuri eeliseid ptolemailike mudelite ees.
 
 <div class="figure" style="text-align: center">
-<img src="img/kop.jpg" alt="Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased."  />
-<p class="caption">(\#fig:unnamed-chunk-4)Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.</p>
+<img src="img/kop.jpg" alt="Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased." width="70%" />
+<p class="caption">(\#fig:unnamed-chunk-5)Ptolemaiose ja Kopernikuse mudelid on üllatavalt sarnased.</p>
 </div>
 
 
@@ -103,7 +104,7 @@ plot(y ~ x,
      ylab = "heigth in cm")
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-5-1.png" width="288" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Mudeli keeles tähistame me seda, mida me ennustame (antud juhul pikkus) Y-ga ja seda, mille väärtuse põhjal me ennustame (antud juhul kaal) X-ga. Seega sirge mudeli matemaatiline formalism on Y = X. 
@@ -129,7 +130,7 @@ plot(y ~ x,
 abline(c(0, 1), lty = 2)
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-6-1.png" width="288" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -155,7 +156,7 @@ plot(y~x,
 abline(c(0,1), lty=2)
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-7-1.png" width="288" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;" />
 
 Nüüd muutub sirge tõusunurk, ehk kui palju me ootame *y*-t muutumas, kui *x* muutub näiteks ühe ühiku võrra. Kui b = 3, siis *x*-i tõustes ühe ühiku võrra suureneb *y* kolme ühiku võrra. Proovi järgi, mis juhtub, kui b = -3.
 
@@ -185,7 +186,7 @@ plot(y ~ x,
      ylim = c(50, 200))
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-8-1.png" width="288" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" />
 
 See mudel ennustab, et 0 kaalu juures on pikku 102 cm, mis on rumal, aga mudelite puhul tavaline, olukord. Me tuunime mudelit andmete peal, mis ei sisalda 0-kaalu. Meie valimiandmed ei peegelda täpselt inimpopulatsiooni. Sirge mudel ei peegelda täpselt pikkuse-kaalu suhteid vahemikus, kus meil on reaalseid kaaluandmeid; ja ta teeb seda veelgi vähem seal, kus meil mõõdetud kaalusid ei ole. Seega pole mõtet imestada, miks mudeli intercept meie üle irvitab.  
 
@@ -201,7 +202,7 @@ plot(iris$Sepal.Length ~ iris$Petal.Length, col = iris$Species)
 abline(m1)
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" />
 
 Mudeli fittimine tähendab siin lihtsalt, et sirge on 2D ruumi asetatud nii, et see oleks võimalikult lähedal kõikidele punktidele.
 
@@ -211,11 +212,8 @@ Fititud koefitsientide väärtused saame nii
 
 ```r
 coef(m1) 
-```
-
-```
-##  (Intercept) Petal.Length 
-##    4.3066034    0.4089223
+#>  (Intercept) Petal.Length 
+#>        4.307        0.409
 ```
 
 Siin a = (Intercept) ehk 4.31 ja b = Petal.Length ehk 0.41.
@@ -240,7 +238,7 @@ Sepal_length <-  a + b*Petal_length
 plot(Sepal_length~Petal_length, type="b")
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" />
 
 Siin ennustasime 10 y väärtust 10-l x-i väärtusel.
 
@@ -314,8 +312,8 @@ dfr %>%
   theme(axis.title = element_blank())
 ```
 
-<div class="figure">
-<img src="09_mudelid_files/figure-html/polymods-1.png" alt="(ref:polymods)" width="576" />
+<div class="figure" style="text-align: center">
+<img src="09_mudelid_files/figure-html/polymods-1.png" alt="(ref:polymods)" width="70%" />
 <p class="caption">(\#fig:polymods)(ref:polymods)</p>
 </div>
 
@@ -324,15 +322,12 @@ Väikseim AIC tähitab parimat fitti väikseima parameetrite arvu juures (kompro
 
 ```r
 AIC(mod_e1, mod_e2, mod_e3, mod_e4, mod_e5)
-```
-
-```
-##        df      AIC
-## mod_e1  3 27.77993
-## mod_e2  4 29.76669
-## mod_e3  5 26.21330
-## mod_e4  6 25.11245
-## mod_e5  7     -Inf
+#>        df  AIC
+#> mod_e1  3 27.8
+#> mod_e2  4 29.8
+#> mod_e3  5 26.2
+#> mod_e4  6 25.1
+#> mod_e5  7 -Inf
 ```
 
 AIC näitab, et parim mudel on mod_e4. Aga kas see on ka kõige kasulikum mudel? Mis siis, kui 3-s andmepunkt on andmesisestaja näpuviga?
@@ -371,7 +366,7 @@ my.lm <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris1)
 s3d$plane3d(my.lm, lty.box = "solid")
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" />
 
 Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile. 
 
@@ -380,14 +375,11 @@ Seda mudelit saab kaeda 2D ruumis, kui kollapseerida kolmas mõõde konstandile.
 m1 <- lm(Sepal.Width ~ Sepal.Length + Petal.Length, data = iris)
 plot(iris$Sepal.Width ~ iris$Sepal.Length, ylim = c(2, 8), col = iris$Species)
 abline(m1)
+#> Warning in abline(m1): only using the first two of 3
+#> regression coefficients
 ```
 
-```
-## Warning in abline(m1): only using the first two of 3 regression
-## coefficients
-```
-
-<img src="09_mudelid_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" />
 
 Enam ei läbi sirge punkte, nagu ta seda 3D ruumis tegi.
 
@@ -399,7 +391,7 @@ plot(iris$Sepal.Width ~ iris$Sepal.Length, ylim = c(2, 8), col = iris$Species)
 abline(m)
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Nõnda võrdleme kahe mudeli koefitsiente
@@ -407,20 +399,11 @@ Nõnda võrdleme kahe mudeli koefitsiente
 
 ```r
 coef(m)
-```
-
-```
-##  (Intercept) Sepal.Length 
-##    3.4189468   -0.0618848
-```
-
-```r
+#>  (Intercept) Sepal.Length 
+#>       3.4189      -0.0619
 coef(m1)
-```
-
-```
-##  (Intercept) Sepal.Length Petal.Length 
-##    1.0380691    0.5611860   -0.3352667
+#>  (Intercept) Sepal.Length Petal.Length 
+#>        1.038        0.561       -0.335
 ```
 
 Nagu näha, mudeli m b~1~ koefitsient erineb oluliselt mudeli m1 vastavast koefitsiendist.
@@ -429,12 +412,9 @@ Kumb mudel on siis parem? AIC-i järgi on m1 kõvasti parem, kui m.
 
 ```r
 AIC(m, m1)
-```
-
-```
-##    df       AIC
-## m   3 179.46442
-## m1  4  92.11691
+#>    df   AIC
+#> m   3 179.5
+#> m1  4  92.1
 ```
 
 **Ennustused sõltumatute prediktoritega mudelist**
@@ -458,7 +438,7 @@ plot(Sepal_width ~ Sepal_length,
 abline(c(coef(m)[1], coef(m)[2]), lty = 2) # prediction from the single predictor model
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-18-1.png" width="288" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 Nüüd joonistame 3D pildi olukorrast, kus nii *x~1~* kui *x~2~* omandavad rea väärtusi. Mudeli ennustus on ikkagi sirge kujul -- mis sest, et 3D ruumis.
@@ -486,7 +466,7 @@ scatterplot3d(df$Sepal_length,
               type = "l", lwd = 2)
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -508,13 +488,10 @@ m2 <- lm(Sepal.Width~Sepal.Length +
            Petal.Length + 
            Sepal.Length*Petal.Length, data = iris)
 AIC(m, m1, m2)
-```
-
-```
-##    df       AIC
-## m   3 179.46442
-## m1  4  92.11691
-## m2  5  93.42623
+#>    df   AIC
+#> m   3 179.5
+#> m1  4  92.1
+#> m2  5  93.4
 ```
 
 
@@ -540,14 +517,11 @@ Sepal_width <-   a + b1 * Sepal_length +
 
 plot(Sepal_width ~ Sepal_length, type = "l", ylim = c(2, 6))
 abline(m1, lty = 2)
+#> Warning in abline(m1, lty = 2): only using the first
+#> two of 3 regression coefficients
 ```
 
-```
-## Warning in abline(m1, lty = 2): only using the first two of 3 regression
-## coefficients
-```
-
-<img src="09_mudelid_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" />
 
 Tulemuseks on sirge, mis on paraleelne ilma interaktsioonita mudeli ennustusele (katkendjoon)
 
@@ -584,6 +558,6 @@ scatterplot3d(df$Sepal_length,
               type = "l", lwd = 2)
 ```
 
-<img src="09_mudelid_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="09_mudelid_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" />
 
 Vau! See on alles ennustus!

@@ -252,88 +252,71 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <p>Kuigi “ggplot2” ja tema sateliit-raamatukogud on meie põhilised huviobjekid, alustame siiski baasgraafikast. Ehki me piirdume vaid väga lihtsate näidetega tasub teada, et baasgraafikas saab teha ka komplekseid visualiseeringuid: <a href="http://shinyapps.org/apps/RGraphCompendium/index.php" class="uri">http://shinyapps.org/apps/RGraphCompendium/index.php</a></p>
 <p>Laadime peatükis edaspidi vajalikud libraryd:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
-<pre><code>## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
-## ✔ tibble  1.4.1     ✔ dplyr   0.7.4
-## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
-## ✔ readr   1.1.1     ✔ forcats 0.2.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggthemes)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(ggthemes)
 <span class="kw">library</span>(ggrepel)
-<span class="kw">library</span>(ggjoy)</code></pre></div>
-<pre><code>## Loading required package: ggridges</code></pre>
-<pre><code>## The ggjoy package has been deprecated. Please switch over to the
-## ggridges package, which provides the same functionality. Porting
-## guidelines can be found here:
-## https://github.com/clauswilke/ggjoy/blob/master/README.md</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(wesanderson)</code></pre></div>
+<span class="kw">library</span>(ggjoy)
+<span class="kw">library</span>(wesanderson)</code></pre></div>
 <div id="baasgraafika" class="section level2">
 <h2><span class="header-section-number">7.1</span> Baasgraafika</h2>
 <p>Kõigepealt laadime tabeli, mida me visuaalselt analüüsima hakkame:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(iris)
-iris</code></pre></div>
-<pre><code>## # A tibble: 150 x 5
-##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fctr&gt; 
-##  1         5.10        3.50         1.40       0.200 setosa 
-##  2         4.90        3.00         1.40       0.200 setosa 
-##  3         4.70        3.20         1.30       0.200 setosa 
-##  4         4.60        3.10         1.50       0.200 setosa 
-##  5         5.00        3.60         1.40       0.200 setosa 
-##  6         5.40        3.90         1.70       0.400 setosa 
-##  7         4.60        3.40         1.40       0.300 setosa 
-##  8         5.00        3.40         1.50       0.200 setosa 
-##  9         4.40        2.90         1.40       0.200 setosa 
-## 10         4.90        3.10         1.50       0.100 setosa 
-## # ... with 140 more rows</code></pre>
+iris
+<span class="co">#&gt; # A tibble: 150 x 5</span>
+<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.W… Spec…</span>
+<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;</span>
+<span class="co">#&gt; 1         5.10        3.50         1.40    0.200 seto…</span>
+<span class="co">#&gt; 2         4.90        3.00         1.40    0.200 seto…</span>
+<span class="co">#&gt; 3         4.70        3.20         1.30    0.200 seto…</span>
+<span class="co">#&gt; 4         4.60        3.10         1.50    0.200 seto…</span>
+<span class="co">#&gt; 5         5.00        3.60         1.40    0.200 seto…</span>
+<span class="co">#&gt; 6         5.40        3.90         1.70    0.400 seto…</span>
+<span class="co">#&gt; # ... with 144 more rows</span></code></pre></div>
 <p>See sisaldab mõõtmistulemusi sentimeetrites kolme iirise perekonna liigi kohta. Esimest korda avaldati need andmed 1936. aastal R.A. Fisheri poolt.</p>
 <p>Baasgraafika põhiverb on <code>plot()</code>. See püüab teie poolt ette antud andmete pealt ära arvata, millist graafikut te soovite. <code>plot()</code> põhiargumendid on x ja y, mis määravad selle, mis väärtused asetatakse x-teljele ja mis läheb y-teljele. Esimene argument on vaikimisi x ja teine y.</p>
 <p>Kui te annate ette faktorandmed, on vastuseks tulpdiagramm, kus tulbad loevad üles selle faktori kõigi tasemete esinemiste arvu. Antud juhul on meil igast liigist mõõdetud 50 isendit.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Species)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Kui te annate ette ühe pideva muutuja:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Nüüd on tulemuseks graafik, kus on näha mõõtmisete rea (ehk tabeli) iga järgmise liikme (tabeli rea) väärtus. Siin on meil kokku 150 mõõtmist muutujale <code>Sepal.Length</code>.</p>
 <p>Alternatiiv sellele vaatele on <code>stripchart()</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stripchart</span>(iris<span class="op">$</span>Sepal.Length)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Enam lihtsamaks üks joonis ei lähe!</p>
 <p>Mis juhtub, kui me x-teljele paneme faktortunnuse ja y-teljele pideva tunnuse?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Species, iris<span class="op">$</span>Sepal.Length)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Vastuseks on boxplot. Sama graafiku saame ka nii:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(iris<span class="op">$</span>Sepal.Length <span class="op">~</span><span class="st"> </span>iris<span class="op">$</span>Species).</code></pre></div>
 <p>Siin on tegu R-i mudeli notatsiooniga: y-telje muutuja, tilde, x-telje muutuja. Tilde näitab, et y sõltub x-st stohhastiliselt, mitte deterministlikult. Deterministliku seost tähistatakse võrdusmärgiga (=).</p>
 <p>Aga vastupidi?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Species)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Pole paha, see on üsna informatiivne scatterplot.</p>
 <p>Järgmiseks kahe pideva muutuja scatterplot, kus me veel lisaks värvime punktid liikide järgi.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width, <span class="dt">col =</span> iris<span class="op">$</span>Species)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Ja lõpuks tõmbame läbi punktide punase regressioonijoone:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)
 model &lt;-<span class="st"> </span><span class="kw">lm</span>(iris<span class="op">$</span>Sepal.Width <span class="op">~</span><span class="st"> </span>iris<span class="op">$</span>Sepal.Length)
 <span class="kw">abline</span>(model, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>“lwd” parameeter reguleerib joone laiust. <code>lm()</code> on funktsioon, mis fitib sirge vähimruutude meetodil.</p>
 <p>Mis juhtub, kui me anname <code>plot()</code> funktsioonile sisse kogu irise tibble?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris, <span class="dt">col =</span> iris<span class="op">$</span>Species)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Juhhei, tulemus on paariviisiline graafik kõigist muutujate kombinatsioonidest.</p>
 <p>Ainus mitte-plot verb, mida baasgraafikas vajame, on <code>hist()</code>, mis joonistab histogrammi.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(iris<span class="op">$</span>Sepal.Length)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Histogrammi tegemiseks jagatakse andmepunktid nende väärtuste järgi bin-idesse ja plotitakse igasse bin-i sattunud andmepunktide arv. Näiteks esimeses bin-is on “Sepal.Length” muutuja väärtused, mis jäävad 4 ja 4.5 cm vahele ja selliseid väärtusi on kokku viis. Histogrammi puhul on oluline teada, et selle kuju sõltub bin-ide laiusest. Bini laiust saab muuta kahel viisil, andes ette bin-ide piirid või arvu:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(iris<span class="op">$</span>Sepal.Length, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">9</span>, <span class="dt">by =</span> <span class="fl">0.25</span>))</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>või</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(iris<span class="op">$</span>Sepal.Length, <span class="dt">breaks =</span> <span class="dv">15</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>See viimane on kiire viis bin-i laiust reguleerida, aga arvestage, et sõltuvalt andmetest ei pruugi “breaks = 15” tähendada, et teie histogrammil on 15 bin-i.</p>
 <p>Ja lõpuks veel üks histogramm, et demonstreerida baas R-i võimalusi (samad argumendid töötavad ka <code>plot()</code> funktsioonis):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(iris<span class="op">$</span>Sepal.Length,
@@ -348,7 +331,7 @@ model &lt;-<span class="st"> </span><span class="kw">lm</span>(iris<span class="
 
 <span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">median</span>(iris<span class="op">$</span>Sepal.Length), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) 
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="fl">0.3</span>, <span class="dt">col =</span> <span class="st">&quot;cyan&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="ggplot2" class="section level2">
 <h2><span class="header-section-number">7.2</span> ggplot2</h2>
@@ -369,16 +352,16 @@ model &lt;-<span class="st"> </span><span class="kw">lm</span>(iris<span class="
 <p>Lisaks määrad sa <code>aes()</code>-is, kas ja kuidas sa tahad grupeerida pidevaid muutujaid faktori tasemete järgi.</p>
 <p>Kõigepealt suuname oma andmed <code>ggplot()</code> funktsiooni:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Saime tühja ploti. Erinevalt baasgraafikast, ggplot-i puhul ainult andmetest ei piisa, et graafik valmis joonistataks. Vaja on lisada kiht-kihilt instruktsioonid, kuidas andmed graafikule paigutada ja missugust graafikutüüpi visualiseerimiseks kasutada.</p>
 <p>Nüüd ütleme, et x-teljele pannakse “Sepal.Length” ja y-teljele “Sepal.Width” andmed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width))</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Aga graafik on ikka tühi sest me pole ggplotile öelnud, millist visualiseeringut me tahame. Teeme seda nüüd.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Me lisasime kaks kihti: esimene kiht <code>geom_point()</code> visualiseerib andmepunktid ja teine <code>geom_smooth(method = &quot;lm&quot;)</code> joonistab regressioonisirge koos usaldusintervalliga (standardviga).</p>
 <blockquote>
 <p>Plussmärk peab ggplot-i koodireas olema vana rea lõpus, mitte uue rea (kihi) alguses</p>
@@ -392,13 +375,13 @@ model &lt;-<span class="st"> </span><span class="kw">lm</span>(iris<span class="
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Me võime <code>geom_smooth()</code>-i anda erineva andmeseti kui <code>ggplot()</code> põhifunktsiooni. Nii joonistame me regressioonisirge ainult nendele andmetele. Proovi ka <code>theme_bw()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> <span class="kw">filter</span>(iris, Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span>), <span class="dt">method =</span> lm) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Alljärgnevalt näiteks moodus kuidas öelda, et me soovime regressioonijoont näidata ainult iiriseliikide virginica või versicolor andmetele.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## First we filter only data that we want to use for regressionline
 smooth_data &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;virginica&quot;</span>, <span class="st">&quot;versicolor&quot;</span>))
@@ -406,37 +389,33 @@ smooth_data &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, S
 <span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> smooth_data, <span class="dt">method =</span> lm)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Ja lõpuks joonistame kolm regressioonisirget – üks igale liigile.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width, <span class="dt">color =</span> Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><strong>Nüüd üks näide teiste andmetega.</strong> Kaalutud lineaarne mudel on viis anda andmepunktidele, mida me tähtsamaks peame (või mis on täpsemalt mõõdetud) suurem kaal. Kõigepealt, siin on USA demograafilised andmed <code>midwest</code> “ggplot2” library-st erinevate kesk-lääne omavalitsuste kohta (437 omavalitsust).</p>
 <p>Me valime <code>midwest</code> andmetest välja kolm muutujat: “percwhite”, “percbelowpoverty”, “poptotal”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">midwest_subset &lt;-<span class="st"> </span>midwest <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(percwhite, percbelowpoverty, poptotal)
-midwest_subset</code></pre></div>
-<pre><code>## # A tibble: 437 x 3
-##    percwhite percbelowpoverty poptotal
-##        &lt;dbl&gt;            &lt;dbl&gt;    &lt;int&gt;
-##  1      96.7            13.2     66090
-##  2      66.4            32.2     10626
-##  3      96.6            12.1     14991
-##  4      95.3             7.21    30806
-##  5      90.2            13.5      5836
-##  6      98.5            10.4     35688
-##  7      99.5            15.1      5322
-##  8      98.3            11.7     16805
-##  9      99.6            13.9     13437
-## 10      84.7            15.6    173025
-## # ... with 427 more rows</code></pre>
+midwest_subset
+<span class="co">#&gt; # A tibble: 437 x 3</span>
+<span class="co">#&gt;   percwhite percbelowpoverty poptotal</span>
+<span class="co">#&gt;       &lt;dbl&gt;            &lt;dbl&gt;    &lt;int&gt;</span>
+<span class="co">#&gt; 1      96.7            13.2     66090</span>
+<span class="co">#&gt; 2      66.4            32.2     10626</span>
+<span class="co">#&gt; 3      96.6            12.1     14991</span>
+<span class="co">#&gt; 4      95.3             7.21    30806</span>
+<span class="co">#&gt; 5      90.2            13.5      5836</span>
+<span class="co">#&gt; 6      98.5            10.4     35688</span>
+<span class="co">#&gt; # ... with 431 more rows</span></code></pre></div>
 <p>Me tahame teada, kuidas valge rassi osakaal ennustab vaesust, aga me arvame, et suurematel omavalitsustel peaks selles ennustuses olema suurem kaal kui väiksematel. Selleks lisame <code>geom_smooth()</code>-i lisaargumendi “weight”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(midwest_subset, <span class="kw">aes</span>(percwhite, percbelowpoverty)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">size =</span> poptotal)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">weight =</span> poptotal), <span class="dt">method =</span> lm, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Percent white&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percent below poverty&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Punane on kaalumata regressioonisirge ja sinine on populatsioonisuuruse suhtes kaalutud regressioonisirge. Kaalumine mitte ainult ei muutnud sirge asukohta vaid vähendas ka ebakindlust sirge asukoha kohta.</p>
 <p>Regeressioonijoone saab ggplotil määrata ka x-telje lõikumispunkti ja tõusu abil. See on kasulik mudelite visualiseerimisel mudeli koefitsientide põhjal. Kasuta <code>geom_abline()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Create plot
@@ -451,32 +430,32 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline
                  <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, 
                  <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, 
                  <span class="dt">size =</span> <span class="fl">1.5</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-26-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="lisame-plotile-sirgjooni" class="section level3">
 <h3><span class="header-section-number">7.3.1</span> Lisame plotile sirgjooni</h3>
 <p>Horisontaalsed sirged saab graafikule lisada <code>geom_hline()</code> abil. Pane tähele, et eelnevalt me andsime oma ggplot-i põhikihtidele nime “p” ja seega panime selle alusploti oma töökeskkonda, et saaksime seda korduvkasutada.</p>
 <p>Lisame graafikule horisontaaljoone y = 20:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add horizontal line at y = 2O</span>
 p <span class="op">+</span><span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">20</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Vertikaalseid sirgeid saab lisada <code>geom_vline()</code> abil, näiteks vertikaalne sirge asukohas x = 3:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a vertical line at x = 3</span>
 p <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="segmendid-ja-nooled" class="section level3">
 <h3><span class="header-section-number">7.3.2</span> Segmendid ja nooled</h3>
 <p>“ggplot2” funktsioon <code>geom_segment()</code> lisab joonejupi, mille algus ja lõpp on ette antud.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a vertical line segment</span>
-p <span class="op">+</span><span class="st"> </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">4</span>, <span class="dt">y =</span> <span class="dv">15</span>, <span class="dt">xend =</span> <span class="dv">4</span>, <span class="dt">yend =</span> <span class="dv">27</span>))</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add horizontal line segment</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">4</span>, <span class="dt">y =</span> <span class="dv">15</span>, <span class="dt">xend =</span> <span class="dv">4</span>, <span class="dt">yend =</span> <span class="dv">27</span>))
+
+<span class="co"># Add horizontal line segment</span>
 p <span class="op">+</span><span class="st"> </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">15</span>, <span class="dt">xend =</span> <span class="dv">3</span>, <span class="dt">yend =</span> <span class="dv">15</span>))</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-29-2.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Saab joonistada ka <strong>nooli</strong>, kasutades arumenti “arrow” funktsioonis <code>geom_segment()</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">5</span>, <span class="dt">y =</span> <span class="dv">30</span>, <span class="dt">xend =</span> <span class="fl">3.5</span>, <span class="dt">yend =</span> <span class="dv">25</span>),
                  <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.5</span>, <span class="st">&quot;cm&quot;</span>)))</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="joongraafikud" class="section level3">
 <h3><span class="header-section-number">7.3.3</span> Joongraafikud</h3>
@@ -489,14 +468,14 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">geom_segmen
 <span class="kw">ggplot</span>(<span class="dt">data =</span> meals, <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> bill, <span class="dt">group =</span> sex)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Järgneval graafikul muudame joonetüüpi automaatselt muutuja sex taseme järgi:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Change line types + colors</span>
 <span class="kw">ggplot</span>(meals, <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> bill, <span class="dt">group =</span> sex)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">linetype =</span> sex, <span class="dt">color =</span> sex)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> sex)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Muuda jooni käsitsi:</p>
 <ul>
 <li><p><code>scale_linetype_manual()</code>: joone tüüp</p></li>
@@ -510,51 +489,56 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">geom_segmen
 <span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#999999&#39;</span>, <span class="st">&#39;#E69F00&#39;</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_size_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">1.5</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-33-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="punktide-tahistamise-trikid" class="section level3">
 <h3><span class="header-section-number">7.3.4</span> Punktide tähistamise trikid</h3>
 <p><code>aes()</code> töötab nii <code>ggplot()</code> kui <code>geom_</code> funktsioonides.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width, <span class="dt">size =</span> Petal.Length, <span class="dt">color =</span> Species))</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-34-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Kui me kasutame color argumenti <code>aes()</code>-st väljaspool, siis värvime kõik punktid sama värvi.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width, <span class="dt">size =</span> Petal.Length), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-35-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Kasulik trikk on kasutada mitut andmesetti sama ploti tegemiseks. Uus andmestik – “mpg” – on autode kütusekulu kohta.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mpg, <span class="dv">2</span>)</code></pre></div>
-<pre><code>## # A tibble: 2 x 11
-##   manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
-##   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
-## 1 audi         a4     1.80  1999     4 auto… f        18    29 p     comp…
-## 2 audi         a4     1.80  1999     4 manu… f        21    29 p     comp…</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best_in_class &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mpg, <span class="dv">2</span>)
+<span class="co">#&gt; # A tibble: 2 x 11</span>
+<span class="co">#&gt;   manufac… model displ  year   cyl trans   drv     cty</span>
+<span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1 audi     a4     1.80  1999     4 auto(l… f        18</span>
+<span class="co">#&gt; 2 audi     a4     1.80  1999     4 manual… f        21</span>
+<span class="co">#&gt; # ... with 3 more variables: hwy &lt;int&gt;, fl &lt;chr&gt;,</span>
+<span class="co">#&gt; #   class &lt;chr&gt;</span>
+
+best_in_class &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">top_n</span>(<span class="dv">1</span>, hwy)
 
-<span class="kw">head</span>(best_in_class)</code></pre></div>
-<pre><code>## # A tibble: 6 x 11
-## # Groups:   class [2]
-##   manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
-##   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
-## 1 chevrolet    corv…  5.70  1999     8 manu… r        16    26 p     2sea…
-## 2 chevrolet    corv…  6.20  2008     8 manu… r        16    26 p     2sea…
-## 3 dodge        cara…  2.40  1999     4 auto… f        18    24 r     mini…
-## 4 dodge        cara…  3.00  1999     6 auto… f        17    24 r     mini…
-## 5 dodge        cara…  3.30  2008     6 auto… f        17    24 r     mini…
-## 6 dodge        cara…  3.30  2008     6 auto… f        17    24 r     mini…</code></pre>
+<span class="kw">head</span>(best_in_class)
+<span class="co">#&gt; # A tibble: 6 x 11</span>
+<span class="co">#&gt; # Groups:   class [2]</span>
+<span class="co">#&gt;   manufa… model   displ  year   cyl trans  drv     cty</span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1 chevro… corvet…  5.70  1999     8 manua… r        16</span>
+<span class="co">#&gt; 2 chevro… corvet…  6.20  2008     8 manua… r        16</span>
+<span class="co">#&gt; 3 dodge   carava…  2.40  1999     4 auto(… f        18</span>
+<span class="co">#&gt; 4 dodge   carava…  3.00  1999     6 auto(… f        17</span>
+<span class="co">#&gt; 5 dodge   carava…  3.30  2008     6 auto(… f        17</span>
+<span class="co">#&gt; 6 dodge   carava…  3.30  2008     6 auto(… f        17</span>
+<span class="co">#&gt; # ... with 3 more variables: hwy &lt;int&gt;, fl &lt;chr&gt;,</span>
+<span class="co">#&gt; #   class &lt;chr&gt;</span></code></pre></div>
 <p>Siin läheb kitsam andmeset uude <code>geom_point()</code> kihti ja teeb osad punktid teistsuguseks. Need on oma klassi parimad autod.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">shape =</span> <span class="dv">1</span>, <span class="dt">data =</span> best_in_class) </code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-37-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Lõpuks toome graafikul eraldi välja nende parimate autode mudelite nimed. Selleks kasutame “ggrepel” raamatukogu funktsiooni <code>geom_label_repel()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">shape =</span> <span class="dv">1</span>, <span class="dt">data =</span> best_in_class) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_label_repel</span>(<span class="kw">aes</span>(<span class="dt">label =</span> model), <span class="dt">data =</span> best_in_class, <span class="dt">cex =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-38-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="facet-pisigraafik" class="section level2">
@@ -567,17 +551,17 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">geom_segmen
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#here we separate different classes of cars into different colors</span>
 p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) 
 p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class))</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>class)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>class, <span class="dt">nrow =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Kui me tahame kahe muutuja kõigi kombinatsioonide vastu paneele, siis kasuta <code>facet_grid()</code> funktsiooni.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(drv <span class="op">~</span><span class="st"> </span>cyl)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <ul>
 <li>“drv” – drive - 4(-wheel), f(orward), r(ear).</li>
 <li>“cyl” – cylinders - 4, 5, 6, or 8.</li>
@@ -585,10 +569,10 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point<
 <p>Kasutades punkti <code>.</code> on võimalik asetada kõik alamgraafikud kõrvuti <code>(. ~ var)</code> või üksteise peale <code>(var ~ .)</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>drv)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-43-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(drv <span class="op">~</span><span class="st"> </span>.)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mitu-graafikut-paneelidena-uhel-joonisel" class="section level2">
 <h2><span class="header-section-number">7.5</span> Mitu graafikut paneelidena ühel joonisel</h2>
@@ -597,15 +581,9 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point<
 i1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span> iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()
 i2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span> iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
 <p>Seejäral, kasuta funktsioon <code>gridExtra::grid.arrange()</code> et graafikud kõrvuti panna</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gridExtra)</code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;gridExtra&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     combine</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">grid.arrange</span>(i2, i1, <span class="dt">nrow =</span> <span class="dv">1</span>) <span class="co"># ncol = 2 also works</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gridExtra)
+<span class="kw">grid.arrange</span>(i2, i1, <span class="dt">nrow =</span> <span class="dv">1</span>) <span class="co"># ncol = 2 also works</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-46-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="telgede-ulatus" class="section level3">
 <h3><span class="header-section-number">7.5.1</span> Telgede ulatus</h3>
 <p>Telgede ulatust saab määrata kolmel erineval viisil</p>
@@ -628,14 +606,14 @@ i2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt"
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(cars, <span class="kw">aes</span>(<span class="dt">x =</span> speed, <span class="dt">y =</span> dist)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lineaarsed andmed ja teljed&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-47-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Logaritmi andmed <code>aes()</code>-s.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(cars, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">log2</span>(speed), <span class="dt">y =</span> <span class="kw">log2</span>(dist))) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Andmed ja teljed on logaritmitud&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-48-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Andmed on logaritmitud, aga teljed mitte.</li>
 </ol>
@@ -643,14 +621,14 @@ i2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt"
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">coord_trans</span>(<span class="dt">x =</span> <span class="st">&quot;log2&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;log2&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Andmed on logaritmitud, aga teljed mitte&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-49-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="poorame-graafikut-90-kraadi" class="section level3">
 <h3><span class="header-section-number">7.5.3</span> Pöörame graafikut 90 kraadi</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-50-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="muudame-telgede-markeeringuid" class="section level3">
 <h3><span class="header-section-number">7.5.4</span> Muudame telgede markeeringuid</h3>
@@ -659,17 +637,17 @@ i2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt"
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">15</span>, <span class="dv">40</span>, <span class="dt">by =</span> <span class="dv">5</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;y-telje markeeringud</span><span class="ch">\n</span><span class="st">15 kuni 40, viieste vahedega&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Muudame x-telje markeeringute nurka muutes <code>theme()</code> funktsiooni argumenti “axis.text.x”:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>))</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Eemaldame telgede markeeringud, ka läbi <code>theme()</code> funktsiooni:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_blank</span>())</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="telgede-tekst-ja-pealkirjad" class="section level2">
@@ -683,10 +661,10 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>
      <span class="dt">y =</span> <span class="st">&quot;Width&quot;</span>,
      <span class="dt">color =</span> <span class="st">&quot;Iris sp.&quot;</span>
      )</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-54-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Eemaldame telgede nimed:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.title =</span> <span class="kw">element_blank</span>())</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="graafiku-pealkiri-alapeakiri-ja-allkiri" class="section level3">
 <h3><span class="header-section-number">7.6.2</span> Graafiku pealkiri, alapeakiri ja allkiri</h3>
@@ -697,7 +675,7 @@ p <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>
      <span class="dt">subtitle =</span> <span class="st">&quot;Subtitle&quot;</span>,
      <span class="dt">caption =</span> <span class="st">&quot;Figure caption&quot;</span>
       )</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-56-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><code>ggtitle()</code> annab graafikule pealkirja</p>
 </div>
 <div id="graafiku-legend" class="section level3">
@@ -736,7 +714,7 @@ base <span class="op">+</span><span class="st"> </span><span class="kw">theme</s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> drv)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="varviskaalad-pidevatele-muutujatele" class="section level3">
 <h3><span class="header-section-number">7.7.1</span> Värviskaalad pidevatele muutujatele</h3>
 <p>Pidevatele muutujatele töötab scale_colour_gradient() or scale_fill_gradient(). scale_colour_gradient2() võimaldab eristada näiteks positiivseid ja negatiivseid väärtusi erinevate värviskaaladega.</p>
@@ -754,7 +732,7 @@ p<span class="op">+</span><span class="kw">scale_color_gradientn</span>(<span cl
 <span class="kw">ggplot</span>(faithfuld) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(waiting, eruptions, <span class="dt">fill =</span> density)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_fill_distiller</span>(<span class="dt">palette =</span> <span class="st">&quot;Spectral&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-63-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="varviskaalad-faktormuutujatele" class="section level3">
 <h3><span class="header-section-number">7.7.2</span> Värviskaalad faktormuutujatele</h3>
@@ -792,26 +770,24 @@ sp <span class="op">+</span><span class="st"> </span><span class="kw">scale_colo
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dsamp &lt;-<span class="st"> </span>diamonds[<span class="kw">sample</span>(<span class="kw">nrow</span>(diamonds), <span class="dv">1000</span>), ]
 d &lt;-<span class="st"> </span><span class="kw">ggplot</span>(dsamp, <span class="kw">aes</span>(carat, price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> clarity))
-d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Change scale label</span>
-d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>(<span class="st">&quot;Diamond</span><span class="ch">\n</span><span class="st">clarity&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-66-2.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Select brewer palette to use, see ?scales::brewer_pal for more details</span>
-d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Greens&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-66-3.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-66-4.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># scale_fill_brewer works just the same as</span>
+d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>()
+
+<span class="co"># Change scale label</span>
+d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>(<span class="st">&quot;Diamond</span><span class="ch">\n</span><span class="st">clarity&quot;</span>)
+
+<span class="co"># Select brewer palette to use, see ?scales::brewer_pal for more details</span>
+d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Greens&quot;</span>)
+d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>)
+
+<span class="co"># scale_fill_brewer works just the same as</span>
 <span class="co"># scale_colour_brewer but for fill colours</span>
 p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> price, <span class="dt">fill =</span> cut)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>, <span class="dt">binwidth =</span> <span class="dv">1000</span>)
-p <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-66-5.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the order of colour can be reversed</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>()
+<span class="co"># the order of colour can be reversed</span>
 <span class="co"># the brewer scales look better on a darker background</span>
 p <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="dt">direction =</span> <span class="op">-</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_dark</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-66-6.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-67-1.png" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-67-2.png" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-67-3.png" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-67-4.png" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-67-5.png" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-67-6.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Väga lahedad värviskaalad, mis eriti hästi sobivad diskreetsetele muutujatele, on wesanderson paketis. Enamus skaalasid on küll ainult 3-5 värviga. Sealt saab siiski ekstrapoleerida rohkematele värvidele (?wes_palette; ?wes_palettes).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;wesanderson&quot;)</span>
 <span class="co">#library(wesanderson)</span>
@@ -865,7 +841,7 @@ my_data <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="co"># Use hollow circles</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># Add linear regression line </span>
 <span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">2</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-70-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Now we will prepare the difference data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diff &lt;-<span class="st"> </span>(post <span class="op">-</span><span class="st"> </span>baseline)
 diffp &lt;-<span class="st"> </span>(post <span class="op">-</span><span class="st"> </span>baseline) <span class="op">/</span><span class="st"> </span>baseline <span class="op">*</span><span class="st"> </span><span class="dv">100</span>
@@ -917,27 +893,27 @@ dd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplo
         <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>(),
         <span class="dt">panel.grid.major.y =</span> <span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">&quot;grey60&quot;</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;clarity&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-73-1.png" width="384" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-74-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="tulpdiagrammid-moodavad-counte-ja-proportsioone" class="section level3">
 <h3><span class="header-section-number">7.9.2</span> Tulpdiagrammid mõõdavad counte ja proportsioone</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(diamonds)</code></pre></div>
-<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    53940 obs. of  10 variables:
-##  $ carat  : num  0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...
-##  $ cut    : Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 2 4 2 3 3 3 1 3 ...
-##  $ color  : Ord.factor w/ 7 levels &quot;D&quot;&lt;&quot;E&quot;&lt;&quot;F&quot;&lt;&quot;G&quot;&lt;..: 2 2 2 6 7 7 6 5 2 5 ...
-##  $ clarity: Ord.factor w/ 8 levels &quot;I1&quot;&lt;&quot;SI2&quot;&lt;&quot;SI1&quot;&lt;..: 2 3 5 4 2 6 7 3 4 5 ...
-##  $ depth  : num  61.5 59.8 56.9 62.4 63.3 62.8 62.3 61.9 65.1 59.4 ...
-##  $ table  : num  55 61 65 58 58 57 57 55 61 61 ...
-##  $ price  : int  326 326 327 334 335 336 336 337 337 338 ...
-##  $ x      : num  3.95 3.89 4.05 4.2 4.34 3.94 3.95 4.07 3.87 4 ...
-##  $ y      : num  3.98 3.84 4.07 4.23 4.35 3.96 3.98 4.11 3.78 4.05 ...
-##  $ z      : num  2.43 2.31 2.31 2.63 2.75 2.48 2.47 2.53 2.49 2.39 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(diamonds)
+<span class="co">#&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    53940 obs. of  10 variables:</span>
+<span class="co">#&gt;  $ carat  : num  0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...</span>
+<span class="co">#&gt;  $ cut    : Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 2 4 2 3 3 3 1 3 ...</span>
+<span class="co">#&gt;  $ color  : Ord.factor w/ 7 levels &quot;D&quot;&lt;&quot;E&quot;&lt;&quot;F&quot;&lt;&quot;G&quot;&lt;..: 2 2 2 6 7 7 6 5 2 5 ...</span>
+<span class="co">#&gt;  $ clarity: Ord.factor w/ 8 levels &quot;I1&quot;&lt;&quot;SI2&quot;&lt;&quot;SI1&quot;&lt;..: 2 3 5 4 2 6 7 3 4 5 ...</span>
+<span class="co">#&gt;  $ depth  : num  61.5 59.8 56.9 62.4 63.3 62.8 62.3 61.9 65.1 59.4 ...</span>
+<span class="co">#&gt;  $ table  : num  55 61 65 58 58 57 57 55 61 61 ...</span>
+<span class="co">#&gt;  $ price  : int  326 326 327 334 335 336 336 337 337 338 ...</span>
+<span class="co">#&gt;  $ x      : num  3.95 3.89 4.05 4.2 4.34 3.94 3.95 4.07 3.87 4 ...</span>
+<span class="co">#&gt;  $ y      : num  3.98 3.84 4.07 4.23 4.35 3.96 3.98 4.11 3.78 4.05 ...</span>
+<span class="co">#&gt;  $ z      : num  2.43 2.31 2.31 2.63 2.75 2.48 2.47 2.53 2.49 2.39 ...</span></code></pre></div>
 <p>loeb üles, mitu korda esineb iga cut</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> cut)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-75-1.png" width="384" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-76-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Pane tähele, et y-teljel on arv, mitu korda esineb tabelis iga cut. See arv ei ole tabelis muutuja. geom_bar, geom_hist, geom_dens arvutavad plotile uued y väärtused — nad jagavad andmed binidesse ja loevad üles, mitu andmepunkti sattus igasse bini.</p>
 <p>Kui tahad tulpdiagrammi proportsioonidest, mitu korda eineb tabelis igat cut-i, siis tee nii:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds) <span class="op">+</span><span class="st"> </span>
@@ -946,24 +922,24 @@ dd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplo
 <p>Edasi lisame eelnevale veel ühe muutuja: clarity. Nii saame üles lugeda kõigi cut-i ja clarity kombinatsioonide esinemise arvu või sageduse. Erinvate clarity tasemete esinemiste arv samal cut-i tasemel on siin üksteise otsa kuhjatud, mis tähendab, et tulpade kõrgus ei muutu võrreldes eelnevaga.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity))</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-77-1.png" width="384" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-78-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Kui me tahame, et cut-i ja clarity kombinatsioonid oleks kastidena ükteise sees, pigem kui üksteise otsa kuhjatud, siis kasutame position = “identity” argumenti.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>, <span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>) </code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-78-1.png" width="384" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-79-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>ka see graafik pole väga lihtne lugeda. Parem viime clarity klassid üksteise kõrvale</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-79-1.png" width="384" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-80-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Eelnev on hea viis kuidas võrrelda clarity tasemete esinemis-sagedusi ühe cut-i taseme piires.</p>
 <p>Ja lõpuks, position=“fill” normaliseerib tulbad, mis muudab selle, mis toimub iga cut-i sees, hästi võrreldavaks. See on hea viis, kuidas võrrelda clarity tasemete proportsioone erinevate cut-i tasemete vahel.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-80-1.png" width="384" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-81-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Ja lõpuks, kui te tahate teha midagi, mis on enamasti keskmiselt rumal valik, ehk plottida tulpdiagrammi viisil, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: <code>geom_bar(stat = &quot;identity&quot;)</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a=</span><span class="kw">c</span>(<span class="fl">2.3</span>, <span class="dv">4</span>, <span class="fl">5.2</span>), <span class="dt">b=</span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>))
 <span class="kw">ggplot</span>(df, <span class="kw">aes</span>(b, a)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-81-1.png" width="288" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-82-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="andmepunktid-on-ukshaaval-valja-plotitud" class="section level3">
 <h3><span class="header-section-number">7.9.3</span> Andmepunktid on ükshaaval välja plotitud</h3>
@@ -972,67 +948,58 @@ dd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplo
 ToothGrowth<span class="op">$</span>dose &lt;-<span class="st"> </span><span class="kw">as.factor</span>(ToothGrowth<span class="op">$</span>dose)
 p&lt;-<span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_dotplot</span>(<span class="dt">binaxis=</span><span class="st">&#39;y&#39;</span>, <span class="dt">stackdir=</span><span class="st">&#39;center&#39;</span>)
-p</code></pre></div>
-<pre><code>## `stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Change dotsize and stack ratio, add line or dot for median</span>
+p
+<span class="co"># Change dotsize and stack ratio, add line or dot for median</span>
 <span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_dotplot</span>(<span class="dt">binaxis=</span><span class="st">&#39;y&#39;</span>, <span class="dt">stackdir=</span><span class="st">&#39;center&#39;</span>,
                <span class="dt">stackratio=</span><span class="fl">1.5</span>, <span class="dt">dotsize=</span><span class="fl">0.7</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> median, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">shape =</span> <span class="dv">95</span>, 
                <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">15</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
-<pre><code>## `stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-82-2.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>median, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="dt">shape=</span><span class="dv">18</span>,
-                 <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
-<pre><code>## `stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-82-3.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#add mean and SD, use pointrange</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()
+
+p <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>median, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="dt">shape=</span><span class="dv">18</span>,
+                 <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)
+
+<span class="co">#add mean and SD, use pointrange</span>
 p <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.data=</span>mean_sdl, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult=</span><span class="dv">1</span>), 
-                 <span class="dt">geom=</span><span class="st">&quot;pointrange&quot;</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
-<pre><code>## `stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>## Warning: Computation failed in `stat_summary()`:
-## Hmisc package required for this function</code></pre>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-82-4.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#use errorbars</span>
+                 <span class="dt">geom=</span><span class="st">&quot;pointrange&quot;</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)
+<span class="co">#&gt; Warning: Computation failed in `stat_summary()`:</span>
+<span class="co">#&gt; Hmisc package required for this function</span>
+<span class="co">#use errorbars</span>
 p <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.data=</span>mean_sdl, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult=</span><span class="dv">1</span>), 
         <span class="dt">geom=</span><span class="st">&quot;errorbar&quot;</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">width=</span><span class="fl">0.2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>mean, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="dt">size=</span><span class="dv">3</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
-<pre><code>## `stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>## Warning: Computation failed in `stat_summary()`:
-## Hmisc package required for this function</code></pre>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-82-5.png" width="672" /></p>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>mean, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="dt">size=</span><span class="dv">3</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)
+<span class="co">#&gt; Warning: Computation failed in `stat_summary()`:</span>
+<span class="co">#&gt; Hmisc package required for this function</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-83-1.png" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-83-2.png" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-83-3.png" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-83-4.png" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-83-5.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Sama jitterplotina — nüüd on iga punkt y suhtes õiges kohas, aga joonis ei näe enam liiga puhas välja.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.05</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> median, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">shape =</span> <span class="dv">95</span>, 
                <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">alpha=</span><span class="fl">0.6</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-84-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Change dot plot colors by groups</span>
 p&lt;-<span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len, <span class="dt">fill=</span>dose)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_dotplot</span>(<span class="dt">binaxis=</span><span class="st">&#39;y&#39;</span>, <span class="dt">stackdir=</span><span class="st">&#39;center&#39;</span>)
 p</code></pre></div>
-<pre><code>## `stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-85-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>It is also possible to change manually dot plot colors using the functions :</p>
 <p>scale_fill_manual() : to use custom colors</p>
 <p>scale_fill_brewer() : to use color palettes from RColorBrewer package</p>
 <p>scale_fill_grey() : to use grey color palettes</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Choose which items to display :</span>
-p <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_discrete</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="st">&quot;0.5&quot;</span>, <span class="st">&quot;2&quot;</span>))</code></pre></div>
-<pre><code>## `stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>## Warning: Removed 20 rows containing non-finite values (stat_bindot).</code></pre>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+p <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_discrete</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="st">&quot;0.5&quot;</span>, <span class="st">&quot;2&quot;</span>))
+<span class="co">#&gt; Warning: Removed 20 rows containing non-finite values</span>
+<span class="co">#&gt; (stat_bindot).</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-86-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Dotplot kui histogram:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_dotplot</span>()</code></pre></div>
-<pre><code>## `stat_bindot()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-87-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Histogram:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">10</span>, <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;navyblue&quot;</span>) </code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-88-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggthemes)
 d &lt;-<span class="st"> </span>iris        <span class="co"># Full data set</span>
 d_bg &lt;-<span class="st"> </span>d[, <span class="op">-</span><span class="dv">5</span>]  <span class="co"># Background Data - full without the 5th column (Species)</span>
@@ -1043,35 +1010,34 @@ d_bg &lt;-<span class="st"> </span>d[, <span class="op">-</span><span class="dv"
 <span class="st">  </span><span class="kw">facet_grid</span>(Species<span class="op">~</span>.) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st">  </span><span class="co"># to remove the legend</span>
 <span class="st">  </span><span class="kw">theme_tufte</span>()          <span class="co"># for clean look overall</span></code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-89-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>density plot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris<span class="op">%&gt;%</span><span class="kw">ggplot</span>()<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(Sepal.Width, <span class="dt">fill=</span>Species, <span class="dt">color=</span>Species, <span class="dt">alpha=</span><span class="fl">0.5</span>))<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-90-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>joyplot võimaldab kõrvuti panna isegi sadu density plotte</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggjoy)
 <span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Species, <span class="dt">fill=</span>Species)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_joy</span>(<span class="dt">scale=</span><span class="dv">4</span>, <span class="dt">rel_min_height=</span><span class="fl">0.01</span>, <span class="dt">alpha=</span><span class="fl">0.9</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_joy</span>(<span class="dt">font_size =</span> <span class="dv">13</span>, <span class="dt">grid=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre></div>
-<pre><code>## Picking joint bandwidth of 0.181</code></pre>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-91-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Joyplot, kui meil on väga palju kõrvuti tihedusjaotusi võrrelda</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sch &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/schools.csv&quot;</span>)
 sch<span class="op">$</span>school &lt;-<span class="st"> </span><span class="kw">as.factor</span>(sch<span class="op">$</span>school)
 <span class="kw">ggplot</span>(sch, <span class="kw">aes</span>(score1, <span class="dt">y=</span><span class="kw">reorder</span>(school, score1))) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_joy</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_tufte</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-92-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Boxplot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Species, Sepal.Width, <span class="dt">fill =</span> Species)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-93-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>violin plot plus jitterplot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Species, Sepal.Width)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_violin</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">alpha =</span> <span class="fl">0.4</span>, <span class="dt">size =</span> <span class="fl">0.5</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-94-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="kahe-muutuja-koos-varieeruvus" class="section level3">
 <h3><span class="header-section-number">7.9.4</span> Kahe muutuja koos-varieeruvus</h3>
@@ -1082,7 +1048,7 @@ sch<span class="op">$</span>school &lt;-<span class="st"> </span><span class="kw
 <span class="st">  </span><span class="kw">ylim</span>(<span class="dv">40</span>, <span class="dv">110</span>)
 <span class="co">#m + stat_density_2d(aes(fill = ..level..), geom = &quot;polygon&quot;)</span>
 m <span class="op">+</span><span class="st"> </span><span class="kw">geom_density_2d</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-95-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Kui punkte on liiga palju, et välja trükkida, kasuta geom = “polygon” varianti.</p>
 
 </div>

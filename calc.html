@@ -246,15 +246,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="calc" class="section level1">
 <h1><span class="header-section-number">3</span> R on kalkulaator</h1>
 <p>Liidame <code>2 + 2</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
-<pre><code>## [1] 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>
+<span class="co">#&gt; [1] 4</span></code></pre></div>
 <p>Nüüd trükiti see vastus konsooli kujul <code>[1] 4</code>. See tähendab, et <code>2 + 2 = 4</code>.</p>
 <p>Kontrollime seda:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## liidame 2 ja 2 ning vaatame kas vastus võrdub 4
 answer &lt;-<span class="st"> </span>(<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>) <span class="op">==</span><span class="st"> </span><span class="dv">4</span>
 ## Trükime vastuse välja
-answer</code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
+answer
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>Vastus on TRUE, (logical).</p>
 <p>Pane tähele, et aritmeetiline võrdusmärk on <code>==</code> (sest = tähendab hoopis väärtuse määramist objektile/argumendile).</p>
 <p>Veel mõned näidisarvutused:</p>
@@ -266,8 +266,8 @@ answer</code></pre></div>
 <span class="kw">log</span>(<span class="dv">100</span>)</code></pre></div>
 <p>Arvule <span class="math inline">\(\pi\)</span> on määratud oma objekt <code>pi</code>. Seega on soovitav enda poolt loodavatele objektidele mitte panna nimeks “pi”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Ümarda pi neljale komakohale
-<span class="kw">round</span>(pi, <span class="dv">4</span>)</code></pre></div>
-<pre><code>## [1] 3.1416</code></pre>
+<span class="kw">round</span>(pi, <span class="dv">4</span>)
+<span class="co">#&gt; [1] 3.14</span></code></pre></div>
 <p>Ümardamine on oluline tulemuste väljaprintimisel.</p>
 <div id="sama-koodi-saab-kirjutada-neljal-viisil" class="section level2">
 <h2><span class="header-section-number">3.1</span> Sama koodi saab kirjutada neljal viisil</h2>
@@ -276,28 +276,20 @@ answer</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## We need piping operator &#39;%&gt;%&#39; from magrittr.
 ## We can import &#39;%&gt;%&#39; via dplyr from tidyverse
 <span class="kw">library</span>(dplyr)</code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
 <p>Esimene võimalus:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
 a &lt;-<span class="st"> </span><span class="kw">sum</span>(a)
 a &lt;-<span class="st"> </span><span class="kw">sqrt</span>(a)
 a &lt;-<span class="st"> </span><span class="kw">round</span>(a, <span class="dv">2</span>)
-a</code></pre></div>
-<pre><code>## [1] 2.24</code></pre>
+a
+<span class="co">#&gt; [1] 2.24</span></code></pre></div>
 <p>Teine võimalus:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
 a1 &lt;-<span class="st"> </span><span class="kw">sum</span>(a)
 a2 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(a1)
 a3 &lt;-<span class="st"> </span><span class="kw">round</span>(a2, <span class="dv">2</span>)
-a3</code></pre></div>
-<pre><code>## [1] 2.24</code></pre>
+a3
+<span class="co">#&gt; [1] 2.24</span></code></pre></div>
 <p>Kolmas võimalus on lühem variant esimesest. Me nimelt ühendame etapid toru <code>%&gt;%</code> kaudu. Siin me võtame objekti “a” (nö. andmed), suuname selle funktsiooni <code>sum()</code>, võtame selle funktsiooni väljundi ja suuname selle omakorda funktsiooni <code>sqrt()</code>. Seejärel võtame selle funktsiooni outputi ja määrame selle nimele “result” (aga võime selle ka mõne teise nimega siduda). Kui mõni funktsioon võtab ainult ühe parameetri, mille me talle toru kaudu sisse sõõdame, siis pole selle funktsiooni taga isegi sulge vaja.</p>
 <blockquote>
 <p>NB! R hea stiili juhised soovitavad siiski ka <em>pipe</em>-s kasutada funktsiooni koos sulgudega!</p>
@@ -305,13 +297,13 @@ a3</code></pre></div>
 <p>See on hea lühike ja inimloetav viis koodi kirjutada, mis on masina jaoks identne esimese koodiga.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
 result &lt;-<span class="st"> </span>a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>)
-result</code></pre></div>
-<pre><code>## [1] 2.24</code></pre>
+result
+<span class="co">#&gt; [1] 2.24</span></code></pre></div>
 <p>Neljas võimalus, klassikaline baas R lahendus:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
 a1 &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">sqrt</span>(<span class="kw">sum</span>(a)), <span class="dv">2</span>)
-a1</code></pre></div>
-<pre><code>## [1] 2.24</code></pre>
+a1
+<span class="co">#&gt; [1] 2.24</span></code></pre></div>
 <p>Sellist koodi loetakse keskelt väljappoole ja kirjutatakse alates viimasest operatsioonist, mida soovitakse, et kood teeks. Masina jaoks pole vahet. Inimese jaoks on küll: 4. variant nõuab hästi pestud ajusid.</p>
 <p>Koodi lühidus 4 –&gt; 3 –&gt; 1 –&gt; 2 (pikem) Lollikindlus 1 –&gt; 2 –&gt; 3 –&gt; 4 (vähem lollikindel)</p>
 <p>See on teie otsustada, millist koodivormi te millal kasutate, aga te peaksite oskama lugeda neid kõiki.</p>

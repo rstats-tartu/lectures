@@ -1,4 +1,5 @@
 
+
 # R objektid {#obj}
 
 R-i töökeskkonnas "workspace" asuvad **objektid**, millega me töötame. 
@@ -12,10 +13,7 @@ Käsk `ls()` annab objektide nimed teie workspace-s:
 
 ```r
 ls()
-```
-
-```
-## character(0)
+#> [1] "old"
 ```
 
 `rm(a)` removes object a from the workspace
@@ -52,10 +50,7 @@ R-s on vastupidi: nimele antakse objekt
 ```r
 babe <- "beebi"
 babe
-```
-
-```
-## [1] "beebi"
+#> [1] "beebi"
 ```
 
 Siin on kõigepealt nimi (babe), siis assingmenti sümbol `<-` ja lõpuks objekt, mis on nimele antud (string "beebi"). 
@@ -68,10 +63,7 @@ Nüüd muudame objekti nime taga:
 ```r
 babe <- c("saatan", "inglike")
 babe
-```
-
-```
-## [1] "saatan"  "inglike"
+#> [1] "saatan"  "inglike"
 ```
 
 Tulemuseks on sama nimi, mis tähistab nüüd midagi muud (vektorit, mis koosneb 2st stringist). Objekt "beebi" kaotas oma nime ja on nüüd workspacest kadunud. 
@@ -79,10 +71,7 @@ Tulemuseks on sama nimi, mis tähistab nüüd midagi muud (vektorit, mis koosneb
 
 ```r
 class(babe)
-```
-
-```
-## [1] "character"
+#> [1] "character"
 ```
  Antud juhul character. 
 
@@ -93,10 +82,7 @@ class(babe)
 apples <- 2
 bananas <- 3
 apples + bananas
-```
-
-```
-## [1] 5
+#> [1] 5
 ```
 Selle ekspressiooni tulemus trükitakse ainult R konsooli, kuna teda ei määrata nimele siis ei ilmu see ka workspace.
 
@@ -108,10 +94,7 @@ b <- 3
 a <- a + b
 # objekti nimega 'a' struktuur
 str(a)
-```
-
-```
-##  num 5
+#>  num 5
 ```
 Nüüd on nimega a seostatud uus objekt, mis sisaldab numbrit 5 (olles ühe elemendiga vektor). Ja nimega a eelnevalt seostatud objekt, mis koosnes numbrist 2, on workspacest lahkunud. 
 
@@ -146,10 +129,7 @@ Loome numbrilise vektori ja vaatame ta struktuuri:
 ```r
 minu_vektor <- c(1, 3, 4)
 str(minu_vektor)
-```
-
-```
-##  num [1:3] 1 3 4
+#>  num [1:3] 1 3 4
 ```
 
 Loome vektori puuduva väärtusega, vaatame vektori klassi:
@@ -157,18 +137,9 @@ Loome vektori puuduva väärtusega, vaatame vektori klassi:
 ```r
 minu_vektor <- c(1, NA, 4)
 minu_vektor
-```
-
-```
-## [1]  1 NA  4
-```
-
-```r
+#> [1]  1 NA  4
 class(minu_vektor)
-```
-
-```
-## [1] "numeric"
+#> [1] "numeric"
 ```
 Klass jääb _numeric_-uks.
 
@@ -177,18 +148,9 @@ Kui vektoris on segamini numbrid ja stringid, siis muudetakse numbrid ka stringi
 ```r
 minu_vektor <- c(1, "2", 2, 4, "joe")
 minu_vektor
-```
-
-```
-## [1] "1"   "2"   "2"   "4"   "joe"
-```
-
-```r
+#> [1] "1"   "2"   "2"   "4"   "joe"
 class(minu_vektor)
-```
-
-```
-## [1] "character"
+#> [1] "character"
 ```
 Piisab ühest "tõrvatilgast meepotis", et teie vektor ei sisaldaks enam numbreid.
 
@@ -196,14 +158,8 @@ Eelnevast segavektorist on võimalik numbrid päästa kasutades käsku `as.numer
 
 ```r
 as.numeric(minu_vektor)
-```
-
-```
-## Warning: NAs introduced by coercion
-```
-
-```
-## [1]  1  2  2  4 NA
+#> Warning: NAs introduced by coercion
+#> [1]  1  2  2  4 NA
 ```
 Väärtus "joe" muudeti NA-ks, kuna seda ei olnud võimalik numbriks muuta.
 Samuti peab olema tähelepanelik faktorite muutmisel numbriteks:
@@ -211,42 +167,21 @@ Samuti peab olema tähelepanelik faktorite muutmisel numbriteks:
 ```r
 minu_vektor <- factor(c(9, "12", 12, 1.4, "joe"))
 minu_vektor
-```
-
-```
-## [1] 9   12  12  1.4 joe
-## Levels: 1.4 12 9 joe
-```
-
-```r
+#> [1] 9   12  12  1.4 joe
+#> Levels: 1.4 12 9 joe
 class(minu_vektor)
-```
-
-```
-## [1] "factor"
-```
-
-```r
+#> [1] "factor"
 ## Kui muudame faktori otse numbriks, saame faktori taseme numbri
 as.numeric(minu_vektor)
-```
-
-```
-## [1] 3 2 2 1 4
+#> [1] 3 2 2 1 4
 ```
 
 Faktorite muutmisel numbriteks tuleb need kõigepealt stringideks muuta:
 
 ```r
 as.numeric(as.character(minu_vektor))
-```
-
-```
-## Warning: NAs introduced by coercion
-```
-
-```
-## [1]  9.0 12.0 12.0  1.4   NA
+#> Warning: NAs introduced by coercion
+#> [1]  9.0 12.0 12.0  1.4   NA
 ```
 
 
@@ -256,27 +191,12 @@ Järgneva trikiga saab stringidest ekstraheerida numbrid:
 minu_vektor <- c(1, "A2", "$2", "joe")
 ## parse_number() is imported from tidyverse 'readr' 
 minu_vektor <- as.vector(parse_number(minu_vektor))
-```
-
-```
-## Warning: 1 parsing failure.
-## row # A tibble: 1 x 4 col     row   col expected actual expected   <int> <int> <chr>    <chr>  actual 1     4    NA a number joe
-```
-
-```r
+#> Warning: 1 parsing failure.
+#> row # A tibble: 1 x 4 col     row   col expected actual expected   <int> <int> <chr>    <chr>  actual 1     4    NA a number joe
 minu_vektor
-```
-
-```
-## [1]  1  2  2 NA
-```
-
-```r
+#> [1]  1  2  2 NA
 str(minu_vektor)
-```
-
-```
-##  num [1:4] 1 2 2 NA
+#>  num [1:4] 1 2 2 NA
 ```
 
 R säilitab vektori algse järjekorra. 
@@ -292,10 +212,7 @@ Vektori unikaalsed väärtused saab kätte käsuga `unique()`:
 ```r
 ## returns a vector or data frame, but with duplicate elements/rows removed
 unique(c(1,1,1,2,2,2,2,2,3,3,4,5,5))
-```
-
-```
-## [1] 1 2 3 4 5
+#> [1] 1 2 3 4 5
 ```
 
 
@@ -304,42 +221,15 @@ unique(c(1,1,1,2,2,2,2,2,3,3,4,5,5))
 
 ```r
 seq(2, 3, by = 0.5)
-```
-
-```
-## [1] 2.0 2.5 3.0
-```
-
-```r
+#> [1] 2.0 2.5 3.0
 seq(2, 3, length.out = 5)
-```
-
-```
-## [1] 2.00 2.25 2.50 2.75 3.00
-```
-
-```r
+#> [1] 2.00 2.25 2.50 2.75 3.00
 rep(1:2, times = 3)
-```
-
-```
-## [1] 1 2 1 2 1 2
-```
-
-```r
+#> [1] 1 2 1 2 1 2
 rep(1:2, each = 3)
-```
-
-```
-## [1] 1 1 1 2 2 2
-```
-
-```r
+#> [1] 1 1 1 2 2 2
 rep(c("a", "b"), each = 3, times = 2)
-```
-
-```
-##  [1] "a" "a" "a" "b" "b" "b" "a" "a" "a" "b" "b" "b"
+#>  [1] "a" "a" "a" "b" "b" "b" "a" "a" "a" "b" "b" "b"
 ```
 
 ### Tehted arvuliste vektoritega
@@ -350,10 +240,7 @@ Vektoreid saab liita, lahutada, korrutada ja jagada.
 a <- c(1, 2, 3)
 b <- 4
 a + b
-```
-
-```
-## [1] 5 6 7
+#> [1] 5 6 7
 ```
 Kõik vektor a liikmed liideti arvuga 3 (kuna vektor b koosnes ühest liikmest, läks see kordusesse)
 
@@ -362,15 +249,9 @@ Kõik vektor a liikmed liideti arvuga 3 (kuna vektor b koosnes ühest liikmest, 
 a <- c(1, 2, 3)
 b <- c(4, 5) 
 a + b
-```
-
-```
-## Warning in a + b: longer object length is not a multiple of shorter object
-## length
-```
-
-```
-## [1] 5 7 7
+#> Warning in a + b: longer object length is not a
+#> multiple of shorter object length
+#> [1] 5 7 7
 ```
 Aga see töötab veateatega, sest vektorite pikkused ei ole üksteise kordajad
 1 + 4; 2 + 5, 3 + 4
@@ -380,10 +261,7 @@ Aga see töötab veateatega, sest vektorite pikkused ei ole üksteise kordajad
 a <- c(1, 2, 3, 4)
 b <- c(5, 6) 
 a + b
-```
-
-```
-## [1]  6  8  8 10
+#> [1]  6  8  8 10
 ```
 See töötab: 1 + 5; 2 + 6; 3 + 5; 4 + 6 
 
@@ -392,10 +270,7 @@ See töötab: 1 + 5; 2 + 6; 3 + 5; 4 + 6
 a <- c(1, 2, 3, 4)
 b <- c(5, 6, 7, 8) 
 a + b
-```
-
-```
-## [1]  6  8 10 12
+#> [1]  6  8 10 12
 ```
 Samuti see (ühepikkused vektorid --- igat liiget kasutatakse üks kord)
 
@@ -403,18 +278,9 @@ Samuti see (ühepikkused vektorid --- igat liiget kasutatakse üks kord)
 ```r
 a <- c(TRUE, FALSE, TRUE)
 sum(a)
-```
-
-```
-## [1] 2
-```
-
-```r
+#> [1] 2
 mean(a)
-```
-
-```
-## [1] 0.6666667
+#> [1] 0.667
 ```
 Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 + 1 = 2.
 Seda loogiliste väärtuste omadust õpime varsti praktikas kasutama. 
@@ -439,42 +305,36 @@ grandma <- "your grandma on bongos"
 # let's creat list
 happy_list <- list(a, ab, model, grandma)
 happy_list
-```
-
-```
-## [[1]]
-## [1] 0.9675923 0.9316345 0.8436564 0.2153299 0.2966920
-## 
-## [[2]]
-##           a          b
-## 1 0.9675923  1.3218381
-## 2 0.9316345 -1.2294296
-## 3 0.8436564  0.4873404
-## 4 0.2153299  0.0317398
-## 5 0.2966920  1.1204760
-## 
-## [[3]]
-## 
-## Call:
-## lm(formula = mpg ~ hp, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)           hp  
-##    30.09886     -0.06823  
-## 
-## 
-## [[4]]
-## [1] "your grandma on bongos"
+#> [[1]]
+#> [1] 0.925 0.277 0.876 0.701 0.423
+#> 
+#> [[2]]
+#>       a      b
+#> 1 0.925 -1.212
+#> 2 0.277 -0.307
+#> 3 0.876 -1.218
+#> 4 0.701  2.282
+#> 5 0.423  0.213
+#> 
+#> [[3]]
+#> 
+#> Call:
+#> lm(formula = mpg ~ hp, data = mtcars)
+#> 
+#> Coefficients:
+#> (Intercept)           hp  
+#>     30.0989      -0.0682  
+#> 
+#> 
+#> [[4]]
+#> [1] "your grandma on bongos"
 ```
 
 Võtame listist välja elemndi "ab":
 
 ```r
 happy_list$ab
-```
-
-```
-## NULL
+#> NULL
 ```
 
 
@@ -500,15 +360,12 @@ vabakava <- list(letters, runif(10), lm(mpg ~ cyl, mtcars))
 ## paneme need vektorid kokku tibble-sse
 fruits <- tibble(shop, apples, oranges, vabakava)
 fruits
-```
-
-```
-## # A tibble: 3 x 4
-##   shop   apples oranges vabakava  
-##   <chr>   <dbl>   <dbl> <list>    
-## 1 maxima   1.00    2.00 <chr [26]>
-## 2 tesco    4.00   32.0  <dbl [10]>
-## 3 lidl    43.0    NA    <S3: lm>
+#> # A tibble: 3 x 4
+#>   shop   apples oranges vabakava  
+#>   <chr>   <dbl>   <dbl> <list>    
+#> 1 maxima   1.00    2.00 <chr [26]>
+#> 2 tesco    4.00   32.0  <dbl [10]>
+#> 3 lidl    43.0    NA    <S3: lm>
 ```
 Siin ta on, ilusti meie workspace-s. Pange tähele viimast tulpa "vabakava", mis sisaldab _character_ vectorit, numbrilist vektorit ja lineaarse mudeli objekti. 
 
@@ -517,14 +374,11 @@ Listi juba nii lihtsalt data.frame-i ei pane:
 ```r
 dfs <- try(data.frame(shop, apples, oranges, vabakava))
 dfs
-```
-
-```
-## [1] "Error in as.data.frame.default(x[[i]], optional = TRUE, stringsAsFactors = stringsAsFactors) : \n  cannot coerce class \"\"lm\"\" to a data.frame\n"
-## attr(,"class")
-## [1] "try-error"
-## attr(,"condition")
-## <simpleError in as.data.frame.default(x[[i]], optional = TRUE, stringsAsFactors = stringsAsFactors): cannot coerce class ""lm"" to a data.frame>
+#> [1] "Error in as.data.frame.default(x[[i]], optional = TRUE, stringsAsFactors = stringsAsFactors) : \n  cannot coerce class \"\"lm\"\" to a data.frame\n"
+#> attr(,"class")
+#> [1] "try-error"
+#> attr(,"condition")
+#> <simpleError in as.data.frame.default(x[[i]], optional = TRUE, stringsAsFactors = stringsAsFactors): cannot coerce class ""lm"" to a data.frame>
 ```
 
 **Mõned asjad, mida tibblega (ja data framega) saab teha:**
@@ -532,120 +386,63 @@ dfs
 
 ```r
 count(fruits, apples)
-```
-
-```
-## # A tibble: 3 x 2
-##   apples     n
-##    <dbl> <int>
-## 1   1.00     1
-## 2   4.00     1
-## 3  43.0      1
-```
-
-```r
+#> # A tibble: 3 x 2
+#>   apples     n
+#>    <dbl> <int>
+#> 1   1.00     1
+#> 2   4.00     1
+#> 3  43.0      1
 count(fruits, shop)
-```
-
-```
-## # A tibble: 3 x 2
-##   shop       n
-##   <chr>  <int>
-## 1 lidl       1
-## 2 maxima     1
-## 3 tesco      1
-```
-
-```r
+#> # A tibble: 3 x 2
+#>   shop       n
+#>   <chr>  <int>
+#> 1 lidl       1
+#> 2 maxima     1
+#> 3 tesco      1
 summary(fruits)
-```
-
-```
-##      shop               apples        oranges    
-##  Length:3           Min.   : 1.0   Min.   : 2.0  
-##  Class :character   1st Qu.: 2.5   1st Qu.: 9.5  
-##  Mode  :character   Median : 4.0   Median :17.0  
-##                     Mean   :16.0   Mean   :17.0  
-##                     3rd Qu.:23.5   3rd Qu.:24.5  
-##                     Max.   :43.0   Max.   :32.0  
-##                                    NA's   :1     
-##  vabakava.Length  vabakava.Class  vabakava.Mode
-##  26         -none-     character               
-##  10         -none-     numeric                 
-##  12         lm         list                    
-##                                                
-##                                                
-##                                                
-## 
-```
-
-```r
+#>      shop               apples        oranges    
+#>  Length:3           Min.   : 1.0   Min.   : 2.0  
+#>  Class :character   1st Qu.: 2.5   1st Qu.: 9.5  
+#>  Mode  :character   Median : 4.0   Median :17.0  
+#>                     Mean   :16.0   Mean   :17.0  
+#>                     3rd Qu.:23.5   3rd Qu.:24.5  
+#>                     Max.   :43.0   Max.   :32.0  
+#>                                    NA's   :1     
+#>  vabakava.Length  vabakava.Class  vabakava.Mode
+#>  26         -none-     character               
+#>  10         -none-     numeric                 
+#>  12         lm         list                    
+#>                                                
+#>                                                
+#>                                                
+#> 
 names(fruits)
-```
-
-```
-## [1] "shop"     "apples"   "oranges"  "vabakava"
-```
-
-```r
+#> [1] "shop"     "apples"   "oranges"  "vabakava"
 colnames(fruits)
-```
-
-```
-## [1] "shop"     "apples"   "oranges"  "vabakava"
-```
-
-```r
+#> [1] "shop"     "apples"   "oranges"  "vabakava"
 nrow(fruits)
-```
-
-```
-## [1] 3
-```
-
-```r
+#> [1] 3
 ncol(fruits)
-```
-
-```
-## [1] 4
-```
-
-```r
+#> [1] 4
 arrange(fruits, desc(apples)) #sorteerib tabeli veeru "apples" väärtuste järgi langevalt (default on tõusev sorteerimine). Võib argumendina anda mitu veergu.
-```
-
-```
-## # A tibble: 3 x 4
-##   shop   apples oranges vabakava  
-##   <chr>   <dbl>   <dbl> <list>    
-## 1 lidl    43.0    NA    <S3: lm>  
-## 2 tesco    4.00   32.0  <dbl [10]>
-## 3 maxima   1.00    2.00 <chr [26]>
-```
-
-```r
+#> # A tibble: 3 x 4
+#>   shop   apples oranges vabakava  
+#>   <chr>   <dbl>   <dbl> <list>    
+#> 1 lidl    43.0    NA    <S3: lm>  
+#> 2 tesco    4.00   32.0  <dbl [10]>
+#> 3 maxima   1.00    2.00 <chr [26]>
 top_n(fruits, 2, apples) #saab 2 rida, milles on kõige rohkem õunu
-```
-
-```
-## # A tibble: 2 x 4
-##   shop  apples oranges vabakava  
-##   <chr>  <dbl>   <dbl> <list>    
-## 1 tesco   4.00    32.0 <dbl [10]>
-## 2 lidl   43.0     NA   <S3: lm>
-```
-
-```r
+#> # A tibble: 2 x 4
+#>   shop  apples oranges vabakava  
+#>   <chr>  <dbl>   <dbl> <list>    
+#> 1 tesco   4.00    32.0 <dbl [10]>
+#> 2 lidl   43.0     NA   <S3: lm>
 top_n(fruits, -2, apples) #saab 2 rida, milles on kõige vähem õunu
-```
-
-```
-## # A tibble: 2 x 4
-##   shop   apples oranges vabakava  
-##   <chr>   <dbl>   <dbl> <list>    
-## 1 maxima   1.00    2.00 <chr [26]>
-## 2 tesco    4.00   32.0  <dbl [10]>
+#> # A tibble: 2 x 4
+#>   shop   apples oranges vabakava  
+#>   <chr>   <dbl>   <dbl> <list>    
+#> 1 maxima   1.00    2.00 <chr [26]>
+#> 2 tesco    4.00   32.0  <dbl [10]>
 ```
 
 Tibblega saab teha maatriksarvutusi, kui kasutada ainult arvudega ridu. 
@@ -653,56 +450,23 @@ Tibblega saab teha maatriksarvutusi, kui kasutada ainult arvudega ridu.
 
 ```r
 colSums(fruits[ , 2:3])
-```
-
-```
-##  apples oranges 
-##      48      NA
-```
-
-```r
+#>  apples oranges 
+#>      48      NA
 rowSums(fruits[ , 2:3])
-```
-
-```
-## [1]  3 36 NA
-```
-
-```r
+#> [1]  3 36 NA
 rowMeans(fruits[ , 2:3])
-```
-
-```
-## [1]  1.5 18.0   NA
-```
-
-```r
+#> [1]  1.5 18.0   NA
 colMeans(fruits[ , 2:3])
-```
-
-```
-##  apples oranges 
-##      16      NA
-```
-
-```r
+#>  apples oranges 
+#>      16      NA
 fruits_subset <- fruits[ , 2:3]
 # 1 tähendab, et arvuta sd rea kaupa
 apply(fruits_subset, 1, sd)
-```
-
-```
-## [1]  0.7071068 19.7989899         NA
-```
-
-```r
+#> [1]  0.707 19.799     NA
 # 2 tähendab, et arvuta sd veeru kaupa
 apply(fruits_subset, 2, sd) 
-```
-
-```
-##   apples  oranges 
-## 23.43075       NA
+#>  apples oranges 
+#>    23.4      NA
 ```
 
 Lisame käsitsi meie tabelile 1 rea:
@@ -714,16 +478,13 @@ fruits <- add_row(fruits,
                   oranges = -5, 
                   .before = 3)
 fruits
-```
-
-```
-## # A tibble: 4 x 4
-##   shop   apples oranges vabakava  
-##   <chr>   <dbl>   <dbl> <list>    
-## 1 maxima   1.00    2.00 <chr [26]>
-## 2 tesco    4.00   32.0  <dbl [10]>
-## 3 konsum 132     - 5.00 <NULL>    
-## 4 lidl    43.0    NA    <S3: lm>
+#> # A tibble: 4 x 4
+#>   shop   apples oranges vabakava  
+#>   <chr>   <dbl>   <dbl> <list>    
+#> 1 maxima   1.00    2.00 <chr [26]>
+#> 2 tesco    4.00   32.0  <dbl [10]>
+#> 3 konsum 132     - 5.00 <NULL>    
+#> 4 lidl    43.0    NA    <S3: lm>
 ```
 
 Proovi ise:
@@ -741,46 +502,31 @@ Eelnevaid verbe ei kasuta me vist enam kunagi sest tavaliselt loeme me andmed si
 ```r
 fruits$apples[fruits$apples==43] <- 333
 fruits
-```
-
-```
-## # A tibble: 4 x 4
-##   shop   apples oranges vabakava  
-##   <chr>   <dbl>   <dbl> <list>    
-## 1 maxima   1.00    2.00 <chr [26]>
-## 2 tesco    4.00   32.0  <dbl [10]>
-## 3 konsum 132     - 5.00 <NULL>    
-## 4 lidl   333      NA    <S3: lm>
-```
-
-```r
+#> # A tibble: 4 x 4
+#>   shop   apples oranges vabakava  
+#>   <chr>   <dbl>   <dbl> <list>    
+#> 1 maxima   1.00    2.00 <chr [26]>
+#> 2 tesco    4.00   32.0  <dbl [10]>
+#> 3 konsum 132     - 5.00 <NULL>    
+#> 4 lidl   333      NA    <S3: lm>
 fruits$shop[fruits$shop=="tesco"] <- "TESCO"
 fruits
-```
-
-```
-## # A tibble: 4 x 4
-##   shop   apples oranges vabakava  
-##   <chr>   <dbl>   <dbl> <list>    
-## 1 maxima   1.00    2.00 <chr [26]>
-## 2 TESCO    4.00   32.0  <dbl [10]>
-## 3 konsum 132     - 5.00 <NULL>    
-## 4 lidl   333      NA    <S3: lm>
-```
-
-```r
+#> # A tibble: 4 x 4
+#>   shop   apples oranges vabakava  
+#>   <chr>   <dbl>   <dbl> <list>    
+#> 1 maxima   1.00    2.00 <chr [26]>
+#> 2 TESCO    4.00   32.0  <dbl [10]>
+#> 3 konsum 132     - 5.00 <NULL>    
+#> 4 lidl   333      NA    <S3: lm>
 fruits$apples[fruits$apples>100] <- NA
 fruits
-```
-
-```
-## # A tibble: 4 x 4
-##   shop   apples oranges vabakava  
-##   <chr>   <dbl>   <dbl> <list>    
-## 1 maxima   1.00    2.00 <chr [26]>
-## 2 TESCO    4.00   32.0  <dbl [10]>
-## 3 konsum  NA     - 5.00 <NULL>    
-## 4 lidl    NA      NA    <S3: lm>
+#> # A tibble: 4 x 4
+#>   shop   apples oranges vabakava  
+#>   <chr>   <dbl>   <dbl> <list>    
+#> 1 maxima   1.00    2.00 <chr [26]>
+#> 2 TESCO    4.00   32.0  <dbl [10]>
+#> 3 konsum  NA     - 5.00 <NULL>    
+#> 4 lidl    NA      NA    <S3: lm>
 ```
 
 
@@ -811,16 +557,13 @@ dfs <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
 dfs1 <- tibble(colA = "d", colB =  4)
 #id teeb veel ühe veeru, mis näitab, kummast algtabelist iga uue tabeli rida pärit on 
 bind_rows(dfs, dfs1, .id = "id")
-```
-
-```
-## # A tibble: 4 x 3
-##   id    colA   colB
-##   <chr> <chr> <dbl>
-## 1 1     a      1.00
-## 2 1     b      2.00
-## 3 1     c      3.00
-## 4 2     d      4.00
+#> # A tibble: 4 x 3
+#>   id    colA   colB
+#>   <chr> <chr> <dbl>
+#> 1 1     a      1.00
+#> 2 1     b      2.00
+#> 3 1     c      3.00
+#> 4 2     d      4.00
 ```
 
 Vaata Environmentist need tabelid üle ja mõtle järgi, mis juhtus.
@@ -835,14 +578,11 @@ Näiteks, võib-olla te tahtsite järgnevat tabelit saada, aga võib-olla ka mit
 df2 <- tibble(ColC = "d", ColD = 4)
 ## works by guessing your true intention
 bind_rows(dfs1, df2)
-```
-
-```
-## # A tibble: 2 x 4
-##   colA   colB ColC   ColD
-##   <chr> <dbl> <chr> <dbl>
-## 1 d      4.00 <NA>  NA   
-## 2 <NA>  NA    d      4.00
+#> # A tibble: 2 x 4
+#>   colA   colB ColC   ColD
+#>   <chr> <dbl> <chr> <dbl>
+#> 1 d      4.00 <NA>  NA   
+#> 2 <NA>  NA    d      4.00
 ```
 
 ### ühendame kaks tibblet veeru kaupa
@@ -853,15 +593,12 @@ Meil on 2 verbi: bind_cols ja cbind, millest esimene on konservatiivsem. Proovig
 ```r
 dfx <- tibble(colC = c(4, 5, 6))
 bind_cols(dfs, dfx)
-```
-
-```
-## # A tibble: 3 x 3
-##   colA   colB  colC
-##   <chr> <dbl> <dbl>
-## 1 a      1.00  4.00
-## 2 b      2.00  5.00
-## 3 c      3.00  6.00
+#> # A tibble: 3 x 3
+#>   colA   colB  colC
+#>   <chr> <dbl> <dbl>
+#> 1 a      1.00  4.00
+#> 2 b      2.00  5.00
+#> 3 c      3.00  6.00
 ```
 
 ### tabelite ühendamine join()-ga
@@ -877,14 +614,11 @@ df1 <- tribble(
 )
 
 df1
-```
-
-```
-## # A tibble: 2 x 2
-##   Member         yr_of_birth
-##   <chr>                <dbl>
-## 1 John Lennon           1940
-## 2 Paul McCartney        1942
+#> # A tibble: 2 x 2
+#>   Member         yr_of_birth
+#>   <chr>                <dbl>
+#> 1 John Lennon           1940
+#> 2 Paul McCartney        1942
 ```
 
 
@@ -896,87 +630,56 @@ df2 <- tribble(
   "George Harrisson", "guitar",         1942
 )
 df2
-```
-
-```
-## # A tibble: 3 x 3
-##   Member           instrument yr_of_birth
-##   <chr>            <chr>            <dbl>
-## 1 John Lennon      guitar            1940
-## 2 Ringo Starr      drums             1940
-## 3 George Harrisson guitar            1942
+#> # A tibble: 3 x 3
+#>   Member           instrument yr_of_birth
+#>   <chr>            <chr>            <dbl>
+#> 1 John Lennon      guitar            1940
+#> 2 Ringo Starr      drums             1940
+#> 3 George Harrisson guitar            1942
 ```
 
 Ühendan 2 tabelit nii, et mõlema tabeli kõik read ilmuvad uude tabelisse.
 
 ```r
 full_join(df1, df2)
-```
-
-```
-## Joining, by = c("Member", "yr_of_birth")
-```
-
-```
-## # A tibble: 4 x 3
-##   Member           yr_of_birth instrument
-##   <chr>                  <dbl> <chr>     
-## 1 John Lennon             1940 guitar    
-## 2 Paul McCartney          1942 <NA>      
-## 3 Ringo Starr             1940 drums     
-## 4 George Harrisson        1942 guitar
+#> # A tibble: 4 x 3
+#>   Member           yr_of_birth instrument
+#>   <chr>                  <dbl> <chr>     
+#> 1 John Lennon             1940 guitar    
+#> 2 Paul McCartney          1942 <NA>      
+#> 3 Ringo Starr             1940 drums     
+#> 4 George Harrisson        1942 guitar
 ```
 
 Ühendan esimese tabeliga df2 nii, et ainult df1 read säilivad, aga df2-lt võetakse sisse veerud, mis df1-s puuduvad. See on hea join, kui on vaja algtabelile lisada infot teistest tabelitest.
 
 ```r
 left_join(df1, df2)
-```
-
-```
-## Joining, by = c("Member", "yr_of_birth")
-```
-
-```
-## # A tibble: 2 x 3
-##   Member         yr_of_birth instrument
-##   <chr>                <dbl> <chr>     
-## 1 John Lennon           1940 guitar    
-## 2 Paul McCartney        1942 <NA>
+#> # A tibble: 2 x 3
+#>   Member         yr_of_birth instrument
+#>   <chr>                <dbl> <chr>     
+#> 1 John Lennon           1940 guitar    
+#> 2 Paul McCartney        1942 <NA>
 ```
 
 Filtreerin välja need df1 read, millele vastab rida df2-s. 
 
 ```r
 semi_join(df1, df2)
-```
-
-```
-## Joining, by = c("Member", "yr_of_birth")
-```
-
-```
-## # A tibble: 1 x 2
-##   Member      yr_of_birth
-##   <chr>             <dbl>
-## 1 John Lennon        1940
+#> # A tibble: 1 x 2
+#>   Member      yr_of_birth
+#>   <chr>             <dbl>
+#> 1 John Lennon        1940
 ```
 
 Filtreerin välja need df1 read, millele ei vasta rida df2-s.
 
 ```r
 anti_join(df1, df2)
-```
-
-```
-## Joining, by = c("Member", "yr_of_birth")
-```
-
-```
-## # A tibble: 1 x 2
-##   Member         yr_of_birth
-##   <chr>                <dbl>
-## 1 Paul McCartney        1942
+#> # A tibble: 1 x 2
+#>   Member         yr_of_birth
+#>   <chr>                <dbl>
+#> 1 Paul McCartney        1942
 ```
 
 
@@ -988,19 +691,10 @@ Tibble jääb muidugi endisel kujul alles.
 ubinad <- fruits$apples
 ubinad <- ubinad + 2
 ubinad
-```
-
-```
-## [1]  3  6 NA NA
-```
-
-```r
+#> [1]  3  6 NA NA
 ## see on jälle vektor
 str(ubinad)
-```
-
-```
-##  num [1:4] 3 6 NA NA
+#>  num [1:4] 3 6 NA NA
 ```
 
 
@@ -1022,10 +716,7 @@ Kuhu see fail läks? See läks meie projekti juurkataloogi kausta "data/", juurk
 
 ```r
 getwd()
-```
-
-```
-## [1] "/home/travis/build/rstats-tartu/lectures"
+#> [1] "/home/travis/build/rstats-tartu/lectures"
 ```
 
 Andmete sisselugemine töökataloogist:
@@ -1069,28 +760,13 @@ Tibble konverteerimine data frame-ks ja tagasi tibbleks:
 
 ```r
 class(fruits)
-```
-
-```
-## [1] "tbl_df"     "tbl"        "data.frame"
-```
-
-```r
+#> [1] "tbl_df"     "tbl"        "data.frame"
 fruits <- as.data.frame(fruits)
 class(fruits)
-```
-
-```
-## [1] "data.frame"
-```
-
-```r
+#> [1] "data.frame"
 fruits <- as_tibble(fruits)
 class(fruits)
-```
-
-```
-## [1] "tbl_df"     "tbl"        "data.frame"
+#> [1] "tbl_df"     "tbl"        "data.frame"
 ```
 
 ## Tabelit sisse lugedes vaata üle NA-d
@@ -1099,36 +775,30 @@ class(fruits)
 ```r
 diabetes <- read.table(file = "data/diabetes.csv", sep = ";", dec = ",", header = TRUE)
 str(diabetes)
-```
-
-```
-## 'data.frame':	403 obs. of  19 variables:
-##  $ id      : int  1000 1001 1002 1003 1005 1008 1011 1015 1016 1022 ...
-##  $ chol    : int  203 165 228 78 249 248 195 227 177 263 ...
-##  $ stab.glu: int  82 97 92 93 90 94 92 75 87 89 ...
-##  $ hdl     : int  56 24 37 12 28 69 41 44 49 40 ...
-##  $ ratio   : num  3.6 6.9 6.2 6.5 8.9 ...
-##  $ glyhb   : num  4.31 4.44 4.64 4.63 7.72 ...
-##  $ location: Factor w/ 2 levels "Buckingham","Louisa": 1 1 1 1 1 1 1 1 1 1 ...
-##  $ age     : int  46 29 58 67 64 34 30 37 45 55 ...
-##  $ gender  : Factor w/ 2 levels "female","male": 1 1 1 2 2 2 2 2 2 1 ...
-##  $ height  : int  62 64 61 67 68 71 69 59 69 63 ...
-##  $ weight  : int  121 218 256 119 183 190 191 170 166 202 ...
-##  $ frame   : Factor w/ 4 levels "","large","medium",..: 3 2 2 2 3 2 3 3 2 4 ...
-##  $ bp.1s   : int  118 112 190 110 138 132 161 NA 160 108 ...
-##  $ bp.1d   : int  59 68 92 50 80 86 112 NA 80 72 ...
-##  $ bp.2s   : int  NA NA 185 NA NA NA 161 NA 128 NA ...
-##  $ bp.2d   : int  NA NA 92 NA NA NA 112 NA 86 NA ...
-##  $ waist   : int  29 46 49 33 44 36 46 34 34 45 ...
-##  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...
-##  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...
-```
-
-```r
+#> 'data.frame':	403 obs. of  19 variables:
+#>  $ id      : int  1000 1001 1002 1003 1005 1008 1011 1015 1016 1022 ...
+#>  $ chol    : int  203 165 228 78 249 248 195 227 177 263 ...
+#>  $ stab.glu: int  82 97 92 93 90 94 92 75 87 89 ...
+#>  $ hdl     : int  56 24 37 12 28 69 41 44 49 40 ...
+#>  $ ratio   : num  3.6 6.9 6.2 6.5 8.9 ...
+#>  $ glyhb   : num  4.31 4.44 4.64 4.63 7.72 ...
+#>  $ location: Factor w/ 2 levels "Buckingham","Louisa": 1 1 1 1 1 1 1 1 1 1 ...
+#>  $ age     : int  46 29 58 67 64 34 30 37 45 55 ...
+#>  $ gender  : Factor w/ 2 levels "female","male": 1 1 1 2 2 2 2 2 2 1 ...
+#>  $ height  : int  62 64 61 67 68 71 69 59 69 63 ...
+#>  $ weight  : int  121 218 256 119 183 190 191 170 166 202 ...
+#>  $ frame   : Factor w/ 4 levels "","large","medium",..: 3 2 2 2 3 2 3 3 2 4 ...
+#>  $ bp.1s   : int  118 112 190 110 138 132 161 NA 160 108 ...
+#>  $ bp.1d   : int  59 68 92 50 80 86 112 NA 80 72 ...
+#>  $ bp.2s   : int  NA NA 185 NA NA NA 161 NA 128 NA ...
+#>  $ bp.2d   : int  NA NA 92 NA NA NA 112 NA 86 NA ...
+#>  $ waist   : int  29 46 49 33 44 36 46 34 34 45 ...
+#>  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...
+#>  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...
 aggr(diabetes, prop = FALSE, numbers = TRUE)
 ```
 
-<img src="03-objektid_files/figure-html/unnamed-chunk-49-1.png" width="672" />
+<img src="03-objektid_files/figure-html/unnamed-chunk-50-1.png" width="70%" style="display: block; margin: auto;" />
 Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.
 
 Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?
@@ -1137,18 +807,9 @@ Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?
 nrows <- nrow(diabetes)
   ncomplete <- sum(complete.cases(diabetes))
   ncomplete #136
-```
-
-```
-## [1] 136
-```
-
-```r
+#> [1] 136
   ncomplete/nrows #34%
-```
-
-```
-## [1] 0.337469
+#> [1] 0.337
 ```
 
   
@@ -1156,15 +817,14 @@ nrows <- nrow(diabetes)
 
 ```r
 sapply(diabetes, function(x) sum(is.na(x))) 
-```
-
-```
-##       id     chol stab.glu      hdl    ratio    glyhb location      age 
-##        0        1        0        1        1       13        0        0 
-##   gender   height   weight    frame    bp.1s    bp.1d    bp.2s    bp.2d 
-##        0        5        1        0        5        5      262      262 
-##    waist      hip time.ppn 
-##        2        2        3
+#>       id     chol stab.glu      hdl    ratio    glyhb 
+#>        0        1        0        1        1       13 
+#> location      age   gender   height   weight    frame 
+#>        0        0        0        5        1        0 
+#>    bp.1s    bp.1d    bp.2s    bp.2d    waist      hip 
+#>        5        5      262      262        2        2 
+#> time.ppn 
+#>        3
 ```
 
 Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:
@@ -1173,7 +833,7 @@ Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda su
 matrixplot(diabetes) 
 ```
 
-<img src="03-objektid_files/figure-html/unnamed-chunk-52-1.png" width="672" />
+<img src="03-objektid_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 **Kuidas rekodeerida NA-d näiteks 0-ks:**
@@ -1192,10 +852,7 @@ kõigepealt kõik
 ```r
 x <- c(1:5, NA, NA, NA)
 coalesce(x, 0L)
-```
-
-```
-## [1] 1 2 3 4 5 0 0 0
+#> [1] 1 2 3 4 5 0 0 0
 ```
 
 Nii saab 2 vektori põhjal kolmanda nii, et NA-d asendatakse vastava väärtusega:
@@ -1204,10 +861,7 @@ Nii saab 2 vektori põhjal kolmanda nii, et NA-d asendatakse vastava väärtuseg
 y <- c(1, 2, NA, NA, 5)
 z <- c(NA, NA, 3, 4, 5)
 coalesce(y, z)
-```
-
-```
-## [1] 1 2 3 4 5
+#> [1] 1 2 3 4 5
 ```
 
 
@@ -1221,6 +875,7 @@ coalesce(y, z)
 
 
 ```r
+
 na_if(x, y)
 
 x - vektor ehk tabeli veerg, mida modifitseerime
@@ -1258,58 +913,19 @@ R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
 ```r
 my_vector <- 2:5 
 my_vector
-```
-
-```
-## [1] 2 3 4 5
-```
-
-```r
+#> [1] 2 3 4 5
 my_vector[1] #1. element ehk number 2
-```
-
-```
-## [1] 2
-```
-
-```r
+#> [1] 2
 my_vector[c(1,3)] #1. ja 3. element 
-```
-
-```
-## [1] 2 4
-```
-
-```r
+#> [1] 2 4
 my_vector[-1] #kõik elemendid, v.a. element number 1
-```
-
-```
-## [1] 3 4 5
-```
-
-```r
+#> [1] 3 4 5
 my_vector[c(-1, -3)] #kõik elemendid, v.a. element number 1 ja 3
-```
-
-```
-## [1] 3 5
-```
-
-```r
+#> [1] 3 5
 my_vector[3:5] #elemendid 3, 4 ja 5 (element 5 on määramata, seega NA)
-```
-
-```
-## [1]  4  5 NA
-```
-
-```r
+#> [1]  4  5 NA
 my_vector[-(3:length(my_vector))] #1. ja 2. element
-```
-
-```
-## [1] 2 3
+#> [1] 2 3
 ```
 
 ### Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid
@@ -1346,18 +962,9 @@ Nüüd veidi keerulisemad konstruktsioonid, mis võimaldavad tabeli ühe kindla 
 ```r
 dat <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
 dat$colB[dat$colA != "a" ] #jätab sisse kõik vektori colB väärtused, kus samas tabeli reas olev colA väärtus ei ole "a". output on vektor! 
-```
-
-```
-## [1] 2 3
-```
-
-```r
+#> [1] 2 3
 dat$colA[dat$colB > 1] #jätab sisse kõik vektori colA väärtused, kus samas tabeli reas olev colB väärtus >1. output on vektor. 
-```
-
-```
-## [1] "b" "c"
+#> [1] "b" "c"
 ```
 
 ### Listide indekseerimine
@@ -1374,14 +981,11 @@ Seevastu üksiksulud `[ ]` tekitavad uue listi, kus on säilinud osad algse list
 my_list <- list(a = tibble(colA = c("A", "B"), colB = c(1, 2)), b = c(1, NA, "s"))
 ## this list has two elements, a data frame called "a" and a character vector called "b".
 str(my_list)
-```
-
-```
-## List of 2
-##  $ a:Classes 'tbl_df', 'tbl' and 'data.frame':	2 obs. of  2 variables:
-##   ..$ colA: chr [1:2] "A" "B"
-##   ..$ colB: num [1:2] 1 2
-##  $ b: chr [1:3] "1" NA "s"
+#> List of 2
+#>  $ a:Classes 'tbl_df', 'tbl' and 'data.frame':	2 obs. of  2 variables:
+#>   ..$ colA: chr [1:2] "A" "B"
+#>   ..$ colB: num [1:2] 1 2
+#>  $ b: chr [1:3] "1" NA "s"
 ```
 
 Tõmbame listist välja tibble:
@@ -1389,14 +993,11 @@ Tõmbame listist välja tibble:
 ```r
 my_tibble <- my_list[[1]]
 my_tibble
-```
-
-```
-## # A tibble: 2 x 2
-##   colA   colB
-##   <chr> <dbl>
-## 1 A      1.00
-## 2 B      2.00
+#> # A tibble: 2 x 2
+#>   colA   colB
+#>   <chr> <dbl>
+#> 1 A      1.00
+#> 2 B      2.00
 ```
 See ei ole enam list.
 
@@ -1406,13 +1007,10 @@ Seekord ühe elemendiga, mis on tibble.
 ```r
 aa <- my_list[1]
 str(aa)
-```
-
-```
-## List of 1
-##  $ a:Classes 'tbl_df', 'tbl' and 'data.frame':	2 obs. of  2 variables:
-##   ..$ colA: chr [1:2] "A" "B"
-##   ..$ colB: num [1:2] 1 2
+#> List of 1
+#>  $ a:Classes 'tbl_df', 'tbl' and 'data.frame':	2 obs. of  2 variables:
+#>   ..$ colA: chr [1:2] "A" "B"
+#>   ..$ colB: num [1:2] 1 2
 ```
 
 
@@ -1420,26 +1018,20 @@ str(aa)
 ```r
 aa1 <- my_list$a[2,] #class is df
 aa1
-```
-
-```
-## # A tibble: 1 x 2
-##   colA   colB
-##   <chr> <dbl>
-## 1 B      2.00
+#> # A tibble: 1 x 2
+#>   colA   colB
+#>   <chr> <dbl>
+#> 1 B      2.00
 ```
 
 
 ```r
 aa3 <- my_list[[1]][1,]
 aa3
-```
-
-```
-## # A tibble: 1 x 2
-##   colA   colB
-##   <chr> <dbl>
-## 1 A      1.00
+#> # A tibble: 1 x 2
+#>   colA   colB
+#>   <chr> <dbl>
+#> 1 A      1.00
 ```
 
 Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välja objekti my_list 1. elemendi, tema algses tibble formaadis, (indeksi 1. dimensioon). Seejärel korjame sealt välja 1. rea, tibble formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).

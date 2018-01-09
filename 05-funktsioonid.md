@@ -1,4 +1,5 @@
 
+
 # Funktsioonid on R keele verbid {#funs}
 
 Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt, kes püüab ära arvata, mida on vaja teha. 
@@ -20,83 +21,32 @@ y <- c(1, 3, 4, 2, 7)
 ```r
 # calculate correlation
 cor(x, y)
-```
-
-```
-## [1] -0.1166019
-```
-
-```r
+#> [1] -0.117
 # calculate sum
 sum(x)
-```
-
-```
-## [1] 21
-```
-
-```r
+#> [1] 21
 # calculate sum of two vectors
 sum(x, y)
-```
-
-```
-## [1] 38
-```
-
-```r
+#> [1] 38
 # calculate average
 mean(x)
-```
-
-```
-## [1] 4.2
-```
-
-```r
+#> [1] 4.2
 # calculate median
 median(x)
-```
-
-```
-## [1] 4
-```
-
-```r
+#> [1] 4
 # calculate standard deviation
 sd(x)
-```
-
-```
-## [1] 1.30384
-```
-
-```r
+#> [1] 1.3
 # return quantiles
 quantile(x)
-```
-
-```
-##   0%  25%  50%  75% 100% 
-##    3    3    4    5    6
-```
-
-```r
+#>   0%  25%  50%  75% 100% 
+#>    3    3    4    5    6
 # return maximum value
 max(x)
-```
-
-```
-## [1] 6
-```
-
-```r
+#> [1] 6
 # return minimum value
 min(x)
-```
-
-```
-## [1] 3
+#> [1] 3
 ```
 
 R-is teevad asju programmikesed, mida kutsutakse **funktsioonideks**. 
@@ -146,10 +96,7 @@ Seega NA tulemus annab märku, et teie andmetes võib olla midagi valesti.
 apples <- c(1, 34, 43, NA)
 ## arvutame summa
 sum(apples, na.rm = TRUE)
-```
-
-```
-## [1] 78
+#> [1] 78
 ```
 Niimoodi saab arvutada summat vektorile nimega "apples".
 
@@ -157,10 +104,7 @@ Sisestades R käsureale funktsiooni ilma selle sulgudeta saab masinast selle fun
 
 ```r
 sum
-```
-
-```
-## function (..., na.rm = FALSE)  .Primitive("sum")
+#> function (..., na.rm = FALSE)  .Primitive("sum")
 ```
 Tulemus näitab, et `sum()` on `Primitive` funktsioon, mis põhimõtteliselt tähendab, et ta põhineb C koodil ja ei kasuta R koodi.
 
@@ -183,10 +127,7 @@ oranges <- 3
 # parentheses around expression assigning result to an object 
 # ensure that result is also printed to R console
 (inventory <- apples + oranges)
-```
-
-```
-## [1] 5
+#> [1] 5
 ```
  
 Ja nüüd pakendame selle tehte funktsiooni `add2()`. 
@@ -210,19 +151,10 @@ Antud funktsiooni käivitamine annab veateate, sest funktsiooni argumentidel pol
 inventory <- try(add2())
 ## when function fails, error message is returned
 class(inventory)
-```
-
-```
-## [1] "try-error"
-```
-
-```r
+#> [1] "try-error"
 ## print error message
 cat(inventory)
-```
-
-```
-## Error in add2() : argument "x" is missing, with no default
+#> Error in add2() : argument "x" is missing, with no default
 ```
 
 Andes funktsiooni argumentidele väärtused, saab väljundi:
@@ -232,19 +164,10 @@ Andes funktsiooni argumentidele väärtused, saab väljundi:
 inventory <- add2(x = apples, y = oranges)
 ## numeric vector is returned
 class(inventory)
-```
-
-```
-## [1] "numeric"
-```
-
-```r
+#> [1] "numeric"
 ## result
 inventory
-```
-
-```
-## [1] 5
+#> [1] 5
 ```
 
 
@@ -273,10 +196,7 @@ x hoiab lihtsalt kohta andmetele, mida me tahame sinna funktsiooni suunata.
 ## create numeric vector
 numbers <- c(2, 3.4, 54, NA, 3)
 calc_sem(numbers)
-```
-
-```
-## [1] NA
+#> [1] NA
 ```
 No jah, kui meil on andmetes tundmatu arv (`NA`) siis on ka tulemuseks tundmatu arv.
 
@@ -285,10 +205,7 @@ Sellisel juhul tuleb NA väärtused vektorist enne selle funktsiooni kasutamist 
 ```r
 numbers_filtered <- na.omit(numbers)
 calc_sem(numbers_filtered)
-```
-
-```
-## [1] 12.80338
+#> [1] 12.8
 ```
 
 On ka võimalus funktsiooni sisse kirjutada **NA väärtuste käsitlemine**. Näiteks, üks võimalus on **anda viga** ja funktsioon katkestada, et kasutaja saaks ise ühemõtteliselt oma andmetest NA väärtused eemaldada. 
@@ -305,10 +222,7 @@ calc_sem <- function(x) {
 }
 
 calc_sem(numbers)
-```
-
-```
-## [1] 11.4517
+#> [1] 11.5
 ```
 See annab meile vale tulemuse sest `na.rm = TRUE` viskab küll NA-d välja meie vektorist aga jätab vektori pikkuse muutmata (`length(x)` rida).
 
@@ -333,22 +247,10 @@ calc_sem <- function(x) {
 }
 
 calc_sem(numbers)
-```
-
-```
-## Warning in calc_sem(numbers): Removed NAs from vector.
-```
-
-```
-## [1] 12.80338
-```
-
-```r
+#> Warning in calc_sem(numbers): Removed NAs from vector.
+#> [1] 12.8
 length(numbers)
-```
-
-```
-## [1] 5
+#> [1] 5
 ```
 
 Missugune funktsiooni käitumine valida, sõltub kasutaja vajadusest.
