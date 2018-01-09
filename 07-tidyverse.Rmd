@@ -4,8 +4,20 @@
 Tidyverse on osa R-i ökosüsteemist, kus kehtivad omad reeglid. 
 Tidyverse  raamatukogud lähtuvad ühtsest filosoofiast ja töötavad hästi koos. 
 Tidyverse algab andmetabeli struktuurist ja selle funktsioonid võtavad reeglina sisse õige struktuuriga tibble ja väljastavad samuti tibble, mis sobib hästi järgmise tidyverse funktsiooni sisendiks. 
-Seega on tidyverse hästi sobiv läbi torude %>% laskmiseks. 
+Seega on tidyverse hästi sobiv läbi torude `%>%` laskmiseks. 
 Tidyverse-ga sobib hästi kokku ka ggplot2 graafikasüsteem.
+
+Laadime tidyverse metapaketi raamatukogud:
+```{r}
+library(tidyverse)
+```
+
+Nagu näha laaditakse tidyverse raamatukoguga 8 paketti:
+✔ ggplot2 ✔ purrr    
+✔ tibble ✔ dplyr   
+✔ tidyr ✔ stringr   
+✔ readr ✔ forcats
+
 
 ## Tidy tabeli struktuur
 

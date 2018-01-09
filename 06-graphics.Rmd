@@ -194,7 +194,8 @@ Me lisasime kaks kihti: esimene kiht `geom_point()` visualiseerib andmepunktid j
 
 ## Regressioonisirgete plottimine
 
-Järgmiseks värvime eelnevalt tehtud plotil punktid iirise liigi kaupa aga joonistame ikkagi regressioonisirge läbi kõikide punktide. 
+Järgmiseks värvime eelnevalt tehtud plotil punktid iirise liigi kaupa aga joonistame ikkagi regressioonisirge läbi kõikide punktide.
+
 Vaata mis juhtub, kui värvide lahutamine toimub `ggplot()`-i enda `aes()`-s. `theme_classic()` muudab graafiku üldist väljanägemist.
 
 ```{r}
@@ -710,7 +711,7 @@ sp + scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))
 
 ```
 
-Colour_brewer-i skaalad on loodud faktormuutujaid silams pidades
+Colour_brewer-i skaalad on loodud faktormuutujaid silmas pidades.
 
 ```{r}
 dsamp <- diamonds[sample(nrow(diamonds), 1000), ]
@@ -733,7 +734,6 @@ p + scale_fill_brewer()
 # the order of colour can be reversed
 # the brewer scales look better on a darker background
 p + scale_fill_brewer(direction = -1) + theme_dark()
-
 ```
 
 
@@ -764,35 +764,29 @@ wes_palettes #gives the complete list of palettes
 Argument **breaks** kontrollib legendi. Sama kehtib ka teiste scale_xx() funktsioonide kohta.
 
 ```{r eval=FALSE}
-bp<-ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
+bp <- ToothGrowth %>% 
+  ggplot(aes(x = dose, y = len, fill = dose)) +
   geom_boxplot()
 bp
 # Box plot
 bp + scale_fill_manual(breaks = c("2", "1", "0.5"), 
-                       values=c("red", "blue", "green"))
-# Scatter plot
-#sp + scale_color_manual(breaks = c("8", "6", "4"),
-#                        values=c("red", "blue", "green"))
-
+                       values = c("red", "blue", "green"))
 
 # color palettes
-bp + scale_fill_brewer(palette="Dark2") 
+bp + scale_fill_brewer(palette = "Dark2") 
 #sp + scale_color_brewer(palette="Dark2") 
 
-#use graysacle
+# use graysacle
 #Change the gray value at the low and the high ends of the palette :
-bp + scale_fill_grey(start=0.8, end=0.2) + theme_classic() 
-#sp + scale_color_grey(start=0.8, end=0.2) + theme_classic() 
+bp + scale_fill_grey(start = 0.8, end = 0.2) + theme_classic()
 ```
-
-
 
 
 The ColorBrewer scales are documented online at http://colorbrewer2.org/ and made available in R via the RColorBrewer package. When you have a predefined mapping between values and colours, use scale_colour_manual(). 
 
-scale_colour_manual(values = c(factor_level_1 = "red", factor_level_2 = "blue")
+`scale_colour_manual(values = c(factor_level_1 = "red", factor_level_2 = "blue")`
 
-scale_colour_viridis() provided by the viridis package is a continuous analog of the categorical ColorBrewer scales.
+`scale_colour_viridis()` provided by the viridis package is a continuous analog of the categorical ColorBrewer scales.
 
 
 ## A complex ggplot
@@ -802,22 +796,21 @@ scale_colour_viridis() provided by the viridis package is a continuous analog of
  
 
 ```{r}
-library(tidyverse)
-set.seed(10) #make predictable random data
+set.seed(10)
 baseline <- rlnorm(100, 0, 1)
-post <- 0.8*baseline + rnorm(100, 0, 0.10*baseline)
-my.data <- data.frame(baseline, post)
-ggplot(my.data, aes(x=baseline, y=post)) +
-    theme_bw() + 
-    geom_point(shape=1) +    # Use hollow circles
-    geom_smooth(method=lm) +  # Add linear regression line 
-    geom_abline(slope = 1, intercept = 0, linetype = 2, colour = "red")
+post <- 0.8 * baseline + rnorm(100, 0, 0.10 * baseline)
+my_data <- tibble(baseline, post)
+my_data %>% 
+  ggplot(aes(baseline, post)) +
+  geom_point(shape = 1) + # Use hollow circles
+  geom_smooth(method = "lm") + # Add linear regression line 
+  geom_abline(slope = 1, intercept = 0, linetype = 2, colour = "red")
 ```
 
 Now we will prepare the difference data:
 ```{r}
 diff <- (post - baseline)
-diffp <- (post - baseline)/baseline*100
+diffp <- (post - baseline) / baseline * 100
 sd.diff <- sd(diff)
 sd.diffp <- sd(diffp)
 my.data <- data.frame(baseline, post, diff, diffp)
@@ -1064,14 +1057,15 @@ ggplot(sch, aes(score1, y=reorder(school, score1))) +
 
 Boxplot:
 ```{r}
-ggplot(iris, aes(Species, Sepal.Width, fill=Species)) + geom_boxplot()
+ggplot(iris, aes(Species, Sepal.Width, fill = Species)) + 
+  geom_boxplot()
 ```
 
 violin plot plus jitterplot:
 ```{r}
 ggplot(iris, aes(Species, Sepal.Width)) + 
-  geom_violin(aes(fill=Species)) +
-  geom_jitter(width = 0.1, alpha=0.4, size=0.5)
+  geom_violin(aes(fill = Species)) +
+  geom_jitter(width = 0.1, alpha = 0.4, size = 0.5)
 ```
 
 ### Kahe muutuja koos-varieeruvus 
