@@ -31,11 +31,18 @@ library(tidyverse)
 ```
 
 Nagu näha laaditakse tidyverse raamatukoguga 8 paketti:
+
 ✔ ggplot2 ✔ purrr    
 ✔ tibble ✔ dplyr   
 ✔ tidyr ✔ stringr   
 ✔ readr ✔ forcats
 
+- tibble pakett sisaldab tidyverse-spetsiifilise andmeraami (data_frame) loomiseks ja manipuleerimiseks vajalike funktsioone. Erinevalt baas R-i andmeraamist (data.frame) iseloomustab tibble-t vaikimisi prindifunktsioon, kus vaikimisi näidataksegi ainult tabeli peast 10 esimest rida. Oluliseks erinevuseks on ka **list tulpade toetus** (data.frame tulbad saavad olla ainult vektorid). List tulbad võimaldavad andmeraami paigutada kõige erinevamaid objekte: näiteks vektoreid, andmeraame, lineaarseid mudeleid ja valgeid puudleid. Lisaks ei ole tibble tabelitel veerunimesid ja veidraid tulbanimesid ei muudeta vaikimisi/automaatselt.
+- tidyr pakett sisaldab eelkõige funktsioone tibble-de kuju muutmiseks laiast formaadist pikka ja tagasi.
+- readr paketi funktsioonid vastutavad andmete impordi eest tekstipõhistest failidest lähtuvalt tidyverse reeglitest ja asendavad vastavad baas R-i funktsioonid.
+- purrr pakett sisaldab funktsioone töötamaks listidega ja asendavad baas R-i apply perekonna funktsioone.
+- dplyr pakett sisaldab põhilisi andmetöötlusverbe.
+- stringr ja forcats paketid sisaldavad vastavalt tekstipõhiste ja kategooriliste andmetega töötamise funktsioone.
 
 ## Tidy tabeli struktuur
 
@@ -292,16 +299,16 @@ select(dat, V9:V6)
 ## # A tibble: 10 x 5
 ##        V9    V8     V5     V2    V6
 ##     <dbl> <dbl>  <dbl>  <dbl> <dbl>
-##  1 0.508  0.696 0.968  0.542  0.549
-##  2 0.987  0.900 0.128  0.126  0.799
-##  3 0.0875 0.719 0.299  0.0413 0.352
-##  4 0.644  0.772 0.949  0.785  0.858
-##  5 0.729  0.256 0.648  0.398  0.112
-##  6 0.157  0.986 0.474  0.616  0.987
-##  7 0.374  0.897 0.956  0.974  0.360
-##  8 0.116  0.453 0.0873 0.321  0.167
-##  9 0.926  0.777 0.590  0.234  0.130
-## 10 0.934  0.554 0.998  0.714  0.832
+##  1 0.315  0.637 0.744  0.237  0.909
+##  2 0.643  0.187 0.196  0.172  0.937
+##  3 0.846  0.327 0.717  0.231  0.704
+##  4 0.388  0.336 0.0215 0.937  0.878
+##  5 0.125  0.803 0.0740 0.207  0.273
+##  6 0.0859 0.391 0.323  0.752  0.479
+##  7 0.0283 0.656 0.864  0.908  0.658
+##  8 0.782  0.370 0.474  0.318  0.430
+##  9 0.323  0.509 0.972  0.843  0.667
+## 10 0.841  0.380 0.841  0.0270 0.949
 ```
 
 ```r
@@ -310,18 +317,18 @@ select(dat, num_range("V", 9:6))
 
 ```
 ## # A tibble: 10 x 4
-##        V9    V8     V7    V6
-##     <dbl> <dbl>  <dbl> <dbl>
-##  1 0.508  0.696 0.315  0.549
-##  2 0.987  0.900 0.0460 0.799
-##  3 0.0875 0.719 0.860  0.352
-##  4 0.644  0.772 0.511  0.858
-##  5 0.729  0.256 0.314  0.112
-##  6 0.157  0.986 0.692  0.987
-##  7 0.374  0.897 0.915  0.360
-##  8 0.116  0.453 0.318  0.167
-##  9 0.926  0.777 0.0943 0.130
-## 10 0.934  0.554 0.718  0.832
+##        V9    V8    V7    V6
+##     <dbl> <dbl> <dbl> <dbl>
+##  1 0.315  0.637 0.469 0.909
+##  2 0.643  0.187 0.339 0.937
+##  3 0.846  0.327 0.643 0.704
+##  4 0.388  0.336 0.346 0.878
+##  5 0.125  0.803 0.754 0.273
+##  6 0.0859 0.391 0.218 0.479
+##  7 0.0283 0.656 0.998 0.658
+##  8 0.782  0.370 0.875 0.430
+##  9 0.323  0.509 0.109 0.667
+## 10 0.841  0.380 0.646 0.949
 ```
 
 ```r
