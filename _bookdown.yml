@@ -7,4 +7,5 @@ language:
     tab: 'Tabel '
   ui:
     chapter_name: ""
+before_chapter_script: '_common.R'
 
