@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2018-01-09">
+<meta name="date" content="2018-01-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -415,25 +415,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;       V9     V8    V5     V2      V6</span>
-<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.722  0.516  0.167 0.0470 0.882  </span>
-<span class="co">#&gt; 2 0.0314 0.216  0.136 0.995  0.544  </span>
-<span class="co">#&gt; 3 0.833  0.740  0.941 0.447  0.00500</span>
-<span class="co">#&gt; 4 0.566  0.0613 0.726 0.0176 0.856  </span>
-<span class="co">#&gt; 5 0.0369 0.813  0.934 0.932  0.919  </span>
-<span class="co">#&gt; 6 0.299  0.288  0.349 0.911  0.691  </span>
+<span class="co">#&gt;       V9    V8    V5    V2    V6</span>
+<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.0525 0.357 0.278 0.332 0.877</span>
+<span class="co">#&gt; 2 0.292  0.804 0.417 0.384 0.611</span>
+<span class="co">#&gt; 3 0.717  0.862 0.532 0.933 0.678</span>
+<span class="co">#&gt; 4 0.268  0.409 0.634 0.973 0.439</span>
+<span class="co">#&gt; 5 0.799  0.132 0.271 0.999 0.951</span>
+<span class="co">#&gt; 6 0.827  0.706 0.925 0.562 0.894</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;       V9     V8     V7      V6</span>
-<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.722  0.516  0.421  0.882  </span>
-<span class="co">#&gt; 2 0.0314 0.216  0.389  0.544  </span>
-<span class="co">#&gt; 3 0.833  0.740  0.724  0.00500</span>
-<span class="co">#&gt; 4 0.566  0.0613 0.0409 0.856  </span>
-<span class="co">#&gt; 5 0.0369 0.813  0.708  0.919  </span>
-<span class="co">#&gt; 6 0.299  0.288  0.165  0.691  </span>
+<span class="co">#&gt;       V9    V8    V7    V6</span>
+<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.0525 0.357 0.747 0.877</span>
+<span class="co">#&gt; 2 0.292  0.804 0.240 0.611</span>
+<span class="co">#&gt; 3 0.717  0.862 0.692 0.678</span>
+<span class="co">#&gt; 4 0.268  0.409 0.614 0.439</span>
+<span class="co">#&gt; 5 0.799  0.132 0.575 0.951</span>
+<span class="co">#&gt; 6 0.827  0.706 0.569 0.894</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
@@ -1063,7 +1063,7 @@ gitbook.start({
 "link": "https://github.com/rstats-tartu/lectures/edit/master/07-tidyverse.Rmd",
 "text": "Edit"
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["main.pdf", "main.epub"],
 "toc": {
 "collapse": "subsection"
 }
