@@ -23,7 +23,7 @@ cover-image: img/cover.png
 
 # Haara kannel, Vanemuine! {-}
 
-
+<img src="img/cover.png" width="70%" style="display: block; margin: auto;" />
 
 Kas oled tundnud, et sul tekib andmeid rohkem kui sa neid "käistsi" analüüsida jõuad? 
 Sa oled sunnitud analüüsiks valima oma multidimensionaalsetest "suurtest" andmetest ainult pisikese osa. 
