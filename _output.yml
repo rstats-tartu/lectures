@@ -18,7 +18,7 @@ bookdown::pdf_book:
     in_header: latex/preamble.tex
     after_body: latex/after_body.tex
   latex_engine: xelatex
-  output-driver: "xdvipdfmx -vv"
+  pandoc_args: ["-M", "output-driver='xdvipdfmx -vv'"]
   citation_package: natbib
   keep_tex: no
 bookdown::epub_book:
