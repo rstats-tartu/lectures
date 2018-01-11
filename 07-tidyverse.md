@@ -216,7 +216,7 @@ select(iris, ends_with("Width"))
 # Move Species variable to the front
 select(iris, Species, everything())
 #> # A tibble: 150 x 5
-#>   Species Sepal.Length Sepal.Width Petal.Length Petal…
+#>   Species Sepal.Length Sepal.Width Petal.Length Petal~
 #>   <fctr>         <dbl>       <dbl>        <dbl>  <dbl>
 #> 1 setosa          5.10        3.50         1.40  0.200
 #> 2 setosa          4.90        3.00         1.40  0.200
@@ -230,25 +230,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>      V9     V8     V5    V2     V6
-#>   <dbl>  <dbl>  <dbl> <dbl>  <dbl>
-#> 1 0.162 0.0976 0.629  0.953 0.958 
-#> 2 0.450 0.340  0.544  0.609 0.270 
-#> 3 0.829 0.717  0.662  0.624 0.0970
-#> 4 0.204 0.664  0.0186 0.501 0.0991
-#> 5 0.308 0.0230 0.960  0.863 0.224 
-#> 6 0.966 0.791  0.0144 0.352 0.179 
+#>       V9     V8    V5      V2    V6
+#>    <dbl>  <dbl> <dbl>   <dbl> <dbl>
+#> 1 0.208  0.764  0.608 0.498   0.407
+#> 2 0.787  0.677  0.546 0.181   0.644
+#> 3 0.0932 0.832  0.600 0.00406 0.624
+#> 4 0.257  0.943  0.217 0.142   0.878
+#> 5 0.541  0.0403 0.582 0.729   0.142
+#> 6 0.227  0.925  0.911 0.858   0.968
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>      V9     V8     V7     V6
-#>   <dbl>  <dbl>  <dbl>  <dbl>
-#> 1 0.162 0.0976 0.0146 0.958 
-#> 2 0.450 0.340  0.948  0.270 
-#> 3 0.829 0.717  0.602  0.0970
-#> 4 0.204 0.664  0.368  0.0991
-#> 5 0.308 0.0230 0.607  0.224 
-#> 6 0.966 0.791  0.975  0.179 
+#>       V9     V8    V7    V6
+#>    <dbl>  <dbl> <dbl> <dbl>
+#> 1 0.208  0.764  0.500 0.407
+#> 2 0.787  0.677  0.194 0.644
+#> 3 0.0932 0.832  0.636 0.624
+#> 4 0.257  0.943  0.238 0.878
+#> 5 0.541  0.0403 0.691 0.142
+#> 6 0.227  0.925  0.878 0.968
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -269,14 +269,14 @@ select(iris, -starts_with("Petal"))
 # rename() keeps all variables
 rename(iris, petal_length = Petal.Length)
 #> # A tibble: 150 x 5
-#>   Sepal.Length Sepal.Width petal_length Petal.W… Spec…
+#>   Sepal.Length Sepal.Width petal_length Petal.W~ Spec~
 #>          <dbl>       <dbl>        <dbl>    <dbl> <fct>
-#> 1         5.10        3.50         1.40    0.200 seto…
-#> 2         4.90        3.00         1.40    0.200 seto…
-#> 3         4.70        3.20         1.30    0.200 seto…
-#> 4         4.60        3.10         1.50    0.200 seto…
-#> 5         5.00        3.60         1.40    0.200 seto…
-#> 6         5.40        3.90         1.70    0.400 seto…
+#> 1         5.10        3.50         1.40    0.200 seto~
+#> 2         4.90        3.00         1.40    0.200 seto~
+#> 3         4.70        3.20         1.30    0.200 seto~
+#> 4         4.60        3.10         1.50    0.200 seto~
+#> 5         5.00        3.60         1.40    0.200 seto~
+#> 6         5.40        3.90         1.70    0.400 seto~
 #> # ... with 144 more rows
 ```
 
@@ -288,12 +288,12 @@ Keep rows in Iris that have Species level "setosa" **and** Sepal.Length value <4
 ```r
 filter(iris, Species=="setosa" & Sepal.Length < 4.5)
 #> # A tibble: 4 x 5
-#>   Sepal.Length Sepal.Width Petal.Length Petal.W… Spec…
+#>   Sepal.Length Sepal.Width Petal.Length Petal.W~ Spec~
 #>          <dbl>       <dbl>        <dbl>    <dbl> <fct>
-#> 1         4.40        2.90         1.40    0.200 seto…
-#> 2         4.30        3.00         1.10    0.100 seto…
-#> 3         4.40        3.00         1.30    0.200 seto…
-#> 4         4.40        3.20         1.30    0.200 seto…
+#> 1         4.40        2.90         1.40    0.200 seto~
+#> 2         4.30        3.00         1.10    0.100 seto~
+#> 3         4.40        3.00         1.30    0.200 seto~
+#> 4         4.40        3.20         1.30    0.200 seto~
 ```
 
 Keep rows in Iris that have Species level "setosa" **or** Sepal.Length value <4.5.
@@ -301,14 +301,14 @@ Keep rows in Iris that have Species level "setosa" **or** Sepal.Length value <4.
 ```r
 filter(iris, Species=="setosa" | Sepal.Length < 4.5)
 #> # A tibble: 50 x 5
-#>   Sepal.Length Sepal.Width Petal.Length Petal.W… Spec…
+#>   Sepal.Length Sepal.Width Petal.Length Petal.W~ Spec~
 #>          <dbl>       <dbl>        <dbl>    <dbl> <fct>
-#> 1         5.10        3.50         1.40    0.200 seto…
-#> 2         4.90        3.00         1.40    0.200 seto…
-#> 3         4.70        3.20         1.30    0.200 seto…
-#> 4         4.60        3.10         1.50    0.200 seto…
-#> 5         5.00        3.60         1.40    0.200 seto…
-#> 6         5.40        3.90         1.70    0.400 seto…
+#> 1         5.10        3.50         1.40    0.200 seto~
+#> 2         4.90        3.00         1.40    0.200 seto~
+#> 3         4.70        3.20         1.30    0.200 seto~
+#> 4         4.60        3.10         1.50    0.200 seto~
+#> 5         5.00        3.60         1.40    0.200 seto~
+#> 6         5.40        3.90         1.70    0.400 seto~
 #> # ... with 44 more rows
 ```
 
@@ -318,14 +318,14 @@ Keep rows in Iris that have Species level "not setosa" **or** Sepal.Length value
 ```r
 filter(iris, Species !="setosa" | Sepal.Length < 4.5)
 #> # A tibble: 104 x 5
-#>   Sepal.Length Sepal.Width Petal.Length Petal.… Speci…
+#>   Sepal.Length Sepal.Width Petal.Length Petal.~ Speci~
 #>          <dbl>       <dbl>        <dbl>   <dbl> <fctr>
 #> 1         4.40        2.90         1.40   0.200 setosa
 #> 2         4.30        3.00         1.10   0.100 setosa
 #> 3         4.40        3.00         1.30   0.200 setosa
 #> 4         4.40        3.20         1.30   0.200 setosa
-#> 5         7.00        3.20         4.70   1.40  versi…
-#> 6         6.40        3.20         4.50   1.50  versi…
+#> 5         7.00        3.20         4.70   1.40  versi~
+#> 6         6.40        3.20         4.50   1.50  versi~
 #> # ... with 98 more rows
 ```
 
@@ -345,14 +345,14 @@ letter "T"
 library(stringr)
 filter(iris, str_detect(Species, "^v")) 
 #> # A tibble: 100 x 5
-#>   Sepal.Length Sepal.Width Petal.Length Petal.… Speci…
+#>   Sepal.Length Sepal.Width Petal.Length Petal.~ Speci~
 #>          <dbl>       <dbl>        <dbl>   <dbl> <fctr>
-#> 1         7.00        3.20         4.70    1.40 versi…
-#> 2         6.40        3.20         4.50    1.50 versi…
-#> 3         6.90        3.10         4.90    1.50 versi…
-#> 4         5.50        2.30         4.00    1.30 versi…
-#> 5         6.50        2.80         4.60    1.50 versi…
-#> 6         5.70        2.80         4.50    1.30 versi…
+#> 1         7.00        3.20         4.70    1.40 versi~
+#> 2         6.40        3.20         4.50    1.50 versi~
+#> 3         6.90        3.10         4.90    1.50 versi~
+#> 4         5.50        2.30         4.00    1.30 versi~
+#> 5         6.50        2.80         4.60    1.50 versi~
+#> 6         5.70        2.80         4.50    1.30 versi~
 #> # ... with 94 more rows
 ```
 
@@ -478,14 +478,14 @@ mutate(iris_grouped,
        SD = sd(Sepal.Length))
 #> # A tibble: 150 x 7
 #> # Groups:   Species [3]
-#>   Sepal.Length Sepal.… Petal… Petal… Spec…  MEAN    SD
+#>   Sepal.Length Sepal.~ Petal~ Petal~ Spec~  MEAN    SD
 #>          <dbl>   <dbl>  <dbl>  <dbl> <fct> <dbl> <dbl>
-#> 1         5.10    3.50   1.40  0.200 seto…  5.01 0.352
-#> 2         4.90    3.00   1.40  0.200 seto…  5.01 0.352
-#> 3         4.70    3.20   1.30  0.200 seto…  5.01 0.352
-#> 4         4.60    3.10   1.50  0.200 seto…  5.01 0.352
-#> 5         5.00    3.60   1.40  0.200 seto…  5.01 0.352
-#> 6         5.40    3.90   1.70  0.400 seto…  5.01 0.352
+#> 1         5.10    3.50   1.40  0.200 seto~  5.01 0.352
+#> 2         4.90    3.00   1.40  0.200 seto~  5.01 0.352
+#> 3         4.70    3.20   1.30  0.200 seto~  5.01 0.352
+#> 4         4.60    3.10   1.50  0.200 seto~  5.01 0.352
+#> 5         5.00    3.60   1.40  0.200 seto~  5.01 0.352
+#> 6         5.40    3.90   1.70  0.400 seto~  5.01 0.352
 #> # ... with 144 more rows
 ```
 
@@ -740,13 +740,13 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1  1.00 Procaryota; Bacteria; Alpha-Proteobacteria; E…
+#> 1  1.00 Procaryota; Bacteria; Alpha-Proteobacteria; E~
 #> 2  2.00 Eukaryota; Chordata
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '; ', extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
-#>   index riik       hmk      klass                pere…
+#>   index riik       hmk      klass                pere~
 #> * <dbl> <chr>      <chr>    <chr>                <chr>
-#> 1  1.00 Procaryota Bacteria Alpha-Proteobacteria Esch…
+#> 1  1.00 Procaryota Bacteria Alpha-Proteobacteria Esch~
 #> 2  2.00 Eukaryota  Chordata <NA>                 <NA>
 ```
 
@@ -758,13 +758,13 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1  1.00 Prokaryota || Bacteria || Alpha-Proteobacteri…
+#> 1  1.00 Prokaryota || Bacteria || Alpha-Proteobacteri~
 #> 2  2.00 Eukaryota || Chordata
 (d1 <- dat %>% separate(taxon, c("riik", "hmk", "klass", "perekond"), sep = "\\|\\|", extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
-#>   index riik          hmk          klass       pereko…
+#>   index riik          hmk          klass       pereko~
 #> * <dbl> <chr>         <chr>        <chr>       <chr>  
-#> 1  1.00 "Prokaryota " " Bacteria " " Alpha-Pr… " Esch…
+#> 1  1.00 "Prokaryota " " Bacteria " " Alpha-Pr~ " Esch~
 #> 2  2.00 "Eukaryota "  " Chordata"  <NA>        <NA>
 ```
 
@@ -774,9 +774,9 @@ dat <- tibble(index = c(1, 2),
               taxon = c("Prokaryota.Bacteria.Alpha-Proteobacteria.Escharichia", "Eukaryota.Chordata"))
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[.]', extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
-#>   index riik       hmk      klass                pere…
+#>   index riik       hmk      klass                pere~
 #> * <dbl> <chr>      <chr>    <chr>                <chr>
-#> 1  1.00 Prokaryota Bacteria Alpha-Proteobacteria Esch…
+#> 1  1.00 Prokaryota Bacteria Alpha-Proteobacteria Esch~
 #> 2  2.00 Eukaryota  Chordata <NA>                 <NA>
 ```
 
@@ -787,13 +787,13 @@ dat <- tibble(index = c(1, 2),
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1  1.00 Prokaryota.Bacteria,Alpha-Proteobacteria.Esch…
+#> 1  1.00 Prokaryota.Bacteria,Alpha-Proteobacteria.Esch~
 #> 2  2.00 Eukaryota.Chordata
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[,\\.]', extra = "merge", fill = "right"))
 #> # A tibble: 2 x 5
-#>   index riik       hmk      klass                pere…
+#>   index riik       hmk      klass                pere~
 #> * <dbl> <chr>      <chr>    <chr>                <chr>
-#> 1  1.00 Prokaryota Bacteria Alpha-Proteobacteria Esch…
+#> 1  1.00 Prokaryota Bacteria Alpha-Proteobacteria Esch~
 #> 2  2.00 Eukaryota  Chordata <NA>                 <NA>
 ```
 
@@ -861,14 +861,14 @@ Kui faktorid on tibbles oma veeruna, siis saab nende tasemed `count()` kasutades
 ```r
 gss_cat #tibble, mille veerg "race" on faktor.
 #> # A tibble: 21,483 x 9
-#>    year marit…   age race   rinc… party… relig  denom 
+#>    year marit~   age race   rinc~ party~ relig  denom 
 #>   <int> <fctr> <int> <fctr> <fct> <fctr> <fctr> <fctr>
-#> 1  2000 Never…    26 White  $800… Ind,n… Prote… South…
-#> 2  2000 Divor…    48 White  $800… Not s… Prote… Bapti…
-#> 3  2000 Widow…    67 White  Not … Indep… Prote… No de…
-#> 4  2000 Never…    39 White  Not … Ind,n… Ortho… Not a…
-#> 5  2000 Divor…    25 White  Not … Not s… None   Not a…
-#> 6  2000 Marri…    25 White  $200… Stron… Prote… South…
+#> 1  2000 Never~    26 White  $800~ Ind,n~ Prote~ South~
+#> 2  2000 Divor~    48 White  $800~ Not s~ Prote~ Bapti~
+#> 3  2000 Widow~    67 White  Not ~ Indep~ Prote~ No de~
+#> 4  2000 Never~    39 White  Not ~ Ind,n~ Ortho~ Not a~
+#> 5  2000 Divor~    25 White  Not ~ Not s~ None   Not a~
+#> 6  2000 Marri~    25 White  $200~ Stron~ Prote~ South~
 #> # ... with 2.148e+04 more rows, and 1 more variable:
 #> #   tvhours <int>
 gss_cat %>% count(race)
@@ -1031,7 +1031,9 @@ p <- ggplot(gsscat_sum, aes(tvhours, fct_reorder(relig, tvhours))) +
 p
 ```
 
-<img src="07-tidyverse_files/figure-html/unnamed-chunk-50-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 
 ### `fct_relevel()` tõstab joonisel osad tasemed teistest ettepoole 
@@ -1043,7 +1045,9 @@ Argumendid on faktor f ja need tasemed (jutumärkides), mida sa tahad tõsta.
 p + aes(tvhours, fct_relevel(relig, "None", "Don't know"))
 ```
 
-<img src="07-tidyverse_files/figure-html/unnamed-chunk-51-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 ### Joontega plotil saab `fct_reorder2()` abil assotseerida y väärtused suurimate x väärtustega
 
@@ -1060,7 +1064,9 @@ ggplot(gsscat_sum, aes(age, N, colour = fct_reorder2(marital, age, N))) +
   labs(colour = "marital")
 ```
 
-<img src="07-tidyverse_files/figure-html/unnamed-chunk-52-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 ### Tulpdiagrammide korral kasuta `fct_infreq()`
 
@@ -1071,4 +1077,6 @@ mutate(gss_cat, marital = fct_infreq(marital) %>% fct_rev()) %>%
   ggplot(aes(marital)) + geom_bar()
 ```
 
-<img src="07-tidyverse_files/figure-html/unnamed-chunk-53-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-53-1} \end{center}
