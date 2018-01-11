@@ -17,9 +17,10 @@ fc-cache -f -v "$FONT_HOME/adobe-fonts/source-code-pro")
 
 (git clone \
    --branch master \
+   --depth 1 \
    'https://github.com/huertatipografica/Alegreya.git' \
    "$FONT_HOME/huertatipografica/alegreya" && \
-fc-cache -f -v "$FONT_HOME/huertatipografica/alegreya")
+fc-cache -f -v "$FONT_HOME/huertatipografica/alegreya/fonts")
 
 echo "rendering site"
 # Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
