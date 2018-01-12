@@ -1,6 +1,8 @@
 #!/bin/sh
 
+
 echo "installing bundled fonts"
+mkdir -p ~/.local/share/fonts/
 cp -r fonts/* ~/.local/share/fonts/
 fc-cache -fv ~/.local/share/fonts/
 
