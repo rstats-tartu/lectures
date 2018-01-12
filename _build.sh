@@ -1,7 +1,8 @@
 #!/bin/sh
 
 echo "installing bundled fonts"
-fc-cache -fv fonts/
+cp -r fonts/* ~/.local/share/fonts/
+fc-cache -fv ~/.local/share/fonts/
 
 echo "rendering site"
 # Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
