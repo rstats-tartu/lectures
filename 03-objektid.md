@@ -306,15 +306,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.8404 0.6287 0.5879 0.2750 0.0386
+#> [1] 0.459 0.523 0.902 0.980 0.988
 #> 
 #> [[2]]
-#>        a      b
-#> 1 0.8404 -1.085
-#> 2 0.6287 -1.291
-#> 3 0.5879 -0.201
-#> 4 0.2750 -0.717
-#> 5 0.0386  1.923
+#>       a      b
+#> 1 0.459  1.845
+#> 2 0.523 -0.677
+#> 3 0.902  0.413
+#> 4 0.980  0.205
+#> 5 0.988 -1.298
 #> 
 #> [[3]]
 #> 
@@ -798,7 +798,9 @@ str(diabetes)
 aggr(diabetes, prop = FALSE, numbers = TRUE)
 ```
 
-<img src="03-objektid_files/figure-epub3/unnamed-chunk-50-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{03-objektid_files/figure-latex/unnamed-chunk-50-1} \end{center}
 Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.
 
 Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?
@@ -833,7 +835,9 @@ Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda su
 matrixplot(diabetes) 
 ```
 
-<img src="03-objektid_files/figure-epub3/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{03-objektid_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 
 **Kuidas rekodeerida NA-d näiteks 0-ks:**

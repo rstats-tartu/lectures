@@ -9,8 +9,6 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
-lot: yes
-lof: yes
 fontsize: 12pt
 monofont: "Source Code Pro"
 monofontoptions: "Scale=0.7"
