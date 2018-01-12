@@ -1212,14 +1212,10 @@ p + stat_summary(fun.y=median, geom="point", shape=18,
 #add mean and SD, use pointrange
 p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), 
                  geom="pointrange", color="red")
-#> Warning: Computation failed in `stat_summary()`:
-#> Hmisc package required for this function
 #use errorbars
 p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), 
         geom="errorbar", color="red", width=0.2) +
   stat_summary(fun.y=mean, geom="point", size=3, color="red")
-#> Warning: Computation failed in `stat_summary()`:
-#> Hmisc package required for this function
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-83-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-83-2.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-83-3.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-83-4.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-83-5.svg" width="70%" style="display: block; margin: auto;" />
