@@ -5,22 +5,21 @@ FONT_HOME=~/.local/share/fonts
 
 echo "installing fonts at $PWD to $FONT_HOME"
 mkdir -p "$FONT_HOME/adobe-fonts/source-code-pro"
-mkdir -p "$FONT_HOME/huertatipografica/alegreya"
+mkdir -p "$FONT_HOME/huertatipografica/Alegreya"
 # find "$FONT_HOME" -iname '*.ttf' -exec echo '{}' \;
 
 (git clone \
    --branch release \
    --depth 1 \
    'https://github.com/adobe-fonts/source-code-pro.git' \
-   "$FONT_HOME/adobe-fonts/source-code-pro" && \
-fc-cache -f -v "$FONT_HOME/adobe-fonts/source-code-pro")
+   "$FONT_HOME/adobe-fonts/source-code-pro" )
 
 (git clone \
    --branch master \
    --depth 1 \
    'https://github.com/huertatipografica/Alegreya.git' \
-   "$FONT_HOME/huertatipografica/alegreya" && \
-fc-cache -f -v "$FONT_HOME/huertatipografica/alegreya/fonts")
+   "$FONT_HOME/huertatipografica/Alegreya" )
+fc-cache -fv "$FONT_HOME"
 
 echo "rendering site"
 # Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
