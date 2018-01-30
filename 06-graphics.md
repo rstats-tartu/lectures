@@ -630,8 +630,8 @@ grid.arrange(i2, i1, nrow = 1) # ncol = 2 also works
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-46-1.svg" width="70%" style="display: block; margin: auto;" />
 
-# Teljed
-## Telgede ulatus
+## Teljed
+### Telgede ulatus
 
 Telgede ulatust saab määrata kolmel erineval viisil
 
@@ -647,7 +647,7 @@ Telgede ulatust saab muuta ka x- ja y-teljele eraldi:
 - `scale_y_continuous(limits = range(mpg$hwy))`
 
 
-## Log skaalas teljed
+### Log skaalas teljed
 
 1. Lineaarsed andmed lineaarsetel telgedel.
 
@@ -684,7 +684,7 @@ ggplot(cars, aes(x = speed, y = dist)) +
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-49-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
-## Pöörame graafikut 90 kraadi
+### Pöörame graafikut 90 kraadi
 
 
 
@@ -698,7 +698,7 @@ ggplot(iris, mapping = aes(x = Species, y = Sepal.Length)) +
 
 
 
-## Muudame telgede markeeringuid
+### Muudame telgede markeeringuid
 
 Muudame y-telje markeeringut:
 
@@ -732,7 +732,7 @@ ggplot(mpg, aes(displ, hwy)) +
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-53-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
-## telgede ja legendi nimed
+### telgede ja legendi nimed
 
 ```r
 p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + 
@@ -755,7 +755,7 @@ p + theme(axis.title = element_blank())
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-55-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
-# Graafiku pealkiri, alapeakiri ja allkiri
+## Graafiku pealkiri, alapeakiri ja allkiri
 
 
 ```r
@@ -772,7 +772,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 
 `ggtitle()`  annab graafikule pealkirja
 
-# Graafiku legend
+## Graafiku legend
 
 Legend erinevalt graafikust endast ei ole pool-läbipaistev.
 
@@ -822,7 +822,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-# Värviskaalad 
+## Värviskaalad 
 
 ColorBreweri skaala "Set1" on hästi nähtav värvipimedatele. colour_brewer skaalad loodi diskreetsetele muutujatele, aga nad näevad sageli head välja ka pidevate muutujate korral. 
 
@@ -835,7 +835,7 @@ ggplot(mpg, aes(displ, hwy)) +
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-61-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
-## Värviskaalad pidevatele muutujatele
+### Värviskaalad pidevatele muutujatele
 
 Pidevatele muutujatele töötab scale_colour_gradient() or scale_fill_gradient().
 scale_colour_gradient2() võimaldab eristada näiteks positiivseid ja negatiivseid väärtusi erinevate värviskaaladega. 
@@ -865,7 +865,7 @@ ggplot(faithfuld) +
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-63-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
-## Värviskaalad faktormuutujatele 
+### Värviskaalad faktormuutujatele 
 
 Tavaline värviskaala on scale_colour_hue() ja scale_fill_hue(), mis valivad värve HCL värvirattast. Töötavad hästi kuni u 8 värvini.
 
@@ -1069,9 +1069,9 @@ diffplotp <- ggplot(my.data, aes(baseline, diffp)) +
 ggMarginal(diffplotp, type="histogram", bins = 25)
 ```
 
-# Erinevad ggplot geom_-id
+## Erinevad ggplot geom_-id
 
-## Kui iga muutja kohta on üks andmepunkt
+### Kui iga muutja kohta on üks andmepunkt
 
 Siis kasuta cleveland graafikut. See on parem kui barplot. 
 
@@ -1091,7 +1091,7 @@ dd %>% ggplot(aes(x=number_of_diamonds,
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-74-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
-## Tulpdiagrammid mõõdavad counte ja proportsioone
+### Tulpdiagrammid mõõdavad counte ja proportsioone
 
 
 ```r
@@ -1185,7 +1185,7 @@ ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-82-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
-## Andmepunktid on ükshaaval välja plotitud
+### Andmepunktid on ükshaaval välja plotitud
 Kõigepealt dotplot, mis ei pane andmepunkti y skaalal täpselt õigesse kohta vaid tekitab histogrammilaadsed andmebinnid, kus siiski iga punkt on eraldi näidatud. See lihtsustab veidi "kirjude" kompleksete andemsettide esitust.
 
 
@@ -1352,7 +1352,7 @@ ggplot(iris, aes(Species, Sepal.Width)) +
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-94-1.svg" width="70%" style="display: block; margin: auto;" />
 
-## Kahe muutuja koos-varieeruvus 
+### Kahe muutuja koos-varieeruvus 
 
 X-teljel on geisri Old Faithful pursete tugevus ja y-teljel pursete vaheline aeg. Kui kahe purske vahel kulub rohkem aega, siis on oodata tugevamat purset. Tundub, et see süsteem töötab kahes diskreetses reziimis.
 
