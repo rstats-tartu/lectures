@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="regex.html">
-<link rel="next" href="graafilised-lahendused.html">
+<link rel="prev" href="graafiku-legend.html">
+<link rel="next" href="erinevad-ggplot-geom-id.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -243,162 +243,175 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="funs" class="section level1">
-<h1><span class="header-section-number">6</span> Funktsioonid on R keele verbid</h1>
-<p>Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt, kes püüab ära arvata, mida on vaja teha. Vahest teeb kah. Vahest isegi seda, mida kasutaja tahtis. Mõni arvab, et R-i puudus on veateadete puudumine või krüptilised veateated. Sama kehtib ka R-i helpi kohta. Seega tasub alati kontrollida, kas R ikka tegi seda, mida sina talle enda arust ette kirjutasid.</p>
-<p>Paljudel juhtudel ütleb (hea) funktsiooni nimi mida see teeb:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create two test vectors</span>
-x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)
-y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">7</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate correlation</span>
-<span class="kw">cor</span>(x, y)
-<span class="co">#&gt; [1] -0.117</span>
-<span class="co"># calculate sum</span>
-<span class="kw">sum</span>(x)
-<span class="co">#&gt; [1] 21</span>
-<span class="co"># calculate sum of two vectors</span>
-<span class="kw">sum</span>(x, y)
-<span class="co">#&gt; [1] 38</span>
-<span class="co"># calculate average</span>
-<span class="kw">mean</span>(x)
-<span class="co">#&gt; [1] 4.2</span>
-<span class="co"># calculate median</span>
-<span class="kw">median</span>(x)
-<span class="co">#&gt; [1] 4</span>
-<span class="co"># calculate standard deviation</span>
-<span class="kw">sd</span>(x)
-<span class="co">#&gt; [1] 1.3</span>
-<span class="co"># return quantiles</span>
-<span class="kw">quantile</span>(x)
-<span class="co">#&gt;   0%  25%  50%  75% 100% </span>
-<span class="co">#&gt;    3    3    4    5    6</span>
-<span class="co"># return maximum value</span>
-<span class="kw">max</span>(x)
-<span class="co">#&gt; [1] 6</span>
-<span class="co"># return minimum value</span>
-<span class="kw">min</span>(x)
-<span class="co">#&gt; [1] 3</span></code></pre></div>
-<p>R-is teevad asju programmikesed, mida kutsutakse <strong>funktsioonideks</strong>. Te võite mõelda funktsioonist nagu verbist. Näiteks funktsiooni <code>sum()</code> korral loe: “võta summa”. Iga funktsiooni nime järel on sulud. Nende sulgude sees asuvad selle funktsiooni <strong>argumendid</strong>. Argumendid määravad ära funktsiooni käitumise. Et näha, millised argumendid on funktsiooni käivitamiseks vajalikud ja milliseid on üldse võimalik seadistada, kasuta ‘help’ käsku.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?sum</code></pre></div>
-<p>Help paneelis paremal all ilmub nüüd selle funktsiooni R dokumentatsioon. Vaata seal peatükki Usage: <code>sum(..., na.rm = FALSE)</code> ja edasi peatükki Arguments, mis ütleb, et <code>...</code> (ellipsis) tähistab vektoreid.</p>
-<pre><code>sum {base}  R Documentation 
-Sum of Vector Elements
+<div id="varviskaalad" class="section level1">
+<h1><span class="header-section-number">11</span> Värviskaalad</h1>
+<p>ColorBreweri skaala “Set1” on hästi nähtav värvipimedatele. colour_brewer skaalad loodi diskreetsetele muutujatele, aga nad näevad sageli head välja ka pidevate muutujate korral.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> drv)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-61-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div id="varviskaalad-pidevatele-muutujatele" class="section level2">
+<h2><span class="header-section-number">11.1</span> Värviskaalad pidevatele muutujatele</h2>
+<p>Pidevatele muutujatele töötab scale_colour_gradient() or scale_fill_gradient(). scale_colour_gradient2() võimaldab eristada näiteks positiivseid ja negatiivseid väärtusi erinevate värviskaaladega.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">z =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">5</span>))
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x, y)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> z), <span class="dt">size =</span> <span class="dv">5</span>)
+p
+<span class="co"># Make missing colours invisible</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient</span>(<span class="dt">na.value =</span> <span class="ot">NA</span>)
+<span class="co"># Customise on a black and white scale</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span>  <span class="st">&quot;black&quot;</span> , <span class="dt">high =</span>  <span class="st">&quot;white&quot;</span> , <span class="dt">na.value =</span>  <span class="st">&quot;red&quot;</span> )
 
-Description:
+<span class="co">#gradient between n colours</span>
+p<span class="op">+</span><span class="kw">scale_color_gradientn</span>(<span class="dt">colours =</span> <span class="kw">rainbow</span>(<span class="dv">5</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use distiller variant with continous data</span>
+<span class="kw">ggplot</span>(faithfuld) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(waiting, eruptions, <span class="dt">fill =</span> density)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_fill_distiller</span>(<span class="dt">palette =</span> <span class="st">&quot;Spectral&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-63-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="varviskaalad-faktormuutujatele" class="section level2">
+<h2><span class="header-section-number">11.2</span> Värviskaalad faktormuutujatele</h2>
+<p>Tavaline värviskaala on scale_colour_hue() ja scale_fill_hue(), mis valivad värve HCL värvirattast. Töötavad hästi kuni u 8 värvini.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ToothGrowth &lt;-<span class="st"> </span>ToothGrowth
+ToothGrowth<span class="op">$</span>dose &lt;-<span class="st"> </span><span class="kw">as.factor</span>(ToothGrowth<span class="op">$</span>dose)
+mtcars &lt;-<span class="st"> </span>mtcars
+mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw">as.factor</span>(mtcars<span class="op">$</span>cyl)
 
-sum returns the sum of all the values present in its arguments.
+<span class="co">#bp for discrete color scales</span>
+bp&lt;-<span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len, <span class="dt">fill=</span>dose)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>()
+bp
+<span class="co">#sp for continuous scales</span>
+sp&lt;-<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x=</span>wt, <span class="dt">y=</span>mpg, <span class="dt">color=</span>cyl)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
+sp
 
-Usage
+<span class="co">#You can control the default chroma and luminance, and the range </span>
+<span class="co">#of hues, with the h, c and l arguments</span>
+bp <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_hue</span>(<span class="dt">l=</span><span class="dv">40</span>, <span class="dt">c=</span><span class="dv">35</span>, <span class="dt">h =</span> <span class="kw">c</span>(<span class="dv">180</span>, <span class="dv">300</span>)) <span class="co">#boxplot</span>
+sp <span class="op">+</span><span class="st"> </span><span class="kw">scale_color_hue</span>(<span class="dt">l=</span><span class="dv">40</span>, <span class="dt">c=</span><span class="dv">35</span>) <span class="co">#scatterplot</span></code></pre></div>
+<p>Halli varjunditega töötab scale_fill_grey().</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bp <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_grey</span>(<span class="dt">start =</span> <span class="fl">0.5</span>, <span class="dt">end =</span> <span class="dv">1</span>)</code></pre></div>
+<p>Järgmine võimalus on käsitsi värve sättida</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#bp for discrete color scales</span>
+bp&lt;-<span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len, <span class="dt">fill=</span>dose)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>()
+bp
+<span class="co">#sp for continuous scales</span>
+sp&lt;-<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x=</span>wt, <span class="dt">y=</span>mpg, <span class="dt">color=</span>cyl)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
+sp
+bp <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>))
+sp <span class="op">+</span><span class="st"> </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>))</code></pre></div>
+<p>Colour_brewer-i skaalad on loodud faktormuutujaid silmas pidades.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dsamp &lt;-<span class="st"> </span>diamonds[<span class="kw">sample</span>(<span class="kw">nrow</span>(diamonds), <span class="dv">1000</span>), ]
+d &lt;-<span class="st"> </span><span class="kw">ggplot</span>(dsamp, <span class="kw">aes</span>(carat, price)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> clarity))
+d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>()
 
-sum(..., na.rm = FALSE)
+<span class="co"># Change scale label</span>
+d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>(<span class="st">&quot;Diamond</span><span class="ch">\n</span><span class="st">clarity&quot;</span>)
 
-Arguments
+<span class="co"># Select brewer palette to use, see ?scales::brewer_pal for more details</span>
+d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Greens&quot;</span>)
+d <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>)
 
-... - numeric or complex or logical vectors.
+<span class="co"># scale_fill_brewer works just the same as</span>
+<span class="co"># scale_colour_brewer but for fill colours</span>
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> price, <span class="dt">fill =</span> cut)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>, <span class="dt">binwidth =</span> <span class="dv">1000</span>)
+p <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>()
+<span class="co"># the order of colour can be reversed</span>
+<span class="co"># the brewer scales look better on a darker background</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="dt">direction =</span> <span class="op">-</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_dark</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-67-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-67-2.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-67-3.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-67-4.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-67-5.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-67-6.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Väga lahedad värviskaalad, mis eriti hästi sobivad diskreetsetele muutujatele, on wesanderson paketis. Enamus skaalasid on küll ainult 3-5 värviga. Sealt saab siiski ekstrapoleerida rohkematele värvidele (?wes_palette; ?wes_palettes).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;wesanderson&quot;)</span>
+<span class="co">#library(wesanderson)</span>
 
-na.rm   - logical. Should missing values (including NaN) be removed?</code></pre>
-<p>Seega võtab funktsioon <code>sum()</code> kaks argumenti: vektori arvudest (või loogilise vektori, mis koosneb TRUE ja FALSE määrangutest), ning “na.rm” argumendi, millele saab anda väärtuseks kas, TRUE või FALSE. Usage ütleb ka, et vaikimisi on <code>na.rm = FALSE</code>, mis tähendab, et sellele argumendile on antud vaikeväärtus – kui me seda ise ei muuda, siis jäävad NA-d arvutusse sisse. Kuna NA tähendab “tundmatu arv” siis iga tehe NA-dega annab vastuseks “tundmatu arv” ehk NA (tundmatu arv + 2 = tundmatu arv). Seega NA tulemus annab märku, et teie andmetes võib olla midagi valesti.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## moodustame vektori
-apples &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">34</span>, <span class="dv">43</span>, <span class="ot">NA</span>)
-## arvutame summa
-<span class="kw">sum</span>(apples, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
-<span class="co">#&gt; [1] 78</span></code></pre></div>
-<p>Niimoodi saab arvutada summat vektorile nimega “apples”.</p>
-<p>Sisestades R käsureale funktsiooni ilma selle sulgudeta saab masinast selle funktsiooni koodi. Näiteks:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sum
-<span class="co">#&gt; function (..., na.rm = FALSE)  .Primitive(&quot;sum&quot;)</span></code></pre></div>
-<p>Tulemus näitab, et <code>sum()</code> on <code>Primitive</code> funktsioon, mis põhimõtteliselt tähendab, et ta põhineb C koodil ja ei kasuta R koodi.</p>
-<div id="kirjutame-r-funktsiooni" class="section level2">
-<h2><span class="header-section-number">6.1</span> Kirjutame R funktsiooni</h2>
-<p>Võib ju väita, et funktsiooni ainus mõte on peita teie eest korduvad vajalikud koodiread kood funktsiooni nime taha. Põhjus, miks R-s on funktsioonid, on korduse vähendamine, koodi loetavaks muutmine ja seega ka ruumi kokkuhoid. Koodi funktsioonidena kasutamine suurendab analüüside reprodutseeritavust, kuna funktsioonis olev kood pärineb ühest allikast, mitte ei ole paljude koopiatena igal pool laiali. See muudab pikad koodilõigud hõlpsalt taaskasutatavaks sest lihtsam on kirjutada lühike funktsiooni nimi ja sisestada selle funktsiooni argumendid. Koodi funktsioonidesse kokku surumine vähendab võimalusi lollideks vigadeks, mida te võite teha pikkade koodijuppidega manipuleerides. Seega tasub teil õppida ka oma korduvaid koodiridu funktsioonidena vormistama.</p>
-<p>Kõige pealt kirjutame natuke koodi.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># two apples</span>
-apples &lt;-<span class="st"> </span><span class="dv">2</span>
-<span class="co"># three oranges</span>
-oranges &lt;-<span class="st"> </span><span class="dv">3</span> 
-<span class="co"># parentheses around expression assigning result to an object </span>
-<span class="co"># ensure that result is also printed to R console</span>
-(inventory &lt;-<span class="st"> </span>apples <span class="op">+</span><span class="st"> </span>oranges)
-<span class="co">#&gt; [1] 5</span></code></pre></div>
-<p>Ja nüüd pakendame selle tehte funktsiooni <code>add2()</code>. Funktsiooni defineerimiseks kasutame järgmist r ekspressiooni <code>function( arglist ) expr</code>, kus “arglist” on tühi või ühe või rohkema nimega argumenti kujul <code>name=expression</code>; “expr” on R-i ekspressioon st. kood mida see funktsioon käivitab. Funktsiooni viimane evlueeritav koodirida on see, mis tuleb välja selle funktsiooni outputina.</p>
-<p>All toodud näites on selleks <code>x + y</code> tehte vastus.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">add2 &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) {
-    x <span class="op">+</span><span class="st"> </span>y
-}</code></pre></div>
-<p>Seda koodi jooksutades näeme, et meie funktsioon ilmub R-i Environmenti, kuhu tekib Functions lahter. Seal on näha ka selle funktsiooni kaks argumenti, apples ja oranges.</p>
-<p>Antud funktsiooni käivitamine annab veateate, sest funktsiooni argumentidel pole väärtusi:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## run function in failsafe mode
-inventory &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">add2</span>())
-## when function fails, error message is returned
-<span class="kw">class</span>(inventory)
-<span class="co">#&gt; [1] &quot;try-error&quot;</span>
-## print error message
-<span class="kw">cat</span>(inventory)
-<span class="co">#&gt; Error in add2() : argument &quot;x&quot; is missing, with no default</span></code></pre></div>
-<p>Andes funktsiooni argumentidele väärtused, saab väljundi:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## run function with proper arguments
-inventory &lt;-<span class="st"> </span><span class="kw">add2</span>(<span class="dt">x =</span> apples, <span class="dt">y =</span> oranges)
-## numeric vector is returned
-<span class="kw">class</span>(inventory)
-<span class="co">#&gt; [1] &quot;numeric&quot;</span>
-## result
-inventory
-<span class="co">#&gt; [1] 5</span></code></pre></div>
-<p><strong>Nüüd midagi kasulikumat!</strong></p>
-<p>Funktsioon standrardvea arvutamiseks (baas R-s sellist funktsiooni ei ole): <code>sd()</code> funktsioon arvutab standardhälbe. Sellel on kaks argumenti: x and na.rm. Me teame, et SEM=SD/sqrt(N) kus N = length(x)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
-  stdev &lt;-<span class="st"> </span><span class="kw">sd</span>(x)
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
-  stdev <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n)
-}</code></pre></div>
-<p>x hoiab lihtsalt kohta andmetele, mida me tahame sinna funktsiooni suunata. <code>sd()</code>, <code>sqrt()</code> ja <code>length()</code> on olemasolevad baas R funktsioonid, mille me oma funktsiooni hõlmame.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## create numeric vector
-numbers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">3.4</span>, <span class="dv">54</span>, <span class="ot">NA</span>, <span class="dv">3</span>)
-<span class="kw">calc_sem</span>(numbers)
-<span class="co">#&gt; [1] NA</span></code></pre></div>
-<p>No jah, kui meil on andmetes tundmatu arv (<code>NA</code>) siis on ka tulemuseks tundmatu arv.</p>
-<p>Sellisel juhul tuleb NA väärtused vektorist enne selle funktsiooni kasutamist välja visata:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">numbers_filtered &lt;-<span class="st"> </span><span class="kw">na.omit</span>(numbers)
-<span class="kw">calc_sem</span>(numbers_filtered)
-<span class="co">#&gt; [1] 12.8</span></code></pre></div>
-<p>On ka võimalus funktsiooni sisse kirjutada <strong>NA väärtuste käsitlemine</strong>. Näiteks, üks võimalus on <strong>anda viga</strong> ja funktsioon katkestada, et kasutaja saaks ise ühemõtteliselt oma andmetest NA väärtused eemaldada. Teine võimalus on funktsioonis <strong>NA-d vaikimisi eemaldada</strong> ja anda selle kohta näiteks teade.</p>
-<p>NA-de vaikimisi eemaldamiseks on hetkel mitu võimalust, kasutame kõigepealt nö. valet lahendust:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
-  ## kasutame sd funktsiooni argumenti na.rm
-  stdev &lt;-<span class="st"> </span><span class="kw">sd</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
-  stdev <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n)
-}
+<span class="co">#bp for discrete color scales</span>
+bp&lt;-<span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len, <span class="dt">fill=</span>dose)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>()
+bp
 
-<span class="kw">calc_sem</span>(numbers)
-<span class="co">#&gt; [1] 11.5</span></code></pre></div>
-<p>See annab meile vale tulemuse sest <code>na.rm = TRUE</code> viskab küll NA-d välja meie vektorist aga jätab vektori pikkuse muutmata (<code>length(x)</code> rida).</p>
-<p>Teeme uue versiooni oma funktsioonist, mis viskab vaikimisi välja puuduvad väärtused, kui need on olemas ja annab siis ka selle kohta hoiatuse.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## x on numbriline vektor
-calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
-  
-  ## viskame NA väärtused vektorist välja
-  x &lt;-<span class="st"> </span><span class="kw">na.omit</span>(x)
-  
-  ## kui vektoris on NA väärtusi, siis hoiatame kasutajat
-  <span class="cf">if</span>(<span class="kw">inherits</span>(<span class="kw">na.action</span>(x), <span class="st">&quot;omit&quot;</span>)) {
-    <span class="kw">warning</span>(<span class="st">&quot;Removed NAs from vector.</span><span class="ch">\n</span><span class="st">&quot;</span>)
-  }
-  
-  ## arvutame standardvea kasutades filtreeritud vektorit
-  stdev &lt;-<span class="st"> </span><span class="kw">sd</span>(x)
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
-  stdev <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n)
-}
+<span class="co">#wes_palette(name, n, type = c(&quot;discrete&quot;, &quot;continuous&quot;))</span>
+<span class="co">#n - the nr of colors desired, type - do you want a continious scalle?</span>
+bp<span class="op">+</span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">wes_palette</span>(<span class="dt">n=</span><span class="dv">3</span>, <span class="dt">name=</span><span class="st">&quot;GrandBudapest&quot;</span>))
 
-<span class="kw">calc_sem</span>(numbers)
-<span class="co">#&gt; Warning in calc_sem(numbers): Removed NAs from vector.</span>
-<span class="co">#&gt; [1] 12.8</span>
-<span class="kw">length</span>(numbers)
-<span class="co">#&gt; [1] 5</span></code></pre></div>
-<p>Missugune funktsiooni käitumine valida, sõltub kasutaja vajadusest. Rohkem infot NA käsitlemise funktsioonide kohta saab <code>?na.omit</code> abifailist.</p>
-<p>Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline protsess ja sellele, et alati saab paremini teha.</p>
+<span class="kw">wes_palette</span>(<span class="st">&quot;Royal1&quot;</span>)
+<span class="kw">wes_palette</span>(<span class="st">&quot;GrandBudapest&quot;</span>)
+<span class="kw">wes_palette</span>(<span class="st">&quot;Cavalcanti&quot;</span>)
+<span class="kw">wes_palette</span>(<span class="st">&quot;BottleRocket&quot;</span>)
+<span class="kw">wes_palette</span>(<span class="st">&quot;Darjeeling&quot;</span>)
 
+wes_palettes <span class="co">#gives the complete list of palettes</span></code></pre></div>
+<p>Argument <strong>breaks</strong> kontrollib legendi. Sama kehtib ka teiste scale_xx() funktsioonide kohta.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bp &lt;-<span class="st"> </span>ToothGrowth <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> dose, <span class="dt">y =</span> len, <span class="dt">fill =</span> dose)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>()
+bp
+<span class="co"># Box plot</span>
+bp <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_manual</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="st">&quot;2&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;0.5&quot;</span>), 
+                       <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green&quot;</span>))
+
+<span class="co"># color palettes</span>
+bp <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) 
+<span class="co">#sp + scale_color_brewer(palette=&quot;Dark2&quot;) </span>
+
+<span class="co"># use graysacle</span>
+<span class="co">#Change the gray value at the low and the high ends of the palette :</span>
+bp <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_grey</span>(<span class="dt">start =</span> <span class="fl">0.8</span>, <span class="dt">end =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p>The ColorBrewer scales are documented online at <a href="http://colorbrewer2.org/" class="uri">http://colorbrewer2.org/</a> and made available in R via the RColorBrewer package. When you have a predefined mapping between values and colours, use scale_colour_manual().</p>
+<p><code>scale_colour_manual(values = c(factor_level_1 = &quot;red&quot;, factor_level_2 = &quot;blue&quot;)</code></p>
+<p><code>scale_colour_viridis()</code> provided by the viridis package is a continuous analog of the categorical ColorBrewer scales.</p>
+</div>
+<div id="a-complex-ggplot" class="section level2">
+<h2><span class="header-section-number">11.3</span> A complex ggplot</h2>
+<p>Let’s pretend that we are measuring the same quantity by immunoassay at baseline and after 1 year of storage at -80 degrees. We’ll add some heteroscedastic error and create some apparent degradation of about 20%:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">10</span>)
+baseline &lt;-<span class="st"> </span><span class="kw">rlnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">1</span>)
+post &lt;-<span class="st"> </span><span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>baseline <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="fl">0.10</span> <span class="op">*</span><span class="st"> </span>baseline)
+my_data &lt;-<span class="st"> </span><span class="kw">tibble</span>(baseline, post)
+my_data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(baseline, post)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="co"># Use hollow circles</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># Add linear regression line </span>
+<span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">2</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-70-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Now we will prepare the difference data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diff &lt;-<span class="st"> </span>(post <span class="op">-</span><span class="st"> </span>baseline)
+diffp &lt;-<span class="st"> </span>(post <span class="op">-</span><span class="st"> </span>baseline) <span class="op">/</span><span class="st"> </span>baseline <span class="op">*</span><span class="st"> </span><span class="dv">100</span>
+sd.diff &lt;-<span class="st"> </span><span class="kw">sd</span>(diff)
+sd.diffp &lt;-<span class="st"> </span><span class="kw">sd</span>(diffp)
+my.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(baseline, post, diff, diffp)</code></pre></div>
+<p>In standard Bland Altman plots, one plots the difference between methods against the average of the methods, but in this case, the x-axis should be the baseline result, because that is the closest thing we have to the truth.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggExtra)
+diffplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(my.data, <span class="kw">aes</span>(baseline, diff)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">2</span>, <span class="dt">colour =</span> <span class="kw">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="co">#when the +/- 2SD lines will fall outside the default plot limits </span>
+<span class="st">  </span><span class="co">#they need to be pre-stated explicitly to make the histogram line up properly. </span>
+<span class="st">  </span><span class="kw">ylim</span>(<span class="kw">mean</span>(my.data<span class="op">$</span>diff) <span class="op">-</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>sd.diff, <span class="kw">mean</span>(my.data<span class="op">$</span>diff) <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>sd.diff) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">3</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(my.data<span class="op">$</span>diff)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(my.data<span class="op">$</span>diff) <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>sd.diff, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(my.data<span class="op">$</span>diff) <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>sd.diff, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Difference pre and post Storage (mg/L)&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Baseline Concentration (mg/L)&quot;</span>)
+ 
+<span class="co">#And now for the magic - we&#39;ll use 25 bins</span>
+<span class="kw">ggMarginal</span>(diffplot, <span class="dt">type=</span><span class="st">&quot;histogram&quot;</span>, <span class="dt">bins =</span> <span class="dv">25</span>)</code></pre></div>
+<p>We can also obviously do the percent difference.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diffplotp &lt;-<span class="st"> </span><span class="kw">ggplot</span>(my.data, <span class="kw">aes</span>(baseline, diffp)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">2</span>, <span class="dt">colour =</span> <span class="kw">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">3</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(my.data<span class="op">$</span>diffp)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(my.data<span class="op">$</span>diffp) <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>sd.diffp, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(my.data<span class="op">$</span>diffp) <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>sd.diffp, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Difference pre and post Storage (%)&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Baseline Concentration (mg/L)&quot;</span>)
+
+
+<span class="kw">ggMarginal</span>(diffplotp, <span class="dt">type=</span><span class="st">&quot;histogram&quot;</span>, <span class="dt">bins =</span> <span class="dv">25</span>)</code></pre></div>
 </div>
 </div>
             </section>
@@ -406,8 +419,8 @@ calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
           </div>
         </div>
       </div>
-<a href="regex.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="graafilised-lahendused.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="graafiku-legend.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="erinevad-ggplot-geom-id.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -436,7 +449,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstats-tartu/lectures/edit/master/05-funktsioonid.Rmd",
+"link": "https://github.com/rstats-tartu/lectures/edit/master/06-graphics.Rmd",
 "text": "Edit"
 },
 "download": ["main.pdf", "main.epub"],

@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="regex.html">
-<link rel="next" href="graafilised-lahendused.html">
+<link rel="prev" href="varviskaalad.html">
+<link rel="next" href="tidyverse.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -243,161 +243,173 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="funs" class="section level1">
-<h1><span class="header-section-number">6</span> Funktsioonid on R keele verbid</h1>
-<p>Kasutaja ütleb nii täpselt kui oskab, mida ta tahab ja R-s elab kratt, kes püüab ära arvata, mida on vaja teha. Vahest teeb kah. Vahest isegi seda, mida kasutaja tahtis. Mõni arvab, et R-i puudus on veateadete puudumine või krüptilised veateated. Sama kehtib ka R-i helpi kohta. Seega tasub alati kontrollida, kas R ikka tegi seda, mida sina talle enda arust ette kirjutasid.</p>
-<p>Paljudel juhtudel ütleb (hea) funktsiooni nimi mida see teeb:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create two test vectors</span>
-x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)
-y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">7</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate correlation</span>
-<span class="kw">cor</span>(x, y)
-<span class="co">#&gt; [1] -0.117</span>
-<span class="co"># calculate sum</span>
-<span class="kw">sum</span>(x)
-<span class="co">#&gt; [1] 21</span>
-<span class="co"># calculate sum of two vectors</span>
-<span class="kw">sum</span>(x, y)
-<span class="co">#&gt; [1] 38</span>
-<span class="co"># calculate average</span>
-<span class="kw">mean</span>(x)
-<span class="co">#&gt; [1] 4.2</span>
-<span class="co"># calculate median</span>
-<span class="kw">median</span>(x)
-<span class="co">#&gt; [1] 4</span>
-<span class="co"># calculate standard deviation</span>
-<span class="kw">sd</span>(x)
-<span class="co">#&gt; [1] 1.3</span>
-<span class="co"># return quantiles</span>
-<span class="kw">quantile</span>(x)
-<span class="co">#&gt;   0%  25%  50%  75% 100% </span>
-<span class="co">#&gt;    3    3    4    5    6</span>
-<span class="co"># return maximum value</span>
-<span class="kw">max</span>(x)
-<span class="co">#&gt; [1] 6</span>
-<span class="co"># return minimum value</span>
-<span class="kw">min</span>(x)
-<span class="co">#&gt; [1] 3</span></code></pre></div>
-<p>R-is teevad asju programmikesed, mida kutsutakse <strong>funktsioonideks</strong>. Te võite mõelda funktsioonist nagu verbist. Näiteks funktsiooni <code>sum()</code> korral loe: “võta summa”. Iga funktsiooni nime järel on sulud. Nende sulgude sees asuvad selle funktsiooni <strong>argumendid</strong>. Argumendid määravad ära funktsiooni käitumise. Et näha, millised argumendid on funktsiooni käivitamiseks vajalikud ja milliseid on üldse võimalik seadistada, kasuta ‘help’ käsku.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?sum</code></pre></div>
-<p>Help paneelis paremal all ilmub nüüd selle funktsiooni R dokumentatsioon. Vaata seal peatükki Usage: <code>sum(..., na.rm = FALSE)</code> ja edasi peatükki Arguments, mis ütleb, et <code>...</code> (ellipsis) tähistab vektoreid.</p>
-<pre><code>sum {base}  R Documentation 
-Sum of Vector Elements
+<div id="erinevad-ggplot-geom_-id" class="section level1">
+<h1><span class="header-section-number">12</span> Erinevad ggplot geom_-id</h1>
+<div id="kui-iga-muutja-kohta-on-uks-andmepunkt" class="section level2">
+<h2><span class="header-section-number">12.1</span> Kui iga muutja kohta on üks andmepunkt</h2>
+<p>Siis kasuta cleveland graafikut. See on parem kui barplot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dd &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(clarity) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">number_of_diamonds=</span><span class="kw">n</span>())
+dd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>number_of_diamonds, 
+                  <span class="dt">y=</span><span class="kw">reorder</span>(clarity, number_of_diamonds))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">panel.grid.major.y =</span> <span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">&quot;grey60&quot;</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;clarity&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-74-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tulpdiagrammid-moodavad-counte-ja-proportsioone" class="section level2">
+<h2><span class="header-section-number">12.2</span> Tulpdiagrammid mõõdavad counte ja proportsioone</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(diamonds)
+<span class="co">#&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    53940 obs. of  10 variables:</span>
+<span class="co">#&gt;  $ carat  : num  0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...</span>
+<span class="co">#&gt;  $ cut    : Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 2 4 2 3 3 3 1 3 ...</span>
+<span class="co">#&gt;  $ color  : Ord.factor w/ 7 levels &quot;D&quot;&lt;&quot;E&quot;&lt;&quot;F&quot;&lt;&quot;G&quot;&lt;..: 2 2 2 6 7 7 6 5 2 5 ...</span>
+<span class="co">#&gt;  $ clarity: Ord.factor w/ 8 levels &quot;I1&quot;&lt;&quot;SI2&quot;&lt;&quot;SI1&quot;&lt;..: 2 3 5 4 2 6 7 3 4 5 ...</span>
+<span class="co">#&gt;  $ depth  : num  61.5 59.8 56.9 62.4 63.3 62.8 62.3 61.9 65.1 59.4 ...</span>
+<span class="co">#&gt;  $ table  : num  55 61 65 58 58 57 57 55 61 61 ...</span>
+<span class="co">#&gt;  $ price  : int  326 326 327 334 335 336 336 337 337 338 ...</span>
+<span class="co">#&gt;  $ x      : num  3.95 3.89 4.05 4.2 4.34 3.94 3.95 4.07 3.87 4 ...</span>
+<span class="co">#&gt;  $ y      : num  3.98 3.84 4.07 4.23 4.35 3.96 3.98 4.11 3.78 4.05 ...</span>
+<span class="co">#&gt;  $ z      : num  2.43 2.31 2.31 2.63 2.75 2.48 2.47 2.53 2.49 2.39 ...</span></code></pre></div>
+<p>loeb üles, mitu korda esineb iga cut</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> cut)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-76-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Pane tähele, et y-teljel on arv, mitu korda esineb tabelis iga cut. See arv ei ole tabelis muutuja. geom_bar, geom_hist, geom_dens arvutavad plotile uued y väärtused — nad jagavad andmed binidesse ja loevad üles, mitu andmepunkti sattus igasse bini.</p>
+<p>Kui tahad tulpdiagrammi proportsioonidest, mitu korda eineb tabelis igat cut-i, siis tee nii:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> ..prop.., <span class="dt">group =</span> <span class="dv">1</span>))</code></pre></div>
+<p>Pane tähele et tulpade omavahelised suhted jäid samaks. Muutus ainult y-telje tähistus.</p>
+<p>Edasi lisame eelnevale veel ühe muutuja: clarity. Nii saame üles lugeda kõigi cut-i ja clarity kombinatsioonide esinemise arvu või sageduse. Erinvate clarity tasemete esinemiste arv samal cut-i tasemel on siin üksteise otsa kuhjatud, mis tähendab, et tulpade kõrgus ei muutu võrreldes eelnevaga.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity))</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-78-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Kui me tahame, et cut-i ja clarity kombinatsioonid oleks kastidena ükteise sees, pigem kui üksteise otsa kuhjatud, siis kasutame position = “identity” argumenti.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>, <span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>) </code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-79-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>ka see graafik pole väga lihtne lugeda. Parem viime clarity klassid üksteise kõrvale</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-80-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Eelnev on hea viis kuidas võrrelda clarity tasemete esinemis-sagedusi ühe cut-i taseme piires.</p>
+<p>Ja lõpuks, position=“fill” normaliseerib tulbad, mis muudab selle, mis toimub iga cut-i sees, hästi võrreldavaks. See on hea viis, kuidas võrrelda clarity tasemete proportsioone erinevate cut-i tasemete vahel.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-81-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Ja lõpuks, kui te tahate teha midagi, mis on enamasti keskmiselt rumal valik, ehk plottida tulpdiagrammi viisil, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: <code>geom_bar(stat = &quot;identity&quot;)</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a=</span><span class="kw">c</span>(<span class="fl">2.3</span>, <span class="dv">4</span>, <span class="fl">5.2</span>), <span class="dt">b=</span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>))
+<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(b, a)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-82-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="andmepunktid-on-ukshaaval-valja-plotitud" class="section level2">
+<h2><span class="header-section-number">12.3</span> Andmepunktid on ükshaaval välja plotitud</h2>
+<p>Kõigepealt dotplot, mis ei pane andmepunkti y skaalal täpselt õigesse kohta vaid tekitab histogrammilaadsed andmebinnid, kus siiski iga punkt on eraldi näidatud. See lihtsustab veidi “kirjude” kompleksete andemsettide esitust.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ToothGrowth &lt;-<span class="st"> </span>ToothGrowth
+ToothGrowth<span class="op">$</span>dose &lt;-<span class="st"> </span><span class="kw">as.factor</span>(ToothGrowth<span class="op">$</span>dose)
+p&lt;-<span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_dotplot</span>(<span class="dt">binaxis=</span><span class="st">&#39;y&#39;</span>, <span class="dt">stackdir=</span><span class="st">&#39;center&#39;</span>)
+p
+<span class="co"># Change dotsize and stack ratio, add line or dot for median</span>
+<span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_dotplot</span>(<span class="dt">binaxis=</span><span class="st">&#39;y&#39;</span>, <span class="dt">stackdir=</span><span class="st">&#39;center&#39;</span>,
+               <span class="dt">stackratio=</span><span class="fl">1.5</span>, <span class="dt">dotsize=</span><span class="fl">0.7</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> median, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">shape =</span> <span class="dv">95</span>, 
+               <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">15</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()
 
-Description:
+p <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>median, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="dt">shape=</span><span class="dv">18</span>,
+                 <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)
 
-sum returns the sum of all the values present in its arguments.
+<span class="co">#add mean and SD, use pointrange</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.data=</span>mean_sdl, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult=</span><span class="dv">1</span>), 
+                 <span class="dt">geom=</span><span class="st">&quot;pointrange&quot;</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)
+<span class="co">#use errorbars</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.data=</span>mean_sdl, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult=</span><span class="dv">1</span>), 
+        <span class="dt">geom=</span><span class="st">&quot;errorbar&quot;</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">width=</span><span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>mean, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="dt">size=</span><span class="dv">3</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-83-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-83-2.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-83-3.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-83-4.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-83-5.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Sama jitterplotina — nüüd on iga punkt y suhtes õiges kohas, aga joonis ei näe enam liiga puhas välja.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.05</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> median, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">shape =</span> <span class="dv">95</span>, 
+               <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">alpha=</span><span class="fl">0.6</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-84-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Change dot plot colors by groups</span>
+p&lt;-<span class="kw">ggplot</span>(ToothGrowth, <span class="kw">aes</span>(<span class="dt">x=</span>dose, <span class="dt">y=</span>len, <span class="dt">fill=</span>dose)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_dotplot</span>(<span class="dt">binaxis=</span><span class="st">&#39;y&#39;</span>, <span class="dt">stackdir=</span><span class="st">&#39;center&#39;</span>)
+p</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-85-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>It is also possible to change manually dot plot colors using the functions :</p>
+<p>scale_fill_manual() : to use custom colors</p>
+<p>scale_fill_brewer() : to use color palettes from RColorBrewer package</p>
+<p>scale_fill_grey() : to use grey color palettes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Choose which items to display :</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_discrete</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="st">&quot;0.5&quot;</span>, <span class="st">&quot;2&quot;</span>))
+<span class="co">#&gt; Warning: Removed 20 rows containing non-finite values</span>
+<span class="co">#&gt; (stat_bindot).</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-86-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Dotplot kui histogram:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_dotplot</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-87-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Histogram:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">10</span>, <span class="dt">color=</span><span class="st">&quot;white&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;navyblue&quot;</span>) </code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-88-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggthemes)
+d &lt;-<span class="st"> </span>iris        <span class="co"># Full data set</span>
+d_bg &lt;-<span class="st"> </span>d[, <span class="op">-</span><span class="dv">5</span>]  <span class="co"># Background Data - full without the 5th column (Species)</span>
 
-Usage
-
-sum(..., na.rm = FALSE)
-
-Arguments
-
-... - numeric or complex or logical vectors.
-
-na.rm   - logical. Should missing values (including NaN) be removed?</code></pre>
-<p>Seega võtab funktsioon <code>sum()</code> kaks argumenti: vektori arvudest (või loogilise vektori, mis koosneb TRUE ja FALSE määrangutest), ning “na.rm” argumendi, millele saab anda väärtuseks kas, TRUE või FALSE. Usage ütleb ka, et vaikimisi on <code>na.rm = FALSE</code>, mis tähendab, et sellele argumendile on antud vaikeväärtus – kui me seda ise ei muuda, siis jäävad NA-d arvutusse sisse. Kuna NA tähendab “tundmatu arv” siis iga tehe NA-dega annab vastuseks “tundmatu arv” ehk NA (tundmatu arv + 2 = tundmatu arv). Seega NA tulemus annab märku, et teie andmetes võib olla midagi valesti.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## moodustame vektori
-apples &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">34</span>, <span class="dv">43</span>, <span class="ot">NA</span>)
-## arvutame summa
-<span class="kw">sum</span>(apples, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
-<span class="co">#&gt; [1] 78</span></code></pre></div>
-<p>Niimoodi saab arvutada summat vektorile nimega “apples”.</p>
-<p>Sisestades R käsureale funktsiooni ilma selle sulgudeta saab masinast selle funktsiooni koodi. Näiteks:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sum
-<span class="co">#&gt; function (..., na.rm = FALSE)  .Primitive(&quot;sum&quot;)</span></code></pre></div>
-<p>Tulemus näitab, et <code>sum()</code> on <code>Primitive</code> funktsioon, mis põhimõtteliselt tähendab, et ta põhineb C koodil ja ei kasuta R koodi.</p>
-<div id="kirjutame-r-funktsiooni" class="section level2">
-<h2><span class="header-section-number">6.1</span> Kirjutame R funktsiooni</h2>
-<p>Võib ju väita, et funktsiooni ainus mõte on peita teie eest korduvad vajalikud koodiread kood funktsiooni nime taha. Põhjus, miks R-s on funktsioonid, on korduse vähendamine, koodi loetavaks muutmine ja seega ka ruumi kokkuhoid. Koodi funktsioonidena kasutamine suurendab analüüside reprodutseeritavust, kuna funktsioonis olev kood pärineb ühest allikast, mitte ei ole paljude koopiatena igal pool laiali. See muudab pikad koodilõigud hõlpsalt taaskasutatavaks sest lihtsam on kirjutada lühike funktsiooni nimi ja sisestada selle funktsiooni argumendid. Koodi funktsioonidesse kokku surumine vähendab võimalusi lollideks vigadeks, mida te võite teha pikkade koodijuppidega manipuleerides. Seega tasub teil õppida ka oma korduvaid koodiridu funktsioonidena vormistama.</p>
-<p>Kõige pealt kirjutame natuke koodi.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># two apples</span>
-apples &lt;-<span class="st"> </span><span class="dv">2</span>
-<span class="co"># three oranges</span>
-oranges &lt;-<span class="st"> </span><span class="dv">3</span> 
-<span class="co"># parentheses around expression assigning result to an object </span>
-<span class="co"># ensure that result is also printed to R console</span>
-(inventory &lt;-<span class="st"> </span>apples <span class="op">+</span><span class="st"> </span>oranges)
-<span class="co">#&gt; [1] 5</span></code></pre></div>
-<p>Ja nüüd pakendame selle tehte funktsiooni <code>add2()</code>. Funktsiooni defineerimiseks kasutame järgmist r ekspressiooni <code>function( arglist ) expr</code>, kus “arglist” on tühi või ühe või rohkema nimega argumenti kujul <code>name=expression</code>; “expr” on R-i ekspressioon st. kood mida see funktsioon käivitab. Funktsiooni viimane evlueeritav koodirida on see, mis tuleb välja selle funktsiooni outputina.</p>
-<p>All toodud näites on selleks <code>x + y</code> tehte vastus.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">add2 &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) {
-    x <span class="op">+</span><span class="st"> </span>y
-}</code></pre></div>
-<p>Seda koodi jooksutades näeme, et meie funktsioon ilmub R-i Environmenti, kuhu tekib Functions lahter. Seal on näha ka selle funktsiooni kaks argumenti, apples ja oranges.</p>
-<p>Antud funktsiooni käivitamine annab veateate, sest funktsiooni argumentidel pole väärtusi:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## run function in failsafe mode
-inventory &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">add2</span>())
-## when function fails, error message is returned
-<span class="kw">class</span>(inventory)
-<span class="co">#&gt; [1] &quot;try-error&quot;</span>
-## print error message
-<span class="kw">cat</span>(inventory)
-<span class="co">#&gt; Error in add2() : argument &quot;x&quot; is missing, with no default</span></code></pre></div>
-<p>Andes funktsiooni argumentidele väärtused, saab väljundi:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## run function with proper arguments
-inventory &lt;-<span class="st"> </span><span class="kw">add2</span>(<span class="dt">x =</span> apples, <span class="dt">y =</span> oranges)
-## numeric vector is returned
-<span class="kw">class</span>(inventory)
-<span class="co">#&gt; [1] &quot;numeric&quot;</span>
-## result
-inventory
-<span class="co">#&gt; [1] 5</span></code></pre></div>
-<p><strong>Nüüd midagi kasulikumat!</strong></p>
-<p>Funktsioon standrardvea arvutamiseks (baas R-s sellist funktsiooni ei ole): <code>sd()</code> funktsioon arvutab standardhälbe. Sellel on kaks argumenti: x and na.rm. Me teame, et SEM=SD/sqrt(N) kus N = length(x)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
-  stdev &lt;-<span class="st"> </span><span class="kw">sd</span>(x)
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
-  stdev <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n)
-}</code></pre></div>
-<p>x hoiab lihtsalt kohta andmetele, mida me tahame sinna funktsiooni suunata. <code>sd()</code>, <code>sqrt()</code> ja <code>length()</code> on olemasolevad baas R funktsioonid, mille me oma funktsiooni hõlmame.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## create numeric vector
-numbers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">3.4</span>, <span class="dv">54</span>, <span class="ot">NA</span>, <span class="dv">3</span>)
-<span class="kw">calc_sem</span>(numbers)
-<span class="co">#&gt; [1] NA</span></code></pre></div>
-<p>No jah, kui meil on andmetes tundmatu arv (<code>NA</code>) siis on ka tulemuseks tundmatu arv.</p>
-<p>Sellisel juhul tuleb NA väärtused vektorist enne selle funktsiooni kasutamist välja visata:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">numbers_filtered &lt;-<span class="st"> </span><span class="kw">na.omit</span>(numbers)
-<span class="kw">calc_sem</span>(numbers_filtered)
-<span class="co">#&gt; [1] 12.8</span></code></pre></div>
-<p>On ka võimalus funktsiooni sisse kirjutada <strong>NA väärtuste käsitlemine</strong>. Näiteks, üks võimalus on <strong>anda viga</strong> ja funktsioon katkestada, et kasutaja saaks ise ühemõtteliselt oma andmetest NA väärtused eemaldada. Teine võimalus on funktsioonis <strong>NA-d vaikimisi eemaldada</strong> ja anda selle kohta näiteks teade.</p>
-<p>NA-de vaikimisi eemaldamiseks on hetkel mitu võimalust, kasutame kõigepealt nö. valet lahendust:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
-  ## kasutame sd funktsiooni argumenti na.rm
-  stdev &lt;-<span class="st"> </span><span class="kw">sd</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
-  stdev <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n)
-}
-
-<span class="kw">calc_sem</span>(numbers)
-<span class="co">#&gt; [1] 11.5</span></code></pre></div>
-<p>See annab meile vale tulemuse sest <code>na.rm = TRUE</code> viskab küll NA-d välja meie vektorist aga jätab vektori pikkuse muutmata (<code>length(x)</code> rida).</p>
-<p>Teeme uue versiooni oma funktsioonist, mis viskab vaikimisi välja puuduvad väärtused, kui need on olemas ja annab siis ka selle kohta hoiatuse.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## x on numbriline vektor
-calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
-  
-  ## viskame NA väärtused vektorist välja
-  x &lt;-<span class="st"> </span><span class="kw">na.omit</span>(x)
-  
-  ## kui vektoris on NA väärtusi, siis hoiatame kasutajat
-  <span class="cf">if</span>(<span class="kw">inherits</span>(<span class="kw">na.action</span>(x), <span class="st">&quot;omit&quot;</span>)) {
-    <span class="kw">warning</span>(<span class="st">&quot;Removed NAs from vector.</span><span class="ch">\n</span><span class="st">&quot;</span>)
-  }
-  
-  ## arvutame standardvea kasutades filtreeritud vektorit
-  stdev &lt;-<span class="st"> </span><span class="kw">sd</span>(x)
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
-  stdev <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n)
-}
-
-<span class="kw">calc_sem</span>(numbers)
-<span class="co">#&gt; Warning in calc_sem(numbers): Removed NAs from vector.</span>
-<span class="co">#&gt; [1] 12.8</span>
-<span class="kw">length</span>(numbers)
-<span class="co">#&gt; [1] 5</span></code></pre></div>
-<p>Missugune funktsiooni käitumine valida, sõltub kasutaja vajadusest. Rohkem infot NA käsitlemise funktsioonide kohta saab <code>?na.omit</code> abifailist.</p>
-<p>Olgu see õpetuseks, et funktsioonide kirjutamine on järk-järguline protsess ja sellele, et alati saab paremini teha.</p>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> d, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Width, <span class="dt">fill =</span> Species)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">data =</span> d_bg, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.8</span>, <span class="dt">bins=</span><span class="dv">10</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">bins=</span><span class="dv">10</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(Species<span class="op">~</span>.) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st">  </span><span class="co"># to remove the legend</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()          <span class="co"># for clean look overall</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-89-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>density plot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris<span class="op">%&gt;%</span><span class="kw">ggplot</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(Sepal.Width, <span class="dt">fill=</span>Species, <span class="dt">color=</span>Species, <span class="dt">alpha=</span><span class="fl">0.5</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-90-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>joyplot võimaldab kõrvuti panna isegi sadu density plotte</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggjoy)
+<span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Species, <span class="dt">fill=</span>Species)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_joy</span>(<span class="dt">scale=</span><span class="dv">4</span>, <span class="dt">rel_min_height=</span><span class="fl">0.01</span>, <span class="dt">alpha=</span><span class="fl">0.9</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_joy</span>(<span class="dt">font_size =</span> <span class="dv">13</span>, <span class="dt">grid=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-91-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Joyplot, kui meil on väga palju kõrvuti tihedusjaotusi võrrelda</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sch &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/schools.csv&quot;</span>)
+sch<span class="op">$</span>school &lt;-<span class="st"> </span><span class="kw">as.factor</span>(sch<span class="op">$</span>school)
+<span class="kw">ggplot</span>(sch, <span class="kw">aes</span>(score1, <span class="dt">y=</span><span class="kw">reorder</span>(school, score1))) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_joy</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_tufte</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-92-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Boxplot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Species, Sepal.Width, <span class="dt">fill =</span> Species)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-93-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>violin plot plus jitterplot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Species, Sepal.Width)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_violin</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Species)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">alpha =</span> <span class="fl">0.4</span>, <span class="dt">size =</span> <span class="fl">0.5</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-94-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kahe-muutuja-koos-varieeruvus" class="section level2">
+<h2><span class="header-section-number">12.4</span> Kahe muutuja koos-varieeruvus</h2>
+<p>X-teljel on geisri Old Faithful pursete tugevus ja y-teljel pursete vaheline aeg. Kui kahe purske vahel kulub rohkem aega, siis on oodata tugevamat purset. Tundub, et see süsteem töötab kahes diskreetses reziimis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">ggplot</span>(faithful, <span class="kw">aes</span>(<span class="dt">x =</span> eruptions, <span class="dt">y =</span> waiting)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlim</span>(<span class="fl">0.5</span>, <span class="dv">6</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylim</span>(<span class="dv">40</span>, <span class="dv">110</span>)
+<span class="co">#m + stat_density_2d(aes(fill = ..level..), geom = &quot;polygon&quot;)</span>
+m <span class="op">+</span><span class="st"> </span><span class="kw">geom_density_2d</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-95-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Kui punkte on liiga palju, et välja trükkida, kasuta geom = “polygon” varianti.</p>
 
 </div>
 </div>
@@ -406,8 +418,8 @@ calc_sem &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
           </div>
         </div>
       </div>
-<a href="regex.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="graafilised-lahendused.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="varviskaalad.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -436,7 +448,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstats-tartu/lectures/edit/master/05-funktsioonid.Rmd",
+"link": "https://github.com/rstats-tartu/lectures/edit/master/06-graphics.Rmd",
 "text": "Edit"
 },
 "download": ["main.pdf", "main.epub"],
