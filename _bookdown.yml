@@ -1,4 +1,5 @@
-book_filename: "main"
+new_session: yes
+book_filename: main
 language:
   language:
   label:
@@ -6,4 +7,5 @@ language:
     tab: 'Tabel '
   ui:
     chapter_name: ""
+before_chapter_script: '_common.R'
 

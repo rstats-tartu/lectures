@@ -17,7 +17,6 @@ Iga kord kui te regular expressionis näete \ peate seda stringis, mis represent
 `writeLines()` näitab kuidas R näeb su stringi peale seda, kui erimärgid on välja loetud (parsitud).  
 
 ```{r eval=FALSE}
-
 writeLines("\\.") # \.
 writeLines("\\ is a backslash") # \ is a backslash
 ```
@@ -108,9 +107,8 @@ abc|d..f will match either "abc", or "deaf".
 
 
 Et mitte interpreteerida stringi tavalise regex-ina:
- `regex(pattern, ignore_case = FALSE, multiline = FALSE, comments = FALSE, dotall = FALSE, ...)` ignore cases, match end of lines and end of strings, allow R comments within regex's , and/or to have . match everything including \n. Näiteks `str_detect("I", regex("i", TRUE))`
-
-
+`regex(pattern, ignore_case = FALSE, multiline = FALSE, comments = FALSE, dotall = FALSE, ...)` ignore cases, match end of lines and end of strings, allow R comments within regex's , and/or to have `.` match everything including `\n`. 
+Näiteks `str_detect("I", regex("i", TRUE))`
 
 
 ## Common operations with regular expressions

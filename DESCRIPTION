@@ -16,5 +16,7 @@ Imports:
     ggrepel,
     ggjoy,
     wesanderson,
-    scatterplot3d
+    scatterplot3d,
+    svglite,
+    Hmisc
 Remotes: rstudio/bookdown
