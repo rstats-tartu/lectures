@@ -499,7 +499,9 @@ i <- iris %>% mutate(
     ))
 ```
 
+### `droplevels()` viskab välja kasutamata faktori tasemed
 
+`df1$sex <- droplevels(df1$sex)`
 
 
 ### `fct_recode()` rekodeerib faktori tasemed 
