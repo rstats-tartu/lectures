@@ -731,6 +731,26 @@ ggplot(mpg, aes(displ, hwy)) +
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-53-1.svg" width="70%" style="display: block; margin: auto;" />
 
+Muudame teljemarkeeringute järjekorda
+
+```r
+p <- ggplot(iris, aes(Species, Sepal.Length)) + geom_boxplot()
+p
+p + scale_x_discrete(breaks=c("versicolor", "setosa"))
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-54-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-54-2.svg" width="70%" style="display: block; margin: auto;" />
+
+Muuda teljemarkeeringuid ja kustuta telje nimi.
+
+
+```r
+p + scale_x_discrete(labels=c("setosa" = "sp 1", "versicolor" = "sp2"), name=NULL)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-55-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
 
 ### telgede ja legendi nimed
 
@@ -744,7 +764,7 @@ p + labs(
      )
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-54-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-56-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Eemaldame telgede nimed:
 
@@ -752,7 +772,7 @@ Eemaldame telgede nimed:
 p + theme(axis.title = element_blank())
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-55-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-57-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ## Graafiku pealkiri, alapeakiri ja allkiri
@@ -768,7 +788,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
       )
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-56-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-58-1.svg" width="70%" style="display: block; margin: auto;" />
 
 `ggtitle()`  annab graafikule pealkirja
 
@@ -832,7 +852,7 @@ ggplot(mpg, aes(displ, hwy)) +
   scale_colour_brewer(palette = "Set1")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-61-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-63-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ### Värviskaalad pidevatele muutujatele
@@ -862,7 +882,7 @@ ggplot(faithfuld) +
   scale_fill_distiller(palette = "Spectral")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-63-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-65-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ### Värviskaalad faktormuutujatele 
@@ -941,7 +961,7 @@ p + scale_fill_brewer()
 p + scale_fill_brewer(direction = -1) + theme_dark()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-67-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-67-2.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-67-3.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-67-4.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-67-5.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-67-6.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-69-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-69-2.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-69-3.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-69-4.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-69-5.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-69-6.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Väga lahedad värviskaalad, mis eriti hästi sobivad diskreetsetele muutujatele, on wesanderson paketis. Enamus skaalasid on küll ainult 3-5 värviga. Sealt saab siiski ekstrapoleerida rohkematele värvidele (?wes_palette; ?wes_palettes).
@@ -1017,7 +1037,7 @@ my_data %>%
   geom_abline(slope = 1, intercept = 0, linetype = 2, colour = "red")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-70-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-72-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Now we will prepare the difference data:
 
@@ -1088,7 +1108,7 @@ dd %>% ggplot(aes(x=number_of_diamonds,
   labs(y="clarity")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-74-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-76-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ### Tulpdiagrammid mõõdavad counte ja proportsioone
@@ -1118,7 +1138,7 @@ ggplot(diamonds) +
   theme(legend.position="none")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-76-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-78-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Pane tähele, et y-teljel on arv, mitu korda esineb tabelis iga cut. See arv ei ole tabelis muutuja. geom_bar, geom_hist, geom_dens arvutavad plotile uued y väärtused --- nad jagavad andmed binidesse ja loevad üles, mitu andmepunkti sattus igasse bini.
 
@@ -1140,7 +1160,7 @@ ggplot(diamonds) +
   geom_bar(aes(x = cut, fill = clarity))
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-78-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-80-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kui me tahame, et cut-i ja clarity kombinatsioonid oleks kastidena ükteise sees, pigem kui üksteise otsa kuhjatud, siis kasutame position = "identity" argumenti. 
 
@@ -1150,7 +1170,7 @@ ggplot(diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(alpha = 0.7, position = "identity") 
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-79-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-81-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ka see graafik pole väga lihtne lugeda. Parem viime clarity klassid üksteise kõrvale
 
@@ -1160,7 +1180,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "dodge")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-80-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-82-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Eelnev on hea viis kuidas võrrelda clarity tasemete esinemis-sagedusi ühe cut-i taseme piires.
 
@@ -1172,7 +1192,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "fill")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-81-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-83-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Ja lõpuks, kui te tahate teha midagi, mis on enamasti keskmiselt rumal valik, ehk plottida tulpdiagrammi viisil, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: `geom_bar(stat = "identity")`
 
@@ -1182,7 +1202,7 @@ df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
 ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-82-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-84-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ### Andmepunktid on ükshaaval välja plotitud
@@ -1215,7 +1235,7 @@ p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1),
   stat_summary(fun.y=mean, geom="point", size=3, color="red")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-83-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-83-2.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-83-3.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-83-4.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-83-5.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-85-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-85-2.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-85-3.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-85-4.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-85-5.svg" width="70%" style="display: block; margin: auto;" />
 
 Sama jitterplotina --- nüüd on iga punkt y suhtes õiges kohas, aga joonis ei näe enam liiga puhas välja.
 
@@ -1228,7 +1248,7 @@ ggplot(ToothGrowth, aes(x=dose, y=len)) +
   theme_tufte()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-84-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-86-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -1238,7 +1258,7 @@ p<-ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
 p
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-85-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-87-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 It is also possible to change manually dot plot colors using the functions :
@@ -1258,7 +1278,7 @@ p + scale_x_discrete(limits=c("0.5", "2"))
 #> (stat_bindot).
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-86-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-88-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -1268,7 +1288,7 @@ Dotplot kui histogram:
 ggplot(iris, aes(Sepal.Length)) + geom_dotplot()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-87-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-89-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Histogram:
 
@@ -1278,7 +1298,7 @@ ggplot(iris, aes(Sepal.Length)) +
   geom_histogram(bins = 10, color="white", fill = "navyblue") 
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-88-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-90-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -1295,7 +1315,7 @@ ggplot(data = d, aes(x = Sepal.Width, fill = Species)) +
   theme_tufte()          # for clean look overall
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-89-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-91-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 density plot:
@@ -1306,7 +1326,7 @@ iris%>%ggplot()+
   theme_tufte()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-90-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-92-1.svg" width="70%" style="display: block; margin: auto;" />
 
 joyplot võimaldab kõrvuti panna isegi sadu density plotte
 
@@ -1319,7 +1339,7 @@ ggplot(iris, aes(x=Sepal.Length, y=Species, fill=Species)) +
   theme(legend.position = "none")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-91-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-93-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Joyplot, kui meil on väga palju kõrvuti tihedusjaotusi võrrelda
 
@@ -1330,7 +1350,7 @@ ggplot(sch, aes(score1, y=reorder(school, score1))) +
   geom_joy() + theme_tufte()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-92-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-94-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Boxplot:
@@ -1340,7 +1360,7 @@ ggplot(iris, aes(Species, Sepal.Width, fill = Species)) +
   geom_boxplot()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-93-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-95-1.svg" width="70%" style="display: block; margin: auto;" />
 
 violin plot plus jitterplot:
 
@@ -1350,7 +1370,7 @@ ggplot(iris, aes(Species, Sepal.Width)) +
   geom_jitter(width = 0.1, alpha = 0.4, size = 0.5)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-94-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-96-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Kahe muutuja koos-varieeruvus 
 
@@ -1366,6 +1386,6 @@ m <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
 m + geom_density_2d()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-95-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-97-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kui punkte on liiga palju, et välja trükkida, kasuta geom = "polygon" varianti.
