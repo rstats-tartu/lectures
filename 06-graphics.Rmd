@@ -554,7 +554,8 @@ p
 p + scale_x_discrete(breaks=c("versicolor", "setosa"))
 ```
 
-change axis labels and remove axis name
+Muuda teljemarkeeringuid ja kustuta telje nimi.
+
 ```{r}
 p + scale_x_discrete(labels=c("setosa" = "sp 1", "versicolor" = "sp2"), name=NULL)
 ```
