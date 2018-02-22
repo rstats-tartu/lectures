@@ -1165,6 +1165,18 @@ economics$rollmean <- rollmean(economics$unemploy, k = 7, fill = NA)
 ggplot(economics, aes(date, rollmean)) + geom_line()
 ```
 
+Kui on oht, et ebahuvitavad tsüklid ja trendid varjutavad veel mingeid mustreid, mis meile võiks huvi pakkuda, võib proovida lahutada aegrea komponentideks kasutades seasonaalset lahutamist (Seasonal decomposition). R::stl() kasutab selleks loess meetodit lahutades aegrea kolmeks komponendiks. 1) trendikomponent püüab keskmise taseme muutusi ajas. 2) seasonaalne komponent lahutab muutused aastaaegade lõikes (konstantse amplituudiga tsüklilisus aegrea piires) ja 3) irregulaarne komponent on see, mis üle jääb. 
+aegrea osadeks lahutamine võib olla additiivne või mulitlikatiivne. Additiivses mudelis
+
+$$Y_t = Trend_t + Seasonal_t + Irregular_t$$
+
+summeeruvad komponendid igas punktis algesele aegreale. Muliplikatiivses mudelis
+
+$$Y_t = Trend_t * Seasonal_t * Irregular_t$$ 
+tuleb selleks teha korrutamistehe.
+
+Näiteks lahutame aegrea, mis käsitleb CO_2 konsentratsiooni muutusi viimase 50 aasta vältel.
+
 
 ```{r}
 require(graphics)
