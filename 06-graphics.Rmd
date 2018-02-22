@@ -865,11 +865,20 @@ diffplotp <- ggplot(my.data, aes(baseline, diffp)) +
 ggMarginal(diffplotp, type="histogram", bins = 25)
 ```
 
-## Erinevad ggplot geom_-id
+# Tosin olulisimat graafikutüüpi
 
-### Kui iga muutja kohta on üks andmepunkt
+Andmete plottimisel otsib analüütik tasakaalu informatsioonikao ja trendide/mustrite/kovarieeruvuste nähtavaks tegemise vahel. Idee on siin, et teie andmed võivad sisaldada a) juhuslikku müra, b) trende/mustreid, mis teile suurt huvi ei paku ja c) teid huvitavaid varjatud mustreid. Kui andmeid on palju ja need on mürarikkad ja kui igavad trendid/mustrid varjavad huvitavaid trende/mustreid, siis aitab vahest andmete graafiline redutseerimine üldisemale kujule ja nende modelleerimine. Kui andmeid ei ole väga palju siis tasuks siiski vältida infot kaotavaid graafikuid ning esitada andmed algsete või ümber arvutatud andmepunktide kujul. Järgnevalt esitame valiku graafikutüüpe erinevat tüüpi andmetele.
 
-Siis kasuta cleveland graafikut. See on parem kui barplot. 
+x- faktormuutuja; y - pidev muutuja; N < 20 --- punktgraafik
+
+
+## 1. Cleveland plot
+
+Seda plotti kasuta a) kui iga muutja kohta on üks andmepunkt või b) kui soovid avaldada keskmise koos usalduspiiridega.
+
+>Sageli lahendatakse sarnased ülesanded tulpdiagrammidega, mis ei ole aga üldiselt hea mõte sest tulpdiagrammid juhivad asjatult tähelepanu tulpadele endile, pigem kui nende otstele, mis tegelikult andmete keskmist kajastavad. Kuna inimese aju tahab võrrelda tulpade kõrgusi suhtelistes, mitte absoluutsetes ühikutes (kui tulp A on 30% kõrgem kui tulp B, siis me näeme efekti suurust, mis on u 1/3), peavad tulbad algama mingilt oodatavalt baastasemelt (tavaliselt nullist). See aga võib muuta raskeks huvitavate efektide märkamise, kui need on protsentuaalselt väikesed. Näiteks 5%-ne CO2 taseme tõus atmosfääris on teaduslikult väga oluline, aga tulpdiagrammi korrektselt kasutades tuleb vaevu graafikult välja.
+
+
 
 ```{r fig.height=3, fig.width=4}
 dd <- diamonds %>% group_by(clarity) %>% summarise(number_of_diamonds=n())
@@ -882,6 +891,45 @@ dd %>% ggplot(aes(x=number_of_diamonds,
         panel.grid.major.y = element_line(colour="grey60", linetype="dashed")) +
   labs(y="clarity")
 ```
+
+Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida väärtuste järgi.
+
+```{r}
+library(rethinking)
+library(reshape2)
+
+ir1 <- iris %>% filter(Species=="setosa") %>% select(setosa= Sepal.Length)
+ir2 <- iris %>% filter(Species=="versicolor")%>% select(versicolor= Sepal.Length)
+ir3 <- iris %>% filter(Species=="virginica")%>% select(virginica= Sepal.Length)
+iris1 <- bind_cols(ir1, ir2, ir3)
+
+ir_ci <- apply(iris1, 2, function(x) PI(x, prob=0.5)) %>% as_tibble() %>% add_column(indeks=c("low", "high"))
+
+ir_ci1 <- apply(iris1, 2, function(x) PI(x, prob=0.95)) %>% as_tibble() %>% add_column(indeks=c("low", "high"))
+
+ir_mean <- apply(iris1, 2, mean) %>% as_tibble() %>% rownames_to_column() %>% spread(key=rowname, value = value) %>% add_column(indeks="mean")
+iris2 <- full_join(ir_mean, ir_ci) %>% melt()
+iris3 <- iris2 %>% filter(indeks=="mean")
+iris4 <- iris2 %>% filter(indeks != "mean") %>% spread(key=indeks, value=value)
+iris4$mean <- iris3$value
+
+iris2_1 <- full_join(ir_mean, ir_ci1) %>% melt()
+iris3_1 <- iris2_1 %>% filter(indeks=="mean")
+iris4_1 <- iris2_1 %>% filter(indeks != "mean") %>% spread(key=indeks, value=value)
+iris4_1$mean <- iris3$value
+
+ggplot(data= iris4, aes(x=mean, y=variable)) +
+  geom_point(size=3) +
+  geom_errorbarh(aes(xmin= low, xmax= high), height=0.2)+
+  geom_errorbarh(data=iris4_1, aes(xmin= low, xmax= high), height=0.4)+
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_line(colour="grey60", linetype="dashed"))+
+  labs(x="Sepal length with 50% and 95% CI", y=NULL)
+
+```
+
 
 
 ### Tulpdiagrammid mõõdavad counte ja proportsioone
