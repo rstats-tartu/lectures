@@ -741,8 +741,7 @@ p + scale_x_discrete(breaks=c("versicolor", "setosa"))
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-54-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-54-2.svg" width="70%" style="display: block; margin: auto;" />
 
-Muuda teljemarkeeringuid ja kustuta telje nimi.
-
+change axis labels and remove axis name
 
 ```r
 p + scale_x_discrete(labels=c("setosa" = "sp 1", "versicolor" = "sp2"), name=NULL)
