@@ -876,7 +876,7 @@ x- faktormuutuja; y - pidev muutuja; N < 20 --- punktgraafik
 
 Seda plotti kasuta a) kui iga muutja kohta on üks andmepunkt või b) kui soovid avaldada keskmise koos usalduspiiridega.
 
->Sageli lahendatakse sarnased ülesanded tulpdiagrammidega, mis ei ole aga üldiselt hea mõte sest tulpdiagrammid juhivad asjatult tähelepanu tulpadele endile, pigem kui nende otstele, mis tegelikult andmete keskmist kajastavad. Kuna inimese aju tahab võrrelda tulpade kõrgusi suhtelistes, mitte absoluutsetes ühikutes (kui tulp A on 30% kõrgem kui tulp B, siis me näeme efekti suurust, mis on u 1/3), peavad tulbad algama mingilt oodatavalt baastasemelt (tavaliselt nullist). See aga võib muuta raskeks huvitavate efektide märkamise, kui need on protsentuaalselt väikesed. Näiteks 5%-ne CO2 taseme tõus atmosfääris on teaduslikult väga oluline, aga tulpdiagrammi korrektselt kasutades tuleb vaevu graafikult välja.
+>Sageli lahendatakse sarnased ülesanded tulpdiagrammidega, mis ei ole aga üldiselt hea mõte, sest tulpdiagrammid juhivad asjatult tähelepanu tulpadele endile, pigem kui nende otstele, mis tegelikult andmete keskmist kajastavad. Kuna inimese aju tahab võrrelda tulpade kõrgusi suhtelistes, mitte absoluutsetes ühikutes (kui tulp A on 30% kõrgem kui tulp B, siis me näeme efekti suurust, mis on u 1/3), peavad tulbad algama mingilt oodatavalt baastasemelt (tavaliselt nullist). See aga võib muuta raskeks huvitavate efektide märkamise, kui need on protsentuaalselt väikesed. Näiteks 5%-ne CO2 taseme tõus atmosfääris on teaduslikult väga oluline, aga tulpdiagrammi korrektselt kasutades tuleb vaevu graafikult välja.
 
 
 
@@ -898,9 +898,9 @@ Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida v
 library(rethinking)
 library(reshape2)
 
-ir1 <- iris %>% filter(Species=="setosa") %>% select(setosa= Sepal.Length)
-ir2 <- iris %>% filter(Species=="versicolor")%>% select(versicolor= Sepal.Length)
-ir3 <- iris %>% filter(Species=="virginica")%>% select(virginica= Sepal.Length)
+ir1 <- iris %>% filter(Species == "setosa") %>% select(setosa= Sepal.Length)
+ir2 <- iris %>% filter(Species == "versicolor")%>% select(versicolor= Sepal.Length)
+ir3 <- iris %>% filter(Species == "virginica")%>% select(virginica= Sepal.Length)
 iris1 <- bind_cols(ir1, ir2, ir3)
 
 ir_ci <- apply(iris1, 2, function(x) PI(x, prob=0.5)) %>% as_tibble() %>% add_column(indeks=c("low", "high"))
@@ -930,6 +930,68 @@ ggplot(data= iris4, aes(x=mean, y=variable)) +
 
 ```
 
+Sellel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. 
+
+## 2. Andmepunktid mediaani või aritmeetilise keskmisega
+
+Kui N < 20, siis on see tavaliselt parim valik sest säilitab maksimaalselt andmetes leiduvat informatsiooni.
+
+```{r}
+ggplot(iris, aes(x=Species, y=Sepal.Length)) + 
+  geom_jitter(width = 0.05)+
+  stat_summary(fun.y = median, geom = "point", shape = 95, 
+               color = "red", size = 15, alpha=0.6) +
+  labs(x=NULL) + 
+  theme_tufte()
+```
+
+Siin on meil lausa 50 andmepunkti iga Irise liigi kohta ja graafik on ikkagi täitsa hästi loetav. 
+
+Meil on võimalik teha sellest graafikust versioon, mis ei pane andmepunkti y skaalal täpselt õigesse kohta, vaid tekitab histogrammilaadsed andmebinnid, kus siiski iga punkt on eraldi näidatud. See lihtsustab veidi "kirjude" kompleksete andemsettide esitust. Kuid kaotab informatsiooni andmepunktide täpse asukoha kohta. Siin on eesmärk muuta graafik kiiremini loetavaks, ehk erinevused gruppide vahel paremini võrreldavaks.
+
+```{r}
+p<-ggplot(iris, aes(x=Species, y=Sepal.Length)) + 
+  geom_dotplot(binaxis='y', stackdir='center', stackratio=1.3, dotsize=0.7) 
+
+p + stat_summary(fun.y = median, geom = "point", shape = 95, 
+               color = "red", size = 15) 
+#try using shape=18, size=5.
+
+#add mean and SD, use pointrange:
+p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), geom="pointrange", color="red")
+
+#use errorbar instead of pointrange:
+#p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), geom="errorbar", color="red", width=0.2, size=1) + stat_summary(fun.y=mean, geom="point", size=3, color="red")
+```
+
+
+## 3. Histogramm
+
+Kui teil on palju andmepunkte (>50) ning soovite uurida nende jaotust (ja/või võrrelda mitme andmestiku jaotust) siis tasub kindlasti alustada histogrammist. Histogrammi koostamine näeb välja järgmine:
+
+1. ploti andmepunktid x - teljele (järgnev on põhimõtteliselt ühedimensionaalne plot, kuigi andmepunktid on üksteise suhtes veidi nihutatud, et nad üksteist ei varjutaks). 
+
+```{r}
+stripchart(iris$Sepal.Length, method = "jitter")
+```
+
+
+
+2. jaga andmestik x-teljel võrdse laiusega vahemikesse (binnidesse)
+
+```{r}
+stripchart(iris$Sepal.Length, method = "jitter")
+abline(v=seq(4, 8, by=0.5), col="red")
+```
+
+3. loe kokku, mitu andmepunkti sattus igasse binni. Näiteks on meil viimases binnis (7.5 ... 8) kuus anmdepunkti
+4. ploti iga bin tulpdiagrammina (y- teljel on tüüpiliselt andmepunktide arv)
+
+```{r}
+ggplot(iris, aes(Sepal.Length)) + geom_histogram(breaks= seq(4, 8, by=0.5), color="white")
+```
+
+Tavaliselt on siiski mõistlik määrata histogrammi binnide laius ja asukoht mitte *breaks* argumeniga vaid kas argumendiga *bins*, mis annab binnide arvu, või argumendiga *binwidth*, mis annab binni laiuse. Vt ka geom_boxplot() funktsiooni helpi.
 
 
 ### Tulpdiagrammid mõõdavad counte ja proportsioone
@@ -995,34 +1057,7 @@ ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
 ```
 
 
-### Andmepunktid on ükshaaval välja plotitud
-Kõigepealt dotplot, mis ei pane andmepunkti y skaalal täpselt õigesse kohta vaid tekitab histogrammilaadsed andmebinnid, kus siiski iga punkt on eraldi näidatud. See lihtsustab veidi "kirjude" kompleksete andemsettide esitust.
 
-```{r}
-ToothGrowth <- ToothGrowth
-ToothGrowth$dose <- as.factor(ToothGrowth$dose)
-p<-ggplot(ToothGrowth, aes(x=dose, y=len)) + 
-  geom_dotplot(binaxis='y', stackdir='center')
-p
-# Change dotsize and stack ratio, add line or dot for median
-ggplot(ToothGrowth, aes(x=dose, y=len)) + 
-  geom_dotplot(binaxis='y', stackdir='center',
-               stackratio=1.5, dotsize=0.7)+
-  stat_summary(fun.y = median, geom = "point", shape = 95, 
-               color = "red", size = 15) +
-  theme_tufte()
-
-p + stat_summary(fun.y=median, geom="point", shape=18,
-                 size=5, color="red")
-
-#add mean and SD, use pointrange
-p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), 
-                 geom="pointrange", color="red")
-#use errorbars
-p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), 
-        geom="errorbar", color="red", width=0.2) +
-  stat_summary(fun.y=mean, geom="point", size=3, color="red")
-```
 
 Sama jitterplotina --- nüüd on iga punkt y suhtes õiges kohas, aga joonis ei näe enam liiga puhas välja.
 
