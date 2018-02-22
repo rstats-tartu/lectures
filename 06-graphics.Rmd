@@ -965,6 +965,15 @@ p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), geom="pointrange", 
 ```
 
 
+Muuda punktide värvi nii:
+
+scale_fill_manual() : to use custom colors
+
+scale_fill_brewer() : to use color palettes from RColorBrewer package
+
+scale_fill_grey() : to use grey color palettes
+
+
 ## 3. Histogramm
 
 Kui teil on palju andmepunkte (>50) ning soovite uurida nende jaotust (ja/või võrrelda mitme andmestiku jaotust) siis tasub kindlasti alustada histogrammist. Histogrammi koostamine näeb välja järgmine:
@@ -993,6 +1002,122 @@ ggplot(iris, aes(Sepal.Length)) + geom_histogram(breaks= seq(4, 8, by=0.5), colo
 
 Tavaliselt on siiski mõistlik määrata histogrammi binnide laius ja asukoht mitte *breaks* argumeniga vaid kas argumendiga *bins*, mis annab binnide arvu, või argumendiga *binwidth*, mis annab binni laiuse. Vt ka geom_boxplot() funktsiooni helpi.
 
+NB! Väga tähtis on mõista, et binnide laius on meie suva järgi määratud. Samade andmete põhjal joonistatud erineva binilaiusega histogrammid võivad anda lugejale väga erinevaid signaale. 
+
+```{r}
+library(gridExtra)
+g1 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 3)
+g2 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 8)
+g3 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 20)
+g4 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 50)
+grid.arrange(g1, g2, g3, g4, nrow = 2)
+```
+
+Seega on tasub joonistada samadest andmetest mitu erineva binnilaiusega histogrammi, et oma andmeid vaadata mitme nurga alt.
+
+
+Kui tahame võrrelda mitmeid jaotusi, siis on meil järgmised variandid:
+
+Kõigepealt, me võime panna mitu histogrammi üksteise alla. Selleks kasutame facet_grid funktsiooni ja paneme joonisele ka hallilt summaarsete andmete histogrammi. Selle funktsioon on pakkuda joonise lugejale ühtset võrdlusskaalat üle kolme paneeli.
+
+```{r}
+d_bg <- iris[, -5]  # Background Data - full without the 5th column (Species)
+
+ggplot(data = iris, aes(x = Sepal.Length, fill = Species)) +
+  geom_histogram(data = d_bg, fill = "grey", alpha=0.8, bins=10) +
+  geom_histogram(colour = "black", bins=10) +
+  facet_grid(Species~.) +
+  guides(fill = FALSE) +  # to remove the legend
+  theme_tufte()          # for clean look overall
+
+```
+
+Teine võimalus on näidata kõiki koos ühel paneelil kasutades histogrammi asemel sageduspolügoni. See töötab täpselt nagu histogramm, ainult et tulpade asemel joonistatakse binnitippude vahele jooned. Neid on lihtsam samale paneelile üksteise otsa laduda.
+
+```{r}
+ggplot(iris, aes(Sepal.Length, color=Species)) + geom_freqpoly(breaks= seq(4, 8, by=0.5)) + theme_tufte()
+```
+
+Selle "histogrammi" binne saab ja tuleb manipuleerida täpselt samamoodi nagu geom_histogrammis.
+
+Veel üks hea meetod histogrammide võrdlemiseks on joonistada nn viiuliplot. See asendab sakilise histogrammi silutud joonega ja muudab seega võrdlemise kergemaks. Viiulile on ka kerge lisada algsed andmepunktid
+
+```{r}
+ggplot(iris, aes(Species, Sepal.Length)) + geom_violin(aes(color=Species))+
+  geom_jitter(size=0.2, width=0.1)
+```
+
+## 3. Tihedusplot
+
+Hea alternatiiv histogrammile on joonistada silutud andmejaotus, mis käitub silutud histogrammina. 
+
+```{r}
+ggplot(iris, aes(Sepal.Length, fill=Species)) + geom_density(alpha=0.5)
+```
+
+Adjust parameeter reguleerib silumise määra.
+```{r echo=FALSE}
+library(gridExtra)
+g1 <- ggplot(iris, aes(Sepal.Length, fill=Species, alpha=0.5)) + geom_density(adjust=0.2) + labs(title="adj = 0.2")+ theme(legend.position = "none")
+g2 <- ggplot(iris, aes(Sepal.Length, fill=Species, alpha=0.5)) + geom_density(adjust=0.5)+ labs(title="adj = 0.5")+ theme(legend.position = "none")
+g3 <- ggplot(iris, aes(Sepal.Length, fill=Species, alpha=0.5)) + geom_density(adjust= 1)+ labs(title="adj = 1")+ theme(legend.position = "none")
+g4 <- ggplot(iris, aes(Sepal.Length, fill=Species, alpha=0.5)) + geom_density(adjust= 2)+ labs(title="adj = 2")+ theme(legend.position = "none")
+grid.arrange(g1, g2, g3, g4, nrow = 2)
+```
+
+Veel üks võimalus jaotusi kõrvuti vaadata on joyplot, mis paneb samale paneelile kasvõi sada tihedusjaotust.
+
+```{r}
+library(ggjoy)
+ggplot(iris, aes(x=Sepal.Length, y=Species, fill=Species)) + 
+  geom_joy(scale=4, rel_min_height=0.01, alpha=0.9) +
+  theme_joy(font_size = 13, grid=TRUE) + 
+  theme(legend.position = "none")
+```
+
+```{r}
+sch <- read.csv("data/schools.csv")
+sch$school <- as.factor(sch$school)
+ggplot(sch, aes(score1, y=reorder(school, score1))) + 
+  geom_joy() + theme_tufte()
+```
+
+## 4. Boxplot
+
+See plot mõeldi välja John Tukey poolt arvutieelsel ajastul (1969), ja see võimaldab millimeeterpaberi ja joonlaua abil võrrelda erinevaid jaotusi. Biomeditsiinis sai boxplot ülipopulaarseks veidi hilinenult, ca. 2010-2015. Inimese jaoks, kes oskab arvutit kasutada, võib viiulite joonistamine tunduda atraktiivsem (ja informatiivsem), aga kui võrreldavaid jaotusi on päris palju, siis võib ka boxploti kandiliselt lihtsusel eeliseid leida. Igal juhul käib klassikalise boxploti konstrueerimine järgevalt.
+
+1. joonista andmepunktid 1D-s välja (nagu me tegime histogrammi puhul)
+
+2. keskmine andmepunkt on mediaan. Selle kohale tuleb boxplotil keskmine kriips
+
+3. ümbritse kastiga pooled andmepunktid (mõlemal pool mediaani). Nii määrad nn. interkvartiilse vahemiku (IQR).
+
+4. pooleteistkordne IQR (y-telje suunas) annab meile vurrude maksimaalse pikkuse. Vurrud joonistatakse siiski ainult kuni viimase andmepunktini (aga kunagi mitte pikemad kui 1.5 IQR)
+
+5. andmepunktid, mis jäävad väljaspoole 1.5 x IQR-i joonistatakse eraldi välja kui outlierid.
+
+```{r}
+ggplot(iris, aes(Species, Sepal.Length, color = Species)) + 
+  geom_boxplot()+
+  geom_jitter(width = 0.1, size=0.1, color="black")
+```
+
+Boxplotile saab lisada ka aritmeetilise keskmise (järgnevas punase täpina), aga pea meeles, et boxploti põhiline kasu tuleb sellest, et see ei eelda sümmeetrilist andmejaotust. Seega on mediaani lisamine üldiselt parem lahendus.
+
+```{r}
+ggplot(iris, aes(Species, Sepal.Length, color = Species)) + 
+  geom_boxplot()+ stat_summary(fun.y=mean,col='red', geom='point', size=2)
+```
+
+```{r echo=FALSE}
+a <- tibble(value=c(rnorm(1000), rnorm(1000, 4)), x="a")
+p <- ggplot(a, aes(value)) 
+p1 <- p + geom_histogram()
+p2 <- p + geom_boxplot(aes(x=x, y=value)) + coord_flip()
+grid.arrange(p1, p2, nrow = 2)
+```
+
+See pilt näitab, et kui jaotus on mitme tipuga, siis võib boxplotist olla rohkem kahju kui kasu. 
 
 ### Tulpdiagrammid mõõdavad counte ja proportsioone
 
@@ -1056,111 +1181,6 @@ df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
 ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
 ```
 
-
-
-
-Sama jitterplotina --- nüüd on iga punkt y suhtes õiges kohas, aga joonis ei näe enam liiga puhas välja.
-
-```{r}
-ggplot(ToothGrowth, aes(x=dose, y=len)) + 
-  geom_jitter(width = 0.05)+
-  stat_summary(fun.y = median, geom = "point", shape = 95, 
-               color = "red", size = 15, alpha=0.6) +
-  theme_tufte()
-```
-
-```{r}
-# Change dot plot colors by groups
-p<-ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
-  geom_dotplot(binaxis='y', stackdir='center')
-p
-```
-
-
-It is also possible to change manually dot plot colors using the functions :
-
-scale_fill_manual() : to use custom colors
-
-scale_fill_brewer() : to use color palettes from RColorBrewer package
-
-scale_fill_grey() : to use grey color palettes
-
-
-```{r}
-#Choose which items to display :
-p + scale_x_discrete(limits=c("0.5", "2"))
-```
-
-
-
-Dotplot kui histogram:
-```{r}
-ggplot(iris, aes(Sepal.Length)) + geom_dotplot()
-```
-
-Histogram:
-
-```{r}
-ggplot(iris, aes(Sepal.Length)) + 
-  geom_histogram(bins = 10, color="white", fill = "navyblue") 
-```
-
-
-```{r}
-library(ggthemes)
-d <- iris        # Full data set
-d_bg <- d[, -5]  # Background Data - full without the 5th column (Species)
-
-ggplot(data = d, aes(x = Sepal.Width, fill = Species)) +
-  geom_histogram(data = d_bg, fill = "grey", alpha=0.8, bins=10) +
-  geom_histogram(colour = "black", bins=10) +
-  facet_grid(Species~.) +
-  guides(fill = FALSE) +  # to remove the legend
-  theme_tufte()          # for clean look overall
-
-```
-
-
-density plot:
-```{r}
-iris%>%ggplot()+
-  geom_density(aes(Sepal.Width, fill=Species, color=Species, alpha=0.5))+
-  theme_tufte()
-
-```
-
-joyplot võimaldab kõrvuti panna isegi sadu density plotte
-
-```{r}
-library(ggjoy)
-ggplot(iris, aes(x=Sepal.Length, y=Species, fill=Species)) + 
-  geom_joy(scale=4, rel_min_height=0.01, alpha=0.9) +
-  theme_joy(font_size = 13, grid=TRUE) + 
-  theme(legend.position = "none")
-```
-
-Joyplot, kui meil on väga palju kõrvuti tihedusjaotusi võrrelda
-```{r message=FALSE, error=FALSE, warning=FALSE, fig.height= 8}
-sch <- read.csv("data/schools.csv")
-sch$school <- as.factor(sch$school)
-ggplot(sch, aes(score1, y=reorder(school, score1))) + 
-  geom_joy() + theme_tufte()
-
-```
-
-
-Boxplot:
-```{r}
-ggplot(iris, aes(Species, Sepal.Width, fill = Species)) + 
-  geom_boxplot()
-```
-
-violin plot plus jitterplot:
-```{r}
-ggplot(iris, aes(Species, Sepal.Width)) + 
-  geom_violin(aes(fill = Species)) +
-  geom_jitter(width = 0.1, alpha = 0.4, size = 0.5)
-```
 
 ### Kahe muutuja koos-varieeruvus 
 
