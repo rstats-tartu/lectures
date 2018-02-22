@@ -867,12 +867,14 @@ ggMarginal(diffplotp, type="histogram", bins = 25)
 
 # Tosin olulisimat graafikutüüpi
 
-Andmete plottimisel otsib analüütik tasakaalu informatsioonikao ja trendide/mustrite/kovarieeruvuste nähtavaks tegemise vahel. Idee on siin, et teie andmed võivad sisaldada a) juhuslikku müra, b) trende/mustreid, mis teile suurt huvi ei paku ja c) teid huvitavaid varjatud mustreid. Kui andmeid on palju ja need on mürarikkad ja kui igavad trendid/mustrid varjavad huvitavaid trende/mustreid, siis aitab vahest andmete graafiline redutseerimine üldisemale kujule ja nende modelleerimine. Kui andmeid ei ole väga palju siis tasuks siiski vältida infot kaotavaid graafikuid ning esitada andmed algsete või ümber arvutatud andmepunktide kujul. Järgnevalt esitame valiku graafikutüüpe erinevat tüüpi andmetele.
+Andmete plottimisel otsib analüütik tasakaalu informatsioonikao ja trendide/mustrite/kovarieeruvuste nähtavaks tegemise vahel. Idee on siin, et teie andmed võivad sisaldada a) juhuslikku müra, b) trende/mustreid, mis teile suurt huvi ei paku ja c) teid huvitavaid varjatud mustreid. Kui andmeid on palju ja need on mürarikkad ja kui igavad trendid/mustrid varjavad huvitavaid trende/mustreid, siis aitab vahest andmete graafiline redutseerimine üldisemale kujule ja nende modelleerimine. Kui andmeid ei ole väga palju, siis tasuks siiski vältida infot kaotavaid graafikuid ning joonistada algsed või ümber arvutatud andmepunktid. Järgnevalt esitame valiku graafikutüüpe erinevat tüüpi andmetele.
 
-x- faktormuutuja; y - pidev muutuja; N < 20 --- punktgraafik
+
 
 
 ## 1. Cleveland plot
+
+x- pidev muutuja; y - faktormuutuja
 
 Seda plotti kasuta a) kui iga muutja kohta on üks andmepunkt või b) kui soovid avaldada keskmise koos usalduspiiridega.
 
@@ -934,6 +936,8 @@ Sellel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 9
 
 ## 2. Andmepunktid mediaani või aritmeetilise keskmisega
 
+x - faktormuutuja; y - pidev muutuja
+
 Kui N < 20, siis on see tavaliselt parim valik sest säilitab maksimaalselt andmetes leiduvat informatsiooni.
 
 ```{r}
@@ -976,6 +980,8 @@ scale_fill_grey() : to use grey color palettes
 
 ## 3. Histogramm
 
+x - pidev muutuja
+
 Kui teil on palju andmepunkte (>50) ning soovite uurida nende jaotust (ja/või võrrelda mitme andmestiku jaotust) siis tasub kindlasti alustada histogrammist. Histogrammi koostamine näeb välja järgmine:
 
 1. ploti andmepunktid x - teljele (järgnev on põhimõtteliselt ühedimensionaalne plot, kuigi andmepunktid on üksteise suhtes veidi nihutatud, et nad üksteist ei varjutaks). 
@@ -997,7 +1003,7 @@ abline(v=seq(4, 8, by=0.5), col="red")
 4. ploti iga bin tulpdiagrammina (y- teljel on tüüpiliselt andmepunktide arv)
 
 ```{r}
-ggplot(iris, aes(Sepal.Length)) + geom_histogram(breaks= seq(4, 8, by=0.5), color="white")
+ggplot(iris, aes(x=Sepal.Length)) + geom_histogram(breaks= seq(4, 8, by=0.5), color="white")
 ```
 
 Tavaliselt on siiski mõistlik määrata histogrammi binnide laius ja asukoht mitte *breaks* argumeniga vaid kas argumendiga *bins*, mis annab binnide arvu, või argumendiga *binwidth*, mis annab binni laiuse. Vt ka geom_boxplot() funktsiooni helpi.
@@ -1035,7 +1041,7 @@ ggplot(data = iris, aes(x = Sepal.Length, fill = Species)) +
 Teine võimalus on näidata kõiki koos ühel paneelil kasutades histogrammi asemel sageduspolügoni. See töötab täpselt nagu histogramm, ainult et tulpade asemel joonistatakse binnitippude vahele jooned. Neid on lihtsam samale paneelile üksteise otsa laduda.
 
 ```{r}
-ggplot(iris, aes(Sepal.Length, color=Species)) + geom_freqpoly(breaks= seq(4, 8, by=0.5)) + theme_tufte()
+ggplot(iris, aes(Sepal.Length, color=Species)) + geom_freqpoly(breaks= seq(4, 8, by=0.5)) + theme_tufte()+ labs(title="Frequency plot")
 ```
 
 Selle "histogrammi" binne saab ja tuleb manipuleerida täpselt samamoodi nagu geom_histogrammis.
@@ -1044,7 +1050,7 @@ Veel üks hea meetod histogrammide võrdlemiseks on joonistada nn viiuliplot. Se
 
 ```{r}
 ggplot(iris, aes(Species, Sepal.Length)) + geom_violin(aes(color=Species))+
-  geom_jitter(size=0.2, width=0.1)
+  geom_jitter(size=0.2, width=0.1) + labs(title="Violin plot", x=NULL)
 ```
 
 ## 3. Tihedusplot
@@ -1118,6 +1124,55 @@ grid.arrange(p1, p2, nrow = 2)
 ```
 
 See pilt näitab, et kui jaotus on mitme tipuga, siis võib boxplotist olla rohkem kahju kui kasu. 
+
+
+## 5. Joongraafikud
+
+x - pidev muutuja (aeg, konsentratsioon, jms); y - pidev muutuja
+
+Joongraafik (geom_line) töötab hästi siis, kui igale x-i väärtusele vastab unikaalne y-i väärtus ja iga kahe mõõdetud x-i väärtuse vahele jääb veel x-i väärtusi, mida pole küll mõõdetud, aga kui oleks, siis vastaks ka neile unikaalsed y-i väärtused. Lisaks me loodame, et y-i suunaline juhuslik varieeruvus ei ole nii suur, et maskeerida meid huvitavad trendid. 
+Kui tahad näidata, kus täpselt muutus toimus, kasuta geom_step funktsiooni.
+
+```{r}
+recent <- economics[economics$date > as.Date("2013-01-01"), ]
+ggplot(recent, aes(date, unemploy)) + geom_line()
+ggplot(recent, aes(date, unemploy)) + geom_step()
+```
+
+Geom_path võimaldab joonel ka tagasisuunas keerata.
+
+```{r}
+# geom_path lets you explore how two variables are related over time,
+# e.g. unemployment and personal savings rate
+m <- ggplot(economics, aes(unemploy/pop, psavert))
+m + geom_path(aes(colour = as.numeric(date)))
+
+```
+
+
+Tulpdiagramm juhib lugeja tähelepanu väikestele teravatele muutustele. Kui see on see, millele sa tahad tähelepanu juhtida, siis kasuta seda.
+```{r}
+p1 <- ggplot(economics, aes(date, unemploy)) + geom_line()
+p2 <- ggplot(economics, aes(date, unemploy)) + geom_bar(stat="identity")
+grid.arrange(p1, p2, nrow = 2)
+```
+
+Et mürarikkaid andmeid siluda kasutame liikuva keskmise meetodit. Siin asendame iga andmepunkti selle andmepunkti ja tema k lähima naabri keskmisega. k on tavaliselt paaritu arv ja mida suurem k, seda silutum tuleb tulemus. 
+
+```{r}
+library(zoo)
+economics$rollmean <- rollmean(economics$unemploy, k = 7, fill = NA)
+ggplot(economics, aes(date, rollmean)) + geom_line()
+```
+
+
+```{r}
+require(graphics)
+#co2 is a time series object 
+#stl() takes class "ts" objects only!
+plot(stl(co2, "per"))
+```
+
 
 ### Tulpdiagrammid mõõdavad counte ja proportsioone
 
