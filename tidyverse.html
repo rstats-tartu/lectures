@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
-  <meta name="generator" content="bookdown 0.7.1 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.6.2 and GitBook 2.6.7">
 
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -25,14 +25,14 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2018-02-23">
+<meta name="date" content="2018-02-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="tosin-olulisimat-graafikutuupi.html">
+<link rel="prev" href="graafilised-lahendused.html">
 <link rel="next" href="statistilised-mudelid.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -176,55 +176,50 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.9.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad-faktormuutujatele"><i class="fa fa-check"></i><b>7.9.2</b> Värviskaalad faktormuutujatele</a></li>
 </ul></li>
 <li class="chapter" data-level="7.10" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#a-complex-ggplot"><i class="fa fa-check"></i><b>7.10</b> A complex ggplot</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="tosin-olulisimat-graafikutuupi.html"><a href="tosin-olulisimat-graafikutuupi.html"><i class="fa fa-check"></i><b>8</b> Tosin olulisimat graafikutüüpi</a><ul>
-<li class="chapter" data-level="8.1" data-path="tosin-olulisimat-graafikutuupi.html"><a href="tosin-olulisimat-graafikutuupi.html#cleveland-plot"><i class="fa fa-check"></i><b>8.1</b> 1. Cleveland plot</a></li>
-<li class="chapter" data-level="8.2" data-path="tosin-olulisimat-graafikutuupi.html"><a href="tosin-olulisimat-graafikutuupi.html#andmepunktid-mediaani-voi-aritmeetilise-keskmisega"><i class="fa fa-check"></i><b>8.2</b> 2. Andmepunktid mediaani või aritmeetilise keskmisega</a></li>
-<li class="chapter" data-level="8.3" data-path="tosin-olulisimat-graafikutuupi.html"><a href="tosin-olulisimat-graafikutuupi.html#histogramm"><i class="fa fa-check"></i><b>8.3</b> 3. Histogramm</a></li>
-<li class="chapter" data-level="8.4" data-path="tosin-olulisimat-graafikutuupi.html"><a href="tosin-olulisimat-graafikutuupi.html#tihedusplot"><i class="fa fa-check"></i><b>8.4</b> 3. Tihedusplot</a></li>
-<li class="chapter" data-level="8.5" data-path="tosin-olulisimat-graafikutuupi.html"><a href="tosin-olulisimat-graafikutuupi.html#boxplot"><i class="fa fa-check"></i><b>8.5</b> 4. Boxplot</a></li>
-<li class="chapter" data-level="8.6" data-path="tosin-olulisimat-graafikutuupi.html"><a href="tosin-olulisimat-graafikutuupi.html#joongraafikud-1"><i class="fa fa-check"></i><b>8.6</b> 5. Joongraafikud</a><ul>
-<li class="chapter" data-level="8.6.1" data-path="tosin-olulisimat-graafikutuupi.html"><a href="tosin-olulisimat-graafikutuupi.html#tulpdiagrammid-moodavad-counte-ja-proportsioone"><i class="fa fa-check"></i><b>8.6.1</b> Tulpdiagrammid mõõdavad counte ja proportsioone</a></li>
-<li class="chapter" data-level="8.6.2" data-path="tosin-olulisimat-graafikutuupi.html"><a href="tosin-olulisimat-graafikutuupi.html#kahe-muutuja-koos-varieeruvus"><i class="fa fa-check"></i><b>8.6.2</b> Kahe muutuja koos-varieeruvus</a></li>
+<li class="chapter" data-level="7.11" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#erinevad-ggplot-geom_-id"><i class="fa fa-check"></i><b>7.11</b> Erinevad ggplot geom_-id</a><ul>
+<li class="chapter" data-level="7.11.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#kui-iga-muutja-kohta-on-uks-andmepunkt"><i class="fa fa-check"></i><b>7.11.1</b> Kui iga muutja kohta on üks andmepunkt</a></li>
+<li class="chapter" data-level="7.11.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#tulpdiagrammid-moodavad-counte-ja-proportsioone"><i class="fa fa-check"></i><b>7.11.2</b> Tulpdiagrammid mõõdavad counte ja proportsioone</a></li>
+<li class="chapter" data-level="7.11.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#andmepunktid-on-ukshaaval-valja-plotitud"><i class="fa fa-check"></i><b>7.11.3</b> Andmepunktid on ükshaaval välja plotitud</a></li>
+<li class="chapter" data-level="7.11.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#kahe-muutuja-koos-varieeruvus"><i class="fa fa-check"></i><b>7.11.4</b> Kahe muutuja koos-varieeruvus</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>9</b> Tidyverse</a><ul>
-<li class="chapter" data-level="9.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>9.1</b> Tidy tabeli struktuur</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>9.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
-<li class="chapter" data-level="9.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>9.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
+<li class="chapter" data-level="8" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>8</b> Tidyverse</a><ul>
+<li class="chapter" data-level="8.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>8.1</b> Tidy tabeli struktuur</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>8.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
+<li class="chapter" data-level="8.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>8.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>9.2</b> dplyr ja selle viis verbi</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>9.2.1</b> <code>select()</code> columns</a></li>
-<li class="chapter" data-level="9.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>9.2.2</b> <code>filter()</code> rows</a></li>
-<li class="chapter" data-level="9.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>9.2.3</b> <code>summarise()</code></a></li>
-<li class="chapter" data-level="9.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>9.2.4</b> <code>group_by()</code></a></li>
-<li class="chapter" data-level="9.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>9.2.5</b> <code>mutate()</code></a></li>
+<li class="chapter" data-level="8.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>8.2</b> dplyr ja selle viis verbi</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>8.2.1</b> <code>select()</code> columns</a></li>
+<li class="chapter" data-level="8.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>8.2.2</b> <code>filter()</code> rows</a></li>
+<li class="chapter" data-level="8.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>8.2.3</b> <code>summarise()</code></a></li>
+<li class="chapter" data-level="8.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>8.2.4</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="8.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>8.2.5</b> <code>mutate()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="tidyverse.html"><a href="tidyverse.html#grouped-filters"><i class="fa fa-check"></i><b>9.3</b> Grouped filters</a></li>
-<li class="chapter" data-level="9.4" data-path="tidyverse.html"><a href="tidyverse.html#separate-one-column-into-several"><i class="fa fa-check"></i><b>9.4</b> <code>separate()</code> one column into several</a></li>
-<li class="chapter" data-level="9.5" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>9.5</b> Faktorid</a><ul>
-<li class="chapter" data-level="9.5.1" data-path="tidyverse.html"><a href="tidyverse.html#tekitame-faktortulba-keerulisemal-teel"><i class="fa fa-check"></i><b>9.5.1</b> tekitame faktortulba keerulisemal teel</a></li>
-<li class="chapter" data-level="9.5.2" data-path="tidyverse.html"><a href="tidyverse.html#droplevels-viskab-valja-kasutamata-faktori-tasemed"><i class="fa fa-check"></i><b>9.5.2</b> <code>droplevels()</code> viskab välja kasutamata faktori tasemed</a></li>
-<li class="chapter" data-level="9.5.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>9.5.3</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
-<li class="chapter" data-level="9.5.4" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>9.5.4</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
-<li class="chapter" data-level="9.5.5" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>9.5.5</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
-<li class="chapter" data-level="9.5.6" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>9.5.6</b> Rekodeerime pideva muutuja faktoriks</a></li>
-<li class="chapter" data-level="9.5.7" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>9.5.7</b> Muudame faktori tasemete järjekorda joonisel</a></li>
-<li class="chapter" data-level="9.5.8" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>9.5.8</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
-<li class="chapter" data-level="9.5.9" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>9.5.9</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
-<li class="chapter" data-level="9.5.10" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>9.5.10</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
+<li class="chapter" data-level="8.3" data-path="tidyverse.html"><a href="tidyverse.html#grouped-filters"><i class="fa fa-check"></i><b>8.3</b> Grouped filters</a></li>
+<li class="chapter" data-level="8.4" data-path="tidyverse.html"><a href="tidyverse.html#separate-one-column-into-several"><i class="fa fa-check"></i><b>8.4</b> <code>separate()</code> one column into several</a></li>
+<li class="chapter" data-level="8.5" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>8.5</b> Faktorid</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="tidyverse.html"><a href="tidyverse.html#tekitame-faktortulba-keerulisemal-teel"><i class="fa fa-check"></i><b>8.5.1</b> tekitame faktortulba keerulisemal teel</a></li>
+<li class="chapter" data-level="8.5.2" data-path="tidyverse.html"><a href="tidyverse.html#droplevels-viskab-valja-kasutamata-faktori-tasemed"><i class="fa fa-check"></i><b>8.5.2</b> <code>droplevels()</code> viskab välja kasutamata faktori tasemed</a></li>
+<li class="chapter" data-level="8.5.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>8.5.3</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
+<li class="chapter" data-level="8.5.4" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>8.5.4</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
+<li class="chapter" data-level="8.5.5" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>8.5.5</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
+<li class="chapter" data-level="8.5.6" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>8.5.6</b> Rekodeerime pideva muutuja faktoriks</a></li>
+<li class="chapter" data-level="8.5.7" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>8.5.7</b> Muudame faktori tasemete järjekorda joonisel</a></li>
+<li class="chapter" data-level="8.5.8" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>8.5.8</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
+<li class="chapter" data-level="8.5.9" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>8.5.9</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
+<li class="chapter" data-level="8.5.10" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>8.5.10</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html"><i class="fa fa-check"></i><b>10</b> Statistilised mudelid</a><ul>
-<li class="chapter" data-level="10.1" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#suur-ja-vaike-maailm"><i class="fa fa-check"></i><b>10.1</b> Suur ja väike maailm</a></li>
-<li class="chapter" data-level="10.2" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#mudeli-vaike-maailm"><i class="fa fa-check"></i><b>10.2</b> Mudeli väike maailm</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#naide-aristoteles-ptolemaios-ja-kopernikus"><i class="fa fa-check"></i><b>10.2.1</b> Näide: Aristoteles, Ptolemaios ja Kopernikus</a></li>
+<li class="chapter" data-level="9" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html"><i class="fa fa-check"></i><b>9</b> Statistilised mudelid</a><ul>
+<li class="chapter" data-level="9.1" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#suur-ja-vaike-maailm"><i class="fa fa-check"></i><b>9.1</b> Suur ja väike maailm</a></li>
+<li class="chapter" data-level="9.2" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#mudeli-vaike-maailm"><i class="fa fa-check"></i><b>9.2</b> Mudeli väike maailm</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#naide-aristoteles-ptolemaios-ja-kopernikus"><i class="fa fa-check"></i><b>9.2.1</b> Näide: Aristoteles, Ptolemaios ja Kopernikus</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#lineaarsed-mudelid"><i class="fa fa-check"></i><b>10.3</b> Lineaarsed mudelid</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#neli-moistet"><i class="fa fa-check"></i><b>10.3.1</b> Neli mõistet</a></li>
-<li class="chapter" data-level="10.3.2" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>10.3.2</b> Mudeli fittimine</a></li>
-<li class="chapter" data-level="10.3.3" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#kaks-lineaarse-mudeli-laiendust."><i class="fa fa-check"></i><b>10.3.3</b> kaks lineaarse mudeli laiendust.</a></li>
-<li class="chapter" data-level="10.3.4" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#interaktsioonimudel---uhe-prediktori-moju-soltub-teise-prediktori-vaartusest"><i class="fa fa-check"></i><b>10.3.4</b> Interaktsioonimudel - ühe prediktori mõju sõltub teise prediktori väärtusest</a></li>
+<li class="chapter" data-level="9.3" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#lineaarsed-mudelid"><i class="fa fa-check"></i><b>9.3</b> Lineaarsed mudelid</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#neli-moistet"><i class="fa fa-check"></i><b>9.3.1</b> Neli mõistet</a></li>
+<li class="chapter" data-level="9.3.2" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>9.3.2</b> Mudeli fittimine</a></li>
+<li class="chapter" data-level="9.3.3" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#kaks-lineaarse-mudeli-laiendust."><i class="fa fa-check"></i><b>9.3.3</b> kaks lineaarse mudeli laiendust.</a></li>
+<li class="chapter" data-level="9.3.4" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#interaktsioonimudel---uhe-prediktori-moju-soltub-teise-prediktori-vaartusest"><i class="fa fa-check"></i><b>9.3.4</b> Interaktsioonimudel - ühe prediktori mõju sõltub teise prediktori väärtusest</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bibliograafia.html"><a href="bibliograafia.html"><i class="fa fa-check"></i>Bibliograafia</a></li>
@@ -249,7 +244,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="tidyverse" class="section level1">
-<h1><span class="header-section-number">9</span> Tidyverse</h1>
+<h1><span class="header-section-number">8</span> Tidyverse</h1>
 <p>Tidyverse on osa R-i ökosüsteemist, kus kehtivad omad reeglid. Tidyverse raamatukogud lähtuvad ühtsest filosoofiast ja töötavad hästi koos. Tidyverse algab andmetabeli struktuurist ja selle funktsioonid võtavad reeglina sisse õige struktuuriga tibble ja väljastavad samuti tibble, mis sobib hästi järgmise tidyverse funktsiooni sisendiks. Seega on tidyverse hästi sobiv läbi torude <code>%&gt;%</code> laskmiseks. Tidyverse-ga sobib hästi kokku ka ggplot2 graafikasüsteem.</p>
 <p>Laadime tidyverse metapaketi raamatukogud:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
@@ -267,7 +262,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>stringr ja forcats paketid sisaldavad vastavalt tekstipõhiste ja kategooriliste andmetega töötamise funktsioone.</li>
 </ul>
 <div id="tidy-tabeli-struktuur" class="section level2">
-<h2><span class="header-section-number">9.1</span> Tidy tabeli struktuur</h2>
+<h2><span class="header-section-number">8.1</span> Tidy tabeli struktuur</h2>
 <ul>
 <li><strong>väärtus</strong> (<em>value</em>) — ühe mõõtmise tulemus (183 cm)</li>
 <li><strong>muutuja</strong> (<em>variable</em>) — see, mida sa mõõdad (pikkus) või faktor (sex)</li>
@@ -295,7 +290,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 #&gt; 2 2       placebo M      3.00    176   91.0</code></pre>
 <p>Nii näeb välja tidy tibble. Kõik analüüsil vajalikud parameetrid tuleks siia tabelisse veeru kaupa sisse tuua. Näiteks, kui mõõtmised on sooritatud erinevates keskustes erinevate inimeste poolt kasutades sama ravimi erinevaid preparaate, oleks hea siia veel 3 veergu lisada (center, experimenter, batch).</p>
 <div id="tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat" class="section level3">
-<h3><span class="header-section-number">9.1.1</span> Tabeli dimensioonide muutmine (pikk ja lai formaat)</h3>
+<h3><span class="header-section-number">8.1.1</span> Tabeli dimensioonide muutmine (pikk ja lai formaat)</h3>
 <p>Väga oluline osa tidyverses töötamisest on tabelite pika ja laia formaadi vahel viimine.</p>
 <p>See on laias formaadis tabel df, mis ei ole tidy</p>
 <pre><code>#&gt; # A tibble: 3 x 5
@@ -330,7 +325,7 @@ dat_lng
 <p>key viitab pika tabeli veerule, mille väärtustest tulevad laias tabelis uute veergude nimed. value viitab pika tabeli veerule, kust võetakse arvud, mis uues laias tabelis uute veergude vahel laiali jagatakse.</p>
 </div>
 <div id="tibble-transpose-read-veergudeks-ja-vastupidi" class="section level3">
-<h3><span class="header-section-number">9.1.2</span> Tibble transpose — read veergudeks ja vastupidi</h3>
+<h3><span class="header-section-number">8.1.2</span> Tibble transpose — read veergudeks ja vastupidi</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a =</span> <span class="kw">c</span>(<span class="st">&quot;tim&quot;</span>, <span class="st">&quot;tom&quot;</span>, <span class="st">&quot;jill&quot;</span>), <span class="dt">b1 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">b2 =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>))
 dat
 <span class="co">#&gt; # A tibble: 3 x 3</span>
@@ -349,10 +344,10 @@ dat1
 </div>
 </div>
 <div id="dplyr-ja-selle-viis-verbi" class="section level2">
-<h2><span class="header-section-number">9.2</span> dplyr ja selle viis verbi</h2>
+<h2><span class="header-section-number">8.2</span> dplyr ja selle viis verbi</h2>
 <p>Need tuleb teil omale pähe ajada sest nende 5 verbiga (pluss gather ja spread) saab lihtsalt teha 90% andmeväänamisest, mida teil elus ette tuleb. NB! Check the data wrangling cheatsheet and dplyr help for further details. dplyr laetakse koos tidyverse-ga automaatselt teie workspace-i.</p>
 <div id="select-columns" class="section level3">
-<h3><span class="header-section-number">9.2.1</span> <code>select()</code> columns</h3>
+<h3><span class="header-section-number">8.2.1</span> <code>select()</code> columns</h3>
 <p><code>select()</code> selects, renames, and re-orders columns.</p>
 <p>Select columns from sex to value:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris
@@ -362,7 +357,7 @@ dat1
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(iris, <span class="dt">liik =</span> Species, Sepal.Length, Sepal.Width) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">as_data_frame</span>()
 <span class="co">#&gt; # A tibble: 150 x 3</span>
 <span class="co">#&gt;   liik   Sepal.Length Sepal.Width</span>
-<span class="co">#&gt;   &lt;fct&gt;         &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;   &lt;fctr&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 setosa         5.10        3.50</span>
 <span class="co">#&gt; 2 setosa         4.90        3.00</span>
 <span class="co">#&gt; 3 setosa         4.70        3.20</span>
@@ -406,47 +401,46 @@ dat1
 <span class="co"># Move Species variable to the front</span>
 <span class="kw">select</span>(iris, Species, <span class="kw">everything</span>())
 <span class="co">#&gt; # A tibble: 150 x 5</span>
-<span class="co">#&gt;   Species Sepal.Length Sepal.Width Petal.Length</span>
-<span class="co">#&gt;   &lt;fct&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 setosa          5.10        3.50         1.40</span>
-<span class="co">#&gt; 2 setosa          4.90        3.00         1.40</span>
-<span class="co">#&gt; 3 setosa          4.70        3.20         1.30</span>
-<span class="co">#&gt; 4 setosa          4.60        3.10         1.50</span>
-<span class="co">#&gt; 5 setosa          5.00        3.60         1.40</span>
-<span class="co">#&gt; 6 setosa          5.40        3.90         1.70</span>
-<span class="co">#&gt; # ... with 144 more rows, and 1 more variable:</span>
-<span class="co">#&gt; #   Petal.Width &lt;dbl&gt;</span>
+<span class="co">#&gt;   Species Sepal.Length Sepal.Width Petal.Length Petal…</span>
+<span class="co">#&gt;   &lt;fctr&gt;         &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 setosa          5.10        3.50         1.40  0.200</span>
+<span class="co">#&gt; 2 setosa          4.90        3.00         1.40  0.200</span>
+<span class="co">#&gt; 3 setosa          4.70        3.20         1.30  0.200</span>
+<span class="co">#&gt; 4 setosa          4.60        3.10         1.50  0.200</span>
+<span class="co">#&gt; 5 setosa          5.00        3.60         1.40  0.200</span>
+<span class="co">#&gt; 6 setosa          5.40        3.90         1.70  0.400</span>
+<span class="co">#&gt; # ... with 144 more rows</span>
 
 dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">runif</span>(<span class="dv">100</span>), <span class="dt">nrow =</span> <span class="dv">10</span>))
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;      V9     V8     V5     V2     V6</span>
-<span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.330 0.0284 0.492  0.704  0.716 </span>
-<span class="co">#&gt; 2 0.460 0.154  0.0618 0.271  0.0271</span>
-<span class="co">#&gt; 3 0.564 0.849  0.459  0.935  0.660 </span>
-<span class="co">#&gt; 4 0.692 0.0948 0.875  0.0690 0.442 </span>
-<span class="co">#&gt; 5 0.696 0.708  0.556  0.892  0.199 </span>
-<span class="co">#&gt; 6 0.512 0.0939 0.870  0.812  0.986 </span>
+<span class="co">#&gt;      V9    V8    V5     V2    V6</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.919 0.759 0.265 0.720  0.797</span>
+<span class="co">#&gt; 2 0.672 0.746 0.940 0.584  0.642</span>
+<span class="co">#&gt; 3 0.111 0.656 0.142 0.705  0.382</span>
+<span class="co">#&gt; 4 0.424 0.991 0.871 0.0475 0.852</span>
+<span class="co">#&gt; 5 0.796 0.808 0.335 0.865  0.174</span>
+<span class="co">#&gt; 6 0.207 0.472 0.546 0.866  0.523</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;      V9     V8     V7     V6</span>
-<span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.330 0.0284 0.736  0.716 </span>
-<span class="co">#&gt; 2 0.460 0.154  0.978  0.0271</span>
-<span class="co">#&gt; 3 0.564 0.849  0.0991 0.660 </span>
-<span class="co">#&gt; 4 0.692 0.0948 0.971  0.442 </span>
-<span class="co">#&gt; 5 0.696 0.708  0.0769 0.199 </span>
-<span class="co">#&gt; 6 0.512 0.0939 0.757  0.986 </span>
+<span class="co">#&gt;      V9    V8    V7    V6</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.919 0.759 0.441 0.797</span>
+<span class="co">#&gt; 2 0.672 0.746 0.776 0.642</span>
+<span class="co">#&gt; 3 0.111 0.656 0.761 0.382</span>
+<span class="co">#&gt; 4 0.424 0.991 0.889 0.852</span>
+<span class="co">#&gt; 5 0.796 0.808 0.384 0.174</span>
+<span class="co">#&gt; 6 0.207 0.472 0.808 0.523</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
 <span class="kw">select</span>(iris, <span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;Petal&quot;</span>))
 <span class="co">#&gt; # A tibble: 150 x 3</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Species</span>
-<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  </span>
+<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;fctr&gt; </span>
 <span class="co">#&gt; 1         5.10        3.50 setosa </span>
 <span class="co">#&gt; 2         4.90        3.00 setosa </span>
 <span class="co">#&gt; 3         4.70        3.20 setosa </span>
@@ -460,55 +454,51 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <span class="co"># rename() keeps all variables</span>
 <span class="kw">rename</span>(iris, <span class="dt">petal_length =</span> Petal.Length)
 <span class="co">#&gt; # A tibble: 150 x 5</span>
-<span class="co">#&gt;   Sepal.Length Sepal.Width petal_length Petal.Width</span>
-<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt; 1         5.10        3.50         1.40       0.200</span>
-<span class="co">#&gt; 2         4.90        3.00         1.40       0.200</span>
-<span class="co">#&gt; 3         4.70        3.20         1.30       0.200</span>
-<span class="co">#&gt; 4         4.60        3.10         1.50       0.200</span>
-<span class="co">#&gt; 5         5.00        3.60         1.40       0.200</span>
-<span class="co">#&gt; 6         5.40        3.90         1.70       0.400</span>
-<span class="co">#&gt; # ... with 144 more rows, and 1 more variable:</span>
-<span class="co">#&gt; #   Species &lt;fct&gt;</span></code></pre></div>
+<span class="co">#&gt;   Sepal.Length Sepal.Width petal_length Petal.W… Spec…</span>
+<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;</span>
+<span class="co">#&gt; 1         5.10        3.50         1.40    0.200 seto…</span>
+<span class="co">#&gt; 2         4.90        3.00         1.40    0.200 seto…</span>
+<span class="co">#&gt; 3         4.70        3.20         1.30    0.200 seto…</span>
+<span class="co">#&gt; 4         4.60        3.10         1.50    0.200 seto…</span>
+<span class="co">#&gt; 5         5.00        3.60         1.40    0.200 seto…</span>
+<span class="co">#&gt; 6         5.40        3.90         1.70    0.400 seto…</span>
+<span class="co">#&gt; # ... with 144 more rows</span></code></pre></div>
 </div>
 <div id="filter-rows" class="section level3">
-<h3><span class="header-section-number">9.2.2</span> <code>filter()</code> rows</h3>
+<h3><span class="header-section-number">8.2.2</span> <code>filter()</code> rows</h3>
 <p>Keep rows in Iris that have Species level “setosa” <strong>and</strong> Sepal.Length value &lt;4.5.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Sepal.Length <span class="op">&lt;</span><span class="st"> </span><span class="fl">4.5</span>)
 <span class="co">#&gt; # A tibble: 4 x 5</span>
-<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
-<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt; 1         4.40        2.90         1.40       0.200</span>
-<span class="co">#&gt; 2         4.30        3.00         1.10       0.100</span>
-<span class="co">#&gt; 3         4.40        3.00         1.30       0.200</span>
-<span class="co">#&gt; 4         4.40        3.20         1.30       0.200</span>
-<span class="co">#&gt; # ... with 1 more variable: Species &lt;fct&gt;</span></code></pre></div>
+<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.W… Spec…</span>
+<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;</span>
+<span class="co">#&gt; 1         4.40        2.90         1.40    0.200 seto…</span>
+<span class="co">#&gt; 2         4.30        3.00         1.10    0.100 seto…</span>
+<span class="co">#&gt; 3         4.40        3.00         1.30    0.200 seto…</span>
+<span class="co">#&gt; 4         4.40        3.20         1.30    0.200 seto…</span></code></pre></div>
 <p>Keep rows in Iris that have Species level “setosa” <strong>or</strong> Sepal.Length value &lt;4.5.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(iris, Species<span class="op">==</span><span class="st">&quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Sepal.Length <span class="op">&lt;</span><span class="st"> </span><span class="fl">4.5</span>)
 <span class="co">#&gt; # A tibble: 50 x 5</span>
-<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
-<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt; 1         5.10        3.50         1.40       0.200</span>
-<span class="co">#&gt; 2         4.90        3.00         1.40       0.200</span>
-<span class="co">#&gt; 3         4.70        3.20         1.30       0.200</span>
-<span class="co">#&gt; 4         4.60        3.10         1.50       0.200</span>
-<span class="co">#&gt; 5         5.00        3.60         1.40       0.200</span>
-<span class="co">#&gt; 6         5.40        3.90         1.70       0.400</span>
-<span class="co">#&gt; # ... with 44 more rows, and 1 more variable:</span>
-<span class="co">#&gt; #   Species &lt;fct&gt;</span></code></pre></div>
+<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.W… Spec…</span>
+<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;</span>
+<span class="co">#&gt; 1         5.10        3.50         1.40    0.200 seto…</span>
+<span class="co">#&gt; 2         4.90        3.00         1.40    0.200 seto…</span>
+<span class="co">#&gt; 3         4.70        3.20         1.30    0.200 seto…</span>
+<span class="co">#&gt; 4         4.60        3.10         1.50    0.200 seto…</span>
+<span class="co">#&gt; 5         5.00        3.60         1.40    0.200 seto…</span>
+<span class="co">#&gt; 6         5.40        3.90         1.70    0.400 seto…</span>
+<span class="co">#&gt; # ... with 44 more rows</span></code></pre></div>
 <p>Keep rows in Iris that have Species level “not setosa” <strong>or</strong> Sepal.Length value &lt;4.5.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(iris, Species <span class="op">!=</span><span class="st">&quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Sepal.Length <span class="op">&lt;</span><span class="st"> </span><span class="fl">4.5</span>)
 <span class="co">#&gt; # A tibble: 104 x 5</span>
-<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
-<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt; 1         4.40        2.90         1.40       0.200</span>
-<span class="co">#&gt; 2         4.30        3.00         1.10       0.100</span>
-<span class="co">#&gt; 3         4.40        3.00         1.30       0.200</span>
-<span class="co">#&gt; 4         4.40        3.20         1.30       0.200</span>
-<span class="co">#&gt; 5         7.00        3.20         4.70       1.40 </span>
-<span class="co">#&gt; 6         6.40        3.20         4.50       1.50 </span>
-<span class="co">#&gt; # ... with 98 more rows, and 1 more variable:</span>
-<span class="co">#&gt; #   Species &lt;fct&gt;</span></code></pre></div>
+<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.… Speci…</span>
+<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;fctr&gt;</span>
+<span class="co">#&gt; 1         4.40        2.90         1.40   0.200 setosa</span>
+<span class="co">#&gt; 2         4.30        3.00         1.10   0.100 setosa</span>
+<span class="co">#&gt; 3         4.40        3.00         1.30   0.200 setosa</span>
+<span class="co">#&gt; 4         4.40        3.20         1.30   0.200 setosa</span>
+<span class="co">#&gt; 5         7.00        3.20         4.70   1.40  versi…</span>
+<span class="co">#&gt; 6         6.40        3.20         4.50   1.50  versi…</span>
+<span class="co">#&gt; # ... with 98 more rows</span></code></pre></div>
 <p>Kui tahame samast veerust filtreerida “või” ehk “|” abil mitu väärtust, on meil valida kahe samaväärse variandi vahel (tegelikult töötab 2. variant ka ühe väärtuse korral)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(iris, Species <span class="op">==</span><span class="st">&quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Species <span class="op">==</span><span class="st">&quot;versicolor&quot;</span>)
 <span class="kw">filter</span>(iris, Species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>) )</code></pre></div>
@@ -517,22 +507,21 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)
 <span class="kw">filter</span>(iris, <span class="kw">str_detect</span>(Species, <span class="st">&quot;^v&quot;</span>)) 
 <span class="co">#&gt; # A tibble: 100 x 5</span>
-<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
-<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt; 1         7.00        3.20         4.70        1.40</span>
-<span class="co">#&gt; 2         6.40        3.20         4.50        1.50</span>
-<span class="co">#&gt; 3         6.90        3.10         4.90        1.50</span>
-<span class="co">#&gt; 4         5.50        2.30         4.00        1.30</span>
-<span class="co">#&gt; 5         6.50        2.80         4.60        1.50</span>
-<span class="co">#&gt; 6         5.70        2.80         4.50        1.30</span>
-<span class="co">#&gt; # ... with 94 more rows, and 1 more variable:</span>
-<span class="co">#&gt; #   Species &lt;fct&gt;</span></code></pre></div>
+<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.… Speci…</span>
+<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;fctr&gt;</span>
+<span class="co">#&gt; 1         7.00        3.20         4.70    1.40 versi…</span>
+<span class="co">#&gt; 2         6.40        3.20         4.50    1.50 versi…</span>
+<span class="co">#&gt; 3         6.90        3.10         4.90    1.50 versi…</span>
+<span class="co">#&gt; 4         5.50        2.30         4.00    1.30 versi…</span>
+<span class="co">#&gt; 5         6.50        2.80         4.60    1.50 versi…</span>
+<span class="co">#&gt; 6         5.70        2.80         4.50    1.30 versi…</span>
+<span class="co">#&gt; # ... with 94 more rows</span></code></pre></div>
 <p>As you can see there are endless vistas here, open for a regular expression fanatic. I wish I was one!</p>
 <p>remove NAs with <code>filter()</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(flights, <span class="op">!</span><span class="kw">is.na</span>(dep_delay), <span class="op">!</span><span class="kw">is.na</span>(arr_delay))</code></pre></div>
 </div>
 <div id="summarise" class="section level3">
-<h3><span class="header-section-number">9.2.3</span> <code>summarise()</code></h3>
+<h3><span class="header-section-number">8.2.3</span> <code>summarise()</code></h3>
 <p>Many rows summarised to a single value</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summarise</span>(iris, 
           <span class="dt">MEAN =</span> <span class="kw">mean</span>(Sepal.Length), 
@@ -548,7 +537,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <p>summarise on kasulikum, kui teda kasutada koos järgmise verbi, group_by-ga.</p>
 </div>
 <div id="group_by" class="section level3">
-<h3><span class="header-section-number">9.2.4</span> <code>group_by()</code></h3>
+<h3><span class="header-section-number">8.2.4</span> <code>group_by()</code></h3>
 <p><code>group_by()</code> groups values for summarising or mutating-</p>
 <p>When we summarise by <em>sex</em> we will get two values for each summary statistic: for males and females. Aint that sexy?!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species) 
@@ -559,7 +548,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
           <span class="dt">n_species =</span> <span class="kw">n_distinct</span>(Species))
 <span class="co">#&gt; # A tibble: 3 x 5</span>
 <span class="co">#&gt;   Species     MEAN    SD     N n_species</span>
-<span class="co">#&gt;   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;     &lt;int&gt;</span>
+<span class="co">#&gt;   &lt;fctr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;     &lt;int&gt;</span>
 <span class="co">#&gt; 1 setosa      5.01 0.352    50         1</span>
 <span class="co">#&gt; 2 versicolor  5.94 0.516    50         1</span>
 <span class="co">#&gt; 3 virginica   6.59 0.636    50         1</span></code></pre></div>
@@ -614,23 +603,22 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
        <span class="dt">SD =</span> <span class="kw">sd</span>(Sepal.Length))
 <span class="co">#&gt; # A tibble: 150 x 7</span>
 <span class="co">#&gt; # Groups:   Species [3]</span>
-<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
-<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt; 1         5.10        3.50         1.40       0.200</span>
-<span class="co">#&gt; 2         4.90        3.00         1.40       0.200</span>
-<span class="co">#&gt; 3         4.70        3.20         1.30       0.200</span>
-<span class="co">#&gt; 4         4.60        3.10         1.50       0.200</span>
-<span class="co">#&gt; 5         5.00        3.60         1.40       0.200</span>
-<span class="co">#&gt; 6         5.40        3.90         1.70       0.400</span>
-<span class="co">#&gt; # ... with 144 more rows, and 3 more variables:</span>
-<span class="co">#&gt; #   Species &lt;fct&gt;, MEAN &lt;dbl&gt;, SD &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt;   Sepal.Length Sepal.… Petal… Petal… Spec…  MEAN    SD</span>
+<span class="co">#&gt;          &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1         5.10    3.50   1.40  0.200 seto…  5.01 0.352</span>
+<span class="co">#&gt; 2         4.90    3.00   1.40  0.200 seto…  5.01 0.352</span>
+<span class="co">#&gt; 3         4.70    3.20   1.30  0.200 seto…  5.01 0.352</span>
+<span class="co">#&gt; 4         4.60    3.10   1.50  0.200 seto…  5.01 0.352</span>
+<span class="co">#&gt; 5         5.00    3.60   1.40  0.200 seto…  5.01 0.352</span>
+<span class="co">#&gt; 6         5.40    3.90   1.70  0.400 seto…  5.01 0.352</span>
+<span class="co">#&gt; # ... with 144 more rows</span></code></pre></div>
 <p>Anna igast grupist 3 kõrgeimat väärtust ja 2 madalaimat väärtust. Samad numbrid erinevates ridades antakse kõik - selle pärast on meil tabelis rohkem ridu.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="kw">top_n</span>(iris_grouped, <span class="dv">3</span>, Sepal.Length)
 <span class="kw">top_n</span>(iris_grouped, <span class="op">-</span><span class="dv">2</span>, Sepal.Length)</code></pre></div>
 </div>
 <div id="mutate" class="section level3">
-<h3><span class="header-section-number">9.2.5</span> <code>mutate()</code></h3>
+<h3><span class="header-section-number">8.2.5</span> <code>mutate()</code></h3>
 <p>Mutate põhikasutus on siiski uute veergude tekitamine, mis võtavad endale inputi rea kaupa. Seega tabeli ridade arv ei muutu.</p>
 <p>If in your tibble called ‘df’ you have a column called ‘value’, you can create a new log2 transformed value value column called log_value by <code>df %&gt;% mutate(log_value = log2(value))</code>. Or you can create a new column where a constant is substracted from the value column: <code>df %&gt;% mutate(centered_value = value - mean(value) )</code>. Here the mean value is substracted from each individual value.</p>
 <p><strong>Mutate adds new columns (and <code>transmute()</code> creates new columns while losing the previous columns)</strong></p>
@@ -697,7 +685,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <span class="co">#&gt; 6 Jill    F     experiment_1  36.0      1.02    5.44</span>
 <span class="co">#&gt; # ... with 3 more rows</span></code></pre></div>
 <div id="summarise-mutate-transmute-ja-filter-tootavad-ka-mitme-veeru-kaupa." class="section level4">
-<h4><span class="header-section-number">9.2.5.1</span> Summarise(), mutate(), transmute() ja filter() töötavad ka mitme veeru kaupa.</h4>
+<h4><span class="header-section-number">8.2.5.1</span> Summarise(), mutate(), transmute() ja filter() töötavad ka mitme veeru kaupa.</h4>
 <p>Need variandid sisaldavad suffikseid _if, _at ja _all.</p>
 <p>_if võimaldab valida veerge teise funktsiooni, nagu näiteks is.numeric() või is.character() alusel.</p>
 <p>_at võimaldab valida veerge sama süntaksiga, mis select().</p>
@@ -719,7 +707,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 </div>
 </div>
 <div id="grouped-filters" class="section level2">
-<h2><span class="header-section-number">9.3</span> Grouped filters</h2>
+<h2><span class="header-section-number">8.3</span> Grouped filters</h2>
 <p>Keep all groups bigger than a threshold:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">popular_dests &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(dest) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -765,7 +753,7 @@ get_numeric &lt;-<span class="st"> </span><span class="cf">function</span>(x, ..
 <p>Here we did the same thing more elegantly by directly parsing numbers from a character string.</p>
 </div>
 <div id="separate-one-column-into-several" class="section level2">
-<h2><span class="header-section-number">9.4</span> <code>separate()</code> one column into several</h2>
+<h2><span class="header-section-number">8.4</span> <code>separate()</code> one column into several</h2>
 <p>Siin on veel üks verb, mida aeg-ajalt kõigil vaja läheb. <code>separate()</code> võtab ühe veeru sisu (mis peab olema character string) ning jagab selle laiali mitme uue veeru vahel. Kui teda kasutada vormis <code>separate(df, old_Column, into=c(&quot;new_col1&quot;, &quot;new_col2&quot;, &quot;ja_nii_edasi&quot;))</code> siis püüab programm ise ära arvata, kustkohalt veeru sisu hakkida (tühikud, komad, semikoolonid, koolonid jne). Aga te võite eksplitsiitselt ette anda separaatori sep = “”. sep = 2 tähendab “peale 2. tähemärki”. sep = -6 tähendab “enne tagantpoolt 6. tähemärki”</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">country =</span> <span class="kw">c</span>(<span class="st">&quot;Albania&quot;</span>), <span class="dt">disease.cases =</span> <span class="kw">c</span>(<span class="st">&quot;80/1000&quot;</span>)))
 <span class="co">#&gt; # A tibble: 1 x 2</span>
@@ -801,10 +789,10 @@ get_numeric &lt;-<span class="st"> </span><span class="cf">function</span>(x, ..
 <span class="co">#&gt; 2  2.00 Eukaryota; Chordata</span>
 (d1 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(taxon, <span class="kw">c</span>(<span class="st">&#39;riik&#39;</span>, <span class="st">&#39;hmk&#39;</span>, <span class="st">&quot;klass&quot;</span>, <span class="st">&quot;perekond&quot;</span>), <span class="dt">sep =</span> <span class="st">&#39;; &#39;</span>, <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>)) 
 <span class="co">#&gt; # A tibble: 2 x 5</span>
-<span class="co">#&gt;   index riik       hmk      klass           perekond  </span>
-<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     </span>
-<span class="co">#&gt; 1  1.00 Procaryota Bacteria Alpha-Proteoba… Escharich…</span>
-<span class="co">#&gt; 2  2.00 Eukaryota  Chordata &lt;NA&gt;            &lt;NA&gt;</span></code></pre></div>
+<span class="co">#&gt;   index riik       hmk      klass                pere…</span>
+<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                &lt;chr&gt;</span>
+<span class="co">#&gt; 1  1.00 Procaryota Bacteria Alpha-Proteobacteria Esch…</span>
+<span class="co">#&gt; 2  2.00 Eukaryota  Chordata &lt;NA&gt;                 &lt;NA&gt;</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># some special cases:</span>
 (dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">index =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), 
                <span class="dt">taxon =</span> <span class="kw">c</span>(<span class="st">&quot;Prokaryota || Bacteria || Alpha-Proteobacteria || Escharichia&quot;</span>, <span class="st">&quot;Eukaryota || Chordata&quot;</span>)))
@@ -815,18 +803,18 @@ get_numeric &lt;-<span class="st"> </span><span class="cf">function</span>(x, ..
 <span class="co">#&gt; 2  2.00 Eukaryota || Chordata</span>
 (d1 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(taxon, <span class="kw">c</span>(<span class="st">&quot;riik&quot;</span>, <span class="st">&quot;hmk&quot;</span>, <span class="st">&quot;klass&quot;</span>, <span class="st">&quot;perekond&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">|</span><span class="ch">\\</span><span class="st">|&quot;</span>, <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>)) 
 <span class="co">#&gt; # A tibble: 2 x 5</span>
-<span class="co">#&gt;   index riik          hmk          klass     perekond </span>
-<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;    </span>
-<span class="co">#&gt; 1  1.00 &quot;Prokaryota &quot; &quot; Bacteria &quot; &quot; Alpha-… &quot; Eschar…</span>
-<span class="co">#&gt; 2  2.00 &quot;Eukaryota &quot;  &quot; Chordata&quot;  &lt;NA&gt;      &lt;NA&gt;</span></code></pre></div>
+<span class="co">#&gt;   index riik          hmk          klass       pereko…</span>
+<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;  </span>
+<span class="co">#&gt; 1  1.00 &quot;Prokaryota &quot; &quot; Bacteria &quot; &quot; Alpha-Pr… &quot; Esch…</span>
+<span class="co">#&gt; 2  2.00 &quot;Eukaryota &quot;  &quot; Chordata&quot;  &lt;NA&gt;        &lt;NA&gt;</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">index =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), 
               <span class="dt">taxon =</span> <span class="kw">c</span>(<span class="st">&quot;Prokaryota.Bacteria.Alpha-Proteobacteria.Escharichia&quot;</span>, <span class="st">&quot;Eukaryota.Chordata&quot;</span>))
 (d1 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(taxon, <span class="kw">c</span>(<span class="st">&#39;riik&#39;</span>, <span class="st">&#39;hmk&#39;</span>, <span class="st">&quot;klass&quot;</span>, <span class="st">&quot;perekond&quot;</span>), <span class="dt">sep =</span> <span class="st">&#39;[.]&#39;</span>, <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>)) 
 <span class="co">#&gt; # A tibble: 2 x 5</span>
-<span class="co">#&gt;   index riik       hmk      klass           perekond  </span>
-<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     </span>
-<span class="co">#&gt; 1  1.00 Prokaryota Bacteria Alpha-Proteoba… Escharich…</span>
-<span class="co">#&gt; 2  2.00 Eukaryota  Chordata &lt;NA&gt;            &lt;NA&gt;</span></code></pre></div>
+<span class="co">#&gt;   index riik       hmk      klass                pere…</span>
+<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                &lt;chr&gt;</span>
+<span class="co">#&gt; 1  1.00 Prokaryota Bacteria Alpha-Proteobacteria Esch…</span>
+<span class="co">#&gt; 2  2.00 Eukaryota  Chordata &lt;NA&gt;                 &lt;NA&gt;</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">index =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), 
                <span class="dt">taxon =</span> <span class="kw">c</span>(<span class="st">&quot;Prokaryota.Bacteria,Alpha-Proteobacteria.Escharichia&quot;</span>, <span class="st">&quot;Eukaryota.Chordata&quot;</span>)))
 <span class="co">#&gt; # A tibble: 2 x 2</span>
@@ -836,14 +824,14 @@ get_numeric &lt;-<span class="st"> </span><span class="cf">function</span>(x, ..
 <span class="co">#&gt; 2  2.00 Eukaryota.Chordata</span>
 (d1 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(taxon, <span class="kw">c</span>(<span class="st">&#39;riik&#39;</span>, <span class="st">&#39;hmk&#39;</span>, <span class="st">&quot;klass&quot;</span>, <span class="st">&quot;perekond&quot;</span>), <span class="dt">sep =</span> <span class="st">&#39;[,</span><span class="ch">\\</span><span class="st">.]&#39;</span>, <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>))
 <span class="co">#&gt; # A tibble: 2 x 5</span>
-<span class="co">#&gt;   index riik       hmk      klass           perekond  </span>
-<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     </span>
-<span class="co">#&gt; 1  1.00 Prokaryota Bacteria Alpha-Proteoba… Escharich…</span>
-<span class="co">#&gt; 2  2.00 Eukaryota  Chordata &lt;NA&gt;            &lt;NA&gt;</span></code></pre></div>
+<span class="co">#&gt;   index riik       hmk      klass                pere…</span>
+<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                &lt;chr&gt;</span>
+<span class="co">#&gt; 1  1.00 Prokaryota Bacteria Alpha-Proteobacteria Esch…</span>
+<span class="co">#&gt; 2  2.00 Eukaryota  Chordata &lt;NA&gt;                 &lt;NA&gt;</span></code></pre></div>
 <p>The companion FUN to separate is <code>unite()</code> - see help.</p>
 </div>
 <div id="faktorid" class="section level2">
-<h2><span class="header-section-number">9.5</span> Faktorid</h2>
+<h2><span class="header-section-number">8.5</span> Faktorid</h2>
 <p>Faktor on andmetüüp, mis oli ajalooliselt tähtsam kui ta praegu on. Sageli saame oma asja ära ajada character vectori andmetüübiga ja ei vaja faktorit. Aga siiski läheb faktoreid aeg-ajalt kõigil vaja.</p>
 <blockquote>
 <p>Faktorite abil töötame kategooriliste muutujatega, millel on fikseeritud hulk võimalikke väärtusi, mida me kõiki teame.</p>
@@ -872,26 +860,26 @@ f2
 <p>Kui faktorid on tibbles oma veeruna, siis saab nende tasemed <code>count()</code> kasutades:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="co">#tibble, mille veerg &quot;race&quot; on faktor.</span>
 <span class="co">#&gt; # A tibble: 21,483 x 9</span>
-<span class="co">#&gt;    year marital    age race  rincome  partyid   relig </span>
-<span class="co">#&gt;   &lt;int&gt; &lt;fct&gt;    &lt;int&gt; &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;     &lt;fct&gt; </span>
-<span class="co">#&gt; 1  2000 Never m…    26 White $8000 t… Ind,near… Prote…</span>
-<span class="co">#&gt; 2  2000 Divorced    48 White $8000 t… Not str … Prote…</span>
-<span class="co">#&gt; 3  2000 Widowed     67 White Not app… Independ… Prote…</span>
-<span class="co">#&gt; 4  2000 Never m…    39 White Not app… Ind,near… Ortho…</span>
-<span class="co">#&gt; 5  2000 Divorced    25 White Not app… Not str … None  </span>
-<span class="co">#&gt; 6  2000 Married     25 White $20000 … Strong d… Prote…</span>
-<span class="co">#&gt; # ... with 2.148e+04 more rows, and 2 more variables:</span>
-<span class="co">#&gt; #   denom &lt;fct&gt;, tvhours &lt;int&gt;</span>
+<span class="co">#&gt;    year marit…   age race   rinc… party… relig  denom </span>
+<span class="co">#&gt;   &lt;int&gt; &lt;fctr&gt; &lt;int&gt; &lt;fctr&gt; &lt;fct&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt;</span>
+<span class="co">#&gt; 1  2000 Never…    26 White  $800… Ind,n… Prote… South…</span>
+<span class="co">#&gt; 2  2000 Divor…    48 White  $800… Not s… Prote… Bapti…</span>
+<span class="co">#&gt; 3  2000 Widow…    67 White  Not … Indep… Prote… No de…</span>
+<span class="co">#&gt; 4  2000 Never…    39 White  Not … Ind,n… Ortho… Not a…</span>
+<span class="co">#&gt; 5  2000 Divor…    25 White  Not … Not s… None   Not a…</span>
+<span class="co">#&gt; 6  2000 Marri…    25 White  $200… Stron… Prote… South…</span>
+<span class="co">#&gt; # ... with 2.148e+04 more rows, and 1 more variable:</span>
+<span class="co">#&gt; #   tvhours &lt;int&gt;</span>
 gss_cat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(race)
 <span class="co">#&gt; # A tibble: 3 x 2</span>
-<span class="co">#&gt;   race      n</span>
-<span class="co">#&gt;   &lt;fct&gt; &lt;int&gt;</span>
-<span class="co">#&gt; 1 Other  1959</span>
-<span class="co">#&gt; 2 Black  3129</span>
-<span class="co">#&gt; 3 White 16395</span></code></pre></div>
+<span class="co">#&gt;   race       n</span>
+<span class="co">#&gt;   &lt;fctr&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1 Other   1959</span>
+<span class="co">#&gt; 2 Black   3129</span>
+<span class="co">#&gt; 3 White  16395</span></code></pre></div>
 <p>Nii saame ka teada, mitu korda iga faktori tase selles tabelis esineb.</p>
 <div id="tekitame-faktortulba-keerulisemal-teel" class="section level3">
-<h3><span class="header-section-number">9.5.1</span> tekitame faktortulba keerulisemal teel</h3>
+<h3><span class="header-section-number">8.5.1</span> tekitame faktortulba keerulisemal teel</h3>
 <p>dplyr::case_when(). Kui Sepal.Length on &gt; 5.8 või Sepal.Width &gt;4, siis uues veerus nimega fact ilmub tase “large”, kui Species = setosa, siis ilmub tase “I. setosa”, igal muul juhul ilmub “other”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 i &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(
@@ -902,15 +890,15 @@ i &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="
     ))</code></pre></div>
 </div>
 <div id="droplevels-viskab-valja-kasutamata-faktori-tasemed" class="section level3">
-<h3><span class="header-section-number">9.5.2</span> <code>droplevels()</code> viskab välja kasutamata faktori tasemed</h3>
+<h3><span class="header-section-number">8.5.2</span> <code>droplevels()</code> viskab välja kasutamata faktori tasemed</h3>
 <p><code>df1$sex &lt;- droplevels(df1$sex)</code></p>
 </div>
 <div id="fct_recode-rekodeerib-faktori-tasemed" class="section level3">
-<h3><span class="header-section-number">9.5.3</span> <code>fct_recode()</code> rekodeerib faktori tasemed</h3>
+<h3><span class="header-section-number">8.5.3</span> <code>fct_recode()</code> rekodeerib faktori tasemed</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(partyid)
 <span class="co">#&gt; # A tibble: 10 x 2</span>
 <span class="co">#&gt;   partyid                n</span>
-<span class="co">#&gt;   &lt;fct&gt;              &lt;int&gt;</span>
+<span class="co">#&gt;   &lt;fctr&gt;             &lt;int&gt;</span>
 <span class="co">#&gt; 1 No answer            154</span>
 <span class="co">#&gt; 2 Don&#39;t know             1</span>
 <span class="co">#&gt; 3 Other party          393</span>
@@ -933,7 +921,7 @@ gss_cat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">count</span>(partyid)
 <span class="co">#&gt; # A tibble: 8 x 2</span>
 <span class="co">#&gt;   partyid                   n</span>
-<span class="co">#&gt;   &lt;fct&gt;                 &lt;int&gt;</span>
+<span class="co">#&gt;   &lt;fctr&gt;                &lt;int&gt;</span>
 <span class="co">#&gt; 1 Other                   548</span>
 <span class="co">#&gt; 2 Republican, strong     2314</span>
 <span class="co">#&gt; 3 Republican, weak       3032</span>
@@ -944,7 +932,7 @@ gss_cat <span class="op">%&gt;%</span>
 <p><code>fct_recode()</code> ei puuduta neid tasemeid, mida selle argumendis ei mainita. Lisaks saab mitu vana taset muuta üheks uueks tasemeks.</p>
 </div>
 <div id="fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid." class="section level3">
-<h3><span class="header-section-number">9.5.4</span> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</h3>
+<h3><span class="header-section-number">8.5.4</span> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">partyid =</span> <span class="kw">fct_collapse</span>(partyid,
                                 <span class="dt">other =</span> <span class="kw">c</span>(<span class="st">&quot;No answer&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>, <span class="st">&quot;Other party&quot;</span>),
@@ -955,7 +943,7 @@ gss_cat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">count</span>(partyid)</code></pre></div>
 </div>
 <div id="fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed." class="section level3">
-<h3><span class="header-section-number">9.5.5</span> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</h3>
+<h3><span class="header-section-number">8.5.5</span> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</h3>
 <p>n parameeter ütleb, mitu algset taset tuleb alles jätta:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gss_cat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">relig =</span> <span class="kw">fct_lump</span>(relig, <span class="dt">n =</span> <span class="dv">5</span>)) <span class="op">%&gt;%</span>
@@ -963,7 +951,7 @@ gss_cat <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">print</span>()
 <span class="co">#&gt; # A tibble: 6 x 2</span>
 <span class="co">#&gt;   relig          n</span>
-<span class="co">#&gt;   &lt;fct&gt;      &lt;int&gt;</span>
+<span class="co">#&gt;   &lt;fctr&gt;     &lt;int&gt;</span>
 <span class="co">#&gt; 1 Protestant 10846</span>
 <span class="co">#&gt; 2 Catholic    5124</span>
 <span class="co">#&gt; 3 None        3523</span>
@@ -972,7 +960,7 @@ gss_cat <span class="op">%&gt;%</span>
 <span class="co">#&gt; 6 Jewish       388</span></code></pre></div>
 </div>
 <div id="rekodeerime-pideva-muutuja-faktoriks" class="section level3">
-<h3><span class="header-section-number">9.5.6</span> Rekodeerime pideva muutuja faktoriks</h3>
+<h3><span class="header-section-number">8.5.6</span> Rekodeerime pideva muutuja faktoriks</h3>
 <p><code>cut()</code> jagab meie muutuja väärtused intervallidesse ja annab igale intervallile faktori taseme.</p>
 <p><code>cut(x, breaks, labels = NULL, ordered_result = FALSE, ...)</code></p>
 <p>breaks - either a numeric vector of two or more unique cut points or a single number &gt;1, giving the number of intervals into which x is to be cut. labels - labels for the levels of the resulting category. ordered_result - logical: should the result be an ordered factor?</p>
@@ -999,7 +987,7 @@ x
 <span class="co">#&gt; [1] &quot;A&quot; &quot;A&quot; &quot;B&quot; &quot;A&quot; &quot;A&quot; &quot;B&quot; &quot;A&quot; &quot;A&quot; &quot;B&quot;</span></code></pre></div>
 </div>
 <div id="muudame-faktori-tasemete-jarjekorda-joonisel" class="section level3">
-<h3><span class="header-section-number">9.5.7</span> Muudame faktori tasemete järjekorda joonisel</h3>
+<h3><span class="header-section-number">8.5.7</span> Muudame faktori tasemete järjekorda joonisel</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summeerime andmed
 gsscat_sum  &lt;-<span class="st"> </span><span class="kw">group_by</span>(gss_cat, relig) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">age =</span> <span class="kw">mean</span>(age, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),
@@ -1012,14 +1000,14 @@ p</code></pre></div>
 <p><img src="07-tidyverse_files/figure-html/unnamed-chunk-50-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole" class="section level3">
-<h3><span class="header-section-number">9.5.8</span> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</h3>
+<h3><span class="header-section-number">8.5.8</span> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</h3>
 <p>Argumendid on faktor f ja need tasemed (jutumärkides), mida sa tahad tõsta.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## täiendame eelmist graafikut ümberkorraldatud andmetega
 p <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(tvhours, <span class="kw">fct_relevel</span>(relig, <span class="st">&quot;None&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>))</code></pre></div>
 <p><img src="07-tidyverse_files/figure-html/unnamed-chunk-51-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega" class="section level3">
-<h3><span class="header-section-number">9.5.9</span> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</h3>
+<h3><span class="header-section-number">8.5.9</span> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</h3>
 <p>See muudab ploti paremini jälgitavaks:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summeerime andmed
 gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat, <span class="op">!</span><span class="kw">is.na</span>(age)) <span class="op">%&gt;%</span>
@@ -1032,7 +1020,7 @@ gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat,
 <p><img src="07-tidyverse_files/figure-html/unnamed-chunk-52-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="tulpdiagrammide-korral-kasuta-fct_infreq" class="section level3">
-<h3><span class="header-section-number">9.5.10</span> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></h3>
+<h3><span class="header-section-number">8.5.10</span> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></h3>
 <p>Loeme kokku erineva perekondliku staatusega isikud ja paneme need andmed tulpdiagrammi grupi suurusele vastupidises järjekorras st. väiksemad grupid tulevad enne.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(gss_cat, <span class="dt">marital =</span> <span class="kw">fct_infreq</span>(marital) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">fct_rev</span>()) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(marital)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
@@ -1046,7 +1034,7 @@ gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat,
           </div>
         </div>
       </div>
-<a href="tosin-olulisimat-graafikutuupi.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="graafilised-lahendused.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="statistilised-mudelid.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
