@@ -963,8 +963,8 @@ Arumendid `height = 0, size = 1.5` määravad antud juhul, vastavalt, veapiiri o
 
 ```{r}
 iris_sepal_length_pi %>% 
-  ggplot(aes(y = Species)) +
-  geom_point(aes(x = `50%`), size = 3) +
+  ggplot(aes(y = Species, x = `50%`)) +
+  geom_point( size = 3) +
   geom_errorbarh(aes(xmin = `3%`, xmax = `98%`), height = 0.2) +
   geom_errorbarh(aes(xmin = `25%`, xmax = `75%`), height = 0, size = 1.5) +
   theme(axis.title.y = element_blank()) +
