@@ -880,7 +880,7 @@ Seda plotti kasuta a) kui iga muutja kohta on üks andmepunkt või b) kui soovid
 
 >Sageli lahendatakse sarnased ülesanded tulpdiagrammidega, mis ei ole aga üldiselt hea mõte, sest tulpdiagrammid juhivad asjatult tähelepanu tulpadele endile, pigem kui nende otstele, mis tegelikult andmete keskmist kajastavad. Kuna inimese aju tahab võrrelda tulpade kõrgusi suhtelistes, mitte absoluutsetes ühikutes (kui tulp A on 30% kõrgem kui tulp B, siis me näeme efekti suurust, mis on u 1/3), peavad tulbad algama mingilt oodatavalt baastasemelt (tavaliselt nullist). See aga võib muuta raskeks huvitavate efektide märkamise, kui need on protsentuaalselt väikesed. Näiteks 5%-ne CO2 taseme tõus atmosfääris on teaduslikult väga oluline, aga tulpdiagrammi korrektselt kasutades tuleb vaevu graafikult välja.
 
-
+Kõigepealt plottime, mitu korda esinevad diamond tabelis erinevate faktormuutuja clarity tasemetega teemandid (clarity igale tasemele vastab üks number -- selle clarity-ga teemantite arv). 
 
 ```{r fig.height=3, fig.width=4}
 dd <- diamonds %>% group_by(clarity) %>% summarise(number_of_diamonds=n())
@@ -895,8 +895,6 @@ dd %>% ggplot(aes(x=number_of_diamonds,
 ```
 
 Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida väärtuste järgi.
-
-<<<<<<< HEAD
 Järgmisel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. 
 
 ```{r}
@@ -914,12 +912,17 @@ ggplot(data= iris1, aes(x=Mean, y=Species)) +
   labs(x="Sepal length with 50% and 95% CI", y=NULL)
 ```
 
-NB! Siin on usaldusintervallide arvutamiseks kasutatud kiiret ad hoc meetodit, mis eeldab muuhulgas, et valimi suurus ei ole väike. Kui n < 30, või kui valimi andmejaotus on väga kaugel normaaljaotusest (jaotus on näiteks väga pika õlaga), tuleks usaldusintervalli arvutamiseks kasutada bayesiaanlikke meetodeid, mida tutvustame hilisemates peatükkides. 
+NB! Siin on usaldusintervallide arvutamiseks kasutatud kiiret ad hoc meetodit, mis eeldab muuhulgas, et valimi suurus ei ole väike. Kui n < 30, või kui valimi andmejaotus on väga kaugel normaaljaotusest (jaotus on näiteks väga pika õlaga), tuleks usaldusintervalli arvutamiseks kasutada bayesiaanlikke meetodeid, mida tutvustame hilisemates peatükkides. Igal juhul, kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame kasutada järgmisi heuristikuid:
+
+```{r echo=FALSE}
+tibble(CI_percentage=c(50, 75, 90, 95, 97, 99, 99.9), nr_of_SEMs= c(0.675, 1.15, 1.645, 1.96, 2.17, 2.58, 3.29))
+```
 
 
 
 
-=======
+
+
 ```{r, echo = FALSE}
 # wrapper function around rethinking::PI() to output a data_frame
 percentile_intervals <- function(samples, prob = 0.89) {
@@ -962,7 +965,7 @@ iris_sepal_length_pi %>%
 ```
 
 Sellel joonisel on näha irise tabeli Sepal length veeru keskmised (punkt) koos 50% (rasvane joon) ja 95% (vuntsid) usaldusintervallidega.
->>>>>>> ae3d7dfdd67ddf4bda2b6cd085f758e3eb4673f7
+
 
 ## 2. Andmepunktid mediaani või aritmeetilise keskmisega
 
