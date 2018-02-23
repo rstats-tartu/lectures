@@ -18,5 +18,6 @@ Imports:
     wesanderson,
     scatterplot3d,
     svglite,
-    Hmisc
+    Hmisc,
+    rethinking
 Remotes: rstudio/bookdown
