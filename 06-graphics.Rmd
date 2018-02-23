@@ -896,6 +896,7 @@ dd %>% ggplot(aes(x=number_of_diamonds,
 
 Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida väärtuste järgi.
 
+<<<<<<< HEAD
 Järgmisel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. 
 
 ```{r}
@@ -918,6 +919,50 @@ NB! Siin on usaldusintervallide arvutamiseks kasutatud kiiret ad hoc meetodit, m
 
 
 
+=======
+```{r, echo = FALSE}
+# wrapper function around rethinking::PI() to output a data_frame
+percentile_intervals <- function(samples, prob = 0.89) {
+  pi <- rethinking::PI(samples, prob)
+  nms <- names(pi)
+  d <- dplyr::as_data_frame(matrix(pi, ncol = length(pi)))
+  colnames(d) <- nms
+  return(d)
+}
+```
+Plotime irise liikide Sepal.length andmete keskmise koos 50% ja 95% protsentiil intervallidega. 
+Protsentiil intervallid näitavad piirkonda mis sisaldab, antud näite põhjal, vastavalt 50% ja 95% andmeid.
+
+
+Kõigepealt arvutame igale irise liigile Sepal.Length usaldusintervallid ja keskväärtuse kasutades `percentile_intervals` funktsiooni, soovitavad usaldusintervallid spetsifitseeritakse argumendiga `prob = c(0, 0.5, 0.95)`. 
+Kusjuures, 0% andmeid sisaldav piirkond asub keskväärtusel.
+
+```{r}
+iris_sepal_length_pi <- iris %>% 
+  group_by(Species) %>% 
+  do(percentile_intervals(.$Sepal.Length, prob = c(0, 0.5, 0.95)))
+
+iris_sepal_length_pi
+```
+
+Saadud summaarseid andmeid kasutame graafiku loomiseks.
+Y-telje väärtused on kõigile geoomidele sama `ggplot(aes(y = Species))`. 
+Lisame geoomid, kõigepealt paneme paika keskmise kasutades punkti geoomi `geom_point()`.
+Seejärel lisame ükshaaval usalduspiirid kasutades horisontaalsete veapiiride geoomi `geom_errorbarh()`.
+Arumendid `height = 0, size = 1.5` määravad antud juhul, vastavalt, veapiiri otstes olevate "vuntside" kõrgust ja joone paksust.
+
+```{r}
+iris_sepal_length_pi %>% 
+  ggplot(aes(y = Species)) +
+  geom_point(aes(x = `50%`), size = 3) +
+  geom_errorbarh(aes(xmin = `3%`, xmax = `98%`), height = 0.2) +
+  geom_errorbarh(aes(xmin = `25%`, xmax = `75%`), height = 0, size = 1.5) +
+  theme(axis.title.y = element_blank()) +
+  labs(x = "Mean Sepal length with 50% and 95% percentile interval")
+```
+
+Sellel joonisel on näha irise tabeli Sepal length veeru keskmised (punkt) koos 50% (rasvane joon) ja 95% (vuntsid) usaldusintervallidega.
+>>>>>>> ae3d7dfdd67ddf4bda2b6cd085f758e3eb4673f7
 
 ## 2. Andmepunktid mediaani või aritmeetilise keskmisega
 
