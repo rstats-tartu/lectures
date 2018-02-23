@@ -896,43 +896,48 @@ dd %>% ggplot(aes(x=number_of_diamonds,
 
 Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida väärtuste järgi.
 
+```{r, echo = FALSE}
+# wrapper function around rethinking::PI() to output a data_frame
+percentile_intervals <- function(samples, prob = 0.89) {
+  pi <- rethinking::PI(samples, prob)
+  nms <- names(pi)
+  d <- dplyr::as_data_frame(matrix(pi, ncol = length(pi)))
+  colnames(d) <- nms
+  return(d)
+}
+```
+Plotime irise liikide Sepal.length andmete keskmise koos 50% ja 95% protsentiil intervallidega. 
+Protsentiil intervallid näitavad piirkonda mis sisaldab, antud näite põhjal, vastavalt 50% ja 95% andmeid.
+
+
+Kõigepealt arvutame igale irise liigile Sepal.Length usaldusintervallid ja keskväärtuse kasutades `percentile_intervals` funktsiooni, soovitavad usaldusintervallid spetsifitseeritakse argumendiga `prob = c(0, 0.5, 0.95)`. 
+Kusjuures, 0% andmeid sisaldav piirkond asub keskväärtusel.
+
 ```{r}
-library(rethinking)
-library(reshape2)
+iris_sepal_length_pi <- iris %>% 
+  group_by(Species) %>% 
+  do(percentile_intervals(.$Sepal.Length, prob = c(0, 0.5, 0.95)))
 
-ir1 <- iris %>% filter(Species == "setosa") %>% select(setosa= Sepal.Length)
-ir2 <- iris %>% filter(Species == "versicolor")%>% select(versicolor= Sepal.Length)
-ir3 <- iris %>% filter(Species == "virginica")%>% select(virginica= Sepal.Length)
-iris1 <- bind_cols(ir1, ir2, ir3)
-
-ir_ci <- apply(iris1, 2, function(x) PI(x, prob=0.5)) %>% as_tibble() %>% add_column(indeks=c("low", "high"))
-
-ir_ci1 <- apply(iris1, 2, function(x) PI(x, prob=0.95)) %>% as_tibble() %>% add_column(indeks=c("low", "high"))
-
-ir_mean <- apply(iris1, 2, mean) %>% as_tibble() %>% rownames_to_column() %>% spread(key=rowname, value = value) %>% add_column(indeks="mean")
-iris2 <- full_join(ir_mean, ir_ci) %>% melt()
-iris3 <- iris2 %>% filter(indeks=="mean")
-iris4 <- iris2 %>% filter(indeks != "mean") %>% spread(key=indeks, value=value)
-iris4$mean <- iris3$value
-
-iris2_1 <- full_join(ir_mean, ir_ci1) %>% melt()
-iris3_1 <- iris2_1 %>% filter(indeks=="mean")
-iris4_1 <- iris2_1 %>% filter(indeks != "mean") %>% spread(key=indeks, value=value)
-iris4_1$mean <- iris3$value
-
-ggplot(data= iris4, aes(x=mean, y=variable)) +
-  geom_point(size=3) +
-  geom_errorbarh(aes(xmin= low, xmax= high), height=0.2)+
-  geom_errorbarh(data=iris4_1, aes(xmin= low, xmax= high), height=0.4)+
-  theme_bw() +
-  theme(panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.y = element_line(colour="grey60", linetype="dashed"))+
-  labs(x="Sepal length with 50% and 95% CI", y=NULL)
-
+iris_sepal_length_pi
 ```
 
-Sellel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. 
+Saadud summaarseid andmeid kasutame graafiku loomiseks.
+Y-telje väärtused on kõigile geoomidele sama `ggplot(aes(y = Species))`. 
+Lisame geoomid, kõigepealt paneme paika keskmise kasutades punkti geoomi `geom_point()`.
+Seejärel lisame ükshaaval usalduspiirid kasutades horisontaalsete veapiiride geoomi `geom_errorbarh()`.
+Arumendid `height = 0, size = 1.5` määravad antud juhul, vastavalt, veapiiri otstes olevate "vuntside" kõrgust ja joone paksust.
+
+```{r}
+iris_sepal_length_pi %>% 
+  ggplot(aes(y = Species)) +
+  geom_point(aes(x = `50%`), size = 3) +
+  geom_errorbarh(aes(xmin = `3%`, xmax = `98%`), height = 0.2) +
+  geom_errorbarh(aes(xmin = `25%`, xmax = `75%`), height = 0, size = 1.5) +
+  theme(axis.title.y = element_blank()) +
+  labs(x = "Mean Sepal length with 50% and 95% percentile interval")
+```
+
+Sellel joonisel on näha irise tabeli Sepal length veeru keskmised (punkt) koos 50% (rasvane joon) ja 95% (vuntsid) usaldusintervallidega.
 
 ## 2. Andmepunktid mediaani või aritmeetilise keskmisega
 
