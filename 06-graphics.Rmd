@@ -895,6 +895,10 @@ dd %>% ggplot(aes(x=number_of_diamonds,
 ```
 
 Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida väärtuste järgi.
+<<<<<<< HEAD
+=======
+
+>>>>>>> 63156ae78cc908cb3c7f059b58cbd236479e4407
 Järgmisel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. 
 
 ```{r}
@@ -920,9 +924,12 @@ tibble(CI_percentage=c(50, 75, 90, 95, 97, 99, 99.9), nr_of_SEMs= c(0.675, 1.15,
 
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 63156ae78cc908cb3c7f059b58cbd236479e4407
 ```{r, echo = FALSE}
 # wrapper function around rethinking::PI() to output a data_frame
 percentile_intervals <- function(samples, prob = 0.89) {
@@ -933,7 +940,7 @@ percentile_intervals <- function(samples, prob = 0.89) {
   return(d)
 }
 ```
-Plotime irise liikide Sepal.length andmete keskmise koos 50% ja 95% protsentiil intervallidega. 
+Järgmiseks plotime irise liikide Sepal.length andmete keskmise koos 50% ja 95% protsentiil intervallidega. 
 Protsentiil intervallid näitavad piirkonda mis sisaldab, antud näite põhjal, vastavalt 50% ja 95% andmeid.
 
 
@@ -965,7 +972,10 @@ iris_sepal_length_pi %>%
 ```
 
 Sellel joonisel on näha irise tabeli Sepal length veeru keskmised (punkt) koos 50% (rasvane joon) ja 95% (vuntsid) usaldusintervallidega.
+<<<<<<< HEAD
 
+=======
+>>>>>>> 63156ae78cc908cb3c7f059b58cbd236479e4407
 
 ## 2. Andmepunktid mediaani või aritmeetilise keskmisega
 
