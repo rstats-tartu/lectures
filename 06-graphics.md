@@ -1129,17 +1129,17 @@ Järgmisel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% 
 
 ```r
 iris1 <- iris %>% group_by(Species) %>% 
-  summarise(Mean= mean(Sepal.Length), SEM= sd(Sepal.Length)/sqrt(nrow(iris)))
+  summarise(Mean = mean(Sepal.Length), SEM = sd(Sepal.Length)/sqrt(nrow(iris)))
 
-ggplot(data= iris1, aes(x=Mean, y=Species)) +
+ggplot(data= iris1, aes(x = Mean, y = Species)) +
   geom_point(size=3) +
-  geom_errorbarh(aes(xmin= Mean - 0.675*SEM, xmax= Mean + 0.675*SEM), height=0.2)+
-  geom_errorbarh(aes(xmin= Mean - 1.96*SEM, xmax= Mean + 1.96*SEM), height=0.4)+
+  geom_errorbarh(aes(xmin = Mean - 0.675*SEM, xmax = Mean + 0.675*SEM), height = 0.2) +
+  geom_errorbarh(aes(xmin = Mean - 1.96*SEM, xmax = Mean + 1.96*SEM), height = 0.4) +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
-        panel.grid.major.y = element_line(colour="grey60", linetype="dashed"))+
-  labs(x="Sepal length with 50% and 95% CI", y=NULL)
+        panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))+
+  labs(x = "Sepal length with 50% and 95% CI", y = NULL)
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-77-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1147,20 +1147,20 @@ ggplot(data= iris1, aes(x=Mean, y=Species)) +
 Alternatiivne graafiku kuju:
 
 ```r
-ggplot(data= iris1, aes(x=Mean, y=Species)) +
-  geom_point(size=5, shape=108) +
-  geom_errorbarh(aes(xmin= Mean - 0.675*SEM, xmax= Mean + 0.675*SEM), height=0, size=2)+
-  geom_errorbarh(aes(xmin= Mean - 1.96*SEM, xmax= Mean + 1.96*SEM), height=0.4)+
+ggplot(data = iris1, aes(x = Mean, y = Species)) +
+  geom_point(size = 5, shape = 108) +
+  geom_errorbarh(aes(xmin = Mean - 0.675*SEM, xmax = Mean + 0.675*SEM), height = 0, size = 2) +
+  geom_errorbarh(aes(xmin = Mean - 1.96*SEM, xmax = Mean + 1.96*SEM), height = 0.4) +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
-        panel.grid.major.y = element_line(colour="grey60", linetype="dashed"))+
-  labs(x="Sepal length with 50% and 95% CI", y=NULL)
+        panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))+
+  labs(x = "Sepal length with 50% and 95% CI", y = NULL)
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-78-1.svg" width="70%" style="display: block; margin: auto;" />
 
-NB! Siin on usaldusintervallide arvutamiseks kasutatud kiiret ad hoc meetodit, mis eeldab muuhulgas, et valimi suurus ei ole väike. Kui n < 30, või kui valimi andmejaotus on väga kaugel normaaljaotusest (jaotus on näiteks väga pika õlaga), tuleks usaldusintervalli arvutamiseks kasutada bayesiaanlikke meetodeid, mida tutvustame hilisemates peatükkides. Igal juhul, kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame kasutada järgmisi heuristikuid:
+Pane tähele, et siin on usaldusintervallide arvutamiseks kasutatud kiiret ad hoc meetodit, mis eeldab muuhulgas, et valimi suurus ei ole väike. Kui n < 30, või kui valimi andmejaotus on väga kaugel normaaljaotusest (jaotus on näiteks väga pika õlaga), soovitame usaldusintervalli arvutamiseks kasutada bayesiaanlikke meetodeid, mida tutvustame hilisemates peatükkides. Igal juhul, kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame kasutada järgmisi heuristikuid:
 
 
 ```
@@ -1176,7 +1176,7 @@ NB! Siin on usaldusintervallide arvutamiseks kasutatud kiiret ad hoc meetodit, m
 #> # ... with 1 more row
 ```
 
-SEM on standardviga ja see arvutatakse jagades valimi standardhälbe ruutjuurega valimi suurusest.
+SEM on standardviga ja selle arvutame jagades valimi standardhälbe ruutjuurega valimi suurusest.
 
 
 Järgneb alternatiivne viis sama arvutust teha:
