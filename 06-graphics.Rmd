@@ -896,43 +896,28 @@ dd %>% ggplot(aes(x=number_of_diamonds,
 
 Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida väärtuste järgi.
 
+Järgmisel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. 
+
 ```{r}
-library(rethinking)
-library(reshape2)
+iris1 <- iris %>% group_by(Species) %>% 
+  summarise(Mean= mean(Sepal.Length), SEM= sd(Sepal.Length)/sqrt(nrow(iris)))
 
-ir1 <- iris %>% filter(Species == "setosa") %>% select(setosa= Sepal.Length)
-ir2 <- iris %>% filter(Species == "versicolor")%>% select(versicolor= Sepal.Length)
-ir3 <- iris %>% filter(Species == "virginica")%>% select(virginica= Sepal.Length)
-iris1 <- bind_cols(ir1, ir2, ir3)
-
-ir_ci <- apply(iris1, 2, function(x) PI(x, prob=0.5)) %>% as_tibble() %>% add_column(indeks=c("low", "high"))
-
-ir_ci1 <- apply(iris1, 2, function(x) PI(x, prob=0.95)) %>% as_tibble() %>% add_column(indeks=c("low", "high"))
-
-ir_mean <- apply(iris1, 2, mean) %>% as_tibble() %>% rownames_to_column() %>% spread(key=rowname, value = value) %>% add_column(indeks="mean")
-iris2 <- full_join(ir_mean, ir_ci) %>% melt()
-iris3 <- iris2 %>% filter(indeks=="mean")
-iris4 <- iris2 %>% filter(indeks != "mean") %>% spread(key=indeks, value=value)
-iris4$mean <- iris3$value
-
-iris2_1 <- full_join(ir_mean, ir_ci1) %>% melt()
-iris3_1 <- iris2_1 %>% filter(indeks=="mean")
-iris4_1 <- iris2_1 %>% filter(indeks != "mean") %>% spread(key=indeks, value=value)
-iris4_1$mean <- iris3$value
-
-ggplot(data= iris4, aes(x=mean, y=variable)) +
+ggplot(data= iris1, aes(x=Mean, y=Species)) +
   geom_point(size=3) +
-  geom_errorbarh(aes(xmin= low, xmax= high), height=0.2)+
-  geom_errorbarh(data=iris4_1, aes(xmin= low, xmax= high), height=0.4)+
+  geom_errorbarh(aes(xmin= Mean - 0.675*SEM, xmax= Mean + 0.675*SEM), height=0.2)+
+  geom_errorbarh(aes(xmin= Mean - 1.96*SEM, xmax= Mean + 1.96*SEM), height=0.4)+
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
         panel.grid.major.y = element_line(colour="grey60", linetype="dashed"))+
   labs(x="Sepal length with 50% and 95% CI", y=NULL)
-
 ```
 
-Sellel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. 
+NB! Siin on usaldusintervallide arvutamiseks kasutatud kiiret ad hoc meetodit, mis eeldab muuhulgas, et valimi suurus ei ole väike. Kui n < 30, või kui valimi andmejaotus on väga kaugel normaaljaotusest (jaotus on näiteks väga pika õlaga), tuleks usaldusintervalli arvutamiseks kasutada bayesiaanlikke meetodeid, mida tutvustame hilisemates peatükkides. 
+
+
+
+
 
 ## 2. Andmepunktid mediaani või aritmeetilise keskmisega
 
@@ -1139,6 +1124,8 @@ ggplot(recent, aes(date, unemploy)) + geom_line()
 ggplot(recent, aes(date, unemploy)) + geom_step()
 ```
 
+Astmeline graafik on eriti hea olukorras, kus astmete vahel y-dimensioonis muutust ei toimu -- näiteks piimapaki hinna dünaamika poes.
+
 Geom_path võimaldab joonel ka tagasisuunas keerata.
 
 ```{r}
@@ -1161,7 +1148,7 @@ Et mürarikkaid andmeid siluda kasutame liikuva keskmise meetodit. Siin asendame
 
 ```{r}
 library(zoo)
-economics$rollmean <- rollmean(economics$unemploy, k = 7, fill = NA)
+economics$rollmean <- rollmean(economics$unemploy, k = 13, fill = NA)
 ggplot(economics, aes(date, rollmean)) + geom_line()
 ```
 
@@ -1183,6 +1170,10 @@ require(graphics)
 #co2 is a time series object 
 #stl() takes class "ts" objects only!
 plot(stl(co2, "per"))
+```
+
+```{r}
+
 ```
 
 
