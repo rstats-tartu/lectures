@@ -20,4 +20,6 @@ Imports:
     svglite,
     Hmisc,
     rethinking
-Remotes: rstudio/bookdown
+Remotes: 
+    rstudio/bookdown, 
+    rmcelreath/rethinking
