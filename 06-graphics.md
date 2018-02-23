@@ -1150,7 +1150,7 @@ Alternatiivne graafiku kuju:
 ggplot(data = iris1, aes(x = Mean, y = Species)) +
   geom_point(size = 5, shape = 108) +
   geom_errorbarh(aes(xmin = Mean - 0.675*SEM, xmax = Mean + 0.675*SEM), height = 0, size = 2) +
-  geom_errorbarh(aes(xmin = Mean - 1.96*SEM, xmax = Mean + 1.96*SEM), height = 0.4) +
+  geom_errorbarh(aes(xmin = Mean - 1.96*SEM, xmax = Mean + 1.96*SEM), height = 0.1) +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
@@ -1294,12 +1294,6 @@ stripchart(iris$Sepal.Length, method = "jitter")
 
 
 2. jaga andmestik x-teljel võrdse laiusega vahemikesse (binnidesse)
-
-
-```r
-stripchart(iris$Sepal.Length, method = "jitter")
-abline(v=seq(4, 8, by=0.5), col="red")
-```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-86-1.svg" width="70%" style="display: block; margin: auto;" />
 
