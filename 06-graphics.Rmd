@@ -850,7 +850,7 @@ ggMarginal(diffplot, type="histogram", bins = 25)
 
  We can also obviously do the percent difference.
  
-```{r eval=FALSE, fig.width= 3, fig.height=5}
+```{r eval=FALSE}
 diffplotp <- ggplot(my.data, aes(baseline, diffp)) + 
   geom_point(size=2, colour = rgb(0,0,0, alpha = 0.5)) + 
   theme_bw() + 
