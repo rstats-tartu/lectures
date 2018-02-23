@@ -192,90 +192,7 @@ Me lisasime kaks kihti: esimene kiht `geom_point()` visualiseerib andmepunktid j
 
 >Plussmärk peab ggplot-i koodireas olema vana rea lõpus, mitte uue rea (kihi) alguses
 
-## Regressioonisirgete plottimine
 
-Järgmiseks värvime eelnevalt tehtud plotil punktid iirise liigi kaupa aga joonistame ikkagi regressioonisirge läbi kõikide punktide.
-
-Vaata mis juhtub, kui värvide lahutamine toimub `ggplot()`-i enda `aes()`-s. `theme_classic()` muudab graafiku üldist väljanägemist.
-
-```{r}
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
-  geom_point(aes(color = Species)) + 
-  geom_smooth(method = "lm", color = "black") +
-  theme_classic()
-```
-
-Me võime `geom_smooth()`-i anda erineva andmeseti kui `ggplot()` põhifunktsiooni. 
-Nii joonistame me regressioonisirge ainult nendele andmetele.
-Proovi ka `theme_bw()`.
-```{r}
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
-  geom_point() +
-  geom_smooth(data = filter(iris, Species == "setosa"), method = lm) +
-  theme_bw()
-```
-
-Alljärgnevalt näiteks moodus kuidas öelda, et me soovime regressioonijoont näidata ainult iiriseliikide virginica või versicolor andmetele.
-
-```{r}
-## First we filter only data that we want to use for regressionline
-smooth_data <- filter(iris, Species %in% c("virginica", "versicolor"))
-## Then we use this filtered dataset in geom_smooth
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
-  geom_point() +
-  geom_smooth(data = smooth_data, method = lm)
-```
-
-Ja lõpuks joonistame kolm regressioonisirget -- üks igale liigile.
-```{r}
-iris %>% ggplot(aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
-  geom_point() +
-  geom_smooth(method = "lm")
-```
-
-**Nüüd üks näide teiste andmetega.**
-Kaalutud lineaarne mudel on viis anda andmepunktidele, mida me tähtsamaks peame (või mis on täpsemalt mõõdetud) suurem kaal. 
-Kõigepealt, siin on USA demograafilised andmed `midwest` "ggplot2" library-st erinevate kesk-lääne omavalitsuste kohta (437 omavalitsust).
-
-Me valime `midwest` andmetest välja kolm muutujat: "percwhite", "percbelowpoverty", "poptotal".
-```{r}
-midwest_subset <- midwest %>% select(percwhite, percbelowpoverty, poptotal)
-midwest_subset
-```
-
-Me tahame teada, kuidas valge rassi osakaal ennustab vaesust, aga me arvame, et suurematel omavalitsustel peaks selles ennustuses olema suurem kaal kui väiksematel.
-Selleks lisame `geom_smooth()`-i lisaargumendi "weight". 
-
-```{r}
-ggplot(midwest_subset, aes(percwhite, percbelowpoverty)) +
-  geom_point(aes(size = poptotal)) +
-  geom_smooth(aes(weight = poptotal), method = lm, size = 1) + 
-  geom_smooth(method = lm, color = "red") +
-  labs(x = "Percent white", y = "Percent below poverty")
-```
-
-Punane on kaalumata regressioonisirge ja sinine on populatsioonisuuruse suhtes kaalutud regressioonisirge. 
-Kaalumine mitte ainult ei muutnud sirge asukohta vaid vähendas ka ebakindlust sirge asukoha kohta.
-
-
-Regeressioonijoone saab ggplotil määrata ka x-telje lõikumispunkti ja tõusu abil. 
-See on kasulik mudelite visualiseerimisel mudeli koefitsientide põhjal. 
-Kasuta `geom_abline()`.
-
-```{r}
-## Create plot
-p <- ggplot(data = mtcars, aes(x = wt, y = mpg)) + 
-  geom_point()
-## Fit model and extract coefficients
-model <- lm(mpg ~ wt, data = mtcars)
-coefs  <- coef(model)
-## Add regressionline to the plot
-p + geom_abline(intercept = coefs[1], 
-                 slope = coefs[2], 
-                 color = "red", 
-                 linetype = "dashed", 
-                 size = 1.5)
-```
 
 ### Lisame plotile sirgjooni
 
@@ -926,14 +843,21 @@ ggplot(data = iris1, aes(x = Mean, y = Species)) +
   labs(x = "Sepal length with 50% and 95% CI", y = NULL)
 ```
 
-Pane tähele, et siin on usaldusintervallide arvutamiseks kasutatud kiiret ad hoc meetodit, mis eeldab muuhulgas, et valimi suurus ei ole väike. Kui n < 30, või kui valimi andmejaotus on väga kaugel normaaljaotusest (jaotus on näiteks väga pika õlaga), soovitame usaldusintervalli arvutamiseks kasutada bayesiaanlikke meetodeid, mida tutvustame hilisemates peatükkides. Igal juhul, kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame kasutada järgmisi heuristikuid:
+Pane tähele, et siin on usaldusintervallide arvutamiseks kasutatud mugavat *ad hoc* meetodit, mis eeldab muuhulgas, et valimi suurus ei ole väike. Kui n < 30, või kui valimi andmejaotus on väga kaugel normaaljaotusest (jaotus on näiteks väga pika õlaga), soovitame usaldusintervalli arvutamiseks kasutada bayesiaanlikke meetodeid, mida tutvustame hilisemates peatükkides. Igal juhul, kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame kasutada järgmisi heuristikuid:
 
 ```{r echo=FALSE}
 tibble(CI_percentage=c(50, 75, 90, 95, 97, 99, 99.9), nr_of_SEMs= c(0.675, 1.15, 1.645, 1.96, 2.17, 2.575, 3.291))
 ```
 
-SEM on standardviga ja selle arvutame jagades valimi standardhälbe ruutjuurega valimi suurusest.
+SEM on standardviga, mille arvutame jagades valimi standardhälbe ruutjuurega valimi suurusest N. Kuna CI sõltub SEM-ist, sõltub see muidugi ka N-st, aga mitte lineaarselt, vaid üle ruutjuure. See tähendab, et uuringu usaldusväärsuse tõstmine, tõstes N-i kipub olema progressiivselt kulukas protsess. Analoogiana võib siin tuua sportliku vormi tõstmine, kus trennis käimisega alustades on suhteliselt lihtne tõsta oma sooritust näiteks 20% võrra, aga peale aastast usinat rassimist tuleb juba teha väga tõsine pingutus, et saavutada veel 1% tõusu.
 
+```{r echo=FALSE}
+N <- 2:100
+Ni_efekt_kordades <- sqrt(N)
+plot(N, Ni_efekt_kordades, ylab = "katse tundlikus (ruutjuur N-st)")
+```
+
+Nagu näha jooniselt, on meil tegu progresiivselt kallineva ülesandega: mida rohkem tahame usalduspiire kitsamaks muuta **suhteliselt** (mis on sama, mis öelda, et me tahame tõsta katse tundlikust), seda suurema tõusu peame tagama kogutud andmete hulgas **absoluutarvuna**. 
 
 Järgneb alternatiivne viis sama arvutust teha:
 
@@ -997,7 +921,7 @@ ggplot(iris, aes(x=Species, y=Sepal.Length)) +
 
 Siin on meil lausa 50 andmepunkti iga Irise liigi kohta ja graafik on ikkagi täitsa hästi loetav. 
 
-Meil on võimalik teha sellest graafikust versioon, mis ei pane andmepunkti y skaalal täpselt õigesse kohta, vaid tekitab histogrammilaadsed andmebinnid, kus siiski iga punkt on eraldi näidatud. See lihtsustab veidi "kirjude" kompleksete andemsettide esitust. Kuid kaotab informatsiooni andmepunktide täpse asukoha kohta. Siin on eesmärk muuta graafik kiiremini loetavaks, ehk erinevused gruppide vahel paremini võrreldavaks.
+Meil on võimalik teha sellest graafikust versioon, mis ei pane andmepunkti y skaalal täpselt õigesse kohta, vaid tekitab histogrammilaadsed andmebinnid, kus siiski iga punkt on eraldi näidatud. See lihtsustab veidi "kirjude" kompleksete andmete esitust, kuid kaotab informatsiooni andmepunktide täpse asukoha kohta. Eesmärk on muuta erinevused gruppide vahel paremini võrreldavaks.
 
 ```{r}
 p<-ggplot(iris, aes(x=Species, y=Sepal.Length)) + 
@@ -1174,7 +1098,7 @@ See pilt näitab, et kui jaotus on mitme tipuga, siis võib boxplotist olla rohk
 
 ## 5. Joongraafikud
 
-x - pidev muutuja (aeg, konsentratsioon, jms); y - pidev muutuja
+x - pidev muutuja (aeg, konsentratsioon, jms); y - pidev muutuja; x ja y vahel on deterministlik seos (trend)
 
 Joongraafik (geom_line) töötab hästi siis, kui igale x-i väärtusele vastab unikaalne y-i väärtus ja iga kahe mõõdetud x-i väärtuse vahele jääb veel x-i väärtusi, mida pole küll mõõdetud, aga kui oleks, siis vastaks ka neile unikaalsed y-i väärtused. Lisaks me loodame, et y-i suunaline juhuslik varieeruvus ei ole nii suur, et maskeerida meid huvitavad trendid. 
 Kui tahad näidata, kus täpselt muutus toimus, kasuta geom_step funktsiooni.
@@ -1233,13 +1157,136 @@ require(graphics)
 plot(stl(co2, "per"))
 ```
 
-```{r}
+Pane tähele graafiku paremas servas asuvaid halle kaste, mis annavad mõõtkava erinevate paneelide võrdlemiseks. Siit näeme, et "remainder" paneeli andmete kõikumise vahemik on väga palju väiksem kui ülemisel paneelil, kus on plotitud täisandmed.
 
+
+Nüüd esitame versiooni, kus remainder-i andmeid on tugevasti silutud, et võimalikku signaali mürast eristada.
+```{r}
+plot(stl(log(co2), s.window = "per", t.window = 1000))
+# t.window -- the span (in lags) of the loess window for trend extraction, which should be odd.
+```
+
+## 6. Scatter plot
+
+x - pidev muutuja; y -pidev muutuja; x ja y vahel on tõenäosuslik, mitte deterministlik, seos.
+
+Scatter ploti abil otsime oma andmetest trende ja mustreid.
+
+X-teljel on geisri Old Faithful pursete tugevus ja y-teljel pursete vaheline aeg. Kui kahe purske vahel kulub rohkem aega, siis on oodata tugevamat purset. Tundub, et see süsteem töötab kahes diskreetses reziimis.
+
+```{r}
+m <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
+  geom_point() +
+  xlim(0.5, 6) +
+  ylim(40, 110)
+m + geom_density_2d()
+```
+
+Kui punkte on liiga palju, et välja trükkida, kasuta geom = "polygon" varianti.
+
+```{r}
+m + stat_density_2d(aes(fill = ..level..), geom = "polygon")
 ```
 
 
-### Tulpdiagrammid mõõdavad counte ja proportsioone
+kui meil on eraldi välja arvutatud tihedus (density) igale vaatluspunktile, saame kasutada geom_tile
 
+```{r}
+ggplot(faithfuld) +
+  geom_tile(aes(eruptions, waiting, fill = density)) + 
+  scale_fill_distiller(palette = "Spectral")
+```
+
+
+
+Nüüd plotime 3 iriseliigi õielehe pikkuse seose tolmuka pikkusega, ja lisame igale liigile mittelineaarse mudelennustuse koos 95% usaldusintervalliga. Mudel püüab ennustada keskmist õielehe pikkust igal tolmuka pikkusel, ja 95% CI kehtib ennustusele keskmisest, mitte üksikute isendite õielehtede pikkustele. 
+```{r}
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point() + geom_smooth()
+```
+
+See mudeldamine tehti loess meetodiga, mis kujutab endast lokaalselt kaalutud polünoomset regressiooni. Loessi põhimõte on, et arvuti fitib palju lokaalseid lineaarseid osamudeleid, mis on kaalutud selles mõttes, et andmepunktidel, mis on vastavale osamudelile lähemal, on mudeli fittimisel suurem kaal. Nendest osamudelitest silutakse siis kokku lõplik mudel, mida joonisel näete.
+
+Järgmiseks värvime eelnevalt tehtud plotil punktid iirise liigi kaupa aga joonistame ikkagi regressioonisirge läbi kõikide punktide. Seekord on tegu tavapärase lineaarse mudeliga, mis fititud vähimruutude meetodiga (vt ptk ....).
+
+Vaata mis juhtub, kui värvide lahutamine toimub `ggplot()`-i enda `aes()`-s. `theme_classic()` muudab graafiku üldist väljanägemist.
+
+```{r}
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point(aes(color = Species)) + 
+  geom_smooth(method = "lm", color = "black") +
+  theme_classic()
+```
+
+Me võime `geom_smooth()`-i anda erineva andmeseti kui `ggplot()` põhifunktsiooni. 
+Nii joonistame me regressioonisirge ainult nendele andmetele.
+Proovi ka `theme_bw()`.
+```{r}
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point() +
+  geom_smooth(data = filter(iris, Species == "setosa"), method = lm) +
+  theme_bw()
+```
+
+Alljärgnevalt näiteks moodus kuidas öelda, et me soovime regressioonijoont näidata ainult iiriseliikide virginica või versicolor andmetele.
+
+```{r}
+## First we filter only data that we want to use for regressionline
+smooth_data <- filter(iris, Species %in% c("virginica", "versicolor"))
+## Then we use this filtered dataset in geom_smooth
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point() +
+  geom_smooth(data = smooth_data, method = lm)
+```
+
+Järgnev kood võimaldab eksplitsiitselt kasutada fititud regressioonikoefitsiente, kasutades regeressioonijoone määramiseks koordinaatteljestikus x-telje lõikumispunkti ja sirge tõusu. Lineaarse mudeli fittimist õpime peatükis ....
+Kasuta `geom_abline()`.
+
+```{r}
+## Create plot
+p <- ggplot(data = mtcars, aes(x = wt, y = mpg)) + 
+  geom_point()
+## Fit model and extract coefficients
+model <- lm(mpg ~ wt, data = mtcars)
+coefs  <- coef(model)
+## Add regressionline to the plot
+p + geom_abline(intercept = coefs[1], 
+                 slope = coefs[2], 
+                 color = "red", 
+                 linetype = "dashed", 
+                 size = 1.5)
+```
+
+### Kaalutud lineaarne mudel
+
+Kaalutud lineaarne mudel on viis anda andmepunktidele, mida me tähtsamaks peame (või mis on täpsemalt mõõdetud) suurem kaal. 
+Kõigepealt, siin on USA demograafilised andmed `midwest` "ggplot2" library-st erinevate kesk-lääne omavalitsuste kohta (437 omavalitsust).
+
+Me valime `midwest` andmetest välja kolm muutujat: "percwhite", "percbelowpoverty", "poptotal".
+```{r}
+midwest_subset <- midwest %>% select(percwhite, percbelowpoverty, poptotal)
+```
+
+Me tahame teada, kuidas valge rassi osakaal ennustab vaesust, aga me arvame, et suurematel omavalitsustel peaks selles ennustuses olema suurem kaal kui väiksematel. Sest me arvame, et väikestel omavalitsustel võib olla suurem valimiviga ja need võivad olla mõjutatud meie mudelis kontrollimata teguritest, nagu mõne suure tööandja käekäik.
+Selleks lisame `geom_smooth()`-i lisaargumendi "weight". 
+
+```{r}
+ggplot(midwest_subset, aes(percwhite, percbelowpoverty)) +
+  geom_point(aes(size = poptotal)) +
+  geom_smooth(aes(weight = poptotal), method = lm, size = 1) + 
+  geom_smooth(method = lm, color = "red") +
+  labs(x = "Percent white", y = "Percent below poverty", caption="sinine joon on kaalutud mudel\npunane joon on tavaline mudel ", title="Vaesusriski seos rassiga")
+```
+
+Kaalumine mitte ainult ei muutnud sirge asukohta, vaid vähendas ka ebakindlust sirge tõusu osas.
+
+
+## 7. tulpdiagramm 
+
+x - faktormuutuja; y - protsent;
+x - faktormuutuja; y - sündmuse esinemiste arv
+
+Tulpdiagramme on hea kasutada kahel viisil: 1. lugemaks üles, mitu korda midagi juhtus ja 2. näitamaks osa tervikust (proportsiooni). 
+ 
 ```{r}
 str(diamonds)
 ```
@@ -1293,25 +1340,14 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "fill")
 ```
 
-Ja lõpuks, kui te tahate teha midagi, mis on enamasti keskmiselt rumal valik, ehk plottida tulpdiagrammi viisil, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: `geom_bar(stat = "identity")`
+Ja lõpetuseks, kui teile miskipärast ei meeldi Cleveland plot ja te tahate plottida tulpdiagrammi nii, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: `geom_bar(stat = "identity")`
 
 ```{r, fig.height=3, fig.width=3}
 df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
 ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
 ```
 
+## 8. residuaalide plot
 
-### Kahe muutuja koos-varieeruvus 
 
-X-teljel on geisri Old Faithful pursete tugevus ja y-teljel pursete vaheline aeg. Kui kahe purske vahel kulub rohkem aega, siis on oodata tugevamat purset. Tundub, et see süsteem töötab kahes diskreetses reziimis.
 
-```{r}
-m <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
-  geom_point() +
-  xlim(0.5, 6) +
-  ylim(40, 110)
-#m + stat_density_2d(aes(fill = ..level..), geom = "polygon")
-m + geom_density_2d()
-```
-
-Kui punkte on liiga palju, et välja trükkida, kasuta geom = "polygon" varianti.
