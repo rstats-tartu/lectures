@@ -31,15 +31,16 @@ Kõigepealt laadime tabeli, mida me visuaalselt analüüsima hakkame:
 iris <- as_tibble(iris)
 iris
 #> # A tibble: 150 x 5
-#>   Sepal.Length Sepal.Width Petal.Length Petal.W… Spec…
-#>          <dbl>       <dbl>        <dbl>    <dbl> <fct>
-#> 1         5.10        3.50         1.40    0.200 seto…
-#> 2         4.90        3.00         1.40    0.200 seto…
-#> 3         4.70        3.20         1.30    0.200 seto…
-#> 4         4.60        3.10         1.50    0.200 seto…
-#> 5         5.00        3.60         1.40    0.200 seto…
-#> 6         5.40        3.90         1.70    0.400 seto…
-#> # ... with 144 more rows
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width
+#>          <dbl>       <dbl>        <dbl>       <dbl>
+#> 1         5.10        3.50         1.40       0.200
+#> 2         4.90        3.00         1.40       0.200
+#> 3         4.70        3.20         1.30       0.200
+#> 4         4.60        3.10         1.50       0.200
+#> 5         5.00        3.60         1.40       0.200
+#> 6         5.40        3.90         1.70       0.400
+#> # ... with 144 more rows, and 1 more variable:
+#> #   Species <fct>
 ```
 
 See sisaldab mõõtmistulemusi sentimeetrites kolme iirise perekonna liigi kohta.
@@ -494,12 +495,12 @@ Uus andmestik -- "mpg" -- on autode kütusekulu kohta.
 ```r
 head(mpg, 2)
 #> # A tibble: 2 x 11
-#>   manufac… model displ  year   cyl trans   drv     cty
-#>   <chr>    <chr> <dbl> <int> <int> <chr>   <chr> <int>
-#> 1 audi     a4     1.80  1999     4 auto(l… f        18
-#> 2 audi     a4     1.80  1999     4 manual… f        21
-#> # ... with 3 more variables: hwy <int>, fl <chr>,
-#> #   class <chr>
+#>   manufacturer model displ  year   cyl trans     drv  
+#>   <chr>        <chr> <dbl> <int> <int> <chr>     <chr>
+#> 1 audi         a4     1.80  1999     4 auto(l5)  f    
+#> 2 audi         a4     1.80  1999     4 manual(m… f    
+#> # ... with 4 more variables: cty <int>, hwy <int>,
+#> #   fl <chr>, class <chr>
 
 best_in_class <- mpg %>%
   group_by(class) %>%
@@ -508,16 +509,16 @@ best_in_class <- mpg %>%
 head(best_in_class)
 #> # A tibble: 6 x 11
 #> # Groups:   class [2]
-#>   manufa… model   displ  year   cyl trans  drv     cty
-#>   <chr>   <chr>   <dbl> <int> <int> <chr>  <chr> <int>
-#> 1 chevro… corvet…  5.70  1999     8 manua… r        16
-#> 2 chevro… corvet…  6.20  2008     8 manua… r        16
-#> 3 dodge   carava…  2.40  1999     4 auto(… f        18
-#> 4 dodge   carava…  3.00  1999     6 auto(… f        17
-#> 5 dodge   carava…  3.30  2008     6 auto(… f        17
-#> 6 dodge   carava…  3.30  2008     6 auto(… f        17
-#> # ... with 3 more variables: hwy <int>, fl <chr>,
-#> #   class <chr>
+#>   manufacturer model    displ  year   cyl trans  drv  
+#>   <chr>        <chr>    <dbl> <int> <int> <chr>  <chr>
+#> 1 chevrolet    corvette  5.70  1999     8 manua… r    
+#> 2 chevrolet    corvette  6.20  2008     8 manua… r    
+#> 3 dodge        caravan…  2.40  1999     4 auto(… f    
+#> 4 dodge        caravan…  3.00  1999     6 auto(… f    
+#> 5 dodge        caravan…  3.30  2008     6 auto(… f    
+#> 6 dodge        caravan…  3.30  2008     6 auto(… f    
+#> # ... with 4 more variables: cty <int>, hwy <int>,
+#> #   fl <chr>, class <chr>
 ```
 
 Siin läheb kitsam andmeset uude `geom_point()` kihti ja teeb osad punktid teistsuguseks. 
@@ -741,7 +742,8 @@ p + scale_x_discrete(breaks=c("versicolor", "setosa"))
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-54-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-54-2.svg" width="70%" style="display: block; margin: auto;" />
 
-change axis labels and remove axis name
+Muuda teljemarkeeringuid ja kustuta telje nimi.
+
 
 ```r
 p + scale_x_discrete(labels=c("setosa" = "sp 1", "versicolor" = "sp2"), name=NULL)
@@ -1088,11 +1090,22 @@ diffplotp <- ggplot(my.data, aes(baseline, diffp)) +
 ggMarginal(diffplotp, type="histogram", bins = 25)
 ```
 
-## Erinevad ggplot geom_-id
+# Tosin olulisimat graafikutüüpi
 
-### Kui iga muutja kohta on üks andmepunkt
+Andmete plottimisel otsib analüütik tasakaalu informatsioonikao ja trendide/mustrite/kovarieeruvuste nähtavaks tegemise vahel. Idee on siin, et teie andmed võivad sisaldada a) juhuslikku müra, b) trende/mustreid, mis teile suurt huvi ei paku ja c) teid huvitavaid varjatud mustreid. Kui andmeid on palju ja need on mürarikkad ja kui igavad trendid/mustrid varjavad huvitavaid trende/mustreid, siis aitab vahest andmete graafiline redutseerimine üldisemale kujule ja nende modelleerimine. Kui andmeid ei ole väga palju, siis tasuks siiski vältida infot kaotavaid graafikuid ning joonistada algsed või ümber arvutatud andmepunktid. Järgnevalt esitame valiku graafikutüüpe erinevat tüüpi andmetele.
 
-Siis kasuta cleveland graafikut. See on parem kui barplot. 
+
+
+
+## 1. Cleveland plot
+
+x- pidev muutuja; y - faktormuutuja
+
+Seda plotti kasuta a) kui iga muutja kohta on üks andmepunkt või b) kui soovid avaldada keskmise koos usalduspiiridega.
+
+>Sageli lahendatakse sarnased ülesanded tulpdiagrammidega, mis ei ole aga üldiselt hea mõte, sest tulpdiagrammid juhivad asjatult tähelepanu tulpadele endile, pigem kui nende otstele, mis tegelikult andmete keskmist kajastavad. Kuna inimese aju tahab võrrelda tulpade kõrgusi suhtelistes, mitte absoluutsetes ühikutes (kui tulp A on 30% kõrgem kui tulp B, siis me näeme efekti suurust, mis on u 1/3), peavad tulbad algama mingilt oodatavalt baastasemelt (tavaliselt nullist). See aga võib muuta raskeks huvitavate efektide märkamise, kui need on protsentuaalselt väikesed. Näiteks 5%-ne CO2 taseme tõus atmosfääris on teaduslikult väga oluline, aga tulpdiagrammi korrektselt kasutades tuleb vaevu graafikult välja.
+
+Kõigepealt plottime, mitu korda esinevad diamond tabelis erinevate faktormuutuja clarity tasemetega teemandid (clarity igale tasemele vastab üks number -- selle clarity-ga teemantite arv). 
 
 
 ```r
@@ -1108,6 +1121,392 @@ dd %>% ggplot(aes(x=number_of_diamonds,
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-76-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida väärtuste järgi.
+
+Järgmisel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. 
+
+
+```r
+iris1 <- iris %>% group_by(Species) %>% 
+  summarise(Mean= mean(Sepal.Length), SEM= sd(Sepal.Length)/sqrt(nrow(iris)))
+
+ggplot(data= iris1, aes(x=Mean, y=Species)) +
+  geom_point(size=3) +
+  geom_errorbarh(aes(xmin= Mean - 0.675*SEM, xmax= Mean + 0.675*SEM), height=0.2)+
+  geom_errorbarh(aes(xmin= Mean - 1.96*SEM, xmax= Mean + 1.96*SEM), height=0.4)+
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_line(colour="grey60", linetype="dashed"))+
+  labs(x="Sepal length with 50% and 95% CI", y=NULL)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-77-1.svg" width="70%" style="display: block; margin: auto;" />
+
+NB! Siin on usaldusintervallide arvutamiseks kasutatud kiiret ad hoc meetodit, mis eeldab muuhulgas, et valimi suurus ei ole väike. Kui n < 30, või kui valimi andmejaotus on väga kaugel normaaljaotusest (jaotus on näiteks väga pika õlaga), tuleks usaldusintervalli arvutamiseks kasutada bayesiaanlikke meetodeid, mida tutvustame hilisemates peatükkides. Igal juhul, kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame kasutada järgmisi heuristikuid:
+
+
+```
+#> # A tibble: 7 x 2
+#>   CI_percentage nr_of_SEMs
+#>           <dbl>      <dbl>
+#> 1          50.0      0.675
+#> 2          75.0      1.15 
+#> 3          90.0      1.64 
+#> 4          95.0      1.96 
+#> 5          97.0      2.17 
+#> 6          99.0      2.58 
+#> # ... with 1 more row
+```
+
+
+
+Järgmiseks plotime irise liikide Sepal.length andmete keskmise koos 50% ja 95% protsentiil intervallidega. 
+Protsentiil intervallid näitavad piirkonda mis sisaldab, antud näite põhjal, vastavalt 50% ja 95% andmeid.
+
+
+Kõigepealt arvutame igale irise liigile Sepal.Length usaldusintervallid ja keskväärtuse kasutades `percentile_intervals` funktsiooni, soovitavad usaldusintervallid spetsifitseeritakse argumendiga `prob = c(0, 0.5, 0.95)`. 
+Kusjuures, 0% andmeid sisaldav piirkond asub keskväärtusel.
+
+
+```r
+iris_sepal_length_pi <- iris %>% 
+  group_by(Species) %>% 
+  do(percentile_intervals(.$Sepal.Length, prob = c(0, 0.5, 0.95)))
+
+iris_sepal_length_pi
+#> # A tibble: 3 x 6
+#> # Groups:   Species [3]
+#>   Species     `3%` `25%` `50%` `75%` `98%`
+#>   <fct>      <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1 setosa      4.40  4.80  5.00  5.20  5.70
+#> 2 versicolor  5.00  5.60  5.90  6.30  6.88
+#> 3 virginica   5.62  6.22  6.50  6.90  7.70
+```
+
+Saadud summaarseid andmeid kasutame graafiku loomiseks.
+Y-telje väärtused on kõigile geoomidele sama `ggplot(aes(y = Species))`. 
+Lisame geoomid, kõigepealt paneme paika keskmise kasutades punkti geoomi `geom_point()`.
+Seejärel lisame ükshaaval usalduspiirid kasutades horisontaalsete veapiiride geoomi `geom_errorbarh()`.
+Arumendid `height = 0, size = 1.5` määravad antud juhul, vastavalt, veapiiri otstes olevate "vuntside" kõrgust ja joone paksust.
+
+
+```r
+iris_sepal_length_pi %>% 
+  ggplot(aes(y = Species, x = `50%`)) +
+  geom_point( size = 3) +
+  geom_errorbarh(aes(xmin = `3%`, xmax = `98%`), height = 0.2) +
+  geom_errorbarh(aes(xmin = `25%`, xmax = `75%`), height = 0, size = 1.5) +
+  theme(axis.title.y = element_blank()) +
+  labs(x = "Mean Sepal length with 50% and 95% percentile interval")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-81-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Sellel joonisel on näha irise tabeli Sepal length veeru keskmised (punkt) koos 50% (rasvane joon) ja 95% (vuntsid) usaldusintervallidega.
+
+
+## 2. Andmepunktid mediaani või aritmeetilise keskmisega
+
+x - faktormuutuja; y - pidev muutuja
+
+Kui N < 20, siis on see tavaliselt parim valik sest säilitab maksimaalselt andmetes leiduvat informatsiooni.
+
+
+```r
+ggplot(iris, aes(x=Species, y=Sepal.Length)) + 
+  geom_jitter(width = 0.05)+
+  stat_summary(fun.y = median, geom = "point", shape = 95, 
+               color = "red", size = 15, alpha=0.6) +
+  labs(x=NULL) + 
+  theme_tufte()
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-82-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Siin on meil lausa 50 andmepunkti iga Irise liigi kohta ja graafik on ikkagi täitsa hästi loetav. 
+
+Meil on võimalik teha sellest graafikust versioon, mis ei pane andmepunkti y skaalal täpselt õigesse kohta, vaid tekitab histogrammilaadsed andmebinnid, kus siiski iga punkt on eraldi näidatud. See lihtsustab veidi "kirjude" kompleksete andemsettide esitust. Kuid kaotab informatsiooni andmepunktide täpse asukoha kohta. Siin on eesmärk muuta graafik kiiremini loetavaks, ehk erinevused gruppide vahel paremini võrreldavaks.
+
+
+```r
+p<-ggplot(iris, aes(x=Species, y=Sepal.Length)) + 
+  geom_dotplot(binaxis='y', stackdir='center', stackratio=1.3, dotsize=0.7) 
+
+p + stat_summary(fun.y = median, geom = "point", shape = 95, 
+               color = "red", size = 15) 
+#try using shape=18, size=5.
+
+#add mean and SD, use pointrange:
+p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), geom="pointrange", color="red")
+
+#use errorbar instead of pointrange:
+#p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), geom="errorbar", color="red", width=0.2, size=1) + stat_summary(fun.y=mean, geom="point", size=3, color="red")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-83-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-83-2.svg" width="70%" style="display: block; margin: auto;" />
+
+
+Muuda punktide värvi nii:
+
+scale_fill_manual() : to use custom colors
+
+scale_fill_brewer() : to use color palettes from RColorBrewer package
+
+scale_fill_grey() : to use grey color palettes
+
+
+## 3. Histogramm
+
+x - pidev muutuja
+
+Kui teil on palju andmepunkte (>50) ning soovite uurida nende jaotust (ja/või võrrelda mitme andmestiku jaotust) siis tasub kindlasti alustada histogrammist. Histogrammi koostamine näeb välja järgmine:
+
+1. ploti andmepunktid x - teljele (järgnev on põhimõtteliselt ühedimensionaalne plot, kuigi andmepunktid on üksteise suhtes veidi nihutatud, et nad üksteist ei varjutaks). 
+
+
+```r
+stripchart(iris$Sepal.Length, method = "jitter")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-84-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+
+2. jaga andmestik x-teljel võrdse laiusega vahemikesse (binnidesse)
+
+
+```r
+stripchart(iris$Sepal.Length, method = "jitter")
+abline(v=seq(4, 8, by=0.5), col="red")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-85-1.svg" width="70%" style="display: block; margin: auto;" />
+
+3. loe kokku, mitu andmepunkti sattus igasse binni. Näiteks on meil viimases binnis (7.5 ... 8) kuus anmdepunkti
+4. ploti iga bin tulpdiagrammina (y- teljel on tüüpiliselt andmepunktide arv)
+
+
+```r
+ggplot(iris, aes(x=Sepal.Length)) + geom_histogram(breaks= seq(4, 8, by=0.5), color="white")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-86-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Tavaliselt on siiski mõistlik määrata histogrammi binnide laius ja asukoht mitte *breaks* argumeniga vaid kas argumendiga *bins*, mis annab binnide arvu, või argumendiga *binwidth*, mis annab binni laiuse. Vt ka geom_boxplot() funktsiooni helpi.
+
+NB! Väga tähtis on mõista, et binnide laius on meie suva järgi määratud. Samade andmete põhjal joonistatud erineva binilaiusega histogrammid võivad anda lugejale väga erinevaid signaale. 
+
+
+```r
+library(gridExtra)
+g1 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 3)
+g2 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 8)
+g3 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 20)
+g4 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 50)
+grid.arrange(g1, g2, g3, g4, nrow = 2)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-87-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Seega on tasub joonistada samadest andmetest mitu erineva binnilaiusega histogrammi, et oma andmeid vaadata mitme nurga alt.
+
+
+Kui tahame võrrelda mitmeid jaotusi, siis on meil järgmised variandid:
+
+Kõigepealt, me võime panna mitu histogrammi üksteise alla. Selleks kasutame facet_grid funktsiooni ja paneme joonisele ka hallilt summaarsete andmete histogrammi. Selle funktsioon on pakkuda joonise lugejale ühtset võrdlusskaalat üle kolme paneeli.
+
+
+```r
+d_bg <- iris[, -5]  # Background Data - full without the 5th column (Species)
+
+ggplot(data = iris, aes(x = Sepal.Length, fill = Species)) +
+  geom_histogram(data = d_bg, fill = "grey", alpha=0.8, bins=10) +
+  geom_histogram(colour = "black", bins=10) +
+  facet_grid(Species~.) +
+  guides(fill = FALSE) +  # to remove the legend
+  theme_tufte()          # for clean look overall
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-88-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Teine võimalus on näidata kõiki koos ühel paneelil kasutades histogrammi asemel sageduspolügoni. See töötab täpselt nagu histogramm, ainult et tulpade asemel joonistatakse binnitippude vahele jooned. Neid on lihtsam samale paneelile üksteise otsa laduda.
+
+
+```r
+ggplot(iris, aes(Sepal.Length, color=Species)) + geom_freqpoly(breaks= seq(4, 8, by=0.5)) + theme_tufte()+ labs(title="Frequency plot")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-89-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Selle "histogrammi" binne saab ja tuleb manipuleerida täpselt samamoodi nagu geom_histogrammis.
+
+Veel üks hea meetod histogrammide võrdlemiseks on joonistada nn viiuliplot. See asendab sakilise histogrammi silutud joonega ja muudab seega võrdlemise kergemaks. Viiulile on ka kerge lisada algsed andmepunktid
+
+
+```r
+ggplot(iris, aes(Species, Sepal.Length)) + geom_violin(aes(color=Species))+
+  geom_jitter(size=0.2, width=0.1) + labs(title="Violin plot", x=NULL)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-90-1.svg" width="70%" style="display: block; margin: auto;" />
+
+## 3. Tihedusplot
+
+Hea alternatiiv histogrammile on joonistada silutud andmejaotus, mis käitub silutud histogrammina. 
+
+
+```r
+ggplot(iris, aes(Sepal.Length, fill=Species)) + geom_density(alpha=0.5)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-91-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Adjust parameeter reguleerib silumise määra.
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-92-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Veel üks võimalus jaotusi kõrvuti vaadata on joyplot, mis paneb samale paneelile kasvõi sada tihedusjaotust.
+
+
+```r
+library(ggjoy)
+ggplot(iris, aes(x=Sepal.Length, y=Species, fill=Species)) + 
+  geom_joy(scale=4, rel_min_height=0.01, alpha=0.9) +
+  theme_joy(font_size = 13, grid=TRUE) + 
+  theme(legend.position = "none")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-93-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+```r
+sch <- read.csv("data/schools.csv")
+sch$school <- as.factor(sch$school)
+ggplot(sch, aes(score1, y=reorder(school, score1))) + 
+  geom_joy() + theme_tufte()
+#> Warning: Removed 202 rows containing non-finite values
+#> (stat_density_ridges).
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-94-1.svg" width="70%" style="display: block; margin: auto;" />
+
+## 4. Boxplot
+
+See plot mõeldi välja John Tukey poolt arvutieelsel ajastul (1969), ja see võimaldab millimeeterpaberi ja joonlaua abil võrrelda erinevaid jaotusi. Biomeditsiinis sai boxplot ülipopulaarseks veidi hilinenult, ca. 2010-2015. Inimese jaoks, kes oskab arvutit kasutada, võib viiulite joonistamine tunduda atraktiivsem (ja informatiivsem), aga kui võrreldavaid jaotusi on päris palju, siis võib ka boxploti kandiliselt lihtsusel eeliseid leida. Igal juhul käib klassikalise boxploti konstrueerimine järgevalt.
+
+1. joonista andmepunktid 1D-s välja (nagu me tegime histogrammi puhul)
+
+2. keskmine andmepunkt on mediaan. Selle kohale tuleb boxplotil keskmine kriips
+
+3. ümbritse kastiga pooled andmepunktid (mõlemal pool mediaani). Nii määrad nn. interkvartiilse vahemiku (IQR).
+
+4. pooleteistkordne IQR (y-telje suunas) annab meile vurrude maksimaalse pikkuse. Vurrud joonistatakse siiski ainult kuni viimase andmepunktini (aga kunagi mitte pikemad kui 1.5 IQR)
+
+5. andmepunktid, mis jäävad väljaspoole 1.5 x IQR-i joonistatakse eraldi välja kui outlierid.
+
+
+```r
+ggplot(iris, aes(Species, Sepal.Length, color = Species)) + 
+  geom_boxplot()+
+  geom_jitter(width = 0.1, size=0.1, color="black")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-95-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Boxplotile saab lisada ka aritmeetilise keskmise (järgnevas punase täpina), aga pea meeles, et boxploti põhiline kasu tuleb sellest, et see ei eelda sümmeetrilist andmejaotust. Seega on mediaani lisamine üldiselt parem lahendus.
+
+
+```r
+ggplot(iris, aes(Species, Sepal.Length, color = Species)) + 
+  geom_boxplot()+ stat_summary(fun.y=mean,col='red', geom='point', size=2)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-96-1.svg" width="70%" style="display: block; margin: auto;" />
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-97-1.svg" width="70%" style="display: block; margin: auto;" />
+
+See pilt näitab, et kui jaotus on mitme tipuga, siis võib boxplotist olla rohkem kahju kui kasu. 
+
+
+## 5. Joongraafikud
+
+x - pidev muutuja (aeg, konsentratsioon, jms); y - pidev muutuja
+
+Joongraafik (geom_line) töötab hästi siis, kui igale x-i väärtusele vastab unikaalne y-i väärtus ja iga kahe mõõdetud x-i väärtuse vahele jääb veel x-i väärtusi, mida pole küll mõõdetud, aga kui oleks, siis vastaks ka neile unikaalsed y-i väärtused. Lisaks me loodame, et y-i suunaline juhuslik varieeruvus ei ole nii suur, et maskeerida meid huvitavad trendid. 
+Kui tahad näidata, kus täpselt muutus toimus, kasuta geom_step funktsiooni.
+
+
+```r
+recent <- economics[economics$date > as.Date("2013-01-01"), ]
+ggplot(recent, aes(date, unemploy)) + geom_line()
+ggplot(recent, aes(date, unemploy)) + geom_step()
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-98-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-98-2.svg" width="70%" style="display: block; margin: auto;" />
+
+Astmeline graafik on eriti hea olukorras, kus astmete vahel y-dimensioonis muutust ei toimu -- näiteks piimapaki hinna dünaamika poes.
+
+Geom_path võimaldab joonel ka tagasisuunas keerata.
+
+
+```r
+# geom_path lets you explore how two variables are related over time,
+# e.g. unemployment and personal savings rate
+m <- ggplot(economics, aes(unemploy/pop, psavert))
+m + geom_path(aes(colour = as.numeric(date)))
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-99-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+Tulpdiagramm juhib lugeja tähelepanu väikestele teravatele muutustele. Kui see on see, millele sa tahad tähelepanu juhtida, siis kasuta seda.
+
+```r
+p1 <- ggplot(economics, aes(date, unemploy)) + geom_line()
+p2 <- ggplot(economics, aes(date, unemploy)) + geom_bar(stat="identity")
+grid.arrange(p1, p2, nrow = 2)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-100-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Et mürarikkaid andmeid siluda kasutame liikuva keskmise meetodit. Siin asendame iga andmepunkti selle andmepunkti ja tema k lähima naabri keskmisega. k on tavaliselt paaritu arv ja mida suurem k, seda silutum tuleb tulemus. 
+
+
+```r
+library(zoo)
+economics$rollmean <- rollmean(economics$unemploy, k = 13, fill = NA)
+ggplot(economics, aes(date, rollmean)) + geom_line()
+#> Warning: Removed 12 rows containing missing values
+#> (geom_path).
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-101-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Kui on oht, et ebahuvitavad tsüklid ja trendid varjutavad veel mingeid mustreid, mis meile võiks huvi pakkuda, võib proovida lahutada aegrea komponentideks kasutades seasonaalset lahutamist (Seasonal decomposition). R::stl() kasutab selleks loess meetodit lahutades aegrea kolmeks komponendiks. 1) trendikomponent püüab keskmise taseme muutusi ajas. 2) seasonaalne komponent lahutab muutused aastaaegade lõikes (konstantse amplituudiga tsüklilisus aegrea piires) ja 3) irregulaarne komponent on see, mis üle jääb. 
+aegrea osadeks lahutamine võib olla additiivne või mulitlikatiivne. Additiivses mudelis
+
+$$Y_t = Trend_t + Seasonal_t + Irregular_t$$
+
+summeeruvad komponendid igas punktis algesele aegreale. Muliplikatiivses mudelis
+
+$$Y_t = Trend_t * Seasonal_t * Irregular_t$$ 
+tuleb selleks teha korrutamistehe.
+
+Näiteks lahutame aegrea, mis käsitleb CO_2 konsentratsiooni muutusi viimase 50 aasta vältel.
+
+
+
+```r
+require(graphics)
+#co2 is a time series object 
+#stl() takes class "ts" objects only!
+plot(stl(co2, "per"))
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-102-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
 
 
 ### Tulpdiagrammid mõõdavad counte ja proportsioone
@@ -1137,7 +1536,7 @@ ggplot(diamonds) +
   theme(legend.position="none")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-78-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-105-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Pane tähele, et y-teljel on arv, mitu korda esineb tabelis iga cut. See arv ei ole tabelis muutuja. geom_bar, geom_hist, geom_dens arvutavad plotile uued y väärtused --- nad jagavad andmed binidesse ja loevad üles, mitu andmepunkti sattus igasse bini.
 
@@ -1159,7 +1558,7 @@ ggplot(diamonds) +
   geom_bar(aes(x = cut, fill = clarity))
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-80-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-107-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kui me tahame, et cut-i ja clarity kombinatsioonid oleks kastidena ükteise sees, pigem kui üksteise otsa kuhjatud, siis kasutame position = "identity" argumenti. 
 
@@ -1169,7 +1568,7 @@ ggplot(diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(alpha = 0.7, position = "identity") 
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-81-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-108-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ka see graafik pole väga lihtne lugeda. Parem viime clarity klassid üksteise kõrvale
 
@@ -1179,7 +1578,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "dodge")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-82-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-109-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Eelnev on hea viis kuidas võrrelda clarity tasemete esinemis-sagedusi ühe cut-i taseme piires.
 
@@ -1191,7 +1590,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "fill")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-83-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-110-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Ja lõpuks, kui te tahate teha midagi, mis on enamasti keskmiselt rumal valik, ehk plottida tulpdiagrammi viisil, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: `geom_bar(stat = "identity")`
 
@@ -1201,175 +1600,8 @@ df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
 ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-84-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-111-1.svg" width="70%" style="display: block; margin: auto;" />
 
-
-### Andmepunktid on ükshaaval välja plotitud
-Kõigepealt dotplot, mis ei pane andmepunkti y skaalal täpselt õigesse kohta vaid tekitab histogrammilaadsed andmebinnid, kus siiski iga punkt on eraldi näidatud. See lihtsustab veidi "kirjude" kompleksete andemsettide esitust.
-
-
-```r
-ToothGrowth <- ToothGrowth
-ToothGrowth$dose <- as.factor(ToothGrowth$dose)
-p<-ggplot(ToothGrowth, aes(x=dose, y=len)) + 
-  geom_dotplot(binaxis='y', stackdir='center')
-p
-# Change dotsize and stack ratio, add line or dot for median
-ggplot(ToothGrowth, aes(x=dose, y=len)) + 
-  geom_dotplot(binaxis='y', stackdir='center',
-               stackratio=1.5, dotsize=0.7)+
-  stat_summary(fun.y = median, geom = "point", shape = 95, 
-               color = "red", size = 15) +
-  theme_tufte()
-
-p + stat_summary(fun.y=median, geom="point", shape=18,
-                 size=5, color="red")
-
-#add mean and SD, use pointrange
-p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), 
-                 geom="pointrange", color="red")
-#use errorbars
-p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), 
-        geom="errorbar", color="red", width=0.2) +
-  stat_summary(fun.y=mean, geom="point", size=3, color="red")
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-85-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-85-2.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-85-3.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-85-4.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-epub3/unnamed-chunk-85-5.svg" width="70%" style="display: block; margin: auto;" />
-
-Sama jitterplotina --- nüüd on iga punkt y suhtes õiges kohas, aga joonis ei näe enam liiga puhas välja.
-
-
-```r
-ggplot(ToothGrowth, aes(x=dose, y=len)) + 
-  geom_jitter(width = 0.05)+
-  stat_summary(fun.y = median, geom = "point", shape = 95, 
-               color = "red", size = 15, alpha=0.6) +
-  theme_tufte()
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-86-1.svg" width="70%" style="display: block; margin: auto;" />
-
-
-```r
-# Change dot plot colors by groups
-p<-ggplot(ToothGrowth, aes(x=dose, y=len, fill=dose)) +
-  geom_dotplot(binaxis='y', stackdir='center')
-p
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-87-1.svg" width="70%" style="display: block; margin: auto;" />
-
-
-It is also possible to change manually dot plot colors using the functions :
-
-scale_fill_manual() : to use custom colors
-
-scale_fill_brewer() : to use color palettes from RColorBrewer package
-
-scale_fill_grey() : to use grey color palettes
-
-
-
-```r
-#Choose which items to display :
-p + scale_x_discrete(limits=c("0.5", "2"))
-#> Warning: Removed 20 rows containing non-finite values
-#> (stat_bindot).
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-88-1.svg" width="70%" style="display: block; margin: auto;" />
-
-
-
-Dotplot kui histogram:
-
-```r
-ggplot(iris, aes(Sepal.Length)) + geom_dotplot()
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-89-1.svg" width="70%" style="display: block; margin: auto;" />
-
-Histogram:
-
-
-```r
-ggplot(iris, aes(Sepal.Length)) + 
-  geom_histogram(bins = 10, color="white", fill = "navyblue") 
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-90-1.svg" width="70%" style="display: block; margin: auto;" />
-
-
-
-```r
-library(ggthemes)
-d <- iris        # Full data set
-d_bg <- d[, -5]  # Background Data - full without the 5th column (Species)
-
-ggplot(data = d, aes(x = Sepal.Width, fill = Species)) +
-  geom_histogram(data = d_bg, fill = "grey", alpha=0.8, bins=10) +
-  geom_histogram(colour = "black", bins=10) +
-  facet_grid(Species~.) +
-  guides(fill = FALSE) +  # to remove the legend
-  theme_tufte()          # for clean look overall
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-91-1.svg" width="70%" style="display: block; margin: auto;" />
-
-
-density plot:
-
-```r
-iris%>%ggplot()+
-  geom_density(aes(Sepal.Width, fill=Species, color=Species, alpha=0.5))+
-  theme_tufte()
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-92-1.svg" width="70%" style="display: block; margin: auto;" />
-
-joyplot võimaldab kõrvuti panna isegi sadu density plotte
-
-
-```r
-library(ggjoy)
-ggplot(iris, aes(x=Sepal.Length, y=Species, fill=Species)) + 
-  geom_joy(scale=4, rel_min_height=0.01, alpha=0.9) +
-  theme_joy(font_size = 13, grid=TRUE) + 
-  theme(legend.position = "none")
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-93-1.svg" width="70%" style="display: block; margin: auto;" />
-
-Joyplot, kui meil on väga palju kõrvuti tihedusjaotusi võrrelda
-
-```r
-sch <- read.csv("data/schools.csv")
-sch$school <- as.factor(sch$school)
-ggplot(sch, aes(score1, y=reorder(school, score1))) + 
-  geom_joy() + theme_tufte()
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-94-1.svg" width="70%" style="display: block; margin: auto;" />
-
-
-Boxplot:
-
-```r
-ggplot(iris, aes(Species, Sepal.Width, fill = Species)) + 
-  geom_boxplot()
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-95-1.svg" width="70%" style="display: block; margin: auto;" />
-
-violin plot plus jitterplot:
-
-```r
-ggplot(iris, aes(Species, Sepal.Width)) + 
-  geom_violin(aes(fill = Species)) +
-  geom_jitter(width = 0.1, alpha = 0.4, size = 0.5)
-```
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-96-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Kahe muutuja koos-varieeruvus 
 
@@ -1385,6 +1617,6 @@ m <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
 m + geom_density_2d()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-97-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-112-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kui punkte on liiga palju, et välja trükkida, kasuta geom = "polygon" varianti.
