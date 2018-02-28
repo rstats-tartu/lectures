@@ -1366,7 +1366,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
 
 Ja lõpetuseks, kui teile miskipärast ei meeldi Cleveland plot ja te tahate plottida tulpdiagrammi nii, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: `geom_bar(stat = "identity")`
 
-<<<<<<< HEAD
+
 ```{r eval=FALSE}
 df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
 ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
@@ -1415,15 +1415,8 @@ ggplot(iris1, aes(Petal.Length, resid, color=Species)) +
   geom_ref_line(h = 0) +
   geom_point() 
 ```
-=======
-```{r}
-df <- tibble(a = c(2.3, 4, 5.2), b = c("A", "B", "C"))
-ggplot(df, aes(b, a)) + 
-  geom_bar(stat = "identity")
-```
 
-## Residuaalide plot
->>>>>>> 149b9cfecb7eac4810c038d48c4f3ca775e99014
+
 
 See võimaldab otsustada, kas mudel ennustab võrdselt hästi erinevatel predikrori (Petal.Length) väärtustel. Antud mudelis ei näe me süstemaatilisi erinevusi residuaalides üle õielehtede pikkuste vahemiku. 
 
