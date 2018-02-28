@@ -1677,7 +1677,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
 
 Ja lõpetuseks, kui teile miskipärast ei meeldi Cleveland plot ja te tahate plottida tulpdiagrammi nii, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: `geom_bar(stat = "identity")`
 
-<<<<<<< HEAD
+
 
 ```r
 df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
@@ -1737,26 +1737,16 @@ ggplot(iris1, aes(Petal.Length, resid, color=Species)) +
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-120-1.svg" width="70%" style="display: block; margin: auto;" />
-=======
 
-```r
-df <- tibble(a = c(2.3, 4, 5.2), b = c("A", "B", "C"))
-ggplot(df, aes(b, a)) + 
-  geom_bar(stat = "identity")
-```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-121-1.svg" width="70%" style="display: block; margin: auto;" />
-
-## Residuaalide plot
->>>>>>> 149b9cfecb7eac4810c038d48c4f3ca775e99014
 
 See võimaldab otsustada, kas mudel ennustab võrdselt hästi erinevatel predikrori (Petal.Length) väärtustel. Antud mudelis ei näe me süstemaatilisi erinevusi residuaalides üle õielehtede pikkuste vahemiku. 
 
 Proovime sama lihtsa lineaarse mudeliga $Sepal.Length = intercept + b * Petal.Length$.
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-121-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-122-1.svg" width="70%" style="display: block; margin: auto;" />
-
-
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Siit näeme, et I. setosa puhul on residuaalid pigem >0 ja et see mudel töötab paremini I. versicolor ja I. virginica puhul. 
 
@@ -1770,7 +1760,7 @@ ggplot(iris1, aes(Petal.Length, st_resid, color=Species)) +
   geom_point()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-124-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standardhälbega ja kahte sama liigi isendit (ja ühte I. setosa isendit), mille koha pealt mudel alahindab >2 standardhälbega.
 
@@ -1783,6 +1773,6 @@ library(Hmisc)
 histbackback(iris[,1:2])
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-124-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Te teet
