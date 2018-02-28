@@ -1427,6 +1427,10 @@ df_l <- separate(df_l, key, c("exp", "nr"))
 df_l <- df_l %>% drop_na()
 df_summary <- df_l %>% group_by(gene, exp) %>% summarise(value= mean(value))
 df_summary2 <- df_summary %>% spread(key= exp, value = value)
+
+```
+
+```{r}
 head(df_summary2, 3)
 ```
 
