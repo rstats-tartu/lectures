@@ -1232,7 +1232,7 @@ p + geom_abline(intercept = coefs[1],
                  size = 1.5)
 ```
 
-## Kaalutud lineaarne mudel
+### Kaalutud lineaarne mudel
 
 Kaalutud lineaarne mudel on viis anda andmepunktidele, mida me tähtsamaks peame (või mis on täpsemalt mõõdetud) suurem kaal. 
 Kõigepealt, siin on USA demograafilised andmed `midwest` "ggplot2" library-st erinevate kesk-lääne omavalitsuste kohta (437 omavalitsust).
@@ -1327,7 +1327,7 @@ df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
 ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
 ```
 
-## 8. Residuaalide plot
+## Residuaalide plot
 
 Alustame lineaarse mudeli fittimisest ja mudeli ennustuse lisamisest algsele andmetabelile. Me fitime polünoomsse mudeli: 
 
@@ -1405,7 +1405,39 @@ ggplot(iris1, aes(Petal.Length, st_resid, color=Species)) +
 
 Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standardhälbega ja kahte sama liigi isendit (ja ühte I. setosa isendit), mille koha pealt mudel alahindab >2 standardhälbega.
 
-## 9. Tukey sum-difference graph
+## Tukey sum-difference graph
+
+Te sooritate korraga palju paralleelseid mõõtmisi -- näiteks mõõdate mass-spektroskoopiaga 1000 valgu taset. Kui teete seda katset kaks korda (või katse vs. kontroll n korda) ja tahate näha süstemaatilisi erinevusi, siis tasub joonistada summa-erinevuse graafik. See on hea olukordades, kus ei ole vahet, mis läheb x ja mis läheb y teljele (erinevalt regressioonimudelitest ja residuaaliplottidest, kus see on väga tähtis).
+Meie graafik on x ja y suhtes sümmeetriline. 
+
+Graafik ise koosneb 3st osast: xy scatterplot koos y = x regressioonijoonega, horisontaalsele teljele plotitud x + y väärtused ja vertikaalsele teljele plotitud y - x väärtused.
+
+
+```{r}
+df <-  read.table(file = "data/rawdata.txt", sep = "\t", dec = ".", header = TRUE)
+colnames(df) <- c("d10_1", "d10_2", "d10_3", "wt_1", "wt_2", "wt_3", "prot", "gene")
+#' First cols should be the non-numeric ones
+df <- dplyr::select(df, 8, 1:6)
+df <- df %>% drop_na()
+#' Into the long format:
+df_l <- gather(df, key, value, 2:7)
+#' Separate key col into 2 new cols:
+df_l <- separate(df_l, key, c("exp", "nr")) 
+df_l <- df_l %>% drop_na()
+df_summary <- df_l %>% group_by(gene, exp) %>% summarise(value= mean(value))
+df_summary2 <- df_summary %>% spread(key= exp, value = value)
+head(df_summary2, 3)
+```
+
+```{r}
+ggplot(df_summary2, aes(x= d10 + wt, y= d10 - wt)) + geom_point(alpha=0.2) + geom_hline(yintercept = 0)
+```
+
+Here we have a nicely centered data of averages of 3 experiments for 2 conditions (d10 and wt) where each point corresponds to a protein. The x axis gives relative abundances in log2 scale (the original scale of data) and the y axis gives the effect size (defined as d10 - wt). We see  (1) that the lower the abundance, the more large effects we have, (2) that the cloud of effects is nicely centered at zero and (3) that postive effects seem to be larger than the negative effects (at least there are more large positive effects). 
+
+
+
+
 
 
 ```{r}
