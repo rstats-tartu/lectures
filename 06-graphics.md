@@ -1677,6 +1677,67 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
 
 Ja lõpetuseks, kui teile miskipärast ei meeldi Cleveland plot ja te tahate plottida tulpdiagrammi nii, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: `geom_bar(stat = "identity")`
 
+<<<<<<< HEAD
+
+```r
+df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
+ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
+```
+
+## 8. Residuaalide plot
+
+Alustame lineaarse mudeli fittimisest ja mudeli ennustuse lisamisest algsele andmetabelile. Me fitime polünoomsse mudeli: 
+
+$$Sepal.Length = intercept + b_1 * Petal.Length + b_2 * Petal.Length^2 + b_3 * Petal.Length^3$$ 
+
+Mudeli ennustused keskmisele õielehe pikkusele (Sepal.Length) saame arvutada fikseerides mudeli koefitsiendid nende fititud väärtustega ja andes mudeli valemisse ühtlase rea võimalikke tolmuka pikkusi. Nii saame igale selle rea liikmele vastava ennustuse õielehe keskmisele pikkusele. Selleks teeme ühetulbalise andmeraami pred_matrix, millele lisame abifunktsiooni add_predictions() abil arvutatud mudeli ennustused. Need ilmuvad tabelisse uue tulbana "pred".
+
+
+```r
+library(modelr)
+#fit the model
+m1 <- lm(Sepal.Length~poly(Petal.Length, 3) , data= iris)
+#make prediction matrix (equally spaced non-empirical Petal Length values)
+pred_matrix <- tibble(Petal.Length=seq(min(iris$Petal.Length), 
+                                       max(iris$Petal.Length), 
+                                       length.out= 100))
+#add prediction to each value in the prediction matrix
+pred_matrix <- add_predictions(pred_matrix, m1)
+```
+
+Nii saab mugavalt visualiseerida ka väga keeruliste mudelite ennustusi. 
+
+```r
+ggplot(pred_matrix, aes(x = Petal.Length)) + 
+  geom_point(data= iris, aes(y = Sepal.Length)) +
+  geom_line(aes(y = pred))
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-118-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Nüüd lisame irise tabelisse residuaalid mugavusfunktsiooni add_residual() abil (tekib tulp "resid"). Residuaal on lihtsalt andmepunkti Sepal.Length väärtus miinus mudeli ennustus.
+
+
+```r
+iris1 <- iris
+iris1 <- add_residuals(iris1, m1)
+ggplot(iris1, aes(resid)) + geom_density()
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-119-1.svg" width="70%" style="display: block; margin: auto;" />
+
+See plot näitab, et residuaalid on enam vähem 0-i ümber koondunud, aga negatiivseid residuaale paistab veidi enam olevat. 
+
+Tegelik residuaaliplot näeb välja selline:
+
+```r
+ggplot(iris1, aes(Petal.Length, resid, color=Species)) + 
+  geom_ref_line(h = 0) +
+  geom_point() 
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-120-1.svg" width="70%" style="display: block; margin: auto;" />
+=======
 
 ```r
 df <- tibble(a = c(2.3, 4, 5.2), b = c("A", "B", "C"))
@@ -1684,9 +1745,44 @@ ggplot(df, aes(b, a)) +
   geom_bar(stat = "identity")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-116-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-121-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ## Residuaalide plot
+>>>>>>> 149b9cfecb7eac4810c038d48c4f3ca775e99014
+
+See võimaldab otsustada, kas mudel ennustab võrdselt hästi erinevatel predikrori (Petal.Length) väärtustel. Antud mudelis ei näe me süstemaatilisi erinevusi residuaalides üle õielehtede pikkuste vahemiku. 
+
+Proovime sama lihtsa lineaarse mudeliga $Sepal.Length = intercept + b * Petal.Length$.
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-122-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Siit näeme, et I. setosa puhul on residuaalid pigem >0 ja et see mudel töötab paremini I. versicolor ja I. virginica puhul. 
+
+Siin on residuaalid algsetes Sepal Length-i mõõtühikutes (cm). Et otsustada, kas üks või teine residuaal on 0-st piisavalt kaugel, avaldame residuaalid standardhälvete ühikutes.
+Residuaalide muster joonisel sellest ei muutu, muutub vaid y-telje tähistus.
+
+```r
+iris1 <- mutate(iris1, st_resid=resid/sd(resid))
+ggplot(iris1, aes(Petal.Length, st_resid, color=Species)) + 
+  geom_ref_line(h = 0) +
+  geom_point()
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-124-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standardhälbega ja kahte sama liigi isendit (ja ühte I. setosa isendit), mille koha pealt mudel alahindab >2 standardhälbega.
+
+## 9. Tukey sum-difference graph
 
 
 
+```r
+library(Hmisc)
+histbackback(iris[,1:2])
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Te teet
