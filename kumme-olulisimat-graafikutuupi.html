@@ -188,7 +188,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="8.8" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tulpdiagramm"><i class="fa fa-check"></i><b>8.8</b> Tulpdiagramm</a></li>
 <li class="chapter" data-level="8.9" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#residuaalide-plot"><i class="fa fa-check"></i><b>8.9</b> Residuaalide plot</a></li>
-<li class="chapter" data-level="8.10" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tukey-sum-difference-graph"><i class="fa fa-check"></i><b>8.10</b> Tukey sum-difference graph</a></li>
+<li class="chapter" data-level="8.10" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tukey-summa-erinevuse-graafik"><i class="fa fa-check"></i><b>8.10</b> Tukey summa-erinevuse graafik</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>9</b> Tidyverse</a><ul>
 <li class="chapter" data-level="9.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>9.1</b> Tidy tabeli struktuur</a><ul>
@@ -653,33 +653,21 @@ iris1 &lt;-<span class="st"> </span><span class="kw">add_residuals</span>(iris1,
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-120-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standardhälbega ja kahte sama liigi isendit (ja ühte I. setosa isendit), mille koha pealt mudel alahindab &gt;2 standardhälbega.</p>
 </div>
-<div id="tukey-sum-difference-graph" class="section level2">
-<h2><span class="header-section-number">8.10</span> Tukey sum-difference graph</h2>
+<div id="tukey-summa-erinevuse-graafik" class="section level2">
+<h2><span class="header-section-number">8.10</span> Tukey summa-erinevuse graafik</h2>
 <p>Te sooritate korraga palju paralleelseid mõõtmisi – näiteks mõõdate mass-spektroskoopiaga 1000 valgu taset. Kui teete seda katset kaks korda (või katse vs. kontroll n korda) ja tahate näha süstemaatilisi erinevusi, siis tasub joonistada summa-erinevuse graafik. See on hea olukordades, kus ei ole vahet, mis läheb x ja mis läheb y teljele (erinevalt regressioonimudelitest ja residuaaliplottidest, kus see on väga tähtis). Meie graafik on x ja y suhtes sümmeetriline.</p>
-<p>Graafik ise koosneb 3st osast: xy scatterplot koos y = x regressioonijoonega, horisontaalsele teljele plotitud x + y väärtused ja vertikaalsele teljele plotitud y - x väärtused.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st">  </span><span class="kw">read.table</span>(<span class="dt">file =</span> <span class="st">&quot;data/rawdata.txt&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">dec =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
-<span class="kw">colnames</span>(df) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;d10_1&quot;</span>, <span class="st">&quot;d10_2&quot;</span>, <span class="st">&quot;d10_3&quot;</span>, <span class="st">&quot;wt_1&quot;</span>, <span class="st">&quot;wt_2&quot;</span>, <span class="st">&quot;wt_3&quot;</span>, <span class="st">&quot;prot&quot;</span>, <span class="st">&quot;gene&quot;</span>)
-<span class="co">#&#39; First cols should be the non-numeric ones</span>
-df &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(df, <span class="dv">8</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)
-df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop_na</span>()
-<span class="co">#&#39; Into the long format:</span>
-df_l &lt;-<span class="st"> </span><span class="kw">gather</span>(df, key, value, <span class="dv">2</span><span class="op">:</span><span class="dv">7</span>)
-<span class="co">#&#39; Separate key col into 2 new cols:</span>
-df_l &lt;-<span class="st"> </span><span class="kw">separate</span>(df_l, key, <span class="kw">c</span>(<span class="st">&quot;exp&quot;</span>, <span class="st">&quot;nr&quot;</span>)) 
-df_l &lt;-<span class="st"> </span>df_l <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">drop_na</span>()
-df_summary &lt;-<span class="st"> </span>df_l <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(gene, exp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">value=</span> <span class="kw">mean</span>(value))
-df_summary2 &lt;-<span class="st"> </span>df_summary <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(<span class="dt">key=</span> exp, <span class="dt">value =</span> value)
-<span class="kw">head</span>(df_summary2, <span class="dv">3</span>)
-<span class="co">#&gt; # A tibble: 3 x 3</span>
-<span class="co">#&gt; # Groups:   gene [3]</span>
-<span class="co">#&gt;   gene    d10    wt</span>
-<span class="co">#&gt;   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 aaeR   25.6  25.6</span>
-<span class="co">#&gt; 2 aas    28.8  28.8</span>
-<span class="co">#&gt; 3 accA   33.7  33.6</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_summary2, <span class="kw">aes</span>(<span class="dt">x=</span> d10 <span class="op">+</span><span class="st"> </span>wt, <span class="dt">y=</span> d10 <span class="op">-</span><span class="st"> </span>wt)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>)</code></pre></div>
+<p>Graafik ise on lihtsalt scatterplot, kus horisontaalsele teljele plotitud x + y väärtused ja vertikaalsele teljele plotitud y - x väärtused. Me lisame ka horisontaalsele teljele 0 - joone, et meil oleks lihtsam oma vaimusilmas efekti suuruste punktipilve tsentreerida.</p>
+<p>Näituseks plottime mass spektroskoopia andmed, kus kahel tingimusel (d10 ja wt) on kummagil tehtud kolm iseseisvat katset. Järgneb tabel df_summary2, kus on 2023 valgu tasemete keskväärtused kahel tingimusel, ning Tukey summa-erinevuse graafik</p>
+<pre><code>#&gt; # A tibble: 3 x 3
+#&gt; # Groups:   gene [3]
+#&gt;   gene    d10    wt
+#&gt;   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1 aaeR   25.6  25.6
+#&gt; 2 aas    28.8  28.8
+#&gt; 3 accA   33.7  33.6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_summary2, <span class="kw">aes</span>(<span class="dt">x=</span> d10 <span class="op">+</span><span class="st"> </span>wt, <span class="dt">y=</span> d10 <span class="op">-</span><span class="st"> </span>wt)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Tukey sum-difference graph of mass spectroscopy data&quot;</span>)</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-122-1.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p>Here we have a nicely centered data of averages of 3 experiments for 2 conditions (d10 and wt) where each point corresponds to a protein. The x axis gives relative abundances in log2 scale (the original scale of data) and the y axis gives the effect size (defined as d10 - wt). We see (1) that the lower the abundance, the more large effects we have, (2) that the cloud of effects is nicely centered at zero and (3) that postive effects seem to be larger than the negative effects (at least there are more large positive effects).</p>
+<p>Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). Me näeme sellelt pildilt väga kiiresti, (1) et mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul), (2) et efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik), (3) et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja (4) et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Hmisc)
 <span class="kw">histbackback</span>(iris[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" /></p>

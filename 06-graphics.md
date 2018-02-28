@@ -1717,29 +1717,17 @@ ggplot(iris1, aes(Petal.Length, st_resid, color=Species)) +
 
 Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standardhälbega ja kahte sama liigi isendit (ja ühte I. setosa isendit), mille koha pealt mudel alahindab >2 standardhälbega.
 
-## Tukey sum-difference graph
+## Tukey summa-erinevuse graafik
 
 Te sooritate korraga palju paralleelseid mõõtmisi -- näiteks mõõdate mass-spektroskoopiaga 1000 valgu taset. Kui teete seda katset kaks korda (või katse vs. kontroll n korda) ja tahate näha süstemaatilisi erinevusi, siis tasub joonistada summa-erinevuse graafik. See on hea olukordades, kus ei ole vahet, mis läheb x ja mis läheb y teljele (erinevalt regressioonimudelitest ja residuaaliplottidest, kus see on väga tähtis).
 Meie graafik on x ja y suhtes sümmeetriline. 
 
-Graafik ise koosneb 3st osast: xy scatterplot koos y = x regressioonijoonega, horisontaalsele teljele plotitud x + y väärtused ja vertikaalsele teljele plotitud y - x väärtused.
+Graafik ise on lihtsalt scatterplot, kus horisontaalsele teljele plotitud x + y väärtused ja vertikaalsele teljele plotitud y - x väärtused. Me lisame ka horisontaalsele teljele 0 - joone, et meil oleks lihtsam oma vaimusilmas efekti suuruste punktipilve tsentreerida. 
+
+Näituseks plottime mass spektroskoopia andmed, kus kahel tingimusel (d10 ja wt) on kummagil tehtud kolm iseseisvat katset. Järgneb tabel df_summary2, kus on 2023 valgu tasemete keskväärtused kahel tingimusel, ning Tukey summa-erinevuse graafik
 
 
-
-```r
-df <-  read.table(file = "data/rawdata.txt", sep = "\t", dec = ".", header = TRUE)
-colnames(df) <- c("d10_1", "d10_2", "d10_3", "wt_1", "wt_2", "wt_3", "prot", "gene")
-#' First cols should be the non-numeric ones
-df <- dplyr::select(df, 8, 1:6)
-df <- df %>% drop_na()
-#' Into the long format:
-df_l <- gather(df, key, value, 2:7)
-#' Separate key col into 2 new cols:
-df_l <- separate(df_l, key, c("exp", "nr")) 
-df_l <- df_l %>% drop_na()
-df_summary <- df_l %>% group_by(gene, exp) %>% summarise(value= mean(value))
-df_summary2 <- df_summary %>% spread(key= exp, value = value)
-head(df_summary2, 3)
+```
 #> # A tibble: 3 x 3
 #> # Groups:   gene [3]
 #>   gene    d10    wt
@@ -1751,12 +1739,14 @@ head(df_summary2, 3)
 
 
 ```r
-ggplot(df_summary2, aes(x= d10 + wt, y= d10 - wt)) + geom_point(alpha=0.2) + geom_hline(yintercept = 0)
+ggplot(df_summary2, aes(x= d10 + wt, y= d10 - wt)) + geom_point(alpha=0.2) + geom_hline(yintercept = 0) + labs(title="Tukey sum-difference graph of mass spectroscopy data")
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-122-1.svg" width="70%" style="display: block; margin: auto;" />
 
-Here we have a nicely centered data of averages of 3 experiments for 2 conditions (d10 and wt) where each point corresponds to a protein. The x axis gives relative abundances in log2 scale (the original scale of data) and the y axis gives the effect size (defined as d10 - wt). We see  (1) that the lower the abundance, the more large effects we have, (2) that the cloud of effects is nicely centered at zero and (3) that postive effects seem to be larger than the negative effects (at least there are more large positive effects). 
+Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). Me näeme sellelt pildilt väga kiiresti, (1) et mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul), (2) et efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik), (3) et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja (4) et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).
+
+
 
 
 

@@ -188,7 +188,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="8.8" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tulpdiagramm"><i class="fa fa-check"></i><b>8.8</b> Tulpdiagramm</a></li>
 <li class="chapter" data-level="8.9" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#residuaalide-plot"><i class="fa fa-check"></i><b>8.9</b> Residuaalide plot</a></li>
-<li class="chapter" data-level="8.10" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tukey-sum-difference-graph"><i class="fa fa-check"></i><b>8.10</b> Tukey sum-difference graph</a></li>
+<li class="chapter" data-level="8.10" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tukey-summa-erinevuse-graafik"><i class="fa fa-check"></i><b>8.10</b> Tukey summa-erinevuse graafik</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>9</b> Tidyverse</a><ul>
 <li class="chapter" data-level="9.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>9.1</b> Tidy tabeli struktuur</a><ul>
@@ -423,25 +423,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;       V9    V8    V5    V2    V6</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.160  0.621 0.989 0.651 0.879</span>
-<span class="co">#&gt; 2 0.661  0.443 0.795 0.174 0.569</span>
-<span class="co">#&gt; 3 0.958  0.939 0.141 0.533 0.278</span>
-<span class="co">#&gt; 4 0.0785 0.753 0.419 0.380 0.153</span>
-<span class="co">#&gt; 5 0.646  0.149 0.340 0.509 0.335</span>
-<span class="co">#&gt; 6 0.423  0.563 0.823 0.436 0.262</span>
+<span class="co">#&gt;      V9     V8     V5    V2    V6</span>
+<span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.751 0.669  0.257  0.112 0.383</span>
+<span class="co">#&gt; 2 0.531 0.0790 0.841  0.364 0.307</span>
+<span class="co">#&gt; 3 0.328 0.0857 0.228  0.865 0.961</span>
+<span class="co">#&gt; 4 0.866 0.494  0.0829 0.938 0.110</span>
+<span class="co">#&gt; 5 0.722 0.774  0.0122 0.673 0.101</span>
+<span class="co">#&gt; 6 0.382 0.536  0.677  0.169 0.926</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;       V9    V8    V7    V6</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.160  0.621 0.331 0.879</span>
-<span class="co">#&gt; 2 0.661  0.443 0.190 0.569</span>
-<span class="co">#&gt; 3 0.958  0.939 0.501 0.278</span>
-<span class="co">#&gt; 4 0.0785 0.753 0.146 0.153</span>
-<span class="co">#&gt; 5 0.646  0.149 0.238 0.335</span>
-<span class="co">#&gt; 6 0.423  0.563 0.583 0.262</span>
+<span class="co">#&gt;      V9     V8    V7    V6</span>
+<span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.751 0.669  0.624 0.383</span>
+<span class="co">#&gt; 2 0.531 0.0790 0.805 0.307</span>
+<span class="co">#&gt; 3 0.328 0.0857 0.923 0.961</span>
+<span class="co">#&gt; 4 0.866 0.494  0.835 0.110</span>
+<span class="co">#&gt; 5 0.722 0.774  0.527 0.101</span>
+<span class="co">#&gt; 6 0.382 0.536  0.235 0.926</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
