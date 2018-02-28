@@ -1750,7 +1750,7 @@ Proovime sama lihtsa lineaarse mudeliga $Sepal.Length = intercept + b * Petal.Le
 
 Siit näeme, et I. setosa puhul on residuaalid pigem >0 ja et see mudel töötab paremini I. versicolor ja I. virginica puhul. 
 
-Siin on residuaalid algsetes Sepal Length-i mõõtühikutes (cm). Et otsustada, kas üks või teine residuaal on 0-st piisavalt kaugel, avaldame residuaalid standardhälvete ühikutes.
+Siin on residuaalid algsetes Sepal Length-i mõõtühikutes (cm). Et otsustada, kas üks või teine residuaal on 0-st piisavalt kaugel, avaldame residuaalid standardhälvete ühikutes (nn Studentized residuals).
 Residuaalide muster joonisel sellest ei muutu, muutub vaid y-telje tähistus.
 
 ```r

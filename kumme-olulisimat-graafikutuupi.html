@@ -669,7 +669,7 @@ iris1 &lt;-<span class="st"> </span><span class="kw">add_residuals</span>(iris1,
 <p>Proovime sama lihtsa lineaarse mudeliga <span class="math inline">\(Sepal.Length = intercept + b * Petal.Length\)</span>. <img src="06-graphics_files/figure-html/unnamed-chunk-121-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-122-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Siit näeme, et I. setosa puhul on residuaalid pigem &gt;0 ja et see mudel töötab paremini I. versicolor ja I. virginica puhul.</p>
-<p>Siin on residuaalid algsetes Sepal Length-i mõõtühikutes (cm). Et otsustada, kas üks või teine residuaal on 0-st piisavalt kaugel, avaldame residuaalid standardhälvete ühikutes. Residuaalide muster joonisel sellest ei muutu, muutub vaid y-telje tähistus.</p>
+<p>Siin on residuaalid algsetes Sepal Length-i mõõtühikutes (cm). Et otsustada, kas üks või teine residuaal on 0-st piisavalt kaugel, avaldame residuaalid standardhälvete ühikutes (nn Studentized residuals). Residuaalide muster joonisel sellest ei muutu, muutub vaid y-telje tähistus.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris1 &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris1, <span class="dt">st_resid=</span>resid<span class="op">/</span><span class="kw">sd</span>(resid))
 <span class="kw">ggplot</span>(iris1, <span class="kw">aes</span>(Petal.Length, st_resid, <span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_ref_line</span>(<span class="dt">h =</span> <span class="dv">0</span>) <span class="op">+</span>
