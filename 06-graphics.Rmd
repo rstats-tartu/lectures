@@ -1412,7 +1412,7 @@ See plot näitab, et residuaalid on enam vähem 0-i ümber koondunud, aga negati
 Tegelik residuaaliplot näeb välja selline:
 ```{r}
 ggplot(iris1, aes(Petal.Length, resid, color=Species)) + 
-  geom_ref_line(h = 0) +
+  modelr::geom_ref_line(h = 0) +
   geom_point() 
 ```
 
