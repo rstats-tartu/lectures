@@ -1435,7 +1435,7 @@ head(df_summary2, 3)
 ```
 
 ```{r}
-ggplot(df_summary2, aes(x= d10 + wt, y= d10 - wt)) + 
+ggplot(df_summary2, aes(x = d10 + wt, y = d10 - wt)) + 
   geom_point(alpha=0.2) + 
   geom_hline(yintercept = 0) + 
   labs(title="Tukey sum-difference graph of mass spectroscopy data", y="d10 - wt (log2 skaalas)", x= "d10 + wt (log2 skaalas)")+
@@ -1456,8 +1456,9 @@ Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalse
 
 ```{r}
 df_x <- df[2:7]
-df_p <- apply(df_x, 1, function(x) t.test(x[1:3], x[4:6])$p.value)
-df$p <- df_p
+#arvutame p väärtused
+df$p <- apply(df_x, 1, function(x) t.test(x[1:3], x[4:6])$p.value)
+#arvutame efekti suurused (katsete keskmine - kontrollide keskmine)
 df$ES <- apply(df_x, 1, function(x) mean(x[1:3]) - mean(x[4:6]))
 
 ggplot(df, aes(ES, -log10(p))) + 
