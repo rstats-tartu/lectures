@@ -188,7 +188,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="8.8" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tulpdiagramm"><i class="fa fa-check"></i><b>8.8</b> Tulpdiagramm</a></li>
 <li class="chapter" data-level="8.9" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#residuaalide-plot"><i class="fa fa-check"></i><b>8.9</b> Residuaalide plot</a></li>
-<li class="chapter" data-level="8.10" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tukey-summa-erinevuse-graafik"><i class="fa fa-check"></i><b>8.10</b> Tukey summa-erinevuse graafik</a></li>
+<li class="chapter" data-level="8.10" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tukey-summa-erinevuse-graafik"><i class="fa fa-check"></i><b>8.10</b> Tukey summa-erinevuse graafik</a><ul>
+<li class="chapter" data-level="8.10.1" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#vulkaaniplot"><i class="fa fa-check"></i><b>8.10.1</b> Vulkaaniplot</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>9</b> Tidyverse</a><ul>
 <li class="chapter" data-level="9.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>9.1</b> Tidy tabeli struktuur</a><ul>
@@ -669,7 +671,7 @@ iris1 &lt;-<span class="st"> </span><span class="kw">add_residuals</span>(iris1,
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_summary2, <span class="kw">aes</span>(<span class="dt">x =</span> d10 <span class="op">+</span><span class="st"> </span>wt, <span class="dt">y =</span> d10 <span class="op">-</span><span class="st"> </span>wt)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Tukey sum-difference graph of mass spectroscopy data&quot;</span>, <span class="dt">y=</span><span class="st">&quot;d10 - wt (log2 skaalas)&quot;</span>, <span class="dt">x=</span> <span class="st">&quot;d10 + wt (log2 skaalas)&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Tukey sum-difference graph of mass spectroscopy data&quot;</span>, <span class="dt">y=</span><span class="st">&quot;d10 - wt (in log2 scale)&quot;</span>, <span class="dt">x=</span> <span class="st">&quot;d10 + wt (in log2 scale)&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). Me näeme sellelt pildilt väga kiiresti,</p>
@@ -679,26 +681,50 @@ iris1 &lt;-<span class="st"> </span><span class="kw">add_residuals</span>(iris1,
 <li><p>et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja</p></li>
 <li><p>et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).</p></li>
 </ol>
-<p>Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas.</p>
+<div id="vulkaaniplot" class="section level3">
+<h3><span class="header-section-number">8.10.1</span> Vulkaaniplot</h3>
+<p>Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas. Vulkaaniplotti tutvustame mitte selle pärast, et seda soovitada, vaid ainult selle tõttu, et seda kasutatakse massiliselt näiteks proteoomika vallas.</p>
+<p>Joonistame vulkaani samade andmete põhjal, mida kasutasime Tukey summa-erinevusgraafiku valmistamieks. Me alustame tabeli “df” ettevalmistamisest: d10_1, d10_2 ja d10_3 on kolm iseseisvat katset ja wt_1, wt_2 ja wt_3 on kolm iseseisvat kontrolli.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(df, <span class="dv">3</span>)
+<span class="co">#&gt;   gene d10_1 d10_2 d10_3 wt_1 wt_2 wt_3</span>
+<span class="co">#&gt; 1 rpoC  36.3  36.3  36.4 36.2 36.3 36.4</span>
+<span class="co">#&gt; 2 rpoB  36.2  36.3  36.2 36.1 36.3 36.3</span>
+<span class="co">#&gt; 3 mukB  32.9  33.0  33.2 32.9 33.1 33.3</span></code></pre></div>
+<p>Me lisame tabelile veeru p väärtustega ja veeru effekti suurustega (ES), kasutades apply() funktsiooni sees tavapärast indekseerimist (vt ptk …).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_x &lt;-<span class="st"> </span>df[<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>]
 <span class="co">#arvutame p väärtused</span>
 df<span class="op">$</span>p &lt;-<span class="st"> </span><span class="kw">apply</span>(df_x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">t.test</span>(x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], x[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>])<span class="op">$</span>p.value)
-<span class="co">#arvutame efekti suurused (katsete keskmine - kontrollide keskmine)</span>
+<span class="co">#arvutame efekti suurused &quot;ES&quot; (katsete keskmine - kontrollide keskmine)</span>
 df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">apply</span>(df_x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">mean</span>(x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>]))
 
 <span class="kw">ggplot</span>(df, <span class="kw">aes</span>(ES, <span class="op">-</span><span class="kw">log10</span>(p))) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="op">-</span><span class="kw">log10</span>(<span class="fl">0.05</span>), <span class="dt">linetype=</span><span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">linetype=</span><span class="dv">2</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;d10 - wt (log2 skaalas)&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;- log10 of p value&quot;</span>, <span class="dt">title=</span><span class="st">&quot;volcano plot&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;d10 - wt (in log2 scale)&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;- log10 of p value&quot;</span>, <span class="dt">title=</span><span class="st">&quot;volcano plot&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-124-1.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p>Sellel pildil demarkeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse. Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub hotisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu “päris” efektiga.</p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Sellel pildil markeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse (üks ühik log2 skaalal; ühekordne ES võrdub sellel skaalal nulliga). Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub horisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu “päris” efektiga. Seevastu inimesed, kes teavad, teavad ka seda, et p väärtuste ühekaupa tõlgendamine ei ole sageli mõistlik. Iga p väärtus koondab endasse informatsiooni kolmest muutujast: valimi suurus (N), varieeruvus (sd) ja efekti suurus (ES = katse - kontroll). Kuigi me saame vulkaaniplotil asuvaid punkte võrreldes ignoreerida valimi suuruse mõju (kuna me teame, et meil on iga punkti taga 3 + 3 mõõtmist), koondab iga p väärtus endasse infot nii ES kui sd kohta viisil, mida me ei oska hästi üksteisest lahutada (siiski, pane tähele, et horisontaalsel teljel on ES). Me teame, et igas punktis on nii ES kui sd mõjutatud valimiveast, mis on kummagi näitaja suhtes teisest sõltumatu. Seega, igal neljandal valgul on valimiveaga seose topeltprobleem: ülehinnatud ES ja samal ajal alahinnatud sd, mis viib oodatust ohtlikult väiksemale p väärtusele.</p>
+<p>Lisaks, p väärtuse definitsioonist (p on sinu andmete või neist ekstreemsemate andmete tõenäosus tingimusel, et nullhüpotees kehtib) tuleneb, et kui null hüpotees on tõene (tegelik ES = 0), siis on meil täpselt võrdne tõenäosus saada oma p väärtus ükskõik kuhu nulli ja ühe vahele. Seega, nullhüpoteesi kehtimise korral ei sisalda individuaalne p väärtus mitte mingisugust kasulikku informatsiooni.</p>
+<p>Oluline on mõista, et p väärtuse arvutamine toimub nullhüpoteesi all, mis kujutab endast põhimõtteliselt lõpmatu hulga hüpoteetiliste valimite põhjal – mille N = 3 ja sd = valimi sd – arvutatud lõpmatu hulga hüpoteetiliste valimikeskmiste jaotust (iga geeni jaoks eraldi arvutatuna). Seega demonstreerib p väärtus statistikat oma kõige abstraktsemas vormis.</p>
+<p>Igal juhul peaks olema siililegi selge, et kui valimi suurus on nõnda väike kui 3, siis valimi põhine sd ega valimi põhine efekti suurus ei ole kuigi usaldusväärsed ennustama tegelikku populatsiooni sd-d ega ES-i!</p>
+<p>Kuidas ikkagi meie vulkaani tõlgendada?</p>
+<ol style="list-style-type: decimal">
+<li><p>Enamus efektisuuruseid &lt; 2</p></li>
+<li><p>Enamus p väärtusi &gt; 0.05</p></li>
+<li><p>Enamus valke, mille p &lt; 0.05, annavad ES &lt; 2. See viitab, et meil on palju katseid, kus iseseisvate katsete vaheline varieeruvus on väga madal.</p></li>
+<li><p>Enamus suhteliselt väga suurte ES-dega valke on üllatavalt kõrge p väärtusega.</p></li>
+<li><p>Seega ei ole meil ES-i ja p väärtuse vahel selget suhet, kus suurtel efektidel oleks selgelt madalam p väärtus kui väikestel efektidel – ehk meie p väärtused mõõdavad suuresti midagi, mis ei ole ES (ega valimi suurus, mis on konstantne) – järelikult varieeruvust. Kuna meil pole põhust arvata, et valkudel, millel on suurem ES, on süstemaatiliselt suurem varieeruvus, siis paistab, et meie vulkaan dokumenteerib eelkõige juhuslikke valimiefekte ja seega pigem katse üldist kvaliteeti kui üksikute efektide “tõelisust”.</p></li>
+</ol>
+<p>Hea küll, joonistame oma vulkaani uuesti p väärtuste põhjal, mis seekord on arvutatud eeldusel, et mõlema grupi (d10 ja wt) varieeruvused on geeni kaupa võrdsed. See tähendab, et kui ES-i arvutamisel on valimi suurus 3 (kolme katse ja kolme kontrolli keskmine), siis sd arvutamisel, mis omakorda läheb p väärtuse arvutamise valemisse, on valimi suurus mõlemale grupile 6.</p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-126-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Pilt on küll detailides erinev, aga suures plaanis üsna sarnane eelmisega.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Hmisc)
 <span class="kw">histbackback</span>(iris[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Te teet</p>
 
+</div>
 </div>
 </div>
             </section>

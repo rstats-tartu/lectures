@@ -1745,7 +1745,7 @@ head(df_summary2, 3)
 ggplot(df_summary2, aes(x = d10 + wt, y = d10 - wt)) + 
   geom_point(alpha=0.2) + 
   geom_hline(yintercept = 0) + 
-  labs(title="Tukey sum-difference graph of mass spectroscopy data", y="d10 - wt (log2 skaalas)", x= "d10 + wt (log2 skaalas)")+
+  labs(title="Tukey sum-difference graph of mass spectroscopy data", y="d10 - wt (in log2 scale)", x= "d10 + wt (in log2 scale)")+
   theme_tufte()
 ```
 
@@ -1753,35 +1753,75 @@ ggplot(df_summary2, aes(x = d10 + wt, y = d10 - wt)) +
 
 Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). Me näeme sellelt pildilt väga kiiresti, 
 
-(1) et mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul), 
+1. et mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul), 
 
-(2) et efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik), 
+2. et efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik), 
 
-(3) et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja 
+3. et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja 
 
-(4) et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).
+4. et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).
 
-Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas.
+### Vulkaaniplot
 
+Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas. Vulkaaniplotti tutvustame mitte selle pärast, et seda soovitada, vaid ainult selle tõttu, et seda kasutatakse massiliselt näiteks proteoomika vallas. 
+
+Joonistame vulkaani samade andmete põhjal, mida kasutasime Tukey summa-erinevusgraafiku valmistamieks. Me alustame tabeli "df" ettevalmistamisest: d10_1, d10_2 ja d10_3 on kolm iseseisvat katset ja wt_1, wt_2 ja wt_3 on kolm iseseisvat kontrolli. 
+
+```r
+head(df, 3)
+#>   gene d10_1 d10_2 d10_3 wt_1 wt_2 wt_3
+#> 1 rpoC  36.3  36.3  36.4 36.2 36.3 36.4
+#> 2 rpoB  36.2  36.3  36.2 36.1 36.3 36.3
+#> 3 mukB  32.9  33.0  33.2 32.9 33.1 33.3
+```
+
+Me lisame tabelile veeru p väärtustega ja veeru effekti suurustega (ES), kasutades apply() funktsiooni sees tavapärast indekseerimist (vt ptk ...).
 
 ```r
 df_x <- df[2:7]
 #arvutame p väärtused
 df$p <- apply(df_x, 1, function(x) t.test(x[1:3], x[4:6])$p.value)
-#arvutame efekti suurused (katsete keskmine - kontrollide keskmine)
+#arvutame efekti suurused "ES" (katsete keskmine - kontrollide keskmine)
 df$ES <- apply(df_x, 1, function(x) mean(x[1:3]) - mean(x[4:6]))
 
 ggplot(df, aes(ES, -log10(p))) + 
   geom_point(alpha=0.2) + 
   geom_hline(yintercept = -log10(0.05), linetype=2) +
   geom_vline(xintercept = c(-1, 1), linetype=2)+
-  labs(x="d10 - wt (log2 skaalas)", y= "- log10 of p value", title="volcano plot")+
+  labs(x="d10 - wt (in log2 scale)", y= "- log10 of p value", title="volcano plot")+
   theme_tufte()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-124-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" />
 
-Sellel pildil demarkeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse. Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub hotisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu "päris" efektiga.  
+Sellel pildil markeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse (üks ühik log2 skaalal; ühekordne ES võrdub sellel skaalal nulliga). Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub horisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu "päris" efektiga. Seevastu inimesed, kes teavad, teavad ka seda, et p väärtuste ühekaupa tõlgendamine ei ole sageli mõistlik. 
+Iga p väärtus koondab endasse informatsiooni kolmest muutujast: valimi suurus (N), varieeruvus (sd) ja efekti suurus (ES = katse - kontroll). Kuigi me saame vulkaaniplotil asuvaid punkte võrreldes ignoreerida valimi suuruse mõju (kuna me teame, et meil on iga punkti taga 3 + 3 mõõtmist), koondab iga p väärtus endasse infot nii ES kui sd kohta viisil, mida me ei oska hästi üksteisest lahutada (siiski, pane tähele, et horisontaalsel teljel on ES). Me teame, et igas punktis on nii ES kui sd mõjutatud valimiveast, mis on kummagi näitaja suhtes teisest sõltumatu. Seega, igal neljandal valgul on valimiveaga seose topeltprobleem: ülehinnatud ES ja samal ajal alahinnatud sd, mis viib oodatust ohtlikult väiksemale p väärtusele. 
+
+Lisaks, p väärtuse definitsioonist (p on sinu andmete või neist ekstreemsemate andmete tõenäosus tingimusel, et nullhüpotees kehtib) tuleneb, et kui null hüpotees on tõene (tegelik ES = 0), siis on meil täpselt võrdne tõenäosus saada oma p väärtus ükskõik kuhu nulli ja ühe vahele. Seega, nullhüpoteesi kehtimise korral ei sisalda individuaalne p väärtus mitte mingisugust kasulikku informatsiooni. 
+
+Oluline on mõista, et p väärtuse arvutamine toimub nullhüpoteesi all, mis kujutab endast põhimõtteliselt lõpmatu hulga hüpoteetiliste valimite põhjal -- mille N = 3 ja sd = valimi sd -- arvutatud lõpmatu hulga hüpoteetiliste valimikeskmiste jaotust (iga geeni jaoks eraldi arvutatuna). Seega demonstreerib p väärtus statistikat oma kõige abstraktsemas vormis. 
+
+Igal juhul peaks olema siililegi selge, et kui valimi suurus on nõnda väike kui 3, siis valimi põhine sd ega valimi põhine efekti suurus ei ole kuigi usaldusväärsed ennustama tegelikku populatsiooni sd-d ega ES-i! 
+
+Kuidas ikkagi meie vulkaani tõlgendada?
+
+1. Enamus efektisuuruseid < 2
+
+2. Enamus p väärtusi > 0.05
+
+3. Enamus valke, mille p < 0.05, annavad ES < 2. See viitab, et meil on palju katseid, kus iseseisvate katsete vaheline varieeruvus on väga madal.
+
+4. Enamus suhteliselt väga suurte ES-dega valke on üllatavalt kõrge p väärtusega.
+
+5. Seega ei ole meil ES-i ja p väärtuse vahel selget suhet, kus suurtel efektidel oleks selgelt madalam p väärtus kui väikestel efektidel -- ehk meie p väärtused mõõdavad suuresti midagi, mis ei ole ES (ega valimi suurus, mis on konstantne) -- järelikult varieeruvust. Kuna meil pole põhust arvata, et valkudel, millel on suurem ES, on süstemaatiliselt suurem varieeruvus, siis paistab, et meie vulkaan dokumenteerib eelkõige juhuslikke valimiefekte ja seega pigem katse üldist kvaliteeti kui üksikute efektide "tõelisust".
+
+Hea küll, joonistame oma vulkaani uuesti p väärtuste põhjal, mis seekord on arvutatud eeldusel, et mõlema grupi (d10 ja wt) varieeruvused on geeni kaupa võrdsed. See tähendab, et kui ES-i arvutamisel on valimi suurus 3 (kolme katse ja kolme kontrolli keskmine), siis sd arvutamisel, mis omakorda läheb p väärtuse arvutamise valemisse, on valimi suurus mõlemale grupile 6.
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-126-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Pilt on küll detailides erinev, aga suures plaanis üsna sarnane eelmisega.
+
+
 
 
 ```r
@@ -1789,6 +1829,6 @@ library(Hmisc)
 histbackback(iris[,1:2])
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Te teet

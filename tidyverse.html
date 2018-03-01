@@ -188,7 +188,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="8.8" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tulpdiagramm"><i class="fa fa-check"></i><b>8.8</b> Tulpdiagramm</a></li>
 <li class="chapter" data-level="8.9" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#residuaalide-plot"><i class="fa fa-check"></i><b>8.9</b> Residuaalide plot</a></li>
-<li class="chapter" data-level="8.10" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tukey-summa-erinevuse-graafik"><i class="fa fa-check"></i><b>8.10</b> Tukey summa-erinevuse graafik</a></li>
+<li class="chapter" data-level="8.10" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tukey-summa-erinevuse-graafik"><i class="fa fa-check"></i><b>8.10</b> Tukey summa-erinevuse graafik</a><ul>
+<li class="chapter" data-level="8.10.1" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#vulkaaniplot"><i class="fa fa-check"></i><b>8.10.1</b> Vulkaaniplot</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>9</b> Tidyverse</a><ul>
 <li class="chapter" data-level="9.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>9.1</b> Tidy tabeli struktuur</a><ul>
@@ -423,25 +425,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;       V9     V8     V5     V2      V6</span>
-<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.0437 0.896  0.151  0.844  0.769  </span>
-<span class="co">#&gt; 2 0.921  0.0341 0.569  0.731  0.00575</span>
-<span class="co">#&gt; 3 0.612  0.510  0.202  0.467  0.723  </span>
-<span class="co">#&gt; 4 0.768  0.503  0.280  0.122  0.779  </span>
-<span class="co">#&gt; 5 0.206  0.480  0.0320 0.0671 0.656  </span>
-<span class="co">#&gt; 6 0.256  0.100  0.143  0.774  0.939  </span>
+<span class="co">#&gt;       V9     V8    V5     V2     V6</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.692  0.975  0.458 0.616  0.845 </span>
+<span class="co">#&gt; 2 0.285  0.563  0.287 0.0568 0.144 </span>
+<span class="co">#&gt; 3 0.0621 0.0562 0.625 0.715  0.0521</span>
+<span class="co">#&gt; 4 0.368  0.735  0.194 0.488  0.590 </span>
+<span class="co">#&gt; 5 0.435  0.732  0.733 0.474  0.355 </span>
+<span class="co">#&gt; 6 0.273  0.150  0.199 0.173  0.160 </span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;       V9     V8      V7      V6</span>
-<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.0437 0.896  0.242   0.769  </span>
-<span class="co">#&gt; 2 0.921  0.0341 0.597   0.00575</span>
-<span class="co">#&gt; 3 0.612  0.510  0.335   0.723  </span>
-<span class="co">#&gt; 4 0.768  0.503  0.637   0.779  </span>
-<span class="co">#&gt; 5 0.206  0.480  0.00598 0.656  </span>
-<span class="co">#&gt; 6 0.256  0.100  0.986   0.939  </span>
+<span class="co">#&gt;       V9     V8     V7     V6</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.692  0.975  0.693  0.845 </span>
+<span class="co">#&gt; 2 0.285  0.563  0.784  0.144 </span>
+<span class="co">#&gt; 3 0.0621 0.0562 0.513  0.0521</span>
+<span class="co">#&gt; 4 0.368  0.735  0.0381 0.590 </span>
+<span class="co">#&gt; 5 0.435  0.732  0.354  0.355 </span>
+<span class="co">#&gt; 6 0.273  0.150  0.223  0.160 </span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
