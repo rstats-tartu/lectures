@@ -666,7 +666,7 @@ iris1 &lt;-<span class="st"> </span><span class="kw">add_residuals</span>(iris1,
 <span class="co">#&gt; 1 aaeR   25.6  25.6</span>
 <span class="co">#&gt; 2 aas    28.8  28.8</span>
 <span class="co">#&gt; 3 accA   33.7  33.6</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_summary2, <span class="kw">aes</span>(<span class="dt">x=</span> d10 <span class="op">+</span><span class="st"> </span>wt, <span class="dt">y=</span> d10 <span class="op">-</span><span class="st"> </span>wt)) <span class="op">+</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_summary2, <span class="kw">aes</span>(<span class="dt">x =</span> d10 <span class="op">+</span><span class="st"> </span>wt, <span class="dt">y =</span> d10 <span class="op">-</span><span class="st"> </span>wt)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Tukey sum-difference graph of mass spectroscopy data&quot;</span>, <span class="dt">y=</span><span class="st">&quot;d10 - wt (log2 skaalas)&quot;</span>, <span class="dt">x=</span> <span class="st">&quot;d10 + wt (log2 skaalas)&quot;</span>)<span class="op">+</span>
@@ -681,8 +681,9 @@ iris1 &lt;-<span class="st"> </span><span class="kw">add_residuals</span>(iris1,
 </ol>
 <p>Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_x &lt;-<span class="st"> </span>df[<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>]
-df_p &lt;-<span class="st"> </span><span class="kw">apply</span>(df_x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">t.test</span>(x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], x[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>])<span class="op">$</span>p.value)
-df<span class="op">$</span>p &lt;-<span class="st"> </span>df_p
+<span class="co">#arvutame p väärtused</span>
+df<span class="op">$</span>p &lt;-<span class="st"> </span><span class="kw">apply</span>(df_x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">t.test</span>(x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], x[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>])<span class="op">$</span>p.value)
+<span class="co">#arvutame efekti suurused (katsete keskmine - kontrollide keskmine)</span>
 df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">apply</span>(df_x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">mean</span>(x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>]))
 
 <span class="kw">ggplot</span>(df, <span class="kw">aes</span>(ES, <span class="op">-</span><span class="kw">log10</span>(p))) <span class="op">+</span><span class="st"> </span>
