@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2018-02-28">
+<meta name="date" content="2018-03-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -658,19 +658,44 @@ iris1 &lt;-<span class="st"> </span><span class="kw">add_residuals</span>(iris1,
 <p>Te sooritate korraga palju paralleelseid mõõtmisi – näiteks mõõdate mass-spektroskoopiaga 1000 valgu taset. Kui teete seda katset kaks korda (või katse vs. kontroll n korda) ja tahate näha süstemaatilisi erinevusi, siis tasub joonistada summa-erinevuse graafik. See on hea olukordades, kus ei ole vahet, mis läheb x ja mis läheb y teljele (erinevalt regressioonimudelitest ja residuaaliplottidest, kus see on väga tähtis). Meie graafik on x ja y suhtes sümmeetriline.</p>
 <p>Graafik ise on lihtsalt scatterplot, kus horisontaalsele teljele plotitud x + y väärtused ja vertikaalsele teljele plotitud y - x väärtused. Me lisame ka horisontaalsele teljele 0 - joone, et meil oleks lihtsam oma vaimusilmas efekti suuruste punktipilve tsentreerida.</p>
 <p>Näituseks plottime mass spektroskoopia andmed, kus kahel tingimusel (d10 ja wt) on kummagil tehtud kolm iseseisvat katset. Järgneb tabel df_summary2, kus on 2023 valgu tasemete keskväärtused kahel tingimusel, ning Tukey summa-erinevuse graafik</p>
-<pre><code>#&gt; # A tibble: 3 x 3
-#&gt; # Groups:   gene [3]
-#&gt;   gene    d10    wt
-#&gt;   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1 aaeR   25.6  25.6
-#&gt; 2 aas    28.8  28.8
-#&gt; 3 accA   33.7  33.6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_summary2, <span class="kw">aes</span>(<span class="dt">x=</span> d10 <span class="op">+</span><span class="st"> </span>wt, <span class="dt">y=</span> d10 <span class="op">-</span><span class="st"> </span>wt)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Tukey sum-difference graph of mass spectroscopy data&quot;</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-122-1.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p>Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). Me näeme sellelt pildilt väga kiiresti, (1) et mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul), (2) et efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik), (3) et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja (4) et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(df_summary2, <span class="dv">3</span>)
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt; # Groups:   gene [3]</span>
+<span class="co">#&gt;   gene    d10    wt</span>
+<span class="co">#&gt;   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 aaeR   25.6  25.6</span>
+<span class="co">#&gt; 2 aas    28.8  28.8</span>
+<span class="co">#&gt; 3 accA   33.7  33.6</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_summary2, <span class="kw">aes</span>(<span class="dt">x=</span> d10 <span class="op">+</span><span class="st"> </span>wt, <span class="dt">y=</span> d10 <span class="op">-</span><span class="st"> </span>wt)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Tukey sum-difference graph of mass spectroscopy data&quot;</span>, <span class="dt">y=</span><span class="st">&quot;d10 - wt (log2 skaalas)&quot;</span>, <span class="dt">x=</span> <span class="st">&quot;d10 + wt (log2 skaalas)&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). Me näeme sellelt pildilt väga kiiresti,</p>
+<ol style="list-style-type: decimal">
+<li><p>et mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul),</p></li>
+<li><p>et efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik),</p></li>
+<li><p>et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja</p></li>
+<li><p>et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).</p></li>
+</ol>
+<p>Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_x &lt;-<span class="st"> </span>df[<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>]
+df_p &lt;-<span class="st"> </span><span class="kw">apply</span>(df_x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">t.test</span>(x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], x[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>])<span class="op">$</span>p.value)
+df<span class="op">$</span>p &lt;-<span class="st"> </span>df_p
+df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">apply</span>(df_x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">mean</span>(x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>]))
+
+<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(ES, <span class="op">-</span><span class="kw">log10</span>(p))) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="op">-</span><span class="kw">log10</span>(<span class="fl">0.05</span>), <span class="dt">linetype=</span><span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">linetype=</span><span class="dv">2</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;d10 - wt (log2 skaalas)&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;- log10 of p value&quot;</span>, <span class="dt">title=</span><span class="st">&quot;volcano plot&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-124-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Sellel pildil demarkeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse. Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub hotisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu “päris” efektiga.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Hmisc)
 <span class="kw">histbackback</span>(iris[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Te teet</p>
 
 </div>

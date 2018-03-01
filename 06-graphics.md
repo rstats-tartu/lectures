@@ -1727,7 +1727,10 @@ Graafik ise on lihtsalt scatterplot, kus horisontaalsele teljele plotitud x + y 
 Näituseks plottime mass spektroskoopia andmed, kus kahel tingimusel (d10 ja wt) on kummagil tehtud kolm iseseisvat katset. Järgneb tabel df_summary2, kus on 2023 valgu tasemete keskväärtused kahel tingimusel, ning Tukey summa-erinevuse graafik
 
 
-```
+
+
+```r
+head(df_summary2, 3)
 #> # A tibble: 3 x 3
 #> # Groups:   gene [3]
 #>   gene    d10    wt
@@ -1739,19 +1742,45 @@ Näituseks plottime mass spektroskoopia andmed, kus kahel tingimusel (d10 ja wt)
 
 
 ```r
-ggplot(df_summary2, aes(x= d10 + wt, y= d10 - wt)) + geom_point(alpha=0.2) + geom_hline(yintercept = 0) + labs(title="Tukey sum-difference graph of mass spectroscopy data")
+ggplot(df_summary2, aes(x= d10 + wt, y= d10 - wt)) + 
+  geom_point(alpha=0.2) + 
+  geom_hline(yintercept = 0) + 
+  labs(title="Tukey sum-difference graph of mass spectroscopy data", y="d10 - wt (log2 skaalas)", x= "d10 + wt (log2 skaalas)")+
+  theme_tufte()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-122-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" />
 
-Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). Me näeme sellelt pildilt väga kiiresti, (1) et mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul), (2) et efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik), (3) et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja (4) et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).
+Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). Me näeme sellelt pildilt väga kiiresti, 
+
+(1) et mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul), 
+
+(2) et efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik), 
+
+(3) et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja 
+
+(4) et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).
+
+Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas.
 
 
+```r
+df_x <- df[2:7]
+df_p <- apply(df_x, 1, function(x) t.test(x[1:3], x[4:6])$p.value)
+df$p <- df_p
+df$ES <- apply(df_x, 1, function(x) mean(x[1:3]) - mean(x[4:6]))
 
+ggplot(df, aes(ES, -log10(p))) + 
+  geom_point(alpha=0.2) + 
+  geom_hline(yintercept = -log10(0.05), linetype=2) +
+  geom_vline(xintercept = c(-1, 1), linetype=2)+
+  labs(x="d10 - wt (log2 skaalas)", y= "- log10 of p value", title="volcano plot")+
+  theme_tufte()
+```
 
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-124-1.svg" width="70%" style="display: block; margin: auto;" />
 
-
-
+Sellel pildil demarkeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse. Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub hotisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu "päris" efektiga.  
 
 
 ```r
@@ -1759,6 +1788,6 @@ library(Hmisc)
 histbackback(iris[,1:2])
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Te teet
