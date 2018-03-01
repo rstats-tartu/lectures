@@ -730,12 +730,14 @@ df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">app
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Hmisc)
 <span class="kw">histbackback</span>(iris[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p>See bihistogramm, mis veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi näitab, et kahe grupi keskmised on selgelt erinevad (ülekate p.a. puudub), aga et ka jaotused erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).</p>
-<p>Kuidas aga võrrelda andmete jaotust teoreetilise jaotusega, näiteks normaaljaotusega? Selleks on parim viis kvantiil-kvantiil plot ehk qq-plot. Kvantiil tähendab lihtsalt andmepunktide osakaalu, mis on väiksemad kui mingi etteantud väärtus. Näiteks kvantiil 0.3 (mis on sama, mis 30s protsentiil) tähistab väärtust, millest 30% kogutud andmeid on väiksemad ja 70% on suuremad. Näiteks standartse normaaljaotuse (mean = 0, sd = 1) 0.5-s kvantiil on 0 ja 0.95-s kvantiil on 1.96.</p>
-<p>QQ-plot annab lihtsalt empiiriliste andmete kvantiilid (y teljel) teoreetilise jaotuse kvantiilide vastu (x teljel). Punktide arv graafikul vastab teie andmepunktide arvule. Referentsjoon oma veapiiridega vastab ideaalsele olukorrale, kus teie andmete jaotus vastab teoreetilisele jaotusele (milleks on enamasti normaaljaotus).</p>
+<p>See bihistogramm, mis küll veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi, näitab, et kahe grupi keskmised on selgelt erinevad (ülekate peaaegu puudub), aga et ka jaotused ise erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).</p>
+<p>Kuidas aga võrrelda oma andmete jaotust teoreetilise jaotusega, näiteks normaaljaotusega? Selleks on parim viis kvantiil-kvantiil plot ehk qq-plot. Kvantiil tähendab lihtsalt andmepunktide osakaalu, mis on väiksemad kui mingi etteantud väärtus. Näiteks kvantiil 0.3 (mis on sama, mis 30s protsentiil) tähistab väärtust, millest 30% kogutud andmeid on väiksemad ja 70% on suuremad. Näiteks standartse normaaljaotuse (mean = 0, sd = 1) 0.5-s kvantiil on 0 ja 0.95-s kvantiil on 1.96.</p>
+<p>QQ-plot annab lihtsalt empiiriliste andmete kvantiilid (y teljel) teoreetilise jaotuse kvantiilide vastu (x teljel). Punktide arv graafikul vastab teie andmepunktide arvule. Referentsjoon oma 95% veapiiridega (punased katkendjooned) vastab ideaalsele olukorrale, kus teie andmete jaotus vastab teoreetilisele jaotusele (milleks on enamasti normaaljaotus).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">qqPlot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">distribution =</span> <span class="st">&quot;lnorm&quot;</span>)</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-128-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">3</span>, <span class="dv">1</span>)) <span class="co">#default on vrdls normaaljaotusega.</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>F</p>
 
 </div>

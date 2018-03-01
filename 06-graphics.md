@@ -1837,12 +1837,12 @@ histbackback(iris[,1:2])
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" />
 
-See bihistogramm, mis veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi näitab, et kahe grupi keskmised on selgelt erinevad (ülekate p.a. puudub), aga et ka jaotused erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).
+See bihistogramm, mis küll veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi, näitab, et kahe grupi keskmised on selgelt erinevad (ülekate peaaegu puudub), aga et ka jaotused ise erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).
 
-Kuidas aga võrrelda andmete jaotust teoreetilise jaotusega, näiteks normaaljaotusega?
+Kuidas aga võrrelda oma andmete jaotust teoreetilise jaotusega, näiteks normaaljaotusega?
 Selleks on parim viis kvantiil-kvantiil plot ehk qq-plot. Kvantiil tähendab lihtsalt andmepunktide osakaalu, mis on väiksemad kui mingi etteantud väärtus. Näiteks kvantiil 0.3 (mis on sama, mis 30s protsentiil) tähistab väärtust, millest 30% kogutud andmeid on väiksemad ja 70% on suuremad. Näiteks standartse normaaljaotuse (mean = 0, sd = 1) 0.5-s kvantiil on 0 ja 0.95-s kvantiil on 1.96. 
 
-QQ-plot annab lihtsalt empiiriliste andmete kvantiilid (y teljel) teoreetilise jaotuse kvantiilide vastu (x teljel). Punktide arv graafikul vastab teie andmepunktide arvule. Referentsjoon oma veapiiridega vastab ideaalsele olukorrale, kus teie andmete jaotus vastab teoreetilisele jaotusele (milleks on enamasti normaaljaotus). 
+QQ-plot annab lihtsalt empiiriliste andmete kvantiilid (y teljel) teoreetilise jaotuse kvantiilide vastu (x teljel). Punktide arv graafikul vastab teie andmepunktide arvule. Referentsjoon oma 95% veapiiridega (punased katkendjooned) vastab ideaalsele olukorrale, kus teie andmete jaotus vastab teoreetilisele jaotusele (milleks on enamasti normaaljaotus). 
 
 
 
@@ -1857,6 +1857,11 @@ qqPlot(rnorm(100), distribution = "lnorm")
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-128-1.svg" width="70%" style="display: block; margin: auto;" />
 
+```r
+qqPlot(rnorm(100, 3, 1)) #default on vrdls normaaljaotusega.
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 

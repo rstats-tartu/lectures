@@ -426,25 +426,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;      V9     V8      V5    V2    V6</span>
-<span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.905 0.992  0.797   0.651 0.905</span>
-<span class="co">#&gt; 2 0.714 0.666  0.497   0.221 0.116</span>
-<span class="co">#&gt; 3 0.344 0.634  0.0425  0.724 0.398</span>
-<span class="co">#&gt; 4 0.908 0.0949 0.0343  0.190 0.175</span>
-<span class="co">#&gt; 5 0.393 0.400  0.777   0.813 0.116</span>
-<span class="co">#&gt; 6 0.277 0.143  0.00770 0.156 0.657</span>
+<span class="co">#&gt;      V9     V8      V5     V2    V6</span>
+<span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.444 0.0510 0.567   0.803  0.573</span>
+<span class="co">#&gt; 2 0.315 0.448  0.203   0.335  0.971</span>
+<span class="co">#&gt; 3 0.930 0.591  0.00815 0.0413 0.595</span>
+<span class="co">#&gt; 4 0.609 0.667  0.0643  0.0438 0.995</span>
+<span class="co">#&gt; 5 0.580 0.928  0.664   0.438  0.749</span>
+<span class="co">#&gt; 6 0.469 0.547  0.332   0.318  0.199</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
 <span class="co">#&gt;      V9     V8    V7    V6</span>
 <span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.905 0.992  0.235 0.905</span>
-<span class="co">#&gt; 2 0.714 0.666  0.372 0.116</span>
-<span class="co">#&gt; 3 0.344 0.634  0.820 0.398</span>
-<span class="co">#&gt; 4 0.908 0.0949 0.594 0.175</span>
-<span class="co">#&gt; 5 0.393 0.400  0.413 0.116</span>
-<span class="co">#&gt; 6 0.277 0.143  0.633 0.657</span>
+<span class="co">#&gt; 1 0.444 0.0510 0.447 0.573</span>
+<span class="co">#&gt; 2 0.315 0.448  0.949 0.971</span>
+<span class="co">#&gt; 3 0.930 0.591  0.412 0.595</span>
+<span class="co">#&gt; 4 0.609 0.667  0.923 0.995</span>
+<span class="co">#&gt; 5 0.580 0.928  0.552 0.749</span>
+<span class="co">#&gt; 6 0.469 0.547  0.519 0.199</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
