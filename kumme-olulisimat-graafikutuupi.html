@@ -191,6 +191,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.10" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#tukey-summa-erinevuse-graafik"><i class="fa fa-check"></i><b>8.10</b> Tukey summa-erinevuse graafik</a><ul>
 <li class="chapter" data-level="8.10.1" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#vulkaaniplot"><i class="fa fa-check"></i><b>8.10.1</b> Vulkaaniplot</a></li>
 </ul></li>
+<li class="chapter" data-level="8.11" data-path="kumme-olulisimat-graafikutuupi.html"><a href="kumme-olulisimat-graafikutuupi.html#qq-plot"><i class="fa fa-check"></i><b>8.11</b> QQ-plot</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>9</b> Tidyverse</a><ul>
 <li class="chapter" data-level="9.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>9.1</b> Tidy tabeli struktuur</a><ul>
@@ -683,7 +684,7 @@ iris1 &lt;-<span class="st"> </span><span class="kw">add_residuals</span>(iris1,
 </ol>
 <div id="vulkaaniplot" class="section level3">
 <h3><span class="header-section-number">8.10.1</span> Vulkaaniplot</h3>
-<p>Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas. Vulkaaniplotti tutvustame selle pärast, et seda kasutatakse massiliselt näiteks proteoomika vallas.</p>
+<p>Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas. Vulkaaniplotti tutvustame mitte selle pärast, et seda soovitada, vaid ainult selle tõttu, et seda kasutatakse massiliselt näiteks proteoomika vallas. Vulkaaniplot on tõlgendamise mõttes kolmemõõtmeline ja pigem keeruline, näitlikustades korraga efekti suurust (ES), varieeruvust (sd) ja valimiviga (see sõltub valimi suurusest, aga ka mõõtmisobjekti/valgu tasemest).</p>
 <p>Joonistame vulkaani samade andmete põhjal, mida kasutasime Tukey summa-erinevusgraafiku valmistamieks. Me alustame tabeli “df” ettevalmistamisest: d10_1, d10_2 ja d10_3 on kolm iseseisvat katset ja wt_1, wt_2 ja wt_3 on kolm iseseisvat kontrolli.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(df, <span class="dv">3</span>)
 <span class="co">#&gt;   gene d10_1 d10_2 d10_3 wt_1 wt_2 wt_3</span>
@@ -708,23 +709,35 @@ df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">app
 <p>Lisaks, p väärtuse definitsioonist (p on sinu andmete või neist ekstreemsemate andmete tõenäosus tingimusel, et nullhüpotees kehtib) tuleneb, et kui null hüpotees on tõene (tegelik ES = 0), siis on meil täpselt võrdne tõenäosus saada oma p väärtus ükskõik kuhu nulli ja ühe vahele. Seega, nullhüpoteesi kehtimise korral ei sisalda individuaalne p väärtus mitte mingisugust kasulikku informatsiooni.</p>
 <p>Oluline on mõista, et p väärtuse arvutamine toimub nullhüpoteesi all, mis kujutab endast põhimõtteliselt lõpmatu hulga hüpoteetiliste valimite põhjal – mille N = 3 ja sd = valimi sd – arvutatud lõpmatu hulga hüpoteetiliste valimikeskmiste jaotust (iga geeni jaoks eraldi arvutatuna). Seega demonstreerib p väärtus statistikat oma kõige abstraktsemas vormis.</p>
 <p>Igal juhul peaks olema siililegi selge, et kui valimi suurus on nõnda väike kui 3, siis valimi põhine sd ega valimi põhine efekti suurus ei ole kuigi usaldusväärsed ennustama tegelikku populatsiooni sd-d ega ES-i!</p>
-<p>Kuidas ikkagi meie vulkaani tõlgendada?</p>
+<p>Kuidas ikkagi vulkaani tõlgendada?</p>
 <ol style="list-style-type: decimal">
-<li><p>Enamus efektisuuruseid &lt; 2</p></li>
-<li><p>Enamus p väärtusi &gt; 0.05</p></li>
-<li><p>Enamus valke, mille p &lt; 0.05, annavad ES &lt; 2. See viitab, et meil on palju katseid, kus iseseisvate katsete vaheline varieeruvus on väga madal.</p></li>
-<li><p>Enamus suhteliselt väga suurte ES-dega valke on üllatavalt kõrge p väärtusega.</p></li>
-<li><p>Seega ei ole meil ES-i ja p väärtuse vahel selget suhet, kus suurtel efektidel oleks selgelt madalam p väärtus kui väikestel efektidel – ehk meie p väärtused mõõdavad suuresti midagi, mis ei ole ES (ega valimi suurus, mis on konstantne) – järelikult varieeruvust. Kuna meil pole põhust arvata, et valkudel, millel on suurem ES, on süstemaatiliselt suurem varieeruvus, siis paistab, et meie vulkaan dokumenteerib eelkõige juhuslikke valimiefekte ja seega pigem katse üldist kvaliteeti kui üksikute efektide “tõelisust”.</p></li>
+<li><p>Enamus efektisuuruseid &lt; 2 (see on hea)</p></li>
+<li><p>Enamus p väärtusi &gt; 0.05 (ka hea)</p></li>
+<li><p>vulkaan on pisut ebasümmeetriline – meil on rohkem positiivseid effekte, kus d10 &gt; wt (see on teaduslikult oluline uudis)</p></li>
+<li><p>Enamus valke, mille p &lt; 0.05, annavad ES &lt; 2. (See viitab, et meil on palju katseid, kus iseseisvate katsete vaheline varieeruvus on väga madal.)</p></li>
+<li><p>Oluline osa valke (võib-olla ca 40%), mille ES &gt; 2, annavad p &gt; 0.05. (Viitab valimivea olulisele osale meie tulemustes.)</p></li>
+<li><p>Enamus kõige suuremate ES-dega valke on üllatavalt kõrge p väärtusega. (Viitab valimivea olulisele osale meie tulemustes.)</p></li>
 </ol>
+<p>Seega ei ole meil ES-i ja p väärtuse vahel selget suhet, kus suurtel efektidel oleks selgelt madalam p väärtus kui väikestel efektidel. Kuna meil pole põhust arvata, et valkudel, millel on suurem ES, on süstemaatiliselt suurem varieeruvus, siis paistab, et meie vulkaan dokumenteerib eelkõige valimivigu, ja seega pigem katse üldist madalat kvaliteeti, kui üksikute efektide “tõelisust”. Seega tundub, et tegu on mudavulkaaniga.</p>
 <p>Hea küll, joonistame oma vulkaani uuesti p väärtuste põhjal, mis seekord on arvutatud eeldusel, et mõlema grupi (d10 ja wt) varieeruvused on geeni kaupa võrdsed. See tähendab, et kui ES-i arvutamisel on valimi suurus 3 (kolme katse ja kolme kontrolli keskmine), siis sd arvutamisel, mis omakorda läheb p väärtuse arvutamise valemisse, on valimi suurus mõlemale grupile 6.</p>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-126-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Pilt on küll detailides erinev, aga suures plaanis üsna sarnane eelmisega.</p>
+</div>
+</div>
+<div id="qq-plot" class="section level2">
+<h2><span class="header-section-number">8.11</span> QQ-plot</h2>
+<p>Kuidas võrrelda kahte jaotust? Kõige lihtsam on joonistada bihistogramm, mis töötab ühtlasi t testi ekslploratoorse analoogina (ei anna ühte numbrit, aga selle eest annab palju parema ülevaate kui t test, kuidas kahe grupi valimid – kuigi mitte tingimata nende taga olevad populatsioonid – tegelikult erinevad).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Hmisc)
 <span class="kw">histbackback</span>(iris[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p>Te teet</p>
+<p>See bihistogramm, mis veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi näitab, et kahe grupi keskmised on selgelt erinevad (ülekate p.a. puudub), aga et ka jaotused erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).</p>
+<p>Kuidas aga võrrelda andmete jaotust teoreetilise jaotusega, näiteks normaaljaotusega? Selleks on parim viis kvantiil-kvantiil plot ehk qq-plot. Kvantiil tähendab lihtsalt andmepunktide osakaalu, mis on väiksemad kui mingi etteantud väärtus. Näiteks kvantiil 0.3 (mis on sama, mis 30s protsentiil) tähistab väärtust, millest 30% kogutud andmeid on väiksemad ja 70% on suuremad. Näiteks standartse normaaljaotuse (mean = 0, sd = 1) 0.5-s kvantiil on 0 ja 0.95-s kvantiil on 1.96.</p>
+<p>QQ-plot annab lihtsalt empiiriliste andmete kvantiilid (y teljel) teoreetilise jaotuse kvantiilide vastu (x teljel). Punktide arv graafikul vastab teie andmepunktide arvule. Referentsjoon oma veapiiridega vastab ideaalsele olukorrale, kus teie andmete jaotus vastab teoreetilisele jaotusele (milleks on enamasti normaaljaotus).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
+<span class="kw">qqPlot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">distribution =</span> <span class="st">&quot;lnorm&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-128-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>F</p>
 
-</div>
 </div>
 </div>
             </section>
