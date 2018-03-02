@@ -22,7 +22,8 @@ Imports:
     rethinking,
     pheatmap,
     corrgram,
-    corrr
+    corrr,
+    igraph
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking
