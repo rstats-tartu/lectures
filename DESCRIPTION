@@ -19,7 +19,8 @@ Imports:
     scatterplot3d,
     svglite,
     Hmisc,
-    rethinking
+    rethinking,
+    pheatmap
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking
