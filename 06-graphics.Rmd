@@ -1676,7 +1676,7 @@ corrgram(iris[1:4], order = TRUE, lower.panel=corrgram::panel.shade,
 
 Alternatiivne võimalus on scatterplot maatriksile on joonistada grrafik läbi paraleelsete koordinaatide. 
 
-```{r}
+```{r message=FALSE}
 library(MASS)
 parcoord(iris[1:4], col = iris$Species, var.label = TRUE, lwd = 1)
 par(xpd = TRUE)
@@ -1689,10 +1689,9 @@ Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teiste
 
 ### Korrelatsioonid võrgustikuna
 
-Võrgustik koosneb sõlmedest ja nende vahel olevatest servadest (nodes and edges)
+Võrgustik koosneb sõlmedest ja nende vahel olevatest servadest (nodes and edges). Meie eesmärk on joonisel näidata sõlmedena ainult need muutujaid, millel esineb mingist meie poolt etteantud numbrist suurem korrelatsioon mõne teise muutujaga. Korrelatsioone endid tähistavad võrgu servad. Järgnevasse voogu, kuhu sisestame kogu mtcars tabeli, lähevad ainult numbrilised muutujad (faktormuutujad tuleb tabelist välja visata).
 
 ```{r}
-library(tidyverse)
 library(corrr)
 library(igraph)
 library(ggraph)
@@ -1704,18 +1703,18 @@ tidy_cors <- mtcars %>%
 # Convert correlations stronger than some value
 # to an undirected graph object
 graph_cors <- tidy_cors %>% 
-  filter(abs(r) > 0.7) %>% 
+  filter(abs(r) > 0.6) %>% 
   graph_from_data_frame(directed = FALSE)
 
 # Plot
 ggraph(graph_cors) +
-  geom_edge_link() +
+  geom_edge_link(alpha=0.2) +
   geom_node_point() +
   geom_node_text(aes(label = name), repel = TRUE) +
   theme_graph()
 ```
 
-Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.9-st.
+Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.
 
 Kenam (ja informatiivsem) versioon eelmisest on
 ```{r}
