@@ -1655,24 +1655,32 @@ mosaic(~Species + cluster, data= iris_x, shade=T, legend=T)
 ```
 
 
-Heat map on ka hea viis visualiseerida korrelatsioonimaatrikseid
+Heat map on ka hea viis visualiseerida korrelatsioonimaatrikseid.
 
+Kõigepealt tavaline scatterplot maatriks.
 ```{r}
-plot(iris[1:4])
+plot(iris[1:4], col=iris$Species)
 ```
 
+Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime ka andmetulbad üm
 ```{r}
 library(corrgram)
 corrgram(iris[1:4], order = TRUE, lower.panel=corrgram::panel.shade,
-         upper.panel=panel.pie, diag.panel=panel.density)
+         upper.panel=panel.cor, diag.panel=panel.density)
 ```
 
-Veel üks võimalus on scatterplot maatriksi asemel joonistada paraleelne koordinaatplot. 
+Alternatiivne võimalus on scatterplot maatriksile on joonistada paraleelne koordinaatplot. 
 
 ```{r}
-MASS::parcoord(iris[1:4], col = iris$Species, var.label = TRUE, lwd = 2)
+library(MASS)
+parcoord(iris[1:4], col = iris$Species, var.label = TRUE, lwd = 1)
+par(xpd = TRUE)
+legend(x = 1.75, y = -.25, cex = 1,
+   legend = as.character(levels(iris$Species)),
+    fill = unique(iris$Species), horiz = TRUE)
 ```
 
+Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teistest eristada.
 
 
 
