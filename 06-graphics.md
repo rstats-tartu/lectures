@@ -1857,12 +1857,35 @@ qqPlot(rnorm(100), distribution = "lnorm")
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-128-1.svg" width="70%" style="display: block; margin: auto;" />
 
-```r
-qqPlot(rnorm(100, 3, 1)) #default on vrdls normaaljaotusega.
-```
-
+Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" />
 
+Ja siis qq-plotid
+
+```r
+par(mfrow = c(2, 2))
+qqPlot(rnorm(100, 3, 1), main = "normal vs normal") #default on vrdls normaaljaotusega.
+qqPlot(rlnorm(100), main = "log normal vs normal")
+qqPlot(rt(100, df=2), main = "students t vs normal")
+qqPlot(c(rnorm(50), rnorm(50, 4,1)), main = "two peaked normal vs normal")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-130-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-131-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Ja siis qq-plotid normaaljaotuse vastu:
+
+```r
+par(mfrow = c(2, 2))
+qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotusega.
+qqPlot(rchisq(100, df=2), main = "chi square vs normal")
+qqPlot(rbeta(100, 3, 3), main = "beta vs normal")
+qqPlot(rbeta(100, 0.4, 0.4), main = "two peaked beata vs normal")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-132-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 F

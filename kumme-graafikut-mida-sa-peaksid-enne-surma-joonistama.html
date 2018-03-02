@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2018-03-01">
+<meta name="date" content="2018-03-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -736,8 +736,22 @@ df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">app
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">qqPlot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">distribution =</span> <span class="st">&quot;lnorm&quot;</span>)</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-128-1.svg" width="70%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">3</span>, <span class="dv">1</span>)) <span class="co">#default on vrdls normaaljaotusega.</span></code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused: <img src="06-graphics_files/figure-html/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Ja siis qq-plotid</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))
+<span class="kw">qqPlot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;normal vs normal&quot;</span>) <span class="co">#default on vrdls normaaljaotusega.</span>
+<span class="kw">qqPlot</span>(<span class="kw">rlnorm</span>(<span class="dv">100</span>), <span class="dt">main =</span> <span class="st">&quot;log normal vs normal&quot;</span>)
+<span class="kw">qqPlot</span>(<span class="kw">rt</span>(<span class="dv">100</span>, <span class="dt">df=</span><span class="dv">2</span>), <span class="dt">main =</span> <span class="st">&quot;students t vs normal&quot;</span>)
+<span class="kw">qqPlot</span>(<span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dv">50</span>), <span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dv">4</span>,<span class="dv">1</span>)), <span class="dt">main =</span> <span class="st">&quot;two peaked normal vs normal&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-130-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused: <img src="06-graphics_files/figure-html/unnamed-chunk-131-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Ja siis qq-plotid normaaljaotuse vastu:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))
+<span class="kw">qqPlot</span>(<span class="kw">runif</span>(<span class="dv">100</span>), <span class="dt">main =</span> <span class="st">&quot;uniform vs normal&quot;</span>) <span class="co">#default on vrdls normaaljaotusega.</span>
+<span class="kw">qqPlot</span>(<span class="kw">rchisq</span>(<span class="dv">100</span>, <span class="dt">df=</span><span class="dv">2</span>), <span class="dt">main =</span> <span class="st">&quot;chi square vs normal&quot;</span>)
+<span class="kw">qqPlot</span>(<span class="kw">rbeta</span>(<span class="dv">100</span>, <span class="dv">3</span>, <span class="dv">3</span>), <span class="dt">main =</span> <span class="st">&quot;beta vs normal&quot;</span>)
+<span class="kw">qqPlot</span>(<span class="kw">rbeta</span>(<span class="dv">100</span>, <span class="fl">0.4</span>, <span class="fl">0.4</span>), <span class="dt">main =</span> <span class="st">&quot;two peaked beata vs normal&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-132-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>F</p>
 
 </div>
