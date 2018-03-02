@@ -1551,10 +1551,45 @@ QQ-plot annab lihtsalt empiiriliste andmete kvantiilid (y teljel) teoreetilise j
 library(car)
 qqPlot(rnorm(100), distribution = "lnorm")
 ```
-```{r}
-qqPlot(rnorm(100, 3, 1)) #default on vrdls normaaljaotusega.
+
+Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
+```{r echo=FALSE}
+par(mfrow = c(2, 2))
+plot(dnorm(seq(0,6, length.out = 100), 3, 1), main = "normal") 
+plot(dlnorm(seq(0,4, length.out = 100)), main = "log normal") 
+plot(dt(seq(-4,4, length.out = 100), df=2), main = "student t") 
+plot(c(dnorm(seq(-3,6, length.out = 50)), dnorm(seq(-3,6, length.out = 50), 4, 1)), main = "bivariate normal") 
+
 ```
 
+Ja siis qq-plotid
+```{r}
+par(mfrow = c(2, 2))
+qqPlot(rnorm(100, 3, 1), main = "normal vs normal") #default on vrdls normaaljaotusega.
+qqPlot(rlnorm(100), main = "log normal vs normal")
+qqPlot(rt(100, df=2), main = "students t vs normal")
+qqPlot(c(rnorm(50), rnorm(50, 4,1)), main = "two peaked normal vs normal")
+
+```
+
+Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
+```{r echo=FALSE}
+par(mfrow = c(2, 2))
+plot(dunif(seq(0, 1, length=100))) 
+plot(dchisq(seq(0, 2, length=100), df=2)) 
+plot(dbeta(seq(0, 1, length=100), 3, 3)) 
+plot(dbeta(seq(0, 1, length=100), 0.4, 0.4)) 
+```
+
+Ja siis qq-plotid normaaljaotuse vastu:
+```{r}
+par(mfrow = c(2, 2))
+qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotusega.
+qqPlot(rchisq(100, df=2), main = "chi square vs normal")
+qqPlot(rbeta(100, 3, 3), main = "beta vs normal")
+qqPlot(rbeta(100, 0.4, 0.4), main = "two peaked beata vs normal")
+
+```
 
 
 F
