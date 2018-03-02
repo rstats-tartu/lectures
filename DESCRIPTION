@@ -21,7 +21,8 @@ Imports:
     Hmisc,
     rethinking,
     pheatmap,
-    corrgram
+    corrgram,
+    corrr
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking
