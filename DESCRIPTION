@@ -19,7 +19,12 @@ Imports:
     scatterplot3d,
     svglite,
     Hmisc,
-    rethinking
+    rethinking,
+    pheatmap,
+    corrgram,
+    corrr,
+    igraph,
+    ggraph
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking
