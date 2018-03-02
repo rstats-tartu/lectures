@@ -23,7 +23,8 @@ Imports:
     pheatmap,
     corrgram,
     corrr,
-    igraph
+    igraph,
+    ggraph
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking
