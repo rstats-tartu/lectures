@@ -20,7 +20,8 @@ Imports:
     svglite,
     Hmisc,
     rethinking,
-    pheatmap
+    pheatmap,
+    corrgram
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking
