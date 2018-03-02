@@ -1532,7 +1532,7 @@ Kuidas võrrelda kahte jaotust? Kõige lihtsam on joonistada bihistogramm, mis t
 
 ```{r}
 library(Hmisc)
-histbackback(iris[,1:2])
+histbackback(iris$Sepal.Length, iris$Sepal.Width)
 ```
 
 See bihistogramm, mis küll veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi, näitab, et kahe grupi keskmised on selgelt erinevad (ülekate peaaegu puudub), aga et ka jaotused ise erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).
@@ -1542,11 +1542,7 @@ Selleks on parim viis kvantiil-kvantiil plot ehk qq-plot. Kvantiil tähendab lih
 
 QQ-plot annab lihtsalt empiiriliste andmete kvantiilid (y teljel) teoreetilise jaotuse kvantiilide vastu (x teljel). Punktide arv graafikul vastab teie andmepunktide arvule. Referentsjoon oma 95% veapiiridega (punased katkendjooned) vastab ideaalsele olukorrale, kus teie andmete jaotus vastab teoreetilisele jaotusele (milleks on enamasti normaaljaotus). 
 
-
-
-
-
-
+Kõigepealt demonstreerime siiski olukorda, kus meie andmed on normaaljaotusega ja me võrdleme neid teoreetilise lognormaaljaotuse vastu. Võrdluseks saame kasutada kõiki R-s defineeritud jaotusi (distribution = "jaotus").
 ```{r}
 library(car)
 qqPlot(rnorm(100), distribution = "lnorm")
@@ -1558,7 +1554,7 @@ par(mfrow = c(2, 2))
 plot(dnorm(seq(0,6, length.out = 100), 3, 1), main = "normal") 
 plot(dlnorm(seq(0,4, length.out = 100)), main = "log normal") 
 plot(dt(seq(-4,4, length.out = 100), df=2), main = "student t") 
-plot(c(dnorm(seq(-3,6, length.out = 50)), dnorm(seq(-3,6, length.out = 50), 4, 1)), main = "bivariate normal") 
+plot(c(dnorm(seq(-3,6, length.out = 50)), dnorm(seq(-3,6, length.out = 50), 4, 1)), main = "2 peaked normal") 
 
 ```
 
@@ -1577,7 +1573,7 @@ Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 par(mfrow = c(2, 2))
 plot(dunif(seq(0, 1, length=100))) 
 plot(dchisq(seq(0, 2, length=100), df=2)) 
-plot(dbeta(seq(0, 1, length=100), 3, 3)) 
+plot(dbeta(seq(0, 1, length=100), 2, 2)) 
 plot(dbeta(seq(0, 1, length=100), 0.4, 0.4)) 
 ```
 
@@ -1586,12 +1582,97 @@ Ja siis qq-plotid normaaljaotuse vastu:
 par(mfrow = c(2, 2))
 qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotusega.
 qqPlot(rchisq(100, df=2), main = "chi square vs normal")
-qqPlot(rbeta(100, 3, 3), main = "beta vs normal")
-qqPlot(rbeta(100, 0.4, 0.4), main = "two peaked beata vs normal")
+qqPlot(rbeta(100, 2, 2), main = "beta vs normal")
+qqPlot(rbeta(100, 0.4, 0.4), main = "two peaked beta vs normal")
+```
 
+Nagu näha, beta jaotus, mis on normaaljaotusest palju laiem, on qq-plotil sellest halvasti eristatav. Erinevus on väga madalatel ja väga kõrgetel kvantiilidel (jaotuste otstes).
+
+Ja exponentsiaalse jaotuse korral:
+```{r}
+y <- rexp(100)
+par(mfrow=c(1,2))
+plot(dexp(seq(0, 5, length=100)), main="exponential distr.") 
+qqPlot(y, main = "exponential vs normal")
+```
+
+QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide tolmukate pikkuste ja tolmukate laiuste jaotusi (vt ka peatüki algusest bihistogrammi). Selle meetodi oluline eelis on, et võrreldavad jaotused võivad olla erineva suurusega (N-ga). Siin kasutame base::R qqplot() funktsiooni.
+
+```{r}
+qqplot(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka pikkus > 7.5 ja tolmuka laius > 3.6.
+
+## Heat map
+
+Heat map asendab tabelis numbrid värvidega, muutes nii keerulised tabelid kiiremini haaratevateks. Samas, inimese aju ei ole kuigi edukas värvitooni pidevate muutujate numbrilisteks väärtusteks tagasi konverteerima, mis tähendab, et heat map võimaldab lugejal kiiresti haarata mustreid andmetes, aga ei võimalda teha täpseid võrdlusi tabeli üksikute lahtrite vahel. Et mutrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifiktseerimiks. Seega lisandub heat mapile ka dendrogramm.
+
+```{r fig.height=5, fig.width=4}
+library(pheatmap)
+pheatmap(iris[1:4], fontsize_row = 6)
 ```
 
 
-F
+
+
+Nüüd me ütleme, et me tahame oma irise liigid ajada täpselt kolme k-means klastrisse.
+NB! k-means klustrid on arvutatud teisel viisil kui eelmisel joonisel olevad hierarhilised klastrid.
+
+```{r}
+a <- pheatmap(iris[1:4], kmeans_k = 3)
+```
+
+Lisame klastrid irise tabelisse
+
+```{r}
+iris$cluster <- a$kmeans$cluster
+head(iris, 3)
+```
+
+Vaatame, kui hästi klastrid tabavad kolme irise liiki:
+```{r}
+table(iris$Species, iris$cluster)
+```
+
+```{r}
+count(iris, cluster, Species)
+```
+
+
+Ja sama graafiliselt:
+```{r}
+ggplot(iris, aes(factor(cluster), Species)) + geom_count()
+```
+
+
+
+```{r}
+library(vcd)
+iris_x <- iris %>% select(Species, cluster)
+iris_x$cluster <- as.factor(iris_x$cluster)
+mosaic(~Species + cluster, data= iris_x, shade=T, legend=T)
+```
+
+
+Heat map on ka hea viis visualiseerida korrelatsioonimaatrikseid
+
+```{r}
+plot(iris[1:4])
+```
+
+```{r}
+library(corrgram)
+corrgram(iris[1:4], order = TRUE, lower.panel=corrgram::panel.shade,
+         upper.panel=panel.pie, diag.panel=panel.density)
+```
+
+Veel üks võimalus on scatterplot maatriksi asemel joonistada paraleelne koordinaatplot. 
+
+```{r}
+MASS::parcoord(iris[1:4], col = iris$Species, var.label = TRUE, lwd = 2)
+```
+
+
 
 
