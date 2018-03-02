@@ -1613,11 +1613,11 @@ library(pheatmap)
 pheatmap(iris[1:4], fontsize_row = 6)
 ```
 
-
+Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest (selle kirjust otsast). Kõigepealt jagab dendrogramm vaatlused paaridesse, siis 3-kaupa, siis 4-kaupa kuni kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks -- seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest. 
 
 
 Nüüd me ütleme, et me tahame oma irise liigid ajada täpselt kolme k-means klastrisse.
-NB! k-means klustrid on arvutatud teisel viisil kui eelmisel joonisel olevad hierarhilised klastrid.
+NB! k-means klustrid on arvutatud teisel viisil kui eelmisel joonisel olevad hierarhilised klastrid. Siin alustame k tsentroidist, assigneerime iga andmepunkti oma lähimale tsentroidile, arvutame tsentroidid ümber kui klastri kõikide andmepunktide keskmised, assigneerime uuesti kõik andmepunktid oma tsentroidile ja kordame seda tsüklit näiteks 10 korda. 
 
 ```{r}
 a <- pheatmap(iris[1:4], kmeans_k = 3)
@@ -1654,6 +1654,7 @@ iris_x$cluster <- as.factor(iris_x$cluster)
 mosaic(~Species + cluster, data= iris_x, shade=T, legend=T)
 ```
 
+### Korrelatsioonimaatriksid heat mapina
 
 Heat map on ka hea viis visualiseerida korrelatsioonimaatrikseid.
 
@@ -1668,6 +1669,8 @@ library(corrgram)
 corrgram(iris[1:4], order = TRUE, lower.panel=corrgram::panel.shade,
          upper.panel=panel.cor, diag.panel=panel.density)
 ```
+
+### Paraleelne koordinaatgraafik
 
 Alternatiivne võimalus on scatterplot maatriksile on joonistada paraleelne koordinaatplot. 
 
