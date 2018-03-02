@@ -1606,18 +1606,26 @@ Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka 
 
 ## Heat map
 
-Heat map asendab tabelis numbrid värvidega, muutes nii keerulised tabelid kiiremini haaratevateks. Samas, inimese aju ei ole kuigi edukas värvitooni pidevate muutujate numbrilisteks väärtusteks tagasi konverteerima, mis tähendab, et heat map võimaldab lugejal kiiresti haarata mustreid andmetes, aga ei võimalda teha täpseid võrdlusi tabeli üksikute lahtrite vahel. Et mutrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifiktseerimiks. Seega lisandub heat mapile ka dendrogramm.
+Heat map asendab tabelis numbrid värvidega, muutes nii keerulised tabelid kiiremini haaratavateks. Samas, inimese aju ei ole kuigi edukas värvitoone pidevate muutujate numbrilisteks väärtusteks tagasi konverteerima, mis tähendab, et heat map võimaldab lugejal kiiresti haarata mustreid andmetes, aga ei võimalda teha täpseid võrdlusi tabeli üksikute lahtrite vahel. 
 
-```{r fig.height=5, fig.width=4}
+Kõigepealt lihtne heat map, kus irise tabeli numbrilistes veergudes on asendatud arvud värvitoonidega, aga tabeli üldine kuju ei muutu: 
+```{r}
 library(pheatmap)
-pheatmap(iris[1:4], fontsize_row = 6)
+pheatmap(iris[1:4], fontsize_row = 3, cluster_cols = FALSE, cluster_rows = FALSE)
 ```
 
-Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest (selle kirjust otsast). Kõigepealt jagab dendrogramm vaatlused paaridesse, siis 3-kaupa, siis 4-kaupa kuni kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks -- seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest. 
+
+Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifitseerimist. Seega lisanduvad heat mapile ka dendrogrammid.
+
+```{r }
+pheatmap(iris[1:4], fontsize_row = 3)
+```
+
+Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest. Kõigepealt jagab dendrogramm vaatlused paaridesse, misjärel hakkab järk-järgult lähimaid paare klastritesse ühendama kuni lõpuks kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks -- seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest. 
 
 
 Nüüd me ütleme, et me tahame oma irise liigid ajada täpselt kolme k-means klastrisse.
-NB! k-means klustrid on arvutatud teisel viisil kui eelmisel joonisel olevad hierarhilised klastrid. Siin alustame k tsentroidist, assigneerime iga andmepunkti oma lähimale tsentroidile, arvutame tsentroidid ümber kui klastri kõikide andmepunktide keskmised, assigneerime uuesti kõik andmepunktid oma tsentroidile ja kordame seda tsüklit näiteks 10 korda. 
+NB! k-means klustrid on arvutatud hoopis teisel viisil kui eelmisel joonisel olevad hierarhilised klastrid. Siin alustame k = 3 tsentroidist, assigneerime iga andmepunkti oma lähimale tsentroidile, arvutame tsentroidid ümber kui klastri kõikide andmepunktide keskmised, assigneerime uuesti kõik andmepunktid oma tsentroidile ja kordame seda tsüklit näiteks 10 korda. 
 
 ```{r}
 a <- pheatmap(iris[1:4], kmeans_k = 3)
@@ -1635,18 +1643,12 @@ Vaatame, kui hästi klastrid tabavad kolme irise liiki:
 table(iris$Species, iris$cluster)
 ```
 
-```{r}
-count(iris, cluster, Species)
-```
-
-
 Ja sama graafiliselt:
 ```{r}
 ggplot(iris, aes(factor(cluster), Species)) + geom_count()
 ```
 
-
-
+Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikkusi on lihtsam võrrelda kui pindalasid eelmisel graafikul):
 ```{r}
 library(vcd)
 iris_x <- iris %>% select(Species, cluster)
@@ -1663,16 +1665,16 @@ Kõigepealt tavaline scatterplot maatriks.
 plot(iris[1:4], col=iris$Species)
 ```
 
-Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime ka andmetulbad üm
+Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime mustrite parema nägemise huvides ka andmetulbad ümber (order=TRUE), seekord kasutades selleks peakomponent analüüsi (PCA).
 ```{r}
 library(corrgram)
 corrgram(iris[1:4], order = TRUE, lower.panel=corrgram::panel.shade,
          upper.panel=panel.cor, diag.panel=panel.density)
 ```
 
-### Paraleelne koordinaatgraafik
+### Paraleelkoordinaatgraafik
 
-Alternatiivne võimalus on scatterplot maatriksile on joonistada paraleelne koordinaatplot. 
+Alternatiivne võimalus on scatterplot maatriksile on joonistada grrafik läbi paraleelsete koordinaatide. 
 
 ```{r}
 library(MASS)
@@ -1685,5 +1687,44 @@ legend(x = 1.75, y = -.25, cex = 1,
 
 Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teistest eristada.
 
+### Korrelatsioonid võrgustikuna
 
+Võrgustik koosneb sõlmedest ja nende vahel olevatest servadest (nodes and edges)
+
+```{r}
+library(tidyverse)
+library(corrr)
+library(igraph)
+library(ggraph)
+
+tidy_cors <- mtcars %>% 
+  correlate() %>% 
+  stretch()
+
+# Convert correlations stronger than some value
+# to an undirected graph object
+graph_cors <- tidy_cors %>% 
+  filter(abs(r) > 0.7) %>% 
+  graph_from_data_frame(directed = FALSE)
+
+# Plot
+ggraph(graph_cors) +
+  geom_edge_link() +
+  geom_node_point() +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_graph()
+```
+
+Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.9-st.
+
+Kenam (ja informatiivsem) versioon eelmisest on
+```{r}
+ggraph(graph_cors) +
+  geom_edge_link(aes(edge_alpha = abs(r), edge_width = abs(r), color = r)) +
+  guides(edge_alpha = "none", edge_width = "none") +
+  scale_edge_colour_gradientn(limits = c(-1, 1), colors = c("firebrick2", "dodgerblue2")) +
+  geom_node_point(color = "white", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_graph() 
+```
 
