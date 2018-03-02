@@ -192,6 +192,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.10.1" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#vulkaaniplot"><i class="fa fa-check"></i><b>8.10.1</b> Vulkaaniplot</a></li>
 </ul></li>
 <li class="chapter" data-level="8.11" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#qq-plot"><i class="fa fa-check"></i><b>8.11</b> QQ-plot</a></li>
+<li class="chapter" data-level="8.12" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#heat-map"><i class="fa fa-check"></i><b>8.12</b> Heat map</a><ul>
+<li class="chapter" data-level="8.12.1" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#korrelatsioonimaatriksid-heat-mapina"><i class="fa fa-check"></i><b>8.12.1</b> Korrelatsioonimaatriksid heat mapina</a></li>
+<li class="chapter" data-level="8.12.2" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#paraleelkoordinaatgraafik"><i class="fa fa-check"></i><b>8.12.2</b> Paraleelkoordinaatgraafik</a></li>
+<li class="chapter" data-level="8.12.3" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#korrelatsioonid-vorgustikuna"><i class="fa fa-check"></i><b>8.12.3</b> Korrelatsioonid võrgustikuna</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>9</b> Tidyverse</a><ul>
 <li class="chapter" data-level="9.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>9.1</b> Tidy tabeli struktuur</a><ul>
@@ -312,12 +317,12 @@ dd <span class="op">%&gt;%</span><span class="st"> </span>
 <pre><code>#&gt; # A tibble: 7 x 2
 #&gt;   CI_percentage nr_of_SEMs
 #&gt;           &lt;dbl&gt;      &lt;dbl&gt;
-#&gt; 1          50.0      0.675
-#&gt; 2          75.0      1.15 
-#&gt; 3          90.0      1.64 
-#&gt; 4          95.0      1.96 
-#&gt; 5          97.0      2.17 
-#&gt; 6          99.0      2.58 
+#&gt; 1           50.      0.675
+#&gt; 2           75.      1.15 
+#&gt; 3           90.      1.64 
+#&gt; 4           95.      1.96 
+#&gt; 5           97.      2.17 
+#&gt; 6           99.      2.58 
 #&gt; # ... with 1 more row</code></pre>
 <p>SEM on standardviga, mille arvutame jagades valimi standardhälbe ruutjuurega valimi suurusest N. Kuna CI sõltub SEM-ist, sõltub see muidugi ka N-st, aga mitte lineaarselt, vaid üle ruutjuure. See tähendab, et uuringu usaldusväärsuse tõstmine, tõstes N-i kipub olema progressiivselt kulukas protsess. Analoogiana võib siin tuua sportliku vormi tõstmine, kus trennis käimisega alustades on suhteliselt lihtne tõsta oma sooritust näiteks 20% võrra, aga peale aastast usinat rassimist tuleb juba teha väga tõsine pingutus, et saavutada veel 1% tõusu.</p>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-73-1.svg" width="70%" style="display: block; margin: auto;" /></p>
@@ -728,11 +733,12 @@ df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">app
 <h2><span class="header-section-number">8.11</span> QQ-plot</h2>
 <p>Kuidas võrrelda kahte jaotust? Kõige lihtsam on joonistada bihistogramm, mis töötab ühtlasi t testi ekslploratoorse analoogina (ei anna ühte numbrit, aga selle eest annab palju parema ülevaate kui t test, kuidas kahe grupi valimid – kuigi mitte tingimata nende taga olevad populatsioonid – tegelikult erinevad).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Hmisc)
-<span class="kw">histbackback</span>(iris[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</code></pre></div>
+<span class="kw">histbackback</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>See bihistogramm, mis küll veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi, näitab, et kahe grupi keskmised on selgelt erinevad (ülekate peaaegu puudub), aga et ka jaotused ise erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).</p>
 <p>Kuidas aga võrrelda oma andmete jaotust teoreetilise jaotusega, näiteks normaaljaotusega? Selleks on parim viis kvantiil-kvantiil plot ehk qq-plot. Kvantiil tähendab lihtsalt andmepunktide osakaalu, mis on väiksemad kui mingi etteantud väärtus. Näiteks kvantiil 0.3 (mis on sama, mis 30s protsentiil) tähistab väärtust, millest 30% kogutud andmeid on väiksemad ja 70% on suuremad. Näiteks standartse normaaljaotuse (mean = 0, sd = 1) 0.5-s kvantiil on 0 ja 0.95-s kvantiil on 1.96.</p>
 <p>QQ-plot annab lihtsalt empiiriliste andmete kvantiilid (y teljel) teoreetilise jaotuse kvantiilide vastu (x teljel). Punktide arv graafikul vastab teie andmepunktide arvule. Referentsjoon oma 95% veapiiridega (punased katkendjooned) vastab ideaalsele olukorrale, kus teie andmete jaotus vastab teoreetilisele jaotusele (milleks on enamasti normaaljaotus).</p>
+<p>Kõigepealt demonstreerime siiski olukorda, kus meie andmed on normaaljaotusega ja me võrdleme neid teoreetilise lognormaaljaotuse vastu. Võrdluseks saame kasutada kõiki R-s defineeritud jaotusi (distribution = “jaotus”).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">qqPlot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">distribution =</span> <span class="st">&quot;lnorm&quot;</span>)</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-128-1.svg" width="70%" style="display: block; margin: auto;" /></p>
@@ -749,11 +755,209 @@ df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">app
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))
 <span class="kw">qqPlot</span>(<span class="kw">runif</span>(<span class="dv">100</span>), <span class="dt">main =</span> <span class="st">&quot;uniform vs normal&quot;</span>) <span class="co">#default on vrdls normaaljaotusega.</span>
 <span class="kw">qqPlot</span>(<span class="kw">rchisq</span>(<span class="dv">100</span>, <span class="dt">df=</span><span class="dv">2</span>), <span class="dt">main =</span> <span class="st">&quot;chi square vs normal&quot;</span>)
-<span class="kw">qqPlot</span>(<span class="kw">rbeta</span>(<span class="dv">100</span>, <span class="dv">3</span>, <span class="dv">3</span>), <span class="dt">main =</span> <span class="st">&quot;beta vs normal&quot;</span>)
-<span class="kw">qqPlot</span>(<span class="kw">rbeta</span>(<span class="dv">100</span>, <span class="fl">0.4</span>, <span class="fl">0.4</span>), <span class="dt">main =</span> <span class="st">&quot;two peaked beata vs normal&quot;</span>)</code></pre></div>
+<span class="kw">qqPlot</span>(<span class="kw">rbeta</span>(<span class="dv">100</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">main =</span> <span class="st">&quot;beta vs normal&quot;</span>)
+<span class="kw">qqPlot</span>(<span class="kw">rbeta</span>(<span class="dv">100</span>, <span class="fl">0.4</span>, <span class="fl">0.4</span>), <span class="dt">main =</span> <span class="st">&quot;two peaked beta vs normal&quot;</span>)</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-132-1.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p>F</p>
+<p>Nagu näha, beta jaotus, mis on normaaljaotusest palju laiem, on qq-plotil sellest halvasti eristatav. Erinevus on väga madalatel ja väga kõrgetel kvantiilidel (jaotuste otstes).</p>
+<p>Ja exponentsiaalse jaotuse korral:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">rexp</span>(<span class="dv">100</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">dexp</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dt">length=</span><span class="dv">100</span>)), <span class="dt">main=</span><span class="st">&quot;exponential distr.&quot;</span>) 
+<span class="kw">qqPlot</span>(y, <span class="dt">main =</span> <span class="st">&quot;exponential vs normal&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-133-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide tolmukate pikkuste ja tolmukate laiuste jaotusi (vt ka peatüki algusest bihistogrammi). Selle meetodi oluline eelis on, et võrreldavad jaotused võivad olla erineva suurusega (N-ga). Siin kasutame base::R qqplot() funktsiooni.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqplot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-134-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka pikkus &gt; 7.5 ja tolmuka laius &gt; 3.6.</p>
+</div>
+<div id="heat-map" class="section level2">
+<h2><span class="header-section-number">8.12</span> Heat map</h2>
+<p>Heat map asendab tabelis numbrid värvidega, muutes nii keerulised tabelid kiiremini haaratavateks. Samas, inimese aju ei ole kuigi edukas värvitoone pidevate muutujate numbrilisteks väärtusteks tagasi konverteerima, mis tähendab, et heat map võimaldab lugejal kiiresti haarata mustreid andmetes, aga ei võimalda teha täpseid võrdlusi tabeli üksikute lahtrite vahel.</p>
+<p>Kõigepealt lihtne heat map, kus irise tabeli numbrilistes veergudes on asendatud arvud värvitoonidega, aga tabeli üldine kuju ei muutu:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pheatmap)
+<span class="kw">pheatmap</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">fontsize_row =</span> <span class="dv">3</span>, <span class="dt">cluster_cols =</span> <span class="ot">FALSE</span>, <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-135-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifitseerimist. Seega lisanduvad heat mapile ka dendrogrammid.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pheatmap</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">fontsize_row =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-136-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest. Kõigepealt jagab dendrogramm vaatlused paaridesse, misjärel hakkab järk-järgult lähimaid paare klastritesse ühendama kuni lõpuks kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks – seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest.</p>
+<p>Nüüd me ütleme, et me tahame oma irise liigid ajada täpselt kolme k-means klastrisse. NB! k-means klustrid on arvutatud hoopis teisel viisil kui eelmisel joonisel olevad hierarhilised klastrid. Siin alustame k = 3 tsentroidist, assigneerime iga andmepunkti oma lähimale tsentroidile, arvutame tsentroidid ümber kui klastri kõikide andmepunktide keskmised, assigneerime uuesti kõik andmepunktid oma tsentroidile ja kordame seda tsüklit näiteks 10 korda.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">pheatmap</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">kmeans_k =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-137-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Lisame klastrid irise tabelisse</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris<span class="op">$</span>cluster &lt;-<span class="st"> </span>a<span class="op">$</span>kmeans<span class="op">$</span>cluster
+<span class="kw">head</span>(iris, <span class="dv">3</span>)
+<span class="co">#&gt; # A tibble: 3 x 6</span>
+<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt; 1         5.10        3.50         1.40       0.200</span>
+<span class="co">#&gt; 2         4.90        3.00         1.40       0.200</span>
+<span class="co">#&gt; 3         4.70        3.20         1.30       0.200</span>
+<span class="co">#&gt; # ... with 2 more variables: Species &lt;fct&gt;,</span>
+<span class="co">#&gt; #   cluster &lt;int&gt;</span></code></pre></div>
+<p>Vaatame, kui hästi klastrid tabavad kolme irise liiki:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(iris<span class="op">$</span>Species, iris<span class="op">$</span>cluster)
+<span class="co">#&gt;             </span>
+<span class="co">#&gt;               1  2  3</span>
+<span class="co">#&gt;   setosa      0 50  0</span>
+<span class="co">#&gt;   versicolor  2  0 48</span>
+<span class="co">#&gt;   virginica  36  0 14</span></code></pre></div>
+<p>Ja sama graafiliselt:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="kw">factor</span>(cluster), Species)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_count</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikkusi on lihtsam võrrelda kui pindalasid eelmisel graafikul):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vcd)
+iris_x &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Species, cluster)
+iris_x<span class="op">$</span>cluster &lt;-<span class="st"> </span><span class="kw">as.factor</span>(iris_x<span class="op">$</span>cluster)
+<span class="kw">mosaic</span>(<span class="op">~</span>Species <span class="op">+</span><span class="st"> </span>cluster, <span class="dt">data=</span> iris_x, <span class="dt">shade=</span>T, <span class="dt">legend=</span>T)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div id="korrelatsioonimaatriksid-heat-mapina" class="section level3">
+<h3><span class="header-section-number">8.12.1</span> Korrelatsioonimaatriksid heat mapina</h3>
+<p>Heat map on ka hea viis visualiseerida korrelatsioonimaatrikseid.</p>
+<p>Kõigepealt tavaline scatterplot maatriks.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">col=</span>iris<span class="op">$</span>Species)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-142-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime mustrite parema nägemise huvides ka andmetulbad ümber (order=TRUE), seekord kasutades selleks peakomponent analüüsi (PCA).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(corrgram)
+<span class="kw">corrgram</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">order =</span> <span class="ot">TRUE</span>, <span class="dt">lower.panel=</span>corrgram<span class="op">::</span>panel.shade,
+         <span class="dt">upper.panel=</span>panel.cor, <span class="dt">diag.panel=</span>panel.density)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-143-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="paraleelkoordinaatgraafik" class="section level3">
+<h3><span class="header-section-number">8.12.2</span> Paraleelkoordinaatgraafik</h3>
+<p>Alternatiivne võimalus on scatterplot maatriksile on joonistada grrafik läbi paraleelsete koordinaatide.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
+<span class="kw">parcoord</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">col =</span> iris<span class="op">$</span>Species, <span class="dt">var.label =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">1</span>)
+<span class="kw">par</span>(<span class="dt">xpd =</span> <span class="ot">TRUE</span>)
+<span class="kw">legend</span>(<span class="dt">x =</span> <span class="fl">1.75</span>, <span class="dt">y =</span> <span class="op">-</span>.<span class="dv">25</span>, <span class="dt">cex =</span> <span class="dv">1</span>,
+   <span class="dt">legend =</span> <span class="kw">as.character</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species)),
+    <span class="dt">fill =</span> <span class="kw">unique</span>(iris<span class="op">$</span>Species), <span class="dt">horiz =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-144-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teistest eristada.</p>
+</div>
+<div id="korrelatsioonid-vorgustikuna" class="section level3">
+<h3><span class="header-section-number">8.12.3</span> Korrelatsioonid võrgustikuna</h3>
+<p>Võrgustik koosneb sõlmedest ja nende vahel olevatest servadest (nodes and edges). Meie eesmärk on joonisel näidata sõlmedena ainult need muutujaid, millel esineb mingist meie poolt etteantud numbrist suurem korrelatsioon mõne teise muutujaga. Korrelatsioone endid tähistavad võrgu servad. Järgnevasse voogu, kuhu sisestame kogu mtcars tabeli, lähevad ainult numbrilised muutujad (faktormuutujad tuleb tabelist välja visata).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(corrr)
+<span class="kw">library</span>(igraph)
+<span class="kw">library</span>(ggraph)
 
+tidy_cors &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">correlate</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stretch</span>()
+
+<span class="co"># Convert correlations stronger than some value</span>
+<span class="co"># to an undirected graph object</span>
+graph_cors &lt;-<span class="st"> </span>tidy_cors <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">abs</span>(r) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.6</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">graph_from_data_frame</span>(<span class="dt">directed =</span> <span class="ot">FALSE</span>)
+
+<span class="co"># Plot</span>
+<span class="kw">ggraph</span>(graph_cors) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_edge_link</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_node_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_graph</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.</p>
+<p>Kenam (ja informatiivsem) versioon eelmisest on</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggraph</span>(graph_cors) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_edge_link</span>(<span class="kw">aes</span>(<span class="dt">edge_alpha =</span> <span class="kw">abs</span>(r), <span class="dt">edge_width =</span> <span class="kw">abs</span>(r), <span class="dt">color =</span> r)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">edge_alpha =</span> <span class="st">&quot;none&quot;</span>, <span class="dt">edge_width =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_edge_colour_gradientn</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">colors =</span> <span class="kw">c</span>( <span class="st">&quot;dodgerblue2&quot;</span>, <span class="st">&quot;firebrick2&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_node_point</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">size =</span> <span class="dv">5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_graph</span>() 
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x</span>
+<span class="co">#&gt; $label), x$x, x$y, : font family &#39;Arial Narrow&#39; not</span>
+<span class="co">#&gt; found in PostScript font database</span>
+<span class="co">#&gt; Warning in grid.Call.graphics(C_text,</span>
+<span class="co">#&gt; as.graphicsAnnot(x$label), x$x, x$y, : font family</span>
+<span class="co">#&gt; &#39;Arial Narrow&#39; not found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call.graphics(C_text,</span>
+<span class="co">#&gt; as.graphicsAnnot(x$label), x$x, x$y, : font family</span>
+<span class="co">#&gt; &#39;Arial Narrow&#39; not found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call.graphics(C_text,</span>
+<span class="co">#&gt; as.graphicsAnnot(x$label), x$x, x$y, : font family</span>
+<span class="co">#&gt; &#39;Arial Narrow&#39; not found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call.graphics(C_text,</span>
+<span class="co">#&gt; as.graphicsAnnot(x$label), x$x, x$y, : font family</span>
+<span class="co">#&gt; &#39;Arial Narrow&#39; not found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call.graphics(C_text,</span>
+<span class="co">#&gt; as.graphicsAnnot(x$label), x$x, x$y, : font family</span>
+<span class="co">#&gt; &#39;Arial Narrow&#39; not found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call.graphics(C_text,</span>
+<span class="co">#&gt; as.graphicsAnnot(x$label), x$x, x$y, : font family</span>
+<span class="co">#&gt; &#39;Arial Narrow&#39; not found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call.graphics(C_text,</span>
+<span class="co">#&gt; as.graphicsAnnot(x$label), x$x, x$y, : font family</span>
+<span class="co">#&gt; &#39;Arial Narrow&#39; not found in PostScript font database</span>
+
+<span class="co">#&gt; Warning in grid.Call.graphics(C_text,</span>
+<span class="co">#&gt; as.graphicsAnnot(x$label), x$x, x$y, : font family</span>
+<span class="co">#&gt; &#39;Arial Narrow&#39; not found in PostScript font database</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti – vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).</p>
+
+</div>
 </div>
 </div>
             </section>

@@ -306,15 +306,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.31380 0.00913 0.60988 0.66724 0.02662
+#> [1] 0.567 0.524 0.395 0.810 0.560
 #> 
 #> [[2]]
-#>         a      b
-#> 1 0.31380  0.317
-#> 2 0.00913 -0.195
-#> 3 0.60988 -1.856
-#> 4 0.66724 -0.934
-#> 5 0.02662  0.301
+#>       a      b
+#> 1 0.567 -0.288
+#> 2 0.524  0.230
+#> 3 0.395  0.400
+#> 4 0.810  0.312
+#> 5 0.560 -0.901
 #> 
 #> [[3]]
 #> 
@@ -363,9 +363,9 @@ fruits
 #> # A tibble: 3 x 4
 #>   shop   apples oranges vabakava  
 #>   <chr>   <dbl>   <dbl> <list>    
-#> 1 maxima   1.00    2.00 <chr [26]>
-#> 2 tesco    4.00   32.0  <dbl [10]>
-#> 3 lidl    43.0    NA    <S3: lm>
+#> 1 maxima     1.      2. <chr [26]>
+#> 2 tesco      4.     32. <dbl [10]>
+#> 3 lidl      43.     NA  <S3: lm>
 ```
 Siin ta on, ilusti meie workspace-s. Pange tähele viimast tulpa "vabakava", mis sisaldab _character_ vectorit, numbrilist vektorit ja lineaarse mudeli objekti. 
 
@@ -389,9 +389,9 @@ count(fruits, apples)
 #> # A tibble: 3 x 2
 #>   apples     n
 #>    <dbl> <int>
-#> 1   1.00     1
-#> 2   4.00     1
-#> 3  43.0      1
+#> 1     1.     1
+#> 2     4.     1
+#> 3    43.     1
 count(fruits, shop)
 #> # A tibble: 3 x 2
 #>   shop       n
@@ -428,21 +428,21 @@ arrange(fruits, desc(apples)) #sorteerib tabeli veeru "apples" väärtuste järg
 #> # A tibble: 3 x 4
 #>   shop   apples oranges vabakava  
 #>   <chr>   <dbl>   <dbl> <list>    
-#> 1 lidl    43.0    NA    <S3: lm>  
-#> 2 tesco    4.00   32.0  <dbl [10]>
-#> 3 maxima   1.00    2.00 <chr [26]>
+#> 1 lidl      43.     NA  <S3: lm>  
+#> 2 tesco      4.     32. <dbl [10]>
+#> 3 maxima     1.      2. <chr [26]>
 top_n(fruits, 2, apples) #saab 2 rida, milles on kõige rohkem õunu
 #> # A tibble: 2 x 4
 #>   shop  apples oranges vabakava  
 #>   <chr>  <dbl>   <dbl> <list>    
-#> 1 tesco   4.00    32.0 <dbl [10]>
-#> 2 lidl   43.0     NA   <S3: lm>
+#> 1 tesco     4.     32. <dbl [10]>
+#> 2 lidl     43.     NA  <S3: lm>
 top_n(fruits, -2, apples) #saab 2 rida, milles on kõige vähem õunu
 #> # A tibble: 2 x 4
 #>   shop   apples oranges vabakava  
 #>   <chr>   <dbl>   <dbl> <list>    
-#> 1 maxima   1.00    2.00 <chr [26]>
-#> 2 tesco    4.00   32.0  <dbl [10]>
+#> 1 maxima     1.      2. <chr [26]>
+#> 2 tesco      4.     32. <dbl [10]>
 ```
 
 Tibblega saab teha maatriksarvutusi, kui kasutada ainult arvudega ridu. 
@@ -481,10 +481,10 @@ fruits
 #> # A tibble: 4 x 4
 #>   shop   apples oranges vabakava  
 #>   <chr>   <dbl>   <dbl> <list>    
-#> 1 maxima   1.00    2.00 <chr [26]>
-#> 2 tesco    4.00   32.0  <dbl [10]>
-#> 3 konsum 132     - 5.00 <NULL>    
-#> 4 lidl    43.0    NA    <S3: lm>
+#> 1 maxima     1.      2. <chr [26]>
+#> 2 tesco      4.     32. <dbl [10]>
+#> 3 konsum   132.     -5. <NULL>    
+#> 4 lidl      43.     NA  <S3: lm>
 ```
 
 Proovi ise:
@@ -505,28 +505,28 @@ fruits
 #> # A tibble: 4 x 4
 #>   shop   apples oranges vabakava  
 #>   <chr>   <dbl>   <dbl> <list>    
-#> 1 maxima   1.00    2.00 <chr [26]>
-#> 2 tesco    4.00   32.0  <dbl [10]>
-#> 3 konsum 132     - 5.00 <NULL>    
-#> 4 lidl   333      NA    <S3: lm>
+#> 1 maxima     1.      2. <chr [26]>
+#> 2 tesco      4.     32. <dbl [10]>
+#> 3 konsum   132.     -5. <NULL>    
+#> 4 lidl     333.     NA  <S3: lm>
 fruits$shop[fruits$shop=="tesco"] <- "TESCO"
 fruits
 #> # A tibble: 4 x 4
 #>   shop   apples oranges vabakava  
 #>   <chr>   <dbl>   <dbl> <list>    
-#> 1 maxima   1.00    2.00 <chr [26]>
-#> 2 TESCO    4.00   32.0  <dbl [10]>
-#> 3 konsum 132     - 5.00 <NULL>    
-#> 4 lidl   333      NA    <S3: lm>
+#> 1 maxima     1.      2. <chr [26]>
+#> 2 TESCO      4.     32. <dbl [10]>
+#> 3 konsum   132.     -5. <NULL>    
+#> 4 lidl     333.     NA  <S3: lm>
 fruits$apples[fruits$apples>100] <- NA
 fruits
 #> # A tibble: 4 x 4
 #>   shop   apples oranges vabakava  
 #>   <chr>   <dbl>   <dbl> <list>    
-#> 1 maxima   1.00    2.00 <chr [26]>
-#> 2 TESCO    4.00   32.0  <dbl [10]>
-#> 3 konsum  NA     - 5.00 <NULL>    
-#> 4 lidl    NA      NA    <S3: lm>
+#> 1 maxima     1.      2. <chr [26]>
+#> 2 TESCO      4.     32. <dbl [10]>
+#> 3 konsum    NA      -5. <NULL>    
+#> 4 lidl      NA      NA  <S3: lm>
 ```
 
 
@@ -560,10 +560,10 @@ bind_rows(dfs, dfs1, .id = "id")
 #> # A tibble: 4 x 3
 #>   id    colA   colB
 #>   <chr> <chr> <dbl>
-#> 1 1     a      1.00
-#> 2 1     b      2.00
-#> 3 1     c      3.00
-#> 4 2     d      4.00
+#> 1 1     a        1.
+#> 2 1     b        2.
+#> 3 1     c        3.
+#> 4 2     d        4.
 ```
 
 Vaata Environmentist need tabelid üle ja mõtle järgi, mis juhtus.
@@ -581,8 +581,8 @@ bind_rows(dfs1, df2)
 #> # A tibble: 2 x 4
 #>   colA   colB ColC   ColD
 #>   <chr> <dbl> <chr> <dbl>
-#> 1 d      4.00 <NA>  NA   
-#> 2 <NA>  NA    d      4.00
+#> 1 d        4. <NA>    NA 
+#> 2 <NA>    NA  d        4.
 ```
 
 ### ühendame kaks tibblet veeru kaupa
@@ -596,9 +596,9 @@ bind_cols(dfs, dfx)
 #> # A tibble: 3 x 3
 #>   colA   colB  colC
 #>   <chr> <dbl> <dbl>
-#> 1 a      1.00  4.00
-#> 2 b      2.00  5.00
-#> 3 c      3.00  6.00
+#> 1 a        1.    4.
+#> 2 b        2.    5.
+#> 3 c        3.    6.
 ```
 
 ### tabelite ühendamine join()-ga
@@ -617,8 +617,8 @@ df1
 #> # A tibble: 2 x 2
 #>   Member         yr_of_birth
 #>   <chr>                <dbl>
-#> 1 John Lennon           1940
-#> 2 Paul McCartney        1942
+#> 1 John Lennon          1940.
+#> 2 Paul McCartney       1942.
 ```
 
 
@@ -633,9 +633,9 @@ df2
 #> # A tibble: 3 x 3
 #>   Member           instrument yr_of_birth
 #>   <chr>            <chr>            <dbl>
-#> 1 John Lennon      guitar            1940
-#> 2 Ringo Starr      drums             1940
-#> 3 George Harrisson guitar            1942
+#> 1 John Lennon      guitar           1940.
+#> 2 Ringo Starr      drums            1940.
+#> 3 George Harrisson guitar           1942.
 ```
 
 Ühendan 2 tabelit nii, et mõlema tabeli kõik read ilmuvad uude tabelisse.
@@ -645,10 +645,10 @@ full_join(df1, df2)
 #> # A tibble: 4 x 3
 #>   Member           yr_of_birth instrument
 #>   <chr>                  <dbl> <chr>     
-#> 1 John Lennon             1940 guitar    
-#> 2 Paul McCartney          1942 <NA>      
-#> 3 Ringo Starr             1940 drums     
-#> 4 George Harrisson        1942 guitar
+#> 1 John Lennon            1940. guitar    
+#> 2 Paul McCartney         1942. <NA>      
+#> 3 Ringo Starr            1940. drums     
+#> 4 George Harrisson       1942. guitar
 ```
 
 Ühendan esimese tabeliga df2 nii, et ainult df1 read säilivad, aga df2-lt võetakse sisse veerud, mis df1-s puuduvad. See on hea join, kui on vaja algtabelile lisada infot teistest tabelitest.
@@ -658,8 +658,8 @@ left_join(df1, df2)
 #> # A tibble: 2 x 3
 #>   Member         yr_of_birth instrument
 #>   <chr>                <dbl> <chr>     
-#> 1 John Lennon           1940 guitar    
-#> 2 Paul McCartney        1942 <NA>
+#> 1 John Lennon          1940. guitar    
+#> 2 Paul McCartney       1942. <NA>
 ```
 
 Filtreerin välja need df1 read, millele vastab rida df2-s. 
@@ -669,7 +669,7 @@ semi_join(df1, df2)
 #> # A tibble: 1 x 2
 #>   Member      yr_of_birth
 #>   <chr>             <dbl>
-#> 1 John Lennon        1940
+#> 1 John Lennon       1940.
 ```
 
 Filtreerin välja need df1 read, millele ei vasta rida df2-s.
@@ -679,7 +679,7 @@ anti_join(df1, df2)
 #> # A tibble: 1 x 2
 #>   Member         yr_of_birth
 #>   <chr>                <dbl>
-#> 1 Paul McCartney        1942
+#> 1 Paul McCartney       1942.
 ```
 
 
@@ -996,8 +996,8 @@ my_tibble
 #> # A tibble: 2 x 2
 #>   colA   colB
 #>   <chr> <dbl>
-#> 1 A      1.00
-#> 2 B      2.00
+#> 1 A        1.
+#> 2 B        2.
 ```
 See ei ole enam list.
 
@@ -1021,7 +1021,7 @@ aa1
 #> # A tibble: 1 x 2
 #>   colA   colB
 #>   <chr> <dbl>
-#> 1 B      2.00
+#> 1 B        2.
 ```
 
 
@@ -1031,7 +1031,7 @@ aa3
 #> # A tibble: 1 x 2
 #>   colA   colB
 #>   <chr> <dbl>
-#> 1 A      1.00
+#> 1 A        1.
 ```
 
 Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välja objekti my_list 1. elemendi, tema algses tibble formaadis, (indeksi 1. dimensioon). Seejärel korjame sealt välja 1. rea, tibble formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).

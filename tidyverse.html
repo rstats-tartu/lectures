@@ -192,6 +192,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.10.1" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#vulkaaniplot"><i class="fa fa-check"></i><b>8.10.1</b> Vulkaaniplot</a></li>
 </ul></li>
 <li class="chapter" data-level="8.11" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#qq-plot"><i class="fa fa-check"></i><b>8.11</b> QQ-plot</a></li>
+<li class="chapter" data-level="8.12" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#heat-map"><i class="fa fa-check"></i><b>8.12</b> Heat map</a><ul>
+<li class="chapter" data-level="8.12.1" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#korrelatsioonimaatriksid-heat-mapina"><i class="fa fa-check"></i><b>8.12.1</b> Korrelatsioonimaatriksid heat mapina</a></li>
+<li class="chapter" data-level="8.12.2" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#paraleelkoordinaatgraafik"><i class="fa fa-check"></i><b>8.12.2</b> Paraleelkoordinaatgraafik</a></li>
+<li class="chapter" data-level="8.12.3" data-path="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kumme-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#korrelatsioonid-vorgustikuna"><i class="fa fa-check"></i><b>8.12.3</b> Korrelatsioonid võrgustikuna</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>9</b> Tidyverse</a><ul>
 <li class="chapter" data-level="9.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>9.1</b> Tidy tabeli struktuur</a><ul>
@@ -296,8 +301,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>#&gt; # A tibble: 2 x 6
 #&gt;   subject drug    sex    time length weigth
 #&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt; 1 1       exp     F      3.00    168   88.0
-#&gt; 2 2       placebo M      3.00    176   91.0</code></pre>
+#&gt; 1 1       exp     F        3.   168.    88.
+#&gt; 2 2       placebo M        3.   176.    91.</code></pre>
 <p>Nii näeb välja tidy tibble. Kõik analüüsil vajalikud parameetrid tuleks siia tabelisse veeru kaupa sisse tuua. Näiteks, kui mõõtmised on sooritatud erinevates keskustes erinevate inimeste poolt kasutades sama ravimi erinevaid preparaate, oleks hea siia veel 3 veergu lisada (center, experimenter, batch).</p>
 <div id="tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat" class="section level3">
 <h3><span class="header-section-number">9.1.1</span> Tabeli dimensioonide muutmine (pikk ja lai formaat)</h3>
@@ -306,9 +311,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>#&gt; # A tibble: 3 x 5
 #&gt;   subject sex   control experiment_1 experiment_2
 #&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
-#&gt; 1 Tim     M        23.0         34.0         40.0
-#&gt; 2 Ann     F        31.0         38.0         42.0
-#&gt; 3 Jill    F        30.0         36.0         44.0</code></pre>
+#&gt; 1 Tim     M         23.          34.          40.
+#&gt; 2 Ann     F         31.          38.          42.
+#&gt; 3 Jill    F         30.          36.          44.</code></pre>
 <p>Kõigepealt pikka formaati. key ja value argumendid on ainult uute veergude nimetamiseks, oluline on 3:ncol(dat) argument, mis ütleb, et “kogu kokku veerud alates 3. veerust”. Alternatiivne viis seda öelda: c(-subject, -sex).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_lng &lt;-<span class="st"> </span><span class="kw">gather</span>(dat, <span class="dt">key =</span> experiment, <span class="dt">value =</span> value, <span class="dv">3</span><span class="op">:</span><span class="kw">ncol</span>(dat))
 <span class="co"># df_l3&lt;-df %&gt;% gather(experiment, value, 3:ncol(df)) works as well.</span>
@@ -317,21 +322,21 @@ dat_lng
 <span class="co">#&gt; # A tibble: 9 x 4</span>
 <span class="co">#&gt;   subject sex   experiment   value</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Tim     M     control       23.0</span>
-<span class="co">#&gt; 2 Ann     F     control       31.0</span>
-<span class="co">#&gt; 3 Jill    F     control       30.0</span>
-<span class="co">#&gt; 4 Tim     M     experiment_1  34.0</span>
-<span class="co">#&gt; 5 Ann     F     experiment_1  38.0</span>
-<span class="co">#&gt; 6 Jill    F     experiment_1  36.0</span>
+<span class="co">#&gt; 1 Tim     M     control        23.</span>
+<span class="co">#&gt; 2 Ann     F     control        31.</span>
+<span class="co">#&gt; 3 Jill    F     control        30.</span>
+<span class="co">#&gt; 4 Tim     M     experiment_1   34.</span>
+<span class="co">#&gt; 5 Ann     F     experiment_1   38.</span>
+<span class="co">#&gt; 6 Jill    F     experiment_1   36.</span>
 <span class="co">#&gt; # ... with 3 more rows</span></code></pre></div>
 <p>Paneme selle tagasi algsesse laia formaati: ?spread</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">spread</span>(dat_lng, <span class="dt">key =</span> experiment, <span class="dt">value =</span> value)
 <span class="co">#&gt; # A tibble: 3 x 5</span>
 <span class="co">#&gt;   subject sex   control experiment_1 experiment_2</span>
-<span class="co">#&gt; * &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Ann     F        31.0         38.0         42.0</span>
-<span class="co">#&gt; 2 Jill    F        30.0         36.0         44.0</span>
-<span class="co">#&gt; 3 Tim     M        23.0         34.0         40.0</span></code></pre></div>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Ann     F         31.          38.          42.</span>
+<span class="co">#&gt; 2 Jill    F         30.          36.          44.</span>
+<span class="co">#&gt; 3 Tim     M         23.          34.          40.</span></code></pre></div>
 <p>key viitab pika tabeli veerule, mille väärtustest tulevad laias tabelis uute veergude nimed. value viitab pika tabeli veerule, kust võetakse arvud, mis uues laias tabelis uute veergude vahel laiali jagatakse.</p>
 </div>
 <div id="tibble-transpose-read-veergudeks-ja-vastupidi" class="section level3">
@@ -341,9 +346,9 @@ dat
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;   a        b1    b2</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 tim    1.00  4.00</span>
-<span class="co">#&gt; 2 tom    2.00  5.00</span>
-<span class="co">#&gt; 3 jill   3.00  6.00</span></code></pre></div>
+<span class="co">#&gt; 1 tim      1.    4.</span>
+<span class="co">#&gt; 2 tom      2.    5.</span>
+<span class="co">#&gt; 3 jill     3.    6.</span></code></pre></div>
 <p>Me kasutame selleks maatriksarvutuse funktsiooni t() — transpose. See võtab sisse ainult numbrilisi veerge, seega anname talle ette df miinus 1. veerg, mille sisu me konverteerime uue tablei veerunimedeks.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat1 &lt;-<span class="st"> </span><span class="kw">t</span>(dat[,<span class="op">-</span><span class="dv">1</span>])
 <span class="kw">colnames</span>(dat1) &lt;-<span class="st"> </span>dat<span class="op">$</span>a
@@ -426,25 +431,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;       V9    V8     V5    V2    V6</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.0307 0.352 0.135  0.486 0.591</span>
-<span class="co">#&gt; 2 0.879  0.921 0.0928 0.476 0.491</span>
-<span class="co">#&gt; 3 0.160  0.535 0.871  0.477 0.894</span>
-<span class="co">#&gt; 4 0.991  0.719 0.775  0.576 0.367</span>
-<span class="co">#&gt; 5 0.297  0.951 0.0395 0.438 0.513</span>
-<span class="co">#&gt; 6 0.961  0.661 0.932  0.292 0.733</span>
+<span class="co">#&gt;      V9    V8    V5    V2    V6</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.301 0.456 0.845 0.357 0.913</span>
+<span class="co">#&gt; 2 0.839 0.575 0.219 0.257 0.742</span>
+<span class="co">#&gt; 3 0.222 0.939 0.939 0.674 0.178</span>
+<span class="co">#&gt; 4 0.300 0.493 0.763 0.857 0.696</span>
+<span class="co">#&gt; 5 0.972 0.663 0.609 0.777 0.366</span>
+<span class="co">#&gt; 6 0.680 0.699 0.917 0.960 0.843</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;       V9    V8    V7    V6</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.0307 0.352 0.610 0.591</span>
-<span class="co">#&gt; 2 0.879  0.921 0.969 0.491</span>
-<span class="co">#&gt; 3 0.160  0.535 0.921 0.894</span>
-<span class="co">#&gt; 4 0.991  0.719 0.239 0.367</span>
-<span class="co">#&gt; 5 0.297  0.951 0.917 0.513</span>
-<span class="co">#&gt; 6 0.961  0.661 0.893 0.733</span>
+<span class="co">#&gt;      V9    V8      V7    V6</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.301 0.456 0.521   0.913</span>
+<span class="co">#&gt; 2 0.839 0.575 0.0324  0.742</span>
+<span class="co">#&gt; 3 0.222 0.939 0.370   0.178</span>
+<span class="co">#&gt; 4 0.300 0.493 0.196   0.696</span>
+<span class="co">#&gt; 5 0.972 0.663 0.227   0.366</span>
+<span class="co">#&gt; 6 0.680 0.699 0.00967 0.843</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
@@ -575,12 +580,12 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <span class="co">#&gt; # A tibble: 9 x 4</span>
 <span class="co">#&gt;   subject sex   experiment   value</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Tim     M     control       23.0</span>
-<span class="co">#&gt; 2 Ann     F     control       31.0</span>
-<span class="co">#&gt; 3 Jill    F     control       30.0</span>
-<span class="co">#&gt; 4 Tim     M     experiment_1  34.0</span>
-<span class="co">#&gt; 5 Ann     F     experiment_1  38.0</span>
-<span class="co">#&gt; 6 Jill    F     experiment_1  36.0</span>
+<span class="co">#&gt; 1 Tim     M     control        23.</span>
+<span class="co">#&gt; 2 Ann     F     control        31.</span>
+<span class="co">#&gt; 3 Jill    F     control        30.</span>
+<span class="co">#&gt; 4 Tim     M     experiment_1   34.</span>
+<span class="co">#&gt; 5 Ann     F     experiment_1   38.</span>
+<span class="co">#&gt; 6 Jill    F     experiment_1   36.</span>
 <span class="co">#&gt; # ... with 3 more rows</span>
 <span class="kw">group_by</span>(dat_lng, sex, experiment) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">MEAN =</span> <span class="kw">mean</span>(value), 
@@ -644,12 +649,12 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <span class="co">#&gt; # A tibble: 9 x 5</span>
 <span class="co">#&gt;   subject sex   experiment   value log_value</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Tim     M     control       23.0      3.14</span>
-<span class="co">#&gt; 2 Ann     F     control       31.0      3.43</span>
-<span class="co">#&gt; 3 Jill    F     control       30.0      3.40</span>
-<span class="co">#&gt; 4 Tim     M     experiment_1  34.0      3.53</span>
-<span class="co">#&gt; 5 Ann     F     experiment_1  38.0      3.64</span>
-<span class="co">#&gt; 6 Jill    F     experiment_1  36.0      3.58</span>
+<span class="co">#&gt; 1 Tim     M     control        23.      3.14</span>
+<span class="co">#&gt; 2 Ann     F     control        31.      3.43</span>
+<span class="co">#&gt; 3 Jill    F     control        30.      3.40</span>
+<span class="co">#&gt; 4 Tim     M     experiment_1   34.      3.53</span>
+<span class="co">#&gt; 5 Ann     F     experiment_1   38.      3.64</span>
+<span class="co">#&gt; 6 Jill    F     experiment_1   36.      3.58</span>
 <span class="co">#&gt; # ... with 3 more rows</span></code></pre></div>
 <p>The same with transmute: note the dropping of some of the original cols, keeping the original <em>subject</em> col and renaming the <em>sex</em> col.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">transmute</span>(dat_lng, subject, <span class="dt">gender =</span> sex, <span class="dt">log_value =</span> <span class="kw">log</span>(value))
@@ -680,12 +685,12 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <span class="co">#&gt; # Groups:   sex [2]</span>
 <span class="co">#&gt;   subject sex   experiment   value norm_value n2_val</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Tim     M     control       23.0      0.711   2.67</span>
-<span class="co">#&gt; 2 Ann     F     control       31.0      0.842   5.47</span>
-<span class="co">#&gt; 3 Jill    F     control       30.0      0.814   5.29</span>
-<span class="co">#&gt; 4 Tim     M     experiment_1  34.0      1.05    3.94</span>
-<span class="co">#&gt; 5 Ann     F     experiment_1  38.0      1.03    6.70</span>
-<span class="co">#&gt; 6 Jill    F     experiment_1  36.0      0.977   6.35</span>
+<span class="co">#&gt; 1 Tim     M     control        23.      0.711   2.67</span>
+<span class="co">#&gt; 2 Ann     F     control        31.      0.842   5.47</span>
+<span class="co">#&gt; 3 Jill    F     control        30.      0.814   5.29</span>
+<span class="co">#&gt; 4 Tim     M     experiment_1   34.      1.05    3.94</span>
+<span class="co">#&gt; 5 Ann     F     experiment_1   38.      1.03    6.70</span>
+<span class="co">#&gt; 6 Jill    F     experiment_1   36.      0.977   6.35</span>
 <span class="co">#&gt; # ... with 3 more rows</span></code></pre></div>
 <p>Compare with a “straight” mutate to see the difference in values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(dat_lng, 
@@ -694,12 +699,12 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <span class="co">#&gt; # A tibble: 9 x 6</span>
 <span class="co">#&gt;   subject sex   experiment   value norm_value n2_val</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Tim     M     control       23.0      0.651   3.48</span>
-<span class="co">#&gt; 2 Ann     F     control       31.0      0.877   4.69</span>
-<span class="co">#&gt; 3 Jill    F     control       30.0      0.849   4.54</span>
-<span class="co">#&gt; 4 Tim     M     experiment_1  34.0      0.962   5.14</span>
-<span class="co">#&gt; 5 Ann     F     experiment_1  38.0      1.08    5.75</span>
-<span class="co">#&gt; 6 Jill    F     experiment_1  36.0      1.02    5.44</span>
+<span class="co">#&gt; 1 Tim     M     control        23.      0.651   3.48</span>
+<span class="co">#&gt; 2 Ann     F     control        31.      0.877   4.69</span>
+<span class="co">#&gt; 3 Jill    F     control        30.      0.849   4.54</span>
+<span class="co">#&gt; 4 Tim     M     experiment_1   34.      0.962   5.14</span>
+<span class="co">#&gt; 5 Ann     F     experiment_1   38.      1.08    5.75</span>
+<span class="co">#&gt; 6 Jill    F     experiment_1   36.      1.02    5.44</span>
 <span class="co">#&gt; # ... with 3 more rows</span></code></pre></div>
 <div id="summarise-mutate-transmute-ja-filter-tootavad-ka-mitme-veeru-kaupa." class="section level4">
 <h4><span class="header-section-number">9.2.5.1</span> Summarise(), mutate(), transmute() ja filter() töötavad ka mitme veeru kaupa.</h4>
@@ -739,17 +744,17 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <span class="co">#&gt; # A tibble: 3 x 2</span>
 <span class="co">#&gt;   time  value</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 t0     2.00</span>
-<span class="co">#&gt; 2 t1     4.00</span>
-<span class="co">#&gt; 3 t12    9.00</span>
+<span class="co">#&gt; 1 t0       2.</span>
+<span class="co">#&gt; 2 t1       4.</span>
+<span class="co">#&gt; 3 t12      9.</span>
 get_numeric &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...) <span class="kw">as.numeric</span>(<span class="kw">str_replace_all</span>(x, ...))
 (bad.df &lt;-<span class="st"> </span><span class="kw">mutate_at</span>(bad.df, <span class="st">&quot;time&quot;</span>, get_numeric, <span class="dt">pattern =</span> <span class="st">&quot;t&quot;</span>, <span class="dt">replacement =</span> <span class="st">&quot;&quot;</span>))
 <span class="co">#&gt; # A tibble: 3 x 2</span>
 <span class="co">#&gt;    time value</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1  0     2.00</span>
-<span class="co">#&gt; 2  1.00  4.00</span>
-<span class="co">#&gt; 3 12.0   9.00</span></code></pre></div>
+<span class="co">#&gt; 1    0.    2.</span>
+<span class="co">#&gt; 2    1.    4.</span>
+<span class="co">#&gt; 3   12.    9.</span></code></pre></div>
 <p>now we have a numeric time column, which can be used in plotting.</p>
 <p>or</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
@@ -757,16 +762,16 @@ get_numeric &lt;-<span class="st"> </span><span class="cf">function</span>(x, ..
 <span class="co">#&gt; # A tibble: 3 x 2</span>
 <span class="co">#&gt;   time  value</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 t0     2.00</span>
-<span class="co">#&gt; 2 t1     4.00</span>
-<span class="co">#&gt; 3 t12    9.00</span>
+<span class="co">#&gt; 1 t0       2.</span>
+<span class="co">#&gt; 2 t1       4.</span>
+<span class="co">#&gt; 3 t12      9.</span>
 <span class="kw">mutate_at</span>(bad.df, <span class="st">&quot;time&quot;</span>, parse_number)
 <span class="co">#&gt; # A tibble: 3 x 2</span>
 <span class="co">#&gt;    time value</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1  0     2.00</span>
-<span class="co">#&gt; 2  1.00  4.00</span>
-<span class="co">#&gt; 3 12.0   9.00</span></code></pre></div>
+<span class="co">#&gt; 1    0.    2.</span>
+<span class="co">#&gt; 2    1.    4.</span>
+<span class="co">#&gt; 3   12.    9.</span></code></pre></div>
 <p>Here we did the same thing more elegantly by directly parsing numbers from a character string.</p>
 </div>
 <div id="separate-one-column-into-several" class="section level2">
@@ -780,71 +785,71 @@ get_numeric &lt;-<span class="st"> </span><span class="cf">function</span>(x, ..
 (df.sep &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(disease.cases, <span class="dt">into=</span><span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;thousand&quot;</span>)))
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;   country cases thousand</span>
-<span class="co">#&gt; * &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Albania 80    1000</span>
 (df.sep &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(disease.cases, <span class="dt">into=</span><span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;thousand&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>))
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;   country cases thousand</span>
-<span class="co">#&gt; * &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Albania 80    1000</span>
 (df.sep &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(disease.cases, <span class="dt">into=</span><span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;thousand&quot;</span>), <span class="dt">sep =</span> <span class="dv">2</span>))
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;   country cases thousand</span>
-<span class="co">#&gt; * &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Albania 80    /1000</span>
 (df.sep &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(disease.cases, <span class="dt">into=</span><span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;thousand&quot;</span>), <span class="dt">sep =</span> <span class="op">-</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;   country cases thousand</span>
-<span class="co">#&gt; * &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   </span>
-<span class="co">#&gt; 1 Albania 80    /1000</span></code></pre></div>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   </span>
+<span class="co">#&gt; 1 Albania 8     0/1000</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">index =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), 
                <span class="dt">taxon =</span> <span class="kw">c</span>(<span class="st">&quot;Procaryota; Bacteria; Alpha-Proteobacteria; Escharichia&quot;</span>, <span class="st">&quot;Eukaryota; Chordata&quot;</span>)))
 <span class="co">#&gt; # A tibble: 2 x 2</span>
 <span class="co">#&gt;   index taxon                                         </span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;                                         </span>
-<span class="co">#&gt; 1  1.00 Procaryota; Bacteria; Alpha-Proteobacteria; E…</span>
-<span class="co">#&gt; 2  2.00 Eukaryota; Chordata</span>
+<span class="co">#&gt; 1    1. Procaryota; Bacteria; Alpha-Proteobacteria; E…</span>
+<span class="co">#&gt; 2    2. Eukaryota; Chordata</span>
 (d1 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(taxon, <span class="kw">c</span>(<span class="st">&#39;riik&#39;</span>, <span class="st">&#39;hmk&#39;</span>, <span class="st">&quot;klass&quot;</span>, <span class="st">&quot;perekond&quot;</span>), <span class="dt">sep =</span> <span class="st">&#39;; &#39;</span>, <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>)) 
 <span class="co">#&gt; # A tibble: 2 x 5</span>
 <span class="co">#&gt;   index riik       hmk      klass           perekond  </span>
-<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     </span>
-<span class="co">#&gt; 1  1.00 Procaryota Bacteria Alpha-Proteoba… Escharich…</span>
-<span class="co">#&gt; 2  2.00 Eukaryota  Chordata &lt;NA&gt;            &lt;NA&gt;</span></code></pre></div>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     </span>
+<span class="co">#&gt; 1    1. Procaryota Bacteria Alpha-Proteoba… Escharich…</span>
+<span class="co">#&gt; 2    2. Eukaryota  Chordata &lt;NA&gt;            &lt;NA&gt;</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># some special cases:</span>
 (dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">index =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), 
                <span class="dt">taxon =</span> <span class="kw">c</span>(<span class="st">&quot;Prokaryota || Bacteria || Alpha-Proteobacteria || Escharichia&quot;</span>, <span class="st">&quot;Eukaryota || Chordata&quot;</span>)))
 <span class="co">#&gt; # A tibble: 2 x 2</span>
 <span class="co">#&gt;   index taxon                                         </span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;                                         </span>
-<span class="co">#&gt; 1  1.00 Prokaryota || Bacteria || Alpha-Proteobacteri…</span>
-<span class="co">#&gt; 2  2.00 Eukaryota || Chordata</span>
+<span class="co">#&gt; 1    1. Prokaryota || Bacteria || Alpha-Proteobacteri…</span>
+<span class="co">#&gt; 2    2. Eukaryota || Chordata</span>
 (d1 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(taxon, <span class="kw">c</span>(<span class="st">&quot;riik&quot;</span>, <span class="st">&quot;hmk&quot;</span>, <span class="st">&quot;klass&quot;</span>, <span class="st">&quot;perekond&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">|</span><span class="ch">\\</span><span class="st">|&quot;</span>, <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>)) 
 <span class="co">#&gt; # A tibble: 2 x 5</span>
 <span class="co">#&gt;   index riik          hmk          klass     perekond </span>
-<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;    </span>
-<span class="co">#&gt; 1  1.00 &quot;Prokaryota &quot; &quot; Bacteria &quot; &quot; Alpha-… &quot; Eschar…</span>
-<span class="co">#&gt; 2  2.00 &quot;Eukaryota &quot;  &quot; Chordata&quot;  &lt;NA&gt;      &lt;NA&gt;</span></code></pre></div>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;    </span>
+<span class="co">#&gt; 1    1. &quot;Prokaryota &quot; &quot; Bacteria &quot; &quot; Alpha-… &quot; Eschar…</span>
+<span class="co">#&gt; 2    2. &quot;Eukaryota &quot;  &quot; Chordata&quot;  &lt;NA&gt;      &lt;NA&gt;</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">index =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), 
               <span class="dt">taxon =</span> <span class="kw">c</span>(<span class="st">&quot;Prokaryota.Bacteria.Alpha-Proteobacteria.Escharichia&quot;</span>, <span class="st">&quot;Eukaryota.Chordata&quot;</span>))
 (d1 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(taxon, <span class="kw">c</span>(<span class="st">&#39;riik&#39;</span>, <span class="st">&#39;hmk&#39;</span>, <span class="st">&quot;klass&quot;</span>, <span class="st">&quot;perekond&quot;</span>), <span class="dt">sep =</span> <span class="st">&#39;[.]&#39;</span>, <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>)) 
 <span class="co">#&gt; # A tibble: 2 x 5</span>
 <span class="co">#&gt;   index riik       hmk      klass           perekond  </span>
-<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     </span>
-<span class="co">#&gt; 1  1.00 Prokaryota Bacteria Alpha-Proteoba… Escharich…</span>
-<span class="co">#&gt; 2  2.00 Eukaryota  Chordata &lt;NA&gt;            &lt;NA&gt;</span></code></pre></div>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     </span>
+<span class="co">#&gt; 1    1. Prokaryota Bacteria Alpha-Proteoba… Escharich…</span>
+<span class="co">#&gt; 2    2. Eukaryota  Chordata &lt;NA&gt;            &lt;NA&gt;</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">index =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), 
                <span class="dt">taxon =</span> <span class="kw">c</span>(<span class="st">&quot;Prokaryota.Bacteria,Alpha-Proteobacteria.Escharichia&quot;</span>, <span class="st">&quot;Eukaryota.Chordata&quot;</span>)))
 <span class="co">#&gt; # A tibble: 2 x 2</span>
 <span class="co">#&gt;   index taxon                                         </span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;                                         </span>
-<span class="co">#&gt; 1  1.00 Prokaryota.Bacteria,Alpha-Proteobacteria.Esch…</span>
-<span class="co">#&gt; 2  2.00 Eukaryota.Chordata</span>
+<span class="co">#&gt; 1    1. Prokaryota.Bacteria,Alpha-Proteobacteria.Esch…</span>
+<span class="co">#&gt; 2    2. Eukaryota.Chordata</span>
 (d1 &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(taxon, <span class="kw">c</span>(<span class="st">&#39;riik&#39;</span>, <span class="st">&#39;hmk&#39;</span>, <span class="st">&quot;klass&quot;</span>, <span class="st">&quot;perekond&quot;</span>), <span class="dt">sep =</span> <span class="st">&#39;[,</span><span class="ch">\\</span><span class="st">.]&#39;</span>, <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>))
 <span class="co">#&gt; # A tibble: 2 x 5</span>
 <span class="co">#&gt;   index riik       hmk      klass           perekond  </span>
-<span class="co">#&gt; * &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     </span>
-<span class="co">#&gt; 1  1.00 Prokaryota Bacteria Alpha-Proteoba… Escharich…</span>
-<span class="co">#&gt; 2  2.00 Eukaryota  Chordata &lt;NA&gt;            &lt;NA&gt;</span></code></pre></div>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;     </span>
+<span class="co">#&gt; 1    1. Prokaryota Bacteria Alpha-Proteoba… Escharich…</span>
+<span class="co">#&gt; 2    2. Eukaryota  Chordata &lt;NA&gt;            &lt;NA&gt;</span></code></pre></div>
 <p>The companion FUN to separate is <code>unite()</code> - see help.</p>
 </div>
 <div id="faktorid" class="section level2">

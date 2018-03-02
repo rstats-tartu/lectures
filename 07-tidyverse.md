@@ -52,8 +52,8 @@ Veergude järjekord tabelis on 1. vaatlusühik, 2. faktor, mis annab katse-kontr
 #> # A tibble: 2 x 6
 #>   subject drug    sex    time length weigth
 #>   <chr>   <chr>   <chr> <dbl>  <dbl>  <dbl>
-#> 1 1       exp     F      3.00    168   88.0
-#> 2 2       placebo M      3.00    176   91.0
+#> 1 1       exp     F        3.   168.    88.
+#> 2 2       placebo M        3.   176.    91.
 ```
 
 Nii näeb välja tidy tibble. Kõik analüüsil vajalikud parameetrid tuleks siia tabelisse veeru kaupa sisse tuua. Näiteks, kui mõõtmised on sooritatud erinevates keskustes erinevate inimeste poolt kasutades sama ravimi erinevaid preparaate, oleks hea siia veel 3 veergu lisada (center, experimenter, batch).
@@ -68,9 +68,9 @@ See on laias formaadis tabel df, mis ei ole tidy
 #> # A tibble: 3 x 5
 #>   subject sex   control experiment_1 experiment_2
 #>   <chr>   <chr>   <dbl>        <dbl>        <dbl>
-#> 1 Tim     M        23.0         34.0         40.0
-#> 2 Ann     F        31.0         38.0         42.0
-#> 3 Jill    F        30.0         36.0         44.0
+#> 1 Tim     M         23.          34.          40.
+#> 2 Ann     F         31.          38.          42.
+#> 3 Jill    F         30.          36.          44.
 ```
 
 Kõigepealt pikka formaati. key ja value argumendid on ainult uute veergude nimetamiseks, oluline on 3:ncol(dat) argument, mis ütleb, et "kogu kokku veerud alates 3. veerust". Alternatiivne viis seda öelda: c(-subject, -sex).
@@ -83,12 +83,12 @@ dat_lng
 #> # A tibble: 9 x 4
 #>   subject sex   experiment   value
 #>   <chr>   <chr> <chr>        <dbl>
-#> 1 Tim     M     control       23.0
-#> 2 Ann     F     control       31.0
-#> 3 Jill    F     control       30.0
-#> 4 Tim     M     experiment_1  34.0
-#> 5 Ann     F     experiment_1  38.0
-#> 6 Jill    F     experiment_1  36.0
+#> 1 Tim     M     control        23.
+#> 2 Ann     F     control        31.
+#> 3 Jill    F     control        30.
+#> 4 Tim     M     experiment_1   34.
+#> 5 Ann     F     experiment_1   38.
+#> 6 Jill    F     experiment_1   36.
 #> # ... with 3 more rows
 ```
 
@@ -100,10 +100,10 @@ Paneme selle tagasi algsesse laia formaati: ?spread
 spread(dat_lng, key = experiment, value = value)
 #> # A tibble: 3 x 5
 #>   subject sex   control experiment_1 experiment_2
-#> * <chr>   <chr>   <dbl>        <dbl>        <dbl>
-#> 1 Ann     F        31.0         38.0         42.0
-#> 2 Jill    F        30.0         36.0         44.0
-#> 3 Tim     M        23.0         34.0         40.0
+#>   <chr>   <chr>   <dbl>        <dbl>        <dbl>
+#> 1 Ann     F         31.          38.          42.
+#> 2 Jill    F         30.          36.          44.
+#> 3 Tim     M         23.          34.          40.
 ```
  key viitab pika tabeli veerule, mille väärtustest tulevad laias tabelis uute veergude nimed. value viitab pika tabeli veerule, kust võetakse arvud, mis uues laias tabelis uute veergude vahel laiali jagatakse.
 
@@ -116,9 +116,9 @@ dat
 #> # A tibble: 3 x 3
 #>   a        b1    b2
 #>   <chr> <dbl> <dbl>
-#> 1 tim    1.00  4.00
-#> 2 tom    2.00  5.00
-#> 3 jill   3.00  6.00
+#> 1 tim      1.    4.
+#> 2 tom      2.    5.
+#> 3 jill     3.    6.
 ```
 
 Me kasutame selleks maatriksarvutuse funktsiooni t() --- transpose. See võtab sisse ainult numbrilisi veerge, seega anname talle ette df miinus 1. veerg, mille sisu me konverteerime uue tablei veerunimedeks. 
@@ -231,25 +231,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>      V9     V8     V5    V2     V6
-#>   <dbl>  <dbl>  <dbl> <dbl>  <dbl>
-#> 1 0.889 0.0190 0.135  0.828 0.169 
-#> 2 0.371 0.693  0.654  0.311 0.0621
-#> 3 0.728 0.461  0.416  0.242 0.563 
-#> 4 0.706 0.969  0.0765 0.257 0.424 
-#> 5 0.668 0.765  0.993  0.989 0.689 
-#> 6 0.896 0.850  0.974  0.295 0.117 
+#>       V9    V8    V5    V2    V6
+#>    <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1 0.626  0.447 0.448 0.153 0.948
+#> 2 0.0938 0.451 0.104 0.732 0.298
+#> 3 0.938  0.103 0.431 0.165 0.970
+#> 4 0.898  0.530 0.605 0.450 0.385
+#> 5 0.736  0.411 0.597 0.825 0.230
+#> 6 0.923  0.403 0.604 0.508 0.635
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>      V9     V8    V7     V6
-#>   <dbl>  <dbl> <dbl>  <dbl>
-#> 1 0.889 0.0190 0.460 0.169 
-#> 2 0.371 0.693  0.700 0.0621
-#> 3 0.728 0.461  0.802 0.563 
-#> 4 0.706 0.969  0.903 0.424 
-#> 5 0.668 0.765  0.111 0.689 
-#> 6 0.896 0.850  0.180 0.117 
+#>       V9    V8     V7    V6
+#>    <dbl> <dbl>  <dbl> <dbl>
+#> 1 0.626  0.447 0.923  0.948
+#> 2 0.0938 0.451 0.600  0.298
+#> 3 0.938  0.103 0.0313 0.970
+#> 4 0.898  0.530 0.969  0.385
+#> 5 0.736  0.411 0.522  0.230
+#> 6 0.923  0.403 0.486  0.635
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -430,12 +430,12 @@ dat_lng
 #> # A tibble: 9 x 4
 #>   subject sex   experiment   value
 #>   <chr>   <chr> <chr>        <dbl>
-#> 1 Tim     M     control       23.0
-#> 2 Ann     F     control       31.0
-#> 3 Jill    F     control       30.0
-#> 4 Tim     M     experiment_1  34.0
-#> 5 Ann     F     experiment_1  38.0
-#> 6 Jill    F     experiment_1  36.0
+#> 1 Tim     M     control        23.
+#> 2 Ann     F     control        31.
+#> 3 Jill    F     control        30.
+#> 4 Tim     M     experiment_1   34.
+#> 5 Ann     F     experiment_1   38.
+#> 6 Jill    F     experiment_1   36.
 #> # ... with 3 more rows
 group_by(dat_lng, sex, experiment) %>% 
   summarise(MEAN = mean(value), 
@@ -520,12 +520,12 @@ mutate(dat_lng, log_value = log(value))
 #> # A tibble: 9 x 5
 #>   subject sex   experiment   value log_value
 #>   <chr>   <chr> <chr>        <dbl>     <dbl>
-#> 1 Tim     M     control       23.0      3.14
-#> 2 Ann     F     control       31.0      3.43
-#> 3 Jill    F     control       30.0      3.40
-#> 4 Tim     M     experiment_1  34.0      3.53
-#> 5 Ann     F     experiment_1  38.0      3.64
-#> 6 Jill    F     experiment_1  36.0      3.58
+#> 1 Tim     M     control        23.      3.14
+#> 2 Ann     F     control        31.      3.43
+#> 3 Jill    F     control        30.      3.40
+#> 4 Tim     M     experiment_1   34.      3.53
+#> 5 Ann     F     experiment_1   38.      3.64
+#> 6 Jill    F     experiment_1   36.      3.58
 #> # ... with 3 more rows
 ```
 
@@ -569,12 +569,12 @@ group_by(dat_lng, sex) %>%
 #> # Groups:   sex [2]
 #>   subject sex   experiment   value norm_value n2_val
 #>   <chr>   <chr> <chr>        <dbl>      <dbl>  <dbl>
-#> 1 Tim     M     control       23.0      0.711   2.67
-#> 2 Ann     F     control       31.0      0.842   5.47
-#> 3 Jill    F     control       30.0      0.814   5.29
-#> 4 Tim     M     experiment_1  34.0      1.05    3.94
-#> 5 Ann     F     experiment_1  38.0      1.03    6.70
-#> 6 Jill    F     experiment_1  36.0      0.977   6.35
+#> 1 Tim     M     control        23.      0.711   2.67
+#> 2 Ann     F     control        31.      0.842   5.47
+#> 3 Jill    F     control        30.      0.814   5.29
+#> 4 Tim     M     experiment_1   34.      1.05    3.94
+#> 5 Ann     F     experiment_1   38.      1.03    6.70
+#> 6 Jill    F     experiment_1   36.      0.977   6.35
 #> # ... with 3 more rows
 ```
 
@@ -588,12 +588,12 @@ mutate(dat_lng,
 #> # A tibble: 9 x 6
 #>   subject sex   experiment   value norm_value n2_val
 #>   <chr>   <chr> <chr>        <dbl>      <dbl>  <dbl>
-#> 1 Tim     M     control       23.0      0.651   3.48
-#> 2 Ann     F     control       31.0      0.877   4.69
-#> 3 Jill    F     control       30.0      0.849   4.54
-#> 4 Tim     M     experiment_1  34.0      0.962   5.14
-#> 5 Ann     F     experiment_1  38.0      1.08    5.75
-#> 6 Jill    F     experiment_1  36.0      1.02    5.44
+#> 1 Tim     M     control        23.      0.651   3.48
+#> 2 Ann     F     control        31.      0.877   4.69
+#> 3 Jill    F     control        30.      0.849   4.54
+#> 4 Tim     M     experiment_1   34.      0.962   5.14
+#> 5 Ann     F     experiment_1   38.      1.08    5.75
+#> 6 Jill    F     experiment_1   36.      1.02    5.44
 #> # ... with 3 more rows
 ```
 
@@ -664,17 +664,17 @@ library(stringr)
 #> # A tibble: 3 x 2
 #>   time  value
 #>   <chr> <dbl>
-#> 1 t0     2.00
-#> 2 t1     4.00
-#> 3 t12    9.00
+#> 1 t0       2.
+#> 2 t1       4.
+#> 3 t12      9.
 get_numeric <- function(x, ...) as.numeric(str_replace_all(x, ...))
 (bad.df <- mutate_at(bad.df, "time", get_numeric, pattern = "t", replacement = ""))
 #> # A tibble: 3 x 2
 #>    time value
 #>   <dbl> <dbl>
-#> 1  0     2.00
-#> 2  1.00  4.00
-#> 3 12.0   9.00
+#> 1    0.    2.
+#> 2    1.    4.
+#> 3   12.    9.
 ```
 
 now we have a numeric time column, which can be used in plotting.
@@ -688,16 +688,16 @@ library(readr)
 #> # A tibble: 3 x 2
 #>   time  value
 #>   <chr> <dbl>
-#> 1 t0     2.00
-#> 2 t1     4.00
-#> 3 t12    9.00
+#> 1 t0       2.
+#> 2 t1       4.
+#> 3 t12      9.
 mutate_at(bad.df, "time", parse_number)
 #> # A tibble: 3 x 2
 #>    time value
 #>   <dbl> <dbl>
-#> 1  0     2.00
-#> 2  1.00  4.00
-#> 3 12.0   9.00
+#> 1    0.    2.
+#> 2    1.    4.
+#> 3   12.    9.
 ```
 
 Here we did the same thing more elegantly by directly parsing numbers from a character string.
@@ -721,23 +721,23 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 (df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand")))
 #> # A tibble: 1 x 3
 #>   country cases thousand
-#> * <chr>   <chr> <chr>   
+#>   <chr>   <chr> <chr>   
 #> 1 Albania 80    1000
 (df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = "/"))
 #> # A tibble: 1 x 3
 #>   country cases thousand
-#> * <chr>   <chr> <chr>   
+#>   <chr>   <chr> <chr>   
 #> 1 Albania 80    1000
 (df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = 2))
 #> # A tibble: 1 x 3
 #>   country cases thousand
-#> * <chr>   <chr> <chr>   
+#>   <chr>   <chr> <chr>   
 #> 1 Albania 80    /1000
 (df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = -6))
 #> # A tibble: 1 x 3
 #>   country cases thousand
-#> * <chr>   <chr> <chr>   
-#> 1 Albania 80    /1000
+#>   <chr>   <chr> <chr>   
+#> 1 Albania 8     0/1000
 ```
 
 
@@ -747,14 +747,14 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1  1.00 Procaryota; Bacteria; Alpha-Proteobacteria; E…
-#> 2  2.00 Eukaryota; Chordata
+#> 1    1. Procaryota; Bacteria; Alpha-Proteobacteria; E…
+#> 2    2. Eukaryota; Chordata
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '; ', extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
 #>   index riik       hmk      klass           perekond  
-#> * <dbl> <chr>      <chr>    <chr>           <chr>     
-#> 1  1.00 Procaryota Bacteria Alpha-Proteoba… Escharich…
-#> 2  2.00 Eukaryota  Chordata <NA>            <NA>
+#>   <dbl> <chr>      <chr>    <chr>           <chr>     
+#> 1    1. Procaryota Bacteria Alpha-Proteoba… Escharich…
+#> 2    2. Eukaryota  Chordata <NA>            <NA>
 ```
 
 
@@ -765,14 +765,14 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1  1.00 Prokaryota || Bacteria || Alpha-Proteobacteri…
-#> 2  2.00 Eukaryota || Chordata
+#> 1    1. Prokaryota || Bacteria || Alpha-Proteobacteri…
+#> 2    2. Eukaryota || Chordata
 (d1 <- dat %>% separate(taxon, c("riik", "hmk", "klass", "perekond"), sep = "\\|\\|", extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
 #>   index riik          hmk          klass     perekond 
-#> * <dbl> <chr>         <chr>        <chr>     <chr>    
-#> 1  1.00 "Prokaryota " " Bacteria " " Alpha-… " Eschar…
-#> 2  2.00 "Eukaryota "  " Chordata"  <NA>      <NA>
+#>   <dbl> <chr>         <chr>        <chr>     <chr>    
+#> 1    1. "Prokaryota " " Bacteria " " Alpha-… " Eschar…
+#> 2    2. "Eukaryota "  " Chordata"  <NA>      <NA>
 ```
 
 
@@ -782,9 +782,9 @@ dat <- tibble(index = c(1, 2),
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[.]', extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
 #>   index riik       hmk      klass           perekond  
-#> * <dbl> <chr>      <chr>    <chr>           <chr>     
-#> 1  1.00 Prokaryota Bacteria Alpha-Proteoba… Escharich…
-#> 2  2.00 Eukaryota  Chordata <NA>            <NA>
+#>   <dbl> <chr>      <chr>    <chr>           <chr>     
+#> 1    1. Prokaryota Bacteria Alpha-Proteoba… Escharich…
+#> 2    2. Eukaryota  Chordata <NA>            <NA>
 ```
 
 
@@ -794,14 +794,14 @@ dat <- tibble(index = c(1, 2),
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1  1.00 Prokaryota.Bacteria,Alpha-Proteobacteria.Esch…
-#> 2  2.00 Eukaryota.Chordata
+#> 1    1. Prokaryota.Bacteria,Alpha-Proteobacteria.Esch…
+#> 2    2. Eukaryota.Chordata
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[,\\.]', extra = "merge", fill = "right"))
 #> # A tibble: 2 x 5
 #>   index riik       hmk      klass           perekond  
-#> * <dbl> <chr>      <chr>    <chr>           <chr>     
-#> 1  1.00 Prokaryota Bacteria Alpha-Proteoba… Escharich…
-#> 2  2.00 Eukaryota  Chordata <NA>            <NA>
+#>   <dbl> <chr>      <chr>    <chr>           <chr>     
+#> 1    1. Prokaryota Bacteria Alpha-Proteoba… Escharich…
+#> 2    2. Eukaryota  Chordata <NA>            <NA>
 ```
 
 The companion FUN to separate is `unite()` - see help.

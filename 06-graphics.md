@@ -1069,12 +1069,12 @@ Igal juhul, kui valimi suurus on piisav ja normaaljaotus pole meie andmetest lii
 #> # A tibble: 7 x 2
 #>   CI_percentage nr_of_SEMs
 #>           <dbl>      <dbl>
-#> 1          50.0      0.675
-#> 2          75.0      1.15 
-#> 3          90.0      1.64 
-#> 4          95.0      1.96 
-#> 5          97.0      2.17 
-#> 6          99.0      2.58 
+#> 1           50.      0.675
+#> 2           75.      1.15 
+#> 3           90.      1.64 
+#> 4           95.      1.96 
+#> 5           97.      2.17 
+#> 6           99.      2.58 
 #> # ... with 1 more row
 ```
 
@@ -1832,7 +1832,7 @@ Kuidas võrrelda kahte jaotust? Kõige lihtsam on joonistada bihistogramm, mis t
 
 ```r
 library(Hmisc)
-histbackback(iris[,1:2])
+histbackback(iris$Sepal.Length, iris$Sepal.Width)
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1844,11 +1844,7 @@ Selleks on parim viis kvantiil-kvantiil plot ehk qq-plot. Kvantiil tähendab lih
 
 QQ-plot annab lihtsalt empiiriliste andmete kvantiilid (y teljel) teoreetilise jaotuse kvantiilide vastu (x teljel). Punktide arv graafikul vastab teie andmepunktide arvule. Referentsjoon oma 95% veapiiridega (punased katkendjooned) vastab ideaalsele olukorrale, kus teie andmete jaotus vastab teoreetilisele jaotusele (milleks on enamasti normaaljaotus). 
 
-
-
-
-
-
+Kõigepealt demonstreerime siiski olukorda, kus meie andmed on normaaljaotusega ja me võrdleme neid teoreetilise lognormaaljaotuse vastu. Võrdluseks saame kasutada kõiki R-s defineeritud jaotusi (distribution = "jaotus").
 
 ```r
 library(car)
@@ -1881,13 +1877,288 @@ Ja siis qq-plotid normaaljaotuse vastu:
 par(mfrow = c(2, 2))
 qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotusega.
 qqPlot(rchisq(100, df=2), main = "chi square vs normal")
-qqPlot(rbeta(100, 3, 3), main = "beta vs normal")
-qqPlot(rbeta(100, 0.4, 0.4), main = "two peaked beata vs normal")
+qqPlot(rbeta(100, 2, 2), main = "beta vs normal")
+qqPlot(rbeta(100, 0.4, 0.4), main = "two peaked beta vs normal")
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-132-1.svg" width="70%" style="display: block; margin: auto;" />
 
+Nagu näha, beta jaotus, mis on normaaljaotusest palju laiem, on qq-plotil sellest halvasti eristatav. Erinevus on väga madalatel ja väga kõrgetel kvantiilidel (jaotuste otstes).
 
-F
+Ja exponentsiaalse jaotuse korral:
+
+```r
+y <- rexp(100)
+par(mfrow=c(1,2))
+plot(dexp(seq(0, 5, length=100)), main="exponential distr.") 
+qqPlot(y, main = "exponential vs normal")
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-133-1.svg" width="70%" style="display: block; margin: auto;" />
+
+QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide tolmukate pikkuste ja tolmukate laiuste jaotusi (vt ka peatüki algusest bihistogrammi). Selle meetodi oluline eelis on, et võrreldavad jaotused võivad olla erineva suurusega (N-ga). Siin kasutame base::R qqplot() funktsiooni.
 
 
+```r
+qqplot(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-134-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka pikkus > 7.5 ja tolmuka laius > 3.6.
+
+## Heat map
+
+Heat map asendab tabelis numbrid värvidega, muutes nii keerulised tabelid kiiremini haaratavateks. Samas, inimese aju ei ole kuigi edukas värvitoone pidevate muutujate numbrilisteks väärtusteks tagasi konverteerima, mis tähendab, et heat map võimaldab lugejal kiiresti haarata mustreid andmetes, aga ei võimalda teha täpseid võrdlusi tabeli üksikute lahtrite vahel. 
+
+Kõigepealt lihtne heat map, kus irise tabeli numbrilistes veergudes on asendatud arvud värvitoonidega, aga tabeli üldine kuju ei muutu: 
+
+```r
+library(pheatmap)
+pheatmap(iris[1:4], fontsize_row = 3, cluster_cols = FALSE, cluster_rows = FALSE)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-135-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifitseerimist. Seega lisanduvad heat mapile ka dendrogrammid.
+
+
+```r
+pheatmap(iris[1:4], fontsize_row = 3)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-136-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest. Kõigepealt jagab dendrogramm vaatlused paaridesse, misjärel hakkab järk-järgult lähimaid paare klastritesse ühendama kuni lõpuks kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks -- seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest. 
+
+
+Nüüd me ütleme, et me tahame oma irise liigid ajada täpselt kolme k-means klastrisse.
+NB! k-means klustrid on arvutatud hoopis teisel viisil kui eelmisel joonisel olevad hierarhilised klastrid. Siin alustame k = 3 tsentroidist, assigneerime iga andmepunkti oma lähimale tsentroidile, arvutame tsentroidid ümber kui klastri kõikide andmepunktide keskmised, assigneerime uuesti kõik andmepunktid oma tsentroidile ja kordame seda tsüklit näiteks 10 korda. 
+
+
+```r
+a <- pheatmap(iris[1:4], kmeans_k = 3)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-137-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Lisame klastrid irise tabelisse
+
+
+```r
+iris$cluster <- a$kmeans$cluster
+head(iris, 3)
+#> # A tibble: 3 x 6
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width
+#>          <dbl>       <dbl>        <dbl>       <dbl>
+#> 1         5.10        3.50         1.40       0.200
+#> 2         4.90        3.00         1.40       0.200
+#> 3         4.70        3.20         1.30       0.200
+#> # ... with 2 more variables: Species <fct>,
+#> #   cluster <int>
+```
+
+Vaatame, kui hästi klastrid tabavad kolme irise liiki:
+
+```r
+table(iris$Species, iris$cluster)
+#>             
+#>               1  2  3
+#>   setosa      0 50  0
+#>   versicolor  2  0 48
+#>   virginica  36  0 14
+```
+
+Ja sama graafiliselt:
+
+```r
+ggplot(iris, aes(factor(cluster), Species)) + geom_count()
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikkusi on lihtsam võrrelda kui pindalasid eelmisel graafikul):
+
+```r
+library(vcd)
+iris_x <- iris %>% select(Species, cluster)
+iris_x$cluster <- as.factor(iris_x$cluster)
+mosaic(~Species + cluster, data= iris_x, shade=T, legend=T)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" />
+
+### Korrelatsioonimaatriksid heat mapina
+
+Heat map on ka hea viis visualiseerida korrelatsioonimaatrikseid.
+
+Kõigepealt tavaline scatterplot maatriks.
+
+```r
+plot(iris[1:4], col=iris$Species)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-142-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime mustrite parema nägemise huvides ka andmetulbad ümber (order=TRUE), seekord kasutades selleks peakomponent analüüsi (PCA).
+
+```r
+library(corrgram)
+corrgram(iris[1:4], order = TRUE, lower.panel=corrgram::panel.shade,
+         upper.panel=panel.cor, diag.panel=panel.density)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-143-1.svg" width="70%" style="display: block; margin: auto;" />
+
+### Paraleelkoordinaatgraafik
+
+Alternatiivne võimalus on scatterplot maatriksile on joonistada grrafik läbi paraleelsete koordinaatide. 
+
+
+```r
+library(MASS)
+parcoord(iris[1:4], col = iris$Species, var.label = TRUE, lwd = 1)
+par(xpd = TRUE)
+legend(x = 1.75, y = -.25, cex = 1,
+   legend = as.character(levels(iris$Species)),
+    fill = unique(iris$Species), horiz = TRUE)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-144-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teistest eristada.
+
+### Korrelatsioonid võrgustikuna
+
+Võrgustik koosneb sõlmedest ja nende vahel olevatest servadest (nodes and edges). Meie eesmärk on joonisel näidata sõlmedena ainult need muutujaid, millel esineb mingist meie poolt etteantud numbrist suurem korrelatsioon mõne teise muutujaga. Korrelatsioone endid tähistavad võrgu servad. Järgnevasse voogu, kuhu sisestame kogu mtcars tabeli, lähevad ainult numbrilised muutujad (faktormuutujad tuleb tabelist välja visata).
+
+
+```r
+library(corrr)
+library(igraph)
+library(ggraph)
+
+tidy_cors <- mtcars %>% 
+  correlate() %>% 
+  stretch()
+
+# Convert correlations stronger than some value
+# to an undirected graph object
+graph_cors <- tidy_cors %>% 
+  filter(abs(r) > 0.6) %>% 
+  graph_from_data_frame(directed = FALSE)
+
+# Plot
+ggraph(graph_cors) +
+  geom_edge_link(alpha=0.2) +
+  geom_node_point() +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_graph()
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.
+
+Kenam (ja informatiivsem) versioon eelmisest on
+
+```r
+ggraph(graph_cors) +
+  geom_edge_link(aes(edge_alpha = abs(r), edge_width = abs(r), color = r)) +
+  guides(edge_alpha = "none", edge_width = "none") +
+  scale_edge_colour_gradientn(limits = c(-1, 1), colors = c( "dodgerblue2", "firebrick2")) +
+  geom_node_point(color = "white", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_graph() 
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+
+#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x
+#> $label), x$x, x$y, : font family 'Arial Narrow' not
+#> found in PostScript font database
+#> Warning in grid.Call.graphics(C_text,
+#> as.graphicsAnnot(x$label), x$x, x$y, : font family
+#> 'Arial Narrow' not found in PostScript font database
+
+#> Warning in grid.Call.graphics(C_text,
+#> as.graphicsAnnot(x$label), x$x, x$y, : font family
+#> 'Arial Narrow' not found in PostScript font database
+
+#> Warning in grid.Call.graphics(C_text,
+#> as.graphicsAnnot(x$label), x$x, x$y, : font family
+#> 'Arial Narrow' not found in PostScript font database
+
+#> Warning in grid.Call.graphics(C_text,
+#> as.graphicsAnnot(x$label), x$x, x$y, : font family
+#> 'Arial Narrow' not found in PostScript font database
+
+#> Warning in grid.Call.graphics(C_text,
+#> as.graphicsAnnot(x$label), x$x, x$y, : font family
+#> 'Arial Narrow' not found in PostScript font database
+
+#> Warning in grid.Call.graphics(C_text,
+#> as.graphicsAnnot(x$label), x$x, x$y, : font family
+#> 'Arial Narrow' not found in PostScript font database
+
+#> Warning in grid.Call.graphics(C_text,
+#> as.graphicsAnnot(x$label), x$x, x$y, : font family
+#> 'Arial Narrow' not found in PostScript font database
+
+#> Warning in grid.Call.graphics(C_text,
+#> as.graphicsAnnot(x$label), x$x, x$y, : font family
+#> 'Arial Narrow' not found in PostScript font database
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti -- vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).
