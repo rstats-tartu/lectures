@@ -784,7 +784,7 @@ diffplotp <- ggplot(my.data, aes(baseline, diffp)) +
 ggMarginal(diffplotp, type = "histogram", bins = 25)
 ```
 
-# Kümme graafikut, mida sa peaksid enne surma joonistama
+# Tosin graafikut, mida sa peaksid enne surma joonistama
 
 Andmete plottimisel otsib analüütik tasakaalu informatsioonikao ja trendide/mustrite/kovarieeruvuste nähtavaks tegemise vahel. 
 Idee on siin, et teie andmed võivad sisaldada a) juhuslikku müra, b) trende/mustreid, mis teile suurt huvi ei paku ja c) teid huvitavaid varjatud mustreid. 
@@ -1549,40 +1549,55 @@ qqPlot(rnorm(100), distribution = "lnorm")
 ```
 
 Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
-```{r echo=FALSE}
-par(mfrow = c(2, 2))
-plot(dnorm(seq(0,6, length.out = 100), 3, 1), main = "normal") 
-plot(dlnorm(seq(0,4, length.out = 100)), main = "log normal") 
-plot(dt(seq(-4,4, length.out = 100), df=2), main = "student t") 
-plot(c(dnorm(seq(-3,6, length.out = 50)), dnorm(seq(-3,6, length.out = 50), 4, 1)), main = "2 peaked normal") 
 
-```
-
-Ja siis qq-plotid
 ```{r}
-par(mfrow = c(2, 2))
+par(mfrow = c(1, 2))
+plot(dnorm(seq(0,6, length.out = 100), 3, 1), main = "normal")
 qqPlot(rnorm(100, 3, 1), main = "normal vs normal") #default on vrdls normaaljaotusega.
-qqPlot(rlnorm(100), main = "log normal vs normal")
-qqPlot(rt(100, df=2), main = "students t vs normal")
-qqPlot(c(rnorm(50), rnorm(50, 4,1)), main = "two peaked normal vs normal")
-
 ```
+
+```{r}
+par(mfrow = c(1, 2))
+plot(dlnorm(seq(0,4, length.out = 100)), main = "log normal") 
+qqPlot(rlnorm(100), main = "log normal vs normal")
+```
+
+
+```{r}
+par(mfrow = c(1, 2))
+plot(dt(seq(-4,4, length.out = 100), df=2), main = "student t") 
+qqPlot(rt(100, df=2), main = "students t vs normal")
+```
+
+```{r}
+par(mfrow = c(1, 2))
+plot(c(dnorm(seq(-3,6, length.out = 50)), dnorm(seq(-3,6, length.out = 50), 4, 1)), main = "2 peaked normal") 
+qqPlot(c(rnorm(50), rnorm(50, 4,1)), main = "two peaked normal vs normal")
+```
+
+```{r}
+par(mfrow = c(1, 2))
+plot(dunif(seq(0, 1, length=100))) 
+qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotusega.
+```
+
+```{r}
+par(mfrow = c(1, 2))
+plot(dchisq(seq(0, 2, length=100), df=2)) 
+qqPlot(rchisq(100, df=2), main = "chi square vs normal")
+```
+
+```{r}
+par(mfrow = c(1, 2))
+plot(dbeta(seq(0, 1, length=100), 2, 2)) 
+qqPlot(rbeta(100, 2, 2), main = "beta vs normal")
+```
+
 
 Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 ```{r echo=FALSE}
-par(mfrow = c(2, 2))
-plot(dunif(seq(0, 1, length=100))) 
-plot(dchisq(seq(0, 2, length=100), df=2)) 
-plot(dbeta(seq(0, 1, length=100), 2, 2)) 
+par(mfrow = c(1, 2))
 plot(dbeta(seq(0, 1, length=100), 0.4, 0.4)) 
-```
-
-Ja siis qq-plotid normaaljaotuse vastu:
-```{r}
-par(mfrow = c(2, 2))
-qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotusega.
-qqPlot(rchisq(100, df=2), main = "chi square vs normal")
-qqPlot(rbeta(100, 2, 2), main = "beta vs normal")
 qqPlot(rbeta(100, 0.4, 0.4), main = "two peaked beta vs normal")
 ```
 
@@ -1617,8 +1632,8 @@ pheatmap(iris[1:4], fontsize_row = 3, cluster_cols = FALSE, cluster_rows = FALSE
 
 Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifitseerimist. Seega lisanduvad heat mapile ka dendrogrammid.
 
-```{r }
-pheatmap(iris[1:4], fontsize_row = 3)
+```{r fig.height=4, fig.width=3}
+pheatmap(iris[1:4], fontsize_row = 5)
 ```
 
 Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest. Kõigepealt jagab dendrogramm vaatlused paaridesse, misjärel hakkab järk-järgult lähimaid paare klastritesse ühendama kuni lõpuks kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks -- seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest. 
@@ -1631,15 +1646,10 @@ NB! k-means klustrid on arvutatud hoopis teisel viisil kui eelmisel joonisel ole
 a <- pheatmap(iris[1:4], kmeans_k = 3)
 ```
 
-Lisame klastrid irise tabelisse
+Lisame klastrid irise tabelisse ja vaatame, kui hästi klastrid tabavad kolme irise liiki:
 
 ```{r}
 iris$cluster <- a$kmeans$cluster
-head(iris, 3)
-```
-
-Vaatame, kui hästi klastrid tabavad kolme irise liiki:
-```{r}
 table(iris$Species, iris$cluster)
 ```
 
@@ -1653,7 +1663,7 @@ Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikku
 library(vcd)
 iris_x <- iris %>% select(Species, cluster)
 iris_x$cluster <- as.factor(iris_x$cluster)
-mosaic(~Species + cluster, data= iris_x, shade=T, legend=T)
+mosaic(~Species + cluster, data= iris_x, shade=T, legend=FALSE)
 ```
 
 ### Korrelatsioonimaatriksid heat mapina
@@ -1717,7 +1727,7 @@ ggraph(graph_cors) +
 Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.
 
 Kenam (ja informatiivsem) versioon eelmisest on
-```{r}
+```{r warning=FALSE, message=FALSE}
 ggraph(graph_cors) +
   geom_edge_link(aes(edge_alpha = abs(r), edge_width = abs(r), color = r)) +
   guides(edge_alpha = "none", edge_width = "none") +
