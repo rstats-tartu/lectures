@@ -1659,7 +1659,7 @@ ggplot(iris, aes(factor(cluster), Species)) + geom_count()
 ```
 
 Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikkusi on lihtsam võrrelda kui pindalasid eelmisel graafikul):
-```{r}
+```{r message=F, warning=FALSE}
 library(vcd)
 iris_x <- iris %>% select(Species, cluster)
 iris_x$cluster <- as.factor(iris_x$cluster)
