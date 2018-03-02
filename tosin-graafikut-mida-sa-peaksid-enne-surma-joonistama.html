@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
+  <meta name="generator" content="bookdown 0.7.1 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="img/cover.png" />
+  <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
+  <meta name="github-repo" content="rstats-tartu/lectures" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  
+  <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
+  <meta name="twitter:image" content="img/cover.png" />
+
+<meta name="author" content="Taavi Päll, Ülo Maiväli">
+
+
+<meta name="date" content="2018-03-02">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="graafilised-lahendused.html">
+<link rel="next" href="tidyverse.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Reprodutseeritav andmeanalüüs R programmiga</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Haara kannel, Vanemuine!</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Sissejuhatus</a></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> Tarkvaratööriistad</a><ul>
+<li class="chapter" data-level="2.1" data-path="tools.html"><a href="tools.html#installeeri-vajalikud-programmid"><i class="fa fa-check"></i><b>2.1</b> Installeeri vajalikud programmid</a></li>
+<li class="chapter" data-level="2.2" data-path="tools.html"><a href="tools.html#loo-githubi-konto"><i class="fa fa-check"></i><b>2.2</b> Loo GitHubi konto</a></li>
+<li class="chapter" data-level="2.3" data-path="tools.html"><a href="tools.html#loo-uus-r-projekt"><i class="fa fa-check"></i><b>2.3</b> Loo uus R projekt</a></li>
+<li class="chapter" data-level="2.4" data-path="tools.html"><a href="tools.html#git-merge-konfliktid"><i class="fa fa-check"></i><b>2.4</b> Git <em>Merge</em> konfliktid</a></li>
+<li class="chapter" data-level="2.5" data-path="tools.html"><a href="tools.html#r-projekti-kataloogi-soovitatav-minimaalne-struktuur"><i class="fa fa-check"></i><b>2.5</b> R projekti kataloogi soovitatav minimaalne struktuur</a></li>
+<li class="chapter" data-level="2.6" data-path="tools.html"><a href="tools.html#libs"><i class="fa fa-check"></i><b>2.6</b> Pakettide installeerimine</a></li>
+<li class="chapter" data-level="2.7" data-path="tools.html"><a href="tools.html#r-repositooriumid"><i class="fa fa-check"></i><b>2.7</b> R repositooriumid</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="calc.html"><a href="calc.html"><i class="fa fa-check"></i><b>3</b> R on kalkulaator</a><ul>
+<li class="chapter" data-level="3.1" data-path="calc.html"><a href="calc.html#sama-koodi-saab-kirjutada-neljal-viisil"><i class="fa fa-check"></i><b>3.1</b> Sama koodi saab kirjutada neljal viisil</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="obj.html"><a href="obj.html"><i class="fa fa-check"></i><b>4</b> R objektid</a><ul>
+<li class="chapter" data-level="4.1" data-path="obj.html"><a href="obj.html#objekt-ja-nimi"><i class="fa fa-check"></i><b>4.1</b> Objekt ja nimi</a></li>
+<li class="chapter" data-level="4.2" data-path="obj.html"><a href="obj.html#nimede-vorm"><i class="fa fa-check"></i><b>4.2</b> Nimede vorm</a></li>
+<li class="chapter" data-level="4.3" data-path="obj.html"><a href="obj.html#andmete-tuubid"><i class="fa fa-check"></i><b>4.3</b> Andmete tüübid</a></li>
+<li class="chapter" data-level="4.4" data-path="obj.html"><a href="obj.html#vektor"><i class="fa fa-check"></i><b>4.4</b> Vektor</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="obj.html"><a href="obj.html#uus-vektor-seq-ja-rep"><i class="fa fa-check"></i><b>4.4.1</b> Uus vektor: <code>seq()</code> ja <code>rep()</code></a></li>
+<li class="chapter" data-level="4.4.2" data-path="obj.html"><a href="obj.html#tehted-arvuliste-vektoritega"><i class="fa fa-check"></i><b>4.4.2</b> Tehted arvuliste vektoritega</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="obj.html"><a href="obj.html#list"><i class="fa fa-check"></i><b>4.5</b> List</a></li>
+<li class="chapter" data-level="4.6" data-path="obj.html"><a href="obj.html#data-frame-ja-tibble"><i class="fa fa-check"></i><b>4.6</b> data frame ja tibble</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="obj.html"><a href="obj.html#rekodeerime-tibble-vaartusi"><i class="fa fa-check"></i><b>4.6.1</b> Rekodeerime tibble väärtusi</a></li>
+<li class="chapter" data-level="4.6.2" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-rea-kaupa"><i class="fa fa-check"></i><b>4.6.2</b> Ühendame kaks tibblet rea kaupa</a></li>
+<li class="chapter" data-level="4.6.3" data-path="obj.html"><a href="obj.html#uhendame-kaks-tibblet-veeru-kaupa"><i class="fa fa-check"></i><b>4.6.3</b> ühendame kaks tibblet veeru kaupa</a></li>
+<li class="chapter" data-level="4.6.4" data-path="obj.html"><a href="obj.html#tabelite-uhendamine-join-ga"><i class="fa fa-check"></i><b>4.6.4</b> tabelite ühendamine join()-ga</a></li>
+<li class="chapter" data-level="4.6.5" data-path="obj.html"><a href="obj.html#nii-saab-tibblest-katte-vektori-millega-saab-tehteid-teha."><i class="fa fa-check"></i><b>4.6.5</b> Nii saab tibblest kätte vektori, millega saab tehteid teha.</a></li>
+<li class="chapter" data-level="4.6.6" data-path="obj.html"><a href="obj.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>4.6.6</b> Andmeraamide salvestamine (eksport-import)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="obj.html"><a href="obj.html#tabelit-sisse-lugedes-vaata-ule-na-d"><i class="fa fa-check"></i><b>4.7</b> Tabelit sisse lugedes vaata üle NA-d</a></li>
+<li class="chapter" data-level="4.8" data-path="obj.html"><a href="obj.html#matrix"><i class="fa fa-check"></i><b>4.8</b> Matrix</a></li>
+<li class="chapter" data-level="4.9" data-path="obj.html"><a href="obj.html#indekseerimine"><i class="fa fa-check"></i><b>4.9</b> Indekseerimine</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="obj.html"><a href="obj.html#vektorid-ja-nende-indeksid-on-uhedimensionaalsed"><i class="fa fa-check"></i><b>4.9.1</b> Vektorid ja nende indeksid on ühedimensionaalsed</a></li>
+<li class="chapter" data-level="4.9.2" data-path="obj.html"><a href="obj.html#andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-indeksid"><i class="fa fa-check"></i><b>4.9.2</b> Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid</a></li>
+<li class="chapter" data-level="4.9.3" data-path="obj.html"><a href="obj.html#listide-indekseerimine"><i class="fa fa-check"></i><b>4.9.3</b> Listide indekseerimine</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>5</b> Regular expression ja find &amp; replace</a><ul>
+<li class="chapter" data-level="5.1" data-path="regex.html"><a href="regex.html#common-operations-with-regular-expressions"><i class="fa fa-check"></i><b>5.1</b> Common operations with regular expressions</a></li>
+<li class="chapter" data-level="5.2" data-path="regex.html"><a href="regex.html#find-and-replace"><i class="fa fa-check"></i><b>5.2</b> Find and replace</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funs.html"><a href="funs.html"><i class="fa fa-check"></i><b>6</b> Funktsioonid on R keele verbid</a><ul>
+<li class="chapter" data-level="6.1" data-path="funs.html"><a href="funs.html#kirjutame-r-funktsiooni"><i class="fa fa-check"></i><b>6.1</b> Kirjutame R funktsiooni</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html"><i class="fa fa-check"></i><b>7</b> Graafilised lahendused</a><ul>
+<li class="chapter" data-level="7.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#baasgraafika"><i class="fa fa-check"></i><b>7.1</b> Baasgraafika</a></li>
+<li class="chapter" data-level="7.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#ggplot2"><i class="fa fa-check"></i><b>7.2</b> ggplot2</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#lisame-plotile-sirgjooni"><i class="fa fa-check"></i><b>7.2.1</b> Lisame plotile sirgjooni</a></li>
+<li class="chapter" data-level="7.2.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#segmendid-ja-nooled"><i class="fa fa-check"></i><b>7.2.2</b> Segmendid ja nooled</a></li>
+<li class="chapter" data-level="7.2.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#joongraafikud"><i class="fa fa-check"></i><b>7.2.3</b> Joongraafikud</a></li>
+<li class="chapter" data-level="7.2.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#punktide-tahistamise-trikid"><i class="fa fa-check"></i><b>7.2.4</b> Punktide tähistamise trikid</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#facet-pisigraafik"><i class="fa fa-check"></i><b>7.3</b> <em>Facet</em> – pisigraafik</a></li>
+<li class="chapter" data-level="7.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#mitu-graafikut-paneelidena-uhel-joonisel"><i class="fa fa-check"></i><b>7.4</b> Mitu graafikut paneelidena ühel joonisel</a></li>
+<li class="chapter" data-level="7.5" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#teljed"><i class="fa fa-check"></i><b>7.5</b> Teljed</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#telgede-ulatus"><i class="fa fa-check"></i><b>7.5.1</b> Telgede ulatus</a></li>
+<li class="chapter" data-level="7.5.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#log-skaalas-teljed"><i class="fa fa-check"></i><b>7.5.2</b> Log skaalas teljed</a></li>
+<li class="chapter" data-level="7.5.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#poorame-graafikut-90-kraadi"><i class="fa fa-check"></i><b>7.5.3</b> Pöörame graafikut 90 kraadi</a></li>
+<li class="chapter" data-level="7.5.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#muudame-telgede-markeeringuid"><i class="fa fa-check"></i><b>7.5.4</b> Muudame telgede markeeringuid</a></li>
+<li class="chapter" data-level="7.5.5" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#telgede-ja-legendi-nimed"><i class="fa fa-check"></i><b>7.5.5</b> telgede ja legendi nimed</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#graafiku-pealkiri-alapeakiri-ja-allkiri"><i class="fa fa-check"></i><b>7.6</b> Graafiku pealkiri, alapeakiri ja allkiri</a></li>
+<li class="chapter" data-level="7.7" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#graafiku-legend"><i class="fa fa-check"></i><b>7.7</b> Graafiku legend</a></li>
+<li class="chapter" data-level="7.8" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad"><i class="fa fa-check"></i><b>7.8</b> Värviskaalad</a><ul>
+<li class="chapter" data-level="7.8.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad-pidevatele-muutujatele"><i class="fa fa-check"></i><b>7.8.1</b> Värviskaalad pidevatele muutujatele</a></li>
+<li class="chapter" data-level="7.8.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad-faktormuutujatele"><i class="fa fa-check"></i><b>7.8.2</b> Värviskaalad faktormuutujatele</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#a-complex-ggplot"><i class="fa fa-check"></i><b>7.9</b> A complex ggplot</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><i class="fa fa-check"></i><b>8</b> Tosin graafikut, mida sa peaksid enne surma joonistama</a><ul>
+<li class="chapter" data-level="8.1" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#cleveland-plot"><i class="fa fa-check"></i><b>8.1</b> Cleveland plot</a></li>
+<li class="chapter" data-level="8.2" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#andmepunktid-mediaani-voi-aritmeetilise-keskmisega"><i class="fa fa-check"></i><b>8.2</b> Andmepunktid mediaani või aritmeetilise keskmisega</a></li>
+<li class="chapter" data-level="8.3" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#histogramm"><i class="fa fa-check"></i><b>8.3</b> Histogramm</a></li>
+<li class="chapter" data-level="8.4" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#tihedusplot"><i class="fa fa-check"></i><b>8.4</b> Tihedusplot</a></li>
+<li class="chapter" data-level="8.5" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#boxplot"><i class="fa fa-check"></i><b>8.5</b> Boxplot</a></li>
+<li class="chapter" data-level="8.6" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#joongraafikud-1"><i class="fa fa-check"></i><b>8.6</b> Joongraafikud</a></li>
+<li class="chapter" data-level="8.7" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#scatter-plot"><i class="fa fa-check"></i><b>8.7</b> Scatter plot</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#kaalutud-lineaarne-mudel"><i class="fa fa-check"></i><b>8.7.1</b> Kaalutud lineaarne mudel</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#tulpdiagramm"><i class="fa fa-check"></i><b>8.8</b> Tulpdiagramm</a></li>
+<li class="chapter" data-level="8.9" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#residuaalide-plot"><i class="fa fa-check"></i><b>8.9</b> Residuaalide plot</a></li>
+<li class="chapter" data-level="8.10" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#tukey-summa-erinevuse-graafik"><i class="fa fa-check"></i><b>8.10</b> Tukey summa-erinevuse graafik</a><ul>
+<li class="chapter" data-level="8.10.1" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#vulkaaniplot"><i class="fa fa-check"></i><b>8.10.1</b> Vulkaaniplot</a></li>
+</ul></li>
+<li class="chapter" data-level="8.11" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#qq-plot"><i class="fa fa-check"></i><b>8.11</b> QQ-plot</a></li>
+<li class="chapter" data-level="8.12" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#heat-map"><i class="fa fa-check"></i><b>8.12</b> Heat map</a><ul>
+<li class="chapter" data-level="8.12.1" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#korrelatsioonimaatriksid-heat-mapina"><i class="fa fa-check"></i><b>8.12.1</b> Korrelatsioonimaatriksid heat mapina</a></li>
+<li class="chapter" data-level="8.12.2" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#paraleelkoordinaatgraafik"><i class="fa fa-check"></i><b>8.12.2</b> Paraleelkoordinaatgraafik</a></li>
+<li class="chapter" data-level="8.12.3" data-path="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#korrelatsioonid-vorgustikuna"><i class="fa fa-check"></i><b>8.12.3</b> Korrelatsioonid võrgustikuna</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>9</b> Tidyverse</a><ul>
+<li class="chapter" data-level="9.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>9.1</b> Tidy tabeli struktuur</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>9.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
+<li class="chapter" data-level="9.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>9.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>9.2</b> dplyr ja selle viis verbi</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>9.2.1</b> <code>select()</code> columns</a></li>
+<li class="chapter" data-level="9.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>9.2.2</b> <code>filter()</code> rows</a></li>
+<li class="chapter" data-level="9.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>9.2.3</b> <code>summarise()</code></a></li>
+<li class="chapter" data-level="9.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>9.2.4</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="9.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>9.2.5</b> <code>mutate()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="tidyverse.html"><a href="tidyverse.html#grouped-filters"><i class="fa fa-check"></i><b>9.3</b> Grouped filters</a></li>
+<li class="chapter" data-level="9.4" data-path="tidyverse.html"><a href="tidyverse.html#separate-one-column-into-several"><i class="fa fa-check"></i><b>9.4</b> <code>separate()</code> one column into several</a></li>
+<li class="chapter" data-level="9.5" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>9.5</b> Faktorid</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="tidyverse.html"><a href="tidyverse.html#tekitame-faktortulba-keerulisemal-teel"><i class="fa fa-check"></i><b>9.5.1</b> tekitame faktortulba keerulisemal teel</a></li>
+<li class="chapter" data-level="9.5.2" data-path="tidyverse.html"><a href="tidyverse.html#droplevels-viskab-valja-kasutamata-faktori-tasemed"><i class="fa fa-check"></i><b>9.5.2</b> <code>droplevels()</code> viskab välja kasutamata faktori tasemed</a></li>
+<li class="chapter" data-level="9.5.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>9.5.3</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
+<li class="chapter" data-level="9.5.4" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>9.5.4</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
+<li class="chapter" data-level="9.5.5" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>9.5.5</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
+<li class="chapter" data-level="9.5.6" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>9.5.6</b> Rekodeerime pideva muutuja faktoriks</a></li>
+<li class="chapter" data-level="9.5.7" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>9.5.7</b> Muudame faktori tasemete järjekorda joonisel</a></li>
+<li class="chapter" data-level="9.5.8" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>9.5.8</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
+<li class="chapter" data-level="9.5.9" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>9.5.9</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
+<li class="chapter" data-level="9.5.10" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>9.5.10</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html"><i class="fa fa-check"></i><b>10</b> Statistilised mudelid</a><ul>
+<li class="chapter" data-level="10.1" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#suur-ja-vaike-maailm"><i class="fa fa-check"></i><b>10.1</b> Suur ja väike maailm</a></li>
+<li class="chapter" data-level="10.2" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#mudeli-vaike-maailm"><i class="fa fa-check"></i><b>10.2</b> Mudeli väike maailm</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#naide-aristoteles-ptolemaios-ja-kopernikus"><i class="fa fa-check"></i><b>10.2.1</b> Näide: Aristoteles, Ptolemaios ja Kopernikus</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#lineaarsed-mudelid"><i class="fa fa-check"></i><b>10.3</b> Lineaarsed mudelid</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#neli-moistet"><i class="fa fa-check"></i><b>10.3.1</b> Neli mõistet</a></li>
+<li class="chapter" data-level="10.3.2" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#mudeli-fittimine"><i class="fa fa-check"></i><b>10.3.2</b> Mudeli fittimine</a></li>
+<li class="chapter" data-level="10.3.3" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#kaks-lineaarse-mudeli-laiendust."><i class="fa fa-check"></i><b>10.3.3</b> kaks lineaarse mudeli laiendust.</a></li>
+<li class="chapter" data-level="10.3.4" data-path="statistilised-mudelid.html"><a href="statistilised-mudelid.html#interaktsioonimudel---uhe-prediktori-moju-soltub-teise-prediktori-vaartusest"><i class="fa fa-check"></i><b>10.3.4</b> Interaktsioonimudel - ühe prediktori mõju sõltub teise prediktori väärtusest</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliograafia.html"><a href="bibliograafia.html"><i class="fa fa-check"></i>Bibliograafia</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstats-tartu/lectures" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reprodutseeritav andmeanalüüs kasutades R keelt</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tosin-graafikut-mida-sa-peaksid-enne-surma-joonistama" class="section level1">
+<h1><span class="header-section-number">8</span> Tosin graafikut, mida sa peaksid enne surma joonistama</h1>
+<p>Andmete plottimisel otsib analüütik tasakaalu informatsioonikao ja trendide/mustrite/kovarieeruvuste nähtavaks tegemise vahel. Idee on siin, et teie andmed võivad sisaldada a) juhuslikku müra, b) trende/mustreid, mis teile suurt huvi ei paku ja c) teid huvitavaid varjatud mustreid. Kui andmeid on palju ja need on mürarikkad ja kui igavad trendid/mustrid varjavad huvitavaid trende/mustreid, siis aitab vahest andmete graafiline redutseerimine üldisemale kujule ja nende modelleerimine. Kui andmeid ei ole väga palju, siis tasuks siiski vältida infot kaotavaid graafikuid ning joonistada algsed või ümber arvutatud andmepunktid. Järgnevalt esitame valiku graafikutüüpe erinevat tüüpi andmetele.</p>
+<div id="cleveland-plot" class="section level2">
+<h2><span class="header-section-number">8.1</span> Cleveland plot</h2>
+<p>x- pidev muutuja; y - faktormuutuja</p>
+<p>Seda plotti kasuta a) kui iga muutja kohta on üks andmepunkt või b) kui soovid avaldada keskmise koos usalduspiiridega.</p>
+<blockquote>
+<p>Sageli lahendatakse sarnased ülesanded tulpdiagrammidega, mis ei ole aga üldiselt hea mõte, sest tulpdiagrammid juhivad asjatult tähelepanu tulpadele endile, pigem kui nende otstele, mis tegelikult andmete keskmist kajastavad. Kuna inimese aju tahab võrrelda tulpade kõrgusi suhtelistes, mitte absoluutsetes ühikutes (kui tulp A on 30% kõrgem kui tulp B, siis me näeme efekti suurust, mis on u 1/3), peavad tulbad algama mingilt oodatavalt baastasemelt (tavaliselt nullist). See aga võib muuta raskeks huvitavate efektide märkamise, kui need on protsentuaalselt väikesed. Näiteks 5%-ne CO2 taseme tõus atmosfääris on teaduslikult väga oluline, aga tulpdiagrammi korrektselt kasutades tuleb vaevu graafikult välja.</p>
+</blockquote>
+<p>Kõigepealt plottime, mitu korda esinevad diamond tabelis erinevate faktormuutuja clarity tasemetega teemandid (clarity igale tasemele vastab üks number – selle clarity-ga teemantite arv).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dd &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(clarity) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">number_of_diamonds =</span> <span class="kw">n</span>())
+
+dd <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> number_of_diamonds, 
+             <span class="dt">y =</span> <span class="kw">reorder</span>(clarity, number_of_diamonds))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">panel.grid.major.y =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&quot;grey60&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;clarity&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-69-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida väärtuste järgi.</p>
+<p>Järgmisel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. Usaldusintervallid annavad hinnangu meie ebakindlusele keskväärtuse (mitte näiteks algandmete) paiknemise kohta, arvestades meie valimi suurust ja sellest tulenevat valimiviga. 50% CI tähendab, et me oleme täpselt sama vähe üllatunud leides tõese väärtuse väljaspoolt intervalli, kui leides selle intervalli seest. 95% CI tähendab, et me oleme mõõdukalt veendunud, et tõene väärtus asub intervallis (aga me arvestame siiski, et ühel juhul 20-st ta ei tee seda). <strong>NB! Mõlemad tõlgendused eeldavad (vähemalt senikaua, kuni me kasutame ad hoc lahendusi), et meie andmetes esinev juhuslik varieeruvus on palju suurem kui seal leiduv suunatud varieeruvus (ehk bias).</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris1 &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(Sepal.Length), 
+            <span class="dt">SEM =</span> <span class="kw">sd</span>(Sepal.Length) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">nrow</span>(iris)))
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> iris1, <span class="kw">aes</span>(<span class="dt">x =</span> Mean, <span class="dt">y =</span> Species)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin =</span> Mean <span class="op">-</span><span class="st"> </span><span class="fl">0.675</span> <span class="op">*</span><span class="st"> </span>SEM, <span class="dt">xmax =</span> Mean <span class="op">+</span><span class="st"> </span><span class="fl">0.675</span> <span class="op">*</span><span class="st"> </span>SEM), <span class="dt">height =</span> <span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin =</span> Mean <span class="op">-</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>SEM, <span class="dt">xmax =</span> Mean <span class="op">+</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>SEM), <span class="dt">height =</span> <span class="fl">0.4</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">panel.grid.major.y =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&quot;grey60&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Sepal length with 50% and 95% CI&quot;</span>, 
+       <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-70-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Alternatiivne graafiku kuju:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> iris1, <span class="kw">aes</span>(<span class="dt">x =</span> Mean, <span class="dt">y =</span> Species)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">shape =</span> <span class="dv">108</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin =</span> Mean <span class="op">-</span><span class="st"> </span><span class="fl">0.675</span><span class="op">*</span>SEM, <span class="dt">xmax =</span> Mean <span class="op">+</span><span class="st"> </span><span class="fl">0.675</span><span class="op">*</span>SEM), <span class="dt">height =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin =</span> Mean <span class="op">-</span><span class="st"> </span><span class="fl">1.96</span><span class="op">*</span>SEM, <span class="dt">xmax =</span> Mean <span class="op">+</span><span class="st"> </span><span class="fl">1.96</span><span class="op">*</span>SEM), <span class="dt">height =</span> <span class="fl">0.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">panel.grid.major.y =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&quot;grey60&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Sepal length with 50% and 95% CI&quot;</span>, 
+       <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-71-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Pane tähele, et siin on usaldusintervallide arvutamiseks kasutatud mugavat <em>ad hoc</em> meetodit, mis eeldab muuhulgas, et valimi suurus ei ole väike. Kui n &lt; 30, või kui valimi andmejaotus on väga kaugel normaaljaotusest (jaotus on näiteks väga pika õlaga), soovitame usaldusintervalli arvutamiseks kasutada bayesiaanlikke meetodeid, mida tutvustame hilisemates peatükkides. Igal juhul, kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame kasutada järgmisi heuristikuid:</p>
+<pre><code>#&gt; # A tibble: 7 x 2
+#&gt;   CI_percentage nr_of_SEMs
+#&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+#&gt; 1           50.      0.675
+#&gt; 2           75.      1.15 
+#&gt; 3           90.      1.64 
+#&gt; 4           95.      1.96 
+#&gt; 5           97.      2.17 
+#&gt; 6           99.      2.58 
+#&gt; # ... with 1 more row</code></pre>
+<p>SEM on standardviga, mille arvutame jagades valimi standardhälbe ruutjuurega valimi suurusest N. Kuna CI sõltub SEM-ist, sõltub see muidugi ka N-st, aga mitte lineaarselt, vaid üle ruutjuure. See tähendab, et uuringu usaldusväärsuse tõstmine, tõstes N-i kipub olema progressiivselt kulukas protsess. Analoogiana võib siin tuua sportliku vormi tõstmine, kus trennis käimisega alustades on suhteliselt lihtne tõsta oma sooritust näiteks 20% võrra, aga peale aastast usinat rassimist tuleb juba teha väga tõsine pingutus, et saavutada veel 1% tõusu.</p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-73-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Nagu näha jooniselt, on meil tegu progresiivselt kallineva ülesandega: mida rohkem tahame usalduspiire kitsamaks muuta <strong>suhteliselt</strong> (mis on sama, mis öelda, et me tahame tõsta katse tundlikust), seda suurema tõusu peame tagama kogutud andmete hulgas <strong>absoluutarvuna</strong>.</p>
+</div>
+<div id="andmepunktid-mediaani-voi-aritmeetilise-keskmisega" class="section level2">
+<h2><span class="header-section-number">8.2</span> Andmepunktid mediaani või aritmeetilise keskmisega</h2>
+<p>x - faktormuutuja; y - pidev muutuja</p>
+<p>Kui N &lt; 20, siis on see tavaliselt parim valik sest säilitab maksimaalselt andmetes leiduvat informatsiooni.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Species, <span class="dt">y=</span>Sepal.Length)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.05</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> median, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">shape =</span> <span class="dv">95</span>, 
+               <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-74-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Siin on meil lausa 50 andmepunkti iga Irise liigi kohta ja graafik on ikkagi täitsa hästi loetav.</p>
+<p>Meil on võimalik teha sellest graafikust versioon, mis ei pane andmepunkti y skaalal täpselt õigesse kohta, vaid tekitab histogrammilaadsed andmebinnid, kus siiski iga punkt on eraldi näidatud. See lihtsustab veidi “kirjude” kompleksete andmete esitust, kuid kaotab informatsiooni andmepunktide täpse asukoha kohta. Eesmärk on muuta erinevused gruppide vahel paremini võrreldavaks.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p&lt;-<span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Species, <span class="dt">y=</span>Sepal.Length)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_dotplot</span>(<span class="dt">binaxis=</span><span class="st">&#39;y&#39;</span>, <span class="dt">stackdir=</span><span class="st">&#39;center&#39;</span>, <span class="dt">stackratio=</span><span class="fl">1.3</span>, <span class="dt">dotsize=</span><span class="fl">0.7</span>) 
+
+p <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> median, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">shape =</span> <span class="dv">95</span>, 
+               <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">15</span>) 
+<span class="co">#try using shape=18, size=5.</span>
+
+<span class="co">#add mean and SD, use pointrange:</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.data=</span>mean_sdl, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult=</span><span class="dv">1</span>), <span class="dt">geom=</span><span class="st">&quot;pointrange&quot;</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)
+
+<span class="co">#use errorbar instead of pointrange:</span>
+<span class="co">#p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), geom=&quot;errorbar&quot;, color=&quot;red&quot;, width=0.2, size=1) + stat_summary(fun.y=mean, geom=&quot;point&quot;, size=3, color=&quot;red&quot;)</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-75-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-75-2.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Muuda punktide värvi nii:</p>
+<p>scale_fill_manual() : to use custom colors</p>
+<p>scale_fill_brewer() : to use color palettes from RColorBrewer package</p>
+<p>scale_fill_grey() : to use grey color palettes</p>
+</div>
+<div id="histogramm" class="section level2">
+<h2><span class="header-section-number">8.3</span> Histogramm</h2>
+<p>x - pidev muutuja</p>
+<p>Kui teil on palju andmepunkte (&gt;50) ning soovite uurida nende jaotust (ja/või võrrelda mitme andmestiku jaotust) siis tasub kindlasti alustada histogrammist. Histogrammi koostamine näeb välja järgmine:</p>
+<ol style="list-style-type: decimal">
+<li>ploti andmepunktid x - teljele (järgnev on põhimõtteliselt ühedimensionaalne plot, kuigi andmepunktid on üksteise suhtes veidi nihutatud, et nad üksteist ei varjutaks).</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stripchart</span>(iris<span class="op">$</span>Sepal.Length, <span class="dt">method =</span> <span class="st">&quot;jitter&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-76-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>jaga andmestik x-teljel võrdse laiusega vahemikesse (binnidesse)</li>
+</ol>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-77-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>loe kokku, mitu andmepunkti sattus igasse binni. Näiteks on meil viimases binnis (7.5 … 8) kuus anmdepunkti</li>
+<li>ploti iga bin tulpdiagrammina (y- teljel on tüüpiliselt andmepunktide arv)</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">breaks=</span> <span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dt">by=</span><span class="fl">0.5</span>), <span class="dt">color=</span><span class="st">&quot;white&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-78-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Tavaliselt on siiski mõistlik määrata histogrammi binnide laius ja asukoht mitte <em>breaks</em> argumeniga vaid kas argumendiga <em>bins</em>, mis annab binnide arvu, või argumendiga <em>binwidth</em>, mis annab binni laiuse. Vt ka geom_boxplot() funktsiooni helpi.</p>
+<p>NB! Väga tähtis on mõista, et binnide laius on meie suva järgi määratud. Samade andmete põhjal joonistatud erineva binilaiusega histogrammid võivad anda lugejale väga erinevaid signaale.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gridExtra)
+g1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">3</span>)
+g2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">8</span>)
+g3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>)
+g4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">50</span>)
+<span class="kw">grid.arrange</span>(g1, g2, g3, g4, <span class="dt">nrow =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-79-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Seega on tasub joonistada samadest andmetest mitu erineva binnilaiusega histogrammi, et oma andmeid vaadata mitme nurga alt.</p>
+<p>Kui tahame võrrelda mitmeid jaotusi, siis on meil järgmised variandid:</p>
+<p>Kõigepealt, me võime panna mitu histogrammi üksteise alla. Selleks kasutame facet_grid funktsiooni ja paneme joonisele ka hallilt summaarsete andmete histogrammi. Selle funktsioon on pakkuda joonise lugejale ühtset võrdlusskaalat üle kolme paneeli.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d_bg &lt;-<span class="st"> </span>iris[, <span class="op">-</span><span class="dv">5</span>]  <span class="co"># Background Data - full without the 5th column (Species)</span>
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">fill =</span> Species)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">data =</span> d_bg, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.8</span>, <span class="dt">bins=</span><span class="dv">10</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">bins=</span><span class="dv">10</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(Species<span class="op">~</span>.) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st">  </span><span class="co"># to remove the legend</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()          <span class="co"># for clean look overall</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-80-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Teine võimalus on näidata kõiki koos ühel paneelil kasutades histogrammi asemel sageduspolügoni. See töötab täpselt nagu histogramm, ainult et tulpade asemel joonistatakse binnitippude vahele jooned. Neid on lihtsam samale paneelile üksteise otsa laduda.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length, <span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_freqpoly</span>(<span class="dt">breaks=</span> <span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dt">by=</span><span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_tufte</span>()<span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Frequency plot&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-81-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Selle “histogrammi” binne saab ja tuleb manipuleerida täpselt samamoodi nagu geom_histogrammis.</p>
+<p>Veel üks hea meetod histogrammide võrdlemiseks on joonistada nn viiuliplot. See asendab sakilise histogrammi silutud joonega ja muudab seega võrdlemise kergemaks. Viiulile on ka kerge lisada algsed andmepunktid</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Species, Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_violin</span>(<span class="kw">aes</span>(<span class="dt">color=</span>Species))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">size=</span><span class="fl">0.2</span>, <span class="dt">width=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Violin plot&quot;</span>, <span class="dt">x=</span><span class="ot">NULL</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-82-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tihedusplot" class="section level2">
+<h2><span class="header-section-number">8.4</span> Tihedusplot</h2>
+<p>Hea alternatiiv histogrammile on joonistada silutud andmejaotus, mis käitub silutud histogrammina.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length, <span class="dt">fill=</span>Species)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-83-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Adjust parameeter reguleerib silumise määra. <img src="06-graphics_files/figure-html/unnamed-chunk-84-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Veel üks võimalus jaotusi kõrvuti vaadata on joyplot, mis paneb samale paneelile kasvõi sada tihedusjaotust.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggjoy)
+<span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Species, <span class="dt">fill=</span>Species)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_joy</span>(<span class="dt">scale=</span><span class="dv">4</span>, <span class="dt">rel_min_height=</span><span class="fl">0.01</span>, <span class="dt">alpha=</span><span class="fl">0.9</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_joy</span>(<span class="dt">font_size =</span> <span class="dv">13</span>, <span class="dt">grid=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-85-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sch &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/schools.csv&quot;</span>)
+sch<span class="op">$</span>school &lt;-<span class="st"> </span><span class="kw">as.factor</span>(sch<span class="op">$</span>school)
+<span class="kw">ggplot</span>(sch, <span class="kw">aes</span>(score1, <span class="dt">y=</span><span class="kw">reorder</span>(school, score1))) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_joy</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_tufte</span>()
+<span class="co">#&gt; Warning: Removed 202 rows containing non-finite values</span>
+<span class="co">#&gt; (stat_density_ridges).</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-86-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="boxplot" class="section level2">
+<h2><span class="header-section-number">8.5</span> Boxplot</h2>
+<p>See plot mõeldi välja John Tukey poolt arvutieelsel ajastul (1969), ja see võimaldab millimeeterpaberi ja joonlaua abil võrrelda erinevaid jaotusi. Biomeditsiinis sai boxplot ülipopulaarseks veidi hilinenult, ca. 2010-2015. Inimese jaoks, kes oskab arvutit kasutada, võib viiulite joonistamine tunduda atraktiivsem (ja informatiivsem), aga kui võrreldavaid jaotusi on päris palju, siis võib ka boxploti kandiliselt lihtsusel eeliseid leida. Igal juhul käib klassikalise boxploti konstrueerimine järgevalt.</p>
+<ol style="list-style-type: decimal">
+<li><p>joonista andmepunktid 1D-s välja (nagu me tegime histogrammi puhul)</p></li>
+<li><p>keskmine andmepunkt on mediaan. Selle kohale tuleb boxplotil keskmine kriips</p></li>
+<li><p>ümbritse kastiga pooled andmepunktid (mõlemal pool mediaani). Nii määrad nn. interkvartiilse vahemiku (IQR).</p></li>
+<li><p>pooleteistkordne IQR (y-telje suunas) annab meile vurrude maksimaalse pikkuse. Vurrud joonistatakse siiski ainult kuni viimase andmepunktini (aga kunagi mitte pikemad kui 1.5 IQR)</p></li>
+<li><p>andmepunktid, mis jäävad väljaspoole 1.5 x IQR-i joonistatakse eraldi välja kui outlierid.</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Species, Sepal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">size=</span><span class="fl">0.1</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-87-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Boxplotile saab lisada ka aritmeetilise keskmise (järgnevas punase täpina), aga pea meeles, et boxploti põhiline kasu tuleb sellest, et see ei eelda sümmeetrilist andmejaotust. Seega on mediaani lisamine üldiselt parem lahendus.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Species, Sepal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>()<span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>mean,<span class="dt">col=</span><span class="st">&#39;red&#39;</span>, <span class="dt">geom=</span><span class="st">&#39;point&#39;</span>, <span class="dt">size=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-88-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-89-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>See pilt näitab, et kui jaotus on mitme tipuga, siis võib boxplotist olla rohkem kahju kui kasu.</p>
+</div>
+<div id="joongraafikud-1" class="section level2">
+<h2><span class="header-section-number">8.6</span> Joongraafikud</h2>
+<p>x - pidev muutuja (aeg, konsentratsioon, jms); y - pidev muutuja; x ja y vahel on deterministlik seos (trend)</p>
+<p>Joongraafik (geom_line) töötab hästi siis, kui igale x-i väärtusele vastab unikaalne y-i väärtus ja iga kahe mõõdetud x-i väärtuse vahele jääb veel x-i väärtusi, mida pole küll mõõdetud, aga kui oleks, siis vastaks ka neile unikaalsed y-i väärtused. Lisaks me loodame, et y-i suunaline juhuslik varieeruvus ei ole nii suur, et maskeerida meid huvitavad trendid. Kui tahad näidata, kus täpselt muutus toimus, kasuta geom_step funktsiooni.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">recent &lt;-<span class="st"> </span>economics[economics<span class="op">$</span>date <span class="op">&gt;</span><span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2013-01-01&quot;</span>), ]
+<span class="kw">ggplot</span>(recent, <span class="kw">aes</span>(date, unemploy)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()
+<span class="kw">ggplot</span>(recent, <span class="kw">aes</span>(date, unemploy)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_step</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-90-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-90-2.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Astmeline graafik on eriti hea olukorras, kus astmete vahel y-dimensioonis muutust ei toimu – näiteks piimapaki hinna dünaamika poes.</p>
+<p>Geom_path võimaldab joonel ka tagasisuunas keerata.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># geom_path lets you explore how two variables are related over time,</span>
+<span class="co"># e.g. unemployment and personal savings rate</span>
+m &lt;-<span class="st"> </span><span class="kw">ggplot</span>(economics, <span class="kw">aes</span>(unemploy<span class="op">/</span>pop, psavert))
+m <span class="op">+</span><span class="st"> </span><span class="kw">geom_path</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> <span class="kw">as.numeric</span>(date)))</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-91-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Tulpdiagramm juhib lugeja tähelepanu väikestele teravatele muutustele. Kui see on see, millele sa tahad tähelepanu juhtida, siis kasuta seda.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(economics, <span class="kw">aes</span>(date, unemploy)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()
+p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(economics, <span class="kw">aes</span>(date, unemploy)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)
+<span class="kw">grid.arrange</span>(p1, p2, <span class="dt">nrow =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-92-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Et mürarikkaid andmeid siluda kasutame liikuva keskmise meetodit. Siin asendame iga andmepunkti selle andmepunkti ja tema k lähima naabri keskmisega. k on tavaliselt paaritu arv ja mida suurem k, seda silutum tuleb tulemus.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(zoo)
+economics<span class="op">$</span>rollmean &lt;-<span class="st"> </span><span class="kw">rollmean</span>(economics<span class="op">$</span>unemploy, <span class="dt">k =</span> <span class="dv">13</span>, <span class="dt">fill =</span> <span class="ot">NA</span>)
+<span class="kw">ggplot</span>(economics, <span class="kw">aes</span>(date, rollmean)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()
+<span class="co">#&gt; Warning: Removed 12 rows containing missing values</span>
+<span class="co">#&gt; (geom_path).</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-93-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Kui on oht, et ebahuvitavad tsüklid ja trendid varjutavad veel mingeid mustreid, mis meile võiks huvi pakkuda, võib proovida lahutada aegrea komponentideks kasutades seasonaalset lahutamist (Seasonal decomposition). R::stl() kasutab selleks loess meetodit lahutades aegrea kolmeks komponendiks. 1) trendikomponent püüab keskmise taseme muutusi ajas. 2) seasonaalne komponent lahutab muutused aastaaegade lõikes (konstantse amplituudiga tsüklilisus aegrea piires) ja 3) irregulaarne komponent on see, mis üle jääb. aegrea osadeks lahutamine võib olla additiivne või mulitlikatiivne. Additiivses mudelis</p>
+<p><span class="math display">\[Y_t = Trend_t + Seasonal_t + Irregular_t\]</span></p>
+<p>summeeruvad komponendid igas punktis algesele aegreale. Muliplikatiivses mudelis</p>
+<p><span class="math display">\[Y_t = Trend_t * Seasonal_t * Irregular_t\]</span> tuleb selleks teha korrutamistehe.</p>
+<p>Näiteks lahutame aegrea, mis käsitleb CO_2 konsentratsiooni muutusi viimase 50 aasta vältel.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(graphics)
+<span class="co">#co2 is a time series object </span>
+<span class="co">#stl() takes class &quot;ts&quot; objects only!</span>
+<span class="kw">plot</span>(<span class="kw">stl</span>(co2, <span class="st">&quot;per&quot;</span>))</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-94-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Pane tähele graafiku paremas servas asuvaid halle kaste, mis annavad mõõtkava erinevate paneelide võrdlemiseks. Siit näeme, et “remainder” paneeli andmete kõikumise vahemik on väga palju väiksem kui ülemisel paneelil, kus on plotitud täisandmed.</p>
+<p>Nüüd esitame versiooni, kus remainder-i andmeid on tugevasti silutud, et võimalikku signaali mürast eristada.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">stl</span>(<span class="kw">log</span>(co2), <span class="dt">s.window =</span> <span class="st">&quot;per&quot;</span>, <span class="dt">t.window =</span> <span class="dv">1000</span>))
+<span class="co"># t.window -- the span (in lags) of the loess window for trend extraction, which should be odd.</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-95-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="scatter-plot" class="section level2">
+<h2><span class="header-section-number">8.7</span> Scatter plot</h2>
+<p>x - pidev muutuja; y -pidev muutuja; x ja y vahel on tõenäosuslik, mitte deterministlik, seos.</p>
+<p>Scatter ploti abil otsime oma andmetest trende ja mustreid.</p>
+<p>X-teljel on geisri Old Faithful pursete tugevus ja y-teljel pursete vaheline aeg. Kui kahe purske vahel kulub rohkem aega, siis on oodata tugevamat purset. Tundub, et see süsteem töötab kahes diskreetses reziimis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">ggplot</span>(faithful, <span class="kw">aes</span>(<span class="dt">x =</span> eruptions, <span class="dt">y =</span> waiting)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlim</span>(<span class="fl">0.5</span>, <span class="dv">6</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylim</span>(<span class="dv">40</span>, <span class="dv">110</span>)
+m <span class="op">+</span><span class="st"> </span><span class="kw">geom_density_2d</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-96-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Kui punkte on liiga palju, et välja trükkida, kasuta geom = “polygon” varianti.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m <span class="op">+</span><span class="st"> </span><span class="kw">stat_density_2d</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> ..level..), <span class="dt">geom =</span> <span class="st">&quot;polygon&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-97-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>kui meil on eraldi välja arvutatud tihedus (density) igale vaatluspunktile, saame kasutada geom_tile</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(faithfuld) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(eruptions, waiting, <span class="dt">fill =</span> density)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_fill_distiller</span>(<span class="dt">palette =</span> <span class="st">&quot;Spectral&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-98-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Nüüd plotime 3 iriseliigi õielehe pikkuse seose tolmuka pikkusega, ja lisame igale liigile mittelineaarse mudelennustuse koos 95% usaldusintervalliga. Mudel püüab ennustada keskmist õielehe pikkust igal tolmuka pikkusel, ja 95% CI kehtib ennustusele keskmisest, mitte üksikute isendite õielehtede pikkustele.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(Sepal.Length, Petal.Length, <span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-99-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>See mudeldamine tehti loess meetodiga, mis kujutab endast lokaalselt kaalutud polünoomset regressiooni. Loessi põhimõte on, et arvuti fitib palju lokaalseid lineaarseid osamudeleid, mis on kaalutud selles mõttes, et andmepunktidel, mis on vastavale osamudelile lähemal, on mudeli fittimisel suurem kaal. Nendest osamudelitest silutakse siis kokku lõplik mudel, mida joonisel näete.</p>
+<p>Järgmiseks värvime eelnevalt tehtud plotil punktid iirise liigi kaupa aga joonistame ikkagi regressioonisirge läbi kõikide punktide. Seekord on tegu tavapärase lineaarse mudeliga, mis fititud vähimruutude meetodiga (vt ptk ….).</p>
+<p>Vaata mis juhtub, kui värvide lahutamine toimub <code>ggplot()</code>-i enda <code>aes()</code>-s. <code>theme_classic()</code> muudab graafiku üldist väljanägemist.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-100-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Me võime <code>geom_smooth()</code>-i anda erineva andmeseti kui <code>ggplot()</code> põhifunktsiooni. Nii joonistame me regressioonisirge ainult nendele andmetele. Proovi ka <code>theme_bw()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> <span class="kw">filter</span>(iris, Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span>), <span class="dt">method =</span> lm) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-101-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Alljärgnevalt näiteks moodus kuidas öelda, et me soovime regressioonijoont näidata ainult iiriseliikide virginica või versicolor andmetele.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## First we filter only data that we want to use for regressionline
+smooth_data &lt;-<span class="st"> </span><span class="kw">filter</span>(iris, Species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;virginica&quot;</span>, <span class="st">&quot;versicolor&quot;</span>))
+
+## Then we use this filtered dataset in geom_smooth
+<span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> smooth_data, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-102-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Järgnev kood võimaldab eksplitsiitselt kasutada fititud regressioonikoefitsiente, kasutades regeressioonijoone määramiseks koordinaatteljestikus x-telje lõikumispunkti ja sirge tõusu. Lineaarse mudeli fittimist õpime peatükis …. Kasuta <code>geom_abline()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Create plot
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>()
+
+## Fit model and extract coefficients
+model &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)
+coefs  &lt;-<span class="st"> </span><span class="kw">coef</span>(model)
+
+## Add regressionline to the plot
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> coefs[<span class="dv">1</span>], 
+                 <span class="dt">slope =</span> coefs[<span class="dv">2</span>], 
+                 <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, 
+                 <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, 
+                 <span class="dt">size =</span> <span class="fl">1.5</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-103-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div id="kaalutud-lineaarne-mudel" class="section level3">
+<h3><span class="header-section-number">8.7.1</span> Kaalutud lineaarne mudel</h3>
+<p>Kaalutud lineaarne mudel on viis anda andmepunktidele, mida me tähtsamaks peame (või mis on täpsemalt mõõdetud) suurem kaal. Kõigepealt, siin on USA demograafilised andmed <code>midwest</code> “ggplot2” library-st erinevate kesk-lääne omavalitsuste kohta (437 omavalitsust).</p>
+<p>Me valime <code>midwest</code> andmetest välja kolm muutujat: “percwhite”, “percbelowpoverty”, “poptotal”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">midwest_subset &lt;-<span class="st"> </span>midwest <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(percwhite, percbelowpoverty, poptotal)</code></pre></div>
+<p>Me tahame teada, kuidas valge rassi osakaal ennustab vaesust, aga me arvame, et suurematel omavalitsustel peaks selles ennustuses olema suurem kaal kui väiksematel. Sest me arvame, et väikestel omavalitsustel võib olla suurem valimiviga ja need võivad olla mõjutatud meie mudelis kontrollimata teguritest, nagu mõne suure tööandja käekäik. Selleks lisame <code>geom_smooth()</code>-i lisaargumendi “weight”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(midwest_subset, <span class="kw">aes</span>(percwhite, percbelowpoverty)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">size =</span> poptotal)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">weight =</span> poptotal), <span class="dt">method =</span> lm, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Percent white&quot;</span>, 
+       <span class="dt">y =</span> <span class="st">&quot;Percent below poverty&quot;</span>, 
+       <span class="dt">caption =</span> <span class="st">&quot;Sinine joon on kaalutud mudel</span><span class="ch">\n</span><span class="st">punane joon on tavaline mudel &quot;</span>, 
+       <span class="dt">title =</span> <span class="st">&quot;Vaesusriski seos rassiga&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-105-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Kaalumine mitte ainult ei muutnud sirge asukohta, vaid vähendas ka ebakindlust sirge tõusu osas.</p>
+</div>
+</div>
+<div id="tulpdiagramm" class="section level2">
+<h2><span class="header-section-number">8.8</span> Tulpdiagramm</h2>
+<p>x - faktormuutuja; y - protsent; x - faktormuutuja; y - sündmuse esinemiste arv</p>
+<p>Tulpdiagramme on hea kasutada kahel viisil: 1. lugemaks üles, mitu korda midagi juhtus ja 2. näitamaks osa tervikust (proportsiooni).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(diamonds)
+<span class="co">#&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    53940 obs. of  10 variables:</span>
+<span class="co">#&gt;  $ carat  : num  0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...</span>
+<span class="co">#&gt;  $ cut    : Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 2 4 2 3 3 3 1 3 ...</span>
+<span class="co">#&gt;  $ color  : Ord.factor w/ 7 levels &quot;D&quot;&lt;&quot;E&quot;&lt;&quot;F&quot;&lt;&quot;G&quot;&lt;..: 2 2 2 6 7 7 6 5 2 5 ...</span>
+<span class="co">#&gt;  $ clarity: Ord.factor w/ 8 levels &quot;I1&quot;&lt;&quot;SI2&quot;&lt;&quot;SI1&quot;&lt;..: 2 3 5 4 2 6 7 3 4 5 ...</span>
+<span class="co">#&gt;  $ depth  : num  61.5 59.8 56.9 62.4 63.3 62.8 62.3 61.9 65.1 59.4 ...</span>
+<span class="co">#&gt;  $ table  : num  55 61 65 58 58 57 57 55 61 61 ...</span>
+<span class="co">#&gt;  $ price  : int  326 326 327 334 335 336 336 337 337 338 ...</span>
+<span class="co">#&gt;  $ x      : num  3.95 3.89 4.05 4.2 4.34 3.94 3.95 4.07 3.87 4 ...</span>
+<span class="co">#&gt;  $ y      : num  3.98 3.84 4.07 4.23 4.35 3.96 3.98 4.11 3.78 4.05 ...</span>
+<span class="co">#&gt;  $ z      : num  2.43 2.31 2.31 2.63 2.75 2.48 2.47 2.53 2.49 2.39 ...</span></code></pre></div>
+<p>loeb üles, mitu korda esineb iga cut</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> cut)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-107-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Pane tähele, et y-teljel on arv, mitu korda esineb tabelis iga cut. See arv ei ole tabelis muutuja. geom_bar, geom_hist, geom_dens arvutavad plotile uued y väärtused — nad jagavad andmed binidesse ja loevad üles, mitu andmepunkti sattus igasse bini.</p>
+<p>Kui tahad tulpdiagrammi proportsioonidest, mitu korda eineb tabelis igat cut-i, siis tee nii:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> ..prop.., <span class="dt">group =</span> <span class="dv">1</span>))</code></pre></div>
+<p>Pane tähele et tulpade omavahelised suhted jäid samaks. Muutus ainult y-telje tähistus.</p>
+<p>Edasi lisame eelnevale veel ühe muutuja: clarity. Nii saame üles lugeda kõigi cut-i ja clarity kombinatsioonide esinemise arvu või sageduse. Erinvate clarity tasemete esinemiste arv samal cut-i tasemel on siin üksteise otsa kuhjatud, mis tähendab, et tulpade kõrgus ei muutu võrreldes eelnevaga.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity))</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-109-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Kui me tahame, et cut-i ja clarity kombinatsioonid oleks kastidena ükteise sees, pigem kui üksteise otsa kuhjatud, siis kasutame position = “identity” argumenti.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>, <span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>) </code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-110-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>ka see graafik pole väga lihtne lugeda. Parem viime clarity klassid üksteise kõrvale</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-111-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Eelnev on hea viis kuidas võrrelda clarity tasemete esinemis-sagedusi ühe cut-i taseme piires.</p>
+<p>Ja lõpuks, position=“fill” normaliseerib tulbad, mis muudab selle, mis toimub iga cut-i sees, hästi võrreldavaks. See on hea viis, kuidas võrrelda clarity tasemete proportsioone erinevate cut-i tasemete vahel.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">fill =</span> clarity)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-112-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Ja lõpetuseks, kui teile miskipärast ei meeldi Cleveland plot ja te tahate plottida tulpdiagrammi nii, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: <code>geom_bar(stat = &quot;identity&quot;)</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a=</span><span class="kw">c</span>(<span class="fl">2.3</span>, <span class="dv">4</span>, <span class="fl">5.2</span>), <span class="dt">b=</span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>))
+<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(b, a)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</code></pre></div>
+</div>
+<div id="residuaalide-plot" class="section level2">
+<h2><span class="header-section-number">8.9</span> Residuaalide plot</h2>
+<p>Alustame lineaarse mudeli fittimisest ja mudeli ennustuse lisamisest algsele andmetabelile. Me fitime polünoomsse mudeli:</p>
+<p><span class="math display">\[Sepal.Length = intercept + b_1 * Petal.Length + b_2 * Petal.Length^2 + b_3 * Petal.Length^3\]</span></p>
+<p>Mudeli ennustused keskmisele õielehe pikkusele (Sepal.Length) saame arvutada fikseerides mudeli koefitsiendid nende fititud väärtustega ja andes mudeli valemisse ühtlase rea võimalikke tolmuka pikkusi. Nii saame igale selle rea liikmele vastava ennustuse õielehe keskmisele pikkusele. Selleks teeme ühetulbalise andmeraami pred_matrix, millele lisame abifunktsiooni add_predictions() abil arvutatud mudeli ennustused. Need ilmuvad tabelisse uue tulbana “pred”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(modelr)
+<span class="co">#fit the model</span>
+m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="kw">poly</span>(Petal.Length, <span class="dv">3</span>) , <span class="dt">data=</span> iris)
+<span class="co">#make prediction matrix (equally spaced non-empirical Petal Length values)</span>
+pred_matrix &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Petal.Length=</span><span class="kw">seq</span>(<span class="kw">min</span>(iris<span class="op">$</span>Petal.Length), 
+                                       <span class="kw">max</span>(iris<span class="op">$</span>Petal.Length), 
+                                       <span class="dt">length.out=</span> <span class="dv">100</span>))
+<span class="co">#add prediction to each value in the prediction matrix</span>
+pred_matrix &lt;-<span class="st"> </span><span class="kw">add_predictions</span>(pred_matrix, m1)</code></pre></div>
+<p>Nii saab mugavalt visualiseerida ka väga keeruliste mudelite ennustusi.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(pred_matrix, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span> iris, <span class="kw">aes</span>(<span class="dt">y =</span> Sepal.Length)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> pred))</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-115-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Nüüd lisame irise tabelisse residuaalid mugavusfunktsiooni add_residual() abil (tekib tulp “resid”). Residuaal on lihtsalt andmepunkti Sepal.Length väärtus miinus mudeli ennustus.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris1 &lt;-<span class="st"> </span>iris
+iris1 &lt;-<span class="st"> </span><span class="kw">add_residuals</span>(iris1, m1)
+<span class="kw">ggplot</span>(iris1, <span class="kw">aes</span>(resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-116-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>See plot näitab, et residuaalid on enam vähem 0-i ümber koondunud, aga negatiivseid residuaale paistab veidi enam olevat.</p>
+<p>Tegelik residuaaliplot näeb välja selline:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris1, <span class="kw">aes</span>(Petal.Length, resid, <span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span>modelr<span class="op">::</span><span class="kw">geom_ref_line</span>(<span class="dt">h =</span> <span class="dv">0</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() </code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-117-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>See võimaldab otsustada, kas mudel ennustab võrdselt hästi erinevatel predikrori (Petal.Length) väärtustel. Antud mudelis ei näe me süstemaatilisi erinevusi residuaalides üle õielehtede pikkuste vahemiku.</p>
+<p>Proovime sama lihtsa lineaarse mudeliga <span class="math inline">\(Sepal.Length = intercept + b * Petal.Length\)</span>. <img src="06-graphics_files/figure-html/unnamed-chunk-118-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-119-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Siit näeme, et I. setosa puhul on residuaalid pigem &gt;0 ja et see mudel töötab paremini I. versicolor ja I. virginica puhul.</p>
+<p>Siin on residuaalid algsetes Sepal Length-i mõõtühikutes (cm). Et otsustada, kas üks või teine residuaal on 0-st piisavalt kaugel, avaldame residuaalid standardhälvete ühikutes (nn Studentized residuals). Residuaalide muster joonisel sellest ei muutu, muutub vaid y-telje tähistus.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris1 &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris1, <span class="dt">st_resid=</span>resid<span class="op">/</span><span class="kw">sd</span>(resid))
+<span class="kw">ggplot</span>(iris1, <span class="kw">aes</span>(Petal.Length, st_resid, <span class="dt">color=</span>Species)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_ref_line</span>(<span class="dt">h =</span> <span class="dv">0</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-120-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standardhälbega ja kahte sama liigi isendit (ja ühte I. setosa isendit), mille koha pealt mudel alahindab &gt;2 standardhälbega.</p>
+</div>
+<div id="tukey-summa-erinevuse-graafik" class="section level2">
+<h2><span class="header-section-number">8.10</span> Tukey summa-erinevuse graafik</h2>
+<p>Te sooritate korraga palju paralleelseid mõõtmisi – näiteks mõõdate mass-spektroskoopiaga 1000 valgu taset. Kui teete seda katset kaks korda (või katse vs. kontroll n korda) ja tahate näha süstemaatilisi erinevusi, siis tasub joonistada summa-erinevuse graafik. See on hea olukordades, kus ei ole vahet, mis läheb x ja mis läheb y teljele (erinevalt regressioonimudelitest ja residuaaliplottidest, kus see on väga tähtis). Meie graafik on x ja y suhtes sümmeetriline.</p>
+<p>Graafik ise on lihtsalt scatterplot, kus horisontaalsele teljele plotitud x + y väärtused ja vertikaalsele teljele plotitud y - x väärtused. Me lisame ka horisontaalsele teljele 0 - joone, et meil oleks lihtsam oma vaimusilmas efekti suuruste punktipilve tsentreerida.</p>
+<p>Näituseks plottime mass spektroskoopia andmed, kus kahel tingimusel (d10 ja wt) on kummagil tehtud kolm iseseisvat katset. Järgneb tabel df_summary2, kus on 2023 valgu tasemete keskväärtused kahel tingimusel, ning Tukey summa-erinevuse graafik</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(df_summary2, <span class="dv">3</span>)
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt; # Groups:   gene [3]</span>
+<span class="co">#&gt;   gene    d10    wt</span>
+<span class="co">#&gt;   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 aaeR   25.6  25.6</span>
+<span class="co">#&gt; 2 aas    28.8  28.8</span>
+<span class="co">#&gt; 3 accA   33.7  33.6</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_summary2, <span class="kw">aes</span>(<span class="dt">x =</span> d10 <span class="op">+</span><span class="st"> </span>wt, <span class="dt">y =</span> d10 <span class="op">-</span><span class="st"> </span>wt)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Tukey sum-difference graph of mass spectroscopy data&quot;</span>, <span class="dt">y=</span><span class="st">&quot;d10 - wt (in log2 scale)&quot;</span>, <span class="dt">x=</span> <span class="st">&quot;d10 + wt (in log2 scale)&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). Me näeme sellelt pildilt väga kiiresti,</p>
+<ol style="list-style-type: decimal">
+<li><p>et mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul),</p></li>
+<li><p>et efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik),</p></li>
+<li><p>et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja</p></li>
+<li><p>et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).</p></li>
+</ol>
+<div id="vulkaaniplot" class="section level3">
+<h3><span class="header-section-number">8.10.1</span> Vulkaaniplot</h3>
+<p>Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas. Vulkaaniplotti tutvustame mitte selle pärast, et seda soovitada, vaid ainult selle tõttu, et seda kasutatakse massiliselt näiteks proteoomika vallas. Vulkaaniplot on tõlgendamise mõttes kolmemõõtmeline ja pigem keeruline, näitlikustades korraga efekti suurust (ES), varieeruvust (sd) ja valimiviga (see sõltub valimi suurusest, aga ka mõõtmisobjekti/valgu tasemest).</p>
+<p>Joonistame vulkaani samade andmete põhjal, mida kasutasime Tukey summa-erinevusgraafiku valmistamieks. Me alustame tabeli “df” ettevalmistamisest: d10_1, d10_2 ja d10_3 on kolm iseseisvat katset ja wt_1, wt_2 ja wt_3 on kolm iseseisvat kontrolli.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(df, <span class="dv">3</span>)
+<span class="co">#&gt;   gene d10_1 d10_2 d10_3 wt_1 wt_2 wt_3</span>
+<span class="co">#&gt; 1 rpoC  36.3  36.3  36.4 36.2 36.3 36.4</span>
+<span class="co">#&gt; 2 rpoB  36.2  36.3  36.2 36.1 36.3 36.3</span>
+<span class="co">#&gt; 3 mukB  32.9  33.0  33.2 32.9 33.1 33.3</span></code></pre></div>
+<p>Me lisame tabelile veeru p väärtustega ja veeru effekti suurustega (ES), kasutades apply() funktsiooni sees tavapärast indekseerimist (vt ptk …).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_x &lt;-<span class="st"> </span>df[<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>]
+<span class="co">#arvutame p väärtused</span>
+df<span class="op">$</span>p &lt;-<span class="st"> </span><span class="kw">apply</span>(df_x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">t.test</span>(x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], x[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>])<span class="op">$</span>p.value)
+<span class="co">#arvutame efekti suurused &quot;ES&quot; (katsete keskmine - kontrollide keskmine)</span>
+df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">apply</span>(df_x, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">mean</span>(x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>]))
+
+<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(ES, <span class="op">-</span><span class="kw">log10</span>(p))) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="op">-</span><span class="kw">log10</span>(<span class="fl">0.05</span>), <span class="dt">linetype=</span><span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">linetype=</span><span class="dv">2</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;d10 - wt (in log2 scale)&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;- log10 of p value&quot;</span>, <span class="dt">title=</span><span class="st">&quot;volcano plot&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Sellel pildil markeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse (üks ühik log2 skaalal; ühekordne ES võrdub sellel skaalal nulliga). Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub horisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu “päris” efektiga. Seevastu inimesed, kes teavad, teavad ka seda, et p väärtuste ühekaupa tõlgendamine ei ole sageli mõistlik. Iga p väärtus koondab endasse informatsiooni kolmest muutujast: valimi suurus (N), varieeruvus (sd) ja efekti suurus (ES = katse - kontroll). Kuigi me saame vulkaaniplotil asuvaid punkte võrreldes ignoreerida valimi suuruse mõju (kuna me teame, et meil on iga punkti taga 3 + 3 mõõtmist), koondab iga p väärtus endasse infot nii ES kui sd kohta viisil, mida me ei oska hästi üksteisest lahutada (siiski, pane tähele, et horisontaalsel teljel on ES). Me teame, et igas punktis on nii ES kui sd mõjutatud valimiveast, mis on kummagi näitaja suhtes teisest sõltumatu. Seega, igal neljandal valgul on valimiveaga seose topeltprobleem: ülehinnatud ES ja samal ajal alahinnatud sd, mis viib oodatust ohtlikult väiksemale p väärtusele.</p>
+<p>Lisaks, p väärtuse definitsioonist (p on sinu andmete või neist ekstreemsemate andmete tõenäosus tingimusel, et nullhüpotees kehtib) tuleneb, et kui null hüpotees on tõene (tegelik ES = 0), siis on meil täpselt võrdne tõenäosus saada oma p väärtus ükskõik kuhu nulli ja ühe vahele. Seega, nullhüpoteesi kehtimise korral ei sisalda individuaalne p väärtus mitte mingisugust kasulikku informatsiooni.</p>
+<p>Oluline on mõista, et p väärtuse arvutamine toimub nullhüpoteesi all, mis kujutab endast põhimõtteliselt lõpmatu hulga hüpoteetiliste valimite põhjal – mille N = 3 ja sd = valimi sd – arvutatud lõpmatu hulga hüpoteetiliste valimikeskmiste jaotust (iga geeni jaoks eraldi arvutatuna). Seega demonstreerib p väärtus statistikat oma kõige abstraktsemas vormis.</p>
+<p>Igal juhul peaks olema siililegi selge, et kui valimi suurus on nõnda väike kui 3, siis valimi põhine sd ega valimi põhine efekti suurus ei ole kuigi usaldusväärsed ennustama tegelikku populatsiooni sd-d ega ES-i!</p>
+<p>Kuidas ikkagi vulkaani tõlgendada?</p>
+<ol style="list-style-type: decimal">
+<li><p>Enamus efektisuuruseid &lt; 2 (see on hea)</p></li>
+<li><p>Enamus p väärtusi &gt; 0.05 (ka hea)</p></li>
+<li><p>vulkaan on pisut ebasümmeetriline – meil on rohkem positiivseid effekte, kus d10 &gt; wt (see on teaduslikult oluline uudis)</p></li>
+<li><p>Enamus valke, mille p &lt; 0.05, annavad ES &lt; 2. (See viitab, et meil on palju katseid, kus iseseisvate katsete vaheline varieeruvus on väga madal.)</p></li>
+<li><p>Oluline osa valke (võib-olla ca 40%), mille ES &gt; 2, annavad p &gt; 0.05. (Viitab valimivea olulisele osale meie tulemustes.)</p></li>
+<li><p>Enamus kõige suuremate ES-dega valke on üllatavalt kõrge p väärtusega. (Viitab valimivea olulisele osale meie tulemustes.)</p></li>
+</ol>
+<p>Seega ei ole meil ES-i ja p väärtuse vahel selget suhet, kus suurtel efektidel oleks selgelt madalam p väärtus kui väikestel efektidel. Kuna meil pole põhust arvata, et valkudel, millel on suurem ES, on süstemaatiliselt suurem varieeruvus, siis paistab, et meie vulkaan dokumenteerib eelkõige valimivigu, ja seega pigem katse üldist madalat kvaliteeti, kui üksikute efektide “tõelisust”. Seega tundub, et tegu on mudavulkaaniga.</p>
+<p>Hea küll, joonistame oma vulkaani uuesti p väärtuste põhjal, mis seekord on arvutatud eeldusel, et mõlema grupi (d10 ja wt) varieeruvused on geeni kaupa võrdsed. See tähendab, et kui ES-i arvutamisel on valimi suurus 3 (kolme katse ja kolme kontrolli keskmine), siis sd arvutamisel, mis omakorda läheb p väärtuse arvutamise valemisse, on valimi suurus mõlemale grupile 6.</p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-126-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Pilt on küll detailides erinev, aga suures plaanis üsna sarnane eelmisega.</p>
+</div>
+</div>
+<div id="qq-plot" class="section level2">
+<h2><span class="header-section-number">8.11</span> QQ-plot</h2>
+<p>Kuidas võrrelda kahte jaotust? Kõige lihtsam on joonistada bihistogramm, mis töötab ühtlasi t testi ekslploratoorse analoogina (ei anna ühte numbrit, aga selle eest annab palju parema ülevaate kui t test, kuidas kahe grupi valimid – kuigi mitte tingimata nende taga olevad populatsioonid – tegelikult erinevad).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Hmisc)
+<span class="kw">histbackback</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>See bihistogramm, mis küll veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi, näitab, et kahe grupi keskmised on selgelt erinevad (ülekate peaaegu puudub), aga et ka jaotused ise erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).</p>
+<p>Kuidas aga võrrelda oma andmete jaotust teoreetilise jaotusega, näiteks normaaljaotusega? Selleks on parim viis kvantiil-kvantiil plot ehk qq-plot. Kvantiil tähendab lihtsalt andmepunktide osakaalu, mis on väiksemad kui mingi etteantud väärtus. Näiteks kvantiil 0.3 (mis on sama, mis 30s protsentiil) tähistab väärtust, millest 30% kogutud andmeid on väiksemad ja 70% on suuremad. Näiteks standartse normaaljaotuse (mean = 0, sd = 1) 0.5-s kvantiil on 0 ja 0.95-s kvantiil on 1.96.</p>
+<p>QQ-plot annab lihtsalt empiiriliste andmete kvantiilid (y teljel) teoreetilise jaotuse kvantiilide vastu (x teljel). Punktide arv graafikul vastab teie andmepunktide arvule. Referentsjoon oma 95% veapiiridega (punased katkendjooned) vastab ideaalsele olukorrale, kus teie andmete jaotus vastab teoreetilisele jaotusele (milleks on enamasti normaaljaotus).</p>
+<p>Kõigepealt demonstreerime siiski olukorda, kus meie andmed on normaaljaotusega ja me võrdleme neid teoreetilise lognormaaljaotuse vastu. Võrdluseks saame kasutada kõiki R-s defineeritud jaotusi (distribution = “jaotus”).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
+<span class="kw">qqPlot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">distribution =</span> <span class="st">&quot;lnorm&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-128-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">dnorm</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">6</span>, <span class="dt">length.out =</span> <span class="dv">100</span>), <span class="dv">3</span>, <span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;normal&quot;</span>)
+<span class="kw">qqPlot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">3</span>, <span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;normal vs normal&quot;</span>) <span class="co">#default on vrdls normaaljaotusega.</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">dlnorm</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">4</span>, <span class="dt">length.out =</span> <span class="dv">100</span>)), <span class="dt">main =</span> <span class="st">&quot;log normal&quot;</span>) 
+<span class="kw">qqPlot</span>(<span class="kw">rlnorm</span>(<span class="dv">100</span>), <span class="dt">main =</span> <span class="st">&quot;log normal vs normal&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-130-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">dt</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>,<span class="dv">4</span>, <span class="dt">length.out =</span> <span class="dv">100</span>), <span class="dt">df=</span><span class="dv">2</span>), <span class="dt">main =</span> <span class="st">&quot;student t&quot;</span>) 
+<span class="kw">qqPlot</span>(<span class="kw">rt</span>(<span class="dv">100</span>, <span class="dt">df=</span><span class="dv">2</span>), <span class="dt">main =</span> <span class="st">&quot;students t vs normal&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-131-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">c</span>(<span class="kw">dnorm</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">3</span>,<span class="dv">6</span>, <span class="dt">length.out =</span> <span class="dv">50</span>)), <span class="kw">dnorm</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">3</span>,<span class="dv">6</span>, <span class="dt">length.out =</span> <span class="dv">50</span>), <span class="dv">4</span>, <span class="dv">1</span>)), <span class="dt">main =</span> <span class="st">&quot;2 peaked normal&quot;</span>) 
+<span class="kw">qqPlot</span>(<span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dv">50</span>), <span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dv">4</span>,<span class="dv">1</span>)), <span class="dt">main =</span> <span class="st">&quot;two peaked normal vs normal&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-132-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">dunif</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length=</span><span class="dv">100</span>))) 
+<span class="kw">qqPlot</span>(<span class="kw">runif</span>(<span class="dv">100</span>), <span class="dt">main =</span> <span class="st">&quot;uniform vs normal&quot;</span>) <span class="co">#default on vrdls normaaljaotusega.</span></code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-133-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">dchisq</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dt">length=</span><span class="dv">100</span>), <span class="dt">df=</span><span class="dv">2</span>)) 
+<span class="kw">qqPlot</span>(<span class="kw">rchisq</span>(<span class="dv">100</span>, <span class="dt">df=</span><span class="dv">2</span>), <span class="dt">main =</span> <span class="st">&quot;chi square vs normal&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-134-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">dbeta</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length=</span><span class="dv">100</span>), <span class="dv">2</span>, <span class="dv">2</span>)) 
+<span class="kw">qqPlot</span>(<span class="kw">rbeta</span>(<span class="dv">100</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">main =</span> <span class="st">&quot;beta vs normal&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-135-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused: <img src="06-graphics_files/figure-html/unnamed-chunk-136-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Nagu näha, beta jaotus, mis on normaaljaotusest palju laiem, on qq-plotil sellest halvasti eristatav. Erinevus on väga madalatel ja väga kõrgetel kvantiilidel (jaotuste otstes).</p>
+<p>Ja exponentsiaalse jaotuse korral:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">rexp</span>(<span class="dv">100</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">dexp</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dt">length=</span><span class="dv">100</span>)), <span class="dt">main=</span><span class="st">&quot;exponential distr.&quot;</span>) 
+<span class="kw">qqPlot</span>(y, <span class="dt">main =</span> <span class="st">&quot;exponential vs normal&quot;</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-137-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide tolmukate pikkuste ja tolmukate laiuste jaotusi (vt ka peatüki algusest bihistogrammi). Selle meetodi oluline eelis on, et võrreldavad jaotused võivad olla erineva suurusega (N-ga). Siin kasutame base::R qqplot() funktsiooni.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqplot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-138-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka pikkus &gt; 7.5 ja tolmuka laius &gt; 3.6.</p>
+</div>
+<div id="heat-map" class="section level2">
+<h2><span class="header-section-number">8.12</span> Heat map</h2>
+<p>Heat map asendab tabelis numbrid värvidega, muutes nii keerulised tabelid kiiremini haaratavateks. Samas, inimese aju ei ole kuigi edukas värvitoone pidevate muutujate numbrilisteks väärtusteks tagasi konverteerima, mis tähendab, et heat map võimaldab lugejal kiiresti haarata mustreid andmetes, aga ei võimalda teha täpseid võrdlusi tabeli üksikute lahtrite vahel.</p>
+<p>Kõigepealt lihtne heat map, kus irise tabeli numbrilistes veergudes on asendatud arvud värvitoonidega, aga tabeli üldine kuju ei muutu:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pheatmap)
+<span class="kw">pheatmap</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">fontsize_row =</span> <span class="dv">3</span>, <span class="dt">cluster_cols =</span> <span class="ot">FALSE</span>, <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-139-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifitseerimist. Seega lisanduvad heat mapile ka dendrogrammid.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pheatmap</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">fontsize_row =</span> <span class="dv">5</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest. Kõigepealt jagab dendrogramm vaatlused paaridesse, misjärel hakkab järk-järgult lähimaid paare klastritesse ühendama kuni lõpuks kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks – seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest.</p>
+<p>Nüüd me ütleme, et me tahame oma irise liigid ajada täpselt kolme k-means klastrisse. NB! k-means klustrid on arvutatud hoopis teisel viisil kui eelmisel joonisel olevad hierarhilised klastrid. Siin alustame k = 3 tsentroidist, assigneerime iga andmepunkti oma lähimale tsentroidile, arvutame tsentroidid ümber kui klastri kõikide andmepunktide keskmised, assigneerime uuesti kõik andmepunktid oma tsentroidile ja kordame seda tsüklit näiteks 10 korda.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">pheatmap</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">kmeans_k =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Lisame klastrid irise tabelisse ja vaatame, kui hästi klastrid tabavad kolme irise liiki:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris<span class="op">$</span>cluster &lt;-<span class="st"> </span>a<span class="op">$</span>kmeans<span class="op">$</span>cluster
+<span class="kw">table</span>(iris<span class="op">$</span>Species, iris<span class="op">$</span>cluster)
+<span class="co">#&gt;             </span>
+<span class="co">#&gt;               1  2  3</span>
+<span class="co">#&gt;   setosa      0 50  0</span>
+<span class="co">#&gt;   versicolor  2  0 48</span>
+<span class="co">#&gt;   virginica  36  0 14</span></code></pre></div>
+<p>Ja sama graafiliselt:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="kw">factor</span>(cluster), Species)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_count</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-143-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikkusi on lihtsam võrrelda kui pindalasid eelmisel graafikul):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vcd)
+iris_x &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Species, cluster)
+iris_x<span class="op">$</span>cluster &lt;-<span class="st"> </span><span class="kw">as.factor</span>(iris_x<span class="op">$</span>cluster)
+<span class="kw">mosaic</span>(<span class="op">~</span>Species <span class="op">+</span><span class="st"> </span>cluster, <span class="dt">data=</span> iris_x, <span class="dt">shade=</span>T, <span class="dt">legend=</span><span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-144-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<div id="korrelatsioonimaatriksid-heat-mapina" class="section level3">
+<h3><span class="header-section-number">8.12.1</span> Korrelatsioonimaatriksid heat mapina</h3>
+<p>Heat map on ka hea viis visualiseerida korrelatsioonimaatrikseid.</p>
+<p>Kõigepealt tavaline scatterplot maatriks.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">col=</span>iris<span class="op">$</span>Species)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime mustrite parema nägemise huvides ka andmetulbad ümber (order=TRUE), seekord kasutades selleks peakomponent analüüsi (PCA).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(corrgram)
+<span class="kw">corrgram</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">order =</span> <span class="ot">TRUE</span>, <span class="dt">lower.panel=</span>corrgram<span class="op">::</span>panel.shade,
+         <span class="dt">upper.panel=</span>panel.cor, <span class="dt">diag.panel=</span>panel.density)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="paraleelkoordinaatgraafik" class="section level3">
+<h3><span class="header-section-number">8.12.2</span> Paraleelkoordinaatgraafik</h3>
+<p>Alternatiivne võimalus on scatterplot maatriksile on joonistada grrafik läbi paraleelsete koordinaatide.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
+<span class="kw">parcoord</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">col =</span> iris<span class="op">$</span>Species, <span class="dt">var.label =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">1</span>)
+<span class="kw">par</span>(<span class="dt">xpd =</span> <span class="ot">TRUE</span>)
+<span class="kw">legend</span>(<span class="dt">x =</span> <span class="fl">1.75</span>, <span class="dt">y =</span> <span class="op">-</span>.<span class="dv">25</span>, <span class="dt">cex =</span> <span class="dv">1</span>,
+   <span class="dt">legend =</span> <span class="kw">as.character</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species)),
+    <span class="dt">fill =</span> <span class="kw">unique</span>(iris<span class="op">$</span>Species), <span class="dt">horiz =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-147-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teistest eristada.</p>
+</div>
+<div id="korrelatsioonid-vorgustikuna" class="section level3">
+<h3><span class="header-section-number">8.12.3</span> Korrelatsioonid võrgustikuna</h3>
+<p>Võrgustik koosneb sõlmedest ja nende vahel olevatest servadest (nodes and edges). Meie eesmärk on joonisel näidata sõlmedena ainult need muutujaid, millel esineb mingist meie poolt etteantud numbrist suurem korrelatsioon mõne teise muutujaga. Korrelatsioone endid tähistavad võrgu servad. Järgnevasse voogu, kuhu sisestame kogu mtcars tabeli, lähevad ainult numbrilised muutujad (faktormuutujad tuleb tabelist välja visata).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(corrr)
+<span class="kw">library</span>(igraph)
+<span class="kw">library</span>(ggraph)
+
+tidy_cors &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">correlate</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stretch</span>()
+
+<span class="co"># Convert correlations stronger than some value</span>
+<span class="co"># to an undirected graph object</span>
+graph_cors &lt;-<span class="st"> </span>tidy_cors <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">abs</span>(r) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.6</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">graph_from_data_frame</span>(<span class="dt">directed =</span> <span class="ot">FALSE</span>)
+
+<span class="co"># Plot</span>
+<span class="kw">ggraph</span>(graph_cors) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_edge_link</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_node_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_graph</span>()</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-148-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.</p>
+<p>Kenam (ja informatiivsem) versioon eelmisest on</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggraph</span>(graph_cors) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_edge_link</span>(<span class="kw">aes</span>(<span class="dt">edge_alpha =</span> <span class="kw">abs</span>(r), <span class="dt">edge_width =</span> <span class="kw">abs</span>(r), <span class="dt">color =</span> r)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">edge_alpha =</span> <span class="st">&quot;none&quot;</span>, <span class="dt">edge_width =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_edge_colour_gradientn</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">colors =</span> <span class="kw">c</span>( <span class="st">&quot;dodgerblue2&quot;</span>, <span class="st">&quot;firebrick2&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_node_point</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">size =</span> <span class="dv">5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_graph</span>() </code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-149-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti – vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="graafilised-lahendused.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstats-tartu/lectures/edit/master/06-graphics.Rmd",
+"text": "Edit"
+},
+"download": ["main.pdf", "main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
