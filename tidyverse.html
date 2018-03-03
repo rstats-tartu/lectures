@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2018-03-02">
+<meta name="date" content="2018-03-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -431,25 +431,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;       V9     V8     V5     V2     V6</span>
-<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.521  0.603  0.507  0.0942 0.747 </span>
-<span class="co">#&gt; 2 0.0801 0.275  0.105  0.338  0.461 </span>
-<span class="co">#&gt; 3 0.314  0.0232 0.442  0.619  0.988 </span>
-<span class="co">#&gt; 4 0.189  0.507  0.721  0.631  0.747 </span>
-<span class="co">#&gt; 5 0.929  0.513  0.0726 0.346  0.492 </span>
-<span class="co">#&gt; 6 0.294  0.451  0.127  0.247  0.0468</span>
+<span class="co">#&gt;       V9     V8     V5    V2     V6</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.662  0.0950 0.0819 0.643 0.318 </span>
+<span class="co">#&gt; 2 0.370  0.907  0.378  0.394 0.595 </span>
+<span class="co">#&gt; 3 0.835  0.974  0.775  0.346 0.233 </span>
+<span class="co">#&gt; 4 0.513  0.783  0.0857 0.974 0.0220</span>
+<span class="co">#&gt; 5 0.710  0.333  0.949  0.980 0.286 </span>
+<span class="co">#&gt; 6 0.0906 0.413  0.0108 0.109 0.276 </span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;       V9     V8     V7     V6</span>
-<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.521  0.603  0.271  0.747 </span>
-<span class="co">#&gt; 2 0.0801 0.275  0.398  0.461 </span>
-<span class="co">#&gt; 3 0.314  0.0232 0.571  0.988 </span>
-<span class="co">#&gt; 4 0.189  0.507  0.703  0.747 </span>
-<span class="co">#&gt; 5 0.929  0.513  0.0544 0.492 </span>
-<span class="co">#&gt; 6 0.294  0.451  0.965  0.0468</span>
+<span class="co">#&gt;       V9     V8    V7     V6</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.662  0.0950 0.116 0.318 </span>
+<span class="co">#&gt; 2 0.370  0.907  0.627 0.595 </span>
+<span class="co">#&gt; 3 0.835  0.974  0.959 0.233 </span>
+<span class="co">#&gt; 4 0.513  0.783  0.948 0.0220</span>
+<span class="co">#&gt; 5 0.710  0.333  0.822 0.286 </span>
+<span class="co">#&gt; 6 0.0906 0.413  0.309 0.276 </span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>

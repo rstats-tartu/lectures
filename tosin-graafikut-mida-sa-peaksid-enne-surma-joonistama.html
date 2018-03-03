@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2018-03-02">
+<meta name="date" content="2018-03-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -777,12 +777,17 @@ df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">app
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">rexp</span>(<span class="dv">100</span>)
 <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
 <span class="kw">plot</span>(<span class="kw">dexp</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dt">length=</span><span class="dv">100</span>)), <span class="dt">main=</span><span class="st">&quot;exponential distr.&quot;</span>) 
-<span class="kw">qqPlot</span>(y, <span class="dt">main =</span> <span class="st">&quot;exponential vs normal&quot;</span>)</code></pre></div>
+<span class="kw">qqPlot</span>(y, <span class="dt">main =</span> <span class="st">&quot;exponential vs normal&quot;</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-137-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide tolmukate pikkuste ja tolmukate laiuste jaotusi (vt ka peatüki algusest bihistogrammi). Selle meetodi oluline eelis on, et võrreldavad jaotused võivad olla erineva suurusega (N-ga). Siin kasutame base::R qqplot() funktsiooni.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqplot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Sepal.Width)</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-138-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka pikkus &gt; 7.5 ja tolmuka laius &gt; 3.6.</p>
+<p>car::qqPlot saab kasutada ka lineaarse regressiooni normaalsuseelduse kontrollimiseks. Kui ennustatav y-muutuja on normaaljaotusega, siis peaksid residuaalid olema normaaljaotusega (keskväärtus = 0). Selle normaalsuse määramiseks plotitakse standardiseeritud residuaalid teoreetiliste normalsete kvantiilide vastu. Selleks anname qqPlot() funktsiooni lm mudeliobjekti</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Sepal.Length<span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>Petal.Width, <span class="dt">data =</span> iris)
+<span class="kw">qqPlot</span>(m1)</code></pre></div>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-139-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="heat-map" class="section level2">
 <h2><span class="header-section-number">8.12</span> Heat map</h2>
@@ -790,42 +795,42 @@ df<span class="op">$</span>ES &lt;-<span class="st"> </span><span class="kw">app
 <p>Kõigepealt lihtne heat map, kus irise tabeli numbrilistes veergudes on asendatud arvud värvitoonidega, aga tabeli üldine kuju ei muutu:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pheatmap)
 <span class="kw">pheatmap</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">fontsize_row =</span> <span class="dv">3</span>, <span class="dt">cluster_cols =</span> <span class="ot">FALSE</span>, <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-139-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifitseerimist. Seega lisanduvad heat mapile ka dendrogrammid.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pheatmap</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">fontsize_row =</span> <span class="dv">5</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest. Kõigepealt jagab dendrogramm vaatlused paaridesse, misjärel hakkab järk-järgult lähimaid paare klastritesse ühendama kuni lõpuks kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks – seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest.</p>
 <p>Nüüd me ütleme, et me tahame oma irise liigid ajada täpselt kolme k-means klastrisse. NB! k-means klustrid on arvutatud hoopis teisel viisil kui eelmisel joonisel olevad hierarhilised klastrid. Siin alustame k = 3 tsentroidist, assigneerime iga andmepunkti oma lähimale tsentroidile, arvutame tsentroidid ümber kui klastri kõikide andmepunktide keskmised, assigneerime uuesti kõik andmepunktid oma tsentroidile ja kordame seda tsüklit näiteks 10 korda.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">pheatmap</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">kmeans_k =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-142-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Lisame klastrid irise tabelisse ja vaatame, kui hästi klastrid tabavad kolme irise liiki:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris<span class="op">$</span>cluster &lt;-<span class="st"> </span>a<span class="op">$</span>kmeans<span class="op">$</span>cluster
 <span class="kw">table</span>(iris<span class="op">$</span>Species, iris<span class="op">$</span>cluster)
 <span class="co">#&gt;             </span>
 <span class="co">#&gt;               1  2  3</span>
-<span class="co">#&gt;   setosa      0 50  0</span>
-<span class="co">#&gt;   versicolor  2  0 48</span>
-<span class="co">#&gt;   virginica  36  0 14</span></code></pre></div>
+<span class="co">#&gt;   setosa     50  0  0</span>
+<span class="co">#&gt;   versicolor  0 48  2</span>
+<span class="co">#&gt;   virginica   0 14 36</span></code></pre></div>
 <p>Ja sama graafiliselt:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="kw">factor</span>(cluster), Species)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_count</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-143-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-144-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikkusi on lihtsam võrrelda kui pindalasid eelmisel graafikul):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vcd)
 iris_x &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Species, cluster)
 iris_x<span class="op">$</span>cluster &lt;-<span class="st"> </span><span class="kw">as.factor</span>(iris_x<span class="op">$</span>cluster)
 <span class="kw">mosaic</span>(<span class="op">~</span>Species <span class="op">+</span><span class="st"> </span>cluster, <span class="dt">data=</span> iris_x, <span class="dt">shade=</span>T, <span class="dt">legend=</span><span class="ot">FALSE</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-144-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <div id="korrelatsioonimaatriksid-heat-mapina" class="section level3">
 <h3><span class="header-section-number">8.12.1</span> Korrelatsioonimaatriksid heat mapina</h3>
 <p>Heat map on ka hea viis visualiseerida korrelatsioonimaatrikseid.</p>
 <p>Kõigepealt tavaline scatterplot maatriks.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">col=</span>iris<span class="op">$</span>Species)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime mustrite parema nägemise huvides ka andmetulbad ümber (order=TRUE), seekord kasutades selleks peakomponent analüüsi (PCA).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(corrgram)
 <span class="kw">corrgram</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">order =</span> <span class="ot">TRUE</span>, <span class="dt">lower.panel=</span>corrgram<span class="op">::</span>panel.shade,
          <span class="dt">upper.panel=</span>panel.cor, <span class="dt">diag.panel=</span>panel.density)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-147-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="paraleelkoordinaatgraafik" class="section level3">
 <h3><span class="header-section-number">8.12.2</span> Paraleelkoordinaatgraafik</h3>
@@ -836,7 +841,7 @@ iris_x<span class="op">$</span>cluster &lt;-<span class="st"> </span><span class
 <span class="kw">legend</span>(<span class="dt">x =</span> <span class="fl">1.75</span>, <span class="dt">y =</span> <span class="op">-</span>.<span class="dv">25</span>, <span class="dt">cex =</span> <span class="dv">1</span>,
    <span class="dt">legend =</span> <span class="kw">as.character</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species)),
     <span class="dt">fill =</span> <span class="kw">unique</span>(iris<span class="op">$</span>Species), <span class="dt">horiz =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-147-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-148-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teistest eristada.</p>
 </div>
 <div id="korrelatsioonid-vorgustikuna" class="section level3">
@@ -862,7 +867,7 @@ graph_cors &lt;-<span class="st"> </span>tidy_cors <span class="op">%&gt;%</span
 <span class="st">  </span><span class="kw">geom_node_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_graph</span>()</code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-148-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-149-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.</p>
 <p>Kenam (ja informatiivsem) versioon eelmisest on</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggraph</span>(graph_cors) <span class="op">+</span>
@@ -872,7 +877,7 @@ graph_cors &lt;-<span class="st"> </span>tidy_cors <span class="op">%&gt;%</span
 <span class="st">  </span><span class="kw">geom_node_point</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">size =</span> <span class="dv">5</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_graph</span>() </code></pre></div>
-<p><img src="06-graphics_files/figure-html/unnamed-chunk-149-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="06-graphics_files/figure-html/unnamed-chunk-150-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti – vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).</p>
 
 </div>

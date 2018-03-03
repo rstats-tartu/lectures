@@ -1932,6 +1932,7 @@ y <- rexp(100)
 par(mfrow=c(1,2))
 plot(dexp(seq(0, 5, length=100)), main="exponential distr.") 
 qqPlot(y, main = "exponential vs normal")
+par(mfrow=c(1,1))
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-137-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1947,6 +1948,19 @@ qqplot(iris$Sepal.Length, iris$Sepal.Width)
 
 Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka pikkus > 7.5 ja tolmuka laius > 3.6.
 
+car::qqPlot saab kasutada ka lineaarse regressiooni normaalsuseelduse kontrollimiseks. Kui ennustatav y-muutuja on normaaljaotusega, siis peaksid residuaalid olema normaaljaotusega (keskväärtus = 0). Selle normaalsuse määramiseks plotitakse standardiseeritud residuaalid teoreetiliste normalsete kvantiilide vastu. Selleks anname qqPlot() funktsiooni lm mudeliobjekti
+
+
+```r
+m1 <- lm(Sepal.Length~ Sepal.Width + Petal.Width, data = iris)
+qqPlot(m1)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-139-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+
+
 ## Heat map 
 
 Heat map asendab tabelis numbrid värvidega, muutes nii keerulised tabelid kiiremini haaratavateks. Samas, inimese aju ei ole kuigi edukas värvitoone pidevate muutujate numbrilisteks väärtusteks tagasi konverteerima, mis tähendab, et heat map võimaldab lugejal kiiresti haarata mustreid andmetes, aga ei võimalda teha täpseid võrdlusi tabeli üksikute lahtrite vahel. 
@@ -1958,7 +1972,7 @@ library(pheatmap)
 pheatmap(iris[1:4], fontsize_row = 3, cluster_cols = FALSE, cluster_rows = FALSE)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-139-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifitseerimist. Seega lisanduvad heat mapile ka dendrogrammid.
@@ -1968,7 +1982,7 @@ Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed
 pheatmap(iris[1:4], fontsize_row = 5)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest. Kõigepealt jagab dendrogramm vaatlused paaridesse, misjärel hakkab järk-järgult lähimaid paare klastritesse ühendama kuni lõpuks kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks -- seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest. 
 
@@ -1981,7 +1995,7 @@ NB! k-means klustrid on arvutatud hoopis teisel viisil kui eelmisel joonisel ole
 a <- pheatmap(iris[1:4], kmeans_k = 3)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-142-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Lisame klastrid irise tabelisse ja vaatame, kui hästi klastrid tabavad kolme irise liiki:
 
@@ -1991,9 +2005,9 @@ iris$cluster <- a$kmeans$cluster
 table(iris$Species, iris$cluster)
 #>             
 #>               1  2  3
-#>   setosa      0 50  0
-#>   versicolor  2  0 48
-#>   virginica  36  0 14
+#>   setosa     50  0  0
+#>   versicolor  0 48  2
+#>   virginica   0 14 36
 ```
 
 Ja sama graafiliselt:
@@ -2002,7 +2016,7 @@ Ja sama graafiliselt:
 ggplot(iris, aes(factor(cluster), Species)) + geom_count()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-143-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-144-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikkusi on lihtsam võrrelda kui pindalasid eelmisel graafikul):
 
@@ -2013,7 +2027,7 @@ iris_x$cluster <- as.factor(iris_x$cluster)
 mosaic(~Species + cluster, data= iris_x, shade=T, legend=FALSE)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-144-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Korrelatsioonimaatriksid heat mapina
 
@@ -2025,7 +2039,7 @@ Kõigepealt tavaline scatterplot maatriks.
 plot(iris[1:4], col=iris$Species)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime mustrite parema nägemise huvides ka andmetulbad ümber (order=TRUE), seekord kasutades selleks peakomponent analüüsi (PCA).
 
@@ -2035,7 +2049,7 @@ corrgram(iris[1:4], order = TRUE, lower.panel=corrgram::panel.shade,
          upper.panel=panel.cor, diag.panel=panel.density)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-147-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Paraleelkoordinaatgraafik
 
@@ -2051,7 +2065,7 @@ legend(x = 1.75, y = -.25, cex = 1,
     fill = unique(iris$Species), horiz = TRUE)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-147-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-148-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teistest eristada.
 
@@ -2083,7 +2097,7 @@ ggraph(graph_cors) +
   theme_graph()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-148-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-149-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.
 
@@ -2099,6 +2113,6 @@ ggraph(graph_cors) +
   theme_graph() 
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-149-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-150-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti -- vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).
