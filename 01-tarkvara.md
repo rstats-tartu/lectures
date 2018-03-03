@@ -190,8 +190,7 @@ biocLite("edgeR")
 
 
 ```r
-## Näiteks järgnev käsk installeerib xaringan 
-## presentation ninja paketi
+# following command installs xaringan (presentation ninja) package from GitHub user yihui
 devtools::install_github("yihui/xaringan")
 ```
 
@@ -199,7 +198,7 @@ devtools::install_github("yihui/xaringan")
 
 
 ```r
-## install.packages("tidyverse")
+# install.packages("tidyverse")
 library(tidyverse)
 ```
 

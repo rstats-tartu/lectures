@@ -394,13 +394,12 @@ Joonis 2.2: RStudio ‘Install Packages’ dialoogiaken.
 <ol start="3" style="list-style-type: decimal">
 <li><strong>GitHub</strong> <a href="https://github.com" class="uri">https://github.com</a></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Näiteks järgnev käsk installeerib xaringan 
-## presentation ninja paketi
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># following command installs xaringan (presentation ninja) package from GitHub user yihui</span>
 devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;yihui/xaringan&quot;</span>)</code></pre></div>
 <blockquote>
 <p>NB! antud praktilise kursuse raames tutvume ja kasutame ‘tidyverse’ metapaketi funktsioone, laadides need iga sessiooni alguses:</p>
 </blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## install.packages(&quot;tidyverse&quot;)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;tidyverse&quot;)</span>
 <span class="kw">library</span>(tidyverse)</code></pre></div>
 <p>Nüüd on teil <code>tidyverse</code> pakett arvutis. Tegelikult kuuluvad siia raamatukokku omakorda tosinkond raamatukogu — tidyverse on pisut meta. Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te need töökeskkonda sisse loete</p>
 <p>Veel üks tehniline detail. <code>library(tidyverse)</code> käsk ei loe sisse kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi. Need tuleb vajadusel eraldi ükshaaval sisse lugeda.</p>
