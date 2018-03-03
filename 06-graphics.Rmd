@@ -1771,3 +1771,26 @@ ggraph(graph_cors) +
 ```
 
 Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti -- vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).
+
+## Biplot ja peakomponentanalüüs
+
+Kui teil on andmetes rohkem dimensioone, kui te jõuate plottida, siis peakomponentanalüüs (PCA) on üks võimalus multidimensionaalseid andmeid kahedimensionaalsena joonistada. PCA on lineaarne meetod, mis püüab omavahel korrelleeritud muutujad aesendada uute muutujatega, mis oleks võimalikult vähe korrelleeritud. PCA joonise teljed (peakomponent 1 ja peakomponent 2) on valitud nii, et need oleks üksteisega võimalikult vähe korreleeritud ja samas säiliks võimalikult suur osa andmete algsest multidimensionaalsest varieeruvusest. Eesmärk on saavutada 2D (või 3D) muster, mis oleks võimalikult lähedane algse multi-D mustriga. Seega, PCA projitseerib multidimensionaalse andmemustri 2D pinnale viisil, mis püüab säilitada maksimaalse osa algsest andmete varieeruvusest. PCA teeb seda, kasutades lineaarset additiivset mudelit. 
+
+See analüüs on mõistlik ainult siis, kui andmed varieeruvad kõige rohkem suunas, mis on ka teaduslikult oluline (ei ole juhuslik müra) ja muutujate vahel ei ole mittelineaarseid interaktsioone (muutujad on sõltumatud). Te ei tea kunagi ette, kas ja millal PCAst võib kasu olla reaalsete mustrite leidmisel -- seega tuleks PCA tõlgendamisega olla pigem ettevaatlik, sest inimaju on suuteline mustreid nägema ka seal, kus neid ei ole. Lisaks, isegi kui PCAs ilmuv muster on ehtne, on PCA dimensioone sageli palju raskem teaduslikult tõlgendada kui originaalseid muutujaid.
+
+```{r}
+ir.species <- iris[, 5]
+ir.pca <- prcomp(iris[,1:4], center=T, scale = TRUE) 
+#library(devtools)
+#install_github("ggbiplot", "vqv")
+library(ggbiplot)
+g <- ggbiplot(ir.pca, obs.scale = 1, var.scale = 1, 
+              groups = iris$Species, ellipse = TRUE, 
+              circle = TRUE)
+g <- g + scale_color_discrete(name = '') + theme_tufte()
+print(g)
+
+```
+
+Seega taandasime 4D andmestiku 2D-sse, säilitades seejuurse suure osa algsest andmete varieeruvusest (esimene pekomponent sisaldab 73% algsest varieeruvusest ja 2. peakomponent 23%). Punkidena on näidatud irise isendid, mis on värvitud liigi järgi, ja lisaks on antud vektorid, mis näitavad, millised algsetest muutujatest korreleeruvad millise peakomponendiga. Siit näeme, et Petal.Length, Petal.Width ja Sepal.Width-i varieeruvus kajastub valdavas enamuses PC1 teljel (vektorid on PC1 teljega enam-vähem paralleelsed) ja et Sepal-Width muutuja varieeruvus kajastub suures osas PC2 teljel. 
+
