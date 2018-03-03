@@ -173,15 +173,14 @@ biocLite("edgeR")
 3. __GitHub__ https://github.com
 
 ```{r eval=FALSE}
-## Näiteks järgnev käsk installeerib xaringan 
-## presentation ninja paketi
+# following command installs xaringan (presentation ninja) package from GitHub user yihui
 devtools::install_github("yihui/xaringan")
 ```
 
 > NB! antud praktilise kursuse raames tutvume ja kasutame 'tidyverse' metapaketi funktsioone, laadides need iga sessiooni alguses:
 
 ```{r eval=FALSE}
-## install.packages("tidyverse")
+# install.packages("tidyverse")
 library(tidyverse)
 ```
 
