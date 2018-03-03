@@ -1455,8 +1455,6 @@ Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele
 
 Proteoomikas on praegu populaarsed MA-fraafikud, kus y-teljel (M) on katse vs kontroll erinevus log2 skaalas ja x-teljel (A) on keskmine tase.
 
-An MA plot is an application of a Bland–Altman plot for visual representation of genomic data. The plot visualises the differences between measurements taken in two samples, by transforming the data onto M (log ratio) and A (mean average) scales, then plotting these values. 
-
 ### Vulkaaniplot
 
 Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas. Vulkaaniplotti tutvustame mitte selle pärast, et seda soovitada, vaid ainult selle tõttu, et seda kasutatakse massiliselt näiteks proteoomika vallas. Vulkaaniplot on tõlgendamise mõttes kolmemõõtmeline ja pigem keeruline, näitlikustades korraga efekti suurust (ES), varieeruvust (sd) ja valimiviga (see sõltub valimi suurusest, aga ka mõõtmisobjekti/valgu tasemest).
@@ -1468,19 +1466,30 @@ head(df, 3)
 
 Me lisame tabelile veeru p väärtustega ja veeru effekti suurustega (ES), kasutades apply() funktsiooni sees tavapärast indekseerimist (vt ptk ...).
 ```{r}
-df_x <- df[2:7]
-#arvutame p väärtused
+df_x <- df[2:7] #numeric variables only
+#p values
 df$p <- apply(df_x, 1, function(x) t.test(x[1:3], x[4:6])$p.value)
-#arvutame efekti suurused "ES" (katsete keskmine - kontrollide keskmine)
+#effect sizes (mean experiment - mean control)
 df$ES <- apply(df_x, 1, function(x) mean(x[1:3]) - mean(x[4:6]))
+d <- df %>% filter(ES > 1 | ES < -1) %>% filter(p < 0.05) #data for text labels
 
-ggplot(df, aes(ES, -log10(p))) + 
+plot <- ggplot(df, aes(ES, -log10(p))) + 
   geom_point(alpha=0.2) + 
-  geom_hline(yintercept = -log10(0.05), linetype=2) +
-  geom_vline(xintercept = c(-1, 1), linetype=2)+
-  labs(x="d10 - wt (in log2 scale)", y= "- log10 of p value", title="volcano plot")+
+  geom_hline(yintercept = -log10(0.05), linetype=2) + #add horizontal line
+  geom_vline(xintercept = c(-1, 1), linetype=2)+ #add 2 vertical lines
+  labs(x="d10 - wt (in log2 scale)", 
+       y= "- log10 of p value", 
+       title="volcano plot")+
   theme_tufte()
+plot
 ```
+
+```{r}
+library(ggrepel) #for geom_text_repel()
+plot + geom_label_repel(data=d, aes(label=gene), cex=2) 
+#alternative: geom_text_repel(data=d, aes(label=gene), cex=2)
+```
+
 
 Sellel pildil markeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse (üks ühik log2 skaalal; ühekordne ES võrdub sellel skaalal nulliga). Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub horisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu "päris" efektiga. Seevastu inimesed, kes teavad, teavad ka seda, et p väärtuste ühekaupa tõlgendamine ei ole sageli mõistlik. 
 Iga p väärtus koondab endasse informatsiooni kolmest muutujast: valimi suurus (N), varieeruvus (sd) ja efekti suurus (ES = katse - kontroll). Kuigi me saame vulkaaniplotil asuvaid punkte võrreldes ignoreerida valimi suuruse mõju (kuna me teame, et meil on iga punkti taga 3 + 3 mõõtmist), koondab iga p väärtus endasse infot nii ES kui sd kohta viisil, mida me ei oska hästi üksteisest lahutada (siiski, pane tähele, et horisontaalsel teljel on ES). Me teame, et igas punktis on nii ES kui sd mõjutatud valimiveast, mis on kummagi näitaja suhtes teisest sõltumatu. Seega, igal neljandal valgul on valimiveaga seose topeltprobleem: ülehinnatud ES ja samal ajal alahinnatud sd, mis viib oodatust ohtlikult väiksemale p väärtusele. 
