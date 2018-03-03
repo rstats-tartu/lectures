@@ -1609,6 +1609,7 @@ y <- rexp(100)
 par(mfrow=c(1,2))
 plot(dexp(seq(0, 5, length=100)), main="exponential distr.") 
 qqPlot(y, main = "exponential vs normal")
+par(mfrow=c(1,1))
 ```
 
 QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide tolmukate pikkuste ja tolmukate laiuste jaotusi (vt ka peatüki algusest bihistogrammi). Selle meetodi oluline eelis on, et võrreldavad jaotused võivad olla erineva suurusega (N-ga). Siin kasutame base::R qqplot() funktsiooni.
@@ -1618,6 +1619,16 @@ qqplot(iris$Sepal.Length, iris$Sepal.Width)
 ```
 
 Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka pikkus > 7.5 ja tolmuka laius > 3.6.
+
+car::qqPlot saab kasutada ka lineaarse regressiooni normaalsuseelduse kontrollimiseks. Kui ennustatav y-muutuja on normaaljaotusega, siis peaksid residuaalid olema normaaljaotusega (keskväärtus = 0). Selle normaalsuse määramiseks plotitakse standardiseeritud residuaalid teoreetiliste normalsete kvantiilide vastu. Selleks anname qqPlot() funktsiooni lm mudeliobjekti
+
+```{r}
+m1 <- lm(Sepal.Length~ Sepal.Width + Petal.Width, data = iris)
+qqPlot(m1)
+```
+
+
+
 
 ## Heat map 
 
