@@ -1407,6 +1407,7 @@ Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standard
 
 ## Tukey summa-erinevuse graafik
 
+Seda gaafikutüüpi tuntakse meditsiinis ka Bland-Altmani graafikuna.
 Te sooritate korraga palju paralleelseid mõõtmisi -- näiteks mõõdate mass-spektroskoopiaga 1000 valgu taset. Kui teete seda katset kaks korda (või katse vs. kontroll n korda) ja tahate näha süstemaatilisi erinevusi, siis tasub joonistada summa-erinevuse graafik. See on hea olukordades, kus ei ole vahet, mis läheb x ja mis läheb y teljele (erinevalt regressioonimudelitest ja residuaaliplottidest, kus see on väga tähtis).
 Meie graafik on x ja y suhtes sümmeetriline. 
 
@@ -1451,6 +1452,10 @@ Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele
 3. et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja 
 
 4. et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).
+
+Proteoomikas on praegu populaarsed MA-fraafikud, kus y-teljel (M) on katse vs kontroll erinevus log2 skaalas ja x-teljel (A) on keskmine tase.
+
+An MA plot is an application of a Bland–Altman plot for visual representation of genomic data. The plot visualises the differences between measurements taken in two samples, by transforming the data onto M (log ratio) and A (mean average) scales, then plotting these values. 
 
 ### Vulkaaniplot
 
