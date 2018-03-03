@@ -1860,6 +1860,7 @@ Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 par(mfrow = c(1, 2))
 plot(dnorm(seq(0,6, length.out = 100), 3, 1), main = "normal")
 qqPlot(rnorm(100, 3, 1), main = "normal vs normal") #default on vrdls normaaljaotusega.
+par(mfrow=c(1,1))
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1869,6 +1870,7 @@ qqPlot(rnorm(100, 3, 1), main = "normal vs normal") #default on vrdls normaaljao
 par(mfrow = c(1, 2))
 plot(dlnorm(seq(0,4, length.out = 100)), main = "log normal") 
 qqPlot(rlnorm(100), main = "log normal vs normal")
+par(mfrow=c(1,1))
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-130-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1879,6 +1881,7 @@ qqPlot(rlnorm(100), main = "log normal vs normal")
 par(mfrow = c(1, 2))
 plot(dt(seq(-4,4, length.out = 100), df=2), main = "student t") 
 qqPlot(rt(100, df=2), main = "students t vs normal")
+par(mfrow=c(1,1))
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-131-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1888,6 +1891,7 @@ qqPlot(rt(100, df=2), main = "students t vs normal")
 par(mfrow = c(1, 2))
 plot(c(dnorm(seq(-3,6, length.out = 50)), dnorm(seq(-3,6, length.out = 50), 4, 1)), main = "2 peaked normal") 
 qqPlot(c(rnorm(50), rnorm(50, 4,1)), main = "two peaked normal vs normal")
+par(mfrow=c(1,1))
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-132-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1897,6 +1901,7 @@ qqPlot(c(rnorm(50), rnorm(50, 4,1)), main = "two peaked normal vs normal")
 par(mfrow = c(1, 2))
 plot(dunif(seq(0, 1, length=100))) 
 qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotusega.
+par(mfrow=c(1,1))
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-133-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1906,6 +1911,7 @@ qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotuseg
 par(mfrow = c(1, 2))
 plot(dchisq(seq(0, 2, length=100), df=2)) 
 qqPlot(rchisq(100, df=2), main = "chi square vs normal")
+par(mfrow=c(1,1))
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-134-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1915,6 +1921,7 @@ qqPlot(rchisq(100, df=2), main = "chi square vs normal")
 par(mfrow = c(1, 2))
 plot(dbeta(seq(0, 1, length=100), 2, 2)) 
 qqPlot(rbeta(100, 2, 2), main = "beta vs normal")
+par(mfrow=c(1,1))
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-135-1.svg" width="70%" style="display: block; margin: auto;" />
