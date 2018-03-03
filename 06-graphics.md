@@ -1764,8 +1764,6 @@ Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele
 
 Proteoomikas on praegu populaarsed MA-fraafikud, kus y-teljel (M) on katse vs kontroll erinevus log2 skaalas ja x-teljel (A) on keskmine tase.
 
-An MA plot is an application of a Bland–Altman plot for visual representation of genomic data. The plot visualises the differences between measurements taken in two samples, by transforming the data onto M (log ratio) and A (mean average) scales, then plotting these values. 
-
 ### Vulkaaniplot
 
 Tukey summa-erinevuse graafiku vaene sugulane on vulkaaniplot, kus horisontaalsel teljel on y - x (soovitavalt log2 skaalas) ja vertikaalsel teljel on p väärtused, mis arvutatud kahe grupi võrdluses, kusjuures p väärtused on -log10 skaalas. Vulkaaniplotti tutvustame mitte selle pärast, et seda soovitada, vaid ainult selle tõttu, et seda kasutatakse massiliselt näiteks proteoomika vallas. Vulkaaniplot on tõlgendamise mõttes kolmemõõtmeline ja pigem keeruline, näitlikustades korraga efekti suurust (ES), varieeruvust (sd) ja valimiviga (see sõltub valimi suurusest, aga ka mõõtmisobjekti/valgu tasemest).
@@ -1783,21 +1781,35 @@ head(df, 3)
 Me lisame tabelile veeru p väärtustega ja veeru effekti suurustega (ES), kasutades apply() funktsiooni sees tavapärast indekseerimist (vt ptk ...).
 
 ```r
-df_x <- df[2:7]
-#arvutame p väärtused
+df_x <- df[2:7] #numeric variables only
+#p values
 df$p <- apply(df_x, 1, function(x) t.test(x[1:3], x[4:6])$p.value)
-#arvutame efekti suurused "ES" (katsete keskmine - kontrollide keskmine)
+#effect sizes (mean experiment - mean control)
 df$ES <- apply(df_x, 1, function(x) mean(x[1:3]) - mean(x[4:6]))
+d <- df %>% filter(ES > 1 | ES < -1) %>% filter(p < 0.05) #data for text labels
 
-ggplot(df, aes(ES, -log10(p))) + 
+plot <- ggplot(df, aes(ES, -log10(p))) + 
   geom_point(alpha=0.2) + 
-  geom_hline(yintercept = -log10(0.05), linetype=2) +
-  geom_vline(xintercept = c(-1, 1), linetype=2)+
-  labs(x="d10 - wt (in log2 scale)", y= "- log10 of p value", title="volcano plot")+
+  geom_hline(yintercept = -log10(0.05), linetype=2) + #add horizontal line
+  geom_vline(xintercept = c(-1, 1), linetype=2)+ #add 2 vertical lines
+  labs(x="d10 - wt (in log2 scale)", 
+       y= "- log10 of p value", 
+       title="volcano plot")+
   theme_tufte()
+plot
 ```
 
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+```r
+library(ggrepel) #for geom_text_repel()
+plot + geom_label_repel(data=d, aes(label=gene), cex=2) 
+#alternative: geom_text_repel(data=d, aes(label=gene), cex=2)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-126-1.svg" width="70%" style="display: block; margin: auto;" />
+
 
 Sellel pildil markeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse (üks ühik log2 skaalal; ühekordne ES võrdub sellel skaalal nulliga). Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub horisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu "päris" efektiga. Seevastu inimesed, kes teavad, teavad ka seda, et p väärtuste ühekaupa tõlgendamine ei ole sageli mõistlik. 
 Iga p väärtus koondab endasse informatsiooni kolmest muutujast: valimi suurus (N), varieeruvus (sd) ja efekti suurus (ES = katse - kontroll). Kuigi me saame vulkaaniplotil asuvaid punkte võrreldes ignoreerida valimi suuruse mõju (kuna me teame, et meil on iga punkti taga 3 + 3 mõõtmist), koondab iga p väärtus endasse infot nii ES kui sd kohta viisil, mida me ei oska hästi üksteisest lahutada (siiski, pane tähele, et horisontaalsel teljel on ES). Me teame, et igas punktis on nii ES kui sd mõjutatud valimiveast, mis on kummagi näitaja suhtes teisest sõltumatu. Seega, igal neljandal valgul on valimiveaga seose topeltprobleem: ülehinnatud ES ja samal ajal alahinnatud sd, mis viib oodatust ohtlikult väiksemale p väärtusele. 
@@ -1826,7 +1838,7 @@ Seega ei ole meil ES-i ja p väärtuse vahel selget suhet, kus suurtel efektidel
 
 Hea küll, joonistame oma vulkaani uuesti p väärtuste põhjal, mis seekord on arvutatud eeldusel, et mõlema grupi (d10 ja wt) varieeruvused on geeni kaupa võrdsed. See tähendab, et kui ES-i arvutamisel on valimi suurus 3 (kolme katse ja kolme kontrolli keskmine), siis sd arvutamisel, mis omakorda läheb p väärtuse arvutamise valemisse, on valimi suurus mõlemale grupile 6.
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-126-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Pilt on küll detailides erinev, aga suures plaanis üsna sarnane eelmisega.
 
@@ -1840,7 +1852,7 @@ library(Hmisc)
 histbackback(iris$Sepal.Length, iris$Sepal.Width)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-128-1.svg" width="70%" style="display: block; margin: auto;" />
 
 See bihistogramm, mis küll veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi, näitab, et kahe grupi keskmised on selgelt erinevad (ülekate peaaegu puudub), aga et ka jaotused ise erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).
 
@@ -1856,7 +1868,7 @@ library(car)
 qqPlot(rnorm(100), distribution = "lnorm")
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-128-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 
@@ -1868,7 +1880,7 @@ qqPlot(rnorm(100, 3, 1), main = "normal vs normal") #default on vrdls normaaljao
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-130-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -1878,7 +1890,7 @@ qqPlot(rlnorm(100), main = "log normal vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-130-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-131-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -1889,7 +1901,7 @@ qqPlot(rt(100, df=2), main = "students t vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-131-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-132-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -1899,7 +1911,7 @@ qqPlot(c(rnorm(50), rnorm(50, 4,1)), main = "two peaked normal vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-132-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-133-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -1909,7 +1921,7 @@ qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotuseg
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-133-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-134-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -1919,7 +1931,7 @@ qqPlot(rchisq(100, df=2), main = "chi square vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-134-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-135-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -1929,11 +1941,11 @@ qqPlot(rbeta(100, 2, 2), main = "beta vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-135-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-136-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-136-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-137-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nagu näha, beta jaotus, mis on normaaljaotusest palju laiem, on qq-plotil sellest halvasti eristatav. Erinevus on väga madalatel ja väga kõrgetel kvantiilidel (jaotuste otstes).
 
@@ -1947,7 +1959,7 @@ qqPlot(y, main = "exponential vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-137-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-138-1.svg" width="70%" style="display: block; margin: auto;" />
 
 QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide tolmukate pikkuste ja tolmukate laiuste jaotusi (vt ka peatüki algusest bihistogrammi). Selle meetodi oluline eelis on, et võrreldavad jaotused võivad olla erineva suurusega (N-ga). Siin kasutame base::R qqplot() funktsiooni.
 
@@ -1956,7 +1968,7 @@ QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide t
 qqplot(iris$Sepal.Length, iris$Sepal.Width)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-138-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-139-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka pikkus > 7.5 ja tolmuka laius > 3.6.
 
@@ -1968,7 +1980,7 @@ m1 <- lm(Sepal.Length~ Sepal.Width + Petal.Width, data = iris)
 qqPlot(m1)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-139-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -1984,7 +1996,7 @@ library(pheatmap)
 pheatmap(iris[1:4], fontsize_row = 3, cluster_cols = FALSE, cluster_rows = FALSE)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifitseerimist. Seega lisanduvad heat mapile ka dendrogrammid.
@@ -1994,7 +2006,7 @@ Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed
 pheatmap(iris[1:4], fontsize_row = 5)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-142-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest. Kõigepealt jagab dendrogramm vaatlused paaridesse, misjärel hakkab järk-järgult lähimaid paare klastritesse ühendama kuni lõpuks kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks -- seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest. 
 
@@ -2007,7 +2019,7 @@ NB! k-means klustrid on arvutatud hoopis teisel viisil kui eelmisel joonisel ole
 a <- pheatmap(iris[1:4], kmeans_k = 3)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-142-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-143-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Lisame klastrid irise tabelisse ja vaatame, kui hästi klastrid tabavad kolme irise liiki:
 
@@ -2017,9 +2029,9 @@ iris$cluster <- a$kmeans$cluster
 table(iris$Species, iris$cluster)
 #>             
 #>               1  2  3
-#>   setosa     50  0  0
-#>   versicolor  0 48  2
-#>   virginica   0 14 36
+#>   setosa      0  0 50
+#>   versicolor  2 48  0
+#>   virginica  36 14  0
 ```
 
 Ja sama graafiliselt:
@@ -2028,7 +2040,7 @@ Ja sama graafiliselt:
 ggplot(iris, aes(factor(cluster), Species)) + geom_count()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-144-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikkusi on lihtsam võrrelda kui pindalasid eelmisel graafikul):
 
@@ -2039,7 +2051,7 @@ iris_x$cluster <- as.factor(iris_x$cluster)
 mosaic(~Species + cluster, data= iris_x, shade=T, legend=FALSE)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Korrelatsioonimaatriksid heat mapina
 
@@ -2051,7 +2063,7 @@ Kõigepealt tavaline scatterplot maatriks.
 plot(iris[1:4], col=iris$Species)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-147-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime mustrite parema nägemise huvides ka andmetulbad ümber (order=TRUE), seekord kasutades selleks peakomponent analüüsi (PCA).
 
@@ -2061,7 +2073,7 @@ corrgram(iris[1:4], order = TRUE, lower.panel=corrgram::panel.shade,
          upper.panel=panel.cor, diag.panel=panel.density)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-147-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-148-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Paraleelkoordinaatgraafik
 
@@ -2077,7 +2089,7 @@ legend(x = 1.75, y = -.25, cex = 1,
     fill = unique(iris$Species), horiz = TRUE)
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-148-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-149-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teistest eristada.
 
@@ -2109,7 +2121,7 @@ ggraph(graph_cors) +
   theme_graph()
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-149-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-150-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.
 
@@ -2125,6 +2137,6 @@ ggraph(graph_cors) +
   theme_graph() 
 ```
 
-<img src="06-graphics_files/figure-epub3/unnamed-chunk-150-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-151-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti -- vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).
