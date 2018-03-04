@@ -784,7 +784,7 @@ diffplotp <- ggplot(my.data, aes(baseline, diffp)) +
 ggMarginal(diffplotp, type = "histogram", bins = 25)
 ```
 
-# Tosin graafikut, mida sa peaksid enne surma joonistama
+# Kuraditosin graafikut, mida sa peaksid enne surma joonistama
 
 Andmete plottimisel otsib analüütik tasakaalu informatsioonikao ja trendide/mustrite/kovarieeruvuste nähtavaks tegemise vahel. 
 Idee on siin, et teie andmed võivad sisaldada a) juhuslikku müra, b) trende/mustreid, mis teile suurt huvi ei paku ja c) teid huvitavaid varjatud mustreid. 
