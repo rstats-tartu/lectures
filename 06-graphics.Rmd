@@ -1794,3 +1794,15 @@ print(g)
 
 Seega taandasime 4D andmestiku 2D-sse, säilitades seejuurse suure osa algsest andmete varieeruvusest (esimene pekomponent sisaldab 73% algsest varieeruvusest ja 2. peakomponent 23%). Punkidena on näidatud irise isendid, mis on värvitud liigi järgi, ja lisaks on antud vektorid, mis näitavad, millised algsetest muutujatest korreleeruvad millise peakomponendiga. Siit näeme, et Petal.Length, Petal.Width ja Sepal.Width-i varieeruvus kajastub valdavas enamuses PC1 teljel (vektorid on PC1 teljega enam-vähem paralleelsed) ja et Sepal-Width muutuja varieeruvus kajastub suures osas PC2 teljel. 
 
+
+Populaarne mittelineaarne viis multidimensionaalsete andmete 2D-sse redutseerimiseks on t-sne, mis on mittelineaarne ja vaatab andmeid lokaalselt (mitte kogu andmeruumi tervikuna). Parameeter perplexity tuunitakse kasutaja poolt ja see määrab tasakaalu, millega algoritm vaatab andmeid lokaalselt ja globaalselt. Väiksem perplexity tõstab lokaalse vaatluse osakaalu. Perplexity annab hinnangu, mitu lähimat naabrit igal andmepunktil võiks olla. Üldiselt on soovitus jooksutada t-sne algoritmi mitu korda varieerides perplexity-d 5 ja 50 vahel. 
+
+```{r warning=FALSE, message=FALSE}
+library(tsne)
+ts <- tsne(iris[1:4], perplexity = 10)
+ts <- as_tibble(ts)
+ism1 <- bind_cols(iris, ts)
+ggplot(ism1, aes(x=V1, y=V2, color=(iris$Species)))+ geom_point()
+```
+
+
