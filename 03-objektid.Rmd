@@ -542,6 +542,9 @@ matrixplot(diabetes)
 dfs[is.na(dfs)] <- 0
 dfs[is.na(dfs)] <- "other"
 dfs[dfs == 0] <- NA # teeb vastupidi 0-d NA-deks
+na_if(dfs, "") #teeb dfs tabelis tühjad lahtrid NA-deks
+na_if(dfs, "other") #teeb lahtrid, kus on "other" NA-deks
+na_if(dfs, 0) #teeb 0-d NA-deks. 
 ```
 
 Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud `is.na()` funktsiooniga.

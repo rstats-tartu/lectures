@@ -739,7 +739,7 @@ my_data %>%
 ```
 
 Now we will prepare the difference data:
-```{r}
+```{r }
 diff <- (post - baseline)
 diffp <- (post - baseline) / baseline * 100
 sd.diff <- sd(diff)
@@ -749,7 +749,7 @@ my.data <- data.frame(baseline, post, diff, diffp)
 
 In standard Bland Altman plots, one plots the difference between methods against the average of the methods, but in this case, the x-axis should be the baseline result, because that is the closest thing we have to the truth.
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, fig.width=5, fig.height=5, message=FALSE}
 library(ggExtra)
 diffplot <- ggplot(my.data, aes(baseline, diff)) + 
   geom_point(size=2, colour = rgb(0,0,0, alpha = 0.5)) + 
