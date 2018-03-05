@@ -526,7 +526,7 @@ nrows <- nrow(diabetes)
 ```
 
   
-**Mitu NA-d on igas tulbas?**
+### Mitu NA-d on igas tulbas?
 ```{r}
 sapply(diabetes, function(x) sum(is.na(x))) 
 ```
@@ -537,14 +537,11 @@ matrixplot(diabetes)
 ```
 
 
-**Kuidas rekodeerida NA-d näiteks 0-ks:**
+### Kuidas rekodeerida NA-d näiteks 0-ks:
 ```{r eval=FALSE}
 dfs[is.na(dfs)] <- 0
 dfs[is.na(dfs)] <- "other"
 dfs[dfs == 0] <- NA # teeb vastupidi 0-d NA-deks
-na_if(dfs, "") #teeb dfs tabelis tühjad lahtrid NA-deks
-na_if(dfs, "other") #teeb lahtrid, kus on "other" NA-deks
-na_if(dfs, 0) #teeb 0-d NA-deks. 
 ```
 
 Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud `is.na()` funktsiooniga.
@@ -570,7 +567,7 @@ coalesce(y, z)
 
 
 
-**Rekodeerime numbri vm NA-ks**
+### Rekodeerime numbri vm NA-ks
 
 ```{r eval=FALSE}
 
@@ -578,6 +575,10 @@ na_if(x, y)
 
 x - vektor ehk tabeli veerg, mida modifitseerime
 y - väärtus, mida soovime NA-ga asendada
+
+na_if(dfs, "") #teeb dfs tabelis tühjad lahtrid NA-deks
+na_if(dfs, "other") #teeb lahtrid, kus on "other" NA-deks
+na_if(dfs, 0) #teeb 0-d NA-deks. 
 ```
 
 
