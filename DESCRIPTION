@@ -25,7 +25,8 @@ Imports:
     corrr,
     igraph,
     ggraph,
-    ggbiplot
+    ggbiplot,
+    tsne
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking,
