@@ -306,15 +306,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.738 0.563 0.442 0.660 0.469
+#> [1] 0.0699 0.3289 0.7100 0.8919 0.5586
 #> 
 #> [[2]]
-#>       a       b
-#> 1 0.738 -1.1245
-#> 2 0.563  0.1110
-#> 3 0.442  0.0842
-#> 4 0.660  1.3976
-#> 5 0.469 -0.2126
+#>        a      b
+#> 1 0.0699 -0.639
+#> 2 0.3289 -1.014
+#> 3 0.7100 -0.771
+#> 4 0.8919 -0.141
+#> 5 0.5586 -0.190
 #> 
 #> [[3]]
 #> 
@@ -813,7 +813,7 @@ nrows <- nrow(diabetes)
 ```
 
   
-**Mitu NA-d on igas tulbas?**
+### Mitu NA-d on igas tulbas?
 
 ```r
 sapply(diabetes, function(x) sum(is.na(x))) 
@@ -836,7 +836,7 @@ matrixplot(diabetes)
 <img src="03-objektid_files/figure-epub3/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" />
 
 
-**Kuidas rekodeerida NA-d näiteks 0-ks:**
+### Kuidas rekodeerida NA-d näiteks 0-ks:
 
 ```r
 dfs[is.na(dfs)] <- 0
@@ -871,7 +871,7 @@ coalesce(y, z)
 
 
 
-**Rekodeerime numbri vm NA-ks**
+### Rekodeerime numbri vm NA-ks
 
 
 ```r
@@ -880,6 +880,10 @@ na_if(x, y)
 
 x - vektor ehk tabeli veerg, mida modifitseerime
 y - väärtus, mida soovime NA-ga asendada
+
+na_if(dfs, "") #teeb dfs tabelis tühjad lahtrid NA-deks
+na_if(dfs, "other") #teeb lahtrid, kus on "other" NA-deks
+na_if(dfs, 0) #teeb 0-d NA-deks. 
 ```
 
 

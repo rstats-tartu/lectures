@@ -980,7 +980,7 @@ diffplotp <- ggplot(my.data, aes(baseline, diffp)) +
 ggMarginal(diffplotp, type = "histogram", bins = 25)
 ```
 
-# Tosin graafikut, mida sa peaksid enne surma joonistama
+# Kuraditosin graafikut, mida sa peaksid enne surma joonistama
 
 Andmete plottimisel otsib analüütik tasakaalu informatsioonikao ja trendide/mustrite/kovarieeruvuste nähtavaks tegemise vahel. 
 Idee on siin, et teie andmed võivad sisaldada a) juhuslikku müra, b) trende/mustreid, mis teile suurt huvi ei paku ja c) teid huvitavaid varjatud mustreid. 
@@ -2140,3 +2140,47 @@ ggraph(graph_cors) +
 <img src="06-graphics_files/figure-epub3/unnamed-chunk-151-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti -- vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).
+
+## Biplot ja peakomponentanalüüs
+
+Kui teil on andmetes rohkem dimensioone, kui te jõuate plottida, siis peakomponentanalüüs (PCA) on üks võimalus multidimensionaalseid andmeid kahedimensionaalsena joonistada. PCA on lineaarne meetod, mis püüab omavahel korrelleeritud muutujad aesendada uute muutujatega, mis oleks võimalikult vähe korrelleeritud. PCA joonise teljed (peakomponent 1 ja peakomponent 2) on valitud nii, et need oleks üksteisega võimalikult vähe korreleeritud ja samas säiliks võimalikult suur osa andmete algsest multidimensionaalsest varieeruvusest. Eesmärk on saavutada 2D (või 3D) muster, mis oleks võimalikult lähedane algse multi-D mustriga. Seega, PCA projitseerib multidimensionaalse andmemustri 2D pinnale viisil, mis püüab säilitada maksimaalse osa algsest andmete varieeruvusest. PCA teeb seda, kasutades lineaarset additiivset mudelit. 
+
+See analüüs on mõistlik ainult siis, kui andmed varieeruvad kõige rohkem suunas, mis on ka teaduslikult oluline (ei ole juhuslik müra) ja muutujate vahel ei ole mittelineaarseid interaktsioone (muutujad on sõltumatud). Te ei tea kunagi ette, kas ja millal PCAst võib kasu olla reaalsete mustrite leidmisel -- seega tuleks PCA tõlgendamisega olla pigem ettevaatlik, sest inimaju on suuteline mustreid nägema ka seal, kus neid ei ole. Lisaks, isegi kui PCAs ilmuv muster on ehtne, on PCA dimensioone sageli palju raskem teaduslikult tõlgendada kui originaalseid muutujaid.
+
+
+```r
+ir.species <- iris[, 5]
+ir.pca <- prcomp(iris[,1:4], center=T, scale = TRUE) 
+#library(devtools)
+#install_github("ggbiplot", "vqv")
+library(ggbiplot)
+g <- ggbiplot(ir.pca, obs.scale = 1, var.scale = 1, 
+              groups = iris$Species, ellipse = TRUE, 
+              circle = TRUE)
+g <- g + scale_color_discrete(name = '') + theme_tufte()
+print(g)
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-152-1.svg" width="70%" style="display: block; margin: auto;" />
+
+Seega taandasime 4D andmestiku 2D-sse, säilitades seejuurse suure osa algsest andmete varieeruvusest (esimene pekomponent sisaldab 73% algsest varieeruvusest ja 2. peakomponent 23%). Punkidena on näidatud irise isendid, mis on värvitud liigi järgi, ja lisaks on antud vektorid, mis näitavad, millised algsetest muutujatest korreleeruvad millise peakomponendiga. Siit näeme, et Petal.Length, Petal.Width ja Sepal.Width-i varieeruvus kajastub valdavas enamuses PC1 teljel (vektorid on PC1 teljega enam-vähem paralleelsed) ja et Sepal-Width muutuja varieeruvus kajastub suures osas PC2 teljel. 
+
+### t-sne
+
+Populaarne mittelineaarne viis multidimensionaalsete andmete 2D-sse redutseerimiseks on t-sne (t-Distributed Stochastic Neighbor Embedding), mis vaatab andmeid lokaalselt (mitte kogu andmeruumi tervikuna). Parameeter perplexity tuunitakse kasutaja poolt ja see määrab tasakaalu, millega algoritm vaatab andmeid lokaalselt ja globaalselt. Väiksem perplexity tõstab lokaalse vaatluse osakaalu. Perplexity annab hinnangu, mitu lähimat naabrit igal andmepunktil võiks olla. Üldiselt on soovitus jooksutada t-sne algoritmi mitu korda varieerides perplexity-d 5 ja 50 vahel. 
+Enne selle meetodi kasutamist loe kindlasti https://distill.pub/2016/misread-tsne/
+
+
+
+
+```r
+library(tsne)
+ts <- tsne(iris[1:4], perplexity = 10)
+ts <- as_tibble(ts)#output is a table of 2D t-sne coordinates
+ism1 <- bind_cols(iris, ts)
+ggplot(ism1, aes(x=V1, y=V2, color=(Species)))+ geom_point()
+```
+
+<img src="06-graphics_files/figure-epub3/unnamed-chunk-153-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
