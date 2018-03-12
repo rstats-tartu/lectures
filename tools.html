@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2018-03-07">
+<meta name="date" content="2018-03-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -315,25 +315,25 @@ Joonis 2.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimeg
 </blockquote>
 <p>Suuremad projektid, nagu näiteks teadusartikkel või raamat, võivad sisaldada mitmeid Rmd faile ja võib tekkida kange kisatus need mõnda alamkataloogi tõsta. Aga <code>knitr::knit()</code>, mis Rmarkdowni markdowniks konverteerib, arvestab, et Rmd fail asub juurkataloogis ja arvestab juurkataloogi suhtes ka failis olevaid <em>path</em>-e teistele failidele (näiteks “data/my_data.csv”).</p>
 <p><strong>data/</strong> kataloog sisaldab faile toorandmetega. Need failid peavad olema R-i poolt loetavad ja soovitavalt tekstipõhised, laienditega TXT, CSV, TSV jne. Neid faile ei muudeta, ainult loetakse. Kogu algandmete töötlus toimub programmaatiliselt. Suured failid muudavad versioonikontrolli aeglaseks, samuti on suheliselt mõttetu versioonikontroll binaarsete failide korral (MS <i class="fa fa-file-word-o" aria-hidden="true"></i> näiteks), sest diffid pole lihtsalt inimkeeles. Github ütleb suurte failide kohta nii: <em>“GitHub will warn you when pushing files larger than 50 MB. You will not be allowed to push files larger than 100 MB.”</em></p>
-<p><strong>src/</strong> kataloog sisaldab analüüsi skripte, sealhulgas ka andmetöötluse skripte.</p>
-<p><strong>lib/</strong> kataloogis on kasutaja poolt tehtud funktsioonide definitsioone sisaldavad R skriptid.</p>
+<p><strong>R/</strong> kataloog sisaldab R skripte.</p>
+<p><strong>output/</strong> kataloogis on kasutaja poolt genereeritud andmed ja puhastatud andmesetid.</p>
 <pre><code>project/
-|- DESCRIPTION       # project metadata and dependencies
-|- README.md         # description of contents and guide to users
-|- my_analysis.Rmd   # markdown file containing analysis
-|                    # writeup together with R code chunks
+|- DESCRIPTION          # project metadata and dependencies
+|- README.md            # description of contents and guide to users
+|- my_analysis.Rmd      # markdown file containing analysis
+|                       # writeup together with R code chunks
 |
-|- data/             # raw data, not changed once created 
-|  +-my_data.csv     # data files in open formats, 
-|                    # such as TXT, CSV, TSV etc.
+|- data/                # raw data, not changed once created 
+|  +-my_rawdata.csv     # data files in open formats, 
+|                       # such as TXT, CSV, TSV etc.
 |
-|- src/              # any programmatic code
-|  +-my_scripts.R    # R code used to analyse and 
-|                    # visualise data
+|- src/                 # any programmatic code
+|  +-my_scripts.R       # R code used to analyse and 
+|                       # visualise data
 |
-|- lib/              # user generated functions
-|  +-my_functions.R  # R code defining functions</code></pre>
-<p>On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid taaskasutatavate funktsioonidega kataloogi <strong>R/</strong>. Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i <span class="citation">(Wickham, Danenberg, and Eugster <a href="#ref-roxygen2">2017</a>)</span>, siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi <strong>man/</strong>. Rohkem projekti pakkimise kohta loe värskest preprindist “Packaging data analytical work reproducibly using R” <span class="citation">(Marwick, Boettiger, and Mullen <a href="#ref-marwick2017">2017</a>)</span>.</p>
+|- output/              # generated data
+|  +-my_clean_data.rds  # saved R object or cleaned up datasets</code></pre>
+<p>Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i <span class="citation">(Wickham, Danenberg, and Eugster <a href="#ref-roxygen2">2017</a>)</span>, siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi <strong>man/</strong>. Rohkem projekti pakkimise kohta loe värskest preprindist “Packaging data analytical work reproducibly using R” <span class="citation">(Marwick, Boettiger, and Mullen <a href="#ref-marwick2017">2017</a>)</span>.</p>
 </div>
 <div id="libs" class="section level2">
 <h2><span class="header-section-number">2.6</span> Pakettide installeerimine</h2>
