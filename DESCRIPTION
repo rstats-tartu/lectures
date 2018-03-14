@@ -24,7 +24,10 @@ Imports:
     corrgram,
     corrr,
     igraph,
-    ggraph
+    ggraph,
+    ggbiplot,
+    tsne
 Remotes: 
     rstudio/bookdown, 
-    rmcelreath/rethinking
+    rmcelreath/rethinking,
+    vqv/ggbiplot

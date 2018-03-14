@@ -74,30 +74,29 @@ Kogu algandmete töötlus toimub programmaatiliselt.
 Suured failid muudavad versioonikontrolli aeglaseks, samuti on suheliselt mõttetu versioonikontroll binaarsete failide korral (MS <i class="fa fa-file-word-o" aria-hidden="true"></i> näiteks), sest diffid pole lihtsalt inimkeeles. 
 Github ütleb suurte failide kohta nii: _"GitHub will warn you when pushing files larger than 50 MB. You will not be allowed to push files larger than 100 MB."_
 
-**src/** kataloog sisaldab analüüsi skripte, sealhulgas ka andmetöötluse skripte. 
+**R/** kataloog sisaldab R skripte. 
 
-**lib/** kataloogis on kasutaja poolt tehtud funktsioonide definitsioone sisaldavad R skriptid.
+**output/** kataloogis on kasutaja poolt genereeritud andmed ja puhastatud andmesetid.
 
 ```
 project/
-|- DESCRIPTION       # project metadata and dependencies
-|- README.md         # description of contents and guide to users
-|- my_analysis.Rmd   # markdown file containing analysis
-|                    # writeup together with R code chunks
+|- DESCRIPTION          # project metadata and dependencies
+|- README.md            # description of contents and guide to users
+|- my_analysis.Rmd      # markdown file containing analysis
+|                       # writeup together with R code chunks
 |
-|- data/             # raw data, not changed once created 
-|  +-my_data.csv     # data files in open formats, 
-|                    # such as TXT, CSV, TSV etc.
+|- data/                # raw data, not changed once created 
+|  +-my_rawdata.csv     # data files in open formats, 
+|                       # such as TXT, CSV, TSV etc.
 |
-|- src/              # any programmatic code
-|  +-my_scripts.R    # R code used to analyse and 
-|                    # visualise data
+|- src/                 # any programmatic code
+|  +-my_scripts.R       # R code used to analyse and 
+|                       # visualise data
 |
-|- lib/              # user generated functions
-|  +-my_functions.R  # R code defining functions
+|- output/              # generated data
+|  +-my_clean_data.rds  # saved R object or cleaned up datasets
 ```
 
-On ka teisi konventsioone, näiteks R pakkide puhul paigutatakse kõik R skriptid taaskasutatavate funktsioonidega kataloogi **R/**. 
 Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i [@roxygen2], siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi **man/**. 
 Rohkem projekti pakkimise kohta loe värskest preprindist "Packaging data analytical work reproducibly using R" [@marwick2017].
 
