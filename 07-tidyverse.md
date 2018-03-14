@@ -231,25 +231,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>      V9     V8    V5    V2     V6
-#>   <dbl>  <dbl> <dbl> <dbl>  <dbl>
-#> 1 0.987 0.171  0.560 0.627 0.0591
-#> 2 0.152 0.608  0.882 0.308 0.644 
-#> 3 0.988 0.184  0.231 0.612 0.911 
-#> 4 0.414 0.0107 0.853 0.647 0.835 
-#> 5 0.605 0.988  0.275 0.327 0.621 
-#> 6 0.778 0.806  0.258 0.110 0.457 
+#>       V9     V8    V5    V2     V6
+#>    <dbl>  <dbl> <dbl> <dbl>  <dbl>
+#> 1 0.389  0.117  0.622 0.217 0.0661
+#> 2 0.241  0.944  0.467 0.871 0.916 
+#> 3 0.303  0.375  0.472 0.236 0.508 
+#> 4 0.711  0.439  0.844 0.613 0.446 
+#> 5 0.0283 0.400  0.507 0.698 0.221 
+#> 6 0.421  0.0545 0.532 0.524 0.851 
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>      V9     V8      V7     V6
-#>   <dbl>  <dbl>   <dbl>  <dbl>
-#> 1 0.987 0.171  1.000   0.0591
-#> 2 0.152 0.608  0.00518 0.644 
-#> 3 0.988 0.184  0.561   0.911 
-#> 4 0.414 0.0107 0.403   0.835 
-#> 5 0.605 0.988  0.396   0.621 
-#> 6 0.778 0.806  0.488   0.457 
+#>       V9     V8    V7     V6
+#>    <dbl>  <dbl> <dbl>  <dbl>
+#> 1 0.389  0.117  0.960 0.0661
+#> 2 0.241  0.944  0.895 0.916 
+#> 3 0.303  0.375  0.814 0.508 
+#> 4 0.711  0.439  0.898 0.446 
+#> 5 0.0283 0.400  0.584 0.221 
+#> 6 0.421  0.0545 0.379 0.851 
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -747,13 +747,13 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1    1. Procaryota; Bacteria; Alpha-Proteobacteria; E…
+#> 1    1. Procaryota; Bacteria; Alpha-Proteobacteria; E~
 #> 2    2. Eukaryota; Chordata
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '; ', extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
 #>   index riik       hmk      klass           perekond  
 #>   <dbl> <chr>      <chr>    <chr>           <chr>     
-#> 1    1. Procaryota Bacteria Alpha-Proteoba… Escharich…
+#> 1    1. Procaryota Bacteria Alpha-Proteoba~ Escharich~
 #> 2    2. Eukaryota  Chordata <NA>            <NA>
 ```
 
@@ -765,13 +765,13 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1    1. Prokaryota || Bacteria || Alpha-Proteobacteri…
+#> 1    1. Prokaryota || Bacteria || Alpha-Proteobacteri~
 #> 2    2. Eukaryota || Chordata
 (d1 <- dat %>% separate(taxon, c("riik", "hmk", "klass", "perekond"), sep = "\\|\\|", extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
 #>   index riik          hmk          klass     perekond 
 #>   <dbl> <chr>         <chr>        <chr>     <chr>    
-#> 1    1. "Prokaryota " " Bacteria " " Alpha-… " Eschar…
+#> 1    1. "Prokaryota " " Bacteria " " Alpha-~ " Eschar~
 #> 2    2. "Eukaryota "  " Chordata"  <NA>      <NA>
 ```
 
@@ -783,7 +783,7 @@ dat <- tibble(index = c(1, 2),
 #> # A tibble: 2 x 5
 #>   index riik       hmk      klass           perekond  
 #>   <dbl> <chr>      <chr>    <chr>           <chr>     
-#> 1    1. Prokaryota Bacteria Alpha-Proteoba… Escharich…
+#> 1    1. Prokaryota Bacteria Alpha-Proteoba~ Escharich~
 #> 2    2. Eukaryota  Chordata <NA>            <NA>
 ```
 
@@ -794,13 +794,13 @@ dat <- tibble(index = c(1, 2),
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1    1. Prokaryota.Bacteria,Alpha-Proteobacteria.Esch…
+#> 1    1. Prokaryota.Bacteria,Alpha-Proteobacteria.Esch~
 #> 2    2. Eukaryota.Chordata
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[,\\.]', extra = "merge", fill = "right"))
 #> # A tibble: 2 x 5
 #>   index riik       hmk      klass           perekond  
 #>   <dbl> <chr>      <chr>    <chr>           <chr>     
-#> 1    1. Prokaryota Bacteria Alpha-Proteoba… Escharich…
+#> 1    1. Prokaryota Bacteria Alpha-Proteoba~ Escharich~
 #> 2    2. Eukaryota  Chordata <NA>            <NA>
 ```
 
@@ -870,12 +870,12 @@ gss_cat #tibble, mille veerg "race" on faktor.
 #> # A tibble: 21,483 x 9
 #>    year marital    age race  rincome  partyid   relig 
 #>   <int> <fct>    <int> <fct> <fct>    <fct>     <fct> 
-#> 1  2000 Never m…    26 White $8000 t… Ind,near… Prote…
-#> 2  2000 Divorced    48 White $8000 t… Not str … Prote…
-#> 3  2000 Widowed     67 White Not app… Independ… Prote…
-#> 4  2000 Never m…    39 White Not app… Ind,near… Ortho…
-#> 5  2000 Divorced    25 White Not app… Not str … None  
-#> 6  2000 Married     25 White $20000 … Strong d… Prote…
+#> 1  2000 Never m~    26 White $8000 t~ Ind,near~ Prote~
+#> 2  2000 Divorced    48 White $8000 t~ Not str ~ Prote~
+#> 3  2000 Widowed     67 White Not app~ Independ~ Prote~
+#> 4  2000 Never m~    39 White Not app~ Ind,near~ Ortho~
+#> 5  2000 Divorced    25 White Not app~ Not str ~ None  
+#> 6  2000 Married     25 White $20000 ~ Strong d~ Prote~
 #> # ... with 2.148e+04 more rows, and 2 more variables:
 #> #   denom <fct>, tvhours <int>
 gss_cat %>% count(race)
@@ -1040,7 +1040,9 @@ p <- ggplot(gsscat_sum, aes(tvhours, fct_reorder(relig, tvhours))) +
 p
 ```
 
-<img src="07-tidyverse_files/figure-epub3/unnamed-chunk-50-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 
 ### `fct_relevel()` tõstab joonisel osad tasemed teistest ettepoole 
@@ -1052,7 +1054,9 @@ Argumendid on faktor f ja need tasemed (jutumärkides), mida sa tahad tõsta.
 p + aes(tvhours, fct_relevel(relig, "None", "Don't know"))
 ```
 
-<img src="07-tidyverse_files/figure-epub3/unnamed-chunk-51-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 ### Joontega plotil saab `fct_reorder2()` abil assotseerida y väärtused suurimate x väärtustega
 
@@ -1069,7 +1073,9 @@ ggplot(gsscat_sum, aes(age, N, colour = fct_reorder2(marital, age, N))) +
   labs(colour = "marital")
 ```
 
-<img src="07-tidyverse_files/figure-epub3/unnamed-chunk-52-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 ### Tulpdiagrammide korral kasuta `fct_infreq()`
 
@@ -1080,4 +1086,6 @@ mutate(gss_cat, marital = fct_infreq(marital) %>% fct_rev()) %>%
   ggplot(aes(marital)) + geom_bar()
 ```
 
-<img src="07-tidyverse_files/figure-epub3/unnamed-chunk-53-1.svg" width="70%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-53-1} \end{center}
