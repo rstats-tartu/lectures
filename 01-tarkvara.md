@@ -95,7 +95,7 @@ project/
 |  +-my_rawdata.csv     # data files in open formats, 
 |                       # such as TXT, CSV, TSV etc.
 |
-|- src/                 # any programmatic code
+|- R/                   # any programmatic code
 |  +-my_scripts.R       # R code used to analyse and 
 |                       # visualise data
 |
