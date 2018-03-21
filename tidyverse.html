@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
-  <meta name="generator" content="bookdown 0.7.1 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.2 and GitBook 2.6.7">
 
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2018-03-15">
+<meta name="date" content="2018-03-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -428,25 +428,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;      V9    V8     V5    V2    V6</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.824 0.246 0.0420 0.715 0.409</span>
-<span class="co">#&gt; 2 0.873 0.897 0.505  0.723 0.550</span>
-<span class="co">#&gt; 3 0.664 0.257 0.729  0.853 0.594</span>
-<span class="co">#&gt; 4 0.723 0.779 0.733  0.168 0.460</span>
-<span class="co">#&gt; 5 0.713 0.683 0.595  0.653 0.573</span>
-<span class="co">#&gt; 6 0.458 0.336 0.625  0.338 0.853</span>
+<span class="co">#&gt;       V9     V8    V5    V2       V6</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.509  0.136  0.785 0.261 0.00195 </span>
+<span class="co">#&gt; 2 0.0795 0.0986 0.821 0.576 0.0314  </span>
+<span class="co">#&gt; 3 0.0559 0.434  0.880 0.275 0.000940</span>
+<span class="co">#&gt; 4 0.683  0.628  0.407 0.680 0.0680  </span>
+<span class="co">#&gt; 5 0.146  0.646  0.608 0.215 0.371   </span>
+<span class="co">#&gt; 6 0.409  0.0403 0.923 0.829 0.124   </span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;      V9    V8     V7    V6</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.824 0.246 0.892  0.409</span>
-<span class="co">#&gt; 2 0.873 0.897 0.677  0.550</span>
-<span class="co">#&gt; 3 0.664 0.257 0.363  0.594</span>
-<span class="co">#&gt; 4 0.723 0.779 0.858  0.460</span>
-<span class="co">#&gt; 5 0.713 0.683 0.0969 0.573</span>
-<span class="co">#&gt; 6 0.458 0.336 0.0636 0.853</span>
+<span class="co">#&gt;       V9     V8    V7       V6</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.509  0.136  0.484 0.00195 </span>
+<span class="co">#&gt; 2 0.0795 0.0986 0.446 0.0314  </span>
+<span class="co">#&gt; 3 0.0559 0.434  0.658 0.000940</span>
+<span class="co">#&gt; 4 0.683  0.628  0.387 0.0680  </span>
+<span class="co">#&gt; 5 0.146  0.646  0.662 0.371   </span>
+<span class="co">#&gt; 6 0.409  0.0403 0.338 0.124   </span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
@@ -722,6 +722,31 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <p><code>transmute_all(df, funs(half = . / 2, double = . * 2))</code> jätab alles ainult uued veerud</p>
 <p><code>filter_all(weather, any_vars(is.na(.)))</code> näitab ridu, mis sisaldavad NA-sid</p>
 <p><code>filter_at(weather, vars(starts_with(&quot;wind&quot;)), all_vars(is.na(.)))</code> read, kus veerg, mis sisaldab wind, on NA.</p>
+</div>
+<div id="kasutame-group_by-et-arvutada-rea-kaupa-statistik-p-vaartused" class="section level4">
+<h4><span class="header-section-number">9.2.5.2</span> Kasutame group_by, et arvutada rea kaupa statistik (p väärtused)</h4>
+<p>Näiteks t test tidy tabelist. Meil on 5 geeni, N=3, võrreldakse kahte tingimust (indeks veerg, “E” ja “C”).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">gene=</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">each=</span><span class="dv">6</span>), <span class="dt">value=</span> <span class="kw">rnorm</span>(<span class="dv">30</span>), <span class="dt">indeks=</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;E&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">each=</span> <span class="dv">3</span>, <span class="dt">times=</span><span class="dv">5</span>))
+<span class="kw">head</span>(a)
+<span class="co">#&gt; # A tibble: 6 x 3</span>
+<span class="co">#&gt;    gene   value indeks</span>
+<span class="co">#&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; </span>
+<span class="co">#&gt; 1     1  0.0276 E     </span>
+<span class="co">#&gt; 2     1  0.779  E     </span>
+<span class="co">#&gt; 3     1  1.94   E     </span>
+<span class="co">#&gt; 4     1 -1.53   C     </span>
+<span class="co">#&gt; 5     1 -0.0481 C     </span>
+<span class="co">#&gt; 6     1  0.204  C</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(a &lt;-<span class="st"> </span>a <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">group_by</span>(gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p =</span> <span class="kw">t.test</span>(value<span class="op">~</span>indeks)<span class="op">$</span>p.value))
+<span class="co">#&gt; # A tibble: 5 x 2</span>
+<span class="co">#&gt;    gene      p</span>
+<span class="co">#&gt;   &lt;int&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1     1 0.151 </span>
+<span class="co">#&gt; 2     2 0.0558</span>
+<span class="co">#&gt; 3     3 0.872 </span>
+<span class="co">#&gt; 4     4 0.872 </span>
+<span class="co">#&gt; 5     5 0.813</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -1016,14 +1041,14 @@ gsscat_sum  &lt;-<span class="st"> </span><span class="kw">group_by</span>(gss_c
 p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gsscat_sum, <span class="kw">aes</span>(tvhours, <span class="kw">fct_reorder</span>(relig, tvhours))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()
 p</code></pre></div>
-<p><img src="07-tidyverse_files/figure-html/unnamed-chunk-50-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="07-tidyverse_files/figure-html/unnamed-chunk-52-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole" class="section level3">
 <h3><span class="header-section-number">9.5.8</span> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</h3>
 <p>Argumendid on faktor f ja need tasemed (jutumärkides), mida sa tahad tõsta.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## täiendame eelmist graafikut ümberkorraldatud andmetega
 p <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(tvhours, <span class="kw">fct_relevel</span>(relig, <span class="st">&quot;None&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>))</code></pre></div>
-<p><img src="07-tidyverse_files/figure-html/unnamed-chunk-51-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="07-tidyverse_files/figure-html/unnamed-chunk-53-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega" class="section level3">
 <h3><span class="header-section-number">9.5.9</span> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</h3>
@@ -1036,14 +1061,14 @@ gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat,
 <span class="kw">ggplot</span>(gsscat_sum, <span class="kw">aes</span>(age, N, <span class="dt">colour =</span> <span class="kw">fct_reorder2</span>(marital, age, N))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;marital&quot;</span>)</code></pre></div>
-<p><img src="07-tidyverse_files/figure-html/unnamed-chunk-52-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="07-tidyverse_files/figure-html/unnamed-chunk-54-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="tulpdiagrammide-korral-kasuta-fct_infreq" class="section level3">
 <h3><span class="header-section-number">9.5.10</span> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></h3>
 <p>Loeme kokku erineva perekondliku staatusega isikud ja paneme need andmed tulpdiagrammi grupi suurusele vastupidises järjekorras st. väiksemad grupid tulevad enne.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(gss_cat, <span class="dt">marital =</span> <span class="kw">fct_infreq</span>(marital) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">fct_rev</span>()) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(marital)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><img src="07-tidyverse_files/figure-html/unnamed-chunk-53-1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="07-tidyverse_files/figure-html/unnamed-chunk-55-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

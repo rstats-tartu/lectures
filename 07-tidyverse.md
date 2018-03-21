@@ -231,25 +231,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>       V9    V8      V5    V2    V6
-#>    <dbl> <dbl>   <dbl> <dbl> <dbl>
-#> 1 0.610  0.621 0.260   0.292 0.935
-#> 2 0.918  0.740 0.371   0.698 0.725
-#> 3 0.0138 0.426 0.790   0.339 0.514
-#> 4 0.645  0.216 0.00530 0.719 0.452
-#> 5 0.486  0.614 0.0867  0.774 0.710
-#> 6 0.0527 0.971 0.138   0.218 0.912
+#>      V9     V8    V5      V2    V6
+#>   <dbl>  <dbl> <dbl>   <dbl> <dbl>
+#> 1 0.126 0.0797 0.935 0.646   0.394
+#> 2 0.132 0.396  0.963 0.717   0.767
+#> 3 0.601 0.661  0.329 0.735   0.222
+#> 4 0.517 0.0272 0.109 0.00571 0.796
+#> 5 0.995 0.444  0.436 0.374   0.351
+#> 6 0.826 0.697  0.197 0.0416  0.273
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>       V9    V8     V7    V6
-#>    <dbl> <dbl>  <dbl> <dbl>
-#> 1 0.610  0.621 0.787  0.935
-#> 2 0.918  0.740 0.316  0.725
-#> 3 0.0138 0.426 0.293  0.514
-#> 4 0.645  0.216 0.0375 0.452
-#> 5 0.486  0.614 0.728  0.710
-#> 6 0.0527 0.971 0.588  0.912
+#>      V9     V8    V7    V6
+#>   <dbl>  <dbl> <dbl> <dbl>
+#> 1 0.126 0.0797 0.488 0.394
+#> 2 0.132 0.396  0.348 0.767
+#> 3 0.601 0.661  0.346 0.222
+#> 4 0.517 0.0272 0.904 0.796
+#> 5 0.995 0.444  0.903 0.351
+#> 6 0.826 0.697  0.449 0.273
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -633,6 +633,39 @@ _all valib kõik veerud.
 `filter_all(weather, any_vars(is.na(.)))` näitab ridu, mis sisaldavad NA-sid
 
 `filter_at(weather, vars(starts_with("wind")), all_vars(is.na(.)))` read, kus veerg, mis sisaldab wind, on NA. 
+
+#### Kasutame group_by, et arvutada rea kaupa statistik (p väärtused)
+
+Näiteks t test tidy tabelist. Meil on 5 geeni, N=3, võrreldakse kahte tingimust (indeks veerg, "E" ja "C").
+
+
+```r
+library(tidyverse)
+a <- tibble(gene= rep(1:5, each=6), value= rnorm(30), indeks= rep(c("E", "C"), each= 3, times=5))
+head(a)
+#> # A tibble: 6 x 3
+#>    gene   value indeks
+#>   <int>   <dbl> <chr> 
+#> 1     1 -1.65   E     
+#> 2     1  0.328  E     
+#> 3     1 -0.0642 E     
+#> 4     1 -0.305  C     
+#> 5     1 -2.23   C     
+#> 6     1 -1.96   C
+```
+
+
+```r
+(a <- a %>%  group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value))
+#> # A tibble: 5 x 2
+#>    gene     p
+#>   <int> <dbl>
+#> 1     1 0.291
+#> 2     2 0.557
+#> 3     3 0.185
+#> 4     4 0.175
+#> 5     5 0.231
+```
 
 
 ## Grouped filters
@@ -1042,7 +1075,7 @@ p
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-50-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 
 ### `fct_relevel()` tõstab joonisel osad tasemed teistest ettepoole 
@@ -1056,7 +1089,7 @@ p + aes(tvhours, fct_relevel(relig, "None", "Don't know"))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-51-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 ### Joontega plotil saab `fct_reorder2()` abil assotseerida y väärtused suurimate x väärtustega
 
@@ -1075,7 +1108,7 @@ ggplot(gsscat_sum, aes(age, N, colour = fct_reorder2(marital, age, N))) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 ### Tulpdiagrammide korral kasuta `fct_infreq()`
 
@@ -1088,4 +1121,4 @@ mutate(gss_cat, marital = fct_infreq(marital) %>% fct_rev()) %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-53-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-55-1} \end{center}
