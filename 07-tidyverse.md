@@ -231,25 +231,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>      V9     V8    V5      V2    V6
-#>   <dbl>  <dbl> <dbl>   <dbl> <dbl>
-#> 1 0.126 0.0797 0.935 0.646   0.394
-#> 2 0.132 0.396  0.963 0.717   0.767
-#> 3 0.601 0.661  0.329 0.735   0.222
-#> 4 0.517 0.0272 0.109 0.00571 0.796
-#> 5 0.995 0.444  0.436 0.374   0.351
-#> 6 0.826 0.697  0.197 0.0416  0.273
+#>      V9     V8    V5    V2     V6
+#>   <dbl>  <dbl> <dbl> <dbl>  <dbl>
+#> 1 0.707 0.0683 0.508 0.774 0.449 
+#> 2 0.869 0.988  0.103 0.251 0.439 
+#> 3 0.569 0.291  0.350 0.968 0.484 
+#> 4 0.568 0.545  0.492 0.434 0.0216
+#> 5 0.204 0.974  0.978 0.477 0.139 
+#> 6 0.512 0.357  0.618 0.642 0.765 
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>      V9     V8    V7    V6
-#>   <dbl>  <dbl> <dbl> <dbl>
-#> 1 0.126 0.0797 0.488 0.394
-#> 2 0.132 0.396  0.348 0.767
-#> 3 0.601 0.661  0.346 0.222
-#> 4 0.517 0.0272 0.904 0.796
-#> 5 0.995 0.444  0.903 0.351
-#> 6 0.826 0.697  0.449 0.273
+#>      V9     V8     V7     V6
+#>   <dbl>  <dbl>  <dbl>  <dbl>
+#> 1 0.707 0.0683 0.221  0.449 
+#> 2 0.869 0.988  0.592  0.439 
+#> 3 0.569 0.291  0.0740 0.484 
+#> 4 0.568 0.545  0.0956 0.0216
+#> 5 0.204 0.974  0.826  0.139 
+#> 6 0.512 0.357  0.929  0.765 
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -634,7 +634,7 @@ _all valib kõik veerud.
 
 `filter_at(weather, vars(starts_with("wind")), all_vars(is.na(.)))` read, kus veerg, mis sisaldab wind, on NA. 
 
-#### Kasutame group_by, et arvutada rea kaupa statistik (p väärtused)
+#### Kasutame group_by %>% summarise toru, et arvutada rea kaupa statistik (p väärtused)
 
 Näiteks t test tidy tabelist. Meil on 5 geeni, N=3, võrreldakse kahte tingimust (indeks veerg, "E" ja "C").
 
@@ -646,25 +646,25 @@ head(a)
 #> # A tibble: 6 x 3
 #>    gene   value indeks
 #>   <int>   <dbl> <chr> 
-#> 1     1 -1.65   E     
-#> 2     1  0.328  E     
-#> 3     1 -0.0642 E     
-#> 4     1 -0.305  C     
-#> 5     1 -2.23   C     
-#> 6     1 -1.96   C
+#> 1     1  0.0830 E     
+#> 2     1  0.415  E     
+#> 3     1 -0.385  E     
+#> 4     1  0.114  C     
+#> 5     1  0.0182 C     
+#> 6     1  0.695  C
 ```
 
 
 ```r
-(a <- a %>%  group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value))
+a %>%  group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 #> # A tibble: 5 x 2
-#>    gene     p
-#>   <int> <dbl>
-#> 1     1 0.291
-#> 2     2 0.557
-#> 3     3 0.185
-#> 4     4 0.175
-#> 5     5 0.231
+#>    gene      p
+#>   <int>  <dbl>
+#> 1     1 0.491 
+#> 2     2 0.973 
+#> 3     3 0.798 
+#> 4     4 0.822 
+#> 5     5 0.0307
 ```
 
 

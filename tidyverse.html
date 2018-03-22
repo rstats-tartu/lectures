@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2018-03-21">
+<meta name="date" content="2018-03-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -428,25 +428,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;       V9     V8    V5    V2       V6</span>
-<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.509  0.136  0.785 0.261 0.00195 </span>
-<span class="co">#&gt; 2 0.0795 0.0986 0.821 0.576 0.0314  </span>
-<span class="co">#&gt; 3 0.0559 0.434  0.880 0.275 0.000940</span>
-<span class="co">#&gt; 4 0.683  0.628  0.407 0.680 0.0680  </span>
-<span class="co">#&gt; 5 0.146  0.646  0.608 0.215 0.371   </span>
-<span class="co">#&gt; 6 0.409  0.0403 0.923 0.829 0.124   </span>
+<span class="co">#&gt;      V9    V8     V5    V2    V6</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.318 0.150 0.757  0.696 0.400</span>
+<span class="co">#&gt; 2 0.358 0.277 0.147  0.390 0.120</span>
+<span class="co">#&gt; 3 1.000 0.324 0.384  0.468 0.176</span>
+<span class="co">#&gt; 4 0.746 0.909 0.927  0.572 0.634</span>
+<span class="co">#&gt; 5 0.277 0.709 0.758  0.316 0.767</span>
+<span class="co">#&gt; 6 0.424 0.161 0.0322 0.133 0.785</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;       V9     V8    V7       V6</span>
-<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.509  0.136  0.484 0.00195 </span>
-<span class="co">#&gt; 2 0.0795 0.0986 0.446 0.0314  </span>
-<span class="co">#&gt; 3 0.0559 0.434  0.658 0.000940</span>
-<span class="co">#&gt; 4 0.683  0.628  0.387 0.0680  </span>
-<span class="co">#&gt; 5 0.146  0.646  0.662 0.371   </span>
-<span class="co">#&gt; 6 0.409  0.0403 0.338 0.124   </span>
+<span class="co">#&gt;      V9    V8    V7    V6</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.318 0.150 0.389 0.400</span>
+<span class="co">#&gt; 2 0.358 0.277 0.622 0.120</span>
+<span class="co">#&gt; 3 1.000 0.324 0.254 0.176</span>
+<span class="co">#&gt; 4 0.746 0.909 0.312 0.634</span>
+<span class="co">#&gt; 5 0.277 0.709 0.936 0.767</span>
+<span class="co">#&gt; 6 0.424 0.161 0.277 0.785</span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
@@ -723,8 +723,8 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <p><code>filter_all(weather, any_vars(is.na(.)))</code> näitab ridu, mis sisaldavad NA-sid</p>
 <p><code>filter_at(weather, vars(starts_with(&quot;wind&quot;)), all_vars(is.na(.)))</code> read, kus veerg, mis sisaldab wind, on NA.</p>
 </div>
-<div id="kasutame-group_by-et-arvutada-rea-kaupa-statistik-p-vaartused" class="section level4">
-<h4><span class="header-section-number">9.2.5.2</span> Kasutame group_by, et arvutada rea kaupa statistik (p väärtused)</h4>
+<div id="kasutame-group_by-summarise-toru-et-arvutada-rea-kaupa-statistik-p-vaartused" class="section level4">
+<h4><span class="header-section-number">9.2.5.2</span> Kasutame group_by %&gt;% summarise toru, et arvutada rea kaupa statistik (p väärtused)</h4>
 <p>Näiteks t test tidy tabelist. Meil on 5 geeni, N=3, võrreldakse kahte tingimust (indeks veerg, “E” ja “C”).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">gene=</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">each=</span><span class="dv">6</span>), <span class="dt">value=</span> <span class="kw">rnorm</span>(<span class="dv">30</span>), <span class="dt">indeks=</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;E&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">each=</span> <span class="dv">3</span>, <span class="dt">times=</span><span class="dv">5</span>))
@@ -732,21 +732,21 @@ a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">
 <span class="co">#&gt; # A tibble: 6 x 3</span>
 <span class="co">#&gt;    gene   value indeks</span>
 <span class="co">#&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; </span>
-<span class="co">#&gt; 1     1  0.0276 E     </span>
-<span class="co">#&gt; 2     1  0.779  E     </span>
-<span class="co">#&gt; 3     1  1.94   E     </span>
-<span class="co">#&gt; 4     1 -1.53   C     </span>
-<span class="co">#&gt; 5     1 -0.0481 C     </span>
-<span class="co">#&gt; 6     1  0.204  C</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(a &lt;-<span class="st"> </span>a <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">group_by</span>(gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p =</span> <span class="kw">t.test</span>(value<span class="op">~</span>indeks)<span class="op">$</span>p.value))
+<span class="co">#&gt; 1     1 -0.630  E     </span>
+<span class="co">#&gt; 2     1  1.67   E     </span>
+<span class="co">#&gt; 3     1 -0.395  E     </span>
+<span class="co">#&gt; 4     1  0.0220 C     </span>
+<span class="co">#&gt; 5     1  0.0476 C     </span>
+<span class="co">#&gt; 6     1 -1.91   C</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">group_by</span>(gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p =</span> <span class="kw">t.test</span>(value<span class="op">~</span>indeks)<span class="op">$</span>p.value)
 <span class="co">#&gt; # A tibble: 5 x 2</span>
 <span class="co">#&gt;    gene      p</span>
 <span class="co">#&gt;   &lt;int&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1 0.151 </span>
-<span class="co">#&gt; 2     2 0.0558</span>
-<span class="co">#&gt; 3     3 0.872 </span>
-<span class="co">#&gt; 4     4 0.872 </span>
-<span class="co">#&gt; 5     5 0.813</span></code></pre></div>
+<span class="co">#&gt; 1     1 0.445 </span>
+<span class="co">#&gt; 2     2 0.991 </span>
+<span class="co">#&gt; 3     3 0.0233</span>
+<span class="co">#&gt; 4     4 0.711 </span>
+<span class="co">#&gt; 5     5 0.467</span></code></pre></div>
 </div>
 </div>
 </div>
