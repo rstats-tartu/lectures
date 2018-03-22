@@ -366,7 +366,7 @@ _all valib kõik veerud.
 
 `filter_at(weather, vars(starts_with("wind")), all_vars(is.na(.)))` read, kus veerg, mis sisaldab wind, on NA. 
 
-#### Kasutame group_by, et arvutada rea kaupa statistik (p väärtused)
+#### Kasutame group_by %>% summarise toru, et arvutada rea kaupa statistik (p väärtused)
 
 Näiteks t test tidy tabelist. Meil on 5 geeni, N=3, võrreldakse kahte tingimust (indeks veerg, "E" ja "C").
 
@@ -377,7 +377,7 @@ head(a)
 ```
 
 ```{r}
-(a <- a %>%  group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value))
+a %>%  group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 ```
 
 
