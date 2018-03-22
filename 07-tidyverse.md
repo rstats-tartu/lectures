@@ -231,25 +231,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>      V9     V8    V5    V2     V6
-#>   <dbl>  <dbl> <dbl> <dbl>  <dbl>
-#> 1 0.707 0.0683 0.508 0.774 0.449 
-#> 2 0.869 0.988  0.103 0.251 0.439 
-#> 3 0.569 0.291  0.350 0.968 0.484 
-#> 4 0.568 0.545  0.492 0.434 0.0216
-#> 5 0.204 0.974  0.978 0.477 0.139 
-#> 6 0.512 0.357  0.618 0.642 0.765 
+#>       V9    V8    V5    V2     V6
+#>    <dbl> <dbl> <dbl> <dbl>  <dbl>
+#> 1 0.0686 0.143 0.719 0.482 0.783 
+#> 2 0.619  0.359 0.951 0.253 0.741 
+#> 3 0.581  0.872 0.514 0.288 0.422 
+#> 4 0.0308 0.605 0.419 0.668 0.886 
+#> 5 0.740  0.378 0.861 0.536 0.930 
+#> 6 0.978  0.266 0.538 0.782 0.0467
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>      V9     V8     V7     V6
-#>   <dbl>  <dbl>  <dbl>  <dbl>
-#> 1 0.707 0.0683 0.221  0.449 
-#> 2 0.869 0.988  0.592  0.439 
-#> 3 0.569 0.291  0.0740 0.484 
-#> 4 0.568 0.545  0.0956 0.0216
-#> 5 0.204 0.974  0.826  0.139 
-#> 6 0.512 0.357  0.929  0.765 
+#>       V9    V8    V7     V6
+#>    <dbl> <dbl> <dbl>  <dbl>
+#> 1 0.0686 0.143 0.518 0.783 
+#> 2 0.619  0.359 0.551 0.741 
+#> 3 0.581  0.872 0.577 0.422 
+#> 4 0.0308 0.605 0.349 0.886 
+#> 5 0.740  0.378 0.405 0.930 
+#> 6 0.978  0.266 0.844 0.0467
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -641,36 +641,38 @@ Näiteks t test tidy tabelist. Meil on 5 geeni, N=3, võrreldakse kahte tingimus
 
 ```r
 library(tidyverse)
-a <- tibble(gene= rep(1:5, each=6), value= rnorm(30), indeks= rep(c("E", "C"), each= 3, times=5))
+a <- tibble(gene= rep(1:5, each=6), 
+            value= rnorm(30), 
+            indeks= rep(c("E", "C"), each= 3, times=5))
 head(a)
 #> # A tibble: 6 x 3
 #>    gene   value indeks
 #>   <int>   <dbl> <chr> 
-#> 1     1  0.0830 E     
-#> 2     1  0.415  E     
-#> 3     1 -0.385  E     
-#> 4     1  0.114  C     
-#> 5     1  0.0182 C     
-#> 6     1  0.695  C
+#> 1     1  0.407  E     
+#> 2     1 -0.296  E     
+#> 3     1  0.381  E     
+#> 4     1 -0.0302 C     
+#> 5     1 -0.0854 C     
+#> 6     1 -1.39   C
 ```
 
 
 ```r
-a %>%  group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
+a %>% group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 #> # A tibble: 5 x 2
 #>    gene      p
 #>   <int>  <dbl>
-#> 1     1 0.491 
-#> 2     2 0.973 
-#> 3     3 0.798 
-#> 4     4 0.822 
-#> 5     5 0.0307
+#> 1     1 0.275 
+#> 2     2 0.154 
+#> 3     3 0.297 
+#> 4     4 0.482 
+#> 5     5 0.0831
 ```
 
 
-## Grouped filters
+#### Grupiviisiline filtreerimine
 
-Keep all groups bigger than a threshold:
+Säilita lennureiside sihtkohad, kuhu viib >365 lennu: 
 
 ```r
 popular_dests <- flights %>% 
@@ -678,66 +680,10 @@ popular_dests <- flights %>%
   filter(n() > 365)
 ```
 
-If you need to remove grouping, and return to operations on ungrouped data, use `ungroup()`.
-
-```r
-ungroup(dat) 
-```
+grupeeringu mahavõtmiseks, et töötada grupeerimata andmetega, kasuta `ungroup()`.
 
 
-`str_replace_all()` helps to deal with unruly labelling inside columns containing strings
-
-The idea is to find a pattern in a collection of strings and replace it with something else. String == character vector.
-
-To find and replace we use `str_replace_all()`, whose base R analogue is `gsub()`.
-
-```r
-library(stringr)
-(bad.df <- tibble(time = c("t0", "t1", "t12"), value = c(2, 4, 9)))
-#> # A tibble: 3 x 2
-#>   time  value
-#>   <chr> <dbl>
-#> 1 t0       2.
-#> 2 t1       4.
-#> 3 t12      9.
-get_numeric <- function(x, ...) as.numeric(str_replace_all(x, ...))
-(bad.df <- mutate_at(bad.df, "time", get_numeric, pattern = "t", replacement = ""))
-#> # A tibble: 3 x 2
-#>    time value
-#>   <dbl> <dbl>
-#> 1    0.    2.
-#> 2    1.    4.
-#> 3   12.    9.
-```
-
-now we have a numeric time column, which can be used in plotting.
-
-or
-
-
-```r
-library(readr)
-(bad.df <- tibble(time = c("t0", "t1", "t12"), value = c(2, 4, 9)))
-#> # A tibble: 3 x 2
-#>   time  value
-#>   <chr> <dbl>
-#> 1 t0       2.
-#> 2 t1       4.
-#> 3 t12      9.
-mutate_at(bad.df, "time", parse_number)
-#> # A tibble: 3 x 2
-#>    time value
-#>   <dbl> <dbl>
-#> 1    0.    2.
-#> 2    1.    4.
-#> 3   12.    9.
-```
-
-Here we did the same thing more elegantly by directly parsing numbers from a character string.
-
-
-
-## `separate()` one column into several
+## `separate()` üks veerg mitmeks
 
 Siin on veel üks verb, mida aeg-ajalt kõigil vaja läheb. 
 `separate()` võtab ühe veeru sisu (mis peab olema character string) ning jagab selle laiali mitme uue veeru vahel. 
@@ -766,11 +712,11 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 #>   country cases thousand
 #>   <chr>   <chr> <chr>   
 #> 1 Albania 80    /1000
-(df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = -6))
+(df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = -5))
 #> # A tibble: 1 x 3
 #>   country cases thousand
 #>   <chr>   <chr> <chr>   
-#> 1 Albania 8     0/1000
+#> 1 Albania 80    /1000
 ```
 
 
@@ -795,17 +741,7 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 # some special cases:
 (dat <- tibble(index = c(1, 2), 
                taxon = c("Prokaryota || Bacteria || Alpha-Proteobacteria || Escharichia", "Eukaryota || Chordata")))
-#> # A tibble: 2 x 2
-#>   index taxon                                         
-#>   <dbl> <chr>                                         
-#> 1    1. Prokaryota || Bacteria || Alpha-Proteobacteri~
-#> 2    2. Eukaryota || Chordata
 (d1 <- dat %>% separate(taxon, c("riik", "hmk", "klass", "perekond"), sep = "\\|\\|", extra = "merge", fill = "right")) 
-#> # A tibble: 2 x 5
-#>   index riik          hmk          klass     perekond 
-#>   <dbl> <chr>         <chr>        <chr>     <chr>    
-#> 1    1. "Prokaryota " " Bacteria " " Alpha-~ " Eschar~
-#> 2    2. "Eukaryota "  " Chordata"  <NA>      <NA>
 ```
 
 
@@ -813,31 +749,16 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 dat <- tibble(index = c(1, 2), 
               taxon = c("Prokaryota.Bacteria.Alpha-Proteobacteria.Escharichia", "Eukaryota.Chordata"))
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[.]', extra = "merge", fill = "right")) 
-#> # A tibble: 2 x 5
-#>   index riik       hmk      klass           perekond  
-#>   <dbl> <chr>      <chr>    <chr>           <chr>     
-#> 1    1. Prokaryota Bacteria Alpha-Proteoba~ Escharich~
-#> 2    2. Eukaryota  Chordata <NA>            <NA>
 ```
 
 
 ```r
 (dat <- tibble(index = c(1,2), 
                taxon = c("Prokaryota.Bacteria,Alpha-Proteobacteria.Escharichia", "Eukaryota.Chordata")))
-#> # A tibble: 2 x 2
-#>   index taxon                                         
-#>   <dbl> <chr>                                         
-#> 1    1. Prokaryota.Bacteria,Alpha-Proteobacteria.Esch~
-#> 2    2. Eukaryota.Chordata
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[,\\.]', extra = "merge", fill = "right"))
-#> # A tibble: 2 x 5
-#>   index riik       hmk      klass           perekond  
-#>   <dbl> <chr>      <chr>    <chr>           <chr>     
-#> 1    1. Prokaryota Bacteria Alpha-Proteoba~ Escharich~
-#> 2    2. Eukaryota  Chordata <NA>            <NA>
 ```
 
-The companion FUN to separate is `unite()` - see help.
+Anti-separate funktsioon on `unite()` - vt. help.
 
 
 ## Faktorid
@@ -1075,7 +996,7 @@ p
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-49-1} \end{center}
 
 
 ### `fct_relevel()` tõstab joonisel osad tasemed teistest ettepoole 
@@ -1089,7 +1010,7 @@ p + aes(tvhours, fct_relevel(relig, "None", "Don't know"))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-53-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 ### Joontega plotil saab `fct_reorder2()` abil assotseerida y väärtused suurimate x väärtustega
 
@@ -1108,7 +1029,7 @@ ggplot(gsscat_sum, aes(age, N, colour = fct_reorder2(marital, age, N))) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 ### Tulpdiagrammide korral kasuta `fct_infreq()`
 
@@ -1121,4 +1042,4 @@ mutate(gss_cat, marital = fct_infreq(marital) %>% fct_rev()) %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-55-1} \end{center}
+\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-52-1} \end{center}
