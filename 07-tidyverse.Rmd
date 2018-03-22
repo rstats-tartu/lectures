@@ -372,57 +372,30 @@ Näiteks t test tidy tabelist. Meil on 5 geeni, N=3, võrreldakse kahte tingimus
 
 ```{r}
 library(tidyverse)
-a <- tibble(gene= rep(1:5, each=6), value= rnorm(30), indeks= rep(c("E", "C"), each= 3, times=5))
+a <- tibble(gene= rep(1:5, each=6), 
+            value= rnorm(30), 
+            indeks= rep(c("E", "C"), each= 3, times=5))
 head(a)
 ```
 
 ```{r}
-a %>%  group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
+a %>% group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 ```
 
 
-## Grouped filters
+#### Grupiviisiline filtreerimine
 
-Keep all groups bigger than a threshold:
+Säilita lennureiside sihtkohad, kuhu viib >365 lennu: 
 ```{r, eval=FALSE}
 popular_dests <- flights %>% 
   group_by(dest) %>% 
   filter(n() > 365)
 ```
 
-If you need to remove grouping, and return to operations on ungrouped data, use `ungroup()`.
-```{r, eval=FALSE}
-ungroup(dat) 
-```
+grupeeringu mahavõtmiseks, et töötada grupeerimata andmetega, kasuta `ungroup()`.
 
 
-`str_replace_all()` helps to deal with unruly labelling inside columns containing strings
-
-The idea is to find a pattern in a collection of strings and replace it with something else. String == character vector.
-
-To find and replace we use `str_replace_all()`, whose base R analogue is `gsub()`.
-```{r}
-library(stringr)
-(bad.df <- tibble(time = c("t0", "t1", "t12"), value = c(2, 4, 9)))
-get_numeric <- function(x, ...) as.numeric(str_replace_all(x, ...))
-(bad.df <- mutate_at(bad.df, "time", get_numeric, pattern = "t", replacement = ""))
-```
-
-now we have a numeric time column, which can be used in plotting.
-
-or
-
-```{r}
-library(readr)
-(bad.df <- tibble(time = c("t0", "t1", "t12"), value = c(2, 4, 9)))
-mutate_at(bad.df, "time", parse_number)
-```
-
-Here we did the same thing more elegantly by directly parsing numbers from a character string.
-
-
-
-## `separate()` one column into several
+## `separate()` üks veerg mitmeks
 
 Siin on veel üks verb, mida aeg-ajalt kõigil vaja läheb. 
 `separate()` võtab ühe veeru sisu (mis peab olema character string) ning jagab selle laiali mitme uue veeru vahel. 
@@ -434,7 +407,7 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 (df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand")))
 (df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = "/"))
 (df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = 2))
-(df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = -6))
+(df.sep <- dat %>% separate(disease.cases, into=c("cases", "thousand"), sep = -5))
 ```
 
 ```{r}
@@ -443,26 +416,26 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '; ', extra = "merge", fill = "right")) 
 ```
 
-```{r}
+```{r eval=FALSE}
 # some special cases:
 (dat <- tibble(index = c(1, 2), 
                taxon = c("Prokaryota || Bacteria || Alpha-Proteobacteria || Escharichia", "Eukaryota || Chordata")))
 (d1 <- dat %>% separate(taxon, c("riik", "hmk", "klass", "perekond"), sep = "\\|\\|", extra = "merge", fill = "right")) 
 ```
 
-```{r}
+```{r eval=FALSE}
 dat <- tibble(index = c(1, 2), 
               taxon = c("Prokaryota.Bacteria.Alpha-Proteobacteria.Escharichia", "Eukaryota.Chordata"))
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[.]', extra = "merge", fill = "right")) 
 ```
 
-```{r}
+```{r eval=FALSE}
 (dat <- tibble(index = c(1,2), 
                taxon = c("Prokaryota.Bacteria,Alpha-Proteobacteria.Escharichia", "Eukaryota.Chordata")))
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '[,\\.]', extra = "merge", fill = "right"))
 ```
 
-The companion FUN to separate is `unite()` - see help.
+Anti-separate funktsioon on `unite()` - vt. help.
 
 
 ## Faktorid
