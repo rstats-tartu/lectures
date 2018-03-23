@@ -231,25 +231,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>       V9    V8    V5    V2     V6
-#>    <dbl> <dbl> <dbl> <dbl>  <dbl>
-#> 1 0.0686 0.143 0.719 0.482 0.783 
-#> 2 0.619  0.359 0.951 0.253 0.741 
-#> 3 0.581  0.872 0.514 0.288 0.422 
-#> 4 0.0308 0.605 0.419 0.668 0.886 
-#> 5 0.740  0.378 0.861 0.536 0.930 
-#> 6 0.978  0.266 0.538 0.782 0.0467
+#>      V9    V8     V5    V2    V6
+#>   <dbl> <dbl>  <dbl> <dbl> <dbl>
+#> 1 0.660 0.133 0.425  0.157 0.367
+#> 2 0.947 0.668 0.774  0.417 0.624
+#> 3 0.420 0.408 0.216  0.155 0.226
+#> 4 0.944 0.844 0.100  0.772 0.651
+#> 5 0.221 0.452 0.884  0.794 0.706
+#> 6 0.929 0.909 0.0270 0.985 0.121
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>       V9    V8    V7     V6
-#>    <dbl> <dbl> <dbl>  <dbl>
-#> 1 0.0686 0.143 0.518 0.783 
-#> 2 0.619  0.359 0.551 0.741 
-#> 3 0.581  0.872 0.577 0.422 
-#> 4 0.0308 0.605 0.349 0.886 
-#> 5 0.740  0.378 0.405 0.930 
-#> 6 0.978  0.266 0.844 0.0467
+#>      V9    V8     V7    V6
+#>   <dbl> <dbl>  <dbl> <dbl>
+#> 1 0.660 0.133 0.0313 0.367
+#> 2 0.947 0.668 0.319  0.624
+#> 3 0.420 0.408 0.608  0.226
+#> 4 0.944 0.844 0.229  0.651
+#> 5 0.221 0.452 0.0544 0.706
+#> 6 0.929 0.909 0.201  0.121
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -509,11 +509,13 @@ top_n(iris_grouped, -2, Sepal.Length)
 
 Mutate põhikasutus on siiski uute veergude tekitamine, mis võtavad endale inputi rea kaupa. Seega tabeli ridade arv ei muutu.
 
-If in your tibble called 'df' you have a column called 'value', you can create a new log2 transformed value value column called log_value by `df %>% mutate(log_value = log2(value))`. Or you can create a new column where a constant is substracted from the value column: `df %>% mutate(centered_value = value - mean(value) ) `. Here the mean value is substracted from each individual value.
+tranformeeri tabeli "df" veerg "value" uueks veeruks "log_value", kus on log2-transformeeritud numbrid: `df %>% mutate(log_value = log2(value))`. 
 
-**Mutate adds new columns (and `transmute()` creates new columns while losing the previous columns)**
+Uues veerus on vana veeru numbritest lahutatud konstant (näiteks vana veeru keskväärtus): `df %>% mutate(centered_value = value - mean(value) ) `. 
 
-Here we  firstly create a new column, which contains log-transformed values from the *value* column, and name it *log_value*.  
+**Mutate() lisab veerge ja `transmute()` kaotab ühtlasi ära vanad veerud**
+
+Uus veerg log-väärtustega, mis põhineb "value" veerul, millele anname nime "log_value". 
 
 ```r
 mutate(dat_lng, log_value = log(value))
@@ -529,7 +531,7 @@ mutate(dat_lng, log_value = log(value))
 #> # ... with 3 more rows
 ```
 
-The same with transmute: note the dropping of some of the original cols, keeping the original *subject* col and renaming the *sex* col.
+Sama transmute() kasutades. Me säilitame lisaks "subject" veeru ja säilitame ning nimetame ümber "sex" veeru.
 
 ```r
 transmute(dat_lng, subject, gender = sex, log_value = log(value))
@@ -545,6 +547,7 @@ transmute(dat_lng, subject, gender = sex, log_value = log(value))
 #> # ... with 3 more rows
 ```
 
+Selekteerime veerud "year" kuni "day", veerud, mille nimed lõppevad stringiga "delay", veerg "distance" ja "air_time". Seejärel loome uue veerud "gain" (kasutades selleks arr_delay ja dep_delay andmeid rea kaupa), "hours" (air_time jagatud konstandiga) ja "gain_per_hour":
 
 ```r
 flights_sml <- select(flights, 
@@ -646,27 +649,27 @@ a <- tibble(gene= rep(1:5, each=6),
             indeks= rep(c("E", "C"), each= 3, times=5))
 head(a)
 #> # A tibble: 6 x 3
-#>    gene   value indeks
-#>   <int>   <dbl> <chr> 
-#> 1     1  0.407  E     
-#> 2     1 -0.296  E     
-#> 3     1  0.381  E     
-#> 4     1 -0.0302 C     
-#> 5     1 -0.0854 C     
-#> 6     1 -1.39   C
+#>    gene  value indeks
+#>   <int>  <dbl> <chr> 
+#> 1     1  0.864 E     
+#> 2     1 -1.98  E     
+#> 3     1  1.06  E     
+#> 4     1 -0.407 C     
+#> 5     1  1.03  C     
+#> 6     1  0.434 C
 ```
 
 
 ```r
 a %>% group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 #> # A tibble: 5 x 2
-#>    gene      p
-#>   <int>  <dbl>
-#> 1     1 0.275 
-#> 2     2 0.154 
-#> 3     3 0.297 
-#> 4     4 0.482 
-#> 5     5 0.0831
+#>    gene     p
+#>   <int> <dbl>
+#> 1     1 0.753
+#> 2     2 0.671
+#> 3     3 0.313
+#> 4     4 0.403
+#> 5     5 0.188
 ```
 
 

@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
-  <meta name="generator" content="bookdown 0.7.2 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Taavi Päll, Ülo Maiväli">
 
 
-<meta name="date" content="2018-03-22">
+<meta name="date" content="2018-03-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -427,25 +427,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;      V9    V8     V5     V2    V6</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.788 0.478 0.154  0.141  0.423</span>
-<span class="co">#&gt; 2 0.537 0.729 0.292  0.971  0.549</span>
-<span class="co">#&gt; 3 0.155 0.556 0.716  0.191  0.140</span>
-<span class="co">#&gt; 4 0.428 0.817 0.606  0.790  0.614</span>
-<span class="co">#&gt; 5 0.722 0.166 0.731  0.712  0.543</span>
-<span class="co">#&gt; 6 0.725 0.377 0.0801 0.0274 0.812</span>
+<span class="co">#&gt;      V9    V8    V5     V2     V6</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.335 0.762 0.110 0.747  0.182 </span>
+<span class="co">#&gt; 2 0.565 0.523 0.841 0.872  0.0700</span>
+<span class="co">#&gt; 3 0.377 0.993 0.825 0.0839 0.345 </span>
+<span class="co">#&gt; 4 0.244 0.794 0.980 0.891  0.408 </span>
+<span class="co">#&gt; 5 0.980 0.198 0.868 0.661  0.598 </span>
+<span class="co">#&gt; 6 0.510 0.512 0.966 0.0991 0.734 </span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;      V9    V8    V7    V6</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.788 0.478 0.875 0.423</span>
-<span class="co">#&gt; 2 0.537 0.729 0.406 0.549</span>
-<span class="co">#&gt; 3 0.155 0.556 0.842 0.140</span>
-<span class="co">#&gt; 4 0.428 0.817 0.984 0.614</span>
-<span class="co">#&gt; 5 0.722 0.166 0.977 0.543</span>
-<span class="co">#&gt; 6 0.725 0.377 0.355 0.812</span>
+<span class="co">#&gt;      V9    V8    V7     V6</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.335 0.762 0.660 0.182 </span>
+<span class="co">#&gt; 2 0.565 0.523 0.967 0.0700</span>
+<span class="co">#&gt; 3 0.377 0.993 0.671 0.345 </span>
+<span class="co">#&gt; 4 0.244 0.794 0.654 0.408 </span>
+<span class="co">#&gt; 5 0.980 0.198 0.540 0.598 </span>
+<span class="co">#&gt; 6 0.510 0.512 0.874 0.734 </span>
 <span class="co">#&gt; # ... with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
@@ -638,9 +638,10 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <div id="mutate" class="section level3">
 <h3><span class="header-section-number">9.2.5</span> <code>mutate()</code></h3>
 <p>Mutate põhikasutus on siiski uute veergude tekitamine, mis võtavad endale inputi rea kaupa. Seega tabeli ridade arv ei muutu.</p>
-<p>If in your tibble called ‘df’ you have a column called ‘value’, you can create a new log2 transformed value value column called log_value by <code>df %&gt;% mutate(log_value = log2(value))</code>. Or you can create a new column where a constant is substracted from the value column: <code>df %&gt;% mutate(centered_value = value - mean(value) )</code>. Here the mean value is substracted from each individual value.</p>
-<p><strong>Mutate adds new columns (and <code>transmute()</code> creates new columns while losing the previous columns)</strong></p>
-<p>Here we firstly create a new column, which contains log-transformed values from the <em>value</em> column, and name it <em>log_value</em>.</p>
+<p>tranformeeri tabeli “df” veerg “value” uueks veeruks “log_value”, kus on log2-transformeeritud numbrid: <code>df %&gt;% mutate(log_value = log2(value))</code>.</p>
+<p>Uues veerus on vana veeru numbritest lahutatud konstant (näiteks vana veeru keskväärtus): <code>df %&gt;% mutate(centered_value = value - mean(value) )</code>.</p>
+<p><strong>Mutate() lisab veerge ja <code>transmute()</code> kaotab ühtlasi ära vanad veerud</strong></p>
+<p>Uus veerg log-väärtustega, mis põhineb “value” veerul, millele anname nime “log_value”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(dat_lng, <span class="dt">log_value =</span> <span class="kw">log</span>(value))
 <span class="co">#&gt; # A tibble: 9 x 5</span>
 <span class="co">#&gt;   subject sex   experiment   value log_value</span>
@@ -652,7 +653,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <span class="co">#&gt; 5 Ann     F     experiment_1   38.      3.64</span>
 <span class="co">#&gt; 6 Jill    F     experiment_1   36.      3.58</span>
 <span class="co">#&gt; # ... with 3 more rows</span></code></pre></div>
-<p>The same with transmute: note the dropping of some of the original cols, keeping the original <em>subject</em> col and renaming the <em>sex</em> col.</p>
+<p>Sama transmute() kasutades. Me säilitame lisaks “subject” veeru ja säilitame ning nimetame ümber “sex” veeru.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">transmute</span>(dat_lng, subject, <span class="dt">gender =</span> sex, <span class="dt">log_value =</span> <span class="kw">log</span>(value))
 <span class="co">#&gt; # A tibble: 9 x 3</span>
 <span class="co">#&gt;   subject gender log_value</span>
@@ -664,6 +665,7 @@ dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class
 <span class="co">#&gt; 5 Ann     F           3.64</span>
 <span class="co">#&gt; 6 Jill    F           3.58</span>
 <span class="co">#&gt; # ... with 3 more rows</span></code></pre></div>
+<p>Selekteerime veerud “year” kuni “day”, veerud, mille nimed lõppevad stringiga “delay”, veerg “distance” ja “air_time”. Seejärel loome uue veerud “gain” (kasutades selleks arr_delay ja dep_delay andmeid rea kaupa), “hours” (air_time jagatud konstandiga) ja “gain_per_hour”:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights_sml &lt;-<span class="st"> </span><span class="kw">select</span>(flights, 
                       year<span class="op">:</span>day, 
                       <span class="kw">ends_with</span>(<span class="st">&quot;delay&quot;</span>), 
@@ -731,23 +733,23 @@ a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">
             <span class="dt">indeks=</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;E&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">each=</span> <span class="dv">3</span>, <span class="dt">times=</span><span class="dv">5</span>))
 <span class="kw">head</span>(a)
 <span class="co">#&gt; # A tibble: 6 x 3</span>
-<span class="co">#&gt;    gene    value indeks</span>
-<span class="co">#&gt;   &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt; </span>
-<span class="co">#&gt; 1     1 -0.0558  E     </span>
-<span class="co">#&gt; 2     1 -2.33    E     </span>
-<span class="co">#&gt; 3     1 -0.368   E     </span>
-<span class="co">#&gt; 4     1 -0.00996 C     </span>
-<span class="co">#&gt; 5     1  0.863   C     </span>
-<span class="co">#&gt; 6     1  1.77    C</span></code></pre></div>
+<span class="co">#&gt;    gene   value indeks</span>
+<span class="co">#&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; </span>
+<span class="co">#&gt; 1     1  0.385  E     </span>
+<span class="co">#&gt; 2     1  0.262  E     </span>
+<span class="co">#&gt; 3     1 -1.30   E     </span>
+<span class="co">#&gt; 4     1 -0.177  C     </span>
+<span class="co">#&gt; 5     1  0.0783 C     </span>
+<span class="co">#&gt; 6     1  0.0397 C</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p =</span> <span class="kw">t.test</span>(value<span class="op">~</span>indeks)<span class="op">$</span>p.value)
 <span class="co">#&gt; # A tibble: 5 x 2</span>
-<span class="co">#&gt;    gene      p</span>
-<span class="co">#&gt;   &lt;int&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1 0.118 </span>
-<span class="co">#&gt; 2     2 0.0170</span>
-<span class="co">#&gt; 3     3 0.251 </span>
-<span class="co">#&gt; 4     4 0.763 </span>
-<span class="co">#&gt; 5     5 0.827</span></code></pre></div>
+<span class="co">#&gt;    gene     p</span>
+<span class="co">#&gt;   &lt;int&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1     1 0.750</span>
+<span class="co">#&gt; 2     2 0.562</span>
+<span class="co">#&gt; 3     3 0.216</span>
+<span class="co">#&gt; 4     4 0.327</span>
+<span class="co">#&gt; 5     5 0.696</span></code></pre></div>
 </div>
 <div id="grupiviisiline-filtreerimine" class="section level4">
 <h4><span class="header-section-number">9.2.5.3</span> Grupiviisiline filtreerimine</h4>
