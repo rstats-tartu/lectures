@@ -287,20 +287,23 @@ top_n(iris_grouped, -2, Sepal.Length)
 
 Mutate põhikasutus on siiski uute veergude tekitamine, mis võtavad endale inputi rea kaupa. Seega tabeli ridade arv ei muutu.
 
-If in your tibble called 'df' you have a column called 'value', you can create a new log2 transformed value value column called log_value by `df %>% mutate(log_value = log2(value))`. Or you can create a new column where a constant is substracted from the value column: `df %>% mutate(centered_value = value - mean(value) ) `. Here the mean value is substracted from each individual value.
+tranformeeri tabeli "df" veerg "value" uueks veeruks "log_value", kus on log2-transformeeritud numbrid: `df %>% mutate(log_value = log2(value))`. 
 
-**Mutate adds new columns (and `transmute()` creates new columns while losing the previous columns)**
+Uues veerus on vana veeru numbritest lahutatud konstant (näiteks vana veeru keskväärtus): `df %>% mutate(centered_value = value - mean(value) ) `. 
 
-Here we  firstly create a new column, which contains log-transformed values from the *value* column, and name it *log_value*.  
+**Mutate() lisab veerge ja `transmute()` kaotab ühtlasi ära vanad veerud**
+
+Uus veerg log-väärtustega, mis põhineb "value" veerul, millele anname nime "log_value". 
 ```{r}
 mutate(dat_lng, log_value = log(value))
 ```
 
-The same with transmute: note the dropping of some of the original cols, keeping the original *subject* col and renaming the *sex* col.
+Sama transmute() kasutades. Me säilitame lisaks "subject" veeru ja säilitame ning nimetame ümber "sex" veeru.
 ```{r}
 transmute(dat_lng, subject, gender = sex, log_value = log(value))
 ```
 
+Selekteerime veerud "year" kuni "day", veerud, mille nimed lõppevad stringiga "delay", veerg "distance" ja "air_time". Seejärel loome uue veerud "gain" (kasutades selleks arr_delay ja dep_delay andmeid rea kaupa), "hours" (air_time jagatud konstandiga) ja "gain_per_hour":
 ```{r, eval=FALSE}
 flights_sml <- select(flights, 
                       year:day, 
