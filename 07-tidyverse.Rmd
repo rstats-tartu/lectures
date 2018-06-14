@@ -317,21 +317,28 @@ flights_sml <- select(flights,
 
 *`mutate_all()`, `mutate_if()` and `mutate_at()` and the three variants of `transmute()` (`transmute_all()`, `transmute_if()`, `transmute_at()`) make it easy to apply a transformation to a selection of variables. See help.*
 
-Here we first group and then mutate. Note that now, instead of a single constant, we divide by as many different constant as there are discrete factor levels in the sex variable (two, in our case):
+Kõigepealt grupeeri, siis muteeri. Konstandid Mean(value) ja sd(value) arvutatakse igale grupile eraldi selle grupi väärtuste pealt (siin grupeerime faktormuutuja "sex" kahe taseme järgi). 
 ```{r}
 group_by(dat_lng, sex) %>% 
   mutate(norm_value = value / mean(value), 
          n2_val = value / sd(value))
 ```
 
-Compare with a "straight" mutate to see the difference in values.
-
+Võrdluseks ilma grupeerimata olukord, kus konstandil alati sama väärtus:
 ```{r}
 mutate(dat_lng, 
        norm_value = value / mean(value), 
        n2_val = value / sd(value))
 ```
 
+#### kahest veerust kolmanda tegemine nii, et NA-d esimeses veerus asendatakse numbritega teisest
+
+```{r}
+y <- c(1, 2, 5, NA, 5)
+z <- c(NA, NA, 7, 4, 5)
+coalesce(z, y)
+
+```
 
 #### Summarise(), mutate(), transmute() ja filter() töötavad ka mitme veeru kaupa. 
 
