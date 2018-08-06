@@ -31,7 +31,7 @@ Nagu näha laaditakse tidyverse raamatukoguga 8 paketti:
 + **väärtus** (*value*) --- ühe mõõtmise tulemus (183 cm)
 + **muutuja** (*variable*) --- see, mida sa mõõdad (pikkus) või faktor (sex)
 + **andmepunkt** (*observation*) --- väärtused, mis mõõdeti samal katsetingimusel (1. subjekti pikkus ja kaal 3h ajapunktis)
-+ **vaatlusühik** (*unit of measurement*) --- keda mõõdeti (subjekt nr 1)
++ **vaatlusühik** (*unit of measurement*) --- keda mõõdeti (subjekt nr)
 + **vaatlusühiku tüüp** --- inimene, hiir, jt
 
 > vaatlusühiku tüüp = tabel 
@@ -192,23 +192,21 @@ filter(iris, Species %in% c("setosa", "versicolor") )
 ```
 Nagu näha, 2. variant on oluliselt lühem.
 
-Filtering with regular expression: we keep the rows where *subject* starts with the
-letter "T"
+Filtreerime regulaarekspressiooniga: read, kus Species algab v tähega
 ```{r}
 library(stringr)
 filter(iris, str_detect(Species, "^v")) 
 ```
 
-As you can see there are endless vistas here, open for a regular expression fanatic. I wish I was one!
 
-remove NAs with `filter()`
+eemalda NAdega read kahe veeru põhjal
 ```{r, eval=FALSE}
 filter(flights, !is.na(dep_delay), !is.na(arr_delay))
 ```
 
 ### `summarise()`
 
-Many rows summarised to a single value
+Mitu rida summeeritakse üheks väärtuseks veeru kaupa. Kõigepealt summeerime kogu tabeli nii, et saame (1) keskmise Sepal-length-i, (2) standardhälbe samast, (3) tabeli ridade arvu ja  (4) mitu erinevat Species-t on tabelis
 
 ```{r}
 summarise(iris, 
@@ -221,14 +219,12 @@ summarise(iris,
 
 `n_distinct()` loeb üles, mitu unikaalset väärtust läks samasse arvutusse.
 
-summarise on kasulikum, kui teda kasutada koos järgmise verbi, group_by-ga.
+Summarise on kasulikum, kui teda kasutada koos järgmise verbi, group_by-ga.
 
 ### `group_by()`
 
-`group_by()` groups values for summarising or mutating-
+`group_by()` grupeerib väärtused, nii et neid saab grupi kaupa summeerida või muteerida. Näiteks grupeerides Species kaupa, saame arvutada summaarsed statistikud igale liigile
 
-When we summarise by *sex* we will get two values for each summary statistic: for males and females. 
-Aint that sexy?!
 
 ```{r}
 iris_grouped <- group_by(iris, Species) 
@@ -245,29 +241,7 @@ Siin me rakendame summarise verbi mitte kogu tabelile, vaid 3-le virtuaalsele ta
 `group_by()`-le saab anda järjest mitu grupeerivat muutujat. 
 Siis ta grupeerib kõigepealt neist esimese järgi, seejärel lõõb saadud grupid omakorda lahku teise argumendi järgi ja nii edasi kuni teie poolt antud argumendid otsa saavad.
 
-Now we group previously generated dat_lng data frame first by *sex* and then inside each group again by *experiment*. 
-This is getting complicated ...
-
-```{r}
-dat_lng
-group_by(dat_lng, sex, experiment) %>% 
-  summarise(MEAN = mean(value), 
-            SD = sd(value),
-            N = n(), 
-            n_sex = n_distinct(sex))
-```
-
-Now we group first by sex and then by variable. Spot the difference!
-
-```{r}
-group_by(dat_lng, experiment, sex) %>% 
-  summarise(MEAN = mean(value), 
-            SD = sd(value),
-            N = n(), 
-            n_sex = n_distinct(sex))
-```
-
-*pro tip* if you want to summarise and then display the summary values as new column(s), which are added to the original non-shrunk df, use `mutate()` instead of `summarise()`.
+*pro tip* Kui tahad summaarseid statistikuid algse pika tabeli sisse uute veergudena (igale grupeeringu tasemele vastavad siis summeeriva statistiku identsed väärtused rea kaupa), kasuta peale `group_by()` verbi `mutate()`, mitte `summarise()`.
 
 ```{r}
 mutate(iris_grouped,
@@ -275,7 +249,7 @@ mutate(iris_grouped,
        SD = sd(Sepal.Length))
 ```
 
-Anna igast grupist 3 kõrgeimat väärtust ja 2 madalaimat väärtust. Samad numbrid erinevates ridades antakse kõik - selle pärast on meil tabelis rohkem ridu. 
+Anna igast grupist 3 kõrgeimat väärtust või 2 madalaimat väärtust. Samad numbrid erinevates ridades antakse kõik - selle pärast on meil tabelis rohkem ridu. 
 ```{r eval=FALSE}
 
 top_n(iris_grouped, 3, Sepal.Length)
@@ -303,7 +277,8 @@ Sama transmute() kasutades. Me säilitame lisaks "subject" veeru ja säilitame n
 transmute(dat_lng, subject, gender = sex, log_value = log(value))
 ```
 
-Selekteerime veerud "year" kuni "day", veerud, mille nimed lõppevad stringiga "delay", veerg "distance" ja "air_time". Seejärel loome uue veerud "gain" (kasutades selleks arr_delay ja dep_delay andmeid rea kaupa), "hours" (air_time jagatud konstandiga) ja "gain_per_hour":
+Selekteerime veerud "year" kuni "day", veerud, mille nimed lõppevad stringiga "delay", veerud "distance" ja "air_time". Seejärel loome uue veerud "gain" (kasutades selleks arr_delay ja dep_delay andmeid rea kaupa), "hours" (air_time jagatud konstandiga) ja "gain_per_hour":
+
 ```{r, eval=FALSE}
 flights_sml <- select(flights, 
                       year:day, 

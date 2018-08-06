@@ -1,5 +1,86 @@
 
-# R objektid {#obj}
+# R-i tööpõhimõte
+
+Iga kord, kui avate R studio, alustate R-i sessiooni, mis seisneb funktsioonide (väikeste programmijuppide) rakendamises andmetele eesmärgiga muuta tabelite struktuuri, transformeerida andmeid, genereerida jooniseid ja/või arvutada statistikuid. Kõik see toimub R-i töökeskkonnas. Tulemusi saab töökeskkonnast eksportida arvuti kõvakettale näiteks .pdf (joonised) või .csv (tabelid) formaadis. Teie sessiooni põhiline tulemus ei ole siiski eksporditavad asjad, vaid R-i kood (script), mida jooksutades on võimalik korrataval viisil algset andmetabelit manipuleerida. Kõik, mida te töökeskonnas teete, kajastub koodis ja on korratav.
+
+R-i sessioon näeb üldjoontes välja niimoodi:
+
+
+ (1) Andmed ja funktsioonid (raamatukogude kujul) loetakse R-i töökeskkonda, (2) andmeid töödeldakse funktsioonide abil ja (3) tööproduktid eksporditakse/salvestatakse teistele programmidele kättesaadavasse vormi.  
+
+* töökeskkond (workspace) - sisaldab üles laetud objekte
+
+* keskkond (environment) - sisaldab nimega seotud objekte
+
+* pakett e raamatukogu - sisaldab funktsioone, andmeid ja seletavaid faile
+
+* funktsioon - R-i alamprogramm
+
+* argument - funktsiooni tööd reguleeriv parameeter 
+
+* objekt - funktsioon, andmestruktuur ja mida iganes saab töökeskkonda viia
+
+* nimi - objekt seotakse nimega <- abil, et see keskkonnas nähtavaks/taaskasutatavaks muuta
+
+**Andmetüübid:**
+
+* character - tähemärgid
+
+* numeric (double) - ratsionaalarvud
+
+* integer - täisarvud
+
+* factor - muutuja, millel on loetud hulk nimedega "tasemeid" (levels), kus iga tase on sisemiselt kodeeritud täisarvuga alates 1st. On olemas nii järjestatud kui järjestamata tasemetega faktorid. Näit "mees"-naine on tüüpiliselt järjestamata tasemed, aga vähe-keskmiselt-palju peaks olema järjestatud.
+
+* logical - TRUE/FALSE. TRUE on sisemiselt kodeeritud kui 1 ja FALSE kui 0. 
+
+**andmeklassid:** (idee on andmed struktureerida hõlbustamaks edasisi tehteid nendega)
+
+* vektor - 1D järjestatud sama tüüpi andmed 
+
+* list - kokku kogutud, järjestatud ja nimetatud objektid (vektorid, andmeraamid, mudelid, teised listid jms)
+
+* maatriks - 2D neljakandiline andmestruktuur, mis koosneb sama tüüpi andmetest 
+
+* andmeraam (data frame, tibble) - 2D neljakandiline andmestruktuur, mis koosneb veeru kaupa kõrvuti asetatud ühepikkustest vektoritest (erinevad vektorid võivad sisaldada erinevaid tüüpi andmeid). Lähim asi nelinurksele tabelile (aga Exceli tabelis -- erinevalt R-st -- saab samasse veergu panna ka erinevat tüüpi andmeid).
+
+
+Avades R Studio peaksite nägema tühja keskkonda (Enviroment tab, ülal paremas aknas). R-i tööpõhimõte on järgmine. 
+
+(1) te laete võrgust alla ja installeerite oma kõvakettale vajalikud R-i alamprogrammid, mida kutsutakse pakettideks ehk raamatukogudeks. Paketid on funktsioonide (kuigi mitte ainult) kogud. Need funktsioonid ei ole aga veel R-s kasutamiseks kättesaadavad.  
+
+(2) te loete R-i töökeskkonda (workspace) sisse vajalikud paketid (oma kõvakettalt) ja andmetabeli(d), mida soovite töödelda (oma kõvakettalt või otse võrgust), muutes need seega R-s kasutatavaks. Seda tuleb teha igal R-i sessioonil uuesti. Igat asja, mis on töökeskkonnas, kutsutakse objektiks. Objektid, mis on omistatud nimele, ilmuvad nähtavale Enviroment tab-i, koos oma struktuuri lühikirjeldsega.
+
+(3) Te sisestate töökeskkonnas olevatesse funtksioonidesse andmed ja argumendid. Sageli teeb üks funktsioon ühte toimingut, mistõttu koosneb teie töövoog funktsioonide rakendamisest üksteise järel sellisel moel, et eelmise funktsiooni väljund on sisend järgmisele funktsioonile. 
+
+(4) Te ekspordite/salvestate oma kõvakettale need objektid (tabelid, joonised), mida soovite tulevikus avada teiste programmidega. Samuti salvestate oma põhilise töötulemuse - R-i scripti (näit .Rmd või .R laiendiga failina).
+
+Järgmise sessiooni saate alustada juba oma salvestatud koodi baasilt --- jooksutades algandmete peal olemasoleva koodi ning seejärel lisades uut koodi (andmetabeli ja raamatukogud tuleb iga sessiooni jaoks uuesti keskkonda sisse lugeda).
+
+
+## Funktsioon
+
+* Hea funktsioon teeb ühte asja. Näiteks funktsioon `t()` ( _t_ tähendab _transpose_) transponeerib maatriksi nii, et ridadest saavad veerud ja vastupidi, aga funktsioon `c()` ( _c_ tähendab _combine_ v _concatenate_ ) moodustab sisestatud objektidest vektori. 
+
+* Funktsiooni nime taha käivad sulud. Ilma sulgudeta funktsiooni nime jooksutamine annab väljundina selle funktsiooni koodi.
+
+* Enamustel funktsioonidel on argumendid, mis käivad sulgude sisse ja on üksteisest komadega eraldatud. Kasutaja saab argumentidele anda väärtused, mis määravad andmed, millel funktsioon töötab, ja selle, mida funktsioon nende andmetega täpselt teeb. 
+
+* Osadel argumentidel on vaikeväärtused, mida saab käsitsi muuta. Vaikeväärtused, nagu ka funktsiooni argumentide nimekirja ja kirjelduse, leiab `?funktsiooni_nimi` (ilma sulgudeta) abil. NB! Ära kasuta funktsioone, mille argumente sa ei tunne.
+
+* Argumendid võivad olla kas kohustuslikud (ilma argumendi väärtust sisestamata funktsioon ei tööta), või mitte.  Näiteks funktsioon `plot(x, y, ...)` argumendid on objekt nimega x, mis annab x teljele plotitud andmete koordinaadid, objekt nimega y, mis annab sama y teljele, ning lisaargumendid, mis võivad sõltuda x-i ja või y-i vormist. x on kohustuslik argument, aga y ei ole tingimata vajalik (kas y on vajalik või mitte, sõltub sisestatud x-i struktuurist).
+
+* Kui argumendi väärtus sisestatakse teksti kujul, siis enamasti jutumärkides. Jutumärgid muudavad R-i jaoks teksti tähemärkide jadaks e stringiks, mille sees R numbreid ei tõlgenda arvudena. 
+
+* Argumendid on järjestatud ja neil on nimed. Nimi trumpab järjekorra üle selles mõttes, et me võime argumentide nimed funktsiooni kirjutada suvalises järjekorras ilma, et funktsiooni töö sellest muutuks. Samas, kui me sisestame funktsiooni argumendid ilma nimedeta, siis on argumentide järjekord tähtis, sest need seostatakse vaikimisi nimedega vastavalt oma järjekorranumbrile. Oletame, et meil on vektorid `kaal <- c(2.3, 4.3, 3)` ja `pikkus <- c(7, 5, 9)`. Me võime need funktsiooni sisestada nii: `plot(x = kaal, y = pikkus)`, `plot(y = pikkus, x = kaal)` ja `plot(kaal, pikkus)` teevad kõik identse scatterploti (aga `plot(pikkus, kaal)` ei tee).  
+
+**Ülesanne:** uuri välja, mida määravad järgneva funktsiooni argumendid. 
+
+`plot(table(rpois(100, 5)), type = "h", col = "red", lwd = 10, main = "rpois(100, lambda = 5)")`
+
+Pane tähele, et funktsiooni "plot" argumendid "table" ja "rpois" on ka ise funktsioonid, millel on kummagil oma argumendid. 
+
+## objekt {#obj}
 
 R-i töökeskkonnas "workspace" asuvad **objektid**, millega me töötame. 
 Tüüpilised objektid on:
@@ -8,15 +89,11 @@ Tüüpilised objektid on:
 - Statistiliste analüüside väljundid (S3, S4 klass).
 - Funktsioonid, mille oleme ise sisse lugenud.
 
-Käsk `ls()` annab objektide nimed teie workspace-s:
-```{r}
-ls()
-```
+Funktsioon `ls()` annab objektide nimed teie workspace-s.
 
-`rm(a)` removes object a from the workspace
+`rm(a)` eemaldab objekti nimega a töökeskkonnast.
 
-Selleks, et salvestada töökeskkond faili kasuta <i class="fa fa-floppy-o" aria-hidden="true"></i> "Save" nuppu "Environment" akna servast või 
-menüüst "Session" -> "Save Workspace As".
+Selleks, et salvestada töökeskkond faili, kasuta "Save" nuppu "Environment" akna servast või menüüst "Session" -> "Save Workspace As".
 
 Projekti sulgemisel salvestab RStudio vaikimisi töökeskkonna. 
 **Parema reprodutseeritavuse huvides pole siiski soovitav töökeskkonda peale töö lõppu projekti sulgemisel salvestada!**. 
@@ -25,9 +102,9 @@ Lülitame automaatse salvestamise välja:
 - Selleks mine "Tools" > "Global Options" > kõige ülemine, "R General" menüüs vali "Save workspace to .RData on exit" > "Never" ever!
 - Võta ära linnuke "Restore .RData to workspace at startup" eest.
 
-Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele.
+Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised, salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele: `write_rds()`, `read_rds()`.
 
-Nüüd laadime hiljem vaja minevad libraryd:
+Nüüd laadime hiljem vaja minevad raamatukogud:
 ```{r, message=FALSE}
 library(tidyverse)
 library(VIM)
@@ -38,7 +115,7 @@ library(readxl)
 ```
 
 
-## Objekt ja nimi
+### Objekt ja nimi
 
 Kui teil sünnib laps, annate talle nime.
 R-s on vastupidi: nimele antakse objekt
@@ -47,10 +124,10 @@ babe <- "beebi"
 babe
 ```
 
-Siin on kõigepealt nimi (babe), siis assingmenti sümbol `<-` ja lõpuks objekt, mis on nimele antud (string "beebi"). 
+Siin on kõigepealt nimi (babe), siis assigneerimise sümbol `<-` ja lõpuks objekt, mis on nimele antud (string "beebi"). 
 
 NB! Stringid on jutumärkides, nimed mitte.
-Nimi üksi evalueeritakse kui "print object", mis antud juhul on string "beebi"
+Nimi üksi evalueeritakse kui käsk: "print object". Antud juhul trükitakse konsooli string "beebi"
 
 Nüüd muudame objekti nime taga:
 ```{r}
@@ -72,7 +149,7 @@ apples <- 2
 bananas <- 3
 apples + bananas
 ```
-Selle ekspressiooni tulemus trükitakse ainult R konsooli, kuna teda ei määrata nimele siis ei ilmu see ka workspace.
+Selle ekspressiooni tulemus trükitakse ainult R konsooli. Kuna teda ei määrata nimele, siis ei ilmu see ka workspace.
 
 
 ```{r}
@@ -84,7 +161,7 @@ str(a)
 ```
 Nüüd on nimega a seostatud uus objekt, mis sisaldab numbrit 5 (olles ühe elemendiga vektor). Ja nimega a eelnevalt seostatud objekt, mis koosnes numbrist 2, on workspacest lahkunud. 
 
-## Nimede vorm
+#### Nimede vorm
 
 + Nimed algavad tähemärgiga, mitte numbriga ega $€%&/?~ˇöõüä
 + Nimed ei sisalda tühikuid
@@ -100,12 +177,38 @@ Nüüd on nimega a seostatud uus objekt, mis sisaldab numbrit 5 (olles ühe elem
 + character
 + factor (ordered and unordered) - 2+ diskreetset väärtust, mis võivad olla järjestatud suuremast väiksemani (aga ei asu üksteisest võrdsel kaugusel). Faktoreid käsitleme põhjalikumalt hiljem.
 
+Faktoritel on tasemed (level) ja sisemiselt on iga faktori tase tähistatud täisarvulise numbriga.  
+
 Andmete tüüpe saab üksteiseks konverteerida `as.numeric()`, `as.character()`, `as.factor()`.
 
-## Vektor
+```{r}
+a <- 5:10 
+#vektor, mis koosneb 6st täisarvust 5st 10-ni
+class(a)
 
-Vektor on rida kindlas järjekorras arve, sõnu või TRUE/FALSE loogilisi väärtusi. 
-Iga vektor ja maatriks (2D vektor) sisaldab ainult ühte tüüpi andmeid. 
+a_char <- c("5", "6", "7") 
+#jutumärgid tähistavad tähemärki, mitte arvu.
+class(a_char)
+
+a1 <- as.factor(a)
+a1
+a2 <- as.numeric(a1) 
+#see ei tööta, sest faktori tasemed 
+#rekodeeritakse sisemiselt numbritena alates 1st. 
+a2
+a3 <- as.numeric(as.character(a1)) 
+#see töötab, taastab numbrid 5st 10-ni
+#kõigepealt konverteerime faktori tasemed tähemärkideks 
+#(ignoreerides sisemisi rekodeeringuid).
+#Seejärel konverteerime tähemärgid numbriteks.
+a3
+```
+
+## Objektide klassid
+### Vektor
+
+Vektor on rida kindlas järjekorras arve, tähemärkide stringe või TRUE/FALSE loogilisi väärtusi. 
+Iga vektor ja maatriks (mis on 2D vektor) sisaldab ainult ühte tüüpi andmeid. 
 Vektor on elementaarüksus, millega me teeme tehteid. 
 Andmetabelis ripuvad kõrvuti ühepikad vektorid (üks vektor = üks tulp) ja R-le meeldib arvutada vektori kaupa vasakult paremale (mis tabelis on ülevalt alla sest vektori algus on üleval tabeli peas). 
 Pikema kui üheelemendise vektori loomiseks kasuta funktsiooni `c()` -- combine
@@ -152,7 +255,7 @@ as.numeric(as.character(minu_vektor))
 ```
 
 
-Järgneva trikiga saab stringidest ekstraheerida numbrid: 
+Järgneva trikiga saab stringidest kätte numbrid: 
 ```{r}
 minu_vektor <- c(1, "A2", "$2", "joe")
 ## parse_number() is imported from tidyverse 'readr' 
@@ -175,7 +278,9 @@ unique(c(1,1,1,2,2,2,2,2,3,3,4,5,5))
 ```
 
 
-###  Uus vektor: `seq()` ja `rep()`
+Uus vektor automaatselt: `seq()` ja `rep()`
+
+seq annab kasvava või kahaneva rea. rep kordab väärtusi.
 
 ```{r}
 seq(2, 3, by = 0.5)
@@ -185,7 +290,7 @@ rep(1:2, each = 3)
 rep(c("a", "b"), each = 3, times = 2)
 ```
 
-### Tehted arvuliste vektoritega
+Tehted arvuliste vektoritega
 
 Vektoreid saab liita, lahutada, korrutada ja jagada.
 ```{r}
@@ -225,13 +330,13 @@ mean(a)
 Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 + 1 = 2.
 Seda loogiliste väärtuste omadust õpime varsti praktikas kasutama. 
 
-## List
+### List
 
 List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa arvatud listid. 
 See on lihtsalt viis objektid koos hoida ühes suuremas meta-objektis. 
-List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid kõik segamini loksuvad.
+List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid segamini kolisevad.
 
-Näiteks siin list, kus loksuvad 1 vektor nimega a, 1 tibble nimega b ja 1 list nimega c, mis omakorda sisaldab vektorit nimega d ja tibblet nimega e. Seega on meil tegu rekursiivse listiga. 
+Näiteks list, kus on 1 vektor nimega a, 1 tibble nimega b ja 1 list nimega c, mis omakorda sisaldab vektorit nimega d ja tibblet nimega e. Seega on meil tegu rekursiivse listiga. 
 ```{r}
 # numeric vector a
 a <- runif(5)
@@ -252,14 +357,14 @@ happy_list$ab
 ```
 
 
-## data frame ja tibble
+### data frame ja tibble
 
-Andmeraam on eriline list, mis koosneb ühepikkustest vektoritest. Andmeraam on ühtlasi teatud liiki tabel, kus igas veerus on ainult ühte tüüpi andmed. Need vektorid ripuvad andmeraamis kõrvuti nagu tuulehaugid suitsuahjus, kusjuures vektori algus vastab tuulehaugi peale, mis on konksu otsas (konks vastab andmeraamis tulba nimele ja ühtlasi vektori nimele). Iga vektori nimi muutub sellises tabelis tulba nimeks. Igas tulbas saab olla ainult ühte tüüpi andmeid. 
+Andmeraam on eriline list, mis koosneb ühepikkustest vektoritest. Andmeraam on ühtlasi neljakandiline tabel, kus igas veerus on ainult ühte tüüpi andmed. Need vektorid ripuvad andmeraamis kõrvuti nagu tuulehaugid suitsuahjus, kusjuures vektori algus vastab tuulehaugi peale, mis on konksu otsas (konks vastab andmeraamis veeru nimele ja ühtlasi vektori nimele). Iga vektori nimi muutub sellises tabelis veeru nimeks. Igas veerus saab olla ainult ühte tüüpi andmeid. 
 
 R-s on 2 andmeraami tüüpi: data frame ja tibble, mis on väga sarnased. 
-Tibble on uuem, veidi kaunima väljatrükiga, pisut mugavam kasutada.
+Tibble on uuem, veidi kaunima väljatrükiga ja pisut mugavam kasutada.
 
-> Oluline on, et erinevalt data frame-st saab tibblesse lisada ka list tulpasid, mis võimaldab sisuliselt suvalisi R objekte tibblesse paigutada. Põhimõtteliselt piisab ainult ühest andmestruktuurist -- tibble, et R-is töötada. Kõik mis juhtub tibbles jääb tibblesse. Nice and tidy -- tidyverse.
+> Erinevalt data frame-st saab tibblesse lisada ka list tulpasid, mis võimaldab sisuliselt suvalisi R objekte tibblesse paigutada. Põhimõtteliselt piisab ainult ühest andmestruktuurist -- tibble, et R-is töötada. Kõik, mis juhtub tibbles, jääb tibblesse. 
 
 "Tidyverse" töötab tibblega veidi paremini kui data frame-ga, aga see vahe ei ole suur.
 
@@ -305,13 +410,14 @@ rowSums(fruits[ , 2:3])
 rowMeans(fruits[ , 2:3])
 colMeans(fruits[ , 2:3])
 fruits_subset <- fruits[ , 2:3]
+
 # 1 tähendab, et arvuta sd rea kaupa
 apply(fruits_subset, 1, sd)
 # 2 tähendab, et arvuta sd veeru kaupa
 apply(fruits_subset, 2, sd) 
 ```
 
-Lisame käsitsi meie tabelile 1 rea:
+Lisame käsitsi tabelile rea:
 ```{r}
 fruits <- add_row(fruits, 
                   shop = "konsum", 
@@ -326,9 +432,9 @@ Proovi ise:
 add_column()
 ```
 
-Eelnevaid verbe ei kasuta me vist enam kunagi sest tavaliselt loeme me andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:
+Eelnevaid verbe ei kasuta me just sageli, sest tavaliselt loeme andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:
 
-### Rekodeerime tibble väärtusi
+### Rekodeerime andmeraami väärtusi
 
 
 ```{r}
@@ -340,8 +446,7 @@ fruits$apples[fruits$apples>100] <- NA
 fruits
 ```
 
-
-Remove duplicate rows where specific column (col1) contains duplicated values:
+Viskame välja duplikaatread, aga ainult need kus veerg nimega col1 sisaldab identseid väärtusi (mitmest identse väärtusega reast jääb alles ainult esimene)
 ```{r eval=FALSE}
 distinct(dat, col1, .keep_all = TRUE)
 # kõikide col vastu
@@ -357,7 +462,7 @@ x[is.na(x)] <- 0
 ```
 
 
-### Ühendame kaks tibblet rea kaupa 
+### Ühendame kaks andmeraami rea kaupa 
 
 Tabeli veergude arv ei muutu, ridade arv kasvab.
 ```{r}
@@ -380,7 +485,7 @@ df2 <- tibble(ColC = "d", ColD = 4)
 bind_rows(dfs1, df2)
 ```
 
-### ühendame kaks tibblet veeru kaupa
+### ühendame kaks andmeraami veeru kaupa
 
 Meil on 2 verbi: bind_cols ja cbind, millest esimene on konservatiivsem. Proovige eelkõige bind_col-ga läbi saada, aga kui muidu ei saa, siis cbind ühendab vahest asju, mida bind_cols keeldub puutumast. NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!
 
@@ -389,7 +494,7 @@ dfx <- tibble(colC = c(4, 5, 6))
 bind_cols(dfs, dfx)
 ```
 
-### tabelite ühendamine join()-ga
+### andmeraamide ühendamine join()-ga
 
 Kõigepealt 2 tabelit: df1 ja df2.
 
@@ -434,7 +539,7 @@ anti_join(df1, df2)
 ```
 
 
-### Nii saab tibblest kätte vektori, millega saab tehteid teha. 
+### Nii saab raamist kätte vektori, millega tehteid teha. 
 
 Tibble jääb muidugi endisel kujul alles.
 ```{r}
@@ -448,7 +553,7 @@ str(ubinad)
 
 ### Andmeraamide salvestamine (eksport-import)
 
-Andmeraami saame salvestada näiteks csv-na (comma separated file) oma kõvakettale, kasutame "tidyverse" analooge paketist "readr", mille nimed on baas R funktsioonidest eristatavad alakriipsu "_" kasutamisega. "readr" laaditakse "tidyverse" laadimisega. 
+Andmeraami saame salvestada näiteks csv-na (comma separated file) oma kõvakettale, kasutame "tidyverse" analooge paketist "readr", mille nimed on baas R funktsioonidest eristatavad alakriipsu "_" kasutamisega. "readr" laaditakse automaatselt koos "tidyverse" laadimisega. 
 ```{r, eval=FALSE}
 ## loome uuesti fruits data tibble
 shop <- c("maxima", "tesco", "lidl")
@@ -484,20 +589,14 @@ R-i saab sisse lugeda palju erinevaid andmeformaate.
 Näiteks, installi RStudio addin: "Gotta read em all R", vaata eespool.
 See läheb ülesse tab-i Addins. 
 Sealt saab selle avada ja selle abil tabeleid oma workspace üles laadida. 
-Selline point-and-click lahendus sobib ehk tabelite esialgseks tutvumiseks, kuid korrektne on andmed importida programmaatiliselt oma skriptis.
 
 Alternatiiv: mine alla paremake Files tab-le, navigeeri sinna kuhu vaja ja kliki faili nimele, mida tahad R-i importida.
 
-Mõlemal juhul ilmub alla konsooli (all vasakul) koodijupp, mille jooksutamine peaks asja ära tegema. 
-Te võite tahta selle koodi kopeerida üles vasakusse aknasse kus teie ülejäänud kood tulevastele põlvedele säilub.
+Mõlemal juhul ilmub alla konsooli (all vasakul) koodijupp, mille jooksutamine peaks asja ära tegema. Te võite tahta selle koodi kopeerida üles vasakusse aknasse kus teie ülejäänud kood tulevastele põlvedele säilub.
 
-> Tüüpiliselt töötate R-s oma algse andmestikuga. Reprodutseeruvaks projektiks on vaja 2 asja: algandmeid ja koodi, millega neid manipuleerida. 
+> Tüüpiliselt töötate R-s oma algse andmestikuga. Reprodutseeruvaks projektiks on vaja 2 asja: algandmeid ja koodi, millega neid manipuleerida. R ei muuda algandmeid, mille te näiteks csv-na sisse loete. 
 
-NB! R ei muuda algandmeid, mille te näiteks csv-na sisse loete - need jäävad alati selliseks nagu need instrumendi või andmesisestaja poolt väljastati.
-
-Seega ei ole andmetabelite salvestamine töö vaheproduktidena sageli vajalik sest te jooksutate iga kord, kui te oma projekti juurde naasete, kogu analüüsi uuesti kuni kohani, kuhu te pooleli jäite. 
-See tagab kõige paremini, et teie kood töötab tervikuna. 
-Erandiks on tabelid, mille arvutamine võtab palju aega.
+Andmetabelite salvestamine töö vaheproduktidena ei ole sageli vajalik, sest te jooksutate iga kord, kui te oma projekti juurde naasete, kogu analüüsi uuesti kuni kohani, kuhu te pooleli jäite. See tagab, et teie kood töötab tervikuna. Erandiks on tabelid, mille arvutamine võtab palju aega.
 
 Tibble konverteerimine data frame-ks ja tagasi tibbleks:
 ```{r}
@@ -565,45 +664,32 @@ coalesce(y, z)
 
 `filter_at(weather, vars(starts_with("wind")), all_vars(is.na(.)))` read, kus veerg, mis sisaldab wind, on NA.
 
-
-
-### Rekodeerime numbri vm NA-ks
+### Rekodeerime NA-ks
 
 ```{r eval=FALSE}
-
 na_if(x, y)
-
-x - vektor ehk tabeli veerg, mida modifitseerime
-y - väärtus, mida soovime NA-ga asendada
+#x - vektor ehk tabeli veerg, mida modifitseerime
+#y - väärtus, mida soovime NA-ga asendada
 
 na_if(dfs, "") #teeb dfs tabelis tühjad lahtrid NA-deks
 na_if(dfs, "other") #teeb lahtrid, kus on "other" NA-deks
 na_if(dfs, 0) #teeb 0-d NA-deks. 
 ```
 
-
-
-
-
 ## Matrix
 
 Maatriks on 2-dimensionaalne vektor, sisaldab ainult ühte tüüpi andmeid -- numbrid, stringid, faktorid.
-Tip: me saame sageli andmeraami maatriksina kasutada kui me viskame sealt välja mitte-numbrilised tulbad.
 
-Aga saame ka andmeraame konverteerida otse maatriksiks (ja tagasi).
+Tip: me saame sageli andmeraami otse maatriksina kasutada kui me viskame sealt välja mitte-numbrilised tulbad. Aga saame ka andmeraame konverteerida maatriksiks, ja tagasi.
 ```{r eval=FALSE}
 fruits <- as.matrix(fruits)
 class(fruits)
 ```
 
-
 ## Indekseerimine
 
 Igale vektori, listi, andmeraami ja maatriksi elemendile vastab unikaalne postiindeks, mille abil saame just selle elemendi unikaalselt indentifitseerida, välja võtta ja töödelda.
-
-Seega on indeksi mõte väga lühikese käsuga välja võtta R-i objektide üksikuid elemente. 
-
-R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
+Seega on indeksi mõte väga lühikese käsuga välja võtta R-i objektide üksikuid elemente. R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
 
 ### Vektorid ja nende indeksid on ühedimensionaalsed
 
@@ -612,8 +698,8 @@ my_vector <- 2:5
 my_vector
 my_vector[1] #1. element ehk number 2
 my_vector[c(1,3)] #1. ja 3. element 
-my_vector[-1] #kõik elemendid, v.a. element number 1
-my_vector[c(-1, -3)] #kõik elemendid, v.a. element number 1 ja 3
+my_vector[-1] #kõik elemendid, v.a. 1. element
+my_vector[c(-1, -3)] #kõik elemendid, v.a. 1. ja 3. element 
 my_vector[3:5] #elemendid 3, 4 ja 5 (element 5 on määramata, seega NA)
 my_vector[-(3:length(my_vector))] #1. ja 2. element
 ```
@@ -625,22 +711,30 @@ my_vector[-(3:length(my_vector))] #1. ja 2. element
 ```{r eval=FALSE}
 dat <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
 dat
-# üks andmepunkt: 1 rida, 2. veerg
+# üks andmepunkt: 1. rida, 2. veerg
 dat[1, 2]
+
 # 1. rida, kõik veerud
 dat[1, ]
+
 # 2. veerg, kõik read
 dat[, 2]
+
 # kõik read peale 1.
 dat[-1, ]
+
 # viskab välja 2. veeru
 dat[, -2]
+
 # 2 andmepunkti: 2. rida, 1. ja 2. veerg
 dat[2, 1:2]
+
 # 2 andmepunkti: 2. rida, 3. ja 4. veerg
 dat[2, c(1, 2)]
+
 #viskab välja 1. ja 2. rea
 dat[-c(1, 2), ]
+
 #veerg nimega colB, output on erandina vektor!
 dat$colB
 ```
@@ -649,8 +743,14 @@ Kui me indekseerimisega tibblest veeru ehk vektori välja võtame, on output cla
 Nüüd veidi keerulisemad konstruktsioonid, mis võimaldavad tabeli ühe kindla veeru väärtusi välja tõmmata teise veeru väärtuste järgi filteerides. Püüdke sellest koodist aru saada, et te hiljem ära tunneksite, kui midagi sellist vastu tuleb. Õnneks ei ole teil endil vaja sellist koodi kirjutada, me õpetame teile varsti lihtsama filtri meetodi.
 ```{r}
 dat <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
-dat$colB[dat$colA != "a" ] #jätab sisse kõik vektori colB väärtused, kus samas tabeli reas olev colA väärtus ei ole "a". output on vektor! 
-dat$colA[dat$colB > 1] #jätab sisse kõik vektori colA väärtused, kus samas tabeli reas olev colB väärtus >1. output on vektor. 
+dat$colB[dat$colA != "a" ] 
+#jätab sisse kõik vektori colB väärtused, 
+#kus samas tabeli reas olev colA väärtus ei 
+#ole "a". output on vektor! 
+dat$colA[dat$colB > 1] 
+#jätab sisse kõik vektori colA väärtused, 
+#kus samas tabeli reas olev colB väärtus >1. 
+#output on vektor. 
 ```
 
 ### Listide indekseerimine
