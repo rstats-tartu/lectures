@@ -64,7 +64,7 @@ Järgmise sessiooni saate alustada juba oma salvestatud koodi baasilt --- jooksu
 
 * Funktsiooni nime taha käivad sulud. Ilma sulgudeta funktsiooni nime jooksutamine annab väljundina selle funktsiooni koodi.
 
-* Enamustel funktsioonidel on argumendid, mis käivad sulgude sisse ja on üksteisest komadega eraldatud. Kasutaja saab argumentidele anda väärtused, mis määravad andmed, millel funktsioon töötab, ja selle, mida funktsioon nende andmetega täpselt teeb. 
+* Enamustel funktsioonidel on argumendid, mis käivad sulgude sisse ja on üksteisest komadega eraldatud. Kasutaja saab argumentidele anda väärtused, mis määravad andmed, millel funktsioon töötab, ja selle, mida funktsioon nende andmetega täpselt teeb. Funktsiooni iga argument täpsustab funktsiooni jaoks, mida teha.
 
 * Osadel argumentidel on vaikeväärtused, mida saab käsitsi muuta. Vaikeväärtused, nagu ka funktsiooni argumentide nimekirja ja kirjelduse, leiab `?funktsiooni_nimi` (ilma sulgudeta) abil. NB! Ära kasuta funktsioone, mille argumente sa ei tunne.
 
@@ -74,15 +74,74 @@ Järgmise sessiooni saate alustada juba oma salvestatud koodi baasilt --- jooksu
 
 * Argumendid on järjestatud ja neil on nimed. Nimi trumpab järjekorra üle selles mõttes, et me võime argumentide nimed funktsiooni kirjutada suvalises järjekorras ilma, et funktsiooni töö sellest muutuks. Samas, kui me sisestame funktsiooni argumendid ilma nimedeta, siis on argumentide järjekord tähtis, sest need seostatakse vaikimisi nimedega vastavalt oma järjekorranumbrile. Oletame, et meil on vektorid `kaal <- c(2.3, 4.3, 3)` ja `pikkus <- c(7, 5, 9)`. Me võime need funktsiooni sisestada nii: `plot(x = kaal, y = pikkus)`, `plot(y = pikkus, x = kaal)` ja `plot(kaal, pikkus)` teevad kõik identse scatterploti (aga `plot(pikkus, kaal)` ei tee).  
 
+* Funktsiooni esimese argumendi saab enamasti sisestada ka alternatiivsel viisil, %>% pipe operaatori abil. Niimoodi jooksevad fun(arg1, arg2) ja arg1 %>% fun(arg2) koodid enamasti identselt. Kumba koodi eelistada on seega "vaid" koodi loetavuse küsimus.
+
 **Ülesanne:** uuri välja, mida määravad järgneva funktsiooni argumendid. 
 
 `plot(table(rpois(100, 5)), type = "h", col = "red", lwd = 10, main = "rpois(100, lambda = 5)")`
 
 Pane tähele, et funktsiooni "plot" argumendid "table" ja "rpois" on ka ise funktsioonid, millel on kummagil oma argumendid. 
 
+### Sama koodi saab kirjutada neljal erineval viisil
+
+Idee on sooritada järjest operatsioone nii, et eelmise operatsiooni väljund (R-i objekt)  oleks sisendiks järgmisele operatsioonile (funktsioonile). See on lihtne  hargnemisteta analüüsiskeem.
+
+Kui me muudame olemasolevat objekti, siis me kas jätame muudetud objektile vana objekti nime või me anname talle uue nime. 
+Esimesel juhul läheb eelmine muutmata objekt töökeskkonnast kaduma, aga nimesid ei tule juurde ja säilib töövoo sujuvus. 
+Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende juurde saab alati tagasi tulla. Aga samas tekib palju sarnaste nimedega objekte.
+
+####Esimene võimalus - anname järjest tekkinud objektid samale nimele.
+```{r}
+a <- c(2, 3)
+a <- sum(a)
+a <- sqrt(a)
+a <- round(a, 2)
+a
+```
+
+#### Teine võimalus - uued nimed.
+Nii saab tekkinud objekte hiljem kasutada.
+```{r}
+a <- c(2, 3)
+a1 <- sum(a)
+a2 <- sqrt(a1)
+a3 <- round(a2, 2)
+a3
+```
+
+#### Kolmas võimalus on lühem variant esimesest. 
+Me nimelt ühendame etapid toru `%>%` kaudu.
+Siin me võtame objekti "a" (nö. andmed), suuname selle funktsiooni `sum()`, võtame selle funktsiooni väljundi ja suuname selle omakorda funktsiooni `sqrt()`. 
+Seejärel võtame selle funktsiooni outputi ja määrame selle nimele "result" (aga võime selle ka mõne teise nimega siduda). 
+Kui mõni funktsioon võtab ainult ühe parameetri, mille me talle toru kaudu sisse sõõdame, siis pole selle funktsiooni taga isegi sulge vaja (R hea stiili juhised soovitavad siiski alati kasutada funktsiooni koos sulgudega). 
+
+See on hea lühike ja inimloetav viis koodi kirjutada, mis on masina jaoks identne esimese koodiga.
+```{r}
+a <- c(2, 3)
+result <- a %>% sum() %>% sqrt() %>% round(2)
+result
+```
+
+#### Neljas võimalus, klassikaline baas R lahendus:
+```{r}
+a <- c(2, 3)
+result <- round(sqrt(sum(a)), 2)
+result
+```
+Sellist koodi loetakse keskelt väljappoole ja kirjutatakse alates viimasest operatsioonist, mida soovitakse, et kood teeks. 
+Masina jaoks pole vahet. 
+Inimese jaoks on küll: 4. variant nõuab hästi pestud ajusid.
+
+Koodi lühidus 4 --> 3 --> 1 --> 2 (pikem)
+Lollikindlus  2 --> 1 --> 3 --> 4 (vähem lollikindel)
+Loetavus 3 --> 2 --> 1 --> 4 (halvemini loetav)
+
+See on teie otsustada, millist koodivormi te millal kasutate, aga te peaksite oskama lugeda neid kõiki.
+
+
 ## objekt {#obj}
 
-R-i töökeskkonnas "workspace" asuvad **objektid**, millega me töötame. 
+R-i töökeskkonnas "workspace" asuvad **objektid**, millega me töötame. Igal objektil on nimi, mille abil saab selle objektiga opereerida (teda argumendina funktsioonidesse sisestada). 
 Tüüpilised objektid on:
 
 - Vektorid, maatriksid, listid ja tabelid.
@@ -163,12 +222,12 @@ Nüüd on nimega a seostatud uus objekt, mis sisaldab numbrit 5 (olles ühe elem
 
 #### Nimede vorm
 
-+ Nimed algavad tähemärgiga, mitte numbriga ega $€%&/?~ˇöõüä
++ Nimed algavad ingliskeelse tähemärgiga, mitte numbriga ega $€%&/?~ˇöõüä
 + Nimed ei sisalda tühikuid
 + Tühiku asemel kasuta alakriipsu: näiteks eriti_pikk_nimi
 + SUURED ja väiksed tähed on nimes erinevad
-+ Nimed peaksid kirjeldama objekti, mis on sellele nimele assigneeritud ja nad võivad olla pikad sest TAB klahv annab meile auto-complete.
-+ alt + - on otsetee `<-` jaoks
++ Nimed peaksid kirjeldama objekti, mis on sellele nimele assigneeritud ja nad võivad olla pikad sest TAB klahv annab auto-complete.
++ alt + - on otsetee `<-` jaoks 
 
 ## Andmete tüübid
 
@@ -417,6 +476,13 @@ apply(fruits_subset, 1, sd)
 apply(fruits_subset, 2, sd) 
 ```
 
+Andmetabei Summary saab mitmel viisil, skimr::skim() funktsioon on üks paremaid 
+```{r}
+skimr::skim(iris)
+```
+
+
+
 Lisame käsitsi tabelile rea:
 ```{r}
 fruits <- add_row(fruits, 
@@ -607,7 +673,7 @@ fruits <- as_tibble(fruits)
 class(fruits)
 ```
 
-## Tabelit sisse lugedes vaata üle NA-d
+## NA-d
 
 ```{r, dev = 'png'}
 diabetes <- read.table(file = "data/diabetes.csv", sep = ";", dec = ",", header = TRUE)
@@ -629,6 +695,13 @@ nrows <- nrow(diabetes)
 ```{r}
 sapply(diabetes, function(x) sum(is.na(x))) 
 ```
+
+alternatiiv tidyverse-st - väljund on uus data frame NA-de arvuga igale algse tabeli veerule
+```{r}
+diabetes %>% map_df(~sum(is.na(.))) %>% t()
+```
+
+
 
 Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:
 ```{r, dev='png'}
@@ -675,6 +748,34 @@ na_if(dfs, "") #teeb dfs tabelis tühjad lahtrid NA-deks
 na_if(dfs, "other") #teeb lahtrid, kus on "other" NA-deks
 na_if(dfs, 0) #teeb 0-d NA-deks. 
 ```
+
+
+### drop_na() viskab tabelist välja NA-dega read
+
+`drop_na(data, c(column1, column2))` - argument variable võimaldab visata välja read, mis on NA-d ainult kindlates veergudes (column1 ja column2 meie näites - aga ära unusta column1 asemele kirjutada oma veeru nime). Ära unusta ka kasutamast vektori vormi c(), et veerge määrata. column1:column4 vorm töötab samuti ja võtab NAd veergudest 1-4 (kui veeru nr 1 nimi on column1 jne).
+
+### viska tabelist välja veerud, milles on liiga palju NA-sid
+
+Meil on lai tabel sadade numbriliste veegudega. Neist paljud on NA-rikkad (andmevaesed) ja tuleks tabelist eemaldada. Aga kuidas seda teha?
+
+Selleks (1) koostame vektori (vekt), milles on tabeli df-i iga numbrilise veeru NA-de suhtarv, (2) viskame sellest vektorist välja nende veergude nimed, milles on liiga palju NA-sid ja (3) subsetime df-i saadud vektori (vekt1) vastu. 
+
+NB! vekt ja vekt1 on nn named vektorid, milles vektori iga element (NAde suhtarv mingis tabeli veerus) on seotud selle elemendi nimega, mis on identne selle veeru nimega tabelis df.
+
+```{r eval=FALSE}
+vekt <- sapply(df, function(x) mean(is.na(x))) 
+#NA-de protsent igas veerus
+vekt
+vekt1 <- nad[nad < 0.8] 
+#subsettisin vektori elemendid, mis on < 0.8 (NA-sid alla 80%). 216 tk.
+#nad1 is a named vector
+vekt1n <- names(vekt1) #vektor named vektori vekt1 nimedest
+df_with_fewer_cols <- subset(df, select = vekt1n)
+#subsetime (jätame alles) ainult need df-i veerud, 
+#mille nimele vastab mõni vektori nad1n element
+```
+
+
 
 ## Matrix
 

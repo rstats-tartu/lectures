@@ -1,9 +1,9 @@
 
 # Graafilised lahendused
 
-R-s on kaks olulisemat graafikasüsteemi mida võib vaadata nagu kaht eraldi keelt mis mõlemad elavad R keele sees. 
+R-s on kaks olulisemat graafikasüsteemi, mida võib vaadata nagu kaht eraldi dialekti, mis mõlemad elavad R keele sees. 
 
-- **Baasgraafika** võimaldab väga lihtsate vahenditega teha kiireid ja suhteliselt ilusaid graafikuid. 
+- **Baasgraafika** võimaldab lihtsate vahenditega teha kiireid ja suhteliselt ilusaid graafikuid. 
 Seda kasutame sageli enda tarbeks kiirete plottide tegemiseks.
 Baasgraafika abil saab teha ka väga keerukaid ja kompleksseid publitseerimiskavaliteedis graafikuid.
 - **"ggplot2"** raamatukogu on hea ilupiltide vormistamiseks ja keskmiselt keeruliste visualiseeringute tegemiseks.
@@ -152,7 +152,7 @@ Näiteid selle abil tehtud visualiseeringutest leiab näiteks järgnevatelt link
 "ggplot2" paketi põhiverb on `ggplot()`. 
 See graafikasüsteem töötab kiht-kihi-haaval ja uusi kihte lisatakse pluss-märgi abil. 
 See annab modulaarsuse kaudu lihtsuse ja võimaluse luua ka keerulisi taieseid. 
-Tõenäoliselt on ggplot hetkel kättesaadavatest graafikasüsteemidest parim (kaasa arvates tasulised programmid!).
+Tõenäoliselt on ggplot hetkel kättesaadavatest graafikasüsteemidest parim (kaasa arvatud tasulised programmid!).
 
 ggploti töövoog on järgmine, minimaalselt pead ette andma kolm asja: 
 

@@ -422,6 +422,15 @@ dat <- tibble(index = c(1, 2),
 
 Anti-separate funktsioon on `unite()` - vt. help.
 
+Kuidas käituda siis, kui teil on veerus üks või mitu sissekannet, näiteks komadega eraldatud, ja te tahaksite need suruda mitte eraldi veergudesse (seda teeb separate()), vaid kõik ühte pikka  veergu? Nüüd kasutame str_plit() ja unnest() funktsioone.
+
+```{r}
+df1 <- tibble(a = c("w", "w, e, f", "g"), b=1:3)
+df2 <- df1 %>% mutate(pikk_a = str_split(a, ",")) %>% select(pikk_a) %>% unnest()
+df3 <- df1 %>% mutate(pikk_a = str_split(a, ",")) %>% unnest()
+```
+
+Pane tähele, et df3 on tabel, kus b veeru elemendid on duplitseeritud nii, et nad kataksid uue pikema pikk_a veeru vastavad elemndid. df2 on andmeraam, mis sisaldab ainult üht veergu.
 
 ## Faktorid
 
