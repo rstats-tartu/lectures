@@ -196,7 +196,6 @@ Veelkord, me lisasime kaks kihti: esimene kiht `geom_point()` visualiseerib andm
 >Plussmärk peab ggplot-i koodireas olema vana rea lõpus, mitte uue rea (kihi) alguses
 
 
-
 ### Lisame plotile sirgjooni
 
 Horisontaalsed sirged saab graafikule lisada `geom_hline()` abil.

@@ -82,7 +82,7 @@ Järgmise sessiooni saate alustada juba oma salvestatud koodi baasilt --- jooksu
 
 Pane tähele, et funktsiooni "plot" argumendid "table" ja "rpois" on ka ise funktsioonid, millel on kummagil oma argumendid. 
 
-### Sama koodi saab kirjutada neljal erineval viisil
+## Sama koodi saab kirjutada neljal erineval viisil
 
 Idee on sooritada järjest operatsioone nii, et eelmise operatsiooni väljund (R-i objekt)  oleks sisendiks järgmisele operatsioonile (funktsioonile). See on lihtne  hargnemisteta analüüsiskeem.
 
@@ -90,7 +90,7 @@ Kui me muudame olemasolevat objekti, siis me kas jätame muudetud objektile vana
 Esimesel juhul läheb eelmine muutmata objekt töökeskkonnast kaduma, aga nimesid ei tule juurde ja säilib töövoo sujuvus. 
 Teisel juhul jäävad analüüsi vaheobjektid meile alles ja nende juurde saab alati tagasi tulla. Aga samas tekib palju sarnaste nimedega objekte.
 
-####Esimene võimalus - anname järjest tekkinud objektid samale nimele.
+### Esimene võimalus - anname järjest tekkinud objektid samale nimele.
 ```{r}
 a <- c(2, 3)
 a <- sum(a)
@@ -99,7 +99,7 @@ a <- round(a, 2)
 a
 ```
 
-#### Teine võimalus - uued nimed.
+### Teine võimalus - uued nimed.
 Nii saab tekkinud objekte hiljem kasutada.
 ```{r}
 a <- c(2, 3)
@@ -109,7 +109,7 @@ a3 <- round(a2, 2)
 a3
 ```
 
-#### Kolmas võimalus on lühem variant esimesest. 
+### Kolmas võimalus on lühem variant esimesest. 
 Me nimelt ühendame etapid toru `%>%` kaudu.
 Siin me võtame objekti "a" (nö. andmed), suuname selle funktsiooni `sum()`, võtame selle funktsiooni väljundi ja suuname selle omakorda funktsiooni `sqrt()`. 
 Seejärel võtame selle funktsiooni outputi ja määrame selle nimele "result" (aga võime selle ka mõne teise nimega siduda). 
@@ -122,7 +122,7 @@ result <- a %>% sum() %>% sqrt() %>% round(2)
 result
 ```
 
-#### Neljas võimalus, klassikaline baas R lahendus:
+### Neljas võimalus, klassikaline baas R lahendus:
 ```{r}
 a <- c(2, 3)
 result <- round(sqrt(sum(a)), 2)
@@ -144,9 +144,9 @@ See on teie otsustada, millist koodivormi te millal kasutate, aga te peaksite os
 R-i töökeskkonnas "workspace" asuvad **objektid**, millega me töötame. Igal objektil on nimi, mille abil saab selle objektiga opereerida (teda argumendina funktsioonidesse sisestada). 
 Tüüpilised objektid on:
 
-- Vektorid, maatriksid, listid ja tabelid.
-- Statistiliste analüüside väljundid (S3, S4 klass).
-- Funktsioonid, mille oleme ise sisse lugenud.
+- Vektorid, maatriksid, listid ja andmeraamid.
+- Statistiliste analüüside väljundid (mudeliobjektid, S3, S4 klass).
+- Funktsioonid.
 
 Funktsioon `ls()` annab objektide nimed teie workspace-s.
 
@@ -318,8 +318,7 @@ Järgneva trikiga saab stringidest kätte numbrid:
 ```{r}
 minu_vektor <- c(1, "A2", "$2", "joe")
 ## parse_number() is imported from tidyverse 'readr' 
-minu_vektor <- as.vector(parse_number(minu_vektor))
-minu_vektor
+minu_vektor <- parse_number(minu_vektor) %>% as.vector()
 str(minu_vektor)
 ```
 
@@ -349,7 +348,7 @@ rep(1:2, each = 3)
 rep(c("a", "b"), each = 3, times = 2)
 ```
 
-Tehted arvuliste vektoritega
+#### Tehted arvuliste vektoritega
 
 Vektoreid saab liita, lahutada, korrutada ja jagada.
 ```{r}
@@ -386,14 +385,13 @@ a <- c(TRUE, FALSE, TRUE)
 sum(a)
 mean(a)
 ```
-Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 + 1 = 2.
-Seda loogiliste väärtuste omadust õpime varsti praktikas kasutama. 
+Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 + 1 = 2. Mean seevastu võtab ühtede summa (TRUE elementide arvu) suhte vektori elementide arvust ja annab seega TRUE väärtuste suhtarvu. Seda loogiliste väärtuste omadust õpime varsti praktikas kasutama. 
 
 ### List
 
 List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa arvatud listid. 
 See on lihtsalt viis objektid koos hoida ühes suuremas meta-objektis. 
-List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid segamini kolisevad. 
+List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid segamini kolisevad. Listidega töötamist vaatame lähemalt veidi hiljem.
 
 Näiteks list, kus on 1 vektor nimega a, 1 tibble nimega b ja 1 list nimega c, mis omakorda sisaldab vektorit nimega d ja tibblet nimega e. Seega on meil tegu rekursiivse listiga. 
 ```{r}
@@ -446,21 +444,143 @@ dfs <- try(data.frame(shop, apples, oranges, vabakava))
 dfs
 ```
 
+### Matrix
 
+Maatriks on 2-dimensionaalne vektor, sisaldab ainult ühte tüüpi andmeid -- numbrid, stringid, faktorid.
 
-**Mõned asjad, mida tibblega (ja data framega) saab teha:**
+Tip: me saame sageli andmeraami otse maatriksina kasutada kui me viskame sealt välja mitte-numbrilised tulbad. Aga saame ka andmeraame konverteerida maatriksiks, ja tagasi.
+```{r eval=FALSE}
+fruits <- as.matrix(fruits)
+class(fruits)
+```
+
+## Indekseerimine
+
+Igale vektori, listi, andmeraami ja maatriksi elemendile vastab unikaalne postiindeks, mille abil saame just selle elemendi unikaalselt indentifitseerida, välja võtta ja töödelda.
+Seega on indeksi mõte väga lühikese käsuga välja võtta R-i objektide üksikuid elemente. R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
+
+### Vektorid ja nende indeksid on ühedimensionaalsed
 
 ```{r}
-count(fruits, apples)
-count(fruits, shop)
-summary(fruits)
-names(fruits)
-colnames(fruits)
-nrow(fruits)
-ncol(fruits)
-arrange(fruits, desc(apples)) #sorteerib tabeli veeru "apples" väärtuste järgi langevalt (default on tõusev sorteerimine). Võib argumendina anda mitu veergu.
-top_n(fruits, 2, apples) #saab 2 rida, milles on kõige rohkem õunu
-top_n(fruits, -2, apples) #saab 2 rida, milles on kõige vähem õunu
+my_vector <- 2:5 
+my_vector
+my_vector[1] #1. element ehk number 2
+my_vector[c(1,3)] #1. ja 3. element 
+my_vector[-1] #kõik elemendid, v.a. 1. element
+my_vector[c(-1, -3)] #kõik elemendid, v.a. 1. ja 3. element 
+my_vector[3:5] #elemendid 3, 4 ja 5 (element 5 on määramata, seega NA)
+my_vector[-(3:length(my_vector))] #1. ja 2. element
+```
+
+### Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid
+
+**2D indeksi kuju on [rea_indeks, veeru_indeks]**.
+
+```{r eval=FALSE}
+dat <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
+dat
+# üks andmepunkt: 1. rida, 2. veerg
+dat[1, 2]
+
+# 1. rida, kõik veerud
+dat[1, ]
+
+# 2. veerg, kõik read
+dat[, 2]
+
+# kõik read peale 1.
+dat[-1, ]
+
+# viskab välja 2. veeru
+dat[, -2]
+
+# 2 andmepunkti: 2. rida, 1. ja 2. veerg
+dat[2, 1:2]
+
+# 2 andmepunkti: 2. rida, 3. ja 4. veerg
+dat[2, c(1, 2)]
+
+#viskab välja 1. ja 2. rea
+dat[-c(1, 2), ]
+
+#veerg nimega colB, output on erandina vektor!
+dat$colB
+```
+Kui me indekseerimisega tibblest veeru ehk vektori välja võtame, on output class: tibble. Kui me teeme sama data frame-st, siis on output class: vector.
+
+Nüüd veidi keerulisemad konstruktsioonid, mis võimaldavad tabeli ühe kindla veeru väärtusi välja tõmmata teise veeru väärtuste järgi filteerides. Püüdke sellest koodist aru saada, et te hiljem ära tunneksite, kui midagi sellist vastu tuleb. Õnneks ei ole teil endil vaja sellist koodi kirjutada, me õpetame teile varsti lihtsama filtri meetodi.
+```{r}
+dat <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
+dat$colB[dat$colA != "a" ] 
+#jätab sisse kõik vektori colB väärtused, 
+#kus samas tabeli reas olev colA väärtus ei 
+#ole "a". output on vektor! 
+dat$colA[dat$colB > 1] 
+#jätab sisse kõik vektori colA väärtused, 
+#kus samas tabeli reas olev colB väärtus >1. 
+#output on vektor. 
+```
+
+### Listide indekseerimine
+
+**Listi indekseerimisel kasutame kahte sorti nurksulge, "[ ]" ja "[[ ]]", mis töötavad erinevalt**.
+
+Kui listi vaadata nagu objektide vanglat, siis kaksiksulgude `[[ ]]` abil on võimalik üksikuid objekte vanglast välja päästa nii, et taastub nende algne kuju ehk class.
+Seevastu üksiksulud `[ ]` tekitavad uue listi, kus on säilinud osad algse listi elemendid, ehk uue vangla vähemate vangidega. 
+
+> Kaksiksulud "[[ ]]" päästavad listist välja ühe elemendi ja taastavad selle algse class-i (data.frame, vektor, list jms). Üksiksulud "[ ]" võtavad algsest listist välja teie poolt valitud elemendid aga jätavad uue objekti ikka listi kujule.
+
+```{r}
+my_list <- list(a = tibble(colA = c("A", "B"), colB = c(1, 2)), b = c(1, NA, "s"))
+## this list has two elements, a data frame called "a" and a character vector called "b".
+str(my_list)
+```
+
+Tõmbame listist välja tibble:
+```{r}
+my_tibble <- my_list[[1]]
+my_tibble
+```
+See ei ole enam list.
+
+Nüüd võtame üksiksuluga listist välja 1. elemendi, mis on tibble, aga output ei ole mitte tibble, vaid ikka list. 
+Seekord ühe elemendiga, mis on tibble.
+```{r}
+aa <- my_list[1]
+str(aa)
+```
+
+
+```{r}
+aa1 <- my_list$a[2,] #class is df
+aa1
+```
+
+```{r}
+aa3 <- my_list[[1]][1,]
+aa3
+```
+
+Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välja objekti my_list 1. elemendi, tema algses tibble formaadis, (indeksi 1. dimensioon). Seejärel korjame sealt välja 1. rea, tibble formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).
+
+Pane tähele, et `[[ ]]` lubab ainult ühe elemendi korraga listist välja päästa.
+
+
+# Lihtne töö Andmeraamidega
+
+
+```{r}
+count(iris, Species) #loeb üles, mitu korda igat näitu veerus Species esineb
+summary(iris)
+names(iris) #annab veerunimed
+nrow(iris) #mitu rida?
+ncol(iris) #mitu veergu?
+arrange(iris, desc(Sepal.Lnegth)) 
+#sorteerib tabeli veeru "Sepal.Length" väärtuste järgi 
+#langevalt (default on tõusev sorteerimine). 
+#Võib argumendina anda mitu veergu.
+top_n(iris, 2, Sepal.Length) #saab 2 rida, milles on kõige suuremad S.L. väärtused
+top_n(iris, -2, Sepal.Length) #saab 2 rida, milles on kõige väiksemad väärtused 
 ```
 
 Tibblega saab teha maatriksarvutusi, kui kasutada ainult arvudega ridu. 
@@ -478,12 +598,10 @@ apply(fruits_subset, 1, sd)
 apply(fruits_subset, 2, sd) 
 ```
 
-Andmetabei Summary saab mitmel viisil, skimr::skim() funktsioon on üks paremaid 
+Andmetabeli Summary saab mitmel viisil, skimr::skim() funktsioon on üks paremaid 
 ```{r}
 skimr::skim(iris)
 ```
-
-
 
 Lisame käsitsi tabelile rea:
 ```{r}
@@ -619,7 +737,7 @@ str(ubinad)
 ```
 
 
-### Andmeraamide salvestamine (eksport-import)
+## Andmeraamide salvestamine (eksport-import)
 
 Andmeraami saame salvestada näiteks csv-na (comma separated file) oma kõvakettale, kasutame "tidyverse" analooge paketist "readr", mille nimed on baas R funktsioonidest eristatavad alakriipsu "_" kasutamisega. "readr" laaditakse automaatselt koos "tidyverse" laadimisega. 
 ```{r, eval=FALSE}
@@ -779,128 +897,8 @@ df_with_fewer_cols <- subset(df, select = vekt1n)
 
 
 
-## Matrix
 
-Maatriks on 2-dimensionaalne vektor, sisaldab ainult ühte tüüpi andmeid -- numbrid, stringid, faktorid.
-
-Tip: me saame sageli andmeraami otse maatriksina kasutada kui me viskame sealt välja mitte-numbrilised tulbad. Aga saame ka andmeraame konverteerida maatriksiks, ja tagasi.
-```{r eval=FALSE}
-fruits <- as.matrix(fruits)
-class(fruits)
-```
-
-## Indekseerimine
-
-Igale vektori, listi, andmeraami ja maatriksi elemendile vastab unikaalne postiindeks, mille abil saame just selle elemendi unikaalselt indentifitseerida, välja võtta ja töödelda.
-Seega on indeksi mõte väga lühikese käsuga välja võtta R-i objektide üksikuid elemente. R-s algab indeksi numeratsioon 1-st (mitte 0-st, nagu näiteks Pythonis).
-
-### Vektorid ja nende indeksid on ühedimensionaalsed
-
-```{r}
-my_vector <- 2:5 
-my_vector
-my_vector[1] #1. element ehk number 2
-my_vector[c(1,3)] #1. ja 3. element 
-my_vector[-1] #kõik elemendid, v.a. 1. element
-my_vector[c(-1, -3)] #kõik elemendid, v.a. 1. ja 3. element 
-my_vector[3:5] #elemendid 3, 4 ja 5 (element 5 on määramata, seega NA)
-my_vector[-(3:length(my_vector))] #1. ja 2. element
-```
-
-### Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid
-
-**2D indeksi kuju on [rea_indeks, veeru_indeks]**.
-
-```{r eval=FALSE}
-dat <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
-dat
-# üks andmepunkt: 1. rida, 2. veerg
-dat[1, 2]
-
-# 1. rida, kõik veerud
-dat[1, ]
-
-# 2. veerg, kõik read
-dat[, 2]
-
-# kõik read peale 1.
-dat[-1, ]
-
-# viskab välja 2. veeru
-dat[, -2]
-
-# 2 andmepunkti: 2. rida, 1. ja 2. veerg
-dat[2, 1:2]
-
-# 2 andmepunkti: 2. rida, 3. ja 4. veerg
-dat[2, c(1, 2)]
-
-#viskab välja 1. ja 2. rea
-dat[-c(1, 2), ]
-
-#veerg nimega colB, output on erandina vektor!
-dat$colB
-```
-Kui me indekseerimisega tibblest veeru ehk vektori välja võtame, on output class: tibble. Kui me teeme sama data frame-st, siis on output class: vector.
-
-Nüüd veidi keerulisemad konstruktsioonid, mis võimaldavad tabeli ühe kindla veeru väärtusi välja tõmmata teise veeru väärtuste järgi filteerides. Püüdke sellest koodist aru saada, et te hiljem ära tunneksite, kui midagi sellist vastu tuleb. Õnneks ei ole teil endil vaja sellist koodi kirjutada, me õpetame teile varsti lihtsama filtri meetodi.
-```{r}
-dat <- tibble(colA = c("a", "b", "c"), colB = c(1, 2, 3))
-dat$colB[dat$colA != "a" ] 
-#jätab sisse kõik vektori colB väärtused, 
-#kus samas tabeli reas olev colA väärtus ei 
-#ole "a". output on vektor! 
-dat$colA[dat$colB > 1] 
-#jätab sisse kõik vektori colA väärtused, 
-#kus samas tabeli reas olev colB väärtus >1. 
-#output on vektor. 
-```
-
-### Listide indekseerimine
-
-**Listi indekseerimisel kasutame kahte sorti nurksulge, "[ ]" ja "[[ ]]", mis töötavad erinevalt**.
-
-Kui listi vaadata nagu objektide vanglat, siis kaksiksulgude `[[ ]]` abil on võimalik üksikuid objekte vanglast välja päästa nii, et taastub nende algne kuju ehk class.
-Seevastu üksiksulud `[ ]` tekitavad uue listi, kus on säilinud osad algse listi elemendid, ehk uue vangla vähemate vangidega. 
-
-> Kaksiksulud "[[ ]]" päästavad listist välja ühe elemendi ja taastavad selle algse class-i (data.frame, vektor, list jms). Üksiksulud "[ ]" võtavad algsest listist välja teie poolt valitud elemendid aga jätavad uue objekti ikka listi kujule.
-
-```{r}
-my_list <- list(a = tibble(colA = c("A", "B"), colB = c(1, 2)), b = c(1, NA, "s"))
-## this list has two elements, a data frame called "a" and a character vector called "b".
-str(my_list)
-```
-
-Tõmbame listist välja tibble:
-```{r}
-my_tibble <- my_list[[1]]
-my_tibble
-```
-See ei ole enam list.
-
-Nüüd võtame üksiksuluga listist välja 1. elemendi, mis on tibble, aga output ei ole mitte tibble, vaid ikka list. 
-Seekord ühe elemendiga, mis on tibble.
-```{r}
-aa <- my_list[1]
-str(aa)
-```
-
-
-```{r}
-aa1 <- my_list$a[2,] #class is df
-aa1
-```
-
-```{r}
-aa3 <- my_list[[1]][1,]
-aa3
-```
-
-Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välja objekti my_list 1. elemendi, tema algses tibble formaadis, (indeksi 1. dimensioon). Seejärel korjame sealt välja 1. rea, tibble formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).
-
-Pane tähele, et `[[ ]]` lubab ainult ühe elemendi korraga listist välja päästa.
-
-## itereerimine ja map() - sama operatsioon mitu korda
+# itereerimine ja map() - sama operatsioon mitu korda
 
 Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda sellepärast, et formaalselt on list vektori tüüp (rekursiivne vektor), kuhu on võimalik elementidena panna mida iganes, k.a. teisi vektoreid. Selle tõttu enamus R-i funktsioone, mis töötavad lihtsate mitte-rekursiivsete vektoritega (ja df-dega), ei tööta listide peal. 
 
