@@ -171,7 +171,7 @@ Kõigepealt suuname oma andmed `ggplot()` funktsiooni:
 ggplot(iris)
 ```
 
-Saime tühja ploti. 
+Saime tühja ploti. ggplot() loob vaid koordinaatsüsteemi, millele saab kihte lisada. 
 Erinevalt baasgraafikast, ggplot-i puhul ainult andmetest ei piisa, et graafik valmis joonistataks.
 Vaja on lisada kiht-kihilt instruktsioonid, kuidas andmed graafikule paigutada ja missugust graafikutüüpi visualiseerimiseks kasutada.
 

@@ -393,7 +393,7 @@ Seda loogiliste väärtuste omadust õpime varsti praktikas kasutama.
 
 List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa arvatud listid. 
 See on lihtsalt viis objektid koos hoida ühes suuremas meta-objektis. 
-List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid segamini kolisevad.
+List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid segamini kolisevad. 
 
 Näiteks list, kus on 1 vektor nimega a, 1 tibble nimega b ja 1 list nimega c, mis omakorda sisaldab vektorit nimega d ja tibblet nimega e. Seega on meil tegu rekursiivse listiga. 
 ```{r}
@@ -418,7 +418,7 @@ happy_list$ab
 
 ### data frame ja tibble
 
-Andmeraam on eriline list, mis koosneb ühepikkustest vektoritest. Andmeraam on ühtlasi neljakandiline tabel, kus igas veerus on ainult ühte tüüpi andmed. Need vektorid ripuvad andmeraamis kõrvuti nagu tuulehaugid suitsuahjus, kusjuures vektori algus vastab tuulehaugi peale, mis on konksu otsas (konks vastab andmeraamis veeru nimele ja ühtlasi vektori nimele). Iga vektori nimi muutub sellises tabelis veeru nimeks. Igas veerus saab olla ainult ühte tüüpi andmeid. 
+Andmeraam on eriline list, mis koosneb ühepikkustest ja sama tüüpi vektoritest (listi iga element on vektor). Iga vektor on df-i veerg ja igas veerus on ainult ühte tüüpi andmed. Need vektorid ripuvad andmeraamis kõrvuti nagu tuulehaugid suitsuahjus, kusjuures vektori algus vastab tuulehaugi peale, mis on konksu otsas (konks vastab andmeraamis veeru nimele). Iga vektori nimi muutub sellises tabelis veeru nimeks. 
 
 R-s on 2 andmeraami tüüpi: data frame ja tibble, mis on väga sarnased. 
 Tibble on uuem, veidi kaunima väljatrükiga ja pisut mugavam kasutada.
@@ -445,6 +445,8 @@ Listi juba nii lihtsalt data.frame-i ei pane:
 dfs <- try(data.frame(shop, apples, oranges, vabakava))
 dfs
 ```
+
+
 
 **Mõned asjad, mida tibblega (ja data framega) saab teha:**
 
@@ -897,3 +899,218 @@ aa3
 Kõigepealt läksime kaksiksulgudega listi taseme võrra sisse ja võtsime välja objekti my_list 1. elemendi, tema algses tibble formaadis, (indeksi 1. dimensioon). Seejärel korjame sealt välja 1. rea, tibble formaati muutmata ja seega üksiksulgudes (indeksi 2. ja 3. dimensioon).
 
 Pane tähele, et `[[ ]]` lubab ainult ühe elemendi korraga listist välja päästa.
+
+## itereerimine ja map() - sama operatsioon mitu korda
+
+Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda sellepärast, et formaalselt on list vektori tüüp (rekursiivne vektor), kuhu on võimalik elementidena panna mida iganes, k.a. teisi vektoreid. Selle tõttu enamus R-i funktsioone, mis töötavad lihtsate mitte-rekursiivsete vektoritega (ja df-dega), ei tööta listide peal. 
+
+purr::map() perekonna funktsioonid töötavad nii lihtsate vektorite kui listide peal. Need funktsioonid kordavad kasutaja poolt ette antud funktsiooni igale vektori elemendile. map() vajab 2 argumenti: vektor ja funktsioon, mida selle vektori elementidele rakendada. map() võtab sisse listi (vektori, data frame) ja väljastab listi (vektori, data frame). Seega saab seda hästi pipe-s rakendada.
+
+```{r}
+list1 <- list(1, 2, 3, 4, 5)
+list1 %>% map(log) %>% map(round)
+```
+
+Kui tahad, map() anda funktsiooni lisaargumentidega, siis need eraldatakse komadega `map(vector1, round, digits = 2)`.
+
+Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta `map_dbl()`. 
+
+```{r}
+list1 %>% map_dbl(log) %>% round()
+```
+
+map()-l on kokku 8 versiooni erinevate väljunditega.
+
+* map() - list
+
+* map_dbl() - floating point number vektor
+
+* map_chr() - character vektor
+
+* map_dfc() - data frame column binded
+
+* map_dfr() - data frame row binded (lisab iga elemendi df-i reana)
+
+* map_int() - integer vektor
+
+* map_lgl() - logical vektor
+
+* walk() - nähtamatu väljund (kasutatakse funktsioonide puhul, mis ei anna command line-le väljundit, nagu plot() või save file).
+
+**Kuidas anda map-le funktsiooni asemel ette ekspressioon (näiteks max(df1$col1) - min(df1$col1))?**
+
+ekspressiooni juhatab sisse ~ (tilde). 
+
+Asenda ekspressioonis see, millega opereeritakse, .x -ga (~ max(.x) - min(.x)). 
+
+pluck igast alam-listist mu ja sd ning kasuta neid, et genereerida 3 setti juhuslikke arve (millest igas on 5 juhuslikku arvu, mis on genereeritud vastavalt selle alam-listi mu-le ja sigmale).
+```{r}
+params <- list(
+  "norm1" = list("mu" = 0, "sd" = 1),
+  "norm2" = list("mu" = 1, "sd" = 1),
+  "norm3" = list("mu" = 2, "scale" = 1)
+)
+params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
+```
+
+`enframe()` konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value). 
+
+### map2()
+
+itereerib üle kahe vektori - map2(v1, v2, fun).
+
+**Tekspressioon map2()-le:**
+
+algab tildega ~
+esimese vektori elemendid on .x
+teise vektori elemendid on .y
+
+### pmap()
+
+itereerib üle 3+ vektori. 
+
+Name each vector in your list of vectors with the name of the argument that it should map to. pmap() will match names to arguments whenever you provide them. So this code, for example, will round each of the long numbers to a different number of digits.
+```{r}
+long_numbers <- list(pi, exp(1), sqrt(2))
+digits <- list(2, 3, 4)
+pmap(list(x = long_numbers, digits = digits), round)
+```
+
+pmap() kasutab ekspressioonide sisesed elemndid on nüüd ..1, ..2, ..3 jne, mitte .x ja .y nagu map2-l. 
+
+NB! pmap-i saab sisetada data frame, mille peale see teeb kõike rea kaupa.
+
+```{r}
+parameters <- data.frame(
+  n = c(1, 2, 3),
+  min = c(0, 5, 10),
+  max = c(1, 6, 11)
+)
+parameters %>% pmap(runif)
+```
+
+### invoke_map() 
+
+itereerib üle funktsioonide vektori, millele järgneb argumentide vektor. 1. funktsioon  esimese argumendiga jne.
+```{r}
+functions <- list(rnorm, rlnorm, rcauchy)
+n <- list(c(5, 2, 3), 2, 3)
+invoke_map(functions, n)
+```
+
+anname sisse esimese argumendi (100) igasse funktsiooni
+```{r}
+functions <- list(rnorm, rlnorm, rcauchy)
+n <- c(5, 2, 3)
+invoke_map(functions, n, 100)
+```
+
+mitu argumenti igale funktsioonile:
+```{r}
+args <- list(norm = c(3, mean = 0, sd = 1), 
+             lnorm = c(2, meanlog = 1, sdlog = 2),
+             cauchy = c(1, location = 10, scale = 100))
+
+invoke_map(functions, args)
+```
+
+
+#### map shortcuts
+
+`pluck()` võtab listist välja elemendi (vektori, data frame jms) nii nagu see on (mitte listina).
+
+```{r}
+list1 <- list(
+  numbers = 1:3,
+  letters = c("a", "b", "c"),
+  logicals = c(TRUE, FALSE)
+)
+
+pluck(list1, 1) # list1 %>% pluck(1)
+pluck(list1, "numbers") # list1 %>% pluck("numbers")
+```
+
+
+Andes map()-le ette character stringi (elemendi nime), saame tagasi elemendi igast alam-listist, mille nimi vastab sellele stringile. See on shotcut pluck-ile.
+
+```{r}
+params <- list(
+  "norm1" = list("mu" = 0, "sd" = 1),
+  "norm2" = list("mu" = 1, "sd" = 1),
+  "norm3" = list("mu" = 2, "scale" = 1)
+)
+map_dbl(params, "mu")
+```
+
+Sama teeb, kui map-le ette anda elemendi positsioon listis
+```{r}
+map_dbl(params, 1)
+```
+
+Nii saab kätte samad tulbad (vektorid) mitmest data frame-st (kui list sisaldab data frame-sid).
+
+**veel mõned abifunktsioonid:**
+
+lmap() works exclusively with functions that take lists
+imap() applies a function to each element of a vector, and its index
+map_at() and map_if() only map a function to specific elements of a list.
+
+#### List column
+
+Df-i veerg, mille andmetüüp on list. Näiteks mudeliobjektid, funktsioonid ja teised df-d võivad minna list columnisse!
+List columnid on ise listid, mitte andmevektorid. 
+
+      List veerud võimaldavad panna samasse tabelisse erinevaid asju - 
+      andmeid, mudeleid, mudeli koefitsiente jms.
+
+nest() teeb uue df-i, kus on 1. veerg grupeeriva muutuja tasemetega, millele järgneb list column, mille iga element on tibble. Iga tibble sisaldab relevantset infot  grupeeriva muutuja vastava taseme kohta. 
+```{r}
+library(gapminder)
+(nested_gapminder <- gapminder %>% group_by(country) %>% nest())
+```
+
+unnest() teeb algse df-i tagasi.
+
+iga nested_gapminder$data element on ise df:
+```{r}
+nested_gapminder %>% 
+  pluck("data") %>% 
+  pluck(1) # %>% lm(lifeExp ~ year, data = .)
+```
+
+fit a model to each tibble nested within nested_gapminder and then store those models as a list column
+ 
+ fitime mudeli igale listi veerule (igale riigile). väljund on ilge list.
+```{r}
+model1 <- nested_gapminder %>%  
+  pluck("data") %>%
+  map(~ lm(lifeExp ~ year, data = .x))
+```
+
+arvutame mudelid igale riigile ja pistame väljundi (mudeliobjekti)  nested_gapminder uude list columnisse:
+```{r}
+models1 <- nested_gapminder %>% 
+  mutate(models = map(data, ~ lm(lifeExp ~ year, data = .x)))
+```
+
+
+võtame välja mudeli koefitsiendi year ja paneme uude veergu nimega coefficient:
+```{r}
+models1 <-  models1 %>% mutate( coefficient = map_dbl(models, ~coef(.x) %>% pluck("year")) )
+```
+
+pane tähele, et df-i veerg models on ühtlasi list, millele saame map_dbl() rakendada.
+
+
+järgnevad 3 koodirida teevad sama asja - võtavad välja 1. mudeli:
+```{r eval=FALSE}
+models1 %>% 
+  pluck("models") %>% 
+  pluck(1)
+
+models1[[1, 3]]
+
+models1$models[[1]]
+```
+
+
