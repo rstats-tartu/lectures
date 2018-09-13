@@ -576,7 +576,7 @@ summary(iris)
 names(iris) #annab veerunimed
 nrow(iris) #mitu rida?
 ncol(iris) #mitu veergu?
-arrange(iris, desc(Sepal.Lnegth)) 
+arrange(iris, desc(Sepal.Length)) 
 #sorteerib tabeli veeru "Sepal.Length" väärtuste järgi 
 #langevalt (default on tõusev sorteerimine). 
 #Võib argumendina anda mitu veergu.
