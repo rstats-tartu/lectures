@@ -110,13 +110,14 @@ a3
 ```
 
 ### Kolmas võimalus on lühem variant esimesest. 
-Me nimelt ühendame etapid toru `%>%` kaudu.
+Me nimelt ühendame etapid toru `%>%` kaudu. Toru operaator ei ole siiski baas R-is kohe kättesaadav, vaid tuleb laadida kas **magrittr** või **dplyr** paketist (viimatinimetatu laadib selle funktsiooni ka vaikimisi esimesena nimetatud raamatukogust).
 Siin me võtame objekti "a" (nö. andmed), suuname selle funktsiooni `sum()`, võtame selle funktsiooni väljundi ja suuname selle omakorda funktsiooni `sqrt()`. 
 Seejärel võtame selle funktsiooni outputi ja määrame selle nimele "result" (aga võime selle ka mõne teise nimega siduda). 
 Kui mõni funktsioon võtab ainult ühe parameetri, mille me talle toru kaudu sisse sõõdame, siis pole selle funktsiooni taga isegi sulge vaja (R hea stiili juhised soovitavad siiski alati kasutada funktsiooni koos sulgudega). 
 
 See on hea lühike ja inimloetav viis koodi kirjutada, mis on masina jaoks identne esimese koodiga.
 ```{r}
+library(dplyr)
 a <- c(2, 3)
 result <- a %>% sum() %>% sqrt() %>% round(2)
 result
