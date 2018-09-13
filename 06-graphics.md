@@ -2,9 +2,9 @@
 
 # Graafilised lahendused
 
-R-s on kaks olulisemat graafikasüsteemi mida võib vaadata nagu kaht eraldi keelt mis mõlemad elavad R keele sees. 
+R-s on kaks olulisemat graafikasüsteemi, mida võib vaadata nagu kaht eraldi dialekti, mis mõlemad elavad R keele sees. 
 
-- **Baasgraafika** võimaldab väga lihtsate vahenditega teha kiireid ja suhteliselt ilusaid graafikuid. 
+- **Baasgraafika** võimaldab lihtsate vahenditega teha kiireid ja suhteliselt ilusaid graafikuid. 
 Seda kasutame sageli enda tarbeks kiirete plottide tegemiseks.
 Baasgraafika abil saab teha ka väga keerukaid ja kompleksseid publitseerimiskavaliteedis graafikuid.
 - **"ggplot2"** raamatukogu on hea ilupiltide vormistamiseks ja keskmiselt keeruliste visualiseeringute tegemiseks.
@@ -33,12 +33,12 @@ iris
 #> # A tibble: 150 x 5
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
 #>          <dbl>       <dbl>        <dbl>       <dbl>
-#> 1         5.10        3.50         1.40       0.200
-#> 2         4.90        3.00         1.40       0.200
-#> 3         4.70        3.20         1.30       0.200
-#> 4         4.60        3.10         1.50       0.200
-#> 5         5.00        3.60         1.40       0.200
-#> 6         5.40        3.90         1.70       0.400
+#> 1          5.1         3.5          1.4         0.2
+#> 2          4.9         3            1.4         0.2
+#> 3          4.7         3.2          1.3         0.2
+#> 4          4.6         3.1          1.5         0.2
+#> 5          5           3.6          1.4         0.2
+#> 6          5.4         3.9          1.7         0.4
 #> # ... with 144 more rows, and 1 more variable:
 #> #   Species <fct>
 ```
@@ -227,7 +227,7 @@ Näiteid selle abil tehtud visualiseeringutest leiab näiteks järgnevatelt link
 "ggplot2" paketi põhiverb on `ggplot()`. 
 See graafikasüsteem töötab kiht-kihi-haaval ja uusi kihte lisatakse pluss-märgi abil. 
 See annab modulaarsuse kaudu lihtsuse ja võimaluse luua ka keerulisi taieseid. 
-Tõenäoliselt on ggplot hetkel kättesaadavatest graafikasüsteemidest parim (kaasa arvates tasulised programmid!).
+Tõenäoliselt on ggplot hetkel kättesaadavatest graafikasüsteemidest parim (kaasa arvatud tasulised programmid!).
 
 ggploti töövoog on järgmine, minimaalselt pead ette andma kolm asja: 
 
@@ -251,7 +251,7 @@ ggplot(iris)
 
 \begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
-Saime tühja ploti. 
+Saime tühja ploti. ggplot() loob vaid koordinaatsüsteemi, millele saab kihte lisada. 
 Erinevalt baasgraafikast, ggplot-i puhul ainult andmetest ei piisa, et graafik valmis joonistataks.
 Vaja on lisada kiht-kihilt instruktsioonid, kuidas andmed graafikule paigutada ja missugust graafikutüüpi visualiseerimiseks kasutada.
 
@@ -284,7 +284,6 @@ p
 Veelkord, me lisasime kaks kihti: esimene kiht `geom_point()` visualiseerib andmepunktid ja teine `geom_smooth(method = "lm")` joonistab regressioonisirge koos usaldusintervalliga (standardviga).
 
 >Plussmärk peab ggplot-i koodireas olema vana rea lõpus, mitte uue rea (kihi) alguses
-
 
 
 ### Lisame plotile sirgjooni
@@ -434,10 +433,10 @@ Uus andmestik -- "mpg" -- on autode kütusekulu kohta.
 ```r
 head(mpg, 2)
 #> # A tibble: 2 x 11
-#>   manufacturer model displ  year   cyl trans     drv  
-#>   <chr>        <chr> <dbl> <int> <int> <chr>     <chr>
-#> 1 audi         a4     1.80  1999     4 auto(l5)  f    
-#> 2 audi         a4     1.80  1999     4 manual(m~ f    
+#>   manufacturer model displ  year   cyl trans drv  
+#>   <chr>        <chr> <dbl> <int> <int> <chr> <chr>
+#> 1 audi         a4      1.8  1999     4 auto~ f    
+#> 2 audi         a4      1.8  1999     4 manu~ f    
 #> # ... with 4 more variables: cty <int>, hwy <int>,
 #> #   fl <chr>, class <chr>
 
@@ -448,14 +447,14 @@ best_in_class <- mpg %>%
 head(best_in_class)
 #> # A tibble: 6 x 11
 #> # Groups:   class [2]
-#>   manufacturer model    displ  year   cyl trans  drv  
-#>   <chr>        <chr>    <dbl> <int> <int> <chr>  <chr>
-#> 1 chevrolet    corvette  5.70  1999     8 manua~ r    
-#> 2 chevrolet    corvette  6.20  2008     8 manua~ r    
-#> 3 dodge        caravan~  2.40  1999     4 auto(~ f    
-#> 4 dodge        caravan~  3.00  1999     6 auto(~ f    
-#> 5 dodge        caravan~  3.30  2008     6 auto(~ f    
-#> 6 dodge        caravan~  3.30  2008     6 auto(~ f    
+#>   manufacturer model displ  year   cyl trans drv  
+#>   <chr>        <chr> <dbl> <int> <int> <chr> <chr>
+#> 1 chevrolet    corv~   5.7  1999     8 manu~ r    
+#> 2 chevrolet    corv~   6.2  2008     8 manu~ r    
+#> 3 dodge        cara~   2.4  1999     4 auto~ f    
+#> 4 dodge        cara~   3    1999     6 auto~ f    
+#> 5 dodge        cara~   3.3  2008     6 auto~ f    
+#> 6 dodge        cara~   3.3  2008     6 auto~ f    
 #> # ... with 4 more variables: cty <int>, hwy <int>,
 #> #   fl <chr>, class <chr>
 ```
@@ -1178,12 +1177,12 @@ Igal juhul, kui valimi suurus on piisav ja normaaljaotus pole meie andmetest lii
 #> # A tibble: 7 x 2
 #>   CI_percentage nr_of_SEMs
 #>           <dbl>      <dbl>
-#> 1           50.      0.675
-#> 2           75.      1.15 
-#> 3           90.      1.64 
-#> 4           95.      1.96 
-#> 5           97.      2.17 
-#> 6           99.      2.58 
+#> 1            50      0.675
+#> 2            75      1.15 
+#> 3            90      1.64 
+#> 4            95      1.96 
+#> 5            97      2.17 
+#> 6            99      2.58 
 #> # ... with 1 more row
 ```
 
@@ -2064,6 +2063,7 @@ Kõigepealt demonstreerime siiski olukorda, kus meie andmed on normaaljaotusega 
 ```r
 library(car)
 qqPlot(rnorm(100), distribution = "lnorm")
+#> [1] 44 98
 ```
 
 
@@ -2077,6 +2077,7 @@ Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 par(mfrow = c(1, 2))
 plot(dnorm(seq(0,6, length.out = 100), 3, 1), main = "normal")
 qqPlot(rnorm(100, 3, 1), main = "normal vs normal") #default on vrdls normaaljaotusega.
+#> [1] 95 28
 par(mfrow=c(1,1))
 ```
 
@@ -2089,6 +2090,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(dlnorm(seq(0,4, length.out = 100)), main = "log normal") 
 qqPlot(rlnorm(100), main = "log normal vs normal")
+#> [1] 20 41
 par(mfrow=c(1,1))
 ```
 
@@ -2102,6 +2104,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(dt(seq(-4,4, length.out = 100), df=2), main = "student t") 
 qqPlot(rt(100, df=2), main = "students t vs normal")
+#> [1] 73 51
 par(mfrow=c(1,1))
 ```
 
@@ -2114,6 +2117,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(c(dnorm(seq(-3,6, length.out = 50)), dnorm(seq(-3,6, length.out = 50), 4, 1)), main = "2 peaked normal") 
 qqPlot(c(rnorm(50), rnorm(50, 4,1)), main = "two peaked normal vs normal")
+#> [1] 50 46
 par(mfrow=c(1,1))
 ```
 
@@ -2126,6 +2130,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(dunif(seq(0, 1, length=100))) 
 qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotusega.
+#> [1] 11 16
 par(mfrow=c(1,1))
 ```
 
@@ -2138,6 +2143,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(dchisq(seq(0, 2, length=100), df=2)) 
 qqPlot(rchisq(100, df=2), main = "chi square vs normal")
+#> [1] 81 61
 par(mfrow=c(1,1))
 ```
 
@@ -2150,6 +2156,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(dbeta(seq(0, 1, length=100), 2, 2)) 
 qqPlot(rbeta(100, 2, 2), main = "beta vs normal")
+#> [1] 31 29
 par(mfrow=c(1,1))
 ```
 
@@ -2159,6 +2166,12 @@ par(mfrow=c(1,1))
 
 
 Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
+
+```
+#> [1] 81 93
+```
+
+
 
 \begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-137-1} \end{center}
 
@@ -2171,6 +2184,7 @@ y <- rexp(100)
 par(mfrow=c(1,2))
 plot(dexp(seq(0, 5, length=100)), main="exponential distr.") 
 qqPlot(y, main = "exponential vs normal")
+#> [1] 79 10
 par(mfrow=c(1,1))
 ```
 
@@ -2197,6 +2211,7 @@ car::qqPlot saab kasutada ka lineaarse regressiooni normaalsuseelduse kontrollim
 ```r
 m1 <- lm(Sepal.Length~ Sepal.Width + Petal.Width, data = iris)
 qqPlot(m1)
+#> [1] 107 123
 ```
 
 
@@ -2256,9 +2271,9 @@ iris$cluster <- a$kmeans$cluster
 table(iris$Species, iris$cluster)
 #>             
 #>               1  2  3
-#>   setosa      0  0 50
-#>   versicolor  2 48  0
-#>   virginica  36 14  0
+#>   setosa      0 50  0
+#>   versicolor  2  0 48
+#>   virginica  36  0 14
 ```
 
 Ja sama graafiliselt:

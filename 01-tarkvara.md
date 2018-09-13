@@ -42,7 +42,7 @@ GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine <i class=
 Rohkem infot R projekti loomise kohta leiad RStudio infoleheküljelt: [Using Projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
 
 ## Git *Merge* konfliktid
-Kollaboreerides üle GitHubi tekivad varem või hiljem konfliktid projekti failide versioonide vahel nn. "merge conflicts", nende korrektselt lahendama õppimine on väga oluline. 
+Kollaboreerides üle GitHubi tekivad varem või hiljem konfliktid projekti failide versioonide vahel nn. "merge conflicts", mille lahendamine on väga oluline. 
 
 - Oma repo GitHubi veebilehel muuda/paranda README.md dokumenti ja "Commit"-i seda lühisõnumiga mis sa muutsid/parandasid.
 - Seejärel, muuda oma arvutis olevat README.md faili RStudio-s viies sinna sisse mingi teistsuguse muudatuse. Tee "Commit" oma muudatustele.
@@ -54,8 +54,8 @@ Githubi veateadete lugemine ja Google otsing aitavad sind.
 
 ## R projekti kataloogi soovitatav minimaalne struktuur
 
-Iga R projekt peab olema täiesti iseseisev (_selfcontained_) ja sisaldama kogu infot, andmeid ja instruktsioone, et projektiga seotud arvutused läbi viia ja raport genereerida.
-Kõik faili _path_-id peavad olema suhtelised.
+Iga R projekt peab olema täiesti iseseisev (_selfcontained_) ja sisaldama andmeid ja koodi, mis on koos piisavad projektiga seotud arvutuste läbi viimiseks ja raporti genereerimiseks.
+Kõik faili _path_-id peavad olema suhtelised. -TAAVI, SEE TULEKS LAHTI KIRJUTADA.
 
 
 R projekti kataloog peaks sisaldama projekti kirjeldavaid faile, mis nimetatakse 
@@ -110,7 +110,7 @@ Rohkem projekti pakkimise kohta loe värskest preprindist "Packaging data analyt
 
 R _library_-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. **R baaspakett sisaldab juba mitmeid funktsioone.** Kõige esimene sõnum `sum()` help lehel on "sum {base}", mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka.
 Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda.
-Näiteks "base" raamatukogu versioon       3.4.4 sisaldab 453 funktsiooni.
+Näiteks "base" raamatukogu versioon       3.5.0 sisaldab 455 funktsiooni.
 Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist [CRAN](https://cran.r-project.org) alla laadida ja installeerida. 
 
 
@@ -147,7 +147,7 @@ library(dplyr)
 `library(dplyr)` käsk teeb R sessioonis kasutatavaks kõik "dplyr" paketi funktsioonid.
 
 
-Näiteks "dplyr" pakett sisaldab 237 funktsiooni:
+Näiteks "dplyr" pakett sisaldab 245 funktsiooni:
 
 
 ```r
@@ -217,5 +217,5 @@ Veel üks tehniline detail. `library(tidyverse)` käsk ei loe sisse kõiki alam-
 Need tuleb vajadusel eraldi ükshaaval sisse lugeda.
 
 
-> Paiguta kõigi raamatukogude lugemine koodi algusesse. Enamasti kirjutatakse sisse loetavad raamatukogud kohe R scripti algusesse. Siis on teile endale ja teistele kes teie koodi loevad ilusti näha, mida hiljem vaja läheb.
+> Enamasti kirjutatakse kõik sisse loetavad raamatukogud kohe R scripti algusesse. Siis on ilusti näha, mida hiljem vaja läheb.
 

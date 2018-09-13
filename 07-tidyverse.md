@@ -33,7 +33,7 @@ Nagu näha laaditakse tidyverse raamatukoguga 8 paketti:
 + **väärtus** (*value*) --- ühe mõõtmise tulemus (183 cm)
 + **muutuja** (*variable*) --- see, mida sa mõõdad (pikkus) või faktor (sex)
 + **andmepunkt** (*observation*) --- väärtused, mis mõõdeti samal katsetingimusel (1. subjekti pikkus ja kaal 3h ajapunktis)
-+ **vaatlusühik** (*unit of measurement*) --- keda mõõdeti (subjekt nr 1)
++ **vaatlusühik** (*unit of measurement*) --- keda mõõdeti (subjekt nr)
 + **vaatlusühiku tüüp** --- inimene, hiir, jt
 
 > vaatlusühiku tüüp = tabel 
@@ -52,8 +52,8 @@ Veergude järjekord tabelis on 1. vaatlusühik, 2. faktor, mis annab katse-kontr
 #> # A tibble: 2 x 6
 #>   subject drug    sex    time length weigth
 #>   <chr>   <chr>   <chr> <dbl>  <dbl>  <dbl>
-#> 1 1       exp     F        3.   168.    88.
-#> 2 2       placebo M        3.   176.    91.
+#> 1 1       exp     F         3    168     88
+#> 2 2       placebo M         3    176     91
 ```
 
 Nii näeb välja tidy tibble. Kõik analüüsil vajalikud parameetrid tuleks siia tabelisse veeru kaupa sisse tuua. Näiteks, kui mõõtmised on sooritatud erinevates keskustes erinevate inimeste poolt kasutades sama ravimi erinevaid preparaate, oleks hea siia veel 3 veergu lisada (center, experimenter, batch).
@@ -68,9 +68,9 @@ See on laias formaadis tabel df, mis ei ole tidy
 #> # A tibble: 3 x 5
 #>   subject sex   control experiment_1 experiment_2
 #>   <chr>   <chr>   <dbl>        <dbl>        <dbl>
-#> 1 Tim     M         23.          34.          40.
-#> 2 Ann     F         31.          38.          42.
-#> 3 Jill    F         30.          36.          44.
+#> 1 Tim     M          23           34           40
+#> 2 Ann     F          31           38           42
+#> 3 Jill    F          30           36           44
 ```
 
 Kõigepealt pikka formaati. key ja value argumendid on ainult uute veergude nimetamiseks, oluline on 3:ncol(dat) argument, mis ütleb, et "kogu kokku veerud alates 3. veerust". Alternatiivne viis seda öelda: c(-subject, -sex).
@@ -83,12 +83,12 @@ dat_lng
 #> # A tibble: 9 x 4
 #>   subject sex   experiment   value
 #>   <chr>   <chr> <chr>        <dbl>
-#> 1 Tim     M     control        23.
-#> 2 Ann     F     control        31.
-#> 3 Jill    F     control        30.
-#> 4 Tim     M     experiment_1   34.
-#> 5 Ann     F     experiment_1   38.
-#> 6 Jill    F     experiment_1   36.
+#> 1 Tim     M     control         23
+#> 2 Ann     F     control         31
+#> 3 Jill    F     control         30
+#> 4 Tim     M     experiment_1    34
+#> 5 Ann     F     experiment_1    38
+#> 6 Jill    F     experiment_1    36
 #> # ... with 3 more rows
 ```
 
@@ -101,9 +101,9 @@ spread(dat_lng, key = experiment, value = value)
 #> # A tibble: 3 x 5
 #>   subject sex   control experiment_1 experiment_2
 #>   <chr>   <chr>   <dbl>        <dbl>        <dbl>
-#> 1 Ann     F         31.          38.          42.
-#> 2 Jill    F         30.          36.          44.
-#> 3 Tim     M         23.          34.          40.
+#> 1 Ann     F          31           38           42
+#> 2 Jill    F          30           36           44
+#> 3 Tim     M          23           34           40
 ```
  key viitab pika tabeli veerule, mille väärtustest tulevad laias tabelis uute veergude nimed. value viitab pika tabeli veerule, kust võetakse arvud, mis uues laias tabelis uute veergude vahel laiali jagatakse.
 
@@ -116,9 +116,9 @@ dat
 #> # A tibble: 3 x 3
 #>   a        b1    b2
 #>   <chr> <dbl> <dbl>
-#> 1 tim      1.    4.
-#> 2 tom      2.    5.
-#> 3 jill     3.    6.
+#> 1 tim       1     4
+#> 2 tom       2     5
+#> 3 jill      3     6
 ```
 
 Me kasutame selleks maatriksarvutuse funktsiooni t() --- transpose. See võtab sisse ainult numbrilisi veerge, seega anname talle ette df miinus 1. veerg, mille sisu me konverteerime uue tablei veerunimedeks. 
@@ -158,12 +158,12 @@ select(iris, liik = Species, Sepal.Length, Sepal.Width) %>% dplyr::as_data_frame
 #> # A tibble: 150 x 3
 #>   liik   Sepal.Length Sepal.Width
 #>   <fct>         <dbl>       <dbl>
-#> 1 setosa         5.10        3.50
-#> 2 setosa         4.90        3.00
-#> 3 setosa         4.70        3.20
-#> 4 setosa         4.60        3.10
-#> 5 setosa         5.00        3.60
-#> 6 setosa         5.40        3.90
+#> 1 setosa          5.1         3.5
+#> 2 setosa          4.9         3  
+#> 3 setosa          4.7         3.2
+#> 4 setosa          4.6         3.1
+#> 5 setosa          5           3.6
+#> 6 setosa          5.4         3.9
 #> # ... with 144 more rows
 ```
 
@@ -194,23 +194,23 @@ select(iris, starts_with("Petal"))
 #> # A tibble: 150 x 2
 #>   Petal.Length Petal.Width
 #>          <dbl>       <dbl>
-#> 1         1.40       0.200
-#> 2         1.40       0.200
-#> 3         1.30       0.200
-#> 4         1.50       0.200
-#> 5         1.40       0.200
-#> 6         1.70       0.400
+#> 1          1.4         0.2
+#> 2          1.4         0.2
+#> 3          1.3         0.2
+#> 4          1.5         0.2
+#> 5          1.4         0.2
+#> 6          1.7         0.4
 #> # ... with 144 more rows
 select(iris, ends_with("Width"))
 #> # A tibble: 150 x 2
 #>   Sepal.Width Petal.Width
 #>         <dbl>       <dbl>
-#> 1        3.50       0.200
-#> 2        3.00       0.200
-#> 3        3.20       0.200
-#> 4        3.10       0.200
-#> 5        3.60       0.200
-#> 6        3.90       0.400
+#> 1         3.5         0.2
+#> 2         3           0.2
+#> 3         3.2         0.2
+#> 4         3.1         0.2
+#> 5         3.6         0.2
+#> 6         3.9         0.4
 #> # ... with 144 more rows
 
 # Move Species variable to the front
@@ -218,12 +218,12 @@ select(iris, Species, everything())
 #> # A tibble: 150 x 5
 #>   Species Sepal.Length Sepal.Width Petal.Length
 #>   <fct>          <dbl>       <dbl>        <dbl>
-#> 1 setosa          5.10        3.50         1.40
-#> 2 setosa          4.90        3.00         1.40
-#> 3 setosa          4.70        3.20         1.30
-#> 4 setosa          4.60        3.10         1.50
-#> 5 setosa          5.00        3.60         1.40
-#> 6 setosa          5.40        3.90         1.70
+#> 1 setosa           5.1         3.5          1.4
+#> 2 setosa           4.9         3            1.4
+#> 3 setosa           4.7         3.2          1.3
+#> 4 setosa           4.6         3.1          1.5
+#> 5 setosa           5           3.6          1.4
+#> 6 setosa           5.4         3.9          1.7
 #> # ... with 144 more rows, and 1 more variable:
 #> #   Petal.Width <dbl>
 
@@ -231,25 +231,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>      V9    V8     V5    V2    V6
-#>   <dbl> <dbl>  <dbl> <dbl> <dbl>
-#> 1 0.660 0.133 0.425  0.157 0.367
-#> 2 0.947 0.668 0.774  0.417 0.624
-#> 3 0.420 0.408 0.216  0.155 0.226
-#> 4 0.944 0.844 0.100  0.772 0.651
-#> 5 0.221 0.452 0.884  0.794 0.706
-#> 6 0.929 0.909 0.0270 0.985 0.121
+#>       V9      V8    V5     V2     V6
+#>    <dbl>   <dbl> <dbl>  <dbl>  <dbl>
+#> 1 0.608  0.960   0.327 0.766  0.748 
+#> 2 0.0965 0.00531 0.686 0.0909 0.352 
+#> 3 0.363  0.988   0.405 0.879  0.466 
+#> 4 0.500  0.137   0.864 0.655  0.284 
+#> 5 0.712  0.966   0.884 0.371  0.204 
+#> 6 0.515  0.413   0.634 0.195  0.0587
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>      V9    V8     V7    V6
-#>   <dbl> <dbl>  <dbl> <dbl>
-#> 1 0.660 0.133 0.0313 0.367
-#> 2 0.947 0.668 0.319  0.624
-#> 3 0.420 0.408 0.608  0.226
-#> 4 0.944 0.844 0.229  0.651
-#> 5 0.221 0.452 0.0544 0.706
-#> 6 0.929 0.909 0.201  0.121
+#>       V9      V8    V7     V6
+#>    <dbl>   <dbl> <dbl>  <dbl>
+#> 1 0.608  0.960   0.920 0.748 
+#> 2 0.0965 0.00531 0.192 0.352 
+#> 3 0.363  0.988   0.182 0.466 
+#> 4 0.500  0.137   0.697 0.284 
+#> 5 0.712  0.966   0.922 0.204 
+#> 6 0.515  0.413   0.609 0.0587
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -257,12 +257,12 @@ select(iris, -starts_with("Petal"))
 #> # A tibble: 150 x 3
 #>   Sepal.Length Sepal.Width Species
 #>          <dbl>       <dbl> <fct>  
-#> 1         5.10        3.50 setosa 
-#> 2         4.90        3.00 setosa 
-#> 3         4.70        3.20 setosa 
-#> 4         4.60        3.10 setosa 
-#> 5         5.00        3.60 setosa 
-#> 6         5.40        3.90 setosa 
+#> 1          5.1         3.5 setosa 
+#> 2          4.9         3   setosa 
+#> 3          4.7         3.2 setosa 
+#> 4          4.6         3.1 setosa 
+#> 5          5           3.6 setosa 
+#> 6          5.4         3.9 setosa 
 #> # ... with 144 more rows
 
 # Renaming -----------------------------------------
@@ -272,12 +272,12 @@ rename(iris, petal_length = Petal.Length)
 #> # A tibble: 150 x 5
 #>   Sepal.Length Sepal.Width petal_length Petal.Width
 #>          <dbl>       <dbl>        <dbl>       <dbl>
-#> 1         5.10        3.50         1.40       0.200
-#> 2         4.90        3.00         1.40       0.200
-#> 3         4.70        3.20         1.30       0.200
-#> 4         4.60        3.10         1.50       0.200
-#> 5         5.00        3.60         1.40       0.200
-#> 6         5.40        3.90         1.70       0.400
+#> 1          5.1         3.5          1.4         0.2
+#> 2          4.9         3            1.4         0.2
+#> 3          4.7         3.2          1.3         0.2
+#> 4          4.6         3.1          1.5         0.2
+#> 5          5           3.6          1.4         0.2
+#> 6          5.4         3.9          1.7         0.4
 #> # ... with 144 more rows, and 1 more variable:
 #> #   Species <fct>
 ```
@@ -292,10 +292,10 @@ filter(iris, Species=="setosa" & Sepal.Length < 4.5)
 #> # A tibble: 4 x 5
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
 #>          <dbl>       <dbl>        <dbl>       <dbl>
-#> 1         4.40        2.90         1.40       0.200
-#> 2         4.30        3.00         1.10       0.100
-#> 3         4.40        3.00         1.30       0.200
-#> 4         4.40        3.20         1.30       0.200
+#> 1          4.4         2.9          1.4         0.2
+#> 2          4.3         3            1.1         0.1
+#> 3          4.4         3            1.3         0.2
+#> 4          4.4         3.2          1.3         0.2
 #> # ... with 1 more variable: Species <fct>
 ```
 
@@ -306,12 +306,12 @@ filter(iris, Species=="setosa" | Sepal.Length < 4.5)
 #> # A tibble: 50 x 5
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
 #>          <dbl>       <dbl>        <dbl>       <dbl>
-#> 1         5.10        3.50         1.40       0.200
-#> 2         4.90        3.00         1.40       0.200
-#> 3         4.70        3.20         1.30       0.200
-#> 4         4.60        3.10         1.50       0.200
-#> 5         5.00        3.60         1.40       0.200
-#> 6         5.40        3.90         1.70       0.400
+#> 1          5.1         3.5          1.4         0.2
+#> 2          4.9         3            1.4         0.2
+#> 3          4.7         3.2          1.3         0.2
+#> 4          4.6         3.1          1.5         0.2
+#> 5          5           3.6          1.4         0.2
+#> 6          5.4         3.9          1.7         0.4
 #> # ... with 44 more rows, and 1 more variable:
 #> #   Species <fct>
 ```
@@ -324,12 +324,12 @@ filter(iris, Species !="setosa" | Sepal.Length < 4.5)
 #> # A tibble: 104 x 5
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
 #>          <dbl>       <dbl>        <dbl>       <dbl>
-#> 1         4.40        2.90         1.40       0.200
-#> 2         4.30        3.00         1.10       0.100
-#> 3         4.40        3.00         1.30       0.200
-#> 4         4.40        3.20         1.30       0.200
-#> 5         7.00        3.20         4.70       1.40 
-#> 6         6.40        3.20         4.50       1.50 
+#> 1          4.4         2.9          1.4         0.2
+#> 2          4.3         3            1.1         0.1
+#> 3          4.4         3            1.3         0.2
+#> 4          4.4         3.2          1.3         0.2
+#> 5          7           3.2          4.7         1.4
+#> 6          6.4         3.2          4.5         1.5
 #> # ... with 98 more rows, and 1 more variable:
 #> #   Species <fct>
 ```
@@ -343,8 +343,7 @@ filter(iris, Species %in% c("setosa", "versicolor") )
 ```
 Nagu näha, 2. variant on oluliselt lühem.
 
-Filtering with regular expression: we keep the rows where *subject* starts with the
-letter "T"
+Filtreerime regulaarekspressiooniga: read, kus Species algab v tähega
 
 ```r
 library(stringr)
@@ -352,19 +351,18 @@ filter(iris, str_detect(Species, "^v"))
 #> # A tibble: 100 x 5
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
 #>          <dbl>       <dbl>        <dbl>       <dbl>
-#> 1         7.00        3.20         4.70        1.40
-#> 2         6.40        3.20         4.50        1.50
-#> 3         6.90        3.10         4.90        1.50
-#> 4         5.50        2.30         4.00        1.30
-#> 5         6.50        2.80         4.60        1.50
-#> 6         5.70        2.80         4.50        1.30
+#> 1          7           3.2          4.7         1.4
+#> 2          6.4         3.2          4.5         1.5
+#> 3          6.9         3.1          4.9         1.5
+#> 4          5.5         2.3          4           1.3
+#> 5          6.5         2.8          4.6         1.5
+#> 6          5.7         2.8          4.5         1.3
 #> # ... with 94 more rows, and 1 more variable:
 #> #   Species <fct>
 ```
 
-As you can see there are endless vistas here, open for a regular expression fanatic. I wish I was one!
 
-remove NAs with `filter()`
+eemalda NAdega read kahe veeru põhjal
 
 ```r
 filter(flights, !is.na(dep_delay), !is.na(arr_delay))
@@ -372,7 +370,7 @@ filter(flights, !is.na(dep_delay), !is.na(arr_delay))
 
 ### `summarise()`
 
-Many rows summarised to a single value
+Mitu rida summeeritakse üheks väärtuseks veeru kaupa. Kõigepealt summeerime kogu tabeli nii, et saame (1) keskmise Sepal-length-i, (2) standardhälbe samast, (3) tabeli ridade arvu ja  (4) mitu erinevat Species-t on tabelis
 
 
 ```r
@@ -390,14 +388,12 @@ summarise(iris,
 
 `n_distinct()` loeb üles, mitu unikaalset väärtust läks samasse arvutusse.
 
-summarise on kasulikum, kui teda kasutada koos järgmise verbi, group_by-ga.
+Summarise on kasulikum, kui teda kasutada koos järgmise verbi, group_by-ga.
 
 ### `group_by()`
 
-`group_by()` groups values for summarising or mutating-
+`group_by()` grupeerib väärtused, nii et neid saab grupi kaupa summeerida või muteerida. Näiteks grupeerides Species kaupa, saame arvutada summaarsed statistikud igale liigile
 
-When we summarise by *sex* we will get two values for each summary statistic: for males and females. 
-Aint that sexy?!
 
 
 ```r
@@ -421,61 +417,7 @@ Siin me rakendame summarise verbi mitte kogu tabelile, vaid 3-le virtuaalsele ta
 `group_by()`-le saab anda järjest mitu grupeerivat muutujat. 
 Siis ta grupeerib kõigepealt neist esimese järgi, seejärel lõõb saadud grupid omakorda lahku teise argumendi järgi ja nii edasi kuni teie poolt antud argumendid otsa saavad.
 
-Now we group previously generated dat_lng data frame first by *sex* and then inside each group again by *experiment*. 
-This is getting complicated ...
-
-
-```r
-dat_lng
-#> # A tibble: 9 x 4
-#>   subject sex   experiment   value
-#>   <chr>   <chr> <chr>        <dbl>
-#> 1 Tim     M     control        23.
-#> 2 Ann     F     control        31.
-#> 3 Jill    F     control        30.
-#> 4 Tim     M     experiment_1   34.
-#> 5 Ann     F     experiment_1   38.
-#> 6 Jill    F     experiment_1   36.
-#> # ... with 3 more rows
-group_by(dat_lng, sex, experiment) %>% 
-  summarise(MEAN = mean(value), 
-            SD = sd(value),
-            N = n(), 
-            n_sex = n_distinct(sex))
-#> # A tibble: 6 x 6
-#> # Groups:   sex [?]
-#>   sex   experiment    MEAN     SD     N n_sex
-#>   <chr> <chr>        <dbl>  <dbl> <int> <int>
-#> 1 F     control       30.5  0.707     2     1
-#> 2 F     experiment_1  37.0  1.41      2     1
-#> 3 F     experiment_2  43.0  1.41      2     1
-#> 4 M     control       23.0 NA         1     1
-#> 5 M     experiment_1  34.0 NA         1     1
-#> 6 M     experiment_2  40.0 NA         1     1
-```
-
-Now we group first by sex and then by variable. Spot the difference!
-
-
-```r
-group_by(dat_lng, experiment, sex) %>% 
-  summarise(MEAN = mean(value), 
-            SD = sd(value),
-            N = n(), 
-            n_sex = n_distinct(sex))
-#> # A tibble: 6 x 6
-#> # Groups:   experiment [?]
-#>   experiment   sex    MEAN     SD     N n_sex
-#>   <chr>        <chr> <dbl>  <dbl> <int> <int>
-#> 1 control      F      30.5  0.707     2     1
-#> 2 control      M      23.0 NA         1     1
-#> 3 experiment_1 F      37.0  1.41      2     1
-#> 4 experiment_1 M      34.0 NA         1     1
-#> 5 experiment_2 F      43.0  1.41      2     1
-#> 6 experiment_2 M      40.0 NA         1     1
-```
-
-*pro tip* if you want to summarise and then display the summary values as new column(s), which are added to the original non-shrunk df, use `mutate()` instead of `summarise()`.
+*pro tip* Kui tahad summaarseid statistikuid algse pika tabeli sisse uute veergudena (igale grupeeringu tasemele vastavad siis summeeriva statistiku identsed väärtused rea kaupa), kasuta peale `group_by()` verbi `mutate()`, mitte `summarise()`.
 
 
 ```r
@@ -486,17 +428,17 @@ mutate(iris_grouped,
 #> # Groups:   Species [3]
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
 #>          <dbl>       <dbl>        <dbl>       <dbl>
-#> 1         5.10        3.50         1.40       0.200
-#> 2         4.90        3.00         1.40       0.200
-#> 3         4.70        3.20         1.30       0.200
-#> 4         4.60        3.10         1.50       0.200
-#> 5         5.00        3.60         1.40       0.200
-#> 6         5.40        3.90         1.70       0.400
+#> 1          5.1         3.5          1.4         0.2
+#> 2          4.9         3            1.4         0.2
+#> 3          4.7         3.2          1.3         0.2
+#> 4          4.6         3.1          1.5         0.2
+#> 5          5           3.6          1.4         0.2
+#> 6          5.4         3.9          1.7         0.4
 #> # ... with 144 more rows, and 3 more variables:
 #> #   Species <fct>, MEAN <dbl>, SD <dbl>
 ```
 
-Anna igast grupist 3 kõrgeimat väärtust ja 2 madalaimat väärtust. Samad numbrid erinevates ridades antakse kõik - selle pärast on meil tabelis rohkem ridu. 
+Anna igast grupist 3 kõrgeimat väärtust või 2 madalaimat väärtust. Samad numbrid erinevates ridades antakse kõik - selle pärast on meil tabelis rohkem ridu. 
 
 ```r
 
@@ -522,12 +464,12 @@ mutate(dat_lng, log_value = log(value))
 #> # A tibble: 9 x 5
 #>   subject sex   experiment   value log_value
 #>   <chr>   <chr> <chr>        <dbl>     <dbl>
-#> 1 Tim     M     control        23.      3.14
-#> 2 Ann     F     control        31.      3.43
-#> 3 Jill    F     control        30.      3.40
-#> 4 Tim     M     experiment_1   34.      3.53
-#> 5 Ann     F     experiment_1   38.      3.64
-#> 6 Jill    F     experiment_1   36.      3.58
+#> 1 Tim     M     control         23      3.14
+#> 2 Ann     F     control         31      3.43
+#> 3 Jill    F     control         30      3.40
+#> 4 Tim     M     experiment_1    34      3.53
+#> 5 Ann     F     experiment_1    38      3.64
+#> 6 Jill    F     experiment_1    36      3.58
 #> # ... with 3 more rows
 ```
 
@@ -547,7 +489,8 @@ transmute(dat_lng, subject, gender = sex, log_value = log(value))
 #> # ... with 3 more rows
 ```
 
-Selekteerime veerud "year" kuni "day", veerud, mille nimed lõppevad stringiga "delay", veerg "distance" ja "air_time". Seejärel loome uue veerud "gain" (kasutades selleks arr_delay ja dep_delay andmeid rea kaupa), "hours" (air_time jagatud konstandiga) ja "gain_per_hour":
+Selekteerime veerud "year" kuni "day", veerud, mille nimed lõppevad stringiga "delay", veerud "distance" ja "air_time". Seejärel loome uue veerud "gain" (kasutades selleks arr_delay ja dep_delay andmeid rea kaupa), "hours" (air_time jagatud konstandiga) ja "gain_per_hour":
+
 
 ```r
 flights_sml <- select(flights, 
@@ -562,7 +505,7 @@ flights_sml <- select(flights,
 
 *`mutate_all()`, `mutate_if()` and `mutate_at()` and the three variants of `transmute()` (`transmute_all()`, `transmute_if()`, `transmute_at()`) make it easy to apply a transformation to a selection of variables. See help.*
 
-Here we first group and then mutate. Note that now, instead of a single constant, we divide by as many different constant as there are discrete factor levels in the sex variable (two, in our case):
+Kõigepealt grupeeri, siis muteeri. Konstandid Mean(value) ja sd(value) arvutatakse igale grupile eraldi selle grupi väärtuste pealt (siin grupeerime faktormuutuja "sex" kahe taseme järgi). 
 
 ```r
 group_by(dat_lng, sex) %>% 
@@ -572,17 +515,16 @@ group_by(dat_lng, sex) %>%
 #> # Groups:   sex [2]
 #>   subject sex   experiment   value norm_value n2_val
 #>   <chr>   <chr> <chr>        <dbl>      <dbl>  <dbl>
-#> 1 Tim     M     control        23.      0.711   2.67
-#> 2 Ann     F     control        31.      0.842   5.47
-#> 3 Jill    F     control        30.      0.814   5.29
-#> 4 Tim     M     experiment_1   34.      1.05    3.94
-#> 5 Ann     F     experiment_1   38.      1.03    6.70
-#> 6 Jill    F     experiment_1   36.      0.977   6.35
+#> 1 Tim     M     control         23      0.711   2.67
+#> 2 Ann     F     control         31      0.842   5.47
+#> 3 Jill    F     control         30      0.814   5.29
+#> 4 Tim     M     experiment_1    34      1.05    3.94
+#> 5 Ann     F     experiment_1    38      1.03    6.70
+#> 6 Jill    F     experiment_1    36      0.977   6.35
 #> # ... with 3 more rows
 ```
 
-Compare with a "straight" mutate to see the difference in values.
-
+Võrdluseks ilma grupeerimata olukord, kus konstandil alati sama väärtus:
 
 ```r
 mutate(dat_lng, 
@@ -591,15 +533,24 @@ mutate(dat_lng,
 #> # A tibble: 9 x 6
 #>   subject sex   experiment   value norm_value n2_val
 #>   <chr>   <chr> <chr>        <dbl>      <dbl>  <dbl>
-#> 1 Tim     M     control        23.      0.651   3.48
-#> 2 Ann     F     control        31.      0.877   4.69
-#> 3 Jill    F     control        30.      0.849   4.54
-#> 4 Tim     M     experiment_1   34.      0.962   5.14
-#> 5 Ann     F     experiment_1   38.      1.08    5.75
-#> 6 Jill    F     experiment_1   36.      1.02    5.44
+#> 1 Tim     M     control         23      0.651   3.48
+#> 2 Ann     F     control         31      0.877   4.69
+#> 3 Jill    F     control         30      0.849   4.54
+#> 4 Tim     M     experiment_1    34      0.962   5.14
+#> 5 Ann     F     experiment_1    38      1.08    5.75
+#> 6 Jill    F     experiment_1    36      1.02    5.44
 #> # ... with 3 more rows
 ```
 
+#### kahest veerust kolmanda tegemine nii, et NA-d esimeses veerus asendatakse numbritega teisest
+
+
+```r
+y <- c(1, 2, 5, NA, 5)
+z <- c(NA, NA, 7, 4, 5)
+coalesce(z, y)
+#> [1] 1 2 7 4 5
+```
 
 #### Summarise(), mutate(), transmute() ja filter() töötavad ka mitme veeru kaupa. 
 
@@ -651,12 +602,12 @@ head(a)
 #> # A tibble: 6 x 3
 #>    gene  value indeks
 #>   <int>  <dbl> <chr> 
-#> 1     1  0.864 E     
-#> 2     1 -1.98  E     
-#> 3     1  1.06  E     
-#> 4     1 -0.407 C     
-#> 5     1  1.03  C     
-#> 6     1  0.434 C
+#> 1     1 -1.92  E     
+#> 2     1  0.914 E     
+#> 3     1 -0.164 E     
+#> 4     1  0.650 C     
+#> 5     1 -1.06  C     
+#> 6     1  0.324 C
 ```
 
 
@@ -665,11 +616,11 @@ a %>% group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 #> # A tibble: 5 x 2
 #>    gene     p
 #>   <int> <dbl>
-#> 1     1 0.753
-#> 2     2 0.671
-#> 3     3 0.313
-#> 4     4 0.403
-#> 5     5 0.188
+#> 1     1 0.733
+#> 2     2 0.373
+#> 3     3 0.511
+#> 4     4 0.903
+#> 5     5 0.624
 ```
 
 
@@ -729,14 +680,14 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1    1. Procaryota; Bacteria; Alpha-Proteobacteria; E~
-#> 2    2. Eukaryota; Chordata
+#> 1     1 Procaryota; Bacteria; Alpha-Proteobacteria; E~
+#> 2     2 Eukaryota; Chordata
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '; ', extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
-#>   index riik       hmk      klass           perekond  
-#>   <dbl> <chr>      <chr>    <chr>           <chr>     
-#> 1    1. Procaryota Bacteria Alpha-Proteoba~ Escharich~
-#> 2    2. Eukaryota  Chordata <NA>            <NA>
+#>   index riik      hmk      klass            perekond  
+#>   <dbl> <chr>     <chr>    <chr>            <chr>     
+#> 1     1 Procaryo~ Bacteria Alpha-Proteobac~ Escharich~
+#> 2     2 Eukaryota Chordata <NA>             <NA>
 ```
 
 
@@ -763,6 +714,16 @@ dat <- tibble(index = c(1, 2),
 
 Anti-separate funktsioon on `unite()` - vt. help.
 
+Kuidas käituda siis, kui teil on veerus üks või mitu sissekannet, näiteks komadega eraldatud, ja te tahaksite need suruda mitte eraldi veergudesse (seda teeb separate()), vaid kõik ühte pikka  veergu? Nüüd kasutame str_plit() ja unnest() funktsioone.
+
+
+```r
+df1 <- tibble(a = c("w", "w, e, f", "g"), b=1:3)
+df2 <- df1 %>% mutate(pikk_a = str_split(a, ",")) %>% select(pikk_a) %>% unnest()
+df3 <- df1 %>% mutate(pikk_a = str_split(a, ",")) %>% unnest()
+```
+
+Pane tähele, et df3 on tabel, kus b veeru elemendid on duplitseeritud nii, et nad kataksid uue pikema pikk_a veeru vastavad elemndid. df2 on andmeraam, mis sisaldab ainult üht veergu.
 
 ## Faktorid
 
@@ -825,16 +786,16 @@ Kui faktorid on tibbles oma veeruna, siis saab nende tasemed `count()` kasutades
 ```r
 gss_cat #tibble, mille veerg "race" on faktor.
 #> # A tibble: 21,483 x 9
-#>    year marital    age race  rincome  partyid   relig 
-#>   <int> <fct>    <int> <fct> <fct>    <fct>     <fct> 
-#> 1  2000 Never m~    26 White $8000 t~ Ind,near~ Prote~
-#> 2  2000 Divorced    48 White $8000 t~ Not str ~ Prote~
-#> 3  2000 Widowed     67 White Not app~ Independ~ Prote~
-#> 4  2000 Never m~    39 White Not app~ Ind,near~ Ortho~
-#> 5  2000 Divorced    25 White Not app~ Not str ~ None  
-#> 6  2000 Married     25 White $20000 ~ Strong d~ Prote~
-#> # ... with 2.148e+04 more rows, and 2 more variables:
-#> #   denom <fct>, tvhours <int>
+#>    year marital   age race  rincome partyid relig denom
+#>   <int> <fct>   <int> <fct> <fct>   <fct>   <fct> <fct>
+#> 1  2000 Never ~    26 White $8000 ~ Ind,ne~ Prot~ Sout~
+#> 2  2000 Divorc~    48 White $8000 ~ Not st~ Prot~ Bapt~
+#> 3  2000 Widowed    67 White Not ap~ Indepe~ Prot~ No d~
+#> 4  2000 Never ~    39 White Not ap~ Ind,ne~ Orth~ Not ~
+#> 5  2000 Divorc~    25 White Not ap~ Not st~ None  Not ~
+#> 6  2000 Married    25 White $20000~ Strong~ Prot~ Sout~
+#> # ... with 2.148e+04 more rows, and 1 more variable:
+#> #   tvhours <int>
 gss_cat %>% count(race)
 #> # A tibble: 3 x 2
 #>   race      n

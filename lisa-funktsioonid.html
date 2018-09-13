@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="img/cover.png" />
+  <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
+  <meta name="github-repo" content="rstats-tartu/lectures" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  
+  <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
+  <meta name="twitter:image" content="img/cover.png" />
+
+<meta name="author" content="Taavi Päll, Ülo Maiväli">
+
+
+<meta name="date" content="2018-09-13">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="tidyverse.html">
+<link rel="next" href="bibliograafia.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Reprodutseeritav andmeanalüüs R programmiga</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Haara kannel, Vanemuine!</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Sissejuhatus</a></li>
+<li class="chapter" data-level="2" data-path="r-keel.html"><a href="r-keel.html"><i class="fa fa-check"></i><b>2</b> R keel</a></li>
+<li class="chapter" data-level="3" data-path="andmeanaluus.html"><a href="andmeanaluus.html"><i class="fa fa-check"></i><b>3</b> Andmeanalüüs</a><ul>
+<li class="chapter" data-level="3.1" data-path="andmeanaluus.html"><a href="andmeanaluus.html#mida-andmeanaluutik-peaks-kusima-enne-kui-ta-alustab."><i class="fa fa-check"></i><b>3.1</b> Mida andmeanalüütik peaks küsima, enne kui ta alustab.</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>4</b> Tarkvaratööriistad</a><ul>
+<li class="chapter" data-level="4.1" data-path="tools.html"><a href="tools.html#installeeri-vajalikud-programmid"><i class="fa fa-check"></i><b>4.1</b> Installeeri vajalikud programmid</a></li>
+<li class="chapter" data-level="4.2" data-path="tools.html"><a href="tools.html#loo-githubi-konto"><i class="fa fa-check"></i><b>4.2</b> Loo GitHubi konto</a></li>
+<li class="chapter" data-level="4.3" data-path="tools.html"><a href="tools.html#loo-uus-r-projekt"><i class="fa fa-check"></i><b>4.3</b> Loo uus R projekt</a></li>
+<li class="chapter" data-level="4.4" data-path="tools.html"><a href="tools.html#git-merge-konfliktid"><i class="fa fa-check"></i><b>4.4</b> Git <em>Merge</em> konfliktid</a></li>
+<li class="chapter" data-level="4.5" data-path="tools.html"><a href="tools.html#r-projekti-kataloogi-soovitatav-minimaalne-struktuur"><i class="fa fa-check"></i><b>4.5</b> R projekti kataloogi soovitatav minimaalne struktuur</a></li>
+<li class="chapter" data-level="4.6" data-path="tools.html"><a href="tools.html#libs"><i class="fa fa-check"></i><b>4.6</b> Pakettide installeerimine</a></li>
+<li class="chapter" data-level="4.7" data-path="tools.html"><a href="tools.html#r-repositooriumid"><i class="fa fa-check"></i><b>4.7</b> R repositooriumid</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="calc.html"><a href="calc.html"><i class="fa fa-check"></i><b>5</b> R on kalkulaator</a></li>
+<li class="chapter" data-level="6" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html"><i class="fa fa-check"></i><b>6</b> R-i tööpõhimõte</a><ul>
+<li class="chapter" data-level="6.1" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#funktsioon"><i class="fa fa-check"></i><b>6.1</b> Funktsioon</a></li>
+<li class="chapter" data-level="6.2" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#sama-koodi-saab-kirjutada-neljal-erineval-viisil"><i class="fa fa-check"></i><b>6.2</b> Sama koodi saab kirjutada neljal erineval viisil</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#esimene-voimalus---anname-jarjest-tekkinud-objektid-samale-nimele."><i class="fa fa-check"></i><b>6.2.1</b> Esimene võimalus - anname järjest tekkinud objektid samale nimele.</a></li>
+<li class="chapter" data-level="6.2.2" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#teine-voimalus---uued-nimed."><i class="fa fa-check"></i><b>6.2.2</b> Teine võimalus - uued nimed.</a></li>
+<li class="chapter" data-level="6.2.3" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#kolmas-voimalus-on-luhem-variant-esimesest."><i class="fa fa-check"></i><b>6.2.3</b> Kolmas võimalus on lühem variant esimesest.</a></li>
+<li class="chapter" data-level="6.2.4" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#neljas-voimalus-klassikaline-baas-r-lahendus"><i class="fa fa-check"></i><b>6.2.4</b> Neljas võimalus, klassikaline baas R lahendus:</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#obj"><i class="fa fa-check"></i><b>6.3</b> objekt</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#objekt-ja-nimi"><i class="fa fa-check"></i><b>6.3.1</b> Objekt ja nimi</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#andmete-tuubid"><i class="fa fa-check"></i><b>6.4</b> Andmete tüübid</a></li>
+<li class="chapter" data-level="6.5" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#objektide-klassid"><i class="fa fa-check"></i><b>6.5</b> Objektide klassid</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#vektor"><i class="fa fa-check"></i><b>6.5.1</b> Vektor</a></li>
+<li class="chapter" data-level="6.5.2" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#list"><i class="fa fa-check"></i><b>6.5.2</b> List</a></li>
+<li class="chapter" data-level="6.5.3" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#data-frame-ja-tibble"><i class="fa fa-check"></i><b>6.5.3</b> data frame ja tibble</a></li>
+<li class="chapter" data-level="6.5.4" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#matrix"><i class="fa fa-check"></i><b>6.5.4</b> Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#indekseerimine"><i class="fa fa-check"></i><b>6.6</b> Indekseerimine</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#vektorid-ja-nende-indeksid-on-uhedimensionaalsed"><i class="fa fa-check"></i><b>6.6.1</b> Vektorid ja nende indeksid on ühedimensionaalsed</a></li>
+<li class="chapter" data-level="6.6.2" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-indeksid"><i class="fa fa-check"></i><b>6.6.2</b> Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid</a></li>
+<li class="chapter" data-level="6.6.3" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#listide-indekseerimine"><i class="fa fa-check"></i><b>6.6.3</b> Listide indekseerimine</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html"><i class="fa fa-check"></i><b>7</b> Lihtne töö Andmeraamidega</a><ul>
+<li class="chapter" data-level="7.0.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#rekodeerime-andmeraami-vaartusi"><i class="fa fa-check"></i><b>7.0.1</b> Rekodeerime andmeraami väärtusi</a></li>
+<li class="chapter" data-level="7.0.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#uhendame-kaks-andmeraami-rea-kaupa"><i class="fa fa-check"></i><b>7.0.2</b> Ühendame kaks andmeraami rea kaupa</a></li>
+<li class="chapter" data-level="7.0.3" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#uhendame-kaks-andmeraami-veeru-kaupa"><i class="fa fa-check"></i><b>7.0.3</b> ühendame kaks andmeraami veeru kaupa</a></li>
+<li class="chapter" data-level="7.0.4" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#andmeraamide-uhendamine-join-ga"><i class="fa fa-check"></i><b>7.0.4</b> andmeraamide ühendamine join()-ga</a></li>
+<li class="chapter" data-level="7.0.5" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#nii-saab-raamist-katte-vektori-millega-tehteid-teha."><i class="fa fa-check"></i><b>7.0.5</b> Nii saab raamist kätte vektori, millega tehteid teha.</a></li>
+<li class="chapter" data-level="7.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>7.1</b> Andmeraamide salvestamine (eksport-import)</a></li>
+<li class="chapter" data-level="7.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#na-d"><i class="fa fa-check"></i><b>7.2</b> NA-d</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#mitu-na-d-on-igas-tulbas"><i class="fa fa-check"></i><b>7.2.1</b> Mitu NA-d on igas tulbas?</a></li>
+<li class="chapter" data-level="7.2.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#kuidas-rekodeerida-na-d-naiteks-0-ks"><i class="fa fa-check"></i><b>7.2.2</b> Kuidas rekodeerida NA-d näiteks 0-ks:</a></li>
+<li class="chapter" data-level="7.2.3" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#rekodeerime-na-ks"><i class="fa fa-check"></i><b>7.2.3</b> Rekodeerime NA-ks</a></li>
+<li class="chapter" data-level="7.2.4" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#drop_na-viskab-tabelist-valja-na-dega-read"><i class="fa fa-check"></i><b>7.2.4</b> drop_na() viskab tabelist välja NA-dega read</a></li>
+<li class="chapter" data-level="7.2.5" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#viska-tabelist-valja-veerud-milles-on-liiga-palju-na-sid"><i class="fa fa-check"></i><b>7.2.5</b> viska tabelist välja veerud, milles on liiga palju NA-sid</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><i class="fa fa-check"></i><b>8</b> itereerimine ja map() - sama operatsioon mitu korda</a><ul>
+<li class="chapter" data-level="8.0.1" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html#map2"><i class="fa fa-check"></i><b>8.0.1</b> map2()</a></li>
+<li class="chapter" data-level="8.0.2" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html#pmap"><i class="fa fa-check"></i><b>8.0.2</b> pmap()</a></li>
+<li class="chapter" data-level="8.0.3" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html#invoke_map"><i class="fa fa-check"></i><b>8.0.3</b> invoke_map()</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>9</b> Regular expression ja find &amp; replace</a><ul>
+<li class="chapter" data-level="9.1" data-path="regex.html"><a href="regex.html#common-operations-with-regular-expressions"><i class="fa fa-check"></i><b>9.1</b> Common operations with regular expressions</a></li>
+<li class="chapter" data-level="9.2" data-path="regex.html"><a href="regex.html#find-and-replace"><i class="fa fa-check"></i><b>9.2</b> Find and replace</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="funs.html"><a href="funs.html"><i class="fa fa-check"></i><b>10</b> Funktsioonid on R keele verbid</a><ul>
+<li class="chapter" data-level="10.1" data-path="funs.html"><a href="funs.html#kirjutame-r-funktsiooni"><i class="fa fa-check"></i><b>10.1</b> Kirjutame R funktsiooni</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html"><i class="fa fa-check"></i><b>11</b> Graafilised lahendused</a><ul>
+<li class="chapter" data-level="11.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#baasgraafika"><i class="fa fa-check"></i><b>11.1</b> Baasgraafika</a></li>
+<li class="chapter" data-level="11.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#ggplot2"><i class="fa fa-check"></i><b>11.2</b> ggplot2</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#lisame-plotile-sirgjooni"><i class="fa fa-check"></i><b>11.2.1</b> Lisame plotile sirgjooni</a></li>
+<li class="chapter" data-level="11.2.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#segmendid-ja-nooled"><i class="fa fa-check"></i><b>11.2.2</b> Segmendid ja nooled</a></li>
+<li class="chapter" data-level="11.2.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#joongraafikud"><i class="fa fa-check"></i><b>11.2.3</b> Joongraafikud</a></li>
+<li class="chapter" data-level="11.2.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#punktide-tahistamise-trikid"><i class="fa fa-check"></i><b>11.2.4</b> Punktide tähistamise trikid</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#facet-pisigraafik"><i class="fa fa-check"></i><b>11.3</b> <em>Facet</em> – pisigraafik</a></li>
+<li class="chapter" data-level="11.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#mitu-graafikut-paneelidena-uhel-joonisel"><i class="fa fa-check"></i><b>11.4</b> Mitu graafikut paneelidena ühel joonisel</a></li>
+<li class="chapter" data-level="11.5" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#teljed"><i class="fa fa-check"></i><b>11.5</b> Teljed</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#telgede-ulatus"><i class="fa fa-check"></i><b>11.5.1</b> Telgede ulatus</a></li>
+<li class="chapter" data-level="11.5.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#log-skaalas-teljed"><i class="fa fa-check"></i><b>11.5.2</b> Log skaalas teljed</a></li>
+<li class="chapter" data-level="11.5.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#poorame-graafikut-90-kraadi"><i class="fa fa-check"></i><b>11.5.3</b> Pöörame graafikut 90 kraadi</a></li>
+<li class="chapter" data-level="11.5.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#muudame-telgede-markeeringuid"><i class="fa fa-check"></i><b>11.5.4</b> Muudame telgede markeeringuid</a></li>
+<li class="chapter" data-level="11.5.5" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#telgede-ja-legendi-nimed"><i class="fa fa-check"></i><b>11.5.5</b> telgede ja legendi nimed</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#graafiku-pealkiri-alapeakiri-ja-allkiri"><i class="fa fa-check"></i><b>11.6</b> Graafiku pealkiri, alapeakiri ja allkiri</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#tapitahed-jms-graafikutel"><i class="fa fa-check"></i><b>11.6.1</b> Täpitähed jms graafikutel</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#graafiku-legend"><i class="fa fa-check"></i><b>11.7</b> Graafiku legend</a></li>
+<li class="chapter" data-level="11.8" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad"><i class="fa fa-check"></i><b>11.8</b> Värviskaalad</a><ul>
+<li class="chapter" data-level="11.8.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad-pidevatele-muutujatele"><i class="fa fa-check"></i><b>11.8.1</b> Värviskaalad pidevatele muutujatele</a></li>
+<li class="chapter" data-level="11.8.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad-faktormuutujatele"><i class="fa fa-check"></i><b>11.8.2</b> Värviskaalad faktormuutujatele</a></li>
+</ul></li>
+<li class="chapter" data-level="11.9" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#a-complex-ggplot"><i class="fa fa-check"></i><b>11.9</b> A complex ggplot</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><i class="fa fa-check"></i><b>12</b> Kuraditosin graafikut, mida sa peaksid enne surma joonistama</a><ul>
+<li class="chapter" data-level="12.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#cleveland-plot"><i class="fa fa-check"></i><b>12.1</b> Cleveland plot</a></li>
+<li class="chapter" data-level="12.2" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#andmepunktid-mediaani-voi-aritmeetilise-keskmisega"><i class="fa fa-check"></i><b>12.2</b> Andmepunktid mediaani või aritmeetilise keskmisega</a></li>
+<li class="chapter" data-level="12.3" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#histogramm"><i class="fa fa-check"></i><b>12.3</b> Histogramm</a></li>
+<li class="chapter" data-level="12.4" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#tihedusplot"><i class="fa fa-check"></i><b>12.4</b> Tihedusplot</a></li>
+<li class="chapter" data-level="12.5" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#boxplot"><i class="fa fa-check"></i><b>12.5</b> Boxplot</a></li>
+<li class="chapter" data-level="12.6" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#joongraafikud-1"><i class="fa fa-check"></i><b>12.6</b> Joongraafikud</a></li>
+<li class="chapter" data-level="12.7" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#scatter-plot"><i class="fa fa-check"></i><b>12.7</b> Scatter plot</a><ul>
+<li class="chapter" data-level="12.7.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#kaalutud-lineaarne-mudel"><i class="fa fa-check"></i><b>12.7.1</b> Kaalutud lineaarne mudel</a></li>
+</ul></li>
+<li class="chapter" data-level="12.8" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#tulpdiagramm"><i class="fa fa-check"></i><b>12.8</b> Tulpdiagramm</a></li>
+<li class="chapter" data-level="12.9" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#residuaalide-plot"><i class="fa fa-check"></i><b>12.9</b> Residuaalide plot</a></li>
+<li class="chapter" data-level="12.10" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#tukey-summa-erinevuse-graafik"><i class="fa fa-check"></i><b>12.10</b> Tukey summa-erinevuse graafik</a><ul>
+<li class="chapter" data-level="12.10.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#vulkaaniplot"><i class="fa fa-check"></i><b>12.10.1</b> Vulkaaniplot</a></li>
+</ul></li>
+<li class="chapter" data-level="12.11" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#qq-plot"><i class="fa fa-check"></i><b>12.11</b> QQ-plot</a></li>
+<li class="chapter" data-level="12.12" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#heat-map"><i class="fa fa-check"></i><b>12.12</b> Heat map</a><ul>
+<li class="chapter" data-level="12.12.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#korrelatsioonimaatriksid-heat-mapina"><i class="fa fa-check"></i><b>12.12.1</b> Korrelatsioonimaatriksid heat mapina</a></li>
+<li class="chapter" data-level="12.12.2" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#paraleelkoordinaatgraafik"><i class="fa fa-check"></i><b>12.12.2</b> Paraleelkoordinaatgraafik</a></li>
+<li class="chapter" data-level="12.12.3" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#korrelatsioonid-vorgustikuna"><i class="fa fa-check"></i><b>12.12.3</b> Korrelatsioonid võrgustikuna</a></li>
+</ul></li>
+<li class="chapter" data-level="12.13" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#biplot-ja-peakomponentanaluus"><i class="fa fa-check"></i><b>12.13</b> Biplot ja peakomponentanalüüs</a><ul>
+<li class="chapter" data-level="12.13.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#t-sne"><i class="fa fa-check"></i><b>12.13.1</b> t-sne</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>13</b> Tidyverse</a><ul>
+<li class="chapter" data-level="13.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>13.1</b> Tidy tabeli struktuur</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>13.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
+<li class="chapter" data-level="13.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>13.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>13.2</b> dplyr ja selle viis verbi</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>13.2.1</b> <code>select()</code> columns</a></li>
+<li class="chapter" data-level="13.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>13.2.2</b> <code>filter()</code> rows</a></li>
+<li class="chapter" data-level="13.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>13.2.3</b> <code>summarise()</code></a></li>
+<li class="chapter" data-level="13.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>13.2.4</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="13.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>13.2.5</b> <code>mutate()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="tidyverse.html"><a href="tidyverse.html#separate-uks-veerg-mitmeks"><i class="fa fa-check"></i><b>13.3</b> <code>separate()</code> üks veerg mitmeks</a></li>
+<li class="chapter" data-level="13.4" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>13.4</b> Faktorid</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="tidyverse.html"><a href="tidyverse.html#tekitame-faktortulba-keerulisemal-teel"><i class="fa fa-check"></i><b>13.4.1</b> tekitame faktortulba keerulisemal teel</a></li>
+<li class="chapter" data-level="13.4.2" data-path="tidyverse.html"><a href="tidyverse.html#droplevels-viskab-valja-kasutamata-faktori-tasemed"><i class="fa fa-check"></i><b>13.4.2</b> <code>droplevels()</code> viskab välja kasutamata faktori tasemed</a></li>
+<li class="chapter" data-level="13.4.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>13.4.3</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
+<li class="chapter" data-level="13.4.4" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>13.4.4</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
+<li class="chapter" data-level="13.4.5" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>13.4.5</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
+<li class="chapter" data-level="13.4.6" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>13.4.6</b> Rekodeerime pideva muutuja faktoriks</a></li>
+<li class="chapter" data-level="13.4.7" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>13.4.7</b> Muudame faktori tasemete järjekorda joonisel</a></li>
+<li class="chapter" data-level="13.4.8" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>13.4.8</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
+<li class="chapter" data-level="13.4.9" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>13.4.9</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
+<li class="chapter" data-level="13.4.10" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>13.4.10</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html"><i class="fa fa-check"></i><b>14</b> lisa: funktsioonid</a><ul>
+<li class="chapter" data-level="14.1" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#raamatukogud"><i class="fa fa-check"></i><b>14.1</b> raamatukogud</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#bioconductor"><i class="fa fa-check"></i><b>14.1.1</b> bioconductor</a></li>
+<li class="chapter" data-level="14.1.2" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#github"><i class="fa fa-check"></i><b>14.1.2</b> Github</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#failide-sisselugemine"><i class="fa fa-check"></i><b>14.2</b> failide sisselugemine</a></li>
+<li class="chapter" data-level="14.3" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#matemaatika"><i class="fa fa-check"></i><b>14.3</b> matemaatika</a></li>
+<li class="chapter" data-level="14.4" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#andmeraamid"><i class="fa fa-check"></i><b>14.4</b> andmeraamid</a></li>
+<li class="chapter" data-level="14.5" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#na-d-1"><i class="fa fa-check"></i><b>14.5</b> NA-d</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliograafia.html"><a href="bibliograafia.html"><i class="fa fa-check"></i>Bibliograafia</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstats-tartu/lectures" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reprodutseeritav andmeanalüüs kasutades R keelt</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="lisa-funktsioonid" class="section level1">
+<h1><span class="header-section-number">14</span> lisa: funktsioonid</h1>
+<div id="raamatukogud" class="section level2">
+<h2><span class="header-section-number">14.1</span> raamatukogud</h2>
+<p><code>install.packages(&quot;ggplot2&quot;)</code> laadib raamatukogu CRAN-ist alla <code>library(ggplot2)</code> muudab raamatukogu funktsioonid kättesaadavaks</p>
+<div id="bioconductor" class="section level3">
+<h3><span class="header-section-number">14.1.1</span> bioconductor</h3>
+<p>First run biocLite script fron bioconductor.org <code>source(&quot;https://bioconductor.org/biocLite.R&quot;)</code><br />
+use ‘http’ in url if ‘https’ is unavailable. <code>biocLite(&quot;edgeR&quot;)</code></p>
+</div>
+<div id="github" class="section level3">
+<h3><span class="header-section-number">14.1.2</span> Github</h3>
+<p><a href="https://github.com" class="uri">https://github.com</a> following command installs xaringan (presentation ninja) package from GitHub user yihui <code>devtools::install_github(&quot;yihui/xaringan&quot;)</code></p>
+</div>
+</div>
+<div id="failide-sisselugemine" class="section level2">
+<h2><span class="header-section-number">14.2</span> failide sisselugemine</h2>
+<ul>
+<li><code>readit::readit()</code>kasutab tidyverse, loeb sisse mida iganes</li>
+<li><code>readr::read_delim(file, delim=&quot;&quot;)</code> saad määrata delimiteri</li>
+<li><code>readr::read_csv2()</code> loeb sisse Exceli csv-d</li>
+<li><code>readr::read_csv()</code> loeb sisse csv-d</li>
+<li>Addins/Gotta Read Em All - interaktiivne</li>
+<li><code>readr::write_csv()  &amp; base::write.csv()</code></li>
+</ul>
+</div>
+<div id="matemaatika" class="section level2">
+<h2><span class="header-section-number">14.3</span> matemaatika</h2>
+<ul>
+<li><code>sum(x, na.rm = TRUE)</code></li>
+<li><code>sqrt()</code> võtab ruutjuure</li>
+<li><code>prod()</code> korrutab</li>
+<li><code>log()</code> naturaallogaritm alusel e</li>
+<li><code>exp()</code> anti-logaritm alusele e</li>
+<li><code>log2()</code></li>
+<li><code>log10()</code></li>
+<li><code>round(x, 2)</code> ümardab 2le komakohale</li>
+<li>^ - astendamine (** töötab ka)</li>
+<li>* - korrutamine</li>
+<li>/ - jagamine</li>
+<li>== - võrdusmärk</li>
+</ul>
+</div>
+<div id="andmeraamid" class="section level2">
+<h2><span class="header-section-number">14.4</span> andmeraamid</h2>
+<ul>
+<li><code>tibble()</code> andmeraami sisestamine rea vektoritena</li>
+<li><code>tribble()</code> andmeraami sisetamine tabelina</li>
+<li><code>str(df)</code> näitab tabeli struktuuri</li>
+<li><code>nrow()</code> annab tabeli ridade arvu</li>
+<li><code>ncol()</code></li>
+<li><code>class()</code> annab objekti klassi</li>
+<li><code>as_tibble() &amp; as.data.frame()</code></li>
+<li><code>add_row()</code></li>
+<li><code>add_column()</code></li>
+<li><code>distinct()</code> eemalda duplikaatread</li>
+<li><code>count()</code> loeb üles tabeli rea väärtuste aesinemise arvu</li>
+<li><code>add_count()</code> lisab faktori esinemiste arvu tabelile uue veeruna “n”</li>
+<li><code>table()</code> annab väärtuste aesinemise arvu igal faktorite taseme kombinatsioonil</li>
+<li><code>summary()</code> summeerib tabeli</li>
+<li><code>psych::describe()</code> summeerib tabeli</li>
+<li><code>colnames()</code></li>
+<li><code>rownames()</code></li>
+<li><code>rownames_to_column()</code></li>
+<li><code>remove_rownames()</code></li>
+<li><code>rowid_to_column()</code> adds a column of ascending nrs starting at 1.</li>
+<li><code>arrange(df, desc(column_name))</code> sordib read</li>
+<li><code>top_n()</code> annab n suureima/väikseima väärtusega rida</li>
+<li><code>colSums()</code></li>
+<li><code>rowSums()</code></li>
+<li><code>rowMeans()</code></li>
+<li><code>apply()</code></li>
+<li><code>bind_rows(df1, df2, .id = &quot;id&quot;)</code> (base::rbind)</li>
+<li><code>bind_cols()</code> (base::cbind)</li>
+<li><code>full_join(df1, df2)</code></li>
+<li><code>left_join(df1, df2)</code> ühendab df2 df1-e ridadega nii, et uusi ridu ei teki.</li>
+<li><code>semi_join(df1, df2)</code> filter: 2 tabeli ühisosa</li>
+<li><code>anti_join(df1, df2)</code> filter: 1 tabeli read, mis puuduvad 2. tabelis</li>
+</ul>
+</div>
+<div id="na-d-1" class="section level2">
+<h2><span class="header-section-number">14.5</span> NA-d</h2>
+<ul>
+<li><code>VIM::aggr()</code> näitab puuduvad väärtused</li>
+<li><code>sapply(diabetes, function(x) sum(is.na(x)))</code> Mitu NA-d on igas tulbas.</li>
+<li><code>VIM::matrixplot(x)</code> NA-de plot</li>
+<li><code>filter_all(x, any_vars(is.na(.)))</code> annab read, mis sisaldavad NA-sid</li>
+<li><code>na_if(x, y)</code> rekodeerib vektoris x väärtused y NA-deks</li>
+<li><p><code>coalesce(x, 0L)</code> rekodeerime NA 0-ks</p></li>
+<li>``</li>
+<li>``</li>
+<li>``</li>
+<li>``</li>
+<li>``</li>
+<li>``</li>
+<li>``</li>
+<li><p>``</p></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tidyverse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bibliograafia.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstats-tartu/lectures/edit/master/08-lisa_funktsioonid.Rmd",
+"text": "Edit"
+},
+"download": ["main.pdf", "main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

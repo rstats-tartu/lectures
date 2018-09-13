@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="img/cover.png" />
+  <meta property="og:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
+  <meta name="github-repo" content="rstats-tartu/lectures" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  
+  <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
+  <meta name="twitter:image" content="img/cover.png" />
+
+<meta name="author" content="Taavi Päll, Ülo Maiväli">
+
+
+<meta name="date" content="2018-09-13">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="r-i-toopohimote.html">
+<link rel="next" href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="https://use.fontawesome.com/e4ba4259a1.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Reprodutseeritav andmeanalüüs R programmiga</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Haara kannel, Vanemuine!</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Sissejuhatus</a></li>
+<li class="chapter" data-level="2" data-path="r-keel.html"><a href="r-keel.html"><i class="fa fa-check"></i><b>2</b> R keel</a></li>
+<li class="chapter" data-level="3" data-path="andmeanaluus.html"><a href="andmeanaluus.html"><i class="fa fa-check"></i><b>3</b> Andmeanalüüs</a><ul>
+<li class="chapter" data-level="3.1" data-path="andmeanaluus.html"><a href="andmeanaluus.html#mida-andmeanaluutik-peaks-kusima-enne-kui-ta-alustab."><i class="fa fa-check"></i><b>3.1</b> Mida andmeanalüütik peaks küsima, enne kui ta alustab.</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>4</b> Tarkvaratööriistad</a><ul>
+<li class="chapter" data-level="4.1" data-path="tools.html"><a href="tools.html#installeeri-vajalikud-programmid"><i class="fa fa-check"></i><b>4.1</b> Installeeri vajalikud programmid</a></li>
+<li class="chapter" data-level="4.2" data-path="tools.html"><a href="tools.html#loo-githubi-konto"><i class="fa fa-check"></i><b>4.2</b> Loo GitHubi konto</a></li>
+<li class="chapter" data-level="4.3" data-path="tools.html"><a href="tools.html#loo-uus-r-projekt"><i class="fa fa-check"></i><b>4.3</b> Loo uus R projekt</a></li>
+<li class="chapter" data-level="4.4" data-path="tools.html"><a href="tools.html#git-merge-konfliktid"><i class="fa fa-check"></i><b>4.4</b> Git <em>Merge</em> konfliktid</a></li>
+<li class="chapter" data-level="4.5" data-path="tools.html"><a href="tools.html#r-projekti-kataloogi-soovitatav-minimaalne-struktuur"><i class="fa fa-check"></i><b>4.5</b> R projekti kataloogi soovitatav minimaalne struktuur</a></li>
+<li class="chapter" data-level="4.6" data-path="tools.html"><a href="tools.html#libs"><i class="fa fa-check"></i><b>4.6</b> Pakettide installeerimine</a></li>
+<li class="chapter" data-level="4.7" data-path="tools.html"><a href="tools.html#r-repositooriumid"><i class="fa fa-check"></i><b>4.7</b> R repositooriumid</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="calc.html"><a href="calc.html"><i class="fa fa-check"></i><b>5</b> R on kalkulaator</a></li>
+<li class="chapter" data-level="6" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html"><i class="fa fa-check"></i><b>6</b> R-i tööpõhimõte</a><ul>
+<li class="chapter" data-level="6.1" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#funktsioon"><i class="fa fa-check"></i><b>6.1</b> Funktsioon</a></li>
+<li class="chapter" data-level="6.2" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#sama-koodi-saab-kirjutada-neljal-erineval-viisil"><i class="fa fa-check"></i><b>6.2</b> Sama koodi saab kirjutada neljal erineval viisil</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#esimene-voimalus---anname-jarjest-tekkinud-objektid-samale-nimele."><i class="fa fa-check"></i><b>6.2.1</b> Esimene võimalus - anname järjest tekkinud objektid samale nimele.</a></li>
+<li class="chapter" data-level="6.2.2" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#teine-voimalus---uued-nimed."><i class="fa fa-check"></i><b>6.2.2</b> Teine võimalus - uued nimed.</a></li>
+<li class="chapter" data-level="6.2.3" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#kolmas-voimalus-on-luhem-variant-esimesest."><i class="fa fa-check"></i><b>6.2.3</b> Kolmas võimalus on lühem variant esimesest.</a></li>
+<li class="chapter" data-level="6.2.4" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#neljas-voimalus-klassikaline-baas-r-lahendus"><i class="fa fa-check"></i><b>6.2.4</b> Neljas võimalus, klassikaline baas R lahendus:</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#obj"><i class="fa fa-check"></i><b>6.3</b> objekt</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#objekt-ja-nimi"><i class="fa fa-check"></i><b>6.3.1</b> Objekt ja nimi</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#andmete-tuubid"><i class="fa fa-check"></i><b>6.4</b> Andmete tüübid</a></li>
+<li class="chapter" data-level="6.5" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#objektide-klassid"><i class="fa fa-check"></i><b>6.5</b> Objektide klassid</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#vektor"><i class="fa fa-check"></i><b>6.5.1</b> Vektor</a></li>
+<li class="chapter" data-level="6.5.2" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#list"><i class="fa fa-check"></i><b>6.5.2</b> List</a></li>
+<li class="chapter" data-level="6.5.3" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#data-frame-ja-tibble"><i class="fa fa-check"></i><b>6.5.3</b> data frame ja tibble</a></li>
+<li class="chapter" data-level="6.5.4" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#matrix"><i class="fa fa-check"></i><b>6.5.4</b> Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#indekseerimine"><i class="fa fa-check"></i><b>6.6</b> Indekseerimine</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#vektorid-ja-nende-indeksid-on-uhedimensionaalsed"><i class="fa fa-check"></i><b>6.6.1</b> Vektorid ja nende indeksid on ühedimensionaalsed</a></li>
+<li class="chapter" data-level="6.6.2" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#andmeraamid-ja-maatriksid-on-kahedimensionaalsed-nagu-ka-nende-indeksid"><i class="fa fa-check"></i><b>6.6.2</b> Andmeraamid ja maatriksid on kahedimensionaalsed, nagu ka nende indeksid</a></li>
+<li class="chapter" data-level="6.6.3" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html#listide-indekseerimine"><i class="fa fa-check"></i><b>6.6.3</b> Listide indekseerimine</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html"><i class="fa fa-check"></i><b>7</b> Lihtne töö Andmeraamidega</a><ul>
+<li class="chapter" data-level="7.0.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#rekodeerime-andmeraami-vaartusi"><i class="fa fa-check"></i><b>7.0.1</b> Rekodeerime andmeraami väärtusi</a></li>
+<li class="chapter" data-level="7.0.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#uhendame-kaks-andmeraami-rea-kaupa"><i class="fa fa-check"></i><b>7.0.2</b> Ühendame kaks andmeraami rea kaupa</a></li>
+<li class="chapter" data-level="7.0.3" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#uhendame-kaks-andmeraami-veeru-kaupa"><i class="fa fa-check"></i><b>7.0.3</b> ühendame kaks andmeraami veeru kaupa</a></li>
+<li class="chapter" data-level="7.0.4" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#andmeraamide-uhendamine-join-ga"><i class="fa fa-check"></i><b>7.0.4</b> andmeraamide ühendamine join()-ga</a></li>
+<li class="chapter" data-level="7.0.5" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#nii-saab-raamist-katte-vektori-millega-tehteid-teha."><i class="fa fa-check"></i><b>7.0.5</b> Nii saab raamist kätte vektori, millega tehteid teha.</a></li>
+<li class="chapter" data-level="7.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>7.1</b> Andmeraamide salvestamine (eksport-import)</a></li>
+<li class="chapter" data-level="7.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#na-d"><i class="fa fa-check"></i><b>7.2</b> NA-d</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#mitu-na-d-on-igas-tulbas"><i class="fa fa-check"></i><b>7.2.1</b> Mitu NA-d on igas tulbas?</a></li>
+<li class="chapter" data-level="7.2.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#kuidas-rekodeerida-na-d-naiteks-0-ks"><i class="fa fa-check"></i><b>7.2.2</b> Kuidas rekodeerida NA-d näiteks 0-ks:</a></li>
+<li class="chapter" data-level="7.2.3" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#rekodeerime-na-ks"><i class="fa fa-check"></i><b>7.2.3</b> Rekodeerime NA-ks</a></li>
+<li class="chapter" data-level="7.2.4" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#drop_na-viskab-tabelist-valja-na-dega-read"><i class="fa fa-check"></i><b>7.2.4</b> drop_na() viskab tabelist välja NA-dega read</a></li>
+<li class="chapter" data-level="7.2.5" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#viska-tabelist-valja-veerud-milles-on-liiga-palju-na-sid"><i class="fa fa-check"></i><b>7.2.5</b> viska tabelist välja veerud, milles on liiga palju NA-sid</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><i class="fa fa-check"></i><b>8</b> itereerimine ja map() - sama operatsioon mitu korda</a><ul>
+<li class="chapter" data-level="8.0.1" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html#map2"><i class="fa fa-check"></i><b>8.0.1</b> map2()</a></li>
+<li class="chapter" data-level="8.0.2" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html#pmap"><i class="fa fa-check"></i><b>8.0.2</b> pmap()</a></li>
+<li class="chapter" data-level="8.0.3" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html#invoke_map"><i class="fa fa-check"></i><b>8.0.3</b> invoke_map()</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>9</b> Regular expression ja find &amp; replace</a><ul>
+<li class="chapter" data-level="9.1" data-path="regex.html"><a href="regex.html#common-operations-with-regular-expressions"><i class="fa fa-check"></i><b>9.1</b> Common operations with regular expressions</a></li>
+<li class="chapter" data-level="9.2" data-path="regex.html"><a href="regex.html#find-and-replace"><i class="fa fa-check"></i><b>9.2</b> Find and replace</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="funs.html"><a href="funs.html"><i class="fa fa-check"></i><b>10</b> Funktsioonid on R keele verbid</a><ul>
+<li class="chapter" data-level="10.1" data-path="funs.html"><a href="funs.html#kirjutame-r-funktsiooni"><i class="fa fa-check"></i><b>10.1</b> Kirjutame R funktsiooni</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html"><i class="fa fa-check"></i><b>11</b> Graafilised lahendused</a><ul>
+<li class="chapter" data-level="11.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#baasgraafika"><i class="fa fa-check"></i><b>11.1</b> Baasgraafika</a></li>
+<li class="chapter" data-level="11.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#ggplot2"><i class="fa fa-check"></i><b>11.2</b> ggplot2</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#lisame-plotile-sirgjooni"><i class="fa fa-check"></i><b>11.2.1</b> Lisame plotile sirgjooni</a></li>
+<li class="chapter" data-level="11.2.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#segmendid-ja-nooled"><i class="fa fa-check"></i><b>11.2.2</b> Segmendid ja nooled</a></li>
+<li class="chapter" data-level="11.2.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#joongraafikud"><i class="fa fa-check"></i><b>11.2.3</b> Joongraafikud</a></li>
+<li class="chapter" data-level="11.2.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#punktide-tahistamise-trikid"><i class="fa fa-check"></i><b>11.2.4</b> Punktide tähistamise trikid</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#facet-pisigraafik"><i class="fa fa-check"></i><b>11.3</b> <em>Facet</em> – pisigraafik</a></li>
+<li class="chapter" data-level="11.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#mitu-graafikut-paneelidena-uhel-joonisel"><i class="fa fa-check"></i><b>11.4</b> Mitu graafikut paneelidena ühel joonisel</a></li>
+<li class="chapter" data-level="11.5" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#teljed"><i class="fa fa-check"></i><b>11.5</b> Teljed</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#telgede-ulatus"><i class="fa fa-check"></i><b>11.5.1</b> Telgede ulatus</a></li>
+<li class="chapter" data-level="11.5.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#log-skaalas-teljed"><i class="fa fa-check"></i><b>11.5.2</b> Log skaalas teljed</a></li>
+<li class="chapter" data-level="11.5.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#poorame-graafikut-90-kraadi"><i class="fa fa-check"></i><b>11.5.3</b> Pöörame graafikut 90 kraadi</a></li>
+<li class="chapter" data-level="11.5.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#muudame-telgede-markeeringuid"><i class="fa fa-check"></i><b>11.5.4</b> Muudame telgede markeeringuid</a></li>
+<li class="chapter" data-level="11.5.5" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#telgede-ja-legendi-nimed"><i class="fa fa-check"></i><b>11.5.5</b> telgede ja legendi nimed</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#graafiku-pealkiri-alapeakiri-ja-allkiri"><i class="fa fa-check"></i><b>11.6</b> Graafiku pealkiri, alapeakiri ja allkiri</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#tapitahed-jms-graafikutel"><i class="fa fa-check"></i><b>11.6.1</b> Täpitähed jms graafikutel</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#graafiku-legend"><i class="fa fa-check"></i><b>11.7</b> Graafiku legend</a></li>
+<li class="chapter" data-level="11.8" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad"><i class="fa fa-check"></i><b>11.8</b> Värviskaalad</a><ul>
+<li class="chapter" data-level="11.8.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad-pidevatele-muutujatele"><i class="fa fa-check"></i><b>11.8.1</b> Värviskaalad pidevatele muutujatele</a></li>
+<li class="chapter" data-level="11.8.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#varviskaalad-faktormuutujatele"><i class="fa fa-check"></i><b>11.8.2</b> Värviskaalad faktormuutujatele</a></li>
+</ul></li>
+<li class="chapter" data-level="11.9" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#a-complex-ggplot"><i class="fa fa-check"></i><b>11.9</b> A complex ggplot</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><i class="fa fa-check"></i><b>12</b> Kuraditosin graafikut, mida sa peaksid enne surma joonistama</a><ul>
+<li class="chapter" data-level="12.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#cleveland-plot"><i class="fa fa-check"></i><b>12.1</b> Cleveland plot</a></li>
+<li class="chapter" data-level="12.2" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#andmepunktid-mediaani-voi-aritmeetilise-keskmisega"><i class="fa fa-check"></i><b>12.2</b> Andmepunktid mediaani või aritmeetilise keskmisega</a></li>
+<li class="chapter" data-level="12.3" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#histogramm"><i class="fa fa-check"></i><b>12.3</b> Histogramm</a></li>
+<li class="chapter" data-level="12.4" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#tihedusplot"><i class="fa fa-check"></i><b>12.4</b> Tihedusplot</a></li>
+<li class="chapter" data-level="12.5" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#boxplot"><i class="fa fa-check"></i><b>12.5</b> Boxplot</a></li>
+<li class="chapter" data-level="12.6" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#joongraafikud-1"><i class="fa fa-check"></i><b>12.6</b> Joongraafikud</a></li>
+<li class="chapter" data-level="12.7" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#scatter-plot"><i class="fa fa-check"></i><b>12.7</b> Scatter plot</a><ul>
+<li class="chapter" data-level="12.7.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#kaalutud-lineaarne-mudel"><i class="fa fa-check"></i><b>12.7.1</b> Kaalutud lineaarne mudel</a></li>
+</ul></li>
+<li class="chapter" data-level="12.8" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#tulpdiagramm"><i class="fa fa-check"></i><b>12.8</b> Tulpdiagramm</a></li>
+<li class="chapter" data-level="12.9" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#residuaalide-plot"><i class="fa fa-check"></i><b>12.9</b> Residuaalide plot</a></li>
+<li class="chapter" data-level="12.10" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#tukey-summa-erinevuse-graafik"><i class="fa fa-check"></i><b>12.10</b> Tukey summa-erinevuse graafik</a><ul>
+<li class="chapter" data-level="12.10.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#vulkaaniplot"><i class="fa fa-check"></i><b>12.10.1</b> Vulkaaniplot</a></li>
+</ul></li>
+<li class="chapter" data-level="12.11" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#qq-plot"><i class="fa fa-check"></i><b>12.11</b> QQ-plot</a></li>
+<li class="chapter" data-level="12.12" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#heat-map"><i class="fa fa-check"></i><b>12.12</b> Heat map</a><ul>
+<li class="chapter" data-level="12.12.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#korrelatsioonimaatriksid-heat-mapina"><i class="fa fa-check"></i><b>12.12.1</b> Korrelatsioonimaatriksid heat mapina</a></li>
+<li class="chapter" data-level="12.12.2" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#paraleelkoordinaatgraafik"><i class="fa fa-check"></i><b>12.12.2</b> Paraleelkoordinaatgraafik</a></li>
+<li class="chapter" data-level="12.12.3" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#korrelatsioonid-vorgustikuna"><i class="fa fa-check"></i><b>12.12.3</b> Korrelatsioonid võrgustikuna</a></li>
+</ul></li>
+<li class="chapter" data-level="12.13" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#biplot-ja-peakomponentanaluus"><i class="fa fa-check"></i><b>12.13</b> Biplot ja peakomponentanalüüs</a><ul>
+<li class="chapter" data-level="12.13.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#t-sne"><i class="fa fa-check"></i><b>12.13.1</b> t-sne</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>13</b> Tidyverse</a><ul>
+<li class="chapter" data-level="13.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>13.1</b> Tidy tabeli struktuur</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>13.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
+<li class="chapter" data-level="13.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>13.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>13.2</b> dplyr ja selle viis verbi</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>13.2.1</b> <code>select()</code> columns</a></li>
+<li class="chapter" data-level="13.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>13.2.2</b> <code>filter()</code> rows</a></li>
+<li class="chapter" data-level="13.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>13.2.3</b> <code>summarise()</code></a></li>
+<li class="chapter" data-level="13.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>13.2.4</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="13.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>13.2.5</b> <code>mutate()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="tidyverse.html"><a href="tidyverse.html#separate-uks-veerg-mitmeks"><i class="fa fa-check"></i><b>13.3</b> <code>separate()</code> üks veerg mitmeks</a></li>
+<li class="chapter" data-level="13.4" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>13.4</b> Faktorid</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="tidyverse.html"><a href="tidyverse.html#tekitame-faktortulba-keerulisemal-teel"><i class="fa fa-check"></i><b>13.4.1</b> tekitame faktortulba keerulisemal teel</a></li>
+<li class="chapter" data-level="13.4.2" data-path="tidyverse.html"><a href="tidyverse.html#droplevels-viskab-valja-kasutamata-faktori-tasemed"><i class="fa fa-check"></i><b>13.4.2</b> <code>droplevels()</code> viskab välja kasutamata faktori tasemed</a></li>
+<li class="chapter" data-level="13.4.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>13.4.3</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
+<li class="chapter" data-level="13.4.4" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>13.4.4</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
+<li class="chapter" data-level="13.4.5" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>13.4.5</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
+<li class="chapter" data-level="13.4.6" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>13.4.6</b> Rekodeerime pideva muutuja faktoriks</a></li>
+<li class="chapter" data-level="13.4.7" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>13.4.7</b> Muudame faktori tasemete järjekorda joonisel</a></li>
+<li class="chapter" data-level="13.4.8" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>13.4.8</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
+<li class="chapter" data-level="13.4.9" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>13.4.9</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
+<li class="chapter" data-level="13.4.10" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>13.4.10</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html"><i class="fa fa-check"></i><b>14</b> lisa: funktsioonid</a><ul>
+<li class="chapter" data-level="14.1" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#raamatukogud"><i class="fa fa-check"></i><b>14.1</b> raamatukogud</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#bioconductor"><i class="fa fa-check"></i><b>14.1.1</b> bioconductor</a></li>
+<li class="chapter" data-level="14.1.2" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#github"><i class="fa fa-check"></i><b>14.1.2</b> Github</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#failide-sisselugemine"><i class="fa fa-check"></i><b>14.2</b> failide sisselugemine</a></li>
+<li class="chapter" data-level="14.3" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#matemaatika"><i class="fa fa-check"></i><b>14.3</b> matemaatika</a></li>
+<li class="chapter" data-level="14.4" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#andmeraamid"><i class="fa fa-check"></i><b>14.4</b> andmeraamid</a></li>
+<li class="chapter" data-level="14.5" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#na-d-1"><i class="fa fa-check"></i><b>14.5</b> NA-d</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliograafia.html"><a href="bibliograafia.html"><i class="fa fa-check"></i>Bibliograafia</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstats-tartu/lectures" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reprodutseeritav andmeanalüüs kasutades R keelt</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="lihtne-too-andmeraamidega" class="section level1">
+<h1><span class="header-section-number">7</span> Lihtne töö Andmeraamidega</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(iris, Species) <span class="co">#loeb üles, mitu korda igat näitu veerus Species esineb</span>
+<span class="co">#&gt; # A tibble: 3 x 2</span>
+<span class="co">#&gt;   Species        n</span>
+<span class="co">#&gt;   &lt;fct&gt;      &lt;int&gt;</span>
+<span class="co">#&gt; 1 setosa        50</span>
+<span class="co">#&gt; 2 versicolor    50</span>
+<span class="co">#&gt; 3 virginica     50</span>
+<span class="kw">summary</span>(iris)
+<span class="co">#&gt;   Sepal.Length   Sepal.Width    Petal.Length </span>
+<span class="co">#&gt;  Min.   :4.30   Min.   :2.00   Min.   :1.00  </span>
+<span class="co">#&gt;  1st Qu.:5.10   1st Qu.:2.80   1st Qu.:1.60  </span>
+<span class="co">#&gt;  Median :5.80   Median :3.00   Median :4.35  </span>
+<span class="co">#&gt;  Mean   :5.84   Mean   :3.06   Mean   :3.76  </span>
+<span class="co">#&gt;  3rd Qu.:6.40   3rd Qu.:3.30   3rd Qu.:5.10  </span>
+<span class="co">#&gt;  Max.   :7.90   Max.   :4.40   Max.   :6.90  </span>
+<span class="co">#&gt;   Petal.Width        Species  </span>
+<span class="co">#&gt;  Min.   :0.1   setosa    :50  </span>
+<span class="co">#&gt;  1st Qu.:0.3   versicolor:50  </span>
+<span class="co">#&gt;  Median :1.3   virginica :50  </span>
+<span class="co">#&gt;  Mean   :1.2                  </span>
+<span class="co">#&gt;  3rd Qu.:1.8                  </span>
+<span class="co">#&gt;  Max.   :2.5</span>
+<span class="kw">names</span>(iris) <span class="co">#annab veerunimed</span>
+<span class="co">#&gt; [1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot;</span>
+<span class="co">#&gt; [4] &quot;Petal.Width&quot;  &quot;Species&quot;</span>
+<span class="kw">nrow</span>(iris) <span class="co">#mitu rida?</span>
+<span class="co">#&gt; [1] 150</span>
+<span class="kw">ncol</span>(iris) <span class="co">#mitu veergu?</span>
+<span class="co">#&gt; [1] 5</span>
+<span class="kw">arrange</span>(iris, <span class="kw">desc</span>(Sepal.Length)) 
+<span class="co">#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class="co">#&gt; 1            7.9         3.8          6.4         2.0</span>
+<span class="co">#&gt; 2            7.7         3.8          6.7         2.2</span>
+<span class="co">#&gt; 3            7.7         2.6          6.9         2.3</span>
+<span class="co">#&gt; 4            7.7         2.8          6.7         2.0</span>
+<span class="co">#&gt; 5            7.7         3.0          6.1         2.3</span>
+<span class="co">#&gt; 6            7.6         3.0          6.6         2.1</span>
+<span class="co">#&gt; 7            7.4         2.8          6.1         1.9</span>
+<span class="co">#&gt; 8            7.3         2.9          6.3         1.8</span>
+<span class="co">#&gt; 9            7.2         3.6          6.1         2.5</span>
+<span class="co">#&gt; 10           7.2         3.2          6.0         1.8</span>
+<span class="co">#&gt; 11           7.2         3.0          5.8         1.6</span>
+<span class="co">#&gt; 12           7.1         3.0          5.9         2.1</span>
+<span class="co">#&gt; 13           7.0         3.2          4.7         1.4</span>
+<span class="co">#&gt; 14           6.9         3.1          4.9         1.5</span>
+<span class="co">#&gt; 15           6.9         3.2          5.7         2.3</span>
+<span class="co">#&gt; 16           6.9         3.1          5.4         2.1</span>
+<span class="co">#&gt; 17           6.9         3.1          5.1         2.3</span>
+<span class="co">#&gt; 18           6.8         2.8          4.8         1.4</span>
+<span class="co">#&gt; 19           6.8         3.0          5.5         2.1</span>
+<span class="co">#&gt; 20           6.8         3.2          5.9         2.3</span>
+<span class="co">#&gt; 21           6.7         3.1          4.4         1.4</span>
+<span class="co">#&gt; 22           6.7         3.0          5.0         1.7</span>
+<span class="co">#&gt; 23           6.7         3.1          4.7         1.5</span>
+<span class="co">#&gt; 24           6.7         2.5          5.8         1.8</span>
+<span class="co">#&gt; 25           6.7         3.3          5.7         2.1</span>
+<span class="co">#&gt; 26           6.7         3.1          5.6         2.4</span>
+<span class="co">#&gt; 27           6.7         3.3          5.7         2.5</span>
+<span class="co">#&gt; 28           6.7         3.0          5.2         2.3</span>
+<span class="co">#&gt; 29           6.6         2.9          4.6         1.3</span>
+<span class="co">#&gt; 30           6.6         3.0          4.4         1.4</span>
+<span class="co">#&gt; 31           6.5         2.8          4.6         1.5</span>
+<span class="co">#&gt; 32           6.5         3.0          5.8         2.2</span>
+<span class="co">#&gt; 33           6.5         3.2          5.1         2.0</span>
+<span class="co">#&gt; 34           6.5         3.0          5.5         1.8</span>
+<span class="co">#&gt; 35           6.5         3.0          5.2         2.0</span>
+<span class="co">#&gt; 36           6.4         3.2          4.5         1.5</span>
+<span class="co">#&gt; 37           6.4         2.9          4.3         1.3</span>
+<span class="co">#&gt; 38           6.4         2.7          5.3         1.9</span>
+<span class="co">#&gt; 39           6.4         3.2          5.3         2.3</span>
+<span class="co">#&gt; 40           6.4         2.8          5.6         2.1</span>
+<span class="co">#&gt; 41           6.4         2.8          5.6         2.2</span>
+<span class="co">#&gt; 42           6.4         3.1          5.5         1.8</span>
+<span class="co">#&gt; 43           6.3         3.3          4.7         1.6</span>
+<span class="co">#&gt; 44           6.3         2.5          4.9         1.5</span>
+<span class="co">#&gt; 45           6.3         2.3          4.4         1.3</span>
+<span class="co">#&gt; 46           6.3         3.3          6.0         2.5</span>
+<span class="co">#&gt; 47           6.3         2.9          5.6         1.8</span>
+<span class="co">#&gt; 48           6.3         2.7          4.9         1.8</span>
+<span class="co">#&gt; 49           6.3         2.8          5.1         1.5</span>
+<span class="co">#&gt; 50           6.3         3.4          5.6         2.4</span>
+<span class="co">#&gt; 51           6.3         2.5          5.0         1.9</span>
+<span class="co">#&gt; 52           6.2         2.2          4.5         1.5</span>
+<span class="co">#&gt; 53           6.2         2.9          4.3         1.3</span>
+<span class="co">#&gt; 54           6.2         2.8          4.8         1.8</span>
+<span class="co">#&gt; 55           6.2         3.4          5.4         2.3</span>
+<span class="co">#&gt; 56           6.1         2.9          4.7         1.4</span>
+<span class="co">#&gt; 57           6.1         2.8          4.0         1.3</span>
+<span class="co">#&gt; 58           6.1         2.8          4.7         1.2</span>
+<span class="co">#&gt; 59           6.1         3.0          4.6         1.4</span>
+<span class="co">#&gt; 60           6.1         3.0          4.9         1.8</span>
+<span class="co">#&gt; 61           6.1         2.6          5.6         1.4</span>
+<span class="co">#&gt; 62           6.0         2.2          4.0         1.0</span>
+<span class="co">#&gt; 63           6.0         2.9          4.5         1.5</span>
+<span class="co">#&gt; 64           6.0         2.7          5.1         1.6</span>
+<span class="co">#&gt; 65           6.0         3.4          4.5         1.6</span>
+<span class="co">#&gt; 66           6.0         2.2          5.0         1.5</span>
+<span class="co">#&gt; 67           6.0         3.0          4.8         1.8</span>
+<span class="co">#&gt; 68           5.9         3.0          4.2         1.5</span>
+<span class="co">#&gt; 69           5.9         3.2          4.8         1.8</span>
+<span class="co">#&gt; 70           5.9         3.0          5.1         1.8</span>
+<span class="co">#&gt; 71           5.8         4.0          1.2         0.2</span>
+<span class="co">#&gt; 72           5.8         2.7          4.1         1.0</span>
+<span class="co">#&gt; 73           5.8         2.7          3.9         1.2</span>
+<span class="co">#&gt; 74           5.8         2.6          4.0         1.2</span>
+<span class="co">#&gt; 75           5.8         2.7          5.1         1.9</span>
+<span class="co">#&gt; 76           5.8         2.8          5.1         2.4</span>
+<span class="co">#&gt; 77           5.8         2.7          5.1         1.9</span>
+<span class="co">#&gt; 78           5.7         4.4          1.5         0.4</span>
+<span class="co">#&gt; 79           5.7         3.8          1.7         0.3</span>
+<span class="co">#&gt; 80           5.7         2.8          4.5         1.3</span>
+<span class="co">#&gt; 81           5.7         2.6          3.5         1.0</span>
+<span class="co">#&gt; 82           5.7         3.0          4.2         1.2</span>
+<span class="co">#&gt; 83           5.7         2.9          4.2         1.3</span>
+<span class="co">#&gt; 84           5.7         2.8          4.1         1.3</span>
+<span class="co">#&gt; 85           5.7         2.5          5.0         2.0</span>
+<span class="co">#&gt; 86           5.6         2.9          3.6         1.3</span>
+<span class="co">#&gt; 87           5.6         3.0          4.5         1.5</span>
+<span class="co">#&gt; 88           5.6         2.5          3.9         1.1</span>
+<span class="co">#&gt; 89           5.6         3.0          4.1         1.3</span>
+<span class="co">#&gt; 90           5.6         2.7          4.2         1.3</span>
+<span class="co">#&gt; 91           5.6         2.8          4.9         2.0</span>
+<span class="co">#&gt; 92           5.5         4.2          1.4         0.2</span>
+<span class="co">#&gt; 93           5.5         3.5          1.3         0.2</span>
+<span class="co">#&gt; 94           5.5         2.3          4.0         1.3</span>
+<span class="co">#&gt; 95           5.5         2.4          3.8         1.1</span>
+<span class="co">#&gt; 96           5.5         2.4          3.7         1.0</span>
+<span class="co">#&gt; 97           5.5         2.5          4.0         1.3</span>
+<span class="co">#&gt; 98           5.5         2.6          4.4         1.2</span>
+<span class="co">#&gt; 99           5.4         3.9          1.7         0.4</span>
+<span class="co">#&gt; 100          5.4         3.7          1.5         0.2</span>
+<span class="co">#&gt; 101          5.4         3.9          1.3         0.4</span>
+<span class="co">#&gt; 102          5.4         3.4          1.7         0.2</span>
+<span class="co">#&gt; 103          5.4         3.4          1.5         0.4</span>
+<span class="co">#&gt; 104          5.4         3.0          4.5         1.5</span>
+<span class="co">#&gt; 105          5.3         3.7          1.5         0.2</span>
+<span class="co">#&gt; 106          5.2         3.5          1.5         0.2</span>
+<span class="co">#&gt; 107          5.2         3.4          1.4         0.2</span>
+<span class="co">#&gt; 108          5.2         4.1          1.5         0.1</span>
+<span class="co">#&gt; 109          5.2         2.7          3.9         1.4</span>
+<span class="co">#&gt; 110          5.1         3.5          1.4         0.2</span>
+<span class="co">#&gt; 111          5.1         3.5          1.4         0.3</span>
+<span class="co">#&gt; 112          5.1         3.8          1.5         0.3</span>
+<span class="co">#&gt; 113          5.1         3.7          1.5         0.4</span>
+<span class="co">#&gt; 114          5.1         3.3          1.7         0.5</span>
+<span class="co">#&gt; 115          5.1         3.4          1.5         0.2</span>
+<span class="co">#&gt; 116          5.1         3.8          1.9         0.4</span>
+<span class="co">#&gt; 117          5.1         3.8          1.6         0.2</span>
+<span class="co">#&gt; 118          5.1         2.5          3.0         1.1</span>
+<span class="co">#&gt; 119          5.0         3.6          1.4         0.2</span>
+<span class="co">#&gt; 120          5.0         3.4          1.5         0.2</span>
+<span class="co">#&gt; 121          5.0         3.0          1.6         0.2</span>
+<span class="co">#&gt; 122          5.0         3.4          1.6         0.4</span>
+<span class="co">#&gt; 123          5.0         3.2          1.2         0.2</span>
+<span class="co">#&gt; 124          5.0         3.5          1.3         0.3</span>
+<span class="co">#&gt; 125          5.0         3.5          1.6         0.6</span>
+<span class="co">#&gt; 126          5.0         3.3          1.4         0.2</span>
+<span class="co">#&gt; 127          5.0         2.0          3.5         1.0</span>
+<span class="co">#&gt; 128          5.0         2.3          3.3         1.0</span>
+<span class="co">#&gt; 129          4.9         3.0          1.4         0.2</span>
+<span class="co">#&gt; 130          4.9         3.1          1.5         0.1</span>
+<span class="co">#&gt; 131          4.9         3.1          1.5         0.2</span>
+<span class="co">#&gt; 132          4.9         3.6          1.4         0.1</span>
+<span class="co">#&gt; 133          4.9         2.4          3.3         1.0</span>
+<span class="co">#&gt; 134          4.9         2.5          4.5         1.7</span>
+<span class="co">#&gt; 135          4.8         3.4          1.6         0.2</span>
+<span class="co">#&gt; 136          4.8         3.0          1.4         0.1</span>
+<span class="co">#&gt; 137          4.8         3.4          1.9         0.2</span>
+<span class="co">#&gt; 138          4.8         3.1          1.6         0.2</span>
+<span class="co">#&gt; 139          4.8         3.0          1.4         0.3</span>
+<span class="co">#&gt; 140          4.7         3.2          1.3         0.2</span>
+<span class="co">#&gt; 141          4.7         3.2          1.6         0.2</span>
+<span class="co">#&gt; 142          4.6         3.1          1.5         0.2</span>
+<span class="co">#&gt; 143          4.6         3.4          1.4         0.3</span>
+<span class="co">#&gt; 144          4.6         3.6          1.0         0.2</span>
+<span class="co">#&gt; 145          4.6         3.2          1.4         0.2</span>
+<span class="co">#&gt; 146          4.5         2.3          1.3         0.3</span>
+<span class="co">#&gt; 147          4.4         2.9          1.4         0.2</span>
+<span class="co">#&gt; 148          4.4         3.0          1.3         0.2</span>
+<span class="co">#&gt; 149          4.4         3.2          1.3         0.2</span>
+<span class="co">#&gt; 150          4.3         3.0          1.1         0.1</span>
+<span class="co">#&gt;        Species</span>
+<span class="co">#&gt; 1    virginica</span>
+<span class="co">#&gt; 2    virginica</span>
+<span class="co">#&gt; 3    virginica</span>
+<span class="co">#&gt; 4    virginica</span>
+<span class="co">#&gt; 5    virginica</span>
+<span class="co">#&gt; 6    virginica</span>
+<span class="co">#&gt; 7    virginica</span>
+<span class="co">#&gt; 8    virginica</span>
+<span class="co">#&gt; 9    virginica</span>
+<span class="co">#&gt; 10   virginica</span>
+<span class="co">#&gt; 11   virginica</span>
+<span class="co">#&gt; 12   virginica</span>
+<span class="co">#&gt; 13  versicolor</span>
+<span class="co">#&gt; 14  versicolor</span>
+<span class="co">#&gt; 15   virginica</span>
+<span class="co">#&gt; 16   virginica</span>
+<span class="co">#&gt; 17   virginica</span>
+<span class="co">#&gt; 18  versicolor</span>
+<span class="co">#&gt; 19   virginica</span>
+<span class="co">#&gt; 20   virginica</span>
+<span class="co">#&gt; 21  versicolor</span>
+<span class="co">#&gt; 22  versicolor</span>
+<span class="co">#&gt; 23  versicolor</span>
+<span class="co">#&gt; 24   virginica</span>
+<span class="co">#&gt; 25   virginica</span>
+<span class="co">#&gt; 26   virginica</span>
+<span class="co">#&gt; 27   virginica</span>
+<span class="co">#&gt; 28   virginica</span>
+<span class="co">#&gt; 29  versicolor</span>
+<span class="co">#&gt; 30  versicolor</span>
+<span class="co">#&gt; 31  versicolor</span>
+<span class="co">#&gt; 32   virginica</span>
+<span class="co">#&gt; 33   virginica</span>
+<span class="co">#&gt; 34   virginica</span>
+<span class="co">#&gt; 35   virginica</span>
+<span class="co">#&gt; 36  versicolor</span>
+<span class="co">#&gt; 37  versicolor</span>
+<span class="co">#&gt; 38   virginica</span>
+<span class="co">#&gt; 39   virginica</span>
+<span class="co">#&gt; 40   virginica</span>
+<span class="co">#&gt; 41   virginica</span>
+<span class="co">#&gt; 42   virginica</span>
+<span class="co">#&gt; 43  versicolor</span>
+<span class="co">#&gt; 44  versicolor</span>
+<span class="co">#&gt; 45  versicolor</span>
+<span class="co">#&gt; 46   virginica</span>
+<span class="co">#&gt; 47   virginica</span>
+<span class="co">#&gt; 48   virginica</span>
+<span class="co">#&gt; 49   virginica</span>
+<span class="co">#&gt; 50   virginica</span>
+<span class="co">#&gt; 51   virginica</span>
+<span class="co">#&gt; 52  versicolor</span>
+<span class="co">#&gt; 53  versicolor</span>
+<span class="co">#&gt; 54   virginica</span>
+<span class="co">#&gt; 55   virginica</span>
+<span class="co">#&gt; 56  versicolor</span>
+<span class="co">#&gt; 57  versicolor</span>
+<span class="co">#&gt; 58  versicolor</span>
+<span class="co">#&gt; 59  versicolor</span>
+<span class="co">#&gt; 60   virginica</span>
+<span class="co">#&gt; 61   virginica</span>
+<span class="co">#&gt; 62  versicolor</span>
+<span class="co">#&gt; 63  versicolor</span>
+<span class="co">#&gt; 64  versicolor</span>
+<span class="co">#&gt; 65  versicolor</span>
+<span class="co">#&gt; 66   virginica</span>
+<span class="co">#&gt; 67   virginica</span>
+<span class="co">#&gt; 68  versicolor</span>
+<span class="co">#&gt; 69  versicolor</span>
+<span class="co">#&gt; 70   virginica</span>
+<span class="co">#&gt; 71      setosa</span>
+<span class="co">#&gt; 72  versicolor</span>
+<span class="co">#&gt; 73  versicolor</span>
+<span class="co">#&gt; 74  versicolor</span>
+<span class="co">#&gt; 75   virginica</span>
+<span class="co">#&gt; 76   virginica</span>
+<span class="co">#&gt; 77   virginica</span>
+<span class="co">#&gt; 78      setosa</span>
+<span class="co">#&gt; 79      setosa</span>
+<span class="co">#&gt; 80  versicolor</span>
+<span class="co">#&gt; 81  versicolor</span>
+<span class="co">#&gt; 82  versicolor</span>
+<span class="co">#&gt; 83  versicolor</span>
+<span class="co">#&gt; 84  versicolor</span>
+<span class="co">#&gt; 85   virginica</span>
+<span class="co">#&gt; 86  versicolor</span>
+<span class="co">#&gt; 87  versicolor</span>
+<span class="co">#&gt; 88  versicolor</span>
+<span class="co">#&gt; 89  versicolor</span>
+<span class="co">#&gt; 90  versicolor</span>
+<span class="co">#&gt; 91   virginica</span>
+<span class="co">#&gt; 92      setosa</span>
+<span class="co">#&gt; 93      setosa</span>
+<span class="co">#&gt; 94  versicolor</span>
+<span class="co">#&gt; 95  versicolor</span>
+<span class="co">#&gt; 96  versicolor</span>
+<span class="co">#&gt; 97  versicolor</span>
+<span class="co">#&gt; 98  versicolor</span>
+<span class="co">#&gt; 99      setosa</span>
+<span class="co">#&gt; 100     setosa</span>
+<span class="co">#&gt; 101     setosa</span>
+<span class="co">#&gt; 102     setosa</span>
+<span class="co">#&gt; 103     setosa</span>
+<span class="co">#&gt; 104 versicolor</span>
+<span class="co">#&gt; 105     setosa</span>
+<span class="co">#&gt; 106     setosa</span>
+<span class="co">#&gt; 107     setosa</span>
+<span class="co">#&gt; 108     setosa</span>
+<span class="co">#&gt; 109 versicolor</span>
+<span class="co">#&gt; 110     setosa</span>
+<span class="co">#&gt; 111     setosa</span>
+<span class="co">#&gt; 112     setosa</span>
+<span class="co">#&gt; 113     setosa</span>
+<span class="co">#&gt; 114     setosa</span>
+<span class="co">#&gt; 115     setosa</span>
+<span class="co">#&gt; 116     setosa</span>
+<span class="co">#&gt; 117     setosa</span>
+<span class="co">#&gt; 118 versicolor</span>
+<span class="co">#&gt; 119     setosa</span>
+<span class="co">#&gt; 120     setosa</span>
+<span class="co">#&gt; 121     setosa</span>
+<span class="co">#&gt; 122     setosa</span>
+<span class="co">#&gt; 123     setosa</span>
+<span class="co">#&gt; 124     setosa</span>
+<span class="co">#&gt; 125     setosa</span>
+<span class="co">#&gt; 126     setosa</span>
+<span class="co">#&gt; 127 versicolor</span>
+<span class="co">#&gt; 128 versicolor</span>
+<span class="co">#&gt; 129     setosa</span>
+<span class="co">#&gt; 130     setosa</span>
+<span class="co">#&gt; 131     setosa</span>
+<span class="co">#&gt; 132     setosa</span>
+<span class="co">#&gt; 133 versicolor</span>
+<span class="co">#&gt; 134  virginica</span>
+<span class="co">#&gt; 135     setosa</span>
+<span class="co">#&gt; 136     setosa</span>
+<span class="co">#&gt; 137     setosa</span>
+<span class="co">#&gt; 138     setosa</span>
+<span class="co">#&gt; 139     setosa</span>
+<span class="co">#&gt; 140     setosa</span>
+<span class="co">#&gt; 141     setosa</span>
+<span class="co">#&gt; 142     setosa</span>
+<span class="co">#&gt; 143     setosa</span>
+<span class="co">#&gt; 144     setosa</span>
+<span class="co">#&gt; 145     setosa</span>
+<span class="co">#&gt; 146     setosa</span>
+<span class="co">#&gt; 147     setosa</span>
+<span class="co">#&gt; 148     setosa</span>
+<span class="co">#&gt; 149     setosa</span>
+<span class="co">#&gt; 150     setosa</span>
+<span class="co">#sorteerib tabeli veeru &quot;Sepal.Length&quot; väärtuste järgi </span>
+<span class="co">#langevalt (default on tõusev sorteerimine). </span>
+<span class="co">#Võib argumendina anda mitu veergu.</span>
+<span class="kw">top_n</span>(iris, <span class="dv">2</span>, Sepal.Length) <span class="co">#saab 2 rida, milles on kõige suuremad S.L. väärtused</span>
+<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class="co">#&gt; 1          7.7         3.8          6.7         2.2</span>
+<span class="co">#&gt; 2          7.7         2.6          6.9         2.3</span>
+<span class="co">#&gt; 3          7.7         2.8          6.7         2.0</span>
+<span class="co">#&gt; 4          7.9         3.8          6.4         2.0</span>
+<span class="co">#&gt; 5          7.7         3.0          6.1         2.3</span>
+<span class="co">#&gt;     Species</span>
+<span class="co">#&gt; 1 virginica</span>
+<span class="co">#&gt; 2 virginica</span>
+<span class="co">#&gt; 3 virginica</span>
+<span class="co">#&gt; 4 virginica</span>
+<span class="co">#&gt; 5 virginica</span>
+<span class="kw">top_n</span>(iris, <span class="op">-</span><span class="dv">2</span>, Sepal.Length) <span class="co">#saab 2 rida, milles on kõige väiksemad väärtused </span>
+<span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class="co">#&gt; 1          4.4         2.9          1.4         0.2</span>
+<span class="co">#&gt; 2          4.3         3.0          1.1         0.1</span>
+<span class="co">#&gt; 3          4.4         3.0          1.3         0.2</span>
+<span class="co">#&gt; 4          4.4         3.2          1.3         0.2</span>
+<span class="co">#&gt;   Species</span>
+<span class="co">#&gt; 1  setosa</span>
+<span class="co">#&gt; 2  setosa</span>
+<span class="co">#&gt; 3  setosa</span>
+<span class="co">#&gt; 4  setosa</span></code></pre></div>
+<p>Tibblega saab teha maatriksarvutusi, kui kasutada ainult arvudega ridu. <code>apply()</code> arvutab maatriksi rea (1) või veeru (2) kaupa, vastavalt funktsioonile, mille sa ette annad.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colSums</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])
+<span class="co">#&gt;  apples oranges </span>
+<span class="co">#&gt;      48      NA</span>
+<span class="kw">rowSums</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])
+<span class="co">#&gt; [1]  3 36 NA</span>
+<span class="kw">rowMeans</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])
+<span class="co">#&gt; [1]  1.5 18.0   NA</span>
+<span class="kw">colMeans</span>(fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>])
+<span class="co">#&gt;  apples oranges </span>
+<span class="co">#&gt;      16      NA</span>
+fruits_subset &lt;-<span class="st"> </span>fruits[ , <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]
+
+<span class="co"># 1 tähendab, et arvuta sd rea kaupa</span>
+<span class="kw">apply</span>(fruits_subset, <span class="dv">1</span>, sd)
+<span class="co">#&gt; [1]  0.707 19.799     NA</span>
+<span class="co"># 2 tähendab, et arvuta sd veeru kaupa</span>
+<span class="kw">apply</span>(fruits_subset, <span class="dv">2</span>, sd) 
+<span class="co">#&gt;  apples oranges </span>
+<span class="co">#&gt;    23.4      NA</span></code></pre></div>
+<p>Andmetabeli Summary saab mitmel viisil, skimr::skim() funktsioon on üks paremaid</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">skimr<span class="op">::</span><span class="kw">skim</span>(iris)
+<span class="co">#&gt; Skim summary statistics</span>
+<span class="co">#&gt;  n obs: 150 </span>
+<span class="co">#&gt;  n variables: 5 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ── Variable type:factor ───────────────────────────────</span>
+<span class="co">#&gt;  variable missing complete   n n_unique</span>
+<span class="co">#&gt;   Species       0      150 150        3</span>
+<span class="co">#&gt;                        top_counts ordered</span>
+<span class="co">#&gt;  set: 50, ver: 50, vir: 50, NA: 0   FALSE</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ── Variable type:numeric ──────────────────────────────</span>
+<span class="co">#&gt;      variable missing complete   n mean   sd  p0 p25</span>
+<span class="co">#&gt;  Petal.Length       0      150 150 3.76 1.77 1   1.6</span>
+<span class="co">#&gt;   Petal.Width       0      150 150 1.2  0.76 0.1 0.3</span>
+<span class="co">#&gt;  Sepal.Length       0      150 150 5.84 0.83 4.3 5.1</span>
+<span class="co">#&gt;   Sepal.Width       0      150 150 3.06 0.44 2   2.8</span>
+<span class="co">#&gt;   p50 p75 p100     hist</span>
+<span class="co">#&gt;  4.35 5.1  6.9 ▇▁▁▂▅▅▃▁</span>
+<span class="co">#&gt;  1.3  1.8  2.5 ▇▁▁▅▃▃▂▂</span>
+<span class="co">#&gt;  5.8  6.4  7.9 ▂▇▅▇▆▅▂▂</span>
+<span class="co">#&gt;  3    3.3  4.4 ▁▂▅▇▃▂▁▁</span></code></pre></div>
+<p>Lisame käsitsi tabelile rea:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st"> </span><span class="kw">add_row</span>(fruits, 
+                  <span class="dt">shop =</span> <span class="st">&quot;konsum&quot;</span>, 
+                  <span class="dt">apples =</span> <span class="dv">132</span>, 
+                  <span class="dt">oranges =</span> <span class="op">-</span><span class="dv">5</span>, 
+                  <span class="dt">.before =</span> <span class="dv">3</span>)
+fruits
+<span class="co">#&gt; # A tibble: 4 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 maxima      1       2 &lt;chr [26]&gt;</span>
+<span class="co">#&gt; 2 tesco       4      32 &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 konsum    132      -5 &lt;NULL&gt;    </span>
+<span class="co">#&gt; 4 lidl       43      NA &lt;S3: lm&gt;</span></code></pre></div>
+<p>Proovi ise:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">add_column</span>()</code></pre></div>
+<p>Eelnevaid verbe ei kasuta me just sageli, sest tavaliselt loeme andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:</p>
+<div id="rekodeerime-andmeraami-vaartusi" class="section level3">
+<h3><span class="header-section-number">7.0.1</span> Rekodeerime andmeraami väärtusi</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits<span class="op">$</span>apples[fruits<span class="op">$</span>apples<span class="op">==</span><span class="dv">43</span>] &lt;-<span class="st"> </span><span class="dv">333</span>
+fruits
+<span class="co">#&gt; # A tibble: 4 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 maxima      1       2 &lt;chr [26]&gt;</span>
+<span class="co">#&gt; 2 tesco       4      32 &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 konsum    132      -5 &lt;NULL&gt;    </span>
+<span class="co">#&gt; 4 lidl      333      NA &lt;S3: lm&gt;</span>
+fruits<span class="op">$</span>shop[fruits<span class="op">$</span>shop<span class="op">==</span><span class="st">&quot;tesco&quot;</span>] &lt;-<span class="st"> &quot;TESCO&quot;</span>
+fruits
+<span class="co">#&gt; # A tibble: 4 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 maxima      1       2 &lt;chr [26]&gt;</span>
+<span class="co">#&gt; 2 TESCO       4      32 &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 konsum    132      -5 &lt;NULL&gt;    </span>
+<span class="co">#&gt; 4 lidl      333      NA &lt;S3: lm&gt;</span>
+fruits<span class="op">$</span>apples[fruits<span class="op">$</span>apples<span class="op">&gt;</span><span class="dv">100</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
+fruits
+<span class="co">#&gt; # A tibble: 4 x 4</span>
+<span class="co">#&gt;   shop   apples oranges vabakava  </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
+<span class="co">#&gt; 1 maxima      1       2 &lt;chr [26]&gt;</span>
+<span class="co">#&gt; 2 TESCO       4      32 &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 konsum     NA      -5 &lt;NULL&gt;    </span>
+<span class="co">#&gt; 4 lidl       NA      NA &lt;S3: lm&gt;</span></code></pre></div>
+<p>Viskame välja duplikaatread, aga ainult need kus veerg nimega col1 sisaldab identseid väärtusi (mitmest identse väärtusega reast jääb alles ainult esimene)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">distinct</span>(dat, col1, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)
+<span class="co"># kõikide col vastu</span>
+<span class="kw">distinct</span>(dat) </code></pre></div>
+<p>Rekodeerime <code>Inf</code> ja <code>NA</code> väärtused nulliks (mis küll tavaliselt on halb mõte):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># inf to 0</span>
+x[<span class="kw">is.infinite</span>(x)] &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="co"># NA to 0</span>
+x[<span class="kw">is.na</span>(x)] &lt;-<span class="st"> </span><span class="dv">0</span></code></pre></div>
+</div>
+<div id="uhendame-kaks-andmeraami-rea-kaupa" class="section level3">
+<h3><span class="header-section-number">7.0.2</span> Ühendame kaks andmeraami rea kaupa</h3>
+<p>Tabeli veergude arv ei muutu, ridade arv kasvab.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">colB =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))
+dfs1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colA =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">colB =</span>  <span class="dv">4</span>)
+<span class="co">#id teeb veel ühe veeru, mis näitab, kummast algtabelist iga uue tabeli rida pärit on </span>
+<span class="kw">bind_rows</span>(dfs, dfs1, <span class="dt">.id =</span> <span class="st">&quot;id&quot;</span>)
+<span class="co">#&gt; # A tibble: 4 x 3</span>
+<span class="co">#&gt;   id    colA   colB</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 1     a         1</span>
+<span class="co">#&gt; 2 1     b         2</span>
+<span class="co">#&gt; 3 1     c         3</span>
+<span class="co">#&gt; 4 2     d         4</span></code></pre></div>
+<p>Vaata Environmentist need tabelid üle ja mõtle järgi, mis juhtus.</p>
+<p>Kui <code>bind_rows()</code> miskipärast ei tööta, proovi <code>do.call(rbind, dfs)</code>, mis on väga sarnane.</p>
+<p>NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!</p>
+<p>Näiteks, võib-olla te tahtsite järgnevat tabelit saada, aga võib-olla ka mitte:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df2 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">ColC =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">ColD =</span> <span class="dv">4</span>)
+## works by guessing your true intention
+<span class="kw">bind_rows</span>(dfs1, df2)
+<span class="co">#&gt; # A tibble: 2 x 4</span>
+<span class="co">#&gt;   colA   colB ColC   ColD</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 d         4 &lt;NA&gt;     NA</span>
+<span class="co">#&gt; 2 &lt;NA&gt;     NA d         4</span></code></pre></div>
+</div>
+<div id="uhendame-kaks-andmeraami-veeru-kaupa" class="section level3">
+<h3><span class="header-section-number">7.0.3</span> ühendame kaks andmeraami veeru kaupa</h3>
+<p>Meil on 2 verbi: bind_cols ja cbind, millest esimene on konservatiivsem. Proovige eelkõige bind_col-ga läbi saada, aga kui muidu ei saa, siis cbind ühendab vahest asju, mida bind_cols keeldub puutumast. NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfx &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">colC =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>))
+<span class="kw">bind_cols</span>(dfs, dfx)
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;   colA   colB  colC</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 a         1     4</span>
+<span class="co">#&gt; 2 b         2     5</span>
+<span class="co">#&gt; 3 c         3     6</span></code></pre></div>
+</div>
+<div id="andmeraamide-uhendamine-join-ga" class="section level3">
+<h3><span class="header-section-number">7.0.4</span> andmeraamide ühendamine join()-ga</h3>
+<p>Kõigepealt 2 tabelit: df1 ja df2.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df1 &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span><span class="st"> </span>Member,         <span class="op">~</span><span class="st"> </span>yr_of_birth,
+  <span class="st">&quot;John Lennon&quot;</span>,    <span class="dv">1940</span>,
+  <span class="st">&quot;Paul McCartney&quot;</span>, <span class="dv">1942</span>
+)
+
+df1
+<span class="co">#&gt; # A tibble: 2 x 2</span>
+<span class="co">#&gt;   Member         yr_of_birth</span>
+<span class="co">#&gt;   &lt;chr&gt;                &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 John Lennon           1940</span>
+<span class="co">#&gt; 2 Paul McCartney        1942</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df2 &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span><span class="st"> </span>Member,            <span class="op">~</span><span class="st"> </span>instrument,    <span class="op">~</span><span class="st"> </span>yr_of_birth,
+  <span class="st">&quot;John Lennon&quot;</span>,      <span class="st">&quot;guitar&quot;</span>,         <span class="dv">1940</span>,
+  <span class="st">&quot;Ringo Starr&quot;</span>,      <span class="st">&quot;drums&quot;</span>,          <span class="dv">1940</span>,
+  <span class="st">&quot;George Harrisson&quot;</span>, <span class="st">&quot;guitar&quot;</span>,         <span class="dv">1942</span>
+)
+df2
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;   Member           instrument yr_of_birth</span>
+<span class="co">#&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 John Lennon      guitar            1940</span>
+<span class="co">#&gt; 2 Ringo Starr      drums             1940</span>
+<span class="co">#&gt; 3 George Harrisson guitar            1942</span></code></pre></div>
+<p>Ühendan 2 tabelit nii, et mõlema tabeli kõik read ilmuvad uude tabelisse.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">full_join</span>(df1, df2)
+<span class="co">#&gt; # A tibble: 4 x 3</span>
+<span class="co">#&gt;   Member           yr_of_birth instrument</span>
+<span class="co">#&gt;   &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;     </span>
+<span class="co">#&gt; 1 John Lennon             1940 guitar    </span>
+<span class="co">#&gt; 2 Paul McCartney          1942 &lt;NA&gt;      </span>
+<span class="co">#&gt; 3 Ringo Starr             1940 drums     </span>
+<span class="co">#&gt; 4 George Harrisson        1942 guitar</span></code></pre></div>
+<p>Ühendan esimese tabeliga df2 nii, et ainult df1 read säilivad, aga df2-lt võetakse sisse veerud, mis df1-s puuduvad. See on hea join, kui on vaja algtabelile lisada infot teistest tabelitest.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(df1, df2)
+<span class="co">#&gt; # A tibble: 2 x 3</span>
+<span class="co">#&gt;   Member         yr_of_birth instrument</span>
+<span class="co">#&gt;   &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;     </span>
+<span class="co">#&gt; 1 John Lennon           1940 guitar    </span>
+<span class="co">#&gt; 2 Paul McCartney        1942 &lt;NA&gt;</span></code></pre></div>
+<p>Filtreerin välja need df1 read, millele vastab rida df2-s.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">semi_join</span>(df1, df2)
+<span class="co">#&gt; # A tibble: 1 x 2</span>
+<span class="co">#&gt;   Member      yr_of_birth</span>
+<span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 John Lennon        1940</span></code></pre></div>
+<p>Filtreerin välja need df1 read, millele ei vasta rida df2-s.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anti_join</span>(df1, df2)
+<span class="co">#&gt; # A tibble: 1 x 2</span>
+<span class="co">#&gt;   Member         yr_of_birth</span>
+<span class="co">#&gt;   &lt;chr&gt;                &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Paul McCartney        1942</span></code></pre></div>
+</div>
+<div id="nii-saab-raamist-katte-vektori-millega-tehteid-teha." class="section level3">
+<h3><span class="header-section-number">7.0.5</span> Nii saab raamist kätte vektori, millega tehteid teha.</h3>
+<p>Tibble jääb muidugi endisel kujul alles.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ubinad &lt;-<span class="st"> </span>fruits<span class="op">$</span>apples
+ubinad &lt;-<span class="st"> </span>ubinad <span class="op">+</span><span class="st"> </span><span class="dv">2</span>
+ubinad
+<span class="co">#&gt; [1]  3  6 NA NA</span>
+## see on jälle vektor
+<span class="kw">str</span>(ubinad)
+<span class="co">#&gt;  num [1:4] 3 6 NA NA</span></code></pre></div>
+</div>
+<div id="andmeraamide-salvestamine-eksport-import" class="section level2">
+<h2><span class="header-section-number">7.1</span> Andmeraamide salvestamine (eksport-import)</h2>
+<p>Andmeraami saame salvestada näiteks csv-na (comma separated file) oma kõvakettale, kasutame “tidyverse” analooge paketist “readr”, mille nimed on baas R funktsioonidest eristatavad alakriipsu “_&quot; kasutamisega. “readr” laaditakse automaatselt koos “tidyverse” laadimisega.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## loome uuesti fruits data tibble
+shop &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;maxima&quot;</span>, <span class="st">&quot;tesco&quot;</span>, <span class="st">&quot;lidl&quot;</span>)
+apples &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">43</span>)
+oranges &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">32</span>, <span class="ot">NA</span>)
+fruits &lt;-<span class="st"> </span><span class="kw">tibble</span>(shop, apples, oranges, vabakava)
+## kirjutame fruits tabeli csv faili fruits.csv kataloogi data 
+<span class="kw">write_csv</span>(fruits, <span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
+<p>Kuhu see fail läks? See läks meie projekti juurkataloogi kausta “data/”, juurkataloogi asukoha oma arvuti kõvakettal leiame käsuga:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getwd</span>()
+<span class="co">#&gt; [1] &quot;/home/travis/build/rstats-tartu/lectures&quot;</span></code></pre></div>
+<p>Andmete sisselugemine töökataloogist:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
+<p>MS exceli failist saab tabeleid importida “readxl” raamatukogu abil.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)
+## kõigepealt vaatame kui palju sheete failis on
+sheets &lt;-<span class="st"> </span><span class="kw">excel_sheets</span>(<span class="st">&quot;data/excelfile.xlsx&quot;</span>)
+## siis impordime näiteks esimese sheeti
+dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;data/excelfile.xlsx&quot;</span>, <span class="dt">sheet =</span> sheets[<span class="dv">1</span>])</code></pre></div>
+<p>Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga <code>read_csv2</code> või <code>read.csv2</code> (need on erinevad funktsioonid; read.csv2 loeb selle sisse data framena ja read_csv2 tibble-na).</p>
+<p>R-i saab sisse lugeda palju erinevaid andmeformaate. Näiteks, installi RStudio addin: “Gotta read em all R”, vaata eespool. See läheb ülesse tab-i Addins. Sealt saab selle avada ja selle abil tabeleid oma workspace üles laadida.</p>
+<p>Alternatiiv: mine alla paremake Files tab-le, navigeeri sinna kuhu vaja ja kliki faili nimele, mida tahad R-i importida.</p>
+<p>Mõlemal juhul ilmub alla konsooli (all vasakul) koodijupp, mille jooksutamine peaks asja ära tegema. Te võite tahta selle koodi kopeerida üles vasakusse aknasse kus teie ülejäänud kood tulevastele põlvedele säilub.</p>
+<blockquote>
+<p>Tüüpiliselt töötate R-s oma algse andmestikuga. Reprodutseeruvaks projektiks on vaja 2 asja: algandmeid ja koodi, millega neid manipuleerida. R ei muuda algandmeid, mille te näiteks csv-na sisse loete.</p>
+</blockquote>
+<p>Andmetabelite salvestamine töö vaheproduktidena ei ole sageli vajalik, sest te jooksutate iga kord, kui te oma projekti juurde naasete, kogu analüüsi uuesti kuni kohani, kuhu te pooleli jäite. See tagab, et teie kood töötab tervikuna. Erandiks on tabelid, mille arvutamine võtab palju aega.</p>
+<p>Tibble konverteerimine data frame-ks ja tagasi tibbleks:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(fruits)
+<span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span>
+fruits &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(fruits)
+<span class="kw">class</span>(fruits)
+<span class="co">#&gt; [1] &quot;data.frame&quot;</span>
+fruits &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(fruits)
+<span class="kw">class</span>(fruits)
+<span class="co">#&gt; [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span></code></pre></div>
+</div>
+<div id="na-d" class="section level2">
+<h2><span class="header-section-number">7.2</span> NA-d</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diabetes &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> <span class="st">&quot;data/diabetes.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">dec =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
+<span class="kw">str</span>(diabetes)
+<span class="co">#&gt; &#39;data.frame&#39;:    403 obs. of  19 variables:</span>
+<span class="co">#&gt;  $ id      : int  1000 1001 1002 1003 1005 1008 1011 1015 1016 1022 ...</span>
+<span class="co">#&gt;  $ chol    : int  203 165 228 78 249 248 195 227 177 263 ...</span>
+<span class="co">#&gt;  $ stab.glu: int  82 97 92 93 90 94 92 75 87 89 ...</span>
+<span class="co">#&gt;  $ hdl     : int  56 24 37 12 28 69 41 44 49 40 ...</span>
+<span class="co">#&gt;  $ ratio   : num  3.6 6.9 6.2 6.5 8.9 ...</span>
+<span class="co">#&gt;  $ glyhb   : num  4.31 4.44 4.64 4.63 7.72 ...</span>
+<span class="co">#&gt;  $ location: Factor w/ 2 levels &quot;Buckingham&quot;,&quot;Louisa&quot;: 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;  $ age     : int  46 29 58 67 64 34 30 37 45 55 ...</span>
+<span class="co">#&gt;  $ gender  : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 1 1 1 2 2 2 2 2 2 1 ...</span>
+<span class="co">#&gt;  $ height  : int  62 64 61 67 68 71 69 59 69 63 ...</span>
+<span class="co">#&gt;  $ weight  : int  121 218 256 119 183 190 191 170 166 202 ...</span>
+<span class="co">#&gt;  $ frame   : Factor w/ 4 levels &quot;&quot;,&quot;large&quot;,&quot;medium&quot;,..: 3 2 2 2 3 2 3 3 2 4 ...</span>
+<span class="co">#&gt;  $ bp.1s   : int  118 112 190 110 138 132 161 NA 160 108 ...</span>
+<span class="co">#&gt;  $ bp.1d   : int  59 68 92 50 80 86 112 NA 80 72 ...</span>
+<span class="co">#&gt;  $ bp.2s   : int  NA NA 185 NA NA NA 161 NA 128 NA ...</span>
+<span class="co">#&gt;  $ bp.2d   : int  NA NA 92 NA NA NA 112 NA 86 NA ...</span>
+<span class="co">#&gt;  $ waist   : int  29 46 49 33 44 36 46 34 34 45 ...</span>
+<span class="co">#&gt;  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...</span>
+<span class="co">#&gt;  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...</span>
+<span class="kw">aggr</span>(diabetes, <span class="dt">prop =</span> <span class="ot">FALSE</span>, <span class="dt">numbers =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="03-objektid_files/figure-html/unnamed-chunk-64-1.png" width="70%" style="display: block; margin: auto;" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
+<p>Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nrows &lt;-<span class="st"> </span><span class="kw">nrow</span>(diabetes)
+  ncomplete &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">complete.cases</span>(diabetes))
+  ncomplete <span class="co">#136</span>
+<span class="co">#&gt; [1] 136</span>
+  ncomplete<span class="op">/</span>nrows <span class="co">#34%</span>
+<span class="co">#&gt; [1] 0.337</span></code></pre></div>
+<div id="mitu-na-d-on-igas-tulbas" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Mitu NA-d on igas tulbas?</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(diabetes, <span class="cf">function</span>(x) <span class="kw">sum</span>(<span class="kw">is.na</span>(x))) 
+<span class="co">#&gt;       id     chol stab.glu      hdl    ratio    glyhb </span>
+<span class="co">#&gt;        0        1        0        1        1       13 </span>
+<span class="co">#&gt; location      age   gender   height   weight    frame </span>
+<span class="co">#&gt;        0        0        0        5        1        0 </span>
+<span class="co">#&gt;    bp.1s    bp.1d    bp.2s    bp.2d    waist      hip </span>
+<span class="co">#&gt;        5        5      262      262        2        2 </span>
+<span class="co">#&gt; time.ppn </span>
+<span class="co">#&gt;        3</span></code></pre></div>
+<p>alternatiiv tidyverse-st - väljund on uus data frame NA-de arvuga igale algse tabeli veerule</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diabetes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map_df</span>(<span class="op">~</span><span class="kw">sum</span>(<span class="kw">is.na</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>()
+<span class="co">#&gt;          [,1]</span>
+<span class="co">#&gt; id          0</span>
+<span class="co">#&gt; chol        1</span>
+<span class="co">#&gt; stab.glu    0</span>
+<span class="co">#&gt; hdl         1</span>
+<span class="co">#&gt; ratio       1</span>
+<span class="co">#&gt; glyhb      13</span>
+<span class="co">#&gt; location    0</span>
+<span class="co">#&gt; age         0</span>
+<span class="co">#&gt; gender      0</span>
+<span class="co">#&gt; height      5</span>
+<span class="co">#&gt; weight      1</span>
+<span class="co">#&gt; frame       0</span>
+<span class="co">#&gt; bp.1s       5</span>
+<span class="co">#&gt; bp.1d       5</span>
+<span class="co">#&gt; bp.2s     262</span>
+<span class="co">#&gt; bp.2d     262</span>
+<span class="co">#&gt; waist       2</span>
+<span class="co">#&gt; hip         2</span>
+<span class="co">#&gt; time.ppn    3</span></code></pre></div>
+<p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
+<p><img src="03-objektid_files/figure-html/unnamed-chunk-68-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kuidas-rekodeerida-na-d-naiteks-0-ks" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Kuidas rekodeerida NA-d näiteks 0-ks:</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> </span><span class="dv">0</span>
+dfs[<span class="kw">is.na</span>(dfs)] &lt;-<span class="st"> &quot;other&quot;</span>
+dfs[dfs <span class="op">==</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span> <span class="co"># teeb vastupidi 0-d NA-deks</span></code></pre></div>
+<p>Pane tähele, et NA tähistamine ei käi character vectorina vaid dedikeeritud <code>is.na()</code> funktsiooniga.</p>
+<p>coalesce teeb seda peenemalt. kõigepealt kõik</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>)
+<span class="kw">coalesce</span>(x, 0L)
+<span class="co">#&gt; [1] 1 2 3 4 5 0 0 0</span></code></pre></div>
+<p>Nii saab 2 vektori põhjal kolmanda nii, et NA-d asendatakse vastava väärtusega:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">5</span>)
+z &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)
+<span class="kw">coalesce</span>(y, z)
+<span class="co">#&gt; [1] 1 2 3 4 5</span></code></pre></div>
+<p><code>filter_all(weather, any_vars(is.na(.)))</code> näitab ridu, mis sisaldavad NA-sid</p>
+<p><code>filter_at(weather, vars(starts_with(&quot;wind&quot;)), all_vars(is.na(.)))</code> read, kus veerg, mis sisaldab wind, on NA.</p>
+</div>
+<div id="rekodeerime-na-ks" class="section level3">
+<h3><span class="header-section-number">7.2.3</span> Rekodeerime NA-ks</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">na_if</span>(x, y)
+<span class="co">#x - vektor ehk tabeli veerg, mida modifitseerime</span>
+<span class="co">#y - väärtus, mida soovime NA-ga asendada</span>
+
+<span class="kw">na_if</span>(dfs, <span class="st">&quot;&quot;</span>) <span class="co">#teeb dfs tabelis tühjad lahtrid NA-deks</span>
+<span class="kw">na_if</span>(dfs, <span class="st">&quot;other&quot;</span>) <span class="co">#teeb lahtrid, kus on &quot;other&quot; NA-deks</span>
+<span class="kw">na_if</span>(dfs, <span class="dv">0</span>) <span class="co">#teeb 0-d NA-deks. </span></code></pre></div>
+</div>
+<div id="drop_na-viskab-tabelist-valja-na-dega-read" class="section level3">
+<h3><span class="header-section-number">7.2.4</span> drop_na() viskab tabelist välja NA-dega read</h3>
+<p><code>drop_na(data, c(column1, column2))</code> - argument variable võimaldab visata välja read, mis on NA-d ainult kindlates veergudes (column1 ja column2 meie näites - aga ära unusta column1 asemele kirjutada oma veeru nime). Ära unusta ka kasutamast vektori vormi c(), et veerge määrata. column1:column4 vorm töötab samuti ja võtab NAd veergudest 1-4 (kui veeru nr 1 nimi on column1 jne).</p>
+</div>
+<div id="viska-tabelist-valja-veerud-milles-on-liiga-palju-na-sid" class="section level3">
+<h3><span class="header-section-number">7.2.5</span> viska tabelist välja veerud, milles on liiga palju NA-sid</h3>
+<p>Meil on lai tabel sadade numbriliste veegudega. Neist paljud on NA-rikkad (andmevaesed) ja tuleks tabelist eemaldada. Aga kuidas seda teha?</p>
+<p>Selleks (1) koostame vektori (vekt), milles on tabeli df-i iga numbrilise veeru NA-de suhtarv, (2) viskame sellest vektorist välja nende veergude nimed, milles on liiga palju NA-sid ja (3) subsetime df-i saadud vektori (vekt1) vastu.</p>
+<p>NB! vekt ja vekt1 on nn named vektorid, milles vektori iga element (NAde suhtarv mingis tabeli veerus) on seotud selle elemendi nimega, mis on identne selle veeru nimega tabelis df.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vekt &lt;-<span class="st"> </span><span class="kw">sapply</span>(df, <span class="cf">function</span>(x) <span class="kw">mean</span>(<span class="kw">is.na</span>(x))) 
+<span class="co">#NA-de protsent igas veerus</span>
+vekt
+vekt1 &lt;-<span class="st"> </span>nad[nad <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.8</span>] 
+<span class="co">#subsettisin vektori elemendid, mis on &lt; 0.8 (NA-sid alla 80%). 216 tk.</span>
+<span class="co">#nad1 is a named vector</span>
+vekt1n &lt;-<span class="st"> </span><span class="kw">names</span>(vekt1) <span class="co">#vektor named vektori vekt1 nimedest</span>
+df_with_fewer_cols &lt;-<span class="st"> </span><span class="kw">subset</span>(df, <span class="dt">select =</span> vekt1n)
+<span class="co">#subsetime (jätame alles) ainult need df-i veerud, </span>
+<span class="co">#mille nimele vastab mõni vektori nad1n element</span></code></pre></div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r-i-toopohimote.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstats-tartu/lectures/edit/master/03-objektid.Rmd",
+"text": "Edit"
+},
+"download": ["main.pdf", "main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
