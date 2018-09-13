@@ -12,14 +12,3 @@ bookdown::gitbook:
         <li><a href="https://github.com/rstats-tartu/lectures" target="blank">Published with bookdown</a></li>
     edit: https://github.com/rstats-tartu/lectures/edit/master/%s
     download: ["pdf", "epub"]
-bookdown::pdf_book:
-  dev: "cairo_pdf"
-  includes:
-    in_header: latex/preamble.tex
-    after_body: latex/after_body.tex
-  latex_engine: xelatex
-  citation_package: natbib
-  keep_tex: no
-bookdown::epub_book:
-  dev: svglite
-  stylesheet: css/style.css
