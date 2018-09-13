@@ -27,7 +27,8 @@ Imports:
     ggraph,
     ggbiplot,
     tsne,
-    skimr
+    skimr,
+    gapminder
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking,
