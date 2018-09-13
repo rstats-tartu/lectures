@@ -327,13 +327,13 @@ list1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ma
 )
 params <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="kw">pluck</span>(.x, <span class="dv">1</span>), <span class="dt">sd =</span> <span class="kw">pluck</span>(.x, <span class="dv">2</span>)))
 <span class="co">#&gt; $norm1</span>
-<span class="co">#&gt; [1] -0.13247 -0.78788  0.00174  0.11470 -0.85446</span>
+<span class="co">#&gt; [1] -0.219  0.476 -1.168 -0.205  0.997</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $norm2</span>
-<span class="co">#&gt; [1] -0.230  0.514  1.510  0.847 -0.627</span>
+<span class="co">#&gt; [1] 1.222 2.533 0.967 2.549 2.652</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $norm3</span>
-<span class="co">#&gt; [1] -0.430  1.891  1.367  2.230  0.305</span></code></pre></div>
+<span class="co">#&gt; [1] 2.14 2.24 2.89 2.04 1.08</span></code></pre></div>
 <p><code>enframe()</code> konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value).</p>
 <div id="map2" class="section level3">
 <h3><span class="header-section-number">8.0.1</span> map2()</h3>
@@ -365,13 +365,13 @@ digits &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="d
 )
 parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pmap</span>(runif)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 0.357</span>
+<span class="co">#&gt; [1] 0.304</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 5.78 5.60</span>
+<span class="co">#&gt; [1] 5.06 5.19</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] 10.4 10.3 10.1</span></code></pre></div>
+<span class="co">#&gt; [1] 11.0 10.3 10.4</span></code></pre></div>
 </div>
 <div id="invoke_map" class="section level3">
 <h3><span class="header-section-number">8.0.3</span> invoke_map()</h3>
@@ -380,25 +380,25 @@ parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="k
 n &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">3</span>)
 <span class="kw">invoke_map</span>(functions, n)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 7.01 5.42 2.97 2.14 1.63</span>
+<span class="co">#&gt; [1] -2.79  1.23 -5.33  8.31  1.62</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 0.319 0.245</span>
+<span class="co">#&gt; [1] 0.491 2.154</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1]  1.3791  0.0847 -0.3268</span></code></pre></div>
+<span class="co">#&gt; [1] -0.979 -5.948  0.381</span></code></pre></div>
 <p>anname sisse esimese argumendi (100) igasse funktsiooni</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">functions &lt;-<span class="st"> </span><span class="kw">list</span>(rnorm, rlnorm, rcauchy)
 n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 <span class="kw">invoke_map</span>(functions, n, <span class="dv">100</span>)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 100.7 100.6 100.0 101.1  99.1</span>
+<span class="co">#&gt; [1] 100.1 100.2 101.2  99.9  99.7</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 1.82e+43 6.03e+43</span>
+<span class="co">#&gt; [1] 8.47e+43 3.96e+43</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] 99.9 99.6 99.2</span></code></pre></div>
+<span class="co">#&gt; [1] 104 104  96</span></code></pre></div>
 <p>mitu argumenti igale funktsioonile:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">args &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">norm =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>), 
              <span class="dt">lnorm =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dt">meanlog =</span> <span class="dv">1</span>, <span class="dt">sdlog =</span> <span class="dv">2</span>),
@@ -406,13 +406,13 @@ n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</sp
 
 <span class="kw">invoke_map</span>(functions, args)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] -1.157  0.775  0.989</span>
+<span class="co">#&gt; [1]  0.6935 -0.3211  0.0551</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 0.524 0.934</span>
+<span class="co">#&gt; [1] 1.64 3.22</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] 43.1</span></code></pre></div>
+<span class="co">#&gt; [1] -255</span></code></pre></div>
 <div id="map-shortcuts" class="section level4">
 <h4><span class="header-section-number">8.0.3.1</span> map shortcuts</h4>
 <p><code>pluck()</code> võtab listist välja elemendi (vektori, data frame jms) nii nagu see on (mitte listina).</p>

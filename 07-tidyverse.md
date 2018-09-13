@@ -231,25 +231,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>       V9      V8    V5     V2     V6
-#>    <dbl>   <dbl> <dbl>  <dbl>  <dbl>
-#> 1 0.608  0.960   0.327 0.766  0.748 
-#> 2 0.0965 0.00531 0.686 0.0909 0.352 
-#> 3 0.363  0.988   0.405 0.879  0.466 
-#> 4 0.500  0.137   0.864 0.655  0.284 
-#> 5 0.712  0.966   0.884 0.371  0.204 
-#> 6 0.515  0.413   0.634 0.195  0.0587
+#>       V9    V8    V5     V2     V6
+#>    <dbl> <dbl> <dbl>  <dbl>  <dbl>
+#> 1 0.514  0.858 0.532 0.507  0.110 
+#> 2 0.455  0.292 0.327 0.251  0.992 
+#> 3 0.839  0.927 0.964 0.681  0.0929
+#> 4 0.0390 0.134 0.704 0.620  0.771 
+#> 5 0.0206 0.864 0.847 0.887  0.409 
+#> 6 0.698  0.232 0.851 0.0507 0.317 
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>       V9      V8    V7     V6
-#>    <dbl>   <dbl> <dbl>  <dbl>
-#> 1 0.608  0.960   0.920 0.748 
-#> 2 0.0965 0.00531 0.192 0.352 
-#> 3 0.363  0.988   0.182 0.466 
-#> 4 0.500  0.137   0.697 0.284 
-#> 5 0.712  0.966   0.922 0.204 
-#> 6 0.515  0.413   0.609 0.0587
+#>       V9    V8      V7     V6
+#>    <dbl> <dbl>   <dbl>  <dbl>
+#> 1 0.514  0.858 0.982   0.110 
+#> 2 0.455  0.292 0.00324 0.992 
+#> 3 0.839  0.927 0.428   0.0929
+#> 4 0.0390 0.134 0.923   0.771 
+#> 5 0.0206 0.864 0.918   0.409 
+#> 6 0.698  0.232 0.198   0.317 
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -602,12 +602,12 @@ head(a)
 #> # A tibble: 6 x 3
 #>    gene  value indeks
 #>   <int>  <dbl> <chr> 
-#> 1     1 -1.92  E     
-#> 2     1  0.914 E     
-#> 3     1 -0.164 E     
-#> 4     1  0.650 C     
-#> 5     1 -1.06  C     
-#> 6     1  0.324 C
+#> 1     1 -2.33  E     
+#> 2     1 -0.557 E     
+#> 3     1 -2.20  E     
+#> 4     1  0.512 C     
+#> 5     1 -1.04  C     
+#> 6     1 -0.817 C
 ```
 
 
@@ -616,11 +616,11 @@ a %>% group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 #> # A tibble: 5 x 2
 #>    gene     p
 #>   <int> <dbl>
-#> 1     1 0.733
-#> 2     2 0.373
-#> 3     3 0.511
-#> 4     4 0.903
-#> 5     5 0.624
+#> 1     1 0.173
+#> 2     2 0.471
+#> 3     3 0.468
+#> 4     4 0.801
+#> 5     5 0.628
 ```
 
 
@@ -680,13 +680,13 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 #> # A tibble: 2 x 2
 #>   index taxon                                         
 #>   <dbl> <chr>                                         
-#> 1     1 Procaryota; Bacteria; Alpha-Proteobacteria; E~
+#> 1     1 Procaryota; Bacteria; Alpha-Proteobacteria; E…
 #> 2     2 Eukaryota; Chordata
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '; ', extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
 #>   index riik      hmk      klass            perekond  
 #>   <dbl> <chr>     <chr>    <chr>            <chr>     
-#> 1     1 Procaryo~ Bacteria Alpha-Proteobac~ Escharich~
+#> 1     1 Procaryo… Bacteria Alpha-Proteobac… Escharich…
 #> 2     2 Eukaryota Chordata <NA>             <NA>
 ```
 
@@ -788,12 +788,12 @@ gss_cat #tibble, mille veerg "race" on faktor.
 #> # A tibble: 21,483 x 9
 #>    year marital   age race  rincome partyid relig denom
 #>   <int> <fct>   <int> <fct> <fct>   <fct>   <fct> <fct>
-#> 1  2000 Never ~    26 White $8000 ~ Ind,ne~ Prot~ Sout~
-#> 2  2000 Divorc~    48 White $8000 ~ Not st~ Prot~ Bapt~
-#> 3  2000 Widowed    67 White Not ap~ Indepe~ Prot~ No d~
-#> 4  2000 Never ~    39 White Not ap~ Ind,ne~ Orth~ Not ~
-#> 5  2000 Divorc~    25 White Not ap~ Not st~ None  Not ~
-#> 6  2000 Married    25 White $20000~ Strong~ Prot~ Sout~
+#> 1  2000 Never …    26 White $8000 … Ind,ne… Prot… Sout…
+#> 2  2000 Divorc…    48 White $8000 … Not st… Prot… Bapt…
+#> 3  2000 Widowed    67 White Not ap… Indepe… Prot… No d…
+#> 4  2000 Never …    39 White Not ap… Ind,ne… Orth… Not …
+#> 5  2000 Divorc…    25 White Not ap… Not st… None  Not …
+#> 6  2000 Married    25 White $20000… Strong… Prot… Sout…
 #> # ... with 2.148e+04 more rows, and 1 more variable:
 #> #   tvhours <int>
 gss_cat %>% count(race)
@@ -958,9 +958,7 @@ p <- ggplot(gsscat_sum, aes(tvhours, fct_reorder(relig, tvhours))) +
 p
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-49-1} \end{center}
+<img src="07-tidyverse_files/figure-html/unnamed-chunk-49-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ### `fct_relevel()` tõstab joonisel osad tasemed teistest ettepoole 
@@ -972,9 +970,7 @@ Argumendid on faktor f ja need tasemed (jutumärkides), mida sa tahad tõsta.
 p + aes(tvhours, fct_relevel(relig, "None", "Don't know"))
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-50-1} \end{center}
+<img src="07-tidyverse_files/figure-html/unnamed-chunk-50-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Joontega plotil saab `fct_reorder2()` abil assotseerida y väärtused suurimate x väärtustega
 
@@ -991,9 +987,7 @@ ggplot(gsscat_sum, aes(age, N, colour = fct_reorder2(marital, age, N))) +
   labs(colour = "marital")
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-51-1} \end{center}
+<img src="07-tidyverse_files/figure-html/unnamed-chunk-51-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Tulpdiagrammide korral kasuta `fct_infreq()`
 
@@ -1004,6 +998,4 @@ mutate(gss_cat, marital = fct_infreq(marital) %>% fct_rev()) %>%
   ggplot(aes(marital)) + geom_bar()
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-52-1} \end{center}
+<img src="07-tidyverse_files/figure-html/unnamed-chunk-52-1.svg" width="70%" style="display: block; margin: auto;" />

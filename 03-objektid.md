@@ -481,15 +481,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.797 0.824 0.565 0.709 0.851
+#> [1] 0.63995 0.00269 0.74742 0.84378 0.48747
 #> 
 #> [[2]]
-#>       a      b
-#> 1 0.797  0.681
-#> 2 0.824 -0.917
-#> 3 0.565 -0.812
-#> 4 0.709  0.136
-#> 5 0.851  1.808
+#>         a      b
+#> 1 0.63995  0.359
+#> 2 0.00269  0.374
+#> 3 0.74742 -1.696
+#> 4 0.84378 -0.503
+#> 5 0.48747  0.956
 #> 
 #> [[3]]
 #> 
@@ -1117,13 +1117,13 @@ skimr::skim(iris)
 #>  n obs: 150 
 #>  n variables: 5 
 #> 
-#> -- Variable type:factor -------------------------------
+#> ── Variable type:factor ───────────────────────────────
 #>  variable missing complete   n n_unique
 #>   Species       0      150 150        3
 #>                        top_counts ordered
 #>  set: 50, ver: 50, vir: 50, NA: 0   FALSE
 #> 
-#> -- Variable type:numeric ------------------------------
+#> ── Variable type:numeric ──────────────────────────────
 #>      variable missing complete   n mean   sd  p0 p25
 #>  Petal.Length       0      150 150 3.76 1.77 1   1.6
 #>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3
@@ -1458,9 +1458,7 @@ str(diabetes)
 aggr(diabetes, prop = FALSE, numbers = TRUE)
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-objektid_files/figure-latex/unnamed-chunk-64-1} \end{center}
+<img src="03-objektid_files/figure-html/unnamed-chunk-64-1.png" width="70%" style="display: block; margin: auto;" />
 Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.
 
 Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?
@@ -1523,9 +1521,7 @@ Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda su
 matrixplot(diabetes) 
 ```
 
-
-
-\begin{center}\includegraphics[width=0.7\linewidth]{03-objektid_files/figure-latex/unnamed-chunk-68-1} \end{center}
+<img src="03-objektid_files/figure-html/unnamed-chunk-68-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Kuidas rekodeerida NA-d näiteks 0-ks:
@@ -1674,13 +1670,13 @@ params <- list(
 )
 params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
 #> $norm1
-#> [1] -0.217 -0.885 -0.830  0.665 -1.006
+#> [1] -0.219  0.476 -1.168 -0.205  0.997
 #> 
 #> $norm2
-#> [1]  1.355  0.261  1.540 -0.687  1.927
+#> [1] 1.222 2.533 0.967 2.549 2.652
 #> 
 #> $norm3
-#> [1] 1.30 3.21 1.26 2.12 2.13
+#> [1] 2.14 2.24 2.89 2.04 1.08
 ```
 
 `enframe()` konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value). 
@@ -1728,13 +1724,13 @@ parameters <- data.frame(
 )
 parameters %>% pmap(runif)
 #> [[1]]
-#> [1] 0.181
+#> [1] 0.304
 #> 
 #> [[2]]
-#> [1] 5.59 5.46
+#> [1] 5.06 5.19
 #> 
 #> [[3]]
-#> [1] 10.9 10.6 10.2
+#> [1] 11.0 10.3 10.4
 ```
 
 ### invoke_map() 
@@ -1746,13 +1742,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- list(c(5, 2, 3), 2, 3)
 invoke_map(functions, n)
 #> [[1]]
-#> [1] -0.547 -2.157 -0.236 -2.378 -9.021
+#> [1] -2.79  1.23 -5.33  8.31  1.62
 #> 
 #> [[2]]
-#> [1] 2.431 0.117
+#> [1] 0.491 2.154
 #> 
 #> [[3]]
-#> [1] -0.021 -3.018  2.680
+#> [1] -0.979 -5.948  0.381
 ```
 
 anname sisse esimese argumendi (100) igasse funktsiooni
@@ -1762,13 +1758,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- c(5, 2, 3)
 invoke_map(functions, n, 100)
 #> [[1]]
-#> [1]  98.9  99.3 103.1  99.3 100.7
+#> [1] 100.1 100.2 101.2  99.9  99.7
 #> 
 #> [[2]]
-#> [1] 1.42e+43 6.68e+42
+#> [1] 8.47e+43 3.96e+43
 #> 
 #> [[3]]
-#> [1] 103 100 101
+#> [1] 104 104  96
 ```
 
 mitu argumenti igale funktsioonile:
@@ -1780,13 +1776,13 @@ args <- list(norm = c(3, mean = 0, sd = 1),
 
 invoke_map(functions, args)
 #> [[1]]
-#> [1] 0.0706 0.4066 0.1946
+#> [1]  0.6935 -0.3211  0.0551
 #> 
 #> [[2]]
-#> [1] 7.51 1.48
+#> [1] 1.64 3.22
 #> 
 #> [[3]]
-#> [1] 58.7
+#> [1] -255
 ```
 
 
@@ -1855,12 +1851,12 @@ library(gapminder)
 #> # A tibble: 142 x 2
 #>   country     data             
 #>   <fct>       <list>           
-#> 1 Afghanistan <tibble [12 x 5]>
-#> 2 Albania     <tibble [12 x 5]>
-#> 3 Algeria     <tibble [12 x 5]>
-#> 4 Angola      <tibble [12 x 5]>
-#> 5 Argentina   <tibble [12 x 5]>
-#> 6 Australia   <tibble [12 x 5]>
+#> 1 Afghanistan <tibble [12 × 5]>
+#> 2 Albania     <tibble [12 × 5]>
+#> 3 Algeria     <tibble [12 × 5]>
+#> 4 Angola      <tibble [12 × 5]>
+#> 5 Argentina   <tibble [12 × 5]>
+#> 6 Australia   <tibble [12 × 5]>
 #> # ... with 136 more rows
 ```
 
