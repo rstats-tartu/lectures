@@ -488,16 +488,20 @@ Nii saame ka teada, mitu korda iga faktori tase selles tabelis esineb.
 
 ### tekitame faktortulba keerulisemal teel
 
-dplyr::case_when(). Kui Sepal.Length on > 5.8 või Sepal.Width >4, siis uues veerus nimega fact ilmub tase "large", kui Species = setosa, siis ilmub tase "I. setosa", igal muul juhul ilmub "other".
+dplyr::case_when(). Kui Sepal.Length on > 5.8 või Sepal.Width >4, siis uues veerus nimega fact ilmub tase "large", kui Species = setosa, siis ilmub tase "I. setosa", igal muul juhul ilmub <NA>.
 ```{r}
 library(tidyverse)
 i <- iris %>% mutate(
     fact = case_when(
       Sepal.Length > 5.8 | Sepal.Width > 4 ~ "large",
       Species == "setosa"        ~ "I. setosa",
-      TRUE                      ~  "other"
+      TRUE                      ~  NA_character_
     ))
 ```
+
+
+case_when() teeb loogilisi tehteid samas järjekorras, mis sa ette andsid. Seega kui mõni väärtus võiks minna mitmesse teie poolt spetsifitseeritud tingimusse, siis ta läheb tegelikult esimesena ette tulevasse tõesesse tingimusse. 
+
 
 ### `droplevels()` viskab välja kasutamata faktori tasemed
 

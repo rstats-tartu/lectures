@@ -17,8 +17,11 @@ Laadime peatükis edaspidi vajalikud libraryd:
 library(tidyverse)
 library(ggthemes)
 library(ggrepel)
-library(ggjoy)
 library(wesanderson)
+library(ggridges)
+library(viridis)
+library(zoo)
+library(graphics)
 ```
 
 ## Baasgraafika
@@ -154,7 +157,22 @@ See graafikasüsteem töötab kiht-kihi-haaval ja uusi kihte lisatakse pluss-mä
 See annab modulaarsuse kaudu lihtsuse ja võimaluse luua ka keerulisi taieseid. 
 Tõenäoliselt on ggplot hetkel kättesaadavatest graafikasüsteemidest parim (kaasa arvatud tasulised programmid!).
 
-ggploti töövoog on järgmine, minimaalselt pead ette andma kolm asja: 
+
+### graafika "keel"
+
+Millised elemendid on igal endast lugupidaval graafikul? 
+
+**Esiteks teljestik** ehk graafiku ruum. Isegi siis, kui telgi pole välja joonistatud, on nad tegelikult alati olemas ja määravad akna, milles olevaid andmeid graafikul kuvatakse. Teljed võivad olla andmetega samas "ruumis" või transformeeritud (näit. logaritmitud). Lisaks on teljedel on suund (vasakult paremale, ülevalt alla, ringiratast, jms). Vastavalt teljestikule võib graafiku kuju olla 1D sirge, 2D ruut, 3D kuup, kera, ristkülik, trapets vms.
+
+**Teiseks graafikule kaardistatud muutujad.** Näit võib x teljele kaardistada pideva muutuja "Sepal.Width" ja y teljele pideva muutuja Sepal.Length. Lisaks võime igale andmepunktile kaardistada näiteks värvi, mis vastab faktormuutuja Species tasemele. Aga võib ka x teljele kaardistada muutuja Sepal.Length ja y telje kaardistamata jätta. Esimesel juhul on võimalik joonistada näiteks scatter plot või line plot, teisel juhul aga histogramm või tihedusplot. Seega on graafiku tüüp veel lahtine.
+
+**Kolmandaks graafiku tüüp.** Osad tüübid kasutavad andmeid otse (n scatter plot), teised arvutavad andmete pealt statistiku, ja plotivad selle (n histogramm). Graafikul on see nn data ink. 
+
+**Neljandaks graafiku esteeetika.** Siia kuuluvad telgede paksused, värvid, tähistused, abijooned, taustavärvid ja kõik muu, mis otseselt ei kajasta andmeid. Graafikul on see nn non-data ink. Oluline on suhe data ink/non-data ink. Kui see suhe on väga madal, siis on teie graafiku teaduslik sisu raskesti leitav ja ilmselt peaks graafikut muutma. Samas, kui see suhe on väga kõrge, tekib oht, et puudu on tähelepanu õigesse kohta juhtivad abijooned ja muu selline, mistõttu andmed ripuvad nagu õhus.  
+
+Ongi kõik. Teljestik sinna kaardistatud muutujatega, graafiku tüüp ja teema on kõik, mida me vajame, et teha ükskõik milline joonis 
+
+ggploti töövoog kajastab seda kiht-kihi haaval ideoloogiat. Kihid eraldatakse omavahel "+" märgiga. Minimaalselt pead ggplot() funktsioonile andma kolm asja: 
 
 1. **andmed**, mida visualiseeritakse, 
 
@@ -164,6 +182,12 @@ ggploti töövoog on järgmine, minimaalselt pead ette andma kolm asja:
 
 
 Lisaks määrad sa `aes()`-is, kas ja kuidas sa tahad grupeerida pidevaid muutujaid faktori tasemete järgi.
+
+Lisakihtides saab dikteerida, 
+
+4. kuidas joonise elemendid jagada erinevate paneelide (facet, small multiple) vahel, kasutades facet_wrap() ja facet_grid() funktsioone.
+
+5. määrata joonise teema theme() funktsiooni abil ning manipuleerida värve, telgi jms erinevate abifunktsioonidega.
 
 
 Kõigepealt suuname oma andmed `ggplot()` funktsiooni:
@@ -177,17 +201,17 @@ Vaja on lisada kiht-kihilt instruktsioonid, kuidas andmed graafikule paigutada j
 
 Nüüd ütleme, et x-teljele pannakse "Sepal.Length" ja y-teljele "Sepal.Width" andmed.
 Pane siin tähele, et me suuname kõigepealt selle ploti objekti p ja alles siis trükime selle ggplot objekti välja.
-Antud näites, lisame edaspidi graafika kihte sellele ggplot objektile.
+Meie näites lisame edaspidi kihte sellele ggplot objektile.
 ```{r}
 p <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width))
 p
 ```
 
-Aga graafik on ikka tühi sest me pole ggplotile öelnud, millist visualiseeringut me tahame. 
-Teeme seda nüüd ja lisame andmepunktid kasutades `geom_smooth`-i ja lineaarse regressioonijoone kasutades `geom_smooth` funktsiooni koos argumendiga `method = "lm"`.
+Graafik on ikka tühi sest me pole ggplotile öelnud, millist visualiseeringut me tahame. 
+Teeme seda nüüd ja lisame andmepunktid kasutades `geom_point`-i ja lineaarse regressioonijoone kasutades `geom_smooth` funktsiooni koos argumendiga `method = lm`.
 Ka nüüd täiendame ggplot objekti p uute kihtidega:
 ```{r}
-p <- p + geom_point() + geom_smooth(method = "lm")
+p <- p + geom_point() + geom_smooth(method = lm)
 p
 ```
 
@@ -395,7 +419,7 @@ Telgede ulatust saab määrata kolmel erineval viisil
 
 2. pane x- ja y-teljele piirangud `xlim()`, `ylim()`
 
-3. kasuta `coord_cartesian()` ja xlim, ylim on parameetrid selle sees: `coord_cartesian(xlim = c(5, 7), ylim = c(10, 30))`
+3. kasuta `coord_cartesian()` ja xlim, ylim parameetritena selle sees: `coord_cartesian(xlim = c(5, 7), ylim = c(10, 30))`
 
 Telgede ulatust saab muuta ka x- ja y-teljele eraldi:
 
@@ -772,22 +796,6 @@ diffplot <- ggplot(my.data, aes(baseline, diff)) +
 ggMarginal(diffplot, type = "histogram", bins = 25)
 ```
 
-We can also obviously do the percent difference.
- 
-```{r eval=FALSE}
-diffplotp <- ggplot(my.data, aes(baseline, diffp)) + 
-  geom_point(size = 2, colour = rgb(0, 0, 0, alpha = 0.5)) + 
-  theme_bw() + 
-  geom_hline(yintercept = 0, linetype = 3) +
-  geom_hline(yintercept = mean(my.data$diffp)) +
-  geom_hline(yintercept = mean(my.data$diffp) + 2 * sd.diffp, linetype = 2) +
-  geom_hline(yintercept = mean(my.data$diffp) - 2 * sd.diffp, linetype = 2) +
-  labs(x = "Baseline Concentration (mg/L)",
-       y = "Difference pre and post Storage (%)")
-
-ggMarginal(diffplotp, type = "histogram", bins = 25)
-```
-
 # Kuraditosin graafikut, mida sa peaksid enne surma joonistama
 
 Andmete plottimisel otsib analüütik tasakaalu informatsioonikao ja trendide/mustrite/kovarieeruvuste nähtavaks tegemise vahel. 
@@ -825,43 +833,74 @@ dd %>%
 
 Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida väärtuste järgi.
 
-Järgmisel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. Usaldusintervallid annavad hinnangu meie ebakindlusele keskväärtuse (mitte näiteks algandmete) paiknemise kohta, arvestades meie valimi suurust ja sellest tulenevat valimiviga. 50% CI tähendab, et me oleme täpselt sama vähe üllatunud leides tõese väärtuse väljaspoolt intervalli, kui leides selle intervalli seest. 95% CI tähendab, et me oleme mõõdukalt veendunud, et tõene väärtus asub intervallis (aga me arvestame siiski, et ühel juhul 20-st ta ei tee seda). **NB! Mõlemad tõlgendused eeldavad (vähemalt senikaua, kuni me kasutame ad hoc lahendusi), et meie andmetes esinev juhuslik varieeruvus on palju suurem kui seal leiduv suunatud varieeruvus (ehk bias).**  
+Järgmisel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. Usaldusintervallid annavad hinnangu meie ebakindlusele keskväärtuse (mitte näiteks algandmete) paiknemise kohta, arvestades meie valimi suurust ja sellest tulenevat valimiviga. 50% CI tähendab, et me oleme täpselt sama vähe üllatunud leides tõese väärtuse väljaspoolt intervalli, kui leides selle intervalli seest. 95% CI tähendab, et me oleme mõõdukalt veendunud, et tõene väärtus asub intervallis (aga me arvestame siiski, et ühel juhul 20-st ta ei tee seda). **NB! Mõlemad tõlgendused eeldavad, et meie andmetes esinev juhuslik varieeruvus on palju suurem kui seal leiduv suunatud varieeruvus (ehk bias).**  
+
+Kasutame Publish::ci.mean(), et arvutada usaldusintervallid (antud juhul 10% CI)
+```{r}
+library(Publish) #siit ci.mean()
+a <- rnorm(10)
+a1 <- ci.mean(a, alpha = 0.9)
+str(a1)
+```
+
+kisume listi elemendi nimega lower (usaldusintervalli alumine piir) välja 3-l alternatiivsel viisil
+```{r}
+a1$lower
+a1[[3]]
+a1 %>% pluck("lower")
+```
+
 
 ```{r}
 iris1 <- iris %>% 
   group_by(Species) %>% 
-  summarise(Mean = mean(Sepal.Length), 
-            SEM = sd(Sepal.Length) / sqrt(nrow(iris)))
+  summarise(Mean = mean(Sepal.Length),
+            CI_low_0.5 = ci.mean(Sepal.Length, alpha=0.5) %>% pluck("lower"),
+            CI_high_0.5 = ci.mean(Sepal.Length, alpha=0.5) %>% pluck("upper"),
+            CI_low_0.95 = ci.mean(Sepal.Length) %>% pluck("lower"),
+            CI_high_0.95 = ci.mean(Sepal.Length) %>% pluck("upper")
+            )
+#pluck() takes a named element out of a list 
+#ci.mean() output is a list of 6 elements
 
 ggplot(data = iris1, aes(x = Mean, y = Species)) +
   geom_point(size = 3) +
-  geom_errorbarh(aes(xmin = Mean - 0.675 * SEM, xmax = Mean + 0.675 * SEM), height = 0.2) +
-  geom_errorbarh(aes(xmin = Mean - 1.96 * SEM, xmax = Mean + 1.96 * SEM), height = 0.4) +
+  geom_errorbarh(aes(xmin = CI_low_0.5, 
+                     xmax = CI_high_0.5), 
+                 height = 0.2) +
+  geom_errorbarh(aes(xmin = CI_low_0.95, 
+                     xmax = CI_high_0.95), 
+                 height = 0.4) +
+  theme_bw()+
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
         panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed")) +
   labs(x = "Sepal length with 50% and 95% CI", 
-       y = NULL) +
-  theme_bw()
+       y = NULL) 
 ```
 
-Alternatiivne graafiku kuju:
+
+Alternatiivne graafiku kuju (muudetud on ainult geom_point size ja shape parameetreid):
 ```{r}
 ggplot(data = iris1, aes(x = Mean, y = Species)) +
   geom_point(size = 5, shape = 108) +
-  geom_errorbarh(aes(xmin = Mean - 0.675*SEM, xmax = Mean + 0.675*SEM), height = 0, size = 2) +
-  geom_errorbarh(aes(xmin = Mean - 1.96*SEM, xmax = Mean + 1.96*SEM), height = 0.1) +
+  geom_errorbarh(aes(xmin = CI_low_0.5, 
+                     xmax = CI_high_0.5), 
+                 height = 0, 
+                 size = 2) +
+  geom_errorbarh(aes(xmin = CI_low_0.95, 
+                     xmax = CI_high_0.95), 
+                 height = 0.1) +
+  theme_bw()+
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
-        panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))+
+        panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed")) +
   labs(x = "Sepal length with 50% and 95% CI", 
-       y = NULL) +
-  theme_bw()
+       y = NULL) 
 ```
 
-Pane tähele, et siin on usaldusintervallide arvutamiseks kasutatud mugavat *ad hoc* meetodit, mis eeldab muuhulgas, et valimi suurus ei ole väike. 
-Kui n < 30, või kui valimi andmejaotus on väga kaugel normaaljaotusest (jaotus on näiteks väga pika õlaga), soovitame usaldusintervalli arvutamiseks kasutada bayesiaanlikke meetodeid, mida tutvustame hilisemates peatükkides.
-Igal juhul, kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame kasutada järgmisi heuristikuid:
+CI-d saab arvutada ka käsitsi.
+Kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame CI arvutamiseks kasutada järgmisi heuristikuid:
 
 ```{r echo=FALSE}
 tibble(CI_percentage = c(50, 75, 90, 95, 97, 99, 99.9), 
@@ -1018,21 +1057,38 @@ g4 <- ggplot(iris, aes(Sepal.Length, fill=Species, alpha=0.5)) + geom_density(ad
 grid.arrange(g1, g2, g3, g4, nrow = 2)
 ```
 
-Veel üks võimalus jaotusi kõrvuti vaadata on joyplot, mis paneb samale paneelile kasvõi sada tihedusjaotust.
+Veel üks võimalus jaotusi kõrvuti vaadata on joyplot, mis paneb samale paneelile kasvõi sada tihedusjaotust. Näiteid vaata ka aadressilt https://cran.r-project.org/web/packages/ggridges/vignettes/gallery.html
+
 
 ```{r}
-library(ggjoy)
-ggplot(iris, aes(x=Sepal.Length, y=Species, fill=Species)) + 
-  geom_joy(scale=4, rel_min_height=0.01, alpha=0.9) +
-  theme_joy(font_size = 13, grid=TRUE) + 
-  theme(legend.position = "none")
+library(ggridges)
+library(viridis)
+```
+
+```{r fig.height=7}
+sch <- read.csv("data/schools.csv")
+sch$school <- as.factor(sch$school)
+
+ggplot(sch, aes(x = score1, y = school, group = school)) +
+  scale_fill_viridis(name = "score", option = "C") +
+  geom_density_ridges(scale = 4, size = 0.25, rel_min_height = 0.05) +
+  theme_ridges() 
+
+ggplot(sch, aes(x = score1, y = school, group = school, fill = ..x..)) +
+  scale_fill_viridis(name = "score", option = "C") +
+  geom_density_ridges_gradient(scale = 4, size = 0.25, rel_min_height = 0.05, gradient_lwd = 1) +
+  theme_ridges() 
 ```
 
 ```{r}
-sch <- read.csv("data/schools.csv")
-sch$school <- as.factor(sch$school)
-ggplot(sch, aes(score1, y=reorder(school, score1))) + 
-  geom_joy() + theme_tufte()
+ggplot(mpg, aes(x=hwy, y=manufacturer, color=drv, point_color=drv, fill=drv)) +
+  geom_density_ridges(jittered_points=TRUE, scale = .95, rel_min_height = .01,
+                      point_shape = "|", point_size = 3, size = 0.25,
+                      position = position_points_jitter(height = 0)) +
+  scale_y_discrete(expand = c(.01, 0)) +
+  scale_x_continuous(expand = c(0, 0), name = "highway fuel consumption [gallons]") +
+  theme_ridges(center = TRUE)
+
 ```
 
 ## Boxplot
@@ -1139,7 +1195,7 @@ Pane tähele graafiku paremas servas asuvaid halle kaste, mis annavad mõõtkava
 
 Nüüd esitame versiooni, kus remainder-i andmeid on tugevasti silutud, et võimalikku signaali mürast eristada.
 ```{r}
-plot(stl(log(co2), s.window = "per", t.window = 1000))
+plot(stl(log(co2), s.window = "per", t.window = 199))
 # t.window -- the span (in lags) of the loess window for trend extraction, which should be odd.
 ```
 
@@ -1166,19 +1222,11 @@ m + stat_density_2d(aes(fill = ..level..), geom = "polygon")
 ```
 
 
-kui meil on eraldi välja arvutatud tihedus (density) igale vaatluspunktile, saame kasutada geom_tile
-
-```{r}
-ggplot(faithfuld) +
-  geom_tile(aes(eruptions, waiting, fill = density)) + 
-  scale_fill_distiller(palette = "Spectral")
-```
-
-
-
 Nüüd plotime 3 iriseliigi õielehe pikkuse seose tolmuka pikkusega, ja lisame igale liigile mittelineaarse mudelennustuse koos 95% usaldusintervalliga. Mudel püüab ennustada keskmist õielehe pikkust igal tolmuka pikkusel, ja 95% CI kehtib ennustusele keskmisest, mitte üksikute isendite õielehtede pikkustele. 
 ```{r}
-ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + geom_point() + geom_smooth()
+ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) + 
+  geom_point() + 
+  geom_smooth()
 ```
 
 See mudeldamine tehti loess meetodiga, mis kujutab endast lokaalselt kaalutud polünoomset regressiooni. Loessi põhimõte on, et arvuti fitib palju lokaalseid lineaarseid osamudeleid, mis on kaalutud selles mõttes, et andmepunktidel, mis on vastavale osamudelile lähemal, on mudeli fittimisel suurem kaal. Nendest osamudelitest silutakse siis kokku lõplik mudel, mida joonisel näete.
@@ -1323,12 +1371,11 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "fill")
 ```
 
-Ja lõpetuseks, kui teile miskipärast ei meeldi Cleveland plot ja te tahate plottida tulpdiagrammi nii, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage: `geom_bar(stat = "identity")`
-
+Ja lõpetuseks, kui teile miskipärast ei meeldi Cleveland plot ja te tahate plottida tulpdiagrammi nii, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage `geom_col()`
 
 ```{r eval=FALSE}
 df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
-ggplot(df, aes(b, a)) + geom_bar(stat = "identity")
+ggplot(df, aes(b, a)) + geom_col()
 ```
 
 ## Residuaalide plot
@@ -1343,15 +1390,17 @@ Mudeli ennustused keskmisele õielehe pikkusele (Sepal.Length) saame arvutada fi
 library(modelr)
 #fit the model
 m1 <- lm(Sepal.Length~poly(Petal.Length, 3) , data= iris)
+
 #make prediction matrix (equally spaced non-empirical Petal Length values)
 pred_matrix <- tibble(Petal.Length=seq(min(iris$Petal.Length), 
                                        max(iris$Petal.Length), 
                                        length.out= 100))
+
 #add prediction to each value in the prediction matrix
 pred_matrix <- add_predictions(pred_matrix, m1)
 ```
 
-Nii saab mugavalt visualiseerida ka väga keeruliste mudelite ennustusi. 
+Nii saab mugavalt visualiseerida ka keeruliste mudelite ennustusi. 
 ```{r}
 ggplot(pred_matrix, aes(x = Petal.Length)) + 
   geom_point(data= iris, aes(y = Sepal.Length)) +
@@ -1381,9 +1430,9 @@ See võimaldab otsustada, kas mudel ennustab võrdselt hästi erinevatel predikr
 
 Proovime sama lihtsa lineaarse mudeliga $Sepal.Length = intercept + b * Petal.Length$.
 ```{r echo=FALSE}
-m1 <- lm(Sepal.Length~Petal.Length , data= iris)
+m2 <- lm(Sepal.Length~Petal.Length , data= iris)
 pred_matrix <- tibble(Petal.Length=seq(min(iris$Petal.Length), max(iris$Petal.Length), length.out= 100))
-pred_matrix <- add_predictions(pred_matrix, m1)
+pred_matrix <- add_predictions(pred_matrix, m2)
 ggplot(pred_matrix, aes(x = Petal.Length)) + 
   geom_point(data= iris, aes(y = Sepal.Length)) +
   geom_line(aes(y = pred))
@@ -1398,7 +1447,9 @@ ggplot(iris1, aes(Petal.Length, resid, color=Species)) +
 
 Siit näeme, et I. setosa puhul on residuaalid pigem >0 ja et see mudel töötab paremini I. versicolor ja I. virginica puhul. 
 
-Siin on residuaalid algsetes Sepal Length-i mõõtühikutes (cm). Et otsustada, kas üks või teine residuaal on 0-st piisavalt kaugel, avaldame residuaalid standardhälvete ühikutes (nn Studentized residuals).
+Eelnevatelpiltidel on residuaalid algsetes Sepal Length-i mõõtühikutes (cm). 
+
+Et otsustada, kas üks või teine residuaal on 0-st piisavalt kaugel, avaldame residuaalid standardhälvete ühikutes (nn Studentized residuals).
 Residuaalide muster joonisel sellest ei muutu, muutub vaid y-telje tähistus.
 ```{r}
 iris1 <- mutate(iris1, st_resid=resid/sd(resid))
@@ -1407,7 +1458,17 @@ ggplot(iris1, aes(Petal.Length, st_resid, color=Species)) +
   geom_point()
 ```
 
-Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standardhälbega ja kahte sama liigi isendit (ja ühte I. setosa isendit), mille koha pealt mudel alahindab >2 standardhälbega.
+Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standardhälbega.
+
+Kumb mudel on parem?
+```{r}
+anova(m1, m2)
+```
+
+m1 on selgelt parem (RSS 19 vs 25, p = e-08)
+
+
+
 
 ## Tukey summa-erinevuse graafik
 
@@ -1447,17 +1508,24 @@ ggplot(df_summary2, aes(x = d10 + wt, y = d10 - wt)) +
   theme_tufte()
 ```
 
-Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). Me näeme sellelt pildilt väga kiiresti, 
+Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). 
 
-1. et mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul), 
+Me näeme sellelt pildilt, et 
 
-2. et efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik), 
+1. mida väiksem on valgu kogus, seda suurema tõenäosusega saame tugeva efekti (mis viitab valimivea rollile, eriti suuremate efektide puhul), 
 
-3. et enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja 
+2. efektipilv on kenasti nullile tsentreeritud (see näitab, et andmete esialgne töötlus on olnud korralik), 
 
-4. et positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).
+3. enamus valgud ei anna suuri efekte (bioloog ohkab siinkohal kergendatult) ja 
 
-Proteoomikas on praegu populaarsed MA-fraafikud, kus y-teljel (M) on katse vs kontroll erinevus log2 skaalas ja x-teljel (A) on keskmine tase.
+4. positiivse märgiga efektid kipuvad olema suuremad, kui negatiivsed efektid (2.5 ühikuline effektisuurus log2 skaalas tähendab 2**2.5 = 5.7 kordset erinevust katse ja kontrolli vahel).
+
+Proteoomikas on praegu populaarsed MA-fraafikud, kus y-teljel (M) on katse vs kontroll erinevus log2 skaalas ja x-teljel (A) on keskmine tase. 
+
+    Log2 skaala koos lahutamistehtega on mugav sest 
+    üks log2 ühik y-teljel vastab kahekordsele efektile 
+    (kaks ühikut neljakordsele, kolm ühikut kaheksakordsele, jne) 
+    ja 0 vastab ühekordsele ehk null-efektile.
 
 ### Vulkaaniplot
 
@@ -1475,7 +1543,6 @@ df_x <- df[2:7] #numeric variables only
 df$p <- apply(df_x, 1, function(x) t.test(x[1:3], x[4:6])$p.value)
 #effect sizes (mean experiment - mean control)
 df$ES <- apply(df_x, 1, function(x) mean(x[1:3]) - mean(x[4:6]))
-d <- df %>% filter(ES > 1 | ES < -1) %>% filter(p < 0.05) #data for text labels
 
 plot <- ggplot(df, aes(ES, -log10(p))) + 
   geom_point(alpha=0.2) + 
@@ -1490,6 +1557,7 @@ plot
 
 ```{r}
 library(ggrepel) #for geom_text_repel()
+d <- df %>% filter(ES > 1 | ES < -1) %>% filter(p < 0.05) #data for text labels
 plot + geom_label_repel(data=d, aes(label=gene), cex=2) 
 #alternative: geom_text_repel(data=d, aes(label=gene), cex=2)
 ```
@@ -1813,4 +1881,18 @@ ism1 <- bind_cols(iris, ts)
 ggplot(ism1, aes(x=V1, y=V2, color=(Species)))+ geom_point()
 ```
 
+# Üldised jooniste printsiibid
 
+Kõigepealt, joonise tüüp peaks vastama joonise sõnumile - sõnasta järeldus, mille sa oma joonise pealt teed. Kas mõni teine joonise tüüp illustreerib seda järeldust paremini/on ühemõttelisem/kiiremini loetav?
+
+1. optimaalne data ink/non-data ink suhe.
+
+2. Joonisel on rõhutatud/silmapaistvad need data ink-i elemendid, mis on ka teaduslike tulemuste seisukohalt kõige olulisemad.
+
+3. data ink on silmatorkavam kui näiteks teljed ja abijooned
+
+4. Kasuta nooli, et juhtida tähelepanu olulistele tulemustele (suuna joonise lugeja tähelepanu).
+
+5. kui võimalik, pane andmete tähised (kirjad) otse joonisele - niikaua kui see muudab joonise kiiremini loetavaks.
+
+6. Ära kuhja joonist üle - keskendu oluliste tulemuste visualiseerimisele. 

@@ -34,6 +34,34 @@ R-i sessioon näeb üldjoontes välja niimoodi:
 
 * logical - TRUE/FALSE. TRUE on sisemiselt kodeeritud kui 1 ja FALSE kui 0. 
 
+**relatsioonilised operaatorid**
+
+* >, >= (on suurem või võrdne), <, <=, 
+
+* == (võrdub), 
+
+* != (ei võrdu), 
+
+* %in% (sisaldub), 
+
+* & (and),
+
+* | (or)
+
+```{r}
+1 == 2
+1 != 2
+
+1 %in% 1:5
+1&4 %in% 1:5 #1 ja 4 sisalduvad vektoris c(1, 2, 3, 4, 5) --- TRUE
+c(1, 8) %in% 1:5
+1|8 %in% 1:5 #1 või 8 sisalduvad vektoris c(1, 2, 3, 4, 5) --- TRUE
+6 %in% 1:5 #6 sisaldub vektoris c(1, 2, 3, 4, 5) --- see lause on FALSE
+char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
+"apple" %in% char.vector
+```
+
+
 **andmeklassid:** (idee on andmed struktureerida hõlbustamaks edasisi tehteid nendega)
 
 * vektor - 1D järjestatud sama tüüpi andmed 
@@ -598,6 +626,7 @@ apply(fruits_subset, 1, sd)
 apply(fruits_subset, 2, sd) 
 ```
 
+
 Andmetabeli Summary saab mitmel viisil, skimr::skim() funktsioon on üks paremaid 
 ```{r}
 skimr::skim(iris)
@@ -896,8 +925,6 @@ df_with_fewer_cols <- subset(df, select = vekt1n)
 ```
 
 
-
-
 # itereerimine ja map() - sama operatsioon mitu korda
 
 Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda sellepärast, et formaalselt on list vektori tüüp (rekursiivne vektor), kuhu on võimalik elementidena panna mida iganes, k.a. teisi vektoreid. Selle tõttu enamus R-i funktsioone, mis töötavad lihtsate mitte-rekursiivsete vektoritega (ja df-dega), ei tööta listide peal. 
@@ -974,9 +1001,9 @@ digits <- list(2, 3, 4)
 pmap(list(x = long_numbers, digits = digits), round)
 ```
 
-pmap() kasutab ekspressioonide sisesed elemndid on nüüd ..1, ..2, ..3 jne, mitte .x ja .y nagu map2-l. 
+pmap() ekspressioonide sisesed elemndid on ..1, ..2, ..3 jne, mitte .x ja .y nagu map2-l. 
 
-NB! pmap-i saab sisetada data frame, mille peale see teeb kõike rea kaupa.
+NB! pmap-i saab sisetada data frame, mille peal see teeb kõike rea kaupa.
 
 ```{r}
 parameters <- data.frame(
@@ -985,6 +1012,24 @@ parameters <- data.frame(
   max = c(1, 6, 11)
 )
 parameters %>% pmap(runif)
+```
+
+See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.
+
+Järgmine funktsioon rakendub suvalisele df-le rea kaupa ja arvutab igale reale näit sd. Aga selleks transponeerime read veergudeks ja rakendame tavalist map()-i. 
+
+```{r}
+rmap <- function (.x, .f, ...) {
+    if(is.null(dim(.x))) stop("dim(X) must have a positive length")
+    .x <- t(.x) %>% as.data.frame(.,stringsAsFactors=F)
+    purrr::map_dfr(.x=.x,.f=.f,...)
+}
+parameters %>% rmap(sd)
+```
+
+apply teeb sama lihtsamini.
+```{r}
+apply(parameters, 1, sd)
 ```
 
 ### invoke_map() 
