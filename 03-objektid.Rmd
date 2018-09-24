@@ -61,6 +61,20 @@ char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
 "apple" %in% char.vector
 ```
 
+https://cran.r-project.org/bin/macosx/el-capitan/contrib/3.5/effects_4.0-3.tgz
+```{r}
+install.packages("https://cran.r-project.org/bin/macosx/el-capitan/contrib/3.5/effects_4.0-3.tgz", repo=NULL, type="source")
+library(effects)
+
+library(devtools)
+
+install_github('andreacirilloac/updateR')
+
+library(updateR)
+
+installed.packages()
+updateR(admin_password = "P1hukeha")
+```
 
 **andmeklassid:** (idee on andmed struktureerida hõlbustamaks edasisi tehteid nendega)
 
@@ -1105,7 +1119,7 @@ Df-i veerg, mille andmetüüp on list. Näiteks mudeliobjektid, funktsioonid ja 
 List columnid on ise listid, mitte andmevektorid. 
 
       List veerud võimaldavad panna samasse tabelisse erinevaid asju - 
-      andmeid, mudeleid, mudeli koefitsiente jms.
+      andmeid, mudeleid, mudeli koefitsiente jms. 
 
 nest() teeb uue df-i, kus on 1. veerg grupeeriva muutuja tasemetega, millele järgneb list column, mille iga element on tibble. Iga tibble sisaldab relevantset infot  grupeeriva muutuja vastava taseme kohta. 
 ```{r}
@@ -1120,6 +1134,7 @@ iga nested_gapminder$data element on ise df:
 nested_gapminder %>% 
   pluck("data") %>% 
   pluck(1) # %>% lm(lifeExp ~ year, data = .)
+#fitime ühe mudeli 1. elemendile (1. riik)
 ```
 
 fit a model to each tibble nested within nested_gapminder and then store those models as a list column
@@ -1143,7 +1158,7 @@ võtame välja mudeli koefitsiendi year ja paneme uude veergu nimega coefficient
 models1 <-  models1 %>% mutate( coefficient = map_dbl(models, ~coef(.x) %>% pluck("year")) )
 ```
 
-pane tähele, et df-i veerg models on ühtlasi list, millele saame map_dbl() rakendada.
+df-i veerg models on ühtlasi list, millele saame map_dbl() rakendada.
 
 
 järgnevad 3 koodirida teevad sama asja - võtavad välja 1. mudeli:

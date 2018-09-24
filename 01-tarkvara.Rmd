@@ -193,3 +193,39 @@ Need tuleb vajadusel eraldi ükshaaval sisse lugeda.
 
 > Enamasti kirjutatakse kõik sisse loetavad raamatukogud kohe R scripti algusesse. Siis on ilusti näha, mida hiljem vaja läheb.
 
+### R-i versiooni uuendamine 
+
+**mac-is**
+
+1. installeeri uus Ri versioon
+
+2. Move all folders from your old R version to new R version.
+
+/Library/Frameworks/R.framework/Versions/x.xx/Resources/library
+
+Replace x.xx with the old and new R version at a time.
+
+Note that you have to move only the packages that are not currently in the destination folder (because those are the base packages, and you don’t want to ruin them). But if you already did replaced everything, the next step will solve this for you.
+
+If you cannot find the proper path, you can run this command to check: installed.packages()
+
+3. Update the moved packages
+
+Run the following command. Type ‘y’ for every question that popped up.
+
+update.packages(checkBuilt=TRUE)
+
+4. Type the following command in R to check if everything went well
+
+version
+
+packageStatus()
+
+**windowsis peaks töötama**
+
+install.packages("installr")
+
+library(installr)
+
+updateR()
+
