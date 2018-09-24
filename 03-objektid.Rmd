@@ -1,4 +1,15 @@
 
+```{r, message=FALSE}
+library(tidyverse)
+library(VIM)
+library(readxl)
+library(skimr)
+## Install gotta read em all as R studio addin
+## install.packages("devtools")
+#devtools::install_github("Stan125/GREA")
+```
+
+
 # R-i tööpõhimõte
 
 Iga kord, kui avate R studio, alustate R-i sessiooni, mis seisneb funktsioonide (väikeste programmijuppide) rakendamises andmetele eesmärgiga muuta tabelite struktuuri, transformeerida andmeid, genereerida jooniseid ja/või arvutada statistikuid. Kõik see toimub R-i töökeskkonnas. Tulemusi saab töökeskkonnast eksportida arvuti kõvakettale näiteks .pdf (joonised) või .csv (tabelid) formaadis. Teie sessiooni põhiline tulemus ei ole siiski eksporditavad asjad, vaid R-i kood (script), mida jooksutades on võimalik korrataval viisil algset andmetabelit manipuleerida. Kõik, mida te töökeskonnas teete, kajastub koodis ja on korratav.
@@ -61,20 +72,6 @@ char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
 "apple" %in% char.vector
 ```
 
-https://cran.r-project.org/bin/macosx/el-capitan/contrib/3.5/effects_4.0-3.tgz
-```{r}
-install.packages("https://cran.r-project.org/bin/macosx/el-capitan/contrib/3.5/effects_4.0-3.tgz", repo=NULL, type="source")
-library(effects)
-
-library(devtools)
-
-install_github('andreacirilloac/updateR')
-
-library(updateR)
-
-installed.packages()
-updateR(admin_password = "P1hukeha")
-```
 
 **andmeklassid:** (idee on andmed struktureerida hõlbustamaks edasisi tehteid nendega)
 
@@ -210,7 +207,8 @@ Nüüd laadime hiljem vaja minevad raamatukogud:
 ```{r, message=FALSE}
 library(tidyverse)
 library(VIM)
-library(readxl) 
+library(readxl)
+library(skimr)
 ## Install gotta read em all as R studio addin
 ## install.packages("devtools")
 #devtools::install_github("Stan125/GREA")
@@ -618,11 +616,12 @@ summary(iris)
 names(iris) #annab veerunimed
 nrow(iris) #mitu rida?
 ncol(iris) #mitu veergu?
-arrange(iris, desc(Sepal.Length)) 
+arrange(iris, desc(Sepal.Length)) %>% head(3) 
 #sorteerib tabeli veeru "Sepal.Length" väärtuste järgi 
 #langevalt (default on tõusev sorteerimine). 
 #Võib argumendina anda mitu veergu.
-top_n(iris, 2, Sepal.Length) #saab 2 rida, milles on kõige suuremad S.L. väärtused
+top_n(iris, 2, Sepal.Length) 
+#saab 2 või rohkem rida, milles on kõige suuremad S.L. väärtused
 top_n(iris, -2, Sepal.Length) #saab 2 rida, milles on kõige väiksemad väärtused 
 ```
 
@@ -856,16 +855,21 @@ nrows <- nrow(diabetes)
 
   
 ### Mitu NA-d on igas tulbas?
-```{r}
-sapply(diabetes, function(x) sum(is.na(x))) 
-```
 
-alternatiiv tidyverse-st - väljund on uus data frame NA-de arvuga igale algse tabeli veerule
 ```{r}
 diabetes %>% map_df(~sum(is.na(.))) %>% t()
 ```
 
+väljund on uus tabel NA-de arvuga igale algse tabeli veerule
 
+Eelnev ekspressioon töötab nii:
+map_df() loeb kokku (summeerib) diabetes tabeli igale veerule, mitu elementi selles veerus andis ekspressioonile is.na() vastuseks TRUE. is.na() on funktsioon, mis annab väljundiks TRUE v FALSE, sõltuvalt vektori elemendi NA-staatusest. 
+
+```{r}
+is.na(c(NA, "3", "sd", "NA"))
+```
+
+Pane tähele, et string "NA" ei ole sama asi, mis loogiline konstant NA.
 
 Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:
 ```{r, dev='png'}
