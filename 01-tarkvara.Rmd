@@ -199,25 +199,21 @@ Need tuleb vajadusel eraldi ükshaaval sisse lugeda.
 
 1. installeeri uus Ri versioon
 
-2. Move all folders from your old R version to new R version.
+2. Kopeeri folderid oma vanast R-i versioonist uude versiooni (tegelikult need folderid, mida uues kataloogis ei ole - sest mõned paketid lastakse peale juba baas installatsiooniga). 
 
 /Library/Frameworks/R.framework/Versions/x.xx/Resources/library
 
-Replace x.xx with the old and new R version at a time.
+(Asenda x.xx vana ja uue R versiooni numbriga) 
 
-Note that you have to move only the packages that are not currently in the destination folder (because those are the base packages, and you don’t want to ruin them). But if you already did replaced everything, the next step will solve this for you.
+ installed.packages() aitab leida kataloogi, kus asuvad sinu paketid (näit kui eelnev rada ei tööta)
 
-If you cannot find the proper path, you can run this command to check: installed.packages()
-
-3. Update the moved packages
-
-Run the following command. Type ‘y’ for every question that popped up.
+3. Uuenda paketid uues kataloogis 
 
 update.packages(checkBuilt=TRUE)
 
-4. Type the following command in R to check if everything went well
+R konsoolis pead vastama y igale küsimusele, mida seal küsitakse
 
-version
+4. kontrolli, et kõik töötas:
 
 packageStatus()
 

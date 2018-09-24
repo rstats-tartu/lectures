@@ -203,16 +203,6 @@ Lülitame automaatse salvestamise välja:
 
 Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised, salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele: `write_rds()`, `read_rds()`.
 
-Nüüd laadime hiljem vaja minevad raamatukogud:
-```{r, message=FALSE}
-library(tidyverse)
-library(VIM)
-library(readxl)
-library(skimr)
-## Install gotta read em all as R studio addin
-## install.packages("devtools")
-#devtools::install_github("Stan125/GREA")
-```
 
 
 ### Objekt ja nimi
