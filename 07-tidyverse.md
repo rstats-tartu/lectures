@@ -231,25 +231,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>       V9     V8     V5    V2     V6
-#>    <dbl>  <dbl>  <dbl> <dbl>  <dbl>
-#> 1 0.513  0.657  0.0965 0.318 0.538 
-#> 2 0.283  0.229  0.864  0.711 0.398 
-#> 3 0.641  0.614  0.904  0.915 0.498 
-#> 4 0.618  0.354  0.971  0.238 0.469 
-#> 5 0.0366 0.202  0.0627 0.104 0.967 
-#> 6 0.949  0.0838 0.724  0.729 0.0301
+#>       V9     V8     V5    V2      V6
+#>    <dbl>  <dbl>  <dbl> <dbl>   <dbl>
+#> 1 0.352  0.368  0.978  0.589 0.00704
+#> 2 0.831  0.0427 0.898  0.481 0.685  
+#> 3 0.195  0.436  0.364  0.510 0.688  
+#> 4 0.396  0.728  0.514  0.940 0.405  
+#> 5 0.791  0.406  0.908  0.335 0.903  
+#> 6 0.0960 0.977  0.0737 0.704 0.937  
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>       V9     V8        V7     V6
-#>    <dbl>  <dbl>     <dbl>  <dbl>
-#> 1 0.513  0.657  0.837     0.538 
-#> 2 0.283  0.229  0.237     0.398 
-#> 3 0.641  0.614  0.705     0.498 
-#> 4 0.618  0.354  0.0000373 0.469 
-#> 5 0.0366 0.202  0.891     0.967 
-#> 6 0.949  0.0838 0.491     0.0301
+#>       V9     V8     V7      V6
+#>    <dbl>  <dbl>  <dbl>   <dbl>
+#> 1 0.352  0.368  0.213  0.00704
+#> 2 0.831  0.0427 0.457  0.685  
+#> 3 0.195  0.436  0.224  0.688  
+#> 4 0.396  0.728  0.147  0.405  
+#> 5 0.791  0.406  0.882  0.903  
+#> 6 0.0960 0.977  0.0490 0.937  
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -600,14 +600,14 @@ a <- tibble(gene= rep(1:5, each=6),
             indeks= rep(c("E", "C"), each= 3, times=5))
 head(a)
 #> # A tibble: 6 x 3
-#>    gene  value indeks
-#>   <int>  <dbl> <chr> 
-#> 1     1 -0.438 E     
-#> 2     1  0.451 E     
-#> 3     1 -0.342 E     
-#> 4     1 -0.920 C     
-#> 5     1 -1.07  C     
-#> 6     1 -0.802 C
+#>    gene   value indeks
+#>   <int>   <dbl> <chr> 
+#> 1     1  0.513  E     
+#> 2     1 -0.184  E     
+#> 3     1  0.0745 E     
+#> 4     1 -0.372  C     
+#> 5     1 -2.06   C     
+#> 6     1 -1.82   C
 ```
 
 
@@ -616,11 +616,11 @@ a %>% group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 #> # A tibble: 5 x 2
 #>    gene      p
 #>   <int>  <dbl>
-#> 1     1 0.0910
-#> 2     2 0.640 
-#> 3     3 0.664 
-#> 4     4 0.462 
-#> 5     5 0.673
+#> 1     1 0.0837
+#> 2     2 0.792 
+#> 3     3 0.385 
+#> 4     4 0.447 
+#> 5     5 0.938
 ```
 
 
@@ -808,7 +808,7 @@ Nii saame ka teada, mitu korda iga faktori tase selles tabelis esineb.
 
 ### tekitame faktortulba keerulisemal teel
 
-dplyr::case_when(). Kui Sepal.Length on > 5.8 või Sepal.Width >4, siis uues veerus nimega fact ilmub tase "large", kui Species = setosa, siis ilmub tase "I. setosa", igal muul juhul ilmub "other".
+dplyr::case_when(). Kui Sepal.Length on > 5.8 või Sepal.Width >4, siis uues veerus nimega fact ilmub tase "large", kui Species = setosa, siis ilmub tase "I. setosa", igal muul juhul ilmub <NA>.
 
 ```r
 library(tidyverse)
@@ -816,9 +816,13 @@ i <- iris %>% mutate(
     fact = case_when(
       Sepal.Length > 5.8 | Sepal.Width > 4 ~ "large",
       Species == "setosa"        ~ "I. setosa",
-      TRUE                      ~  "other"
+      TRUE                      ~  NA_character_
     ))
 ```
+
+
+case_when() teeb loogilisi tehteid samas järjekorras, mis sa ette andsid. Seega kui mõni väärtus võiks minna mitmesse teie poolt spetsifitseeritud tingimusse, siis ta läheb tegelikult esimesena ette tulevasse tõesesse tingimusse. 
+
 
 ### `droplevels()` viskab välja kasutamata faktori tasemed
 

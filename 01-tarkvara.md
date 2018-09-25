@@ -211,3 +211,35 @@ Need tuleb vajadusel eraldi ükshaaval sisse lugeda.
 
 > Enamasti kirjutatakse kõik sisse loetavad raamatukogud kohe R scripti algusesse. Siis on ilusti näha, mida hiljem vaja läheb.
 
+### R-i versiooni uuendamine 
+
+**mac-is**
+
+1. installeeri uus Ri versioon
+
+2. Kopeeri folderid oma vanast R-i versioonist uude versiooni (tegelikult need folderid, mida uues kataloogis ei ole - sest mõned paketid lastakse peale juba baas installatsiooniga). 
+
+/Library/Frameworks/R.framework/Versions/x.xx/Resources/library
+
+(Asenda x.xx vana ja uue R versiooni numbriga) 
+
+ installed.packages() aitab leida kataloogi, kus asuvad sinu paketid (näit kui eelnev rada ei tööta)
+
+3. Uuenda paketid uues kataloogis 
+
+update.packages(checkBuilt=TRUE)
+
+R konsoolis pead vastama y igale küsimusele, mida seal küsitakse
+
+4. kontrolli, et kõik töötas:
+
+packageStatus()
+
+**windowsis peaks töötama**
+
+install.packages("installr")
+
+library(installr)
+
+updateR()
+

@@ -25,7 +25,7 @@
 <meta name="author" content="Ülo Maiväli &amp; Taavi Päll">
 
 
-<meta name="date" content="2018-09-17">
+<meta name="date" content="2018-09-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -118,7 +118,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4" data-path="tools.html"><a href="tools.html#git-merge-konfliktid"><i class="fa fa-check"></i><b>4.4</b> Git <em>Merge</em> konfliktid</a></li>
 <li class="chapter" data-level="4.5" data-path="tools.html"><a href="tools.html#r-projekti-kataloogi-soovitatav-minimaalne-struktuur"><i class="fa fa-check"></i><b>4.5</b> R projekti kataloogi soovitatav minimaalne struktuur</a></li>
 <li class="chapter" data-level="4.6" data-path="tools.html"><a href="tools.html#libs"><i class="fa fa-check"></i><b>4.6</b> Pakettide installeerimine</a></li>
-<li class="chapter" data-level="4.7" data-path="tools.html"><a href="tools.html#r-repositooriumid"><i class="fa fa-check"></i><b>4.7</b> R repositooriumid</a></li>
+<li class="chapter" data-level="4.7" data-path="tools.html"><a href="tools.html#r-repositooriumid"><i class="fa fa-check"></i><b>4.7</b> R repositooriumid</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="tools.html"><a href="tools.html#r-i-versiooni-uuendamine"><i class="fa fa-check"></i><b>4.7.1</b> R-i versiooni uuendamine</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="calc.html"><a href="calc.html"><i class="fa fa-check"></i><b>5</b> R on kalkulaator</a></li>
 <li class="chapter" data-level="6" data-path="r-i-toopohimote.html"><a href="r-i-toopohimote.html"><i class="fa fa-check"></i><b>6</b> R-i tööpõhimõte</a><ul>
@@ -175,10 +177,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html"><i class="fa fa-check"></i><b>11</b> Graafilised lahendused</a><ul>
 <li class="chapter" data-level="11.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#baasgraafika"><i class="fa fa-check"></i><b>11.1</b> Baasgraafika</a></li>
 <li class="chapter" data-level="11.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#ggplot2"><i class="fa fa-check"></i><b>11.2</b> ggplot2</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#lisame-plotile-sirgjooni"><i class="fa fa-check"></i><b>11.2.1</b> Lisame plotile sirgjooni</a></li>
-<li class="chapter" data-level="11.2.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#segmendid-ja-nooled"><i class="fa fa-check"></i><b>11.2.2</b> Segmendid ja nooled</a></li>
-<li class="chapter" data-level="11.2.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#joongraafikud"><i class="fa fa-check"></i><b>11.2.3</b> Joongraafikud</a></li>
-<li class="chapter" data-level="11.2.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#punktide-tahistamise-trikid"><i class="fa fa-check"></i><b>11.2.4</b> Punktide tähistamise trikid</a></li>
+<li class="chapter" data-level="11.2.1" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#graafika-keel"><i class="fa fa-check"></i><b>11.2.1</b> graafika “keel”</a></li>
+<li class="chapter" data-level="11.2.2" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#lisame-plotile-sirgjooni"><i class="fa fa-check"></i><b>11.2.2</b> Lisame plotile sirgjooni</a></li>
+<li class="chapter" data-level="11.2.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#segmendid-ja-nooled"><i class="fa fa-check"></i><b>11.2.3</b> Segmendid ja nooled</a></li>
+<li class="chapter" data-level="11.2.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#joongraafikud"><i class="fa fa-check"></i><b>11.2.4</b> Joongraafikud</a></li>
+<li class="chapter" data-level="11.2.5" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#punktide-tahistamise-trikid"><i class="fa fa-check"></i><b>11.2.5</b> Punktide tähistamise trikid</a></li>
 </ul></li>
 <li class="chapter" data-level="11.3" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#facet-pisigraafik"><i class="fa fa-check"></i><b>11.3</b> <em>Facet</em> – pisigraafik</a></li>
 <li class="chapter" data-level="11.4" data-path="graafilised-lahendused.html"><a href="graafilised-lahendused.html#mitu-graafikut-paneelidena-uhel-joonisel"><i class="fa fa-check"></i><b>11.4</b> Mitu graafikut paneelidena ühel joonisel</a></li>
@@ -224,41 +227,42 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.13.1" data-path="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html"><a href="kuraditosin-graafikut-mida-sa-peaksid-enne-surma-joonistama.html#t-sne"><i class="fa fa-check"></i><b>12.13.1</b> t-sne</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>13</b> Tidyverse</a><ul>
-<li class="chapter" data-level="13.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>13.1</b> Tidy tabeli struktuur</a><ul>
-<li class="chapter" data-level="13.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>13.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
-<li class="chapter" data-level="13.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>13.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
+<li class="chapter" data-level="13" data-path="uldised-jooniste-printsiibid.html"><a href="uldised-jooniste-printsiibid.html"><i class="fa fa-check"></i><b>13</b> Üldised jooniste printsiibid</a></li>
+<li class="chapter" data-level="14" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>14</b> Tidyverse</a><ul>
+<li class="chapter" data-level="14.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-tabeli-struktuur"><i class="fa fa-check"></i><b>14.1</b> Tidy tabeli struktuur</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tabeli-dimensioonide-muutmine-pikk-ja-lai-formaat"><i class="fa fa-check"></i><b>14.1.1</b> Tabeli dimensioonide muutmine (pikk ja lai formaat)</a></li>
+<li class="chapter" data-level="14.1.2" data-path="tidyverse.html"><a href="tidyverse.html#tibble-transpose-read-veergudeks-ja-vastupidi"><i class="fa fa-check"></i><b>14.1.2</b> Tibble transpose — read veergudeks ja vastupidi</a></li>
 </ul></li>
-<li class="chapter" data-level="13.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>13.2</b> dplyr ja selle viis verbi</a><ul>
-<li class="chapter" data-level="13.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>13.2.1</b> <code>select()</code> columns</a></li>
-<li class="chapter" data-level="13.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>13.2.2</b> <code>filter()</code> rows</a></li>
-<li class="chapter" data-level="13.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>13.2.3</b> <code>summarise()</code></a></li>
-<li class="chapter" data-level="13.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>13.2.4</b> <code>group_by()</code></a></li>
-<li class="chapter" data-level="13.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>13.2.5</b> <code>mutate()</code></a></li>
+<li class="chapter" data-level="14.2" data-path="tidyverse.html"><a href="tidyverse.html#dplyr-ja-selle-viis-verbi"><i class="fa fa-check"></i><b>14.2</b> dplyr ja selle viis verbi</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="tidyverse.html"><a href="tidyverse.html#select-columns"><i class="fa fa-check"></i><b>14.2.1</b> <code>select()</code> columns</a></li>
+<li class="chapter" data-level="14.2.2" data-path="tidyverse.html"><a href="tidyverse.html#filter-rows"><i class="fa fa-check"></i><b>14.2.2</b> <code>filter()</code> rows</a></li>
+<li class="chapter" data-level="14.2.3" data-path="tidyverse.html"><a href="tidyverse.html#summarise"><i class="fa fa-check"></i><b>14.2.3</b> <code>summarise()</code></a></li>
+<li class="chapter" data-level="14.2.4" data-path="tidyverse.html"><a href="tidyverse.html#group_by"><i class="fa fa-check"></i><b>14.2.4</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="14.2.5" data-path="tidyverse.html"><a href="tidyverse.html#mutate"><i class="fa fa-check"></i><b>14.2.5</b> <code>mutate()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="tidyverse.html"><a href="tidyverse.html#separate-uks-veerg-mitmeks"><i class="fa fa-check"></i><b>13.3</b> <code>separate()</code> üks veerg mitmeks</a></li>
-<li class="chapter" data-level="13.4" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>13.4</b> Faktorid</a><ul>
-<li class="chapter" data-level="13.4.1" data-path="tidyverse.html"><a href="tidyverse.html#tekitame-faktortulba-keerulisemal-teel"><i class="fa fa-check"></i><b>13.4.1</b> tekitame faktortulba keerulisemal teel</a></li>
-<li class="chapter" data-level="13.4.2" data-path="tidyverse.html"><a href="tidyverse.html#droplevels-viskab-valja-kasutamata-faktori-tasemed"><i class="fa fa-check"></i><b>13.4.2</b> <code>droplevels()</code> viskab välja kasutamata faktori tasemed</a></li>
-<li class="chapter" data-level="13.4.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>13.4.3</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
-<li class="chapter" data-level="13.4.4" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>13.4.4</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
-<li class="chapter" data-level="13.4.5" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>13.4.5</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
-<li class="chapter" data-level="13.4.6" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>13.4.6</b> Rekodeerime pideva muutuja faktoriks</a></li>
-<li class="chapter" data-level="13.4.7" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>13.4.7</b> Muudame faktori tasemete järjekorda joonisel</a></li>
-<li class="chapter" data-level="13.4.8" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>13.4.8</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
-<li class="chapter" data-level="13.4.9" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>13.4.9</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
-<li class="chapter" data-level="13.4.10" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>13.4.10</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
+<li class="chapter" data-level="14.3" data-path="tidyverse.html"><a href="tidyverse.html#separate-uks-veerg-mitmeks"><i class="fa fa-check"></i><b>14.3</b> <code>separate()</code> üks veerg mitmeks</a></li>
+<li class="chapter" data-level="14.4" data-path="tidyverse.html"><a href="tidyverse.html#faktorid"><i class="fa fa-check"></i><b>14.4</b> Faktorid</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="tidyverse.html"><a href="tidyverse.html#tekitame-faktortulba-keerulisemal-teel"><i class="fa fa-check"></i><b>14.4.1</b> tekitame faktortulba keerulisemal teel</a></li>
+<li class="chapter" data-level="14.4.2" data-path="tidyverse.html"><a href="tidyverse.html#droplevels-viskab-valja-kasutamata-faktori-tasemed"><i class="fa fa-check"></i><b>14.4.2</b> <code>droplevels()</code> viskab välja kasutamata faktori tasemed</a></li>
+<li class="chapter" data-level="14.4.3" data-path="tidyverse.html"><a href="tidyverse.html#fct_recode-rekodeerib-faktori-tasemed"><i class="fa fa-check"></i><b>14.4.3</b> <code>fct_recode()</code> rekodeerib faktori tasemed</a></li>
+<li class="chapter" data-level="14.4.4" data-path="tidyverse.html"><a href="tidyverse.html#fct_collapse-annab-argumenti-sisse-vanade-tasemete-vektori-et-teha-vahem-uusi-tasemeid."><i class="fa fa-check"></i><b>14.4.4</b> <code>fct_collapse()</code> annab argumenti sisse vanade tasemete vektori, et teha vähem uusi tasemeid.</a></li>
+<li class="chapter" data-level="14.4.5" data-path="tidyverse.html"><a href="tidyverse.html#fct_lump-loob-kokku-koik-vahem-arv-kordi-esinevad-tasemed."><i class="fa fa-check"></i><b>14.4.5</b> <code>fct_lump()</code> lööb kokku kõik vähem arv kordi esinevad tasemed.</a></li>
+<li class="chapter" data-level="14.4.6" data-path="tidyverse.html"><a href="tidyverse.html#rekodeerime-pideva-muutuja-faktoriks"><i class="fa fa-check"></i><b>14.4.6</b> Rekodeerime pideva muutuja faktoriks</a></li>
+<li class="chapter" data-level="14.4.7" data-path="tidyverse.html"><a href="tidyverse.html#muudame-faktori-tasemete-jarjekorda-joonisel"><i class="fa fa-check"></i><b>14.4.7</b> Muudame faktori tasemete järjekorda joonisel</a></li>
+<li class="chapter" data-level="14.4.8" data-path="tidyverse.html"><a href="tidyverse.html#fct_relevel-tostab-joonisel-osad-tasemed-teistest-ettepoole"><i class="fa fa-check"></i><b>14.4.8</b> <code>fct_relevel()</code> tõstab joonisel osad tasemed teistest ettepoole</a></li>
+<li class="chapter" data-level="14.4.9" data-path="tidyverse.html"><a href="tidyverse.html#joontega-plotil-saab-fct_reorder2-abil-assotseerida-y-vaartused-suurimate-x-vaartustega"><i class="fa fa-check"></i><b>14.4.9</b> Joontega plotil saab <code>fct_reorder2()</code> abil assotseerida y väärtused suurimate x väärtustega</a></li>
+<li class="chapter" data-level="14.4.10" data-path="tidyverse.html"><a href="tidyverse.html#tulpdiagrammide-korral-kasuta-fct_infreq"><i class="fa fa-check"></i><b>14.4.10</b> Tulpdiagrammide korral kasuta <code>fct_infreq()</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html"><i class="fa fa-check"></i><b>14</b> lisa: funktsioonid</a><ul>
-<li class="chapter" data-level="14.1" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#raamatukogud"><i class="fa fa-check"></i><b>14.1</b> raamatukogud</a><ul>
-<li class="chapter" data-level="14.1.1" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#bioconductor"><i class="fa fa-check"></i><b>14.1.1</b> bioconductor</a></li>
-<li class="chapter" data-level="14.1.2" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#github"><i class="fa fa-check"></i><b>14.1.2</b> Github</a></li>
+<li class="chapter" data-level="15" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html"><i class="fa fa-check"></i><b>15</b> lisa: funktsioonid</a><ul>
+<li class="chapter" data-level="15.1" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#raamatukogud"><i class="fa fa-check"></i><b>15.1</b> raamatukogud</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#bioconductor"><i class="fa fa-check"></i><b>15.1.1</b> bioconductor</a></li>
+<li class="chapter" data-level="15.1.2" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#github"><i class="fa fa-check"></i><b>15.1.2</b> Github</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#failide-sisselugemine"><i class="fa fa-check"></i><b>14.2</b> failide sisselugemine</a></li>
-<li class="chapter" data-level="14.3" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#matemaatika"><i class="fa fa-check"></i><b>14.3</b> matemaatika</a></li>
-<li class="chapter" data-level="14.4" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#andmeraamid"><i class="fa fa-check"></i><b>14.4</b> andmeraamid</a></li>
-<li class="chapter" data-level="14.5" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#na-d-1"><i class="fa fa-check"></i><b>14.5</b> NA-d</a></li>
+<li class="chapter" data-level="15.2" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#failide-sisselugemine"><i class="fa fa-check"></i><b>15.2</b> failide sisselugemine</a></li>
+<li class="chapter" data-level="15.3" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#matemaatika"><i class="fa fa-check"></i><b>15.3</b> matemaatika</a></li>
+<li class="chapter" data-level="15.4" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#andmeraamid"><i class="fa fa-check"></i><b>15.4</b> andmeraamid</a></li>
+<li class="chapter" data-level="15.5" data-path="lisa-funktsioonid.html"><a href="lisa-funktsioonid.html#na-d-1"><i class="fa fa-check"></i><b>15.5</b> NA-d</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="bibliograafia.html"><a href="bibliograafia.html"><i class="fa fa-check"></i>Bibliograafia</a></li>
 <li class="divider"></li>
@@ -327,13 +331,13 @@ list1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ma
 )
 params <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="kw">pluck</span>(.x, <span class="dv">1</span>), <span class="dt">sd =</span> <span class="kw">pluck</span>(.x, <span class="dv">2</span>)))
 <span class="co">#&gt; $norm1</span>
-<span class="co">#&gt; [1] 0.610 0.348 0.435 1.180 0.960</span>
+<span class="co">#&gt; [1]  0.893  1.976 -1.455 -0.799 -0.715</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $norm2</span>
-<span class="co">#&gt; [1] 1.674 0.912 0.902 2.654 1.277</span>
+<span class="co">#&gt; [1] 0.246 2.364 2.845 0.684 0.690</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $norm3</span>
-<span class="co">#&gt; [1] 3.623 0.494 5.499 3.372 1.609</span></code></pre></div>
+<span class="co">#&gt; [1] 1.611 2.429 4.856 2.312 0.699</span></code></pre></div>
 <p><code>enframe()</code> konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value).</p>
 <div id="map2" class="section level3">
 <h3><span class="header-section-number">8.0.1</span> map2()</h3>
@@ -356,8 +360,8 @@ digits &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="d
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; [1] 1.41</span></code></pre></div>
-<p>pmap() kasutab ekspressioonide sisesed elemndid on nüüd ..1, ..2, ..3 jne, mitte .x ja .y nagu map2-l.</p>
-<p>NB! pmap-i saab sisetada data frame, mille peale see teeb kõike rea kaupa.</p>
+<p>pmap() ekspressioonide sisesed elemndid on ..1, ..2, ..3 jne, mitte .x ja .y nagu map2-l.</p>
+<p>NB! pmap-i saab sisetada data frame, mille peal see teeb kõike rea kaupa.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">parameters &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
   <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),
   <span class="dt">min =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>),
@@ -365,13 +369,28 @@ digits &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="d
 )
 parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pmap</span>(runif)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 0.144</span>
+<span class="co">#&gt; [1] 0.754</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 5.87 5.57</span>
+<span class="co">#&gt; [1] 5.34 5.17</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] 10.7 10.5 10.8</span></code></pre></div>
+<span class="co">#&gt; [1] 10.5 10.8 10.4</span></code></pre></div>
+<p>See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.</p>
+<p>Järgmine funktsioon rakendub suvalisele df-le rea kaupa ja arvutab igale reale näit sd. Aga selleks transponeerime read veergudeks ja rakendame tavalist map()-i.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmap &lt;-<span class="st"> </span><span class="cf">function</span> (.x, .f, ...) {
+    <span class="cf">if</span>(<span class="kw">is.null</span>(<span class="kw">dim</span>(.x))) <span class="kw">stop</span>(<span class="st">&quot;dim(X) must have a positive length&quot;</span>)
+    .x &lt;-<span class="st"> </span><span class="kw">t</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>(.,<span class="dt">stringsAsFactors=</span>F)
+    purrr<span class="op">::</span><span class="kw">map_dfr</span>(<span class="dt">.x=</span>.x,<span class="dt">.f=</span>.f,...)
+}
+parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rmap</span>(sd)
+<span class="co">#&gt; # A tibble: 1 x 3</span>
+<span class="co">#&gt;      V1    V2    V3</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.577  2.08  4.36</span></code></pre></div>
+<p>apply teeb sama lihtsamini.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(parameters, <span class="dv">1</span>, sd)
+<span class="co">#&gt; [1] 0.577 2.082 4.359</span></code></pre></div>
 </div>
 <div id="invoke_map" class="section level3">
 <h3><span class="header-section-number">8.0.3</span> invoke_map()</h3>
@@ -380,25 +399,25 @@ parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="k
 n &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">3</span>)
 <span class="kw">invoke_map</span>(functions, n)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] -2.07  4.87  2.23  1.22  4.34</span>
+<span class="co">#&gt; [1] -5.286  4.810  0.598  4.441  3.927</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 0.278 1.807</span>
+<span class="co">#&gt; [1] 0.740 0.593</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1]  1.3189  4.7459 -0.0103</span></code></pre></div>
+<span class="co">#&gt; [1] -4.78 -1.89  1.49</span></code></pre></div>
 <p>anname sisse esimese argumendi (100) igasse funktsiooni</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">functions &lt;-<span class="st"> </span><span class="kw">list</span>(rnorm, rlnorm, rcauchy)
 n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 <span class="kw">invoke_map</span>(functions, n, <span class="dv">100</span>)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 100.1  98.5 100.3  98.0  99.2</span>
+<span class="co">#&gt; [1] 100.2  98.0 101.6 101.0  98.4</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 1.84e+43 1.74e+43</span>
+<span class="co">#&gt; [1] 7.97e+43 6.21e+43</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1]  99.8 100.7 100.5</span></code></pre></div>
+<span class="co">#&gt; [1] 100.1 105.9  99.8</span></code></pre></div>
 <p>mitu argumenti igale funktsioonile:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">args &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">norm =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>), 
              <span class="dt">lnorm =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dt">meanlog =</span> <span class="dv">1</span>, <span class="dt">sdlog =</span> <span class="dv">2</span>),
@@ -406,13 +425,13 @@ n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</sp
 
 <span class="kw">invoke_map</span>(functions, args)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] -0.448 -0.431  0.706</span>
+<span class="co">#&gt; [1]  0.355 -1.436 -0.174</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 29.9 22.2</span>
+<span class="co">#&gt; [1]  9.16 15.56</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] 15.5</span></code></pre></div>
+<span class="co">#&gt; [1] 90.6</span></code></pre></div>
 <div id="map-shortcuts" class="section level4">
 <h4><span class="header-section-number">8.0.3.1</span> map shortcuts</h4>
 <p><code>pluck()</code> võtab listist välja elemendi (vektori, data frame jms) nii nagu see on (mitte listina).</p>
@@ -447,7 +466,7 @@ n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</sp
 <h4><span class="header-section-number">8.0.3.2</span> List column</h4>
 <p>Df-i veerg, mille andmetüüp on list. Näiteks mudeliobjektid, funktsioonid ja teised df-d võivad minna list columnisse! List columnid on ise listid, mitte andmevektorid.</p>
 <pre><code>  List veerud võimaldavad panna samasse tabelisse erinevaid asju - 
-  andmeid, mudeleid, mudeli koefitsiente jms.</code></pre>
+  andmeid, mudeleid, mudeli koefitsiente jms. </code></pre>
 <p>nest() teeb uue df-i, kus on 1. veerg grupeeriva muutuja tasemetega, millele järgneb list column, mille iga element on tibble. Iga tibble sisaldab relevantset infot grupeeriva muutuja vastava taseme kohta.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gapminder)
 (nested_gapminder &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nest</span>())
@@ -475,7 +494,8 @@ n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</sp
 <span class="co">#&gt; 4 Asia       1967    34.0 11537966      836.</span>
 <span class="co">#&gt; 5 Asia       1972    36.1 13079460      740.</span>
 <span class="co">#&gt; 6 Asia       1977    38.4 14880372      786.</span>
-<span class="co">#&gt; # ... with 6 more rows</span></code></pre></div>
+<span class="co">#&gt; # ... with 6 more rows</span>
+<span class="co">#fitime ühe mudeli 1. elemendile (1. riik)</span></code></pre></div>
 <p>fit a model to each tibble nested within nested_gapminder and then store those models as a list column</p>
 <p>fitime mudeli igale listi veerule (igale riigile). väljund on ilge list.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model1 &lt;-<span class="st"> </span>nested_gapminder <span class="op">%&gt;%</span><span class="st">  </span>
@@ -486,7 +506,7 @@ n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</sp
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">models =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>year, <span class="dt">data =</span> .x)))</code></pre></div>
 <p>võtame välja mudeli koefitsiendi year ja paneme uude veergu nimega coefficient:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">models1 &lt;-<span class="st">  </span>models1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>( <span class="dt">coefficient =</span> <span class="kw">map_dbl</span>(models, <span class="op">~</span><span class="kw">coef</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pluck</span>(<span class="st">&quot;year&quot;</span>)) )</code></pre></div>
-<p>pane tähele, et df-i veerg models on ühtlasi list, millele saame map_dbl() rakendada.</p>
+<p>df-i veerg models on ühtlasi list, millele saame map_dbl() rakendada.</p>
 <p>järgnevad 3 koodirida teevad sama asja - võtavad välja 1. mudeli:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">models1 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;models&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>

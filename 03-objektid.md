@@ -1,5 +1,17 @@
 
 
+
+```r
+library(tidyverse)
+library(VIM)
+library(readxl)
+library(skimr)
+## Install gotta read em all as R studio addin
+## install.packages("devtools")
+#devtools::install_github("Stan125/GREA")
+```
+
+
 # R-i tööpõhimõte
 
 Iga kord, kui avate R studio, alustate R-i sessiooni, mis seisneb funktsioonide (väikeste programmijuppide) rakendamises andmetele eesmärgiga muuta tabelite struktuuri, transformeerida andmeid, genereerida jooniseid ja/või arvutada statistikuid. Kõik see toimub R-i töökeskkonnas. Tulemusi saab töökeskkonnast eksportida arvuti kõvakettale näiteks .pdf (joonised) või .csv (tabelid) formaadis. Teie sessiooni põhiline tulemus ei ole siiski eksporditavad asjad, vaid R-i kood (script), mida jooksutades on võimalik korrataval viisil algset andmetabelit manipuleerida. Kõik, mida te töökeskonnas teete, kajastub koodis ja on korratav.
@@ -34,6 +46,43 @@ R-i sessioon näeb üldjoontes välja niimoodi:
 * factor - muutuja, millel on loetud hulk nimedega "tasemeid" (levels), kus iga tase on sisemiselt kodeeritud täisarvuga alates 1st. On olemas nii järjestatud kui järjestamata tasemetega faktorid. Näit "mees"-naine on tüüpiliselt järjestamata tasemed, aga vähe-keskmiselt-palju peaks olema järjestatud.
 
 * logical - TRUE/FALSE. TRUE on sisemiselt kodeeritud kui 1 ja FALSE kui 0. 
+
+**relatsioonilised operaatorid**
+
+* >, >= (on suurem või võrdne), <, <=, 
+
+* == (võrdub), 
+
+* != (ei võrdu), 
+
+* %in% (sisaldub), 
+
+* & (and),
+
+* | (or)
+
+
+```r
+1 == 2
+#> [1] FALSE
+1 != 2
+#> [1] TRUE
+
+1 %in% 1:5
+#> [1] TRUE
+1&4 %in% 1:5 #1 ja 4 sisalduvad vektoris c(1, 2, 3, 4, 5) --- TRUE
+#> [1] TRUE
+c(1, 8) %in% 1:5
+#> [1]  TRUE FALSE
+1|8 %in% 1:5 #1 või 8 sisalduvad vektoris c(1, 2, 3, 4, 5) --- TRUE
+#> [1] TRUE
+6 %in% 1:5 #6 sisaldub vektoris c(1, 2, 3, 4, 5) --- see lause on FALSE
+#> [1] FALSE
+char.vector <- c("apple", "banana", "cantaloupe", "dragonfruit")
+"apple" %in% char.vector
+#> [1] TRUE
+```
+
 
 **andmeklassid:** (idee on andmed struktureerida hõlbustamaks edasisi tehteid nendega)
 
@@ -173,16 +222,6 @@ Lülitame automaatse salvestamise välja:
 
 Kui on mingid kaua aega võtvad kalkulatsioonid või allalaadimised, salvesta need eraldi .rds faili ja laadi koodis vastavalt vajadusele: `write_rds()`, `read_rds()`.
 
-Nüüd laadime hiljem vaja minevad raamatukogud:
-
-```r
-library(tidyverse)
-library(VIM)
-library(readxl) 
-## Install gotta read em all as R studio addin
-## install.packages("devtools")
-#devtools::install_github("Stan125/GREA")
-```
 
 
 ### Objekt ja nimi
@@ -481,15 +520,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.380 0.384 0.618 0.420 0.398
+#> [1] 0.2137 0.1681 0.0262 0.8526 0.5555
 #> 
 #> [[2]]
-#>       a      b
-#> 1 0.380  0.334
-#> 2 0.384 -1.000
-#> 3 0.618  0.466
-#> 4 0.420 -0.615
-#> 5 0.398 -0.528
+#>        a      b
+#> 1 0.2137  0.612
+#> 2 0.1681 -0.347
+#> 3 0.0262  1.143
+#> 4 0.8526 -0.783
+#> 5 0.5555 -0.880
 #> 
 #> [[3]]
 #> 
@@ -752,313 +791,19 @@ nrow(iris) #mitu rida?
 #> [1] 150
 ncol(iris) #mitu veergu?
 #> [1] 5
-arrange(iris, desc(Sepal.Length)) 
-#>     Sepal.Length Sepal.Width Petal.Length Petal.Width
-#> 1            7.9         3.8          6.4         2.0
-#> 2            7.7         3.8          6.7         2.2
-#> 3            7.7         2.6          6.9         2.3
-#> 4            7.7         2.8          6.7         2.0
-#> 5            7.7         3.0          6.1         2.3
-#> 6            7.6         3.0          6.6         2.1
-#> 7            7.4         2.8          6.1         1.9
-#> 8            7.3         2.9          6.3         1.8
-#> 9            7.2         3.6          6.1         2.5
-#> 10           7.2         3.2          6.0         1.8
-#> 11           7.2         3.0          5.8         1.6
-#> 12           7.1         3.0          5.9         2.1
-#> 13           7.0         3.2          4.7         1.4
-#> 14           6.9         3.1          4.9         1.5
-#> 15           6.9         3.2          5.7         2.3
-#> 16           6.9         3.1          5.4         2.1
-#> 17           6.9         3.1          5.1         2.3
-#> 18           6.8         2.8          4.8         1.4
-#> 19           6.8         3.0          5.5         2.1
-#> 20           6.8         3.2          5.9         2.3
-#> 21           6.7         3.1          4.4         1.4
-#> 22           6.7         3.0          5.0         1.7
-#> 23           6.7         3.1          4.7         1.5
-#> 24           6.7         2.5          5.8         1.8
-#> 25           6.7         3.3          5.7         2.1
-#> 26           6.7         3.1          5.6         2.4
-#> 27           6.7         3.3          5.7         2.5
-#> 28           6.7         3.0          5.2         2.3
-#> 29           6.6         2.9          4.6         1.3
-#> 30           6.6         3.0          4.4         1.4
-#> 31           6.5         2.8          4.6         1.5
-#> 32           6.5         3.0          5.8         2.2
-#> 33           6.5         3.2          5.1         2.0
-#> 34           6.5         3.0          5.5         1.8
-#> 35           6.5         3.0          5.2         2.0
-#> 36           6.4         3.2          4.5         1.5
-#> 37           6.4         2.9          4.3         1.3
-#> 38           6.4         2.7          5.3         1.9
-#> 39           6.4         3.2          5.3         2.3
-#> 40           6.4         2.8          5.6         2.1
-#> 41           6.4         2.8          5.6         2.2
-#> 42           6.4         3.1          5.5         1.8
-#> 43           6.3         3.3          4.7         1.6
-#> 44           6.3         2.5          4.9         1.5
-#> 45           6.3         2.3          4.4         1.3
-#> 46           6.3         3.3          6.0         2.5
-#> 47           6.3         2.9          5.6         1.8
-#> 48           6.3         2.7          4.9         1.8
-#> 49           6.3         2.8          5.1         1.5
-#> 50           6.3         3.4          5.6         2.4
-#> 51           6.3         2.5          5.0         1.9
-#> 52           6.2         2.2          4.5         1.5
-#> 53           6.2         2.9          4.3         1.3
-#> 54           6.2         2.8          4.8         1.8
-#> 55           6.2         3.4          5.4         2.3
-#> 56           6.1         2.9          4.7         1.4
-#> 57           6.1         2.8          4.0         1.3
-#> 58           6.1         2.8          4.7         1.2
-#> 59           6.1         3.0          4.6         1.4
-#> 60           6.1         3.0          4.9         1.8
-#> 61           6.1         2.6          5.6         1.4
-#> 62           6.0         2.2          4.0         1.0
-#> 63           6.0         2.9          4.5         1.5
-#> 64           6.0         2.7          5.1         1.6
-#> 65           6.0         3.4          4.5         1.6
-#> 66           6.0         2.2          5.0         1.5
-#> 67           6.0         3.0          4.8         1.8
-#> 68           5.9         3.0          4.2         1.5
-#> 69           5.9         3.2          4.8         1.8
-#> 70           5.9         3.0          5.1         1.8
-#> 71           5.8         4.0          1.2         0.2
-#> 72           5.8         2.7          4.1         1.0
-#> 73           5.8         2.7          3.9         1.2
-#> 74           5.8         2.6          4.0         1.2
-#> 75           5.8         2.7          5.1         1.9
-#> 76           5.8         2.8          5.1         2.4
-#> 77           5.8         2.7          5.1         1.9
-#> 78           5.7         4.4          1.5         0.4
-#> 79           5.7         3.8          1.7         0.3
-#> 80           5.7         2.8          4.5         1.3
-#> 81           5.7         2.6          3.5         1.0
-#> 82           5.7         3.0          4.2         1.2
-#> 83           5.7         2.9          4.2         1.3
-#> 84           5.7         2.8          4.1         1.3
-#> 85           5.7         2.5          5.0         2.0
-#> 86           5.6         2.9          3.6         1.3
-#> 87           5.6         3.0          4.5         1.5
-#> 88           5.6         2.5          3.9         1.1
-#> 89           5.6         3.0          4.1         1.3
-#> 90           5.6         2.7          4.2         1.3
-#> 91           5.6         2.8          4.9         2.0
-#> 92           5.5         4.2          1.4         0.2
-#> 93           5.5         3.5          1.3         0.2
-#> 94           5.5         2.3          4.0         1.3
-#> 95           5.5         2.4          3.8         1.1
-#> 96           5.5         2.4          3.7         1.0
-#> 97           5.5         2.5          4.0         1.3
-#> 98           5.5         2.6          4.4         1.2
-#> 99           5.4         3.9          1.7         0.4
-#> 100          5.4         3.7          1.5         0.2
-#> 101          5.4         3.9          1.3         0.4
-#> 102          5.4         3.4          1.7         0.2
-#> 103          5.4         3.4          1.5         0.4
-#> 104          5.4         3.0          4.5         1.5
-#> 105          5.3         3.7          1.5         0.2
-#> 106          5.2         3.5          1.5         0.2
-#> 107          5.2         3.4          1.4         0.2
-#> 108          5.2         4.1          1.5         0.1
-#> 109          5.2         2.7          3.9         1.4
-#> 110          5.1         3.5          1.4         0.2
-#> 111          5.1         3.5          1.4         0.3
-#> 112          5.1         3.8          1.5         0.3
-#> 113          5.1         3.7          1.5         0.4
-#> 114          5.1         3.3          1.7         0.5
-#> 115          5.1         3.4          1.5         0.2
-#> 116          5.1         3.8          1.9         0.4
-#> 117          5.1         3.8          1.6         0.2
-#> 118          5.1         2.5          3.0         1.1
-#> 119          5.0         3.6          1.4         0.2
-#> 120          5.0         3.4          1.5         0.2
-#> 121          5.0         3.0          1.6         0.2
-#> 122          5.0         3.4          1.6         0.4
-#> 123          5.0         3.2          1.2         0.2
-#> 124          5.0         3.5          1.3         0.3
-#> 125          5.0         3.5          1.6         0.6
-#> 126          5.0         3.3          1.4         0.2
-#> 127          5.0         2.0          3.5         1.0
-#> 128          5.0         2.3          3.3         1.0
-#> 129          4.9         3.0          1.4         0.2
-#> 130          4.9         3.1          1.5         0.1
-#> 131          4.9         3.1          1.5         0.2
-#> 132          4.9         3.6          1.4         0.1
-#> 133          4.9         2.4          3.3         1.0
-#> 134          4.9         2.5          4.5         1.7
-#> 135          4.8         3.4          1.6         0.2
-#> 136          4.8         3.0          1.4         0.1
-#> 137          4.8         3.4          1.9         0.2
-#> 138          4.8         3.1          1.6         0.2
-#> 139          4.8         3.0          1.4         0.3
-#> 140          4.7         3.2          1.3         0.2
-#> 141          4.7         3.2          1.6         0.2
-#> 142          4.6         3.1          1.5         0.2
-#> 143          4.6         3.4          1.4         0.3
-#> 144          4.6         3.6          1.0         0.2
-#> 145          4.6         3.2          1.4         0.2
-#> 146          4.5         2.3          1.3         0.3
-#> 147          4.4         2.9          1.4         0.2
-#> 148          4.4         3.0          1.3         0.2
-#> 149          4.4         3.2          1.3         0.2
-#> 150          4.3         3.0          1.1         0.1
-#>        Species
-#> 1    virginica
-#> 2    virginica
-#> 3    virginica
-#> 4    virginica
-#> 5    virginica
-#> 6    virginica
-#> 7    virginica
-#> 8    virginica
-#> 9    virginica
-#> 10   virginica
-#> 11   virginica
-#> 12   virginica
-#> 13  versicolor
-#> 14  versicolor
-#> 15   virginica
-#> 16   virginica
-#> 17   virginica
-#> 18  versicolor
-#> 19   virginica
-#> 20   virginica
-#> 21  versicolor
-#> 22  versicolor
-#> 23  versicolor
-#> 24   virginica
-#> 25   virginica
-#> 26   virginica
-#> 27   virginica
-#> 28   virginica
-#> 29  versicolor
-#> 30  versicolor
-#> 31  versicolor
-#> 32   virginica
-#> 33   virginica
-#> 34   virginica
-#> 35   virginica
-#> 36  versicolor
-#> 37  versicolor
-#> 38   virginica
-#> 39   virginica
-#> 40   virginica
-#> 41   virginica
-#> 42   virginica
-#> 43  versicolor
-#> 44  versicolor
-#> 45  versicolor
-#> 46   virginica
-#> 47   virginica
-#> 48   virginica
-#> 49   virginica
-#> 50   virginica
-#> 51   virginica
-#> 52  versicolor
-#> 53  versicolor
-#> 54   virginica
-#> 55   virginica
-#> 56  versicolor
-#> 57  versicolor
-#> 58  versicolor
-#> 59  versicolor
-#> 60   virginica
-#> 61   virginica
-#> 62  versicolor
-#> 63  versicolor
-#> 64  versicolor
-#> 65  versicolor
-#> 66   virginica
-#> 67   virginica
-#> 68  versicolor
-#> 69  versicolor
-#> 70   virginica
-#> 71      setosa
-#> 72  versicolor
-#> 73  versicolor
-#> 74  versicolor
-#> 75   virginica
-#> 76   virginica
-#> 77   virginica
-#> 78      setosa
-#> 79      setosa
-#> 80  versicolor
-#> 81  versicolor
-#> 82  versicolor
-#> 83  versicolor
-#> 84  versicolor
-#> 85   virginica
-#> 86  versicolor
-#> 87  versicolor
-#> 88  versicolor
-#> 89  versicolor
-#> 90  versicolor
-#> 91   virginica
-#> 92      setosa
-#> 93      setosa
-#> 94  versicolor
-#> 95  versicolor
-#> 96  versicolor
-#> 97  versicolor
-#> 98  versicolor
-#> 99      setosa
-#> 100     setosa
-#> 101     setosa
-#> 102     setosa
-#> 103     setosa
-#> 104 versicolor
-#> 105     setosa
-#> 106     setosa
-#> 107     setosa
-#> 108     setosa
-#> 109 versicolor
-#> 110     setosa
-#> 111     setosa
-#> 112     setosa
-#> 113     setosa
-#> 114     setosa
-#> 115     setosa
-#> 116     setosa
-#> 117     setosa
-#> 118 versicolor
-#> 119     setosa
-#> 120     setosa
-#> 121     setosa
-#> 122     setosa
-#> 123     setosa
-#> 124     setosa
-#> 125     setosa
-#> 126     setosa
-#> 127 versicolor
-#> 128 versicolor
-#> 129     setosa
-#> 130     setosa
-#> 131     setosa
-#> 132     setosa
-#> 133 versicolor
-#> 134  virginica
-#> 135     setosa
-#> 136     setosa
-#> 137     setosa
-#> 138     setosa
-#> 139     setosa
-#> 140     setosa
-#> 141     setosa
-#> 142     setosa
-#> 143     setosa
-#> 144     setosa
-#> 145     setosa
-#> 146     setosa
-#> 147     setosa
-#> 148     setosa
-#> 149     setosa
-#> 150     setosa
+arrange(iris, desc(Sepal.Length)) %>% head(3) 
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width
+#> 1          7.9         3.8          6.4         2.0
+#> 2          7.7         3.8          6.7         2.2
+#> 3          7.7         2.6          6.9         2.3
+#>     Species
+#> 1 virginica
+#> 2 virginica
+#> 3 virginica
 #sorteerib tabeli veeru "Sepal.Length" väärtuste järgi 
 #langevalt (default on tõusev sorteerimine). 
 #Võib argumendina anda mitu veergu.
-top_n(iris, 2, Sepal.Length) #saab 2 rida, milles on kõige suuremad S.L. väärtused
+top_n(iris, 2, Sepal.Length) 
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
 #> 1          7.7         3.8          6.7         2.2
 #> 2          7.7         2.6          6.9         2.3
@@ -1071,6 +816,7 @@ top_n(iris, 2, Sepal.Length) #saab 2 rida, milles on kõige suuremad S.L. väär
 #> 3 virginica
 #> 4 virginica
 #> 5 virginica
+#saab 2 või rohkem rida, milles on kõige suuremad S.L. väärtused
 top_n(iris, -2, Sepal.Length) #saab 2 rida, milles on kõige väiksemad väärtused 
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
 #> 1          4.4         2.9          1.4         0.2
@@ -1108,6 +854,7 @@ apply(fruits_subset, 2, sd)
 #>  apples oranges 
 #>    23.4      NA
 ```
+
 
 Andmetabeli Summary saab mitmel viisil, skimr::skim() funktsioon on üks paremaid 
 
@@ -1458,7 +1205,7 @@ str(diabetes)
 aggr(diabetes, prop = FALSE, numbers = TRUE)
 ```
 
-<img src="03-objektid_files/figure-html/unnamed-chunk-64-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-objektid_files/figure-html/unnamed-chunk-65-1.png" width="70%" style="display: block; margin: auto;" />
 Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.
 
 Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?
@@ -1475,19 +1222,6 @@ nrows <- nrow(diabetes)
   
 ### Mitu NA-d on igas tulbas?
 
-```r
-sapply(diabetes, function(x) sum(is.na(x))) 
-#>       id     chol stab.glu      hdl    ratio    glyhb 
-#>        0        1        0        1        1       13 
-#> location      age   gender   height   weight    frame 
-#>        0        0        0        5        1        0 
-#>    bp.1s    bp.1d    bp.2s    bp.2d    waist      hip 
-#>        5        5      262      262        2        2 
-#> time.ppn 
-#>        3
-```
-
-alternatiiv tidyverse-st - väljund on uus data frame NA-de arvuga igale algse tabeli veerule
 
 ```r
 diabetes %>% map_df(~sum(is.na(.))) %>% t()
@@ -1513,7 +1247,18 @@ diabetes %>% map_df(~sum(is.na(.))) %>% t()
 #> time.ppn    3
 ```
 
+väljund on uus tabel NA-de arvuga igale algse tabeli veerule
 
+Eelnev ekspressioon töötab nii:
+map_df() loeb kokku (summeerib) diabetes tabeli igale veerule, mitu elementi selles veerus andis ekspressioonile is.na() vastuseks TRUE. is.na() on funktsioon, mis annab väljundiks TRUE v FALSE, sõltuvalt vektori elemendi NA-staatusest. 
+
+
+```r
+is.na(c(NA, "3", "sd", "NA"))
+#> [1]  TRUE FALSE FALSE FALSE
+```
+
+Pane tähele, et string "NA" ei ole sama asi, mis loogiline konstant NA.
 
 Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:
 
@@ -1521,7 +1266,7 @@ Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda su
 matrixplot(diabetes) 
 ```
 
-<img src="03-objektid_files/figure-html/unnamed-chunk-68-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-objektid_files/figure-html/unnamed-chunk-69-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Kuidas rekodeerida NA-d näiteks 0-ks:
@@ -1598,8 +1343,6 @@ df_with_fewer_cols <- subset(df, select = vekt1n)
 ```
 
 
-
-
 # itereerimine ja map() - sama operatsioon mitu korda
 
 Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda sellepärast, et formaalselt on list vektori tüüp (rekursiivne vektor), kuhu on võimalik elementidena panna mida iganes, k.a. teisi vektoreid. Selle tõttu enamus R-i funktsioone, mis töötavad lihtsate mitte-rekursiivsete vektoritega (ja df-dega), ei tööta listide peal. 
@@ -1670,13 +1413,13 @@ params <- list(
 )
 params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
 #> $norm1
-#> [1] 0.610 0.348 0.435 1.180 0.960
+#> [1]  0.893  1.976 -1.455 -0.799 -0.715
 #> 
 #> $norm2
-#> [1] 1.674 0.912 0.902 2.654 1.277
+#> [1] 0.246 2.364 2.845 0.684 0.690
 #> 
 #> $norm3
-#> [1] 3.623 0.494 5.499 3.372 1.609
+#> [1] 1.611 2.429 4.856 2.312 0.699
 ```
 
 `enframe()` konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value). 
@@ -1711,9 +1454,9 @@ pmap(list(x = long_numbers, digits = digits), round)
 #> [1] 1.41
 ```
 
-pmap() kasutab ekspressioonide sisesed elemndid on nüüd ..1, ..2, ..3 jne, mitte .x ja .y nagu map2-l. 
+pmap() ekspressioonide sisesed elemndid on ..1, ..2, ..3 jne, mitte .x ja .y nagu map2-l. 
 
-NB! pmap-i saab sisetada data frame, mille peale see teeb kõike rea kaupa.
+NB! pmap-i saab sisetada data frame, mille peal see teeb kõike rea kaupa.
 
 
 ```r
@@ -1724,13 +1467,38 @@ parameters <- data.frame(
 )
 parameters %>% pmap(runif)
 #> [[1]]
-#> [1] 0.144
+#> [1] 0.754
 #> 
 #> [[2]]
-#> [1] 5.87 5.57
+#> [1] 5.34 5.17
 #> 
 #> [[3]]
-#> [1] 10.7 10.5 10.8
+#> [1] 10.5 10.8 10.4
+```
+
+See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.
+
+Järgmine funktsioon rakendub suvalisele df-le rea kaupa ja arvutab igale reale näit sd. Aga selleks transponeerime read veergudeks ja rakendame tavalist map()-i. 
+
+
+```r
+rmap <- function (.x, .f, ...) {
+    if(is.null(dim(.x))) stop("dim(X) must have a positive length")
+    .x <- t(.x) %>% as.data.frame(.,stringsAsFactors=F)
+    purrr::map_dfr(.x=.x,.f=.f,...)
+}
+parameters %>% rmap(sd)
+#> # A tibble: 1 x 3
+#>      V1    V2    V3
+#>   <dbl> <dbl> <dbl>
+#> 1 0.577  2.08  4.36
+```
+
+apply teeb sama lihtsamini.
+
+```r
+apply(parameters, 1, sd)
+#> [1] 0.577 2.082 4.359
 ```
 
 ### invoke_map() 
@@ -1742,13 +1510,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- list(c(5, 2, 3), 2, 3)
 invoke_map(functions, n)
 #> [[1]]
-#> [1] -2.07  4.87  2.23  1.22  4.34
+#> [1] -5.286  4.810  0.598  4.441  3.927
 #> 
 #> [[2]]
-#> [1] 0.278 1.807
+#> [1] 0.740 0.593
 #> 
 #> [[3]]
-#> [1]  1.3189  4.7459 -0.0103
+#> [1] -4.78 -1.89  1.49
 ```
 
 anname sisse esimese argumendi (100) igasse funktsiooni
@@ -1758,13 +1526,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- c(5, 2, 3)
 invoke_map(functions, n, 100)
 #> [[1]]
-#> [1] 100.1  98.5 100.3  98.0  99.2
+#> [1] 100.2  98.0 101.6 101.0  98.4
 #> 
 #> [[2]]
-#> [1] 1.84e+43 1.74e+43
+#> [1] 7.97e+43 6.21e+43
 #> 
 #> [[3]]
-#> [1]  99.8 100.7 100.5
+#> [1] 100.1 105.9  99.8
 ```
 
 mitu argumenti igale funktsioonile:
@@ -1776,13 +1544,13 @@ args <- list(norm = c(3, mean = 0, sd = 1),
 
 invoke_map(functions, args)
 #> [[1]]
-#> [1] -0.448 -0.431  0.706
+#> [1]  0.355 -1.436 -0.174
 #> 
 #> [[2]]
-#> [1] 29.9 22.2
+#> [1]  9.16 15.56
 #> 
 #> [[3]]
-#> [1] 15.5
+#> [1] 90.6
 ```
 
 
@@ -1841,7 +1609,7 @@ Df-i veerg, mille andmetüüp on list. Näiteks mudeliobjektid, funktsioonid ja 
 List columnid on ise listid, mitte andmevektorid. 
 
       List veerud võimaldavad panna samasse tabelisse erinevaid asju - 
-      andmeid, mudeleid, mudeli koefitsiente jms.
+      andmeid, mudeleid, mudeli koefitsiente jms. 
 
 nest() teeb uue df-i, kus on 1. veerg grupeeriva muutuja tasemetega, millele järgneb list column, mille iga element on tibble. Iga tibble sisaldab relevantset infot  grupeeriva muutuja vastava taseme kohta. 
 
@@ -1878,6 +1646,7 @@ nested_gapminder %>%
 #> 5 Asia       1972    36.1 13079460      740.
 #> 6 Asia       1977    38.4 14880372      786.
 #> # ... with 6 more rows
+#fitime ühe mudeli 1. elemendile (1. riik)
 ```
 
 fit a model to each tibble nested within nested_gapminder and then store those models as a list column
@@ -1904,7 +1673,7 @@ võtame välja mudeli koefitsiendi year ja paneme uude veergu nimega coefficient
 models1 <-  models1 %>% mutate( coefficient = map_dbl(models, ~coef(.x) %>% pluck("year")) )
 ```
 
-pane tähele, et df-i veerg models on ühtlasi list, millele saame map_dbl() rakendada.
+df-i veerg models on ühtlasi list, millele saame map_dbl() rakendada.
 
 
 järgnevad 3 koodirida teevad sama asja - võtavad välja 1. mudeli:
