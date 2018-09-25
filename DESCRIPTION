@@ -28,7 +28,9 @@ Imports:
     ggbiplot,
     tsne,
     skimr,
-    gapminder
+    gapminder,
+    survey, 
+    estimability
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking,
