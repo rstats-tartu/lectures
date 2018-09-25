@@ -30,7 +30,8 @@ Imports:
     skimr,
     gapminder,
     survey, 
-    estimability
+    estimability,
+    Publish
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking,
