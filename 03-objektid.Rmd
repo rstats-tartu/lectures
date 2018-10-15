@@ -420,9 +420,8 @@ Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 
 
 ### List
 
-List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa arvatud listid. 
-See on lihtsalt viis objektid koos hoida ühes suuremas meta-objektis. 
-List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid segamini kolisevad. Listidega töötamist vaatame lähemalt veidi hiljem.
+List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa arvatud listid. R-i jaoks on list lihtsalt vektor, mille elemendid ei pean olema sama andmetüüpi (nagu tavalistel nn lihtsatel vektoritel).  
+Praktikas kasutatakse listi enamasti lihtsalt erinevate R-i objektide koos hoidmiseks ühes suuremas meta-objektis. List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid segamini kolisevad. Listidega töötamist vaatame lähemalt veidi hiljem.
 
 Näiteks list, kus on 1 vektor nimega a, 1 tibble nimega b ja 1 list nimega c, mis omakorda sisaldab vektorit nimega d ja tibblet nimega e. Seega on meil tegu rekursiivse listiga. 
 ```{r}
@@ -793,6 +792,34 @@ Andmete sisselugemine töökataloogist:
 fruits <-  read_csv("data/fruits.csv")
 ```
 
+Andmeraamide sisselugemiseks on kaks paralleelset süsteemi: baas-R-i read.table() ja selle mugavusfunktsioonid (read.csv(), read.csv2() jne) ning readr paketti, mis laaditakse koos tidyversiga, funktsioon read_delim() ja selle mugavusfunktsioonid (read_csv jne). Tavaliselt soovitame eelistada alakriipsuga variante (http://r4ds.had.co.nz/data-import.html). 
+
+read_delim()-l ja selle poegade argument `col_types = cols(col_name_1 = col_double(), col_name_2 = col_date(format = ""))` võimaldab spetsifitseerida kindlatele veergudele, mis tüübiga need sisse loetakse. Töötab ka `cols_only(a = col_integer())`, samuti standardsed lühendid andmetüüpidele: `cols(a = "i", b = "d")`. Vaikimisi otsustab programm andmetüübi iga veeru esimese 1000 elemendi põhjal. Vahest tasub kõik veerud sisse lugeda character-idena, et oleks parem probleeme tuvastada: `df1 <- read_csv("my_data_frame_name.csv"), col_types = cols(.default = col_character()))`. .default	- kõik nimega veerud, mille kohta ei ole eksplitsiitselt teisiti õeldud, lähevad sisse lugemisel selle alla. .
+
+Seda, milline sümbol kodeerib sisseloetavas failis koma ja milline on "grouping mark", mis eraldab tuhandeid, saab sisestada `locale = locale(decimal_mark = ",", grouping_mark = ".")` abil. Või näit: `locale("et", decimal_mark = ";")`. Vt ka https://cran.r-project.org/web/packages/readr/vignettes/locales.html.
+
+https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes annab nimekirja riikide lokaalitähistest.
+
+Argument `skip = n` jätab esimesed n rida sisse lugemata. Argument `comment = "#"` jätab sisse lugemata read, mis algavad #-ga.
+
+Argument `col_names = FALSE` ei loe esimest rida sisse veerunimedena (see on vaikekäitumine) ja selle asemel nimetatakse veerud X1 ... Xn. `col_names = c("x", "y", "z"))` loeb tabeli sisse uute veerunimedega x, y ja z.
+
+`na = "."` argument ütleb, et tabeli kirjed, mis on punktid, tuleb sisse lugeda NA-dena.
+
+Kui teil on kataloogitäis faile (näit .csv lõpuga), mida soovite kõiki korraga sisse lugeda, siis tehke nii:
+```{r eval=FALSE}
+library(fs)
+#järgnev loeb sisse iga faili eraldi kataloogist nimega data_dir
+fs::dir_ls(data_dir, regexp = "\\.csv$") %>% map(read_csv)
+
+#Kui meil on mitu faili samade tulbanimedega ja tahame
+#need sisse lugeda ühte faili üksteise järel, siis
+dir_ls(data_dir, regexp = "\\.csv$") %>% map_dfr(read_csv, .id = "source")
+#.id on optsionaalne argument, mis lisab uude faili lisaveeru, 
+#kus on unikaalsed viited igale algtabelile, et oleks näha, millisest
+#tabelist iga uue tabeli rida pärit on.
+```
+
 MS exceli failist saab tabeleid importida "readxl" raamatukogu abil.
 ```{r, eval=FALSE}
 library(readxl)
@@ -802,7 +829,7 @@ sheets <- excel_sheets("data/excelfile.xlsx")
 dfs <- read_excel("data/excelfile.xlsx", sheet = sheets[1])
 ```
 
-Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga `read_csv2` või `read.csv2` (need on erinevad funktsioonid; read.csv2 loeb selle sisse data framena ja read_csv2 tibble-na).
+Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga `read_csv2` või `read.csv2` (need on erinevad funktsioonid; read.csv2 loeb selle sisse data frame-na ja read_csv2 tibble-na).
 
 R-i saab sisse lugeda palju erinevaid andmeformaate. 
 Näiteks, installi RStudio addin: "Gotta read em all R", vaata eespool.
