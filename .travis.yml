@@ -2,7 +2,6 @@ language: r
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libudunits2-dev
-  - bash configure.sh
 cache:
   packages: true
   directories:
