@@ -6,9 +6,6 @@ library(tidyverse)
 library(VIM)
 library(readxl)
 library(skimr)
-## Install gotta read em all as R studio addin
-## install.packages("devtools")
-#devtools::install_github("Stan125/GREA")
 ```
 
 
@@ -501,9 +498,8 @@ Mis siin juhtus? R kodeerib sisemiselt TRUE kui 1 ja FALSE kui 0-i. summa 1 + 0 
 
 ### List
 
-List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa arvatud listid. 
-See on lihtsalt viis objektid koos hoida ühes suuremas meta-objektis. 
-List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid segamini kolisevad. Listidega töötamist vaatame lähemalt veidi hiljem.
+List on objektitüüp, kuhu saab koondada kõiki teisi objekte, kaasa arvatud listid. R-i jaoks on list lihtsalt vektor, mille elemendid ei pean olema sama andmetüüpi (nagu tavalistel nn lihtsatel vektoritel).  
+Praktikas kasutatakse listi enamasti lihtsalt erinevate R-i objektide koos hoidmiseks ühes suuremas meta-objektis. List on nagu jõuluvana kingikott, kus kommid, sokipaarid ja muud kingid segamini kolisevad. Listidega töötamist vaatame lähemalt veidi hiljem.
 
 Näiteks list, kus on 1 vektor nimega a, 1 tibble nimega b ja 1 list nimega c, mis omakorda sisaldab vektorit nimega d ja tibblet nimega e. Seega on meil tegu rekursiivse listiga. 
 
@@ -520,15 +516,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.2137 0.1681 0.0262 0.8526 0.5555
+#> [1] 0.00182 0.40515 0.42749 0.68107 0.04993
 #> 
 #> [[2]]
-#>        a      b
-#> 1 0.2137  0.612
-#> 2 0.1681 -0.347
-#> 3 0.0262  1.143
-#> 4 0.8526 -0.783
-#> 5 0.5555 -0.880
+#>         a      b
+#> 1 0.00182  1.339
+#> 2 0.40515 -0.527
+#> 3 0.42749 -1.064
+#> 4 0.68107  0.686
+#> 5 0.04993  0.577
 #> 
 #> [[3]]
 #> 
@@ -1138,6 +1134,35 @@ Andmete sisselugemine töökataloogist:
 fruits <-  read_csv("data/fruits.csv")
 ```
 
+Andmeraamide sisselugemiseks on kaks paralleelset süsteemi: baas-R-i read.table() ja selle mugavusfunktsioonid (read.csv(), read.csv2() jne) ning readr paketti, mis laaditakse koos tidyversiga, funktsioon read_delim() ja selle mugavusfunktsioonid (read_csv jne). Tavaliselt soovitame eelistada alakriipsuga variante (http://r4ds.had.co.nz/data-import.html). 
+
+read_delim()-l ja selle poegade argument `col_types = cols(col_name_1 = col_double(), col_name_2 = col_date(format = ""))` võimaldab spetsifitseerida kindlatele veergudele, mis tüübiga need sisse loetakse. Töötab ka `cols_only(a = col_integer())`, samuti standardsed lühendid andmetüüpidele: `cols(a = "i", b = "d")`. Vaikimisi otsustab programm andmetüübi iga veeru esimese 1000 elemendi põhjal. Vahest tasub kõik veerud sisse lugeda character-idena, et oleks parem probleeme tuvastada: `df1 <- read_csv("my_data_frame_name.csv"), col_types = cols(.default = col_character()))`. .default	- kõik nimega veerud, mille kohta ei ole eksplitsiitselt teisiti õeldud, lähevad sisse lugemisel selle alla. .
+
+Seda, milline sümbol kodeerib sisseloetavas failis koma ja milline on "grouping mark", mis eraldab tuhandeid, saab sisestada `locale = locale(decimal_mark = ",", grouping_mark = ".")` abil. Või näit: `locale("et", decimal_mark = ";")`. Vt ka https://cran.r-project.org/web/packages/readr/vignettes/locales.html.
+
+https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes annab nimekirja riikide lokaalitähistest.
+
+Argument `skip = n` jätab esimesed n rida sisse lugemata. Argument `comment = "#"` jätab sisse lugemata read, mis algavad #-ga.
+
+Argument `col_names = FALSE` ei loe esimest rida sisse veerunimedena (see on vaikekäitumine) ja selle asemel nimetatakse veerud X1 ... Xn. `col_names = c("x", "y", "z"))` loeb tabeli sisse uute veerunimedega x, y ja z.
+
+`na = "."` argument ütleb, et tabeli kirjed, mis on punktid, tuleb sisse lugeda NA-dena.
+
+Kui teil on kataloogitäis faile (näit .csv lõpuga), mida soovite kõiki korraga sisse lugeda, siis tehke nii:
+
+```r
+library(fs)
+#järgnev loeb sisse iga faili eraldi kataloogist nimega data_dir
+fs::dir_ls(data_dir, regexp = "\\.csv$") %>% map(read_csv)
+
+#Kui meil on mitu faili samade tulbanimedega ja tahame
+#need sisse lugeda ühte faili üksteise järel, siis
+dir_ls(data_dir, regexp = "\\.csv$") %>% map_dfr(read_csv, .id = "source")
+#.id on optsionaalne argument, mis lisab uude faili lisaveeru, 
+#kus on unikaalsed viited igale algtabelile, et oleks näha, millisest
+#tabelist iga uue tabeli rida pärit on.
+```
+
 MS exceli failist saab tabeleid importida "readxl" raamatukogu abil.
 
 ```r
@@ -1148,7 +1173,7 @@ sheets <- excel_sheets("data/excelfile.xlsx")
 dfs <- read_excel("data/excelfile.xlsx", sheet = sheets[1])
 ```
 
-Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga `read_csv2` või `read.csv2` (need on erinevad funktsioonid; read.csv2 loeb selle sisse data framena ja read_csv2 tibble-na).
+Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga `read_csv2` või `read.csv2` (need on erinevad funktsioonid; read.csv2 loeb selle sisse data frame-na ja read_csv2 tibble-na).
 
 R-i saab sisse lugeda palju erinevaid andmeformaate. 
 Näiteks, installi RStudio addin: "Gotta read em all R", vaata eespool.
@@ -1205,7 +1230,7 @@ str(diabetes)
 aggr(diabetes, prop = FALSE, numbers = TRUE)
 ```
 
-<img src="03-objektid_files/figure-html/unnamed-chunk-65-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-objektid_files/figure-html/unnamed-chunk-66-1.png" width="70%" style="display: block; margin: auto;" />
 Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.
 
 Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?
@@ -1266,7 +1291,7 @@ Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda su
 matrixplot(diabetes) 
 ```
 
-<img src="03-objektid_files/figure-html/unnamed-chunk-69-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-objektid_files/figure-html/unnamed-chunk-70-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Kuidas rekodeerida NA-d näiteks 0-ks:
@@ -1413,13 +1438,13 @@ params <- list(
 )
 params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
 #> $norm1
-#> [1]  0.893  1.976 -1.455 -0.799 -0.715
+#> [1] -1.170  0.503  0.431  0.811  1.912
 #> 
 #> $norm2
-#> [1] 0.246 2.364 2.845 0.684 0.690
+#> [1]  1.448  1.945  0.191 -0.236  3.159
 #> 
 #> $norm3
-#> [1] 1.611 2.429 4.856 2.312 0.699
+#> [1] 3.373 2.171 0.533 0.956 2.181
 ```
 
 `enframe()` konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value). 
@@ -1467,13 +1492,13 @@ parameters <- data.frame(
 )
 parameters %>% pmap(runif)
 #> [[1]]
-#> [1] 0.754
+#> [1] 0.706
 #> 
 #> [[2]]
-#> [1] 5.34 5.17
+#> [1] 5.08 5.07
 #> 
 #> [[3]]
-#> [1] 10.5 10.8 10.4
+#> [1] 10.5 10.4 10.3
 ```
 
 See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.
@@ -1510,13 +1535,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- list(c(5, 2, 3), 2, 3)
 invoke_map(functions, n)
 #> [[1]]
-#> [1] -5.286  4.810  0.598  4.441  3.927
+#> [1]  5.442 -2.394  0.673  4.207  3.266
 #> 
 #> [[2]]
-#> [1] 0.740 0.593
+#> [1] 0.393 0.342
 #> 
 #> [[3]]
-#> [1] -4.78 -1.89  1.49
+#> [1] 11.27 -1.53  2.93
 ```
 
 anname sisse esimese argumendi (100) igasse funktsiooni
@@ -1526,13 +1551,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- c(5, 2, 3)
 invoke_map(functions, n, 100)
 #> [[1]]
-#> [1] 100.2  98.0 101.6 101.0  98.4
+#> [1] 102.4  99.8  98.8  96.9 100.7
 #> 
 #> [[2]]
-#> [1] 7.97e+43 6.21e+43
+#> [1] 2.40e+43 1.77e+43
 #> 
 #> [[3]]
-#> [1] 100.1 105.9  99.8
+#> [1] 100.4  96.4  96.6
 ```
 
 mitu argumenti igale funktsioonile:
@@ -1544,13 +1569,13 @@ args <- list(norm = c(3, mean = 0, sd = 1),
 
 invoke_map(functions, args)
 #> [[1]]
-#> [1]  0.355 -1.436 -0.174
+#> [1] 0.538 0.795 0.828
 #> 
 #> [[2]]
-#> [1]  9.16 15.56
+#> [1] 71.092  0.561
 #> 
 #> [[3]]
-#> [1] 90.6
+#> [1] -175
 ```
 
 

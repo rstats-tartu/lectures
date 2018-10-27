@@ -25,7 +25,7 @@
 <meta name="author" content="Ülo Maiväli &amp; Taavi Päll">
 
 
-<meta name="date" content="2018-09-25">
+<meta name="date" content="2018-10-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="r-i-toopohimote.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -315,10 +316,7 @@ answer
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(VIM)
 <span class="kw">library</span>(readxl)
-<span class="kw">library</span>(skimr)
-## Install gotta read em all as R studio addin
-## install.packages(&quot;devtools&quot;)
-<span class="co">#devtools::install_github(&quot;Stan125/GREA&quot;)</span></code></pre></div>
+<span class="kw">library</span>(skimr)</code></pre></div>
 </div>
             </section>
 
@@ -373,7 +371,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

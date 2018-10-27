@@ -25,7 +25,7 @@
 <meta name="author" content="Ülo Maiväli &amp; Taavi Päll">
 
 
-<meta name="date" content="2018-09-25">
+<meta name="date" content="2018-10-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="calc.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -369,7 +370,7 @@ Joonis 4.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimeg
 </div>
 <div id="libs" class="section level2">
 <h2><span class="header-section-number">4.6</span> Pakettide installeerimine</h2>
-<p>R <em>library</em>-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. <strong>R baaspakett sisaldab juba mitmeid funktsioone.</strong> Kõige esimene sõnum <code>sum()</code> help lehel on “sum {base}”, mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda. Näiteks “base” raamatukogu versioon 3.5.0 sisaldab 455 funktsiooni. Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist <a href="https://cran.r-project.org">CRAN</a> alla laadida ja installeerida.</p>
+<p>R <em>library</em>-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. <strong>R baaspakett sisaldab juba mitmeid funktsioone.</strong> Kõige esimene sõnum <code>sum()</code> help lehel on “sum {base}”, mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda. Näiteks “base” raamatukogu versioon 3.5.1 sisaldab 455 funktsiooni. Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist <a href="https://cran.r-project.org">CRAN</a> alla laadida ja installeerida.</p>
 <p>Selleks, et installeerida pakett, sisesta järgnev käsurida R konsooli:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## eg use &quot;ggplot2&quot; as packagename
 <span class="kw">install.packages</span>(<span class="st">&quot;packagename&quot;</span>)</code></pre></div>
@@ -522,7 +523,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

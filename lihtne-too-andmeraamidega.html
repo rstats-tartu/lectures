@@ -25,7 +25,7 @@
 <meta name="author" content="Ülo Maiväli &amp; Taavi Päll">
 
 
-<meta name="date" content="2018-09-25">
+<meta name="date" content="2018-10-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -574,13 +575,31 @@ fruits &lt;-<span class="st"> </span><span class="kw">tibble</span>(shop, apples
 <span class="co">#&gt; [1] &quot;/home/travis/build/rstats-tartu/lectures&quot;</span></code></pre></div>
 <p>Andmete sisselugemine töökataloogist:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
+<p>Andmeraamide sisselugemiseks on kaks paralleelset süsteemi: baas-R-i read.table() ja selle mugavusfunktsioonid (read.csv(), read.csv2() jne) ning readr paketti, mis laaditakse koos tidyversiga, funktsioon read_delim() ja selle mugavusfunktsioonid (read_csv jne). Tavaliselt soovitame eelistada alakriipsuga variante (<a href="http://r4ds.had.co.nz/data-import.html" class="uri">http://r4ds.had.co.nz/data-import.html</a>).</p>
+<p>read_delim()-l ja selle poegade argument <code>col_types = cols(col_name_1 = col_double(), col_name_2 = col_date(format = &quot;&quot;))</code> võimaldab spetsifitseerida kindlatele veergudele, mis tüübiga need sisse loetakse. Töötab ka <code>cols_only(a = col_integer())</code>, samuti standardsed lühendid andmetüüpidele: <code>cols(a = &quot;i&quot;, b = &quot;d&quot;)</code>. Vaikimisi otsustab programm andmetüübi iga veeru esimese 1000 elemendi põhjal. Vahest tasub kõik veerud sisse lugeda character-idena, et oleks parem probleeme tuvastada: <code>df1 &lt;- read_csv(&quot;my_data_frame_name.csv&quot;), col_types = cols(.default = col_character()))</code>. .default - kõik nimega veerud, mille kohta ei ole eksplitsiitselt teisiti õeldud, lähevad sisse lugemisel selle alla. .</p>
+<p>Seda, milline sümbol kodeerib sisseloetavas failis koma ja milline on “grouping mark”, mis eraldab tuhandeid, saab sisestada <code>locale = locale(decimal_mark = &quot;,&quot;, grouping_mark = &quot;.&quot;)</code> abil. Või näit: <code>locale(&quot;et&quot;, decimal_mark = &quot;;&quot;)</code>. Vt ka <a href="https://cran.r-project.org/web/packages/readr/vignettes/locales.html" class="uri">https://cran.r-project.org/web/packages/readr/vignettes/locales.html</a>.</p>
+<p><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" class="uri">https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes</a> annab nimekirja riikide lokaalitähistest.</p>
+<p>Argument <code>skip = n</code> jätab esimesed n rida sisse lugemata. Argument <code>comment = &quot;#&quot;</code> jätab sisse lugemata read, mis algavad #-ga.</p>
+<p>Argument <code>col_names = FALSE</code> ei loe esimest rida sisse veerunimedena (see on vaikekäitumine) ja selle asemel nimetatakse veerud X1 … Xn. <code>col_names = c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;))</code> loeb tabeli sisse uute veerunimedega x, y ja z.</p>
+<p><code>na = &quot;.&quot;</code> argument ütleb, et tabeli kirjed, mis on punktid, tuleb sisse lugeda NA-dena.</p>
+<p>Kui teil on kataloogitäis faile (näit .csv lõpuga), mida soovite kõiki korraga sisse lugeda, siis tehke nii:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(fs)
+<span class="co">#järgnev loeb sisse iga faili eraldi kataloogist nimega data_dir</span>
+fs<span class="op">::</span><span class="kw">dir_ls</span>(data_dir, <span class="dt">regexp =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.csv$&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(read_csv)
+
+<span class="co">#Kui meil on mitu faili samade tulbanimedega ja tahame</span>
+<span class="co">#need sisse lugeda ühte faili üksteise järel, siis</span>
+<span class="kw">dir_ls</span>(data_dir, <span class="dt">regexp =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.csv$&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map_dfr</span>(read_csv, <span class="dt">.id =</span> <span class="st">&quot;source&quot;</span>)
+<span class="co">#.id on optsionaalne argument, mis lisab uude faili lisaveeru, </span>
+<span class="co">#kus on unikaalsed viited igale algtabelile, et oleks näha, millisest</span>
+<span class="co">#tabelist iga uue tabeli rida pärit on.</span></code></pre></div>
 <p>MS exceli failist saab tabeleid importida “readxl” raamatukogu abil.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)
 ## kõigepealt vaatame kui palju sheete failis on
 sheets &lt;-<span class="st"> </span><span class="kw">excel_sheets</span>(<span class="st">&quot;data/excelfile.xlsx&quot;</span>)
 ## siis impordime näiteks esimese sheeti
 dfs &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;data/excelfile.xlsx&quot;</span>, <span class="dt">sheet =</span> sheets[<span class="dv">1</span>])</code></pre></div>
-<p>Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga <code>read_csv2</code> või <code>read.csv2</code> (need on erinevad funktsioonid; read.csv2 loeb selle sisse data framena ja read_csv2 tibble-na).</p>
+<p>Excelist csv-na eksporditud failid tuleks sisse lugeda käsuga <code>read_csv2</code> või <code>read.csv2</code> (need on erinevad funktsioonid; read.csv2 loeb selle sisse data frame-na ja read_csv2 tibble-na).</p>
 <p>R-i saab sisse lugeda palju erinevaid andmeformaate. Näiteks, installi RStudio addin: “Gotta read em all R”, vaata eespool. See läheb ülesse tab-i Addins. Sealt saab selle avada ja selle abil tabeleid oma workspace üles laadida.</p>
 <p>Alternatiiv: mine alla paremake Files tab-le, navigeeri sinna kuhu vaja ja kliki faili nimele, mida tahad R-i importida.</p>
 <p>Mõlemal juhul ilmub alla konsooli (all vasakul) koodijupp, mille jooksutamine peaks asja ära tegema. Te võite tahta selle koodi kopeerida üles vasakusse aknasse kus teie ülejäänud kood tulevastele põlvedele säilub.</p>
@@ -623,7 +642,7 @@ fruits &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(fruits)
 <span class="co">#&gt;  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...</span>
 <span class="co">#&gt;  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...</span>
 <span class="kw">aggr</span>(diabetes, <span class="dt">prop =</span> <span class="ot">FALSE</span>, <span class="dt">numbers =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="03-objektid_files/figure-html/unnamed-chunk-65-1.png" width="70%" style="display: block; margin: auto;" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
+<p><img src="03-objektid_files/figure-html/unnamed-chunk-66-1.png" width="70%" style="display: block; margin: auto;" /> Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.</p>
 <p>Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nrows &lt;-<span class="st"> </span><span class="kw">nrow</span>(diabetes)
   ncomplete &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">complete.cases</span>(diabetes))
@@ -661,7 +680,7 @@ fruits &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(fruits)
 <p>Pane tähele, et string “NA” ei ole sama asi, mis loogiline konstant NA.</p>
 <p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
-<p><img src="03-objektid_files/figure-html/unnamed-chunk-69-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="03-objektid_files/figure-html/unnamed-chunk-70-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="kuidas-rekodeerida-na-d-naiteks-0-ks" class="section level3">
 <h3><span class="header-section-number">7.2.2</span> Kuidas rekodeerida NA-d näiteks 0-ks:</h3>
@@ -766,7 +785,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;
