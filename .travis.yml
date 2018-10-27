@@ -2,6 +2,9 @@ language: r
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libudunits2-dev
+  - mkdir -p ~/.R
+  - echo "CXX14FLAGS=-O3 -mtune=native -march=native -Wno-unused-variable -Wno-unused-function  -Wno-macro-redefined" >> ~/.R/Makevars
+  - echo "CXX14=g++ -std=c++1y -fPIC" >> ~/.R/Makevars
 cache:
   packages: true
   directories:
