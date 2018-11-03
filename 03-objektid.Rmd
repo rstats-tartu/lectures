@@ -113,7 +113,7 @@ Järgmise sessiooni saate alustada juba oma salvestatud koodi baasilt --- jooksu
 
 * Argumendid on järjestatud ja neil on nimed. Nimi trumpab järjekorra üle selles mõttes, et me võime argumentide nimed funktsiooni kirjutada suvalises järjekorras ilma, et funktsiooni töö sellest muutuks. Samas, kui me sisestame funktsiooni argumendid ilma nimedeta, siis on argumentide järjekord tähtis, sest need seostatakse vaikimisi nimedega vastavalt oma järjekorranumbrile. Oletame, et meil on vektorid `kaal <- c(2.3, 4.3, 3)` ja `pikkus <- c(7, 5, 9)`. Me võime need funktsiooni sisestada nii: `plot(x = kaal, y = pikkus)`, `plot(y = pikkus, x = kaal)` ja `plot(kaal, pikkus)` teevad kõik identse scatterploti (aga `plot(pikkus, kaal)` ei tee).  
 
-* Funktsiooni esimese argumendi saab enamasti sisestada ka alternatiivsel viisil, %>% pipe operaatori abil. Niimoodi jooksevad fun(arg1, arg2) ja arg1 %>% fun(arg2) koodid enamasti identselt. Kumba koodi eelistada on seega "vaid" koodi loetavuse küsimus.
+* Funktsiooni esimese argumendi saab enamasti sisestada ka alternatiivsel viisil, %>% pipe operaatori abil. Niimoodi jooksevad `fun(arg1, arg2)` ja `arg1 %>% fun(arg2)` koodid enamasti identselt. Kumba koodi eelistada on seega "vaid" koodi loetavuse küsimus. `arg1 %>% fun(arg2)` on sama, mis `arg1 %>% fun(., arg2)`, kus punkt "." näitab vaikimisi, mitmenda argumendi kohale me oma arg1 sisse torutame. Seda teades on võimalik ka vorm `arg2 %>% fun(arg1,.)`, kus toru kaudu anname sisse 2. või ükskõik millise muu argumendi. Siin ei ole muud saladust kui, et peame punkti asukoha funktsioonis eksplitsiitselt ära näitama. 
 
 **Ülesanne:** uuri välja, mida määravad järgneva funktsiooni argumendid. 
 
@@ -746,12 +746,12 @@ full_join(df1, df2)
 left_join(df1, df2)
 ```
 
-Filtreerin välja need df1 read, millele vastab rida df2-s. 
+Jätan alles ainult need df1 read, millele vastab mõni df2 rida.
 ```{r}
 semi_join(df1, df2)
 ```
 
-Filtreerin välja need df1 read, millele ei vasta rida df2-s.
+Jätan alles ainult need df1 read, millele ei vasta ükski df2 rida.
 ```{r}
 anti_join(df1, df2)
 ```
@@ -846,7 +846,7 @@ Andmetabelite salvestamine töö vaheproduktidena ei ole sageli vajalik, sest te
 
 Tibble konverteerimine data frame-ks ja tagasi tibbleks:
 ```{r}
-class(fruits)
+class(fruits) #näitab ojekti klassi
 fruits <- as.data.frame(fruits)
 class(fruits)
 fruits <- as_tibble(fruits)
