@@ -958,18 +958,18 @@ df_with_fewer_cols <- subset(df, select = vekt1n)
 ```
 
 
-# itereerimine ja map() - sama operatsioon mitu korda
+# map() - kordame sama operatsiooni igale listi liikmele
 
-Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda sellepärast, et formaalselt on list vektori tüüp (rekursiivne vektor), kuhu on võimalik elementidena panna mida iganes, k.a. teisi vektoreid. Selle tõttu enamus R-i funktsioone, mis töötavad lihtsate mitte-rekursiivsete vektoritega (ja df-dega), ei tööta listide peal. 
+Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda sellepärast, et formaalselt on list vektori tüüp (rekursiivne vektor), kuhu on võimalik elementidena panna mida iganes, k.a. teisi vektoreid. Enamus R-i funktsioone, mis töötavad lihtsate mitte-rekursiivsete vektoritega (ja df-dega), ei tööta listide peal. 
 
-purr::map() perekonna funktsioonid töötavad nii lihtsate vektorite kui listide peal. Need funktsioonid kordavad kasutaja poolt ette antud funktsiooni igale vektori elemendile. map() vajab 2 argumenti: vektor ja funktsioon, mida selle vektori elementidele rakendada. map() võtab sisse listi (vektori, data frame) ja väljastab listi (vektori, data frame). Seega saab seda hästi pipe-s rakendada.
+purrr::map() perekonna funktsioonid töötavad nii lihtsate vektorite kui listide peal. Need funktsioonid rakendavad kasutaja poolt ette antud funktsiooni järjest igale vektori elemendile. map() vajab 2 argumenti: vektor ja funktsioon, mida selle vektori elementidele rakendada. map() võtab sisse listi (vektori, data frame) ja väljastab listi (vektori, data frame). Seega saab seda hästi pipe-s rakendada.
 
 ```{r}
 list1 <- list(1, 2, 3, 4, 5)
 list1 %>% map(log) %>% map(round)
 ```
 
-Kui tahad, map() anda funktsiooni lisaargumentidega, siis need eraldatakse komadega `map(vector1, round, digits = 2)`.
+Kui tahad, map() anda funktsiooni lisaargumentidega, siis need eraldatakse komadega `map(list1, round, digits = 2)`.
 
 Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta `map_dbl()`. 
 
@@ -993,15 +993,13 @@ map()-l on kokku 8 versiooni erinevate väljunditega.
 
 * map_lgl() - logical vektor
 
-* walk() - nähtamatu väljund (kasutatakse funktsioonide puhul, mis ei anna command line-le väljundit, nagu plot() või save file).
+* walk() - nähtamatu väljund (kasutatakse funktsioonide puhul, mis ei anna *command line*-le väljundit, nagu plot() või failide salvestamine).
 
-**Kuidas anda map-le funktsiooni asemel ette ekspressioon (näiteks max(df1$col1) - min(df1$col1))?**
+sisestame map-i funktsiooni asemel ekspressiooni `max(df1$col1) - min(df1$col1)`:
 
-ekspressiooni juhatab sisse ~ (tilde). 
+ekspressiooni juhatab sisse ~ (tilde) ja seal asendatakse see, millega opereeritakse, .x -ga: `~ max(.x) - min(.x)`. 
 
-Asenda ekspressioonis see, millega opereeritakse, .x -ga (~ max(.x) - min(.x)). 
-
-pluck igast alam-listist mu ja sd ning kasuta neid, et genereerida 3 setti juhuslikke arve (millest igas on 5 juhuslikku arvu, mis on genereeritud vastavalt selle alam-listi mu-le ja sigmale).
+Kasutades funktsiooni `pluck()` nopime järgnevas koodis igast "params" listi alam-listist mu ja sd ning kasutame neid, et genereerida 3 portsu juhuslikke arve, millest igas on 5 juhuslikku arvu, mis on genereeritud vastavalt selles alam-listis spetsifitseeritud mu-le ja sigmale.
 ```{r}
 params <- list(
   "norm1" = list("mu" = 0, "sd" = 1),
@@ -1015,19 +1013,23 @@ params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
 
 ### map2()
 
-itereerib üle kahe vektori - map2(v1, v2, fun).
+Itereerib üle kahe vektori - map2(.x, .y, .f). 
 
-**Tekspressioon map2()-le:**
+.x ja .y on sama pikad vektorid (ühe-elemendine vektor kõlbab ka - seda lihtsalt retsükleeritakse nii mitu korda, kui teises vektoris on liikmeid).
 
-algab tildega ~
-esimese vektori elemendid on .x
+.f on funktsioon või ekspressioon (valem) 
+
+Ekspressioon `map2()`-le algab ikka tildega; esimese vektori elemendid on .x
 teise vektori elemendid on .y
+
+Näiteks `map2(x, y, ~ .x + .y)` liidab vektorid x ja y
 
 ### pmap()
 
 itereerib üle 3+ vektori. 
+Näiteks `pmap(list(x, y, z), sum)` liidab 3 vektorit (x, y ja z on ise vektorid)
 
-Name each vector in your list of vectors with the name of the argument that it should map to. pmap() will match names to arguments whenever you provide them. So this code, for example, will round each of the long numbers to a different number of digits.
+Järgnevas koodis anname ette listi long_numbers kolme vektoriga (pi, exp(1) ja sqrt(2)) ning vektori digits kolme liikmega, mida kasutab funktsiooni round() argument digits. Andes sellele argumendile 3 erinevat väärtust saame me kolm erinevat ümardamist kolmele listi long_numbers liikmele. 
 ```{r}
 long_numbers <- list(pi, exp(1), sqrt(2))
 digits <- list(2, 3, 4)
@@ -1036,7 +1038,7 @@ pmap(list(x = long_numbers, digits = digits), round)
 
 pmap() ekspressioonide sisesed elemndid on ..1, ..2, ..3 jne, mitte .x ja .y nagu map2-l. 
 
-NB! pmap-i saab sisetada data frame, mille peal see teeb kõike rea kaupa.
+NB! pmap-i saab sisetada data frame, mille peal see töötab rea kaupa.
 
 ```{r}
 parameters <- data.frame(
