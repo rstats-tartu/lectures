@@ -950,7 +950,7 @@ vekt <- sapply(df, function(x) mean(is.na(x)))
 vekt
 vekt1 <- vekt[vekt < 0.8] 
 #subsettisin vektori elemendid, mis on < 0.8 (NA-sid alla 80%). 216 tk.
-#nad1 is a named vector
+#vekt1 is a named vector
 vekt1n <- names(vekt1) #vektor named vektori vekt1 nimedest
 df_with_fewer_cols <- subset(df, select = vekt1n)
 #subsetime (jätame alles) ainult need df-i veerud, 
