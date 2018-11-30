@@ -948,7 +948,7 @@ NB! vekt ja vekt1 on nn named vektorid, milles vektori iga element (NAde suhtarv
 vekt <- sapply(df, function(x) mean(is.na(x))) 
 #NA-de protsent igas veerus
 vekt
-vekt1 <- nad[nad < 0.8] 
+vekt1 <- vekt[vekt < 0.8] 
 #subsettisin vektori elemendid, mis on < 0.8 (NA-sid alla 80%). 216 tk.
 #nad1 is a named vector
 vekt1n <- names(vekt1) #vektor named vektori vekt1 nimedest
