@@ -595,6 +595,31 @@ Pane tähele, et `[[ ]]` lubab ainult ühe elemendi korraga listist välja pää
 
 # Lihtne töö Andmeraamidega
 
+## Võrdleme andmeraame kahel viisil ja summeerime andmeraami.
+
+1. all_equal
+
+df1 on märklaud ja df2 on see, mida võrreldakse.
+convert = TRUE ühtlustab kahe tabeli vahel sarnased andmetüübid (n. factor ja character).
+```{r eval=FALSE}
+all_equal(df1, df2, convert = FALSE)
+```
+
+2. diffdf raamatukogu annab detailsema väljundi
+
+```{r eval=FALSE}
+diffdf::diffdf(df1, df2)
+```
+
+Andmetabeli Summary saab mitmel viisil, skimr::skim() funktsioon on üks paremaid 
+```{r}
+skimr::skim(iris)
+```
+
+BaasR kasutab `summary(df)` vormi.
+
+
+## Põhitehted andmeraamidega
 
 ```{r}
 count(iris, Species) #loeb üles, mitu korda igat näitu veerus Species esineb
@@ -626,12 +651,6 @@ apply(fruits_subset, 1, sd)
 apply(fruits_subset, 2, sd) 
 ```
 
-
-Andmetabeli Summary saab mitmel viisil, skimr::skim() funktsioon on üks paremaid 
-```{r}
-skimr::skim(iris)
-```
-
 Lisame käsitsi tabelile rea:
 ```{r}
 fruits <- add_row(fruits, 
@@ -649,7 +668,7 @@ add_column()
 
 Eelnevaid verbe ei kasuta me just sageli, sest tavaliselt loeme andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:
 
-### Rekodeerime andmeraami väärtusi
+## Rekodeerime andmeraami väärtusi
 
 
 ```{r}
@@ -677,7 +696,7 @@ x[is.na(x)] <- 0
 ```
 
 
-### Ühendame kaks andmeraami rea kaupa 
+## Ühendame kaks andmeraami rea kaupa 
 
 Tabeli veergude arv ei muutu, ridade arv kasvab.
 ```{r}
@@ -700,7 +719,7 @@ df2 <- tibble(ColC = "d", ColD = 4)
 bind_rows(dfs1, df2)
 ```
 
-### ühendame kaks andmeraami veeru kaupa
+## ühendame kaks andmeraami veeru kaupa
 
 Meil on 2 verbi: bind_cols ja cbind, millest esimene on konservatiivsem. Proovige eelkõige bind_col-ga läbi saada, aga kui muidu ei saa, siis cbind ühendab vahest asju, mida bind_cols keeldub puutumast. NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!
 
@@ -709,7 +728,7 @@ dfx <- tibble(colC = c(4, 5, 6))
 bind_cols(dfs, dfx)
 ```
 
-### andmeraamide ühendamine join()-ga
+## andmeraamide ühendamine join()-ga
 
 Kõigepealt 2 tabelit: df1 ja df2.
 
@@ -754,7 +773,7 @@ anti_join(df1, df2)
 ```
 
 
-### Nii saab raamist kätte vektori, millega tehteid teha. 
+## Nii saab raamist kätte vektori, millega tehteid teha. 
 
 Tibble jääb muidugi endisel kujul alles.
 ```{r}
@@ -855,7 +874,7 @@ class(fruits)
 ```{r, dev = 'png'}
 diabetes <- read.table(file = "data/diabetes.csv", sep = ";", dec = ",", header = TRUE)
 str(diabetes)
-aggr(diabetes, prop = FALSE, numbers = TRUE)
+VIM::aggr(diabetes, prop = FALSE, numbers = TRUE)
 ```
 Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.
 
@@ -887,7 +906,7 @@ Pane tähele, et string "NA" ei ole sama asi, mis loogiline konstant NA.
 
 Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:
 ```{r, dev='png'}
-matrixplot(diabetes) 
+VIM::matrixplot(diabetes) 
 ```
 
 
