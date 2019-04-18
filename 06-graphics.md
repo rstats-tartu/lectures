@@ -1232,8 +1232,7 @@ set.seed(12)
 a1 <- tibble(a=runif(200))
 ggplot(a1, aes(a)) + 
   geom_histogram(bins = 20, color="white", alpha=0.8, fill="grey")+ 
-  geom_histogram(aes(a), breaks= seq(0,1, by=0.05), 
-                 color= "navyblue", alpha=0.5, fill=NA)
+  geom_histogram(breaks= seq(0,1, by=0.05), color= "navyblue", fill=NA)
 ```
 
 <img src="06-graphics_files/figure-html/unnamed-chunk-80-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1241,12 +1240,11 @@ ggplot(a1, aes(a)) +
 Pane tähele, et tulemus on küllaltki erinev ja et `breaks` argument töötab korrektselt. Nagu järgnev koodijupp näitab, on meil on 6 väärtust alla 0.05 (1. bin) ja 8 väärtust üle 0.95 (20. bin), mis on korrektselt kajastatud ainult `breaks` argumentdiga histogrammil.
 
 ```r
-a1 %>% filter(a<0.05) %>% nrow()
+a1 %>% filter(a < 0.05) %>% nrow()
 #> [1] 6
-a1 %>% filter(a>0.95) %>% nrow()
+a1 %>% filter(a > 0.95) %>% nrow()
 #> [1] 8
 ```
-
 
 NB! Väga tähtis on mõista, et binnide laius on meie suva järgi määratud. Samade andmete põhjal joonistatud erineva binilaiusega histogrammid võivad anda lugejale väga erinevaid signaale. 
 
