@@ -1304,7 +1304,7 @@ ggplot(iris, aes(Species, Sepal.Length)) + geom_violin(aes(color=Species))+
 
 ## Tihedusplot
 
-Hea alternatiiv histogrammile on joonistada silutud andmejaotus, mis käitub silutud histogrammina. 
+Hea alternatiiv histogrammile on joonistada silutud andmejaotus ehk tihedusplot. Tihedusplotil kajastab iga andmejaotust sujuv funktsioon ehk andmete tihedusjoon, ning kõik jaotused on normaliseeritud samale joonealusele pindalale (iga pindlala = 1, mis muudab selle sisuliselt tõenäosusfunktsiooniks). Seega saame hästi võrrelda erinevate jaotuste kujusid, aga mitte kõrgusi (ehk seda, mitu andmepunkti on mingis bin-is -- selline võrdlus töötab muidugi histogrammi korral). 
 
 
 ```r
@@ -1313,7 +1313,7 @@ ggplot(iris, aes(Sepal.Length, fill=Species)) + geom_density(alpha=0.5)
 
 <img src="06-graphics_files/figure-html/unnamed-chunk-86-1.svg" width="70%" style="display: block; margin: auto;" />
 
-Adjust parameeter reguleerib silumise määra.
+Adjust parameeter reguleerib funktsiooni silumise määra.
 <img src="06-graphics_files/figure-html/unnamed-chunk-87-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Veel üks võimalus jaotusi kõrvuti vaadata on joyplot, mis paneb samale paneelile kasvõi sada tihedusjaotust. Näiteid vaata ka aadressilt https://cran.r-project.org/web/packages/ggridges/vignettes/gallery.html
