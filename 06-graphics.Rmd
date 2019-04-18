@@ -1056,13 +1056,13 @@ ggplot(iris, aes(Species, Sepal.Length)) + geom_violin(aes(color=Species))+
 
 ## Tihedusplot
 
-Hea alternatiiv histogrammile on joonistada silutud andmejaotus, mis käitub silutud histogrammina. 
+Hea alternatiiv histogrammile on joonistada silutud andmejaotus ehk tihedusplot. Tihedusplotil kajastab iga andmejaotust sujuv funktsioon ehk andmete tihedusjoon, ning kõik jaotused on normaliseeritud samale joonealusele pindalale (iga pindlala = 1, mis muudab selle sisuliselt tõenäosusfunktsiooniks). Seega saame hästi võrrelda erinevate jaotuste kujusid, aga mitte kõrgusi (ehk seda, mitu andmepunkti on mingis bin-is -- selline võrdlus töötab muidugi histogrammi korral). 
 
 ```{r}
 ggplot(iris, aes(Sepal.Length, fill=Species)) + geom_density(alpha=0.5)
 ```
 
-Adjust parameeter reguleerib silumise määra.
+Adjust parameeter reguleerib funktsiooni silumise määra.
 ```{r echo=FALSE}
 library(gridExtra)
 g1 <- ggplot(iris, aes(Sepal.Length, fill=Species, alpha=0.5)) + geom_density(adjust=0.2) + labs(title="adj = 0.2")+ theme(legend.position = "none")
