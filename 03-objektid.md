@@ -121,7 +121,7 @@ Järgmise sessiooni saate alustada juba oma salvestatud koodi baasilt --- jooksu
 
 * Argumendid on järjestatud ja neil on nimed. Nimi trumpab järjekorra üle selles mõttes, et me võime argumentide nimed funktsiooni kirjutada suvalises järjekorras ilma, et funktsiooni töö sellest muutuks. Samas, kui me sisestame funktsiooni argumendid ilma nimedeta, siis on argumentide järjekord tähtis, sest need seostatakse vaikimisi nimedega vastavalt oma järjekorranumbrile. Oletame, et meil on vektorid `kaal <- c(2.3, 4.3, 3)` ja `pikkus <- c(7, 5, 9)`. Me võime need funktsiooni sisestada nii: `plot(x = kaal, y = pikkus)`, `plot(y = pikkus, x = kaal)` ja `plot(kaal, pikkus)` teevad kõik identse scatterploti (aga `plot(pikkus, kaal)` ei tee).  
 
-* Funktsiooni esimese argumendi saab enamasti sisestada ka alternatiivsel viisil, %>% pipe operaatori abil. Niimoodi jooksevad fun(arg1, arg2) ja arg1 %>% fun(arg2) koodid enamasti identselt. Kumba koodi eelistada on seega "vaid" koodi loetavuse küsimus.
+* Funktsiooni esimese argumendi saab enamasti sisestada ka alternatiivsel viisil, %>% pipe operaatori abil. Niimoodi jooksevad `fun(arg1, arg2)` ja `arg1 %>% fun(arg2)` koodid enamasti identselt. Kumba koodi eelistada on seega "vaid" koodi loetavuse küsimus. `arg1 %>% fun(arg2)` on sama, mis `arg1 %>% fun(., arg2)`, kus punkt "." näitab vaikimisi, mitmenda argumendi kohale me oma arg1 sisse torutame. Seda teades on võimalik ka vorm `arg2 %>% fun(arg1,.)`, kus toru kaudu anname sisse 2. või ükskõik millise muu argumendi. Siin ei ole muud saladust kui, et peame punkti asukoha funktsioonis eksplitsiitselt ära näitama. 
 
 **Ülesanne:** uuri välja, mida määravad järgneva funktsiooni argumendid. 
 
@@ -404,7 +404,8 @@ minu_vektor <- c(1, "A2", "$2", "joe")
 ## parse_number() is imported from tidyverse 'readr' 
 minu_vektor <- parse_number(minu_vektor) %>% as.vector()
 #> Warning: 1 parsing failure.
-#> row # A tibble: 1 x 4 col     row   col expected actual expected   <int> <int> <chr>    <chr>  actual 1     4    NA a number joe
+#> row col expected actual
+#>   4  -- a number    joe
 str(minu_vektor)
 #>  num [1:4] 1 2 2 NA
 ```
@@ -516,15 +517,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.00182 0.40515 0.42749 0.68107 0.04993
+#> [1] 0.208 0.256 0.587 0.225 0.221
 #> 
 #> [[2]]
-#>         a      b
-#> 1 0.00182  1.339
-#> 2 0.40515 -0.527
-#> 3 0.42749 -1.064
-#> 4 0.68107  0.686
-#> 5 0.04993  0.577
+#>       a      b
+#> 1 0.208 -0.455
+#> 2 0.256 -0.362
+#> 3 0.587 -1.123
+#> 4 0.225  0.900
+#> 5 0.221  0.526
 #> 
 #> [[3]]
 #> 
@@ -583,6 +584,8 @@ Listi juba nii lihtsalt data.frame-i ei pane:
 
 ```r
 dfs <- try(data.frame(shop, apples, oranges, vabakava))
+#> Error in as.data.frame.default(x[[i]], optional = TRUE, stringsAsFactors = stringsAsFactors) : 
+#>   cannot coerce class '"lm"' to a data.frame
 dfs
 #> [1] "Error in as.data.frame.default(x[[i]], optional = TRUE, stringsAsFactors = stringsAsFactors) : \n  cannot coerce class '\"lm\"' to a data.frame\n"
 #> attr(,"class")
@@ -755,6 +758,55 @@ Pane tähele, et `[[ ]]` lubab ainult ühe elemendi korraga listist välja pää
 
 # Lihtne töö Andmeraamidega
 
+## Võrdleme andmeraame kahel viisil ja summeerime andmeraami.
+
+1. all_equal
+
+df1 on märklaud ja df2 on see, mida võrreldakse.
+convert = TRUE ühtlustab kahe tabeli vahel sarnased andmetüübid (n. factor ja character).
+
+```r
+all_equal(df1, df2, convert = FALSE)
+```
+
+2. diffdf raamatukogu annab detailsema väljundi
+
+
+```r
+diffdf::diffdf(df1, df2)
+```
+
+Andmetabeli Summary saab mitmel viisil, skimr::skim() funktsioon on üks paremaid 
+
+```r
+skimr::skim(iris)
+#> Skim summary statistics
+#>  n obs: 150 
+#>  n variables: 5 
+#> 
+#> ── Variable type:factor ───────────────────────────────
+#>  variable missing complete   n n_unique
+#>   Species       0      150 150        3
+#>                        top_counts ordered
+#>  set: 50, ver: 50, vir: 50, NA: 0   FALSE
+#> 
+#> ── Variable type:numeric ──────────────────────────────
+#>      variable missing complete   n mean   sd  p0 p25
+#>  Petal.Length       0      150 150 3.76 1.77 1   1.6
+#>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3
+#>  Sepal.Length       0      150 150 5.84 0.83 4.3 5.1
+#>   Sepal.Width       0      150 150 3.06 0.44 2   2.8
+#>   p50 p75 p100     hist
+#>  4.35 5.1  6.9 ▇▁▁▂▅▅▃▁
+#>  1.3  1.8  2.5 ▇▁▁▅▃▃▂▂
+#>  5.8  6.4  7.9 ▂▇▅▇▆▅▂▂
+#>  3    3.3  4.4 ▁▂▅▇▃▂▁▁
+```
+
+BaasR kasutab `summary(df)` vormi.
+
+
+## Põhitehted andmeraamidega
 
 
 ```r
@@ -851,34 +903,6 @@ apply(fruits_subset, 2, sd)
 #>    23.4      NA
 ```
 
-
-Andmetabeli Summary saab mitmel viisil, skimr::skim() funktsioon on üks paremaid 
-
-```r
-skimr::skim(iris)
-#> Skim summary statistics
-#>  n obs: 150 
-#>  n variables: 5 
-#> 
-#> ── Variable type:factor ───────────────────────────────
-#>  variable missing complete   n n_unique
-#>   Species       0      150 150        3
-#>                        top_counts ordered
-#>  set: 50, ver: 50, vir: 50, NA: 0   FALSE
-#> 
-#> ── Variable type:numeric ──────────────────────────────
-#>      variable missing complete   n mean   sd  p0 p25
-#>  Petal.Length       0      150 150 3.76 1.77 1   1.6
-#>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3
-#>  Sepal.Length       0      150 150 5.84 0.83 4.3 5.1
-#>   Sepal.Width       0      150 150 3.06 0.44 2   2.8
-#>   p50 p75 p100     hist
-#>  4.35 5.1  6.9 ▇▁▁▂▅▅▃▁
-#>  1.3  1.8  2.5 ▇▁▁▅▃▃▂▂
-#>  5.8  6.4  7.9 ▂▇▅▇▆▅▂▂
-#>  3    3.3  4.4 ▁▂▅▇▃▂▁▁
-```
-
 Lisame käsitsi tabelile rea:
 
 ```r
@@ -905,7 +929,7 @@ add_column()
 
 Eelnevaid verbe ei kasuta me just sageli, sest tavaliselt loeme andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:
 
-### Rekodeerime andmeraami väärtusi
+## Rekodeerime andmeraami väärtusi
 
 
 
@@ -957,7 +981,7 @@ x[is.na(x)] <- 0
 ```
 
 
-### Ühendame kaks andmeraami rea kaupa 
+## Ühendame kaks andmeraami rea kaupa 
 
 Tabeli veergude arv ei muutu, ridade arv kasvab.
 
@@ -994,7 +1018,7 @@ bind_rows(dfs1, df2)
 #> 2 <NA>     NA d         4
 ```
 
-### ühendame kaks andmeraami veeru kaupa
+## ühendame kaks andmeraami veeru kaupa
 
 Meil on 2 verbi: bind_cols ja cbind, millest esimene on konservatiivsem. Proovige eelkõige bind_col-ga läbi saada, aga kui muidu ei saa, siis cbind ühendab vahest asju, mida bind_cols keeldub puutumast. NB! Alati kontrollige, et ühendatud tabel oleks selline, nagu te tahtsite!
 
@@ -1010,7 +1034,7 @@ bind_cols(dfs, dfx)
 #> 3 c         3     6
 ```
 
-### andmeraamide ühendamine join()-ga
+## andmeraamide ühendamine join()-ga
 
 Kõigepealt 2 tabelit: df1 ja df2.
 
@@ -1071,7 +1095,7 @@ left_join(df1, df2)
 #> 2 Paul McCartney        1942 <NA>
 ```
 
-Filtreerin välja need df1 read, millele vastab rida df2-s. 
+Jätan alles ainult need df1 read, millele vastab mõni df2 rida.
 
 ```r
 semi_join(df1, df2)
@@ -1081,7 +1105,7 @@ semi_join(df1, df2)
 #> 1 John Lennon        1940
 ```
 
-Filtreerin välja need df1 read, millele ei vasta rida df2-s.
+Jätan alles ainult need df1 read, millele ei vasta ükski df2 rida.
 
 ```r
 anti_join(df1, df2)
@@ -1092,7 +1116,7 @@ anti_join(df1, df2)
 ```
 
 
-### Nii saab raamist kätte vektori, millega tehteid teha. 
+## Nii saab raamist kätte vektori, millega tehteid teha. 
 
 Tibble jääb muidugi endisel kujul alles.
 
@@ -1191,7 +1215,7 @@ Andmetabelite salvestamine töö vaheproduktidena ei ole sageli vajalik, sest te
 Tibble konverteerimine data frame-ks ja tagasi tibbleks:
 
 ```r
-class(fruits)
+class(fruits) #näitab ojekti klassi
 #> [1] "tbl_df"     "tbl"        "data.frame"
 fruits <- as.data.frame(fruits)
 class(fruits)
@@ -1227,10 +1251,10 @@ str(diabetes)
 #>  $ waist   : int  29 46 49 33 44 36 46 34 34 45 ...
 #>  $ hip     : int  38 48 57 38 41 42 49 39 40 50 ...
 #>  $ time.ppn: int  720 360 180 480 300 195 720 1020 300 240 ...
-aggr(diabetes, prop = FALSE, numbers = TRUE)
+VIM::aggr(diabetes, prop = FALSE, numbers = TRUE)
 ```
 
-<img src="03-objektid_files/figure-html/unnamed-chunk-66-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-objektid_files/figure-html/unnamed-chunk-68-1.png" width="70%" style="display: block; margin: auto;" />
 Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.
 
 Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?
@@ -1288,10 +1312,10 @@ Pane tähele, et string "NA" ei ole sama asi, mis loogiline konstant NA.
 Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:
 
 ```r
-matrixplot(diabetes) 
+VIM::matrixplot(diabetes) 
 ```
 
-<img src="03-objektid_files/figure-html/unnamed-chunk-70-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-objektid_files/figure-html/unnamed-chunk-72-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Kuidas rekodeerida NA-d näiteks 0-ks:
@@ -1358,9 +1382,9 @@ NB! vekt ja vekt1 on nn named vektorid, milles vektori iga element (NAde suhtarv
 vekt <- sapply(df, function(x) mean(is.na(x))) 
 #NA-de protsent igas veerus
 vekt
-vekt1 <- nad[nad < 0.8] 
+vekt1 <- vekt[vekt < 0.8] 
 #subsettisin vektori elemendid, mis on < 0.8 (NA-sid alla 80%). 216 tk.
-#nad1 is a named vector
+#vekt1 is a named vector
 vekt1n <- names(vekt1) #vektor named vektori vekt1 nimedest
 df_with_fewer_cols <- subset(df, select = vekt1n)
 #subsetime (jätame alles) ainult need df-i veerud, 
@@ -1368,11 +1392,11 @@ df_with_fewer_cols <- subset(df, select = vekt1n)
 ```
 
 
-# itereerimine ja map() - sama operatsioon mitu korda
+# map() - kordame sama operatsiooni igale listi liikmele
 
-Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda sellepärast, et formaalselt on list vektori tüüp (rekursiivne vektor), kuhu on võimalik elementidena panna mida iganes, k.a. teisi vektoreid. Selle tõttu enamus R-i funktsioone, mis töötavad lihtsate mitte-rekursiivsete vektoritega (ja df-dega), ei tööta listide peal. 
+Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda sellepärast, et formaalselt on list vektori tüüp (rekursiivne vektor), kuhu on võimalik elementidena panna mida iganes, k.a. teisi vektoreid. Enamus R-i funktsioone, mis töötavad lihtsate mitte-rekursiivsete vektoritega (ja df-dega), ei tööta listide peal. 
 
-purr::map() perekonna funktsioonid töötavad nii lihtsate vektorite kui listide peal. Need funktsioonid kordavad kasutaja poolt ette antud funktsiooni igale vektori elemendile. map() vajab 2 argumenti: vektor ja funktsioon, mida selle vektori elementidele rakendada. map() võtab sisse listi (vektori, data frame) ja väljastab listi (vektori, data frame). Seega saab seda hästi pipe-s rakendada.
+purrr::map() perekonna funktsioonid töötavad nii lihtsate vektorite kui listide peal. Need funktsioonid rakendavad kasutaja poolt ette antud funktsiooni järjest igale vektori elemendile. map() vajab 2 argumenti: vektor ja funktsioon, mida selle vektori elementidele rakendada. map() võtab sisse listi (vektori, data frame) ja väljastab listi (vektori, data frame). Seega saab seda hästi pipe-s rakendada.
 
 
 ```r
@@ -1394,7 +1418,7 @@ list1 %>% map(log) %>% map(round)
 #> [1] 2
 ```
 
-Kui tahad, map() anda funktsiooni lisaargumentidega, siis need eraldatakse komadega `map(vector1, round, digits = 2)`.
+Kui tahad, map() anda funktsiooni lisaargumentidega, siis need eraldatakse komadega `map(list1, round, digits = 2)`.
 
 Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta `map_dbl()`. 
 
@@ -1420,15 +1444,13 @@ map()-l on kokku 8 versiooni erinevate väljunditega.
 
 * map_lgl() - logical vektor
 
-* walk() - nähtamatu väljund (kasutatakse funktsioonide puhul, mis ei anna command line-le väljundit, nagu plot() või save file).
+* walk() - nähtamatu väljund (kasutatakse funktsioonide puhul, mis ei anna *command line*-le väljundit, nagu plot() või failide salvestamine).
 
-**Kuidas anda map-le funktsiooni asemel ette ekspressioon (näiteks max(df1$col1) - min(df1$col1))?**
+sisestame map-i funktsiooni asemel ekspressiooni `max(df1$col1) - min(df1$col1)`:
 
-ekspressiooni juhatab sisse ~ (tilde). 
+ekspressiooni juhatab sisse ~ (tilde) ja seal asendatakse see, millega opereeritakse, .x -ga: `~ max(.x) - min(.x)`. 
 
-Asenda ekspressioonis see, millega opereeritakse, .x -ga (~ max(.x) - min(.x)). 
-
-pluck igast alam-listist mu ja sd ning kasuta neid, et genereerida 3 setti juhuslikke arve (millest igas on 5 juhuslikku arvu, mis on genereeritud vastavalt selle alam-listi mu-le ja sigmale).
+Kasutades funktsiooni `pluck()` nopime järgnevas koodis igast "params" listi alam-listist mu ja sd ning kasutame neid, et genereerida 3 portsu juhuslikke arve, millest igas on 5 juhuslikku arvu, mis on genereeritud vastavalt selles alam-listis spetsifitseeritud mu-le ja sigmale.
 
 ```r
 params <- list(
@@ -1438,32 +1460,36 @@ params <- list(
 )
 params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
 #> $norm1
-#> [1] -1.170  0.503  0.431  0.811  1.912
+#> [1]  0.105  1.414 -1.102  0.633  1.190
 #> 
 #> $norm2
-#> [1]  1.448  1.945  0.191 -0.236  3.159
+#> [1] -0.156  0.538  1.141  2.146  0.260
 #> 
 #> $norm3
-#> [1] 3.373 2.171 0.533 0.956 2.181
+#> [1] 2.902 2.877 1.052 0.609 1.502
 ```
 
 `enframe()` konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value). 
 
 ### map2()
 
-itereerib üle kahe vektori - map2(v1, v2, fun).
+Itereerib üle kahe vektori - map2(.x, .y, .f). 
 
-**Tekspressioon map2()-le:**
+.x ja .y on sama pikad vektorid (ühe-elemendine vektor kõlbab ka - seda lihtsalt retsükleeritakse nii mitu korda, kui teises vektoris on liikmeid).
 
-algab tildega ~
-esimese vektori elemendid on .x
+.f on funktsioon või ekspressioon (valem) 
+
+Ekspressioon `map2()`-le algab ikka tildega; esimese vektori elemendid on .x
 teise vektori elemendid on .y
+
+Näiteks `map2(x, y, ~ .x + .y)` liidab vektorid x ja y
 
 ### pmap()
 
 itereerib üle 3+ vektori. 
+Näiteks `pmap(list(x, y, z), sum)` liidab 3 vektorit (x, y ja z on ise vektorid)
 
-Name each vector in your list of vectors with the name of the argument that it should map to. pmap() will match names to arguments whenever you provide them. So this code, for example, will round each of the long numbers to a different number of digits.
+Järgnevas koodis anname ette listi long_numbers kolme vektoriga (pi, exp(1) ja sqrt(2)) ning vektori digits kolme liikmega, mida kasutab funktsiooni round() argument digits. Andes sellele argumendile 3 erinevat väärtust saame me kolm erinevat ümardamist kolmele listi long_numbers liikmele. 
 
 ```r
 long_numbers <- list(pi, exp(1), sqrt(2))
@@ -1481,7 +1507,7 @@ pmap(list(x = long_numbers, digits = digits), round)
 
 pmap() ekspressioonide sisesed elemndid on ..1, ..2, ..3 jne, mitte .x ja .y nagu map2-l. 
 
-NB! pmap-i saab sisetada data frame, mille peal see teeb kõike rea kaupa.
+NB! pmap-i saab sisetada data frame, mille peal see töötab rea kaupa.
 
 
 ```r
@@ -1492,13 +1518,13 @@ parameters <- data.frame(
 )
 parameters %>% pmap(runif)
 #> [[1]]
-#> [1] 0.706
+#> [1] 0.899
 #> 
 #> [[2]]
-#> [1] 5.08 5.07
+#> [1] 5.76 5.71
 #> 
 #> [[3]]
-#> [1] 10.5 10.4 10.3
+#> [1] 10.4 10.8 10.7
 ```
 
 See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.
@@ -1535,13 +1561,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- list(c(5, 2, 3), 2, 3)
 invoke_map(functions, n)
 #> [[1]]
-#> [1]  5.442 -2.394  0.673  4.207  3.266
+#> [1]  4.852  1.952  0.941  1.092 -2.644
 #> 
 #> [[2]]
-#> [1] 0.393 0.342
+#> [1] 3.93 4.12
 #> 
 #> [[3]]
-#> [1] 11.27 -1.53  2.93
+#> [1] -2.420  0.238  1.187
 ```
 
 anname sisse esimese argumendi (100) igasse funktsiooni
@@ -1551,13 +1577,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- c(5, 2, 3)
 invoke_map(functions, n, 100)
 #> [[1]]
-#> [1] 102.4  99.8  98.8  96.9 100.7
+#> [1] 100.2 100.0 100.7  99.8 101.5
 #> 
 #> [[2]]
-#> [1] 2.40e+43 1.77e+43
+#> [1] 5.36e+43 3.50e+43
 #> 
 #> [[3]]
-#> [1] 100.4  96.4  96.6
+#> [1] 101 101 101
 ```
 
 mitu argumenti igale funktsioonile:
@@ -1569,13 +1595,13 @@ args <- list(norm = c(3, mean = 0, sd = 1),
 
 invoke_map(functions, args)
 #> [[1]]
-#> [1] 0.538 0.795 0.828
+#> [1] -0.385  0.890 -1.529
 #> 
 #> [[2]]
-#> [1] 71.092  0.561
+#> [1] 1.09 3.05
 #> 
 #> [[3]]
-#> [1] -175
+#> [1] -119
 ```
 
 
@@ -1650,7 +1676,7 @@ library(gapminder)
 #> 4 Angola      <tibble [12 × 5]>
 #> 5 Argentina   <tibble [12 × 5]>
 #> 6 Australia   <tibble [12 × 5]>
-#> # ... with 136 more rows
+#> # … with 136 more rows
 ```
 
 unnest() teeb algse df-i tagasi.
@@ -1670,7 +1696,7 @@ nested_gapminder %>%
 #> 4 Asia       1967    34.0 11537966      836.
 #> 5 Asia       1972    36.1 13079460      740.
 #> 6 Asia       1977    38.4 14880372      786.
-#> # ... with 6 more rows
+#> # … with 6 more rows
 #fitime ühe mudeli 1. elemendile (1. riik)
 ```
 

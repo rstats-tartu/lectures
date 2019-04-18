@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Tarkvaratööriistad | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
+  <title>8 map() - kordame sama operatsiooni igale listi liikmele | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
   <meta name="generator" content="bookdown  and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Tarkvaratööriistad | Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  <meta property="og:title" content="8 map() - kordame sama operatsiooni igale listi liikmele | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="img/cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstats-tartu/lectures" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Tarkvaratööriistad | Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  <meta name="twitter:title" content="8 map() - kordame sama operatsiooni igale listi liikmele | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
   <meta name="twitter:image" content="img/cover.png" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="andmeanaluus.html">
-<link rel="next" href="calc.html">
+<link rel="prev" href="lihtne-too-andmeraamidega.html">
+<link rel="next" href="regex.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -287,188 +287,239 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tools" class="section level1">
-<h1><span class="header-section-number">4</span> Tarkvaratööriistad</h1>
-<div id="installeeri-vajalikud-programmid" class="section level2">
-<h2><span class="header-section-number">4.1</span> Installeeri vajalikud programmid</h2>
-<p>Praktiline kursus eeldab töötavate R, RStudio ja Git programmide olemasolu sinu arvutist. Kõik on väga lihtsad installid.</p>
-<ol style="list-style-type: decimal">
-<li>Googelda “install R” või mine otse <a href="https://cran.r-project.org">R allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
-<li>Googelda “install RStudio” või mine otse <a href="https://www.rstudio.com/products/rstudio/download/">RStudio allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
-<li>Googelda “install git” või mine otse <a href="https://git-scm.com/downloads">Git allalaadimise veebilehele</a>, laadi alla ja installi sobiv versioon.</li>
-</ol>
-</div>
-<div id="loo-githubi-konto" class="section level2">
-<h2><span class="header-section-number">4.2</span> Loo GitHubi konto</h2>
-<p>GitHub <i class="fa fa-github" aria-hidden="true"></i> on veebipõhine <i class="fa fa-git" aria-hidden="true"></i> versioonikontrolli repositoorium ja veebimajutuse teenus.</p>
+<div id="map---kordame-sama-operatsiooni-igale-listi-liikmele" class="section level1">
+<h1><span class="header-section-number">8</span> map() - kordame sama operatsiooni igale listi liikmele</h1>
+<p>Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda sellepärast, et formaalselt on list vektori tüüp (rekursiivne vektor), kuhu on võimalik elementidena panna mida iganes, k.a. teisi vektoreid. Enamus R-i funktsioone, mis töötavad lihtsate mitte-rekursiivsete vektoritega (ja df-dega), ei tööta listide peal.</p>
+<p>purrr::map() perekonna funktsioonid töötavad nii lihtsate vektorite kui listide peal. Need funktsioonid rakendavad kasutaja poolt ette antud funktsiooni järjest igale vektori elemendile. map() vajab 2 argumenti: vektor ja funktsioon, mida selle vektori elementidele rakendada. map() võtab sisse listi (vektori, data frame) ja väljastab listi (vektori, data frame). Seega saab seda hästi pipe-s rakendada.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">list1 &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)
+list1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(log) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(round)
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 0</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[4]]</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[5]]</span>
+<span class="co">#&gt; [1] 2</span></code></pre></div>
+<p>Kui tahad, map() anda funktsiooni lisaargumentidega, siis need eraldatakse komadega <code>map(list1, round, digits = 2)</code>.</p>
+<p>Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta <code>map_dbl()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">list1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map_dbl</span>(log) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>()
+<span class="co">#&gt; [1] 0 1 1 1 2</span></code></pre></div>
+<p>map()-l on kokku 8 versiooni erinevate väljunditega.</p>
 <ul>
-<li><p><i class="fa fa-github" aria-hidden="true"></i> konto loomiseks mine lehele <a href="https://github.com" class="uri">https://github.com</a>. Loo endale oma nimega seotud avalik konto. Tulevikule mõeldes vali kasutajanimi hoolikalt. Ära muretse detailide pärast, need on võimalik täita hiljem.</p></li>
-<li>Loo repo nimega <code>intro_demo</code>.</li>
-<li>Lisa repole lühike ja informatiivne kirjeldus.</li>
-<li>Vali “Public”.</li>
-<li>Pane linnuke kasti “Initialize this repository with a README”.</li>
-<li><p>Klikka “Create Repository”.</p></li>
+<li><p>map() - list</p></li>
+<li><p>map_dbl() - floating point number vektor</p></li>
+<li><p>map_chr() - character vektor</p></li>
+<li><p>map_dfc() - data frame column binded</p></li>
+<li><p>map_dfr() - data frame row binded (lisab iga elemendi df-i reana)</p></li>
+<li><p>map_int() - integer vektor</p></li>
+<li><p>map_lgl() - logical vektor</p></li>
+<li><p>walk() - nähtamatu väljund (kasutatakse funktsioonide puhul, mis ei anna <em>command line</em>-le väljundit, nagu plot() või failide salvestamine).</p></li>
 </ul>
+<p>sisestame map-i funktsiooni asemel ekspressiooni <code>max(df1$col1) - min(df1$col1)</code>:</p>
+<p>ekspressiooni juhatab sisse ~ (tilde) ja seal asendatakse see, millega opereeritakse, .x -ga: <code>~ max(.x) - min(.x)</code>.</p>
+<p>Kasutades funktsiooni <code>pluck()</code> nopime järgnevas koodis igast “params” listi alam-listist mu ja sd ning kasutame neid, et genereerida 3 portsu juhuslikke arve, millest igas on 5 juhuslikku arvu, mis on genereeritud vastavalt selles alam-listis spetsifitseeritud mu-le ja sigmale.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="st">&quot;norm1&quot;</span> =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;mu&quot;</span> =<span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;sd&quot;</span> =<span class="st"> </span><span class="dv">1</span>),
+  <span class="st">&quot;norm2&quot;</span> =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;mu&quot;</span> =<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;sd&quot;</span> =<span class="st"> </span><span class="dv">1</span>),
+  <span class="st">&quot;norm3&quot;</span> =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;mu&quot;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&quot;scale&quot;</span> =<span class="st"> </span><span class="dv">1</span>)
+)
+params <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="kw">pluck</span>(.x, <span class="dv">1</span>), <span class="dt">sd =</span> <span class="kw">pluck</span>(.x, <span class="dv">2</span>)))
+<span class="co">#&gt; $norm1</span>
+<span class="co">#&gt; [1]  0.105  1.414 -1.102  0.633  1.190</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $norm2</span>
+<span class="co">#&gt; [1] -0.156  0.538  1.141  2.146  0.260</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $norm3</span>
+<span class="co">#&gt; [1] 2.902 2.877 1.052 0.609 1.502</span></code></pre></div>
+<p><code>enframe()</code> konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value).</p>
+<div id="map2" class="section level3">
+<h3><span class="header-section-number">8.0.1</span> map2()</h3>
+<p>Itereerib üle kahe vektori - map2(.x, .y, .f).</p>
+<p>.x ja .y on sama pikad vektorid (ühe-elemendine vektor kõlbab ka - seda lihtsalt retsükleeritakse nii mitu korda, kui teises vektoris on liikmeid).</p>
+<p>.f on funktsioon või ekspressioon (valem)</p>
+<p>Ekspressioon <code>map2()</code>-le algab ikka tildega; esimese vektori elemendid on .x teise vektori elemendid on .y</p>
+<p>Näiteks <code>map2(x, y, ~ .x + .y)</code> liidab vektorid x ja y</p>
 </div>
-<div id="loo-uus-r-projekt" class="section level2">
-<h2><span class="header-section-number">4.3</span> Loo uus R projekt</h2>
-<blockquote>
-<p>NB! Loo kataloogide nimed ilma tühikuteta. Tühikute asemel kasuta alakriipsu “_”.</p>
-</blockquote>
-<ol start="4" style="list-style-type: decimal">
-<li>Ava RStudio (R ise töötab taustal ja sa ei pea seda kunagi ise avama)</li>
-<li>Ava RStudio akna (Joonis <a href="tools.html#fig:rstudiowindow">4.1</a>) paremalt ülevalt nurgast “Project” menüüst “New Project” dialoog.</li>
-<li>Ava “New Directory” &gt; “Empty Project” &gt; vali projekti_nimi ja oma failisüsteemi alamkataloog kus see projekti kataloog asuma hakkab. Meie kursusel pane projekti/kataloogi nimeks “rstats2017”.</li>
-</ol>
-<div class="figure" style="text-align: center"><span id="fig:rstudiowindow"></span>
-<img src="img/rstudio_screen_untitled.png" alt="RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt;. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. &lt;i class='fa fa-git' aria-hidden='true'&gt;&lt;/i&gt; menüüs on võimalik muutusi vaadata ja 'commit'ida ja &lt;i class='fa fa-github' aria-hidden='true'&gt;&lt;/i&gt;-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse)." width="\textwidth" />
-<p class="caption">
-Joonis 4.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimega varustatud koodi ja teksti editor kuhu kirjutad R skripti. Sinna kirjutad oma koodi ja kommentaarid sellele. All vasakul on konsool. Sinna sisestatakse käivitamisel sinu R kood ja sinna trükitakse väljund. Üleval paremal on Environment aken olulise sakiga <i class='fa fa-git' aria-hidden='true'></i>. Seal on näha R-i objektid, mis on sulle töökeskkonnas kättesaadavad ja millega sa saad töötada. <i class='fa fa-git' aria-hidden='true'></i> menüüs on võimalik muutusi vaadata ja ’commit’ida ja <i class='fa fa-github' aria-hidden='true'></i>-ga suhelda. All paremal on paneel mitme sakiga. Files tab töötab nagu failihaldur. Kui sa lood või avad R projekti, siis näidatakse seal vaikimisi sinu töökataloogi. Kui kasutad R projekti, siis ei ole vaja töökataloogi eraldi seadistada. Plots paneelile ilmuvad joonised, mille sa teed. Packages näitab sulle sinu arvutis olevaid R-i pakette ehk raamatukogusid. Help paneeli avanevad help failid (ka need, mida konsooli kaudu otsitakse).
-</p>
+<div id="pmap" class="section level3">
+<h3><span class="header-section-number">8.0.2</span> pmap()</h3>
+<p>itereerib üle 3+ vektori. Näiteks <code>pmap(list(x, y, z), sum)</code> liidab 3 vektorit (x, y ja z on ise vektorid)</p>
+<p>Järgnevas koodis anname ette listi long_numbers kolme vektoriga (pi, exp(1) ja sqrt(2)) ning vektori digits kolme liikmega, mida kasutab funktsiooni round() argument digits. Andes sellele argumendile 3 erinevat väärtust saame me kolm erinevat ümardamist kolmele listi long_numbers liikmele.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">long_numbers &lt;-<span class="st"> </span><span class="kw">list</span>(pi, <span class="kw">exp</span>(<span class="dv">1</span>), <span class="kw">sqrt</span>(<span class="dv">2</span>))
+digits &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
+<span class="kw">pmap</span>(<span class="kw">list</span>(<span class="dt">x =</span> long_numbers, <span class="dt">digits =</span> digits), round)
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 3.14</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 2.72</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1] 1.41</span></code></pre></div>
+<p>pmap() ekspressioonide sisesed elemndid on ..1, ..2, ..3 jne, mitte .x ja .y nagu map2-l.</p>
+<p>NB! pmap-i saab sisetada data frame, mille peal see töötab rea kaupa.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">parameters &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),
+  <span class="dt">min =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>),
+  <span class="dt">max =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">11</span>)
+)
+parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pmap</span>(runif)
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 0.899</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 5.76 5.71</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1] 10.4 10.8 10.7</span></code></pre></div>
+<p>See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.</p>
+<p>Järgmine funktsioon rakendub suvalisele df-le rea kaupa ja arvutab igale reale näit sd. Aga selleks transponeerime read veergudeks ja rakendame tavalist map()-i.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmap &lt;-<span class="st"> </span><span class="cf">function</span> (.x, .f, ...) {
+    <span class="cf">if</span>(<span class="kw">is.null</span>(<span class="kw">dim</span>(.x))) <span class="kw">stop</span>(<span class="st">&quot;dim(X) must have a positive length&quot;</span>)
+    .x &lt;-<span class="st"> </span><span class="kw">t</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>(.,<span class="dt">stringsAsFactors=</span>F)
+    purrr<span class="op">::</span><span class="kw">map_dfr</span>(<span class="dt">.x=</span>.x,<span class="dt">.f=</span>.f,...)
+}
+parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rmap</span>(sd)
+<span class="co">#&gt; # A tibble: 1 x 3</span>
+<span class="co">#&gt;      V1    V2    V3</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.577  2.08  4.36</span></code></pre></div>
+<p>apply teeb sama lihtsamini.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(parameters, <span class="dv">1</span>, sd)
+<span class="co">#&gt; [1] 0.577 2.082 4.359</span></code></pre></div>
 </div>
-<p>Rohkem infot R projekti loomise kohta leiad RStudio infoleheküljelt: <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects">Using Projects</a>.</p>
+<div id="invoke_map" class="section level3">
+<h3><span class="header-section-number">8.0.3</span> invoke_map()</h3>
+<p>itereerib üle funktsioonide vektori, millele järgneb argumentide vektor. 1. funktsioon esimese argumendiga jne.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">functions &lt;-<span class="st"> </span><span class="kw">list</span>(rnorm, rlnorm, rcauchy)
+n &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">3</span>)
+<span class="kw">invoke_map</span>(functions, n)
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1]  4.852  1.952  0.941  1.092 -2.644</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 3.93 4.12</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1] -2.420  0.238  1.187</span></code></pre></div>
+<p>anname sisse esimese argumendi (100) igasse funktsiooni</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">functions &lt;-<span class="st"> </span><span class="kw">list</span>(rnorm, rlnorm, rcauchy)
+n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+<span class="kw">invoke_map</span>(functions, n, <span class="dv">100</span>)
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] 100.2 100.0 100.7  99.8 101.5</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 5.36e+43 3.50e+43</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1] 101 101 101</span></code></pre></div>
+<p>mitu argumenti igale funktsioonile:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">args &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">norm =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>), 
+             <span class="dt">lnorm =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dt">meanlog =</span> <span class="dv">1</span>, <span class="dt">sdlog =</span> <span class="dv">2</span>),
+             <span class="dt">cauchy =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dt">location =</span> <span class="dv">10</span>, <span class="dt">scale =</span> <span class="dv">100</span>))
+
+<span class="kw">invoke_map</span>(functions, args)
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] -0.385  0.890 -1.529</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[2]]</span>
+<span class="co">#&gt; [1] 1.09 3.05</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[3]]</span>
+<span class="co">#&gt; [1] -119</span></code></pre></div>
+<div id="map-shortcuts" class="section level4">
+<h4><span class="header-section-number">8.0.3.1</span> map shortcuts</h4>
+<p><code>pluck()</code> võtab listist välja elemendi (vektori, data frame jms) nii nagu see on (mitte listina).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">list1 &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
+  <span class="dt">letters =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>),
+  <span class="dt">logicals =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)
+)
+
+<span class="kw">pluck</span>(list1, <span class="dv">1</span>) <span class="co"># list1 %&gt;% pluck(1)</span>
+<span class="co">#&gt; [1] 1 2 3</span>
+<span class="kw">pluck</span>(list1, <span class="st">&quot;numbers&quot;</span>) <span class="co"># list1 %&gt;% pluck(&quot;numbers&quot;)</span>
+<span class="co">#&gt; [1] 1 2 3</span></code></pre></div>
+<p>Andes map()-le ette character stringi (elemendi nime), saame tagasi elemendi igast alam-listist, mille nimi vastab sellele stringile. See on shotcut pluck-ile.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="st">&quot;norm1&quot;</span> =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;mu&quot;</span> =<span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;sd&quot;</span> =<span class="st"> </span><span class="dv">1</span>),
+  <span class="st">&quot;norm2&quot;</span> =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;mu&quot;</span> =<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;sd&quot;</span> =<span class="st"> </span><span class="dv">1</span>),
+  <span class="st">&quot;norm3&quot;</span> =<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;mu&quot;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&quot;scale&quot;</span> =<span class="st"> </span><span class="dv">1</span>)
+)
+<span class="kw">map_dbl</span>(params, <span class="st">&quot;mu&quot;</span>)
+<span class="co">#&gt; norm1 norm2 norm3 </span>
+<span class="co">#&gt;     0     1     2</span></code></pre></div>
+<p>Sama teeb, kui map-le ette anda elemendi positsioon listis</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(params, <span class="dv">1</span>)
+<span class="co">#&gt; norm1 norm2 norm3 </span>
+<span class="co">#&gt;     0     1     2</span></code></pre></div>
+<p>Nii saab kätte samad tulbad (vektorid) mitmest data frame-st (kui list sisaldab data frame-sid).</p>
+<p><strong>veel mõned abifunktsioonid:</strong></p>
+<p>lmap() works exclusively with functions that take lists imap() applies a function to each element of a vector, and its index map_at() and map_if() only map a function to specific elements of a list.</p>
 </div>
-<div id="git-merge-konfliktid" class="section level2">
-<h2><span class="header-section-number">4.4</span> Git <em>Merge</em> konfliktid</h2>
-<p>Kollaboreerides üle GitHubi tekivad varem või hiljem konfliktid projekti failide versioonide vahel nn. “merge conflicts”, mille lahendamine on väga oluline.</p>
-<ul>
-<li>Oma repo GitHubi veebilehel muuda/paranda README.md dokumenti ja “Commit”-i seda lühisõnumiga mis sa muutsid/parandasid.</li>
-<li>Seejärel, muuda oma arvutis olevat README.md faili RStudio-s viies sinna sisse mingi teistsuguse muudatuse. Tee “Commit” oma muudatustele.</li>
-<li>Proovi “push”-ida – sa saad veateate!</li>
-<li>Proovi “pull”.</li>
-<li>Lahenda “merge” konflikt ja seejärel “commit” + “push”.</li>
-</ul>
-<p>Githubi veateadete lugemine ja Google otsing aitavad sind.</p>
-</div>
-<div id="r-projekti-kataloogi-soovitatav-minimaalne-struktuur" class="section level2">
-<h2><span class="header-section-number">4.5</span> R projekti kataloogi soovitatav minimaalne struktuur</h2>
-<p>Iga R projekt peab olema täiesti iseseisev (<em>selfcontained</em>) ja sisaldama andmeid ja koodi, mis on koos piisavad projektiga seotud arvutuste läbi viimiseks ja raporti genereerimiseks. Kõik faili <em>path</em>-id peavad olema suhtelised. -TAAVI, SEE TULEKS LAHTI KIRJUTADA.</p>
-<p>R projekti kataloog peaks sisaldama projekti kirjeldavaid faile, mis nimetatakse DESCRIPTION ja README.md. <strong>DESCRIPTION</strong> on tavaline tekstifail ja sisaldab projekti metainfot ja infot projekti sõltuvuste kohta, nagu väliste andmesettide asukoht, vajalik tarkvara jne. <strong>README.md</strong> on markdown formaadis projekti info, sisaldab juhendeid kasutajatele. Igale GitHubi repole on soovitav koostada README.md, esialgu kasvõi projekti pealkiri ja üks kirjeldav lause. README.md ja DESCRIPTION asuvad projekti juurkataloogis.</p>
-<blockquote>
-<p>Projekti juurkataloogi jäävad ka kõik .Rmd laiendiga teksti ja analüüsi tulemusi sisaldavad failid, millest genereeritakse lõplik raport/dokument.</p>
-</blockquote>
-<p>Suuremad projektid, nagu näiteks teadusartikkel või raamat, võivad sisaldada mitmeid Rmd faile ja võib tekkida kange kisatus need mõnda alamkataloogi tõsta. Aga <code>knitr::knit()</code>, mis Rmarkdowni markdowniks konverteerib, arvestab, et Rmd fail asub juurkataloogis ja arvestab juurkataloogi suhtes ka failis olevaid <em>path</em>-e teistele failidele (näiteks “data/my_data.csv”).</p>
-<p><strong>data/</strong> kataloog sisaldab faile toorandmetega. Need failid peavad olema R-i poolt loetavad ja soovitavalt tekstipõhised, laienditega TXT, CSV, TSV jne. Neid faile ei muudeta, ainult loetakse. Kogu algandmete töötlus toimub programmaatiliselt. Suured failid muudavad versioonikontrolli aeglaseks, samuti on suheliselt mõttetu versioonikontroll binaarsete failide korral (MS <i class="fa fa-file-word-o" aria-hidden="true"></i> näiteks), sest diffid pole lihtsalt inimkeeles. Github ütleb suurte failide kohta nii: <em>“GitHub will warn you when pushing files larger than 50 MB. You will not be allowed to push files larger than 100 MB.”</em></p>
-<p><strong>R/</strong> kataloog sisaldab R skripte.</p>
-<p><strong>output/</strong> kataloogis on kasutaja poolt genereeritud andmed ja puhastatud andmesetid.</p>
-<pre><code>project/
-|- DESCRIPTION          # project metadata and dependencies
-|- README.md            # description of contents and guide to users
-|- my_analysis.Rmd      # markdown file containing analysis
-|                       # writeup together with R code chunks
-|
-|- data/                # raw data, not changed once created 
-|  +-my_rawdata.csv     # data files in open formats, 
-|                       # such as TXT, CSV, TSV etc.
-|
-|- R/                   # any programmatic code
-|  +-my_scripts.R       # R code used to analyse and 
-|                       # visualise data
-|
-|- output/              # generated data
-|  +-my_clean_data.rds  # saved R object or cleaned up datasets</code></pre>
-<p>Kui selles kataloogis olevad skriptid on annoteeritud kasutades Roxygen-i <span class="citation">(Wickham, Danenberg, and Eugster <a href="#ref-roxygen2">2017</a>)</span>, siis genereeritakse automaatselt funktsioonide dokumentatsioon kataloogi <strong>man/</strong>. Rohkem projekti pakkimise kohta loe värskest preprindist “Packaging data analytical work reproducibly using R” <span class="citation">(Marwick, Boettiger, and Mullen <a href="#ref-marwick2017">2017</a>)</span>.</p>
-</div>
-<div id="libs" class="section level2">
-<h2><span class="header-section-number">4.6</span> Pakettide installeerimine</h2>
-<p>R <em>library</em>-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. <strong>R baaspakett sisaldab juba mitmeid funktsioone.</strong> Kõige esimene sõnum <code>sum()</code> help lehel on “sum {base}”, mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda. Näiteks “base” raamatukogu versioon 3.5.3 sisaldab 455 funktsiooni. Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist <a href="https://cran.r-project.org">CRAN</a> alla laadida ja installeerida.</p>
-<p>Selleks, et installeerida pakett, sisesta järgnev käsurida R konsooli:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## eg use &quot;ggplot2&quot; as packagename
-<span class="kw">install.packages</span>(<span class="st">&quot;packagename&quot;</span>)</code></pre></div>
-<p>NB! Kui mõni raamatukogu sel viisil alla ei tule, siis guugeldage selle nime + R ja vaadake instruktsioone installeerimiseks. Suure tõenäosusega on tegemist mõnes teises repos (näiteks Bioconductor) või ainult GitHubis asuva paketiga.</p>
-RStudio võimaldab ka <em>point-and-click</em> stiilis pakettide installeerimist:
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
-<img src="img/RStudio_package.install.png" alt="RStudio 'Install Packages' dialoogiaken." width="\textwidth" />
-<p class="caption">
-Joonis 4.2: RStudio ‘Install Packages’ dialoogiaken.
-</p>
-</div>
-<blockquote>
-<p>Sa ei saa installeeritud pakette enne kasutada, kui laadid nad töökeskkonda kasutades <code>library()</code> funktsiooni.</p>
-</blockquote>
-<p>Peale installeerimist lae pakett oma R sessiooni kasutades <code>library()</code> käsku, näiteks:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Load library/package dplyr
-<span class="kw">library</span>(dplyr)</code></pre></div>
-<p><code>library(dplyr)</code> käsk teeb R sessioonis kasutatavaks kõik “dplyr” paketi funktsioonid.</p>
-<p>Näiteks “dplyr” pakett sisaldab 263 funktsiooni:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-## let&#39;s look at the head of package list
-<span class="kw">head</span>(<span class="kw">ls</span>(<span class="st">&quot;package:dplyr&quot;</span>), <span class="dv">20</span>)
-<span class="co">#&gt;  [1] &quot;%&gt;%&quot;           &quot;add_count&quot;     &quot;add_count_&quot;   </span>
-<span class="co">#&gt;  [4] &quot;add_row&quot;       &quot;add_rownames&quot;  &quot;add_tally&quot;    </span>
-<span class="co">#&gt;  [7] &quot;add_tally_&quot;    &quot;all_equal&quot;     &quot;all_vars&quot;     </span>
-<span class="co">#&gt; [10] &quot;anti_join&quot;     &quot;any_vars&quot;      &quot;arrange&quot;      </span>
-<span class="co">#&gt; [13] &quot;arrange_&quot;      &quot;arrange_all&quot;   &quot;arrange_at&quot;   </span>
-<span class="co">#&gt; [16] &quot;arrange_if&quot;    &quot;as_data_frame&quot; &quot;as_tibble&quot;    </span>
-<span class="co">#&gt; [19] &quot;as.tbl&quot;        &quot;as.tbl_cube&quot;</span></code></pre></div>
-<p>Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab <code>::</code> operaatorit kasutades kutsuda välja/importida funktsiooni spetsiifilisest paketist:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dplyr<span class="op">::</span><span class="kw">select</span>(df, my_var)</code></pre></div>
-<p>Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat funktsiooni sisaldavat raamatukogu töökeskkonda laadida.</p>
-<p><strong>Funktsioonide-pakettide help failid RStudio kasutajaliidesest</strong>: Kui te lähete RStudios paremal all olevale “Packages” tabile, siis on võimalik klikkida raamatukogu nimele ja näha selle help-faile, tutooriale ja kõiki selle raamatukogu funktsioone koos nende help failidega.</p>
-</div>
-<div id="r-repositooriumid" class="section level2">
-<h2><span class="header-section-number">4.7</span> R repositooriumid</h2>
-<p>R pakid on saadaval kolmest põhilisest repositooriumist:</p>
-<ol style="list-style-type: decimal">
-<li><strong>CRAN</strong> <a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a></li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li><strong>Bioconductor</strong> <a href="https://www.bioconductor.org" class="uri">https://www.bioconductor.org</a></li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># First run biocLite script fron bioconductor.org</span>
-<span class="kw">source</span>(<span class="st">&quot;https://bioconductor.org/biocLite.R&quot;</span>)  
-<span class="co"># use &#39;http&#39; in url if &#39;https&#39; is unavailable. </span>
-<span class="kw">biocLite</span>(<span class="st">&quot;edgeR&quot;</span>)</code></pre></div>
-<ol start="3" style="list-style-type: decimal">
-<li><strong>GitHub</strong> <a href="https://github.com" class="uri">https://github.com</a></li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># following command installs xaringan (presentation ninja) package from GitHub user yihui</span>
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;yihui/xaringan&quot;</span>)</code></pre></div>
-<blockquote>
-<p>NB! antud praktilise kursuse raames tutvume ja kasutame ‘tidyverse’ metapaketi funktsioone, laadides need iga sessiooni alguses:</p>
-</blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;tidyverse&quot;)</span>
-<span class="kw">library</span>(tidyverse)</code></pre></div>
-<p>Nüüd on teil <code>tidyverse</code> pakett arvutis. Tegelikult kuuluvad siia raamatukokku omakorda tosinkond raamatukogu — tidyverse on pisut meta. Igal juhul muutuvad selle funktsioonid kättesaadavaks peale seda, kui te need töökeskkonda sisse loete</p>
-<p>Veel üks tehniline detail. <code>library(tidyverse)</code> käsk ei loe sisse kõiki alam-raamatukogusid, mis selle nime all CRAN-ist alla laaditi. Need tuleb vajadusel eraldi ükshaaval sisse lugeda.</p>
-<blockquote>
-<p>Enamasti kirjutatakse kõik sisse loetavad raamatukogud kohe R scripti algusesse. Siis on ilusti näha, mida hiljem vaja läheb.</p>
-</blockquote>
-<div id="r-i-versiooni-uuendamine" class="section level3">
-<h3><span class="header-section-number">4.7.1</span> R-i versiooni uuendamine</h3>
-<p><strong>mac-is</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>installeeri uus Ri versioon</p></li>
-<li><p>Kopeeri folderid oma vanast R-i versioonist uude versiooni (tegelikult need folderid, mida uues kataloogis ei ole - sest mõned paketid lastakse peale juba baas installatsiooniga).</p></li>
-</ol>
-<p>/Library/Frameworks/R.framework/Versions/x.xx/Resources/library</p>
-<p>(Asenda x.xx vana ja uue R versiooni numbriga)</p>
-<p>installed.packages() aitab leida kataloogi, kus asuvad sinu paketid (näit kui eelnev rada ei tööta)</p>
-<ol start="3" style="list-style-type: decimal">
-<li>Uuenda paketid uues kataloogis</li>
-</ol>
-<p>update.packages(checkBuilt=TRUE)</p>
-<p>R konsoolis pead vastama y igale küsimusele, mida seal küsitakse</p>
-<ol start="4" style="list-style-type: decimal">
-<li>kontrolli, et kõik töötas:</li>
-</ol>
-<p>packageStatus()</p>
-<p><strong>windowsis peaks töötama</strong></p>
-<p>install.packages(“installr”)</p>
-<p>library(installr)</p>
-<p>updateR()</p>
+<div id="list-column" class="section level4">
+<h4><span class="header-section-number">8.0.3.2</span> List column</h4>
+<p>Df-i veerg, mille andmetüüp on list. Näiteks mudeliobjektid, funktsioonid ja teised df-d võivad minna list columnisse! List columnid on ise listid, mitte andmevektorid.</p>
+<pre><code>  List veerud võimaldavad panna samasse tabelisse erinevaid asju - 
+  andmeid, mudeleid, mudeli koefitsiente jms. </code></pre>
+<p>nest() teeb uue df-i, kus on 1. veerg grupeeriva muutuja tasemetega, millele järgneb list column, mille iga element on tibble. Iga tibble sisaldab relevantset infot grupeeriva muutuja vastava taseme kohta.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gapminder)
+(nested_gapminder &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nest</span>())
+<span class="co">#&gt; # A tibble: 142 x 2</span>
+<span class="co">#&gt;   country     data             </span>
+<span class="co">#&gt;   &lt;fct&gt;       &lt;list&gt;           </span>
+<span class="co">#&gt; 1 Afghanistan &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; 2 Albania     &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; 3 Algeria     &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; 4 Angola      &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; 5 Argentina   &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; 6 Australia   &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; # … with 136 more rows</span></code></pre></div>
+<p>unnest() teeb algse df-i tagasi.</p>
+<p>iga nested_gapminder$data element on ise df:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nested_gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;data&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pluck</span>(<span class="dv">1</span>) <span class="co"># %&gt;% lm(lifeExp ~ year, data = .)</span>
+<span class="co">#&gt; # A tibble: 12 x 5</span>
+<span class="co">#&gt;   continent  year lifeExp      pop gdpPercap</span>
+<span class="co">#&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Asia       1952    28.8  8425333      779.</span>
+<span class="co">#&gt; 2 Asia       1957    30.3  9240934      821.</span>
+<span class="co">#&gt; 3 Asia       1962    32.0 10267083      853.</span>
+<span class="co">#&gt; 4 Asia       1967    34.0 11537966      836.</span>
+<span class="co">#&gt; 5 Asia       1972    36.1 13079460      740.</span>
+<span class="co">#&gt; 6 Asia       1977    38.4 14880372      786.</span>
+<span class="co">#&gt; # … with 6 more rows</span>
+<span class="co">#fitime ühe mudeli 1. elemendile (1. riik)</span></code></pre></div>
+<p>fit a model to each tibble nested within nested_gapminder and then store those models as a list column</p>
+<p>fitime mudeli igale listi veerule (igale riigile). väljund on ilge list.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model1 &lt;-<span class="st"> </span>nested_gapminder <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;data&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>year, <span class="dt">data =</span> .x))</code></pre></div>
+<p>arvutame mudelid igale riigile ja pistame väljundi (mudeliobjekti) nested_gapminder uude list columnisse:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">models1 &lt;-<span class="st"> </span>nested_gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">models =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>year, <span class="dt">data =</span> .x)))</code></pre></div>
+<p>võtame välja mudeli koefitsiendi year ja paneme uude veergu nimega coefficient:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">models1 &lt;-<span class="st">  </span>models1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>( <span class="dt">coefficient =</span> <span class="kw">map_dbl</span>(models, <span class="op">~</span><span class="kw">coef</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pluck</span>(<span class="st">&quot;year&quot;</span>)) )</code></pre></div>
+<p>df-i veerg models on ühtlasi list, millele saame map_dbl() rakendada.</p>
+<p>järgnevad 3 koodirida teevad sama asja - võtavad välja 1. mudeli:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">models1 <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pluck</span>(<span class="st">&quot;models&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pluck</span>(<span class="dv">1</span>)
+
+models1[[<span class="dv">1</span>, <span class="dv">3</span>]]
+
+models1<span class="op">$</span>models[[<span class="dv">1</span>]]</code></pre></div>
 
 </div>
-</div>
-</div>
-<h3>Bibliograafia</h3>
-<div id="refs" class="references">
-<div id="ref-marwick2017">
-<p>Marwick, Ben, Carl Boettiger, and Lincoln Mullen. 2017. “Packaging Data Analytical Work Reproducibly Using R (and Friends).” <em>PeerJ Preprints</em> 5: e3192v1. doi:<a href="https://doi.org/10.7287/peerj.preprints.3192v1">10.7287/peerj.preprints.3192v1</a>.</p>
-</div>
-<div id="ref-roxygen2">
-<p>Wickham, Hadley, Peter Danenberg, and Manuel Eugster. 2017. <em>Roxygen2: In-Line Documentation for R</em>. <a href="https://CRAN.R-project.org/package=roxygen2" class="uri">https://CRAN.R-project.org/package=roxygen2</a>.</p>
 </div>
 </div>
             </section>
@@ -476,8 +527,8 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
           </div>
         </div>
       </div>
-<a href="andmeanaluus.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="calc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="lihtne-too-andmeraamidega.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regex.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -507,7 +558,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstats-tartu/lectures/edit/master/01-tarkvara.Rmd",
+"link": "https://github.com/rstats-tartu/lectures/edit/master/03-objektid.Rmd",
 "text": "Edit"
 },
 "history": {

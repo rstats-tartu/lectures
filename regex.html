@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Reprodutseeritav andmeanalüüs kasutades R keelt</title>
-  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 Regular expression ja find &amp; replace | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
+  <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
+  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  <meta property="og:title" content="9 Regular expression ja find &amp; replace | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="img/cover.png" />
@@ -17,22 +16,22 @@
   <meta name="github-repo" content="rstats-tartu/lectures" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Reprodutseeritav andmeanalüüs kasutades R keelt" />
+  <meta name="twitter:title" content="9 Regular expression ja find &amp; replace | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   
   <meta name="twitter:description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
   <meta name="twitter:image" content="img/cover.png" />
 
-<meta name="author" content="Ülo Maiväli &amp; Taavi Päll">
+<meta name="author" content="Ülo Maiväli &amp; Taavi Päll" />
 
 
-<meta name="date" content="2018-10-27">
+<meta name="date" content="2019-04-18" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html">
+<link rel="prev" href="map-kordame-sama-operatsiooni-igale-listi-liikmele.html">
 <link rel="next" href="funs.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -149,24 +148,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html"><i class="fa fa-check"></i><b>7</b> Lihtne töö Andmeraamidega</a><ul>
-<li class="chapter" data-level="7.0.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#rekodeerime-andmeraami-vaartusi"><i class="fa fa-check"></i><b>7.0.1</b> Rekodeerime andmeraami väärtusi</a></li>
-<li class="chapter" data-level="7.0.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#uhendame-kaks-andmeraami-rea-kaupa"><i class="fa fa-check"></i><b>7.0.2</b> Ühendame kaks andmeraami rea kaupa</a></li>
-<li class="chapter" data-level="7.0.3" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#uhendame-kaks-andmeraami-veeru-kaupa"><i class="fa fa-check"></i><b>7.0.3</b> ühendame kaks andmeraami veeru kaupa</a></li>
-<li class="chapter" data-level="7.0.4" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#andmeraamide-uhendamine-join-ga"><i class="fa fa-check"></i><b>7.0.4</b> andmeraamide ühendamine join()-ga</a></li>
-<li class="chapter" data-level="7.0.5" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#nii-saab-raamist-katte-vektori-millega-tehteid-teha."><i class="fa fa-check"></i><b>7.0.5</b> Nii saab raamist kätte vektori, millega tehteid teha.</a></li>
-<li class="chapter" data-level="7.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>7.1</b> Andmeraamide salvestamine (eksport-import)</a></li>
-<li class="chapter" data-level="7.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#na-d"><i class="fa fa-check"></i><b>7.2</b> NA-d</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#mitu-na-d-on-igas-tulbas"><i class="fa fa-check"></i><b>7.2.1</b> Mitu NA-d on igas tulbas?</a></li>
-<li class="chapter" data-level="7.2.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#kuidas-rekodeerida-na-d-naiteks-0-ks"><i class="fa fa-check"></i><b>7.2.2</b> Kuidas rekodeerida NA-d näiteks 0-ks:</a></li>
-<li class="chapter" data-level="7.2.3" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#rekodeerime-na-ks"><i class="fa fa-check"></i><b>7.2.3</b> Rekodeerime NA-ks</a></li>
-<li class="chapter" data-level="7.2.4" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#drop_na-viskab-tabelist-valja-na-dega-read"><i class="fa fa-check"></i><b>7.2.4</b> drop_na() viskab tabelist välja NA-dega read</a></li>
-<li class="chapter" data-level="7.2.5" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#viska-tabelist-valja-veerud-milles-on-liiga-palju-na-sid"><i class="fa fa-check"></i><b>7.2.5</b> viska tabelist välja veerud, milles on liiga palju NA-sid</a></li>
+<li class="chapter" data-level="7.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#vordleme-andmeraame-kahel-viisil-ja-summeerime-andmeraami."><i class="fa fa-check"></i><b>7.1</b> Võrdleme andmeraame kahel viisil ja summeerime andmeraami.</a></li>
+<li class="chapter" data-level="7.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#pohitehted-andmeraamidega"><i class="fa fa-check"></i><b>7.2</b> Põhitehted andmeraamidega</a></li>
+<li class="chapter" data-level="7.3" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#rekodeerime-andmeraami-vaartusi"><i class="fa fa-check"></i><b>7.3</b> Rekodeerime andmeraami väärtusi</a></li>
+<li class="chapter" data-level="7.4" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#uhendame-kaks-andmeraami-rea-kaupa"><i class="fa fa-check"></i><b>7.4</b> Ühendame kaks andmeraami rea kaupa</a></li>
+<li class="chapter" data-level="7.5" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#uhendame-kaks-andmeraami-veeru-kaupa"><i class="fa fa-check"></i><b>7.5</b> ühendame kaks andmeraami veeru kaupa</a></li>
+<li class="chapter" data-level="7.6" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#andmeraamide-uhendamine-join-ga"><i class="fa fa-check"></i><b>7.6</b> andmeraamide ühendamine join()-ga</a></li>
+<li class="chapter" data-level="7.7" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#nii-saab-raamist-katte-vektori-millega-tehteid-teha."><i class="fa fa-check"></i><b>7.7</b> Nii saab raamist kätte vektori, millega tehteid teha.</a></li>
+<li class="chapter" data-level="7.8" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#andmeraamide-salvestamine-eksport-import"><i class="fa fa-check"></i><b>7.8</b> Andmeraamide salvestamine (eksport-import)</a></li>
+<li class="chapter" data-level="7.9" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#na-d"><i class="fa fa-check"></i><b>7.9</b> NA-d</a><ul>
+<li class="chapter" data-level="7.9.1" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#mitu-na-d-on-igas-tulbas"><i class="fa fa-check"></i><b>7.9.1</b> Mitu NA-d on igas tulbas?</a></li>
+<li class="chapter" data-level="7.9.2" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#kuidas-rekodeerida-na-d-naiteks-0-ks"><i class="fa fa-check"></i><b>7.9.2</b> Kuidas rekodeerida NA-d näiteks 0-ks:</a></li>
+<li class="chapter" data-level="7.9.3" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#rekodeerime-na-ks"><i class="fa fa-check"></i><b>7.9.3</b> Rekodeerime NA-ks</a></li>
+<li class="chapter" data-level="7.9.4" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#drop_na-viskab-tabelist-valja-na-dega-read"><i class="fa fa-check"></i><b>7.9.4</b> drop_na() viskab tabelist välja NA-dega read</a></li>
+<li class="chapter" data-level="7.9.5" data-path="lihtne-too-andmeraamidega.html"><a href="lihtne-too-andmeraamidega.html#viska-tabelist-valja-veerud-milles-on-liiga-palju-na-sid"><i class="fa fa-check"></i><b>7.9.5</b> viska tabelist välja veerud, milles on liiga palju NA-sid</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><i class="fa fa-check"></i><b>8</b> itereerimine ja map() - sama operatsioon mitu korda</a><ul>
-<li class="chapter" data-level="8.0.1" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html#map2"><i class="fa fa-check"></i><b>8.0.1</b> map2()</a></li>
-<li class="chapter" data-level="8.0.2" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html#pmap"><i class="fa fa-check"></i><b>8.0.2</b> pmap()</a></li>
-<li class="chapter" data-level="8.0.3" data-path="itereerimine-ja-map-sama-operatsioon-mitu-korda.html"><a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html#invoke_map"><i class="fa fa-check"></i><b>8.0.3</b> invoke_map()</a></li>
+<li class="chapter" data-level="8" data-path="map-kordame-sama-operatsiooni-igale-listi-liikmele.html"><a href="map-kordame-sama-operatsiooni-igale-listi-liikmele.html"><i class="fa fa-check"></i><b>8</b> map() - kordame sama operatsiooni igale listi liikmele</a><ul>
+<li class="chapter" data-level="8.0.1" data-path="map-kordame-sama-operatsiooni-igale-listi-liikmele.html"><a href="map-kordame-sama-operatsiooni-igale-listi-liikmele.html#map2"><i class="fa fa-check"></i><b>8.0.1</b> map2()</a></li>
+<li class="chapter" data-level="8.0.2" data-path="map-kordame-sama-operatsiooni-igale-listi-liikmele.html"><a href="map-kordame-sama-operatsiooni-igale-listi-liikmele.html#pmap"><i class="fa fa-check"></i><b>8.0.2</b> pmap()</a></li>
+<li class="chapter" data-level="8.0.3" data-path="map-kordame-sama-operatsiooni-igale-listi-liikmele.html"><a href="map-kordame-sama-operatsiooni-igale-listi-liikmele.html#invoke_map"><i class="fa fa-check"></i><b>8.0.3</b> invoke_map()</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>9</b> Regular expression ja find &amp; replace</a><ul>
 <li class="chapter" data-level="9.1" data-path="regex.html"><a href="regex.html#common-operations-with-regular-expressions"><i class="fa fa-check"></i><b>9.1</b> Common operations with regular expressions</a></li>
@@ -469,7 +470,7 @@ v_f_subject
           </div>
         </div>
       </div>
-<a href="itereerimine-ja-map-sama-operatsioon-mitu-korda.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="map-kordame-sama-operatsiooni-igale-listi-liikmele.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="funs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -490,7 +491,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -502,6 +503,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/rstats-tartu/lectures/edit/master/04-regex.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["main.pdf", "main.epub"],
 "toc": {

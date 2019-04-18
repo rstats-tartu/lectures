@@ -149,6 +149,7 @@ Antud funktsiooni käivitamine annab veateate, sest funktsiooni argumentidel pol
 ```r
 ## run function in failsafe mode
 inventory <- try(add2())
+#> Error in add2() : argument "x" is missing, with no default
 ## when function fails, error message is returned
 class(inventory)
 #> [1] "try-error"

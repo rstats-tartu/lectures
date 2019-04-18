@@ -89,7 +89,7 @@ dat_lng
 #> 4 Tim     M     experiment_1    34
 #> 5 Ann     F     experiment_1    38
 #> 6 Jill    F     experiment_1    36
-#> # ... with 3 more rows
+#> # … with 3 more rows
 ```
 
 
@@ -155,6 +155,8 @@ To select 3 columns and rename *subject* to *SUBJ* and put liik as the 1st col:
 
 ```r
 select(iris, liik = Species, Sepal.Length, Sepal.Width) %>% dplyr::as_data_frame()
+#> Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
+#> This warning is displayed once per session.
 #> # A tibble: 150 x 3
 #>   liik   Sepal.Length Sepal.Width
 #>   <fct>         <dbl>       <dbl>
@@ -164,7 +166,7 @@ select(iris, liik = Species, Sepal.Length, Sepal.Width) %>% dplyr::as_data_frame
 #> 4 setosa          4.6         3.1
 #> 5 setosa          5           3.6
 #> 6 setosa          5.4         3.9
-#> # ... with 144 more rows
+#> # … with 144 more rows
 ```
 
 
@@ -200,7 +202,7 @@ select(iris, starts_with("Petal"))
 #> 4          1.5         0.2
 #> 5          1.4         0.2
 #> 6          1.7         0.4
-#> # ... with 144 more rows
+#> # … with 144 more rows
 select(iris, ends_with("Width"))
 #> # A tibble: 150 x 2
 #>   Sepal.Width Petal.Width
@@ -211,7 +213,7 @@ select(iris, ends_with("Width"))
 #> 4         3.1         0.2
 #> 5         3.6         0.2
 #> 6         3.9         0.4
-#> # ... with 144 more rows
+#> # … with 144 more rows
 
 # Move Species variable to the front
 select(iris, Species, everything())
@@ -224,33 +226,33 @@ select(iris, Species, everything())
 #> 4 setosa           4.6         3.1          1.5
 #> 5 setosa           5           3.6          1.4
 #> 6 setosa           5.4         3.9          1.7
-#> # ... with 144 more rows, and 1 more variable:
+#> # … with 144 more rows, and 1 more variable:
 #> #   Petal.Width <dbl>
 
 dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>      V9    V8    V5     V2     V6
-#>   <dbl> <dbl> <dbl>  <dbl>  <dbl>
-#> 1 0.955 0.706 0.322 0.748  0.322 
-#> 2 0.585 1.000 0.416 0.809  0.443 
-#> 3 0.650 0.880 0.972 0.0831 0.387 
-#> 4 0.660 0.607 0.718 0.0424 0.0306
-#> 5 0.638 0.429 0.453 0.498  0.825 
-#> 6 0.774 0.769 0.110 0.545  0.0281
-#> # ... with 4 more rows
+#>      V9    V8    V5    V2    V6
+#>   <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1 0.244 0.826 0.127 0.525 0.452
+#> 2 0.391 0.926 0.174 0.210 0.885
+#> 3 0.221 0.155 0.980 0.123 0.750
+#> 4 0.804 0.732 0.143 0.426 0.751
+#> 5 0.782 0.875 0.486 0.438 0.486
+#> 6 0.109 0.921 0.598 0.813 0.458
+#> # … with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>      V9    V8     V7     V6
-#>   <dbl> <dbl>  <dbl>  <dbl>
-#> 1 0.955 0.706 0.0935 0.322 
-#> 2 0.585 1.000 0.607  0.443 
-#> 3 0.650 0.880 0.549  0.387 
-#> 4 0.660 0.607 0.165  0.0306
-#> 5 0.638 0.429 0.479  0.825 
-#> 6 0.774 0.769 0.295  0.0281
-#> # ... with 4 more rows
+#>      V9    V8     V7    V6
+#>   <dbl> <dbl>  <dbl> <dbl>
+#> 1 0.244 0.826 0.797  0.452
+#> 2 0.391 0.926 0.0432 0.885
+#> 3 0.221 0.155 0.829  0.750
+#> 4 0.804 0.732 0.182  0.751
+#> 5 0.782 0.875 0.885  0.486
+#> 6 0.109 0.921 0.987  0.458
+#> # … with 4 more rows
 
 # Drop variables with -
 select(iris, -starts_with("Petal"))
@@ -263,7 +265,7 @@ select(iris, -starts_with("Petal"))
 #> 4          4.6         3.1 setosa 
 #> 5          5           3.6 setosa 
 #> 6          5.4         3.9 setosa 
-#> # ... with 144 more rows
+#> # … with 144 more rows
 
 # Renaming -----------------------------------------
 # select() keeps only the variables you specify
@@ -278,7 +280,7 @@ rename(iris, petal_length = Petal.Length)
 #> 4          4.6         3.1          1.5         0.2
 #> 5          5           3.6          1.4         0.2
 #> 6          5.4         3.9          1.7         0.4
-#> # ... with 144 more rows, and 1 more variable:
+#> # … with 144 more rows, and 1 more variable:
 #> #   Species <fct>
 ```
 
@@ -296,7 +298,7 @@ filter(iris, Species=="setosa" & Sepal.Length < 4.5)
 #> 2          4.3         3            1.1         0.1
 #> 3          4.4         3            1.3         0.2
 #> 4          4.4         3.2          1.3         0.2
-#> # ... with 1 more variable: Species <fct>
+#> # … with 1 more variable: Species <fct>
 ```
 
 Keep rows in Iris that have Species level "setosa" **or** Sepal.Length value <4.5.
@@ -312,7 +314,7 @@ filter(iris, Species=="setosa" | Sepal.Length < 4.5)
 #> 4          4.6         3.1          1.5         0.2
 #> 5          5           3.6          1.4         0.2
 #> 6          5.4         3.9          1.7         0.4
-#> # ... with 44 more rows, and 1 more variable:
+#> # … with 44 more rows, and 1 more variable:
 #> #   Species <fct>
 ```
 
@@ -330,7 +332,7 @@ filter(iris, Species !="setosa" | Sepal.Length < 4.5)
 #> 4          4.4         3.2          1.3         0.2
 #> 5          7           3.2          4.7         1.4
 #> 6          6.4         3.2          4.5         1.5
-#> # ... with 98 more rows, and 1 more variable:
+#> # … with 98 more rows, and 1 more variable:
 #> #   Species <fct>
 ```
 
@@ -357,7 +359,7 @@ filter(iris, str_detect(Species, "^v"))
 #> 4          5.5         2.3          4           1.3
 #> 5          6.5         2.8          4.6         1.5
 #> 6          5.7         2.8          4.5         1.3
-#> # ... with 94 more rows, and 1 more variable:
+#> # … with 94 more rows, and 1 more variable:
 #> #   Species <fct>
 ```
 
@@ -434,7 +436,7 @@ mutate(iris_grouped,
 #> 4          4.6         3.1          1.5         0.2
 #> 5          5           3.6          1.4         0.2
 #> 6          5.4         3.9          1.7         0.4
-#> # ... with 144 more rows, and 3 more variables:
+#> # … with 144 more rows, and 3 more variables:
 #> #   Species <fct>, MEAN <dbl>, SD <dbl>
 ```
 
@@ -470,7 +472,7 @@ mutate(dat_lng, log_value = log(value))
 #> 4 Tim     M     experiment_1    34      3.53
 #> 5 Ann     F     experiment_1    38      3.64
 #> 6 Jill    F     experiment_1    36      3.58
-#> # ... with 3 more rows
+#> # … with 3 more rows
 ```
 
 Sama transmute() kasutades. Me säilitame lisaks "subject" veeru ja säilitame ning nimetame ümber "sex" veeru.
@@ -486,7 +488,7 @@ transmute(dat_lng, subject, gender = sex, log_value = log(value))
 #> 4 Tim     M           3.53
 #> 5 Ann     F           3.64
 #> 6 Jill    F           3.58
-#> # ... with 3 more rows
+#> # … with 3 more rows
 ```
 
 Selekteerime veerud "year" kuni "day", veerud, mille nimed lõppevad stringiga "delay", veerud "distance" ja "air_time". Seejärel loome uue veerud "gain" (kasutades selleks arr_delay ja dep_delay andmeid rea kaupa), "hours" (air_time jagatud konstandiga) ja "gain_per_hour":
@@ -521,7 +523,7 @@ group_by(dat_lng, sex) %>%
 #> 4 Tim     M     experiment_1    34      1.05    3.94
 #> 5 Ann     F     experiment_1    38      1.03    6.70
 #> 6 Jill    F     experiment_1    36      0.977   6.35
-#> # ... with 3 more rows
+#> # … with 3 more rows
 ```
 
 Võrdluseks ilma grupeerimata olukord, kus konstandil alati sama väärtus:
@@ -539,7 +541,7 @@ mutate(dat_lng,
 #> 4 Tim     M     experiment_1    34      0.962   5.14
 #> 5 Ann     F     experiment_1    38      1.08    5.75
 #> 6 Jill    F     experiment_1    36      1.02    5.44
-#> # ... with 3 more rows
+#> # … with 3 more rows
 ```
 
 #### kahest veerust kolmanda tegemine nii, et NA-d esimeses veerus asendatakse numbritega teisest
@@ -602,12 +604,12 @@ head(a)
 #> # A tibble: 6 x 3
 #>    gene  value indeks
 #>   <int>  <dbl> <chr> 
-#> 1     1 0.0807 E     
-#> 2     1 1.22   E     
-#> 3     1 0.656  E     
-#> 4     1 0.0888 C     
-#> 5     1 0.402  C     
-#> 6     1 0.949  C
+#> 1     1  1.36  E     
+#> 2     1 -1.39  E     
+#> 3     1 -0.590 E     
+#> 4     1  0.866 C     
+#> 5     1 -0.340 C     
+#> 6     1 -0.827 C
 ```
 
 
@@ -616,11 +618,11 @@ a %>% group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 #> # A tibble: 5 x 2
 #>    gene     p
 #>   <int> <dbl>
-#> 1     1 0.700
-#> 2     2 0.195
-#> 3     3 0.741
-#> 4     4 0.152
-#> 5     5 0.487
+#> 1     1 0.920
+#> 2     2 0.998
+#> 3     3 0.206
+#> 4     4 0.478
+#> 5     5 0.166
 ```
 
 
@@ -678,16 +680,16 @@ Aga te võite eksplitsiitselt ette anda separaatori sep = "". sep = 2 tähendab 
 (dat <- tibble(index = c(1, 2), 
                taxon = c("Procaryota; Bacteria; Alpha-Proteobacteria; Escharichia", "Eukaryota; Chordata")))
 #> # A tibble: 2 x 2
-#>   index taxon                                         
-#>   <dbl> <chr>                                         
-#> 1     1 Procaryota; Bacteria; Alpha-Proteobacteria; E…
+#>   index taxon                                          
+#>   <dbl> <chr>                                          
+#> 1     1 Procaryota; Bacteria; Alpha-Proteobacteria; Es…
 #> 2     2 Eukaryota; Chordata
 (d1 <- dat %>% separate(taxon, c('riik', 'hmk', "klass", "perekond"), sep = '; ', extra = "merge", fill = "right")) 
 #> # A tibble: 2 x 5
-#>   index riik      hmk      klass            perekond  
-#>   <dbl> <chr>     <chr>    <chr>            <chr>     
-#> 1     1 Procaryo… Bacteria Alpha-Proteobac… Escharich…
-#> 2     2 Eukaryota Chordata <NA>             <NA>
+#>   index riik       hmk     klass             perekond  
+#>   <dbl> <chr>      <chr>   <chr>             <chr>     
+#> 1     1 Procaryota Bacter… Alpha-Proteobact… Escharich…
+#> 2     2 Eukaryota  Chorda… <NA>              <NA>
 ```
 
 
@@ -794,7 +796,7 @@ gss_cat #tibble, mille veerg "race" on faktor.
 #> 4  2000 Never …    39 White Not ap… Ind,ne… Orth… Not …
 #> 5  2000 Divorc…    25 White Not ap… Not st… None  Not …
 #> 6  2000 Married    25 White $20000… Strong… Prot… Sout…
-#> # ... with 2.148e+04 more rows, and 1 more variable:
+#> # … with 2.148e+04 more rows, and 1 more variable:
 #> #   tvhours <int>
 gss_cat %>% count(race)
 #> # A tibble: 3 x 2
@@ -843,7 +845,7 @@ gss_cat %>% count(partyid)
 #> 4 Strong republican   2314
 #> 5 Not str republican  3032
 #> 6 Ind,near rep        1791
-#> # ... with 4 more rows
+#> # … with 4 more rows
 gss_cat %>%
   mutate(partyid = fct_recode(partyid,
                               "Republican, strong"    = "Strong republican",
@@ -866,7 +868,7 @@ gss_cat %>%
 #> 4 Independent, near rep  1791
 #> 5 Independent            4119
 #> 6 Independent, near dem  2499
-#> # ... with 2 more rows
+#> # … with 2 more rows
 ```
 
 `fct_recode()` ei puuduta neid tasemeid, mida selle argumendis ei mainita. 
