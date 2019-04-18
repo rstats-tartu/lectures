@@ -813,7 +813,7 @@ Seda plotti kasuta a) kui iga muutja kohta on üks andmepunkt või b) kui soovid
 
 >Sageli lahendatakse sarnased ülesanded tulpdiagrammidega, mis ei ole aga üldiselt hea mõte, sest tulpdiagrammid juhivad asjatult tähelepanu tulpadele endile, pigem kui nende otstele, mis tegelikult andmete keskmist kajastavad. Kuna inimese aju tahab võrrelda tulpade kõrgusi suhtelistes, mitte absoluutsetes ühikutes (kui tulp A on 30% kõrgem kui tulp B, siis me näeme efekti suurust, mis on u 1/3), peavad tulbad algama mingilt oodatavalt baastasemelt (tavaliselt nullist). See aga võib muuta raskeks huvitavate efektide märkamise, kui need on protsentuaalselt väikesed. Näiteks 5%-ne CO2 taseme tõus atmosfääris on teaduslikult väga oluline, aga tulpdiagrammi korrektselt kasutades tuleb vaevu graafikult välja.
 
-Kõigepealt plottime, mitu korda esinevad diamond tabelis erinevate faktormuutuja clarity tasemetega teemandid (clarity igale tasemele vastab üks number -- selle clarity-ga teemantite arv). 
+Kõigepealt plotime, mitu korda esinevad *diamonds* tabelis erinevate faktormuutuja *clarity* tasemetega teemandid (*clarity* igale tasemele vastab üks number -- selle *clarity*-ga teemantite arv). 
 
 ```{r}
 dd <- diamonds %>% 
@@ -831,9 +831,9 @@ dd %>%
   theme_bw()
 ```
 
-Graafiku loetavuse huvides on mõistlik on Cleveland plotil Y- telg sorteerida väärtuste järgi.
+Graafiku loetavuse huvides on mõistlik Y- telg sorteerida väärtuste järgi.
 
-Järgmisel joonisel on näha irise tabeli Sepal length veeru keskmised koos 50% ja 95% usaldusintervallidega. Usaldusintervallid annavad hinnangu meie ebakindlusele keskväärtuse (mitte näiteks algandmete) paiknemise kohta, arvestades meie valimi suurust ja sellest tulenevat valimiviga. 50% CI tähendab, et me oleme täpselt sama vähe üllatunud leides tõese väärtuse väljaspoolt intervalli, kui leides selle intervalli seest. 95% CI tähendab, et me oleme mõõdukalt veendunud, et tõene väärtus asub intervallis (aga me arvestame siiski, et ühel juhul 20-st ta ei tee seda). **NB! Mõlemad tõlgendused eeldavad, et meie andmetes esinev juhuslik varieeruvus on palju suurem kui seal leiduv suunatud varieeruvus (ehk bias).**  
+Järgmisel joonisel on näha *iris* tabeli *Sepal length* veeru keskmised koos 50% ja 95% usaldusintervallidega. Usaldusintervallid annavad hinnangu meie ebakindlusele keskväärtuse (mitte näiteks algandmete) paiknemise kohta, arvestades meie valimi suurust ja sellest tulenevat valimiviga. 50% CI tähendab, et me oleme täpselt sama vähe üllatunud leides tõese väärtuse väljaspoolt intervalli, kui leides selle intervalli seest. 95% CI tähendab, et me oleme mõõdukalt veendunud, et tõene väärtus asub intervallis (aga me arvestame siiski, et ühel juhul 20-st ta ei tee seda). **NB! Need tõlgendused eeldavad, et meie andmetes esinev juhuslik varieeruvus on palju suurem kui seal leiduv suunatud varieeruvus (ehk bias).**  
 
 Kasutame Publish::ci.mean(), et arvutada usaldusintervallid (antud juhul 10% CI)
 ```{r}
@@ -904,7 +904,7 @@ Kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, s
 
 ```{r echo=FALSE}
 tibble(CI_percentage = c(50, 75, 90, 95, 97, 99, 99.9), 
-       nr_of_SEMs = c(0.675, 1.15, 1.645, 1.96, 2.17, 2.575, 3.291))
+       nr_of_SEMs = c(0.675, 1.15, 1.645, 1.96, 2.17, 2.575, 3.291)) %>% knitr::kable()
 ```
 
 SEM on standardviga, mille arvutame jagades valimi standardhälbe ruutjuurega valimi suurusest N. 
