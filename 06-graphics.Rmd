@@ -994,7 +994,7 @@ ggplot(iris, aes(x=Sepal.Length)) + geom_histogram(breaks= seq(4, 8, by=0.5), co
 
 Tavaliselt on mõistlik määrata histogrammi binnide laius ja asukoht `breaks` argumeniga. On olemas ka alternatiivsed argumendid `bins`, mis annab binnide arvu, ja `binwidth`, mis annab binni laiuse, aga ohutum on kasutada `breaks`-i. Vt ka geom_boxplot() funktsiooni helpi.
 
-Järnevalt genereerime ühtlase jaotuse 0 ja 1 vahel ning plotime selle kahel histogrammil, millest esimene (halli taustaga) kasutab `bins` argumenti ja teine (sinine) kasutab `breaks` argumenti. Pane tähele, et tulemus on küllaltki erinev ja et `breaks` argument töötab korrektselt.
+Järnevalt genereerime ühtlase jaotuse 0 ja 1 vahel ning plotime selle kahel histogrammil, millest esimene (halli taustaga) kasutab `bins` argumenti ja teine (sinine) kasutab `breaks` argumenti. 
 ```{r}
 set.seed(12)
 a1 <- tibble(a=runif(200))
@@ -1004,7 +1004,7 @@ ggplot(a1, aes(a)) +
                  color= "navyblue", alpha=0.5, fill=NA)
 ```
 
-Meil on 6 väärtust alla 0.05 (1. bin) ja 8 väärtust üle 0.95 (20. bin), mis on korrektselt kajastatud ainult `bins` argumentdiga histogrammil.
+Pane tähele, et tulemus on küllaltki erinev ja et `breaks` argument töötab korrektselt. Nagu järgnev koodijupp näitab, on meil on 6 väärtust alla 0.05 (1. bin) ja 8 väärtust üle 0.95 (20. bin), mis on korrektselt kajastatud ainult `breaks` argumentdiga histogrammil.
 ```{r}
 a1 %>% filter(a<0.05) %>% nrow()
 a1 %>% filter(a>0.95) %>% nrow()
