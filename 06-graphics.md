@@ -1,4 +1,9 @@
 
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 
 # Graafilised lahendused
 
@@ -1978,7 +1983,7 @@ Kõigepealt demonstreerime siiski olukorda, kus meie andmed on normaaljaotusega 
 ```r
 library(car)
 qqPlot(rnorm(100), distribution = "lnorm")
-#> [1] 51 21
+#> [1] 50 20
 ```
 
 <img src="06-graphics_files/figure-html/unnamed-chunk-133-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -1990,7 +1995,7 @@ Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 par(mfrow = c(1, 2))
 plot(dnorm(seq(0,6, length.out = 100), 3, 1), main = "normal")
 qqPlot(rnorm(100, 3, 1), main = "normal vs normal") #default on vrdls normaaljaotusega.
-#> [1] 67  5
+#> [1] 66  4
 par(mfrow=c(1,1))
 ```
 
@@ -2001,7 +2006,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(dlnorm(seq(0,4, length.out = 100)), main = "log normal") 
 qqPlot(rlnorm(100), main = "log normal vs normal")
-#> [1]  1 55
+#> [1] 54 19
 par(mfrow=c(1,1))
 ```
 
@@ -2013,7 +2018,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(dt(seq(-4,4, length.out = 100), df=2), main = "student t") 
 qqPlot(rt(100, df=2), main = "students t vs normal")
-#> [1]  9 24
+#> [1] 23 20
 par(mfrow=c(1,1))
 ```
 
@@ -2024,7 +2029,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(c(dnorm(seq(-3,6, length.out = 50)), dnorm(seq(-3,6, length.out = 50), 4, 1)), main = "2 peaked normal") 
 qqPlot(c(rnorm(50), rnorm(50, 4,1)), main = "two peaked normal vs normal")
-#> [1] 89 34
+#> [1] 32 48
 par(mfrow=c(1,1))
 ```
 
@@ -2035,7 +2040,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(dunif(seq(0, 1, length=100))) 
 qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotusega.
-#> [1]  5 97
+#> [1] 92 55
 par(mfrow=c(1,1))
 ```
 
@@ -2046,7 +2051,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(dchisq(seq(0, 2, length=100), df=2)) 
 qqPlot(rchisq(100, df=2), main = "chi square vs normal")
-#> [1] 29 31
+#> [1] 26 28
 par(mfrow=c(1,1))
 ```
 
@@ -2057,7 +2062,7 @@ par(mfrow=c(1,1))
 par(mfrow = c(1, 2))
 plot(dbeta(seq(0, 1, length=100), 2, 2)) 
 qqPlot(rbeta(100, 2, 2), main = "beta vs normal")
-#> [1] 41 85
+#> [1] 100  38
 par(mfrow=c(1,1))
 ```
 
@@ -2067,7 +2072,7 @@ par(mfrow=c(1,1))
 Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 
 ```
-#> [1]  3 78
+#> [1] 75 42
 ```
 
 <img src="06-graphics_files/figure-html/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" />
@@ -2081,7 +2086,7 @@ y <- rexp(100)
 par(mfrow=c(1,2))
 plot(dexp(seq(0, 5, length=100)), main="exponential distr.") 
 qqPlot(y, main = "exponential vs normal")
-#> [1] 19 36
+#> [1] 15 32
 par(mfrow=c(1,1))
 ```
 
@@ -2156,9 +2161,9 @@ iris$cluster <- a$kmeans$cluster
 table(iris$Species, iris$cluster)
 #>             
 #>               1  2  3
-#>   setosa      0 33 17
-#>   versicolor 46  0  4
-#>   virginica  50  0  0
+#>   setosa     33 17  0
+#>   versicolor  0  4 46
+#>   virginica   0  0 50
 ```
 
 Ja sama graafiliselt:

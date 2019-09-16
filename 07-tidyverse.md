@@ -233,25 +233,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>      V9    V8     V5     V2    V6
-#>   <dbl> <dbl>  <dbl>  <dbl> <dbl>
-#> 1 0.634 0.388 0.0579 0.730  0.397
-#> 2 0.921 0.486 0.637  0.270  0.265
-#> 3 0.465 0.182 0.0524 0.979  0.587
-#> 4 0.935 0.792 0.595  0.0526 0.998
-#> 5 0.206 0.784 0.333  0.0478 0.170
-#> 6 0.756 0.897 0.687  0.261  0.125
+#>       V9     V8     V5    V2     V6
+#>    <dbl>  <dbl>  <dbl> <dbl>  <dbl>
+#> 1 0.945  0.598  0.493  0.535 0.151 
+#> 2 0.0422 0.427  0.474  0.758 0.355 
+#> 3 0.202  0.629  0.128  0.250 0.351 
+#> 4 0.0988 0.482  0.0417 0.289 0.0444
+#> 5 0.717  0.0310 0.335  0.353 0.296 
+#> 6 0.733  0.321  0.0454 0.951 0.461 
 #> # … with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>      V9    V8     V7    V6
-#>   <dbl> <dbl>  <dbl> <dbl>
-#> 1 0.634 0.388 0.954  0.397
-#> 2 0.921 0.486 0.0628 0.265
-#> 3 0.465 0.182 0.998  0.587
-#> 4 0.935 0.792 0.447  0.998
-#> 5 0.206 0.784 0.503  0.170
-#> 6 0.756 0.897 0.207  0.125
+#>       V9     V8     V7     V6
+#>    <dbl>  <dbl>  <dbl>  <dbl>
+#> 1 0.945  0.598  0.361  0.151 
+#> 2 0.0422 0.427  0.251  0.355 
+#> 3 0.202  0.629  0.0570 0.351 
+#> 4 0.0988 0.482  0.0520 0.0444
+#> 5 0.717  0.0310 0.357  0.296 
+#> 6 0.733  0.321  0.599  0.461 
 #> # … with 4 more rows
 
 # Drop variables with -
@@ -604,25 +604,25 @@ head(a)
 #> # A tibble: 6 x 3
 #>    gene  value indeks
 #>   <int>  <dbl> <chr> 
-#> 1     1  0.786 E     
-#> 2     1 -0.879 E     
-#> 3     1  0.856 E     
-#> 4     1 -0.851 C     
-#> 5     1 -0.174 C     
-#> 6     1  0.669 C
+#> 1     1  0.804 E     
+#> 2     1  0.301 E     
+#> 3     1  0.324 E     
+#> 4     1 -0.517 C     
+#> 5     1 -0.437 C     
+#> 6     1 -0.193 C
 ```
 
 
 ```r
 a %>% group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 #> # A tibble: 5 x 2
-#>    gene     p
-#>   <int> <dbl>
-#> 1     1 0.632
-#> 2     2 0.657
-#> 3     3 0.137
-#> 4     4 0.566
-#> 5     5 0.237
+#>    gene      p
+#>   <int>  <dbl>
+#> 1     1 0.0171
+#> 2     2 0.195 
+#> 3     3 0.818 
+#> 4     4 0.403 
+#> 5     5 0.222
 ```
 
 
@@ -722,7 +722,11 @@ Kuidas käituda siis, kui teil on veerus üks või mitu sissekannet, näiteks ko
 ```r
 df1 <- tibble(a = c("w", "w, e, f", "g"), b=1:3)
 df2 <- df1 %>% mutate(pikk_a = str_split(a, ",")) %>% select(pikk_a) %>% unnest()
+#> Warning: `cols` is now required.
+#> Please use `cols = c(pikk_a)`
 df3 <- df1 %>% mutate(pikk_a = str_split(a, ",")) %>% unnest()
+#> Warning: `cols` is now required.
+#> Please use `cols = c(pikk_a)`
 ```
 
 Pane tähele, et df3 on tabel, kus b veeru elemendid on duplitseeritud nii, et nad kataksid uue pikema pikk_a veeru vastavad elemndid. df2 on andmeraam, mis sisaldab ainult üht veergu.

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7 Lihtne töö Andmeraamidega | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7 Lihtne töö Andmeraamidega | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Ülo Maiväli &amp; Taavi Päll" />
 
 
-<meta name="date" content="2019-04-18" />
+<meta name="date" content="2019-09-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="r-i-toopohimote.html">
-<link rel="next" href="map-kordame-sama-operatsiooni-igale-listi-liikmele.html">
+<link rel="prev" href="r-i-toopohimote.html"/>
+<link rel="next" href="map-kordame-sama-operatsiooni-igale-listi-liikmele.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -426,7 +426,7 @@ fruits
 <span class="co">#&gt; 1 maxima      1       2 &lt;chr [26]&gt;</span>
 <span class="co">#&gt; 2 tesco       4      32 &lt;dbl [10]&gt;</span>
 <span class="co">#&gt; 3 konsum    132      -5 &lt;NULL&gt;    </span>
-<span class="co">#&gt; 4 lidl       43      NA &lt;S3: lm&gt;</span></code></pre></div>
+<span class="co">#&gt; 4 lidl       43      NA &lt;lm&gt;</span></code></pre></div>
 <p>Proovi ise:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">add_column</span>()</code></pre></div>
 <p>Eelnevaid verbe ei kasuta me just sageli, sest tavaliselt loeme andmed sisse väljaspoolt R-i. Aga väga kasulikud on järgmised käsud:</p>
@@ -441,7 +441,7 @@ fruits
 <span class="co">#&gt; 1 maxima      1       2 &lt;chr [26]&gt;</span>
 <span class="co">#&gt; 2 tesco       4      32 &lt;dbl [10]&gt;</span>
 <span class="co">#&gt; 3 konsum    132      -5 &lt;NULL&gt;    </span>
-<span class="co">#&gt; 4 lidl      333      NA &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 4 lidl      333      NA &lt;lm&gt;</span>
 fruits<span class="op">$</span>shop[fruits<span class="op">$</span>shop<span class="op">==</span><span class="st">&quot;tesco&quot;</span>] &lt;-<span class="st"> &quot;TESCO&quot;</span>
 fruits
 <span class="co">#&gt; # A tibble: 4 x 4</span>
@@ -450,7 +450,7 @@ fruits
 <span class="co">#&gt; 1 maxima      1       2 &lt;chr [26]&gt;</span>
 <span class="co">#&gt; 2 TESCO       4      32 &lt;dbl [10]&gt;</span>
 <span class="co">#&gt; 3 konsum    132      -5 &lt;NULL&gt;    </span>
-<span class="co">#&gt; 4 lidl      333      NA &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 4 lidl      333      NA &lt;lm&gt;</span>
 fruits<span class="op">$</span>apples[fruits<span class="op">$</span>apples<span class="op">&gt;</span><span class="dv">100</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
 fruits
 <span class="co">#&gt; # A tibble: 4 x 4</span>
@@ -459,7 +459,7 @@ fruits
 <span class="co">#&gt; 1 maxima      1       2 &lt;chr [26]&gt;</span>
 <span class="co">#&gt; 2 TESCO       4      32 &lt;dbl [10]&gt;</span>
 <span class="co">#&gt; 3 konsum     NA      -5 &lt;NULL&gt;    </span>
-<span class="co">#&gt; 4 lidl       NA      NA &lt;S3: lm&gt;</span></code></pre></div>
+<span class="co">#&gt; 4 lidl       NA      NA &lt;lm&gt;</span></code></pre></div>
 <p>Viskame välja duplikaatread, aga ainult need kus veerg nimega col1 sisaldab identseid väärtusi (mitmest identse väärtusega reast jääb alles ainult esimene)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">distinct</span>(dat, col1, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)
 <span class="co"># kõikide col vastu</span>
@@ -807,8 +807,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

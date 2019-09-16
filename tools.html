@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Tarkvaratööriistad | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Tarkvaratööriistad | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Ülo Maiväli &amp; Taavi Päll" />
 
 
-<meta name="date" content="2019-04-18" />
+<meta name="date" content="2019-09-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="andmeanaluus.html">
-<link rel="next" href="calc.html">
+<link rel="prev" href="andmeanaluus.html"/>
+<link rel="next" href="calc.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -371,7 +371,7 @@ Joonis 4.1: RStudio konsoolis on neli akent. Üleval vasakul on sinu poolt nimeg
 </div>
 <div id="libs" class="section level2">
 <h2><span class="header-section-number">4.6</span> Pakettide installeerimine</h2>
-<p>R <em>library</em>-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. <strong>R baaspakett sisaldab juba mitmeid funktsioone.</strong> Kõige esimene sõnum <code>sum()</code> help lehel on “sum {base}”, mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda. Näiteks “base” raamatukogu versioon 3.5.3 sisaldab 455 funktsiooni. Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist <a href="https://cran.r-project.org">CRAN</a> alla laadida ja installeerida.</p>
+<p>R <em>library</em>-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. <strong>R baaspakett sisaldab juba mitmeid funktsioone.</strong> Kõige esimene sõnum <code>sum()</code> help lehel on “sum {base}”, mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka. Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda. Näiteks “base” raamatukogu versioon 3.6.1 sisaldab 457 funktsiooni. Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist <a href="https://cran.r-project.org">CRAN</a> alla laadida ja installeerida.</p>
 <p>Selleks, et installeerida pakett, sisesta järgnev käsurida R konsooli:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## eg use &quot;ggplot2&quot; as packagename
 <span class="kw">install.packages</span>(<span class="st">&quot;packagename&quot;</span>)</code></pre></div>
@@ -390,7 +390,7 @@ Joonis 4.2: RStudio ‘Install Packages’ dialoogiaken.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Load library/package dplyr
 <span class="kw">library</span>(dplyr)</code></pre></div>
 <p><code>library(dplyr)</code> käsk teeb R sessioonis kasutatavaks kõik “dplyr” paketi funktsioonid.</p>
-<p>Näiteks “dplyr” pakett sisaldab 263 funktsiooni:</p>
+<p>Näiteks “dplyr” pakett sisaldab 267 funktsiooni:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 ## let&#39;s look at the head of package list
 <span class="kw">head</span>(<span class="kw">ls</span>(<span class="st">&quot;package:dplyr&quot;</span>), <span class="dv">20</span>)
@@ -399,8 +399,8 @@ Joonis 4.2: RStudio ‘Install Packages’ dialoogiaken.
 <span class="co">#&gt;  [7] &quot;add_tally_&quot;    &quot;all_equal&quot;     &quot;all_vars&quot;     </span>
 <span class="co">#&gt; [10] &quot;anti_join&quot;     &quot;any_vars&quot;      &quot;arrange&quot;      </span>
 <span class="co">#&gt; [13] &quot;arrange_&quot;      &quot;arrange_all&quot;   &quot;arrange_at&quot;   </span>
-<span class="co">#&gt; [16] &quot;arrange_if&quot;    &quot;as_data_frame&quot; &quot;as_tibble&quot;    </span>
-<span class="co">#&gt; [19] &quot;as.tbl&quot;        &quot;as.tbl_cube&quot;</span></code></pre></div>
+<span class="co">#&gt; [16] &quot;arrange_if&quot;    &quot;as_data_frame&quot; &quot;as_label&quot;     </span>
+<span class="co">#&gt; [19] &quot;as_tibble&quot;     &quot;as.tbl&quot;</span></code></pre></div>
 <p>Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab <code>::</code> operaatorit kasutades kutsuda välja/importida funktsiooni spetsiifilisest paketist:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dplyr<span class="op">::</span><span class="kw">select</span>(df, my_var)</code></pre></div>
 <p>Sellisel kujul funktsioonide kasutamisel pole vaja imporditavat funktsiooni sisaldavat raamatukogu töökeskkonda laadida.</p>
@@ -529,8 +529,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

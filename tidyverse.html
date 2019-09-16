@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>14 Tidyverse | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
 
   <meta property="og:title" content="14 Tidyverse | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Ülo Maiväli &amp; Taavi Päll" />
 
 
-<meta name="date" content="2019-04-18" />
+<meta name="date" content="2019-09-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="uldised-jooniste-printsiibid.html">
-<link rel="next" href="lisa-funktsioonid.html">
+<link rel="prev" href="uldised-jooniste-printsiibid.html"/>
+<link rel="next" href="lisa-funktsioonid.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -462,25 +462,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;      V9    V8     V5     V2    V6</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.634 0.388 0.0579 0.730  0.397</span>
-<span class="co">#&gt; 2 0.921 0.486 0.637  0.270  0.265</span>
-<span class="co">#&gt; 3 0.465 0.182 0.0524 0.979  0.587</span>
-<span class="co">#&gt; 4 0.935 0.792 0.595  0.0526 0.998</span>
-<span class="co">#&gt; 5 0.206 0.784 0.333  0.0478 0.170</span>
-<span class="co">#&gt; 6 0.756 0.897 0.687  0.261  0.125</span>
+<span class="co">#&gt;       V9     V8     V5    V2     V6</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.945  0.598  0.493  0.535 0.151 </span>
+<span class="co">#&gt; 2 0.0422 0.427  0.474  0.758 0.355 </span>
+<span class="co">#&gt; 3 0.202  0.629  0.128  0.250 0.351 </span>
+<span class="co">#&gt; 4 0.0988 0.482  0.0417 0.289 0.0444</span>
+<span class="co">#&gt; 5 0.717  0.0310 0.335  0.353 0.296 </span>
+<span class="co">#&gt; 6 0.733  0.321  0.0454 0.951 0.461 </span>
 <span class="co">#&gt; # … with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;      V9    V8     V7    V6</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.634 0.388 0.954  0.397</span>
-<span class="co">#&gt; 2 0.921 0.486 0.0628 0.265</span>
-<span class="co">#&gt; 3 0.465 0.182 0.998  0.587</span>
-<span class="co">#&gt; 4 0.935 0.792 0.447  0.998</span>
-<span class="co">#&gt; 5 0.206 0.784 0.503  0.170</span>
-<span class="co">#&gt; 6 0.756 0.897 0.207  0.125</span>
+<span class="co">#&gt;       V9     V8     V7     V6</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.945  0.598  0.361  0.151 </span>
+<span class="co">#&gt; 2 0.0422 0.427  0.251  0.355 </span>
+<span class="co">#&gt; 3 0.202  0.629  0.0570 0.351 </span>
+<span class="co">#&gt; 4 0.0988 0.482  0.0520 0.0444</span>
+<span class="co">#&gt; 5 0.717  0.0310 0.357  0.296 </span>
+<span class="co">#&gt; 6 0.733  0.321  0.599  0.461 </span>
 <span class="co">#&gt; # … with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
@@ -732,21 +732,21 @@ a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">
 <span class="co">#&gt; # A tibble: 6 x 3</span>
 <span class="co">#&gt;    gene  value indeks</span>
 <span class="co">#&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt; </span>
-<span class="co">#&gt; 1     1  0.786 E     </span>
-<span class="co">#&gt; 2     1 -0.879 E     </span>
-<span class="co">#&gt; 3     1  0.856 E     </span>
-<span class="co">#&gt; 4     1 -0.851 C     </span>
-<span class="co">#&gt; 5     1 -0.174 C     </span>
-<span class="co">#&gt; 6     1  0.669 C</span></code></pre></div>
+<span class="co">#&gt; 1     1  0.804 E     </span>
+<span class="co">#&gt; 2     1  0.301 E     </span>
+<span class="co">#&gt; 3     1  0.324 E     </span>
+<span class="co">#&gt; 4     1 -0.517 C     </span>
+<span class="co">#&gt; 5     1 -0.437 C     </span>
+<span class="co">#&gt; 6     1 -0.193 C</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p =</span> <span class="kw">t.test</span>(value<span class="op">~</span>indeks)<span class="op">$</span>p.value)
 <span class="co">#&gt; # A tibble: 5 x 2</span>
-<span class="co">#&gt;    gene     p</span>
-<span class="co">#&gt;   &lt;int&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1 0.632</span>
-<span class="co">#&gt; 2     2 0.657</span>
-<span class="co">#&gt; 3     3 0.137</span>
-<span class="co">#&gt; 4     4 0.566</span>
-<span class="co">#&gt; 5     5 0.237</span></code></pre></div>
+<span class="co">#&gt;    gene      p</span>
+<span class="co">#&gt;   &lt;int&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1     1 0.0171</span>
+<span class="co">#&gt; 2     2 0.195 </span>
+<span class="co">#&gt; 3     3 0.818 </span>
+<span class="co">#&gt; 4     4 0.403 </span>
+<span class="co">#&gt; 5     5 0.222</span></code></pre></div>
 </div>
 <div id="grupiviisiline-filtreerimine" class="section level4">
 <h4><span class="header-section-number">14.2.5.4</span> Grupiviisiline filtreerimine</h4>
@@ -813,7 +813,11 @@ a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">
 <p>Kuidas käituda siis, kui teil on veerus üks või mitu sissekannet, näiteks komadega eraldatud, ja te tahaksite need suruda mitte eraldi veergudesse (seda teeb separate()), vaid kõik ühte pikka veergu? Nüüd kasutame str_plit() ja unnest() funktsioone.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">a =</span> <span class="kw">c</span>(<span class="st">&quot;w&quot;</span>, <span class="st">&quot;w, e, f&quot;</span>, <span class="st">&quot;g&quot;</span>), <span class="dt">b=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)
 df2 &lt;-<span class="st"> </span>df1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">pikk_a =</span> <span class="kw">str_split</span>(a, <span class="st">&quot;,&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(pikk_a) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>()
-df3 &lt;-<span class="st"> </span>df1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">pikk_a =</span> <span class="kw">str_split</span>(a, <span class="st">&quot;,&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>()</code></pre></div>
+<span class="co">#&gt; Warning: `cols` is now required.</span>
+<span class="co">#&gt; Please use `cols = c(pikk_a)`</span>
+df3 &lt;-<span class="st"> </span>df1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">pikk_a =</span> <span class="kw">str_split</span>(a, <span class="st">&quot;,&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>()
+<span class="co">#&gt; Warning: `cols` is now required.</span>
+<span class="co">#&gt; Please use `cols = c(pikk_a)`</span></code></pre></div>
 <p>Pane tähele, et df3 on tabel, kus b veeru elemendid on duplitseeritud nii, et nad kataksid uue pikema pikk_a veeru vastavad elemndid. df2 on andmeraam, mis sisaldab ainult üht veergu.</p>
 </div>
 <div id="faktorid" class="section level2">
@@ -1074,8 +1078,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

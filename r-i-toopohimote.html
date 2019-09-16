@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 R-i tööpõhimõte | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 R-i tööpõhimõte | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Ülo Maiväli &amp; Taavi Päll" />
 
 
-<meta name="date" content="2019-04-18" />
+<meta name="date" content="2019-09-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="calc.html">
-<link rel="next" href="lihtne-too-andmeraamidega.html">
+<link rel="prev" href="calc.html"/>
+<link rel="next" href="lihtne-too-andmeraamidega.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -632,15 +632,15 @@ grandma &lt;-<span class="st"> &quot;your grandma on bongos&quot;</span>
 happy_list &lt;-<span class="st"> </span><span class="kw">list</span>(a, ab, model, grandma)
 happy_list
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 0.419 0.447 0.661 0.524 0.788</span>
+<span class="co">#&gt; [1] 0.1745 0.9913 0.1837 0.0817 0.1163</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt;       a       b</span>
-<span class="co">#&gt; 1 0.419 -1.8496</span>
-<span class="co">#&gt; 2 0.447 -0.2750</span>
-<span class="co">#&gt; 3 0.661 -1.4794</span>
-<span class="co">#&gt; 4 0.524  1.6425</span>
-<span class="co">#&gt; 5 0.788  0.0772</span>
+<span class="co">#&gt;        a      b</span>
+<span class="co">#&gt; 1 0.1745  0.684</span>
+<span class="co">#&gt; 2 0.9913  0.677</span>
+<span class="co">#&gt; 3 0.1837  0.363</span>
+<span class="co">#&gt; 4 0.0817  0.568</span>
+<span class="co">#&gt; 5 0.1163 -0.653</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; </span>
@@ -680,7 +680,7 @@ fruits
 <span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;    </span>
 <span class="co">#&gt; 1 maxima      1       2 &lt;chr [26]&gt;</span>
 <span class="co">#&gt; 2 tesco       4      32 &lt;dbl [10]&gt;</span>
-<span class="co">#&gt; 3 lidl       43      NA &lt;S3: lm&gt;</span></code></pre></div>
+<span class="co">#&gt; 3 lidl       43      NA &lt;lm&gt;</span></code></pre></div>
 <p>Siin ta on, ilusti meie workspace-s. Pange tähele viimast tulpa “vabakava”, mis sisaldab <em>character</em> vectorit, numbrilist vektorit ja lineaarse mudeli objekti.</p>
 <p>Listi juba nii lihtsalt data.frame-i ei pane:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfs &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">data.frame</span>(shop, apples, oranges, vabakava))
@@ -873,8 +873,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

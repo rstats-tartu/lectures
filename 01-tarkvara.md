@@ -106,7 +106,7 @@ Rohkem projekti pakkimise kohta loe värskest preprindist "Packaging data analyt
 
 R _library_-d ehk paketid sisaldavad ühte või enamat mingit kindlat operatsiooni läbi viivat funktsiooni. **R baaspakett sisaldab juba mitmeid funktsioone.** Kõige esimene sõnum `sum()` help lehel on "sum {base}", mis tähendab, et see funktsioon kuulub nn. baasfunktsioonide hulka.
 Need funktsioonid on alati kättesaadavad sest neid sisaldavad raamatukogud laetakse vaikimisi teie töökeskkonda.
-Näiteks "base" raamatukogu versioon       3.5.3 sisaldab 455 funktsiooni.
+Näiteks "base" raamatukogu versioon       3.6.1 sisaldab 457 funktsiooni.
 Enamasti on sarnaseid asju tegevad funktsioonid koondatud kokku raamatukogudesse ehk pakettidesse, mis tuleb eraldi R kesksest repositooriumist [CRAN](https://cran.r-project.org) alla laadida ja installeerida. 
 
 
@@ -139,7 +139,7 @@ library(dplyr)
 `library(dplyr)` käsk teeb R sessioonis kasutatavaks kõik "dplyr" paketi funktsioonid.
 
 
-Näiteks "dplyr" pakett sisaldab 263 funktsiooni:
+Näiteks "dplyr" pakett sisaldab 267 funktsiooni:
 
 
 ```r
@@ -151,8 +151,8 @@ head(ls("package:dplyr"), 20)
 #>  [7] "add_tally_"    "all_equal"     "all_vars"     
 #> [10] "anti_join"     "any_vars"      "arrange"      
 #> [13] "arrange_"      "arrange_all"   "arrange_at"   
-#> [16] "arrange_if"    "as_data_frame" "as_tibble"    
-#> [19] "as.tbl"        "as.tbl_cube"
+#> [16] "arrange_if"    "as_data_frame" "as_label"     
+#> [19] "as_tibble"     "as.tbl"
 ```
 
 Konfliktide korral eri pakettide sama nimega funktsioonide vahel saab `::` operaatorit kasutades kutsuda välja/importida funktsiooni spetsiifilisest paketist:

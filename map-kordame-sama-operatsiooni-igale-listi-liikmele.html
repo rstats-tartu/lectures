@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8 map() - kordame sama operatsiooni igale listi liikmele | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8 map() - kordame sama operatsiooni igale listi liikmele | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Ülo Maiväli &amp; Taavi Päll" />
 
 
-<meta name="date" content="2019-04-18" />
+<meta name="date" content="2019-09-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="lihtne-too-andmeraamidega.html">
-<link rel="next" href="regex.html">
+<link rel="prev" href="lihtne-too-andmeraamidega.html"/>
+<link rel="next" href="regex.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -291,26 +291,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">8</span> map() - kordame sama operatsiooni igale listi liikmele</h1>
 <p>Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda sellepärast, et formaalselt on list vektori tüüp (rekursiivne vektor), kuhu on võimalik elementidena panna mida iganes, k.a. teisi vektoreid. Enamus R-i funktsioone, mis töötavad lihtsate mitte-rekursiivsete vektoritega (ja df-dega), ei tööta listide peal.</p>
 <p>purrr::map() perekonna funktsioonid töötavad nii lihtsate vektorite kui listide peal. Need funktsioonid rakendavad kasutaja poolt ette antud funktsiooni järjest igale vektori elemendile. map() vajab 2 argumenti: vektor ja funktsioon, mida selle vektori elementidele rakendada. map() võtab sisse listi (vektori, data frame) ja väljastab listi (vektori, data frame). Seega saab seda hästi pipe-s rakendada.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">list1 &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)
-list1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(log) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(round)
-<span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 0</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [[4]]</span>
-<span class="co">#&gt; [1] 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [[5]]</span>
-<span class="co">#&gt; [1] 2</span></code></pre></div>
 <p>Kui tahad, map() anda funktsiooni lisaargumentidega, siis need eraldatakse komadega <code>map(list1, round, digits = 2)</code>.</p>
 <p>Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta <code>map_dbl()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">list1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map_dbl</span>(log) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>()
-<span class="co">#&gt; [1] 0 1 1 1 2</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">map</span>(rnorm, <span class="dt">n =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">map_dbl</span>(mean)
+<span class="co">#&gt;  [1] 1.03 2.16 3.22 4.15 4.45 6.28 6.94 7.87 8.92 9.98</span></code></pre></div>
 <p>map()-l on kokku 8 versiooni erinevate väljunditega.</p>
 <ul>
 <li><p>map() - list</p></li>
@@ -332,13 +318,13 @@ list1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ma
 )
 params <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="kw">pluck</span>(.x, <span class="dv">1</span>), <span class="dt">sd =</span> <span class="kw">pluck</span>(.x, <span class="dv">2</span>)))
 <span class="co">#&gt; $norm1</span>
-<span class="co">#&gt; [1]  0.149 -0.845  0.232 -0.171  0.511</span>
+<span class="co">#&gt; [1]  0.1823 -1.3502 -0.1663 -0.0349  0.1323</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $norm2</span>
-<span class="co">#&gt; [1]  0.835 -0.771  1.901  0.889  1.240</span>
+<span class="co">#&gt; [1]  2.3007  0.0116 -0.2482  0.8321  0.7228</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $norm3</span>
-<span class="co">#&gt; [1] 1.10 1.36 2.60 1.63 2.58</span></code></pre></div>
+<span class="co">#&gt; [1] 2.839 0.284 3.086 3.097 3.836</span></code></pre></div>
 <p><code>enframe()</code> konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value).</p>
 <div id="map2" class="section level3">
 <h3><span class="header-section-number">8.0.1</span> map2()</h3>
@@ -372,13 +358,13 @@ digits &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="d
 )
 parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pmap</span>(runif)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 0.128</span>
+<span class="co">#&gt; [1] 0.656</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 5.16 5.00</span>
+<span class="co">#&gt; [1] 5.79 5.28</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] 10.7 11.0 10.3</span></code></pre></div>
+<span class="co">#&gt; [1] 10.8 10.6 10.7</span></code></pre></div>
 <p>See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.</p>
 <p>Järgmine funktsioon rakendub suvalisele df-le rea kaupa ja arvutab igale reale näit sd. Aga selleks transponeerime read veergudeks ja rakendame tavalist map()-i.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmap &lt;-<span class="st"> </span><span class="cf">function</span> (.x, .f, ...) {
@@ -402,25 +388,25 @@ parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="k
 n &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">3</span>)
 <span class="kw">invoke_map</span>(functions, n)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1]  3.69  3.26  1.03 -1.06  1.75</span>
+<span class="co">#&gt; [1]  2.923558  4.117592  4.320870 -0.000297  4.029793</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 0.572 4.216</span>
+<span class="co">#&gt; [1] 0.808 3.531</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1]  0.416  4.615 -0.741</span></code></pre></div>
+<span class="co">#&gt; [1]  0.6346  1.0732 -0.0523</span></code></pre></div>
 <p>anname sisse esimese argumendi (100) igasse funktsiooni</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">functions &lt;-<span class="st"> </span><span class="kw">list</span>(rnorm, rlnorm, rcauchy)
 n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 <span class="kw">invoke_map</span>(functions, n, <span class="dv">100</span>)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 100.8 100.9  98.8 100.6 101.5</span>
+<span class="co">#&gt; [1] 101 101 100 102 100</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 1.69e+43 2.97e+42</span>
+<span class="co">#&gt; [1] 1.6e+43 4.1e+43</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1]  98.4 101.4 103.8</span></code></pre></div>
+<span class="co">#&gt; [1] 101 100 102</span></code></pre></div>
 <p>mitu argumenti igale funktsioonile:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">args &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">norm =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>), 
              <span class="dt">lnorm =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dt">meanlog =</span> <span class="dv">1</span>, <span class="dt">sdlog =</span> <span class="dv">2</span>),
@@ -428,13 +414,13 @@ n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</sp
 
 <span class="kw">invoke_map</span>(functions, args)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1]  1.044  0.653 -0.179</span>
+<span class="co">#&gt; [1] 2.199 0.689 0.873</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1]  7.08 45.50</span>
+<span class="co">#&gt; [1] 27.06  4.05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] -63.1</span></code></pre></div>
+<span class="co">#&gt; [1] -30.7</span></code></pre></div>
 <div id="map-shortcuts" class="section level4">
 <h4><span class="header-section-number">8.0.3.1</span> map shortcuts</h4>
 <p><code>pluck()</code> võtab listist välja elemendi (vektori, data frame jms) nii nagu see on (mitte listina).</p>
@@ -474,14 +460,15 @@ n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</sp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gapminder)
 (nested_gapminder &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nest</span>())
 <span class="co">#&gt; # A tibble: 142 x 2</span>
-<span class="co">#&gt;   country     data             </span>
-<span class="co">#&gt;   &lt;fct&gt;       &lt;list&gt;           </span>
-<span class="co">#&gt; 1 Afghanistan &lt;tibble [12 × 5]&gt;</span>
-<span class="co">#&gt; 2 Albania     &lt;tibble [12 × 5]&gt;</span>
-<span class="co">#&gt; 3 Algeria     &lt;tibble [12 × 5]&gt;</span>
-<span class="co">#&gt; 4 Angola      &lt;tibble [12 × 5]&gt;</span>
-<span class="co">#&gt; 5 Argentina   &lt;tibble [12 × 5]&gt;</span>
-<span class="co">#&gt; 6 Australia   &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; # Groups:   country [142]</span>
+<span class="co">#&gt;   country               data</span>
+<span class="co">#&gt;   &lt;fct&gt;       &lt;list&lt;df[,5]&gt;&gt;</span>
+<span class="co">#&gt; 1 Afghanistan       [12 × 5]</span>
+<span class="co">#&gt; 2 Albania           [12 × 5]</span>
+<span class="co">#&gt; 3 Algeria           [12 × 5]</span>
+<span class="co">#&gt; 4 Angola            [12 × 5]</span>
+<span class="co">#&gt; 5 Argentina         [12 × 5]</span>
+<span class="co">#&gt; 6 Australia         [12 × 5]</span>
 <span class="co">#&gt; # … with 136 more rows</span></code></pre></div>
 <p>unnest() teeb algse df-i tagasi.</p>
 <p>iga nested_gapminder$data element on ise df:</p>
@@ -580,8 +567,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

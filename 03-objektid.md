@@ -517,15 +517,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.419 0.447 0.661 0.524 0.788
+#> [1] 0.1745 0.9913 0.1837 0.0817 0.1163
 #> 
 #> [[2]]
-#>       a       b
-#> 1 0.419 -1.8496
-#> 2 0.447 -0.2750
-#> 3 0.661 -1.4794
-#> 4 0.524  1.6425
-#> 5 0.788  0.0772
+#>        a      b
+#> 1 0.1745  0.684
+#> 2 0.9913  0.677
+#> 3 0.1837  0.363
+#> 4 0.0817  0.568
+#> 5 0.1163 -0.653
 #> 
 #> [[3]]
 #> 
@@ -576,7 +576,7 @@ fruits
 #>   <chr>   <dbl>   <dbl> <list>    
 #> 1 maxima      1       2 <chr [26]>
 #> 2 tesco       4      32 <dbl [10]>
-#> 3 lidl       43      NA <S3: lm>
+#> 3 lidl       43      NA <lm>
 ```
 Siin ta on, ilusti meie workspace-s. Pange tähele viimast tulpa "vabakava", mis sisaldab _character_ vectorit, numbrilist vektorit ja lineaarse mudeli objekti. 
 
@@ -918,7 +918,7 @@ fruits
 #> 1 maxima      1       2 <chr [26]>
 #> 2 tesco       4      32 <dbl [10]>
 #> 3 konsum    132      -5 <NULL>    
-#> 4 lidl       43      NA <S3: lm>
+#> 4 lidl       43      NA <lm>
 ```
 
 Proovi ise:
@@ -942,7 +942,7 @@ fruits
 #> 1 maxima      1       2 <chr [26]>
 #> 2 tesco       4      32 <dbl [10]>
 #> 3 konsum    132      -5 <NULL>    
-#> 4 lidl      333      NA <S3: lm>
+#> 4 lidl      333      NA <lm>
 fruits$shop[fruits$shop=="tesco"] <- "TESCO"
 fruits
 #> # A tibble: 4 x 4
@@ -951,7 +951,7 @@ fruits
 #> 1 maxima      1       2 <chr [26]>
 #> 2 TESCO       4      32 <dbl [10]>
 #> 3 konsum    132      -5 <NULL>    
-#> 4 lidl      333      NA <S3: lm>
+#> 4 lidl      333      NA <lm>
 fruits$apples[fruits$apples>100] <- NA
 fruits
 #> # A tibble: 4 x 4
@@ -960,7 +960,7 @@ fruits
 #> 1 maxima      1       2 <chr [26]>
 #> 2 TESCO       4      32 <dbl [10]>
 #> 3 konsum     NA      -5 <NULL>    
-#> 4 lidl       NA      NA <S3: lm>
+#> 4 lidl       NA      NA <lm>
 ```
 
 Viskame välja duplikaatread, aga ainult need kus veerg nimega col1 sisaldab identseid väärtusi (mitmest identse väärtusega reast jääb alles ainult esimene)
@@ -1398,34 +1398,16 @@ Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda
 
 purrr::map() perekonna funktsioonid töötavad nii lihtsate vektorite kui listide peal. Need funktsioonid rakendavad kasutaja poolt ette antud funktsiooni järjest igale vektori elemendile. map() vajab 2 argumenti: vektor ja funktsioon, mida selle vektori elementidele rakendada. map() võtab sisse listi (vektori, data frame) ja väljastab listi (vektori, data frame). Seega saab seda hästi pipe-s rakendada.
 
-
-```r
-list1 <- list(1, 2, 3, 4, 5)
-list1 %>% map(log) %>% map(round)
-#> [[1]]
-#> [1] 0
-#> 
-#> [[2]]
-#> [1] 1
-#> 
-#> [[3]]
-#> [1] 1
-#> 
-#> [[4]]
-#> [1] 1
-#> 
-#> [[5]]
-#> [1] 2
-```
-
 Kui tahad, map() anda funktsiooni lisaargumentidega, siis need eraldatakse komadega `map(list1, round, digits = 2)`.
 
 Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta `map_dbl()`. 
 
 
 ```r
-list1 %>% map_dbl(log) %>% round()
-#> [1] 0 1 1 1 2
+1:10 %>%
+  map(rnorm, n = 10) %>%
+  map_dbl(mean)
+#>  [1] 1.03 2.16 3.22 4.15 4.45 6.28 6.94 7.87 8.92 9.98
 ```
 
 map()-l on kokku 8 versiooni erinevate väljunditega.
@@ -1460,13 +1442,13 @@ params <- list(
 )
 params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
 #> $norm1
-#> [1]  0.149 -0.845  0.232 -0.171  0.511
+#> [1]  0.1823 -1.3502 -0.1663 -0.0349  0.1323
 #> 
 #> $norm2
-#> [1]  0.835 -0.771  1.901  0.889  1.240
+#> [1]  2.3007  0.0116 -0.2482  0.8321  0.7228
 #> 
 #> $norm3
-#> [1] 1.10 1.36 2.60 1.63 2.58
+#> [1] 2.839 0.284 3.086 3.097 3.836
 ```
 
 `enframe()` konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value). 
@@ -1518,13 +1500,13 @@ parameters <- data.frame(
 )
 parameters %>% pmap(runif)
 #> [[1]]
-#> [1] 0.128
+#> [1] 0.656
 #> 
 #> [[2]]
-#> [1] 5.16 5.00
+#> [1] 5.79 5.28
 #> 
 #> [[3]]
-#> [1] 10.7 11.0 10.3
+#> [1] 10.8 10.6 10.7
 ```
 
 See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.
@@ -1561,13 +1543,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- list(c(5, 2, 3), 2, 3)
 invoke_map(functions, n)
 #> [[1]]
-#> [1]  3.69  3.26  1.03 -1.06  1.75
+#> [1]  2.923558  4.117592  4.320870 -0.000297  4.029793
 #> 
 #> [[2]]
-#> [1] 0.572 4.216
+#> [1] 0.808 3.531
 #> 
 #> [[3]]
-#> [1]  0.416  4.615 -0.741
+#> [1]  0.6346  1.0732 -0.0523
 ```
 
 anname sisse esimese argumendi (100) igasse funktsiooni
@@ -1577,13 +1559,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- c(5, 2, 3)
 invoke_map(functions, n, 100)
 #> [[1]]
-#> [1] 100.8 100.9  98.8 100.6 101.5
+#> [1] 101 101 100 102 100
 #> 
 #> [[2]]
-#> [1] 1.69e+43 2.97e+42
+#> [1] 1.6e+43 4.1e+43
 #> 
 #> [[3]]
-#> [1]  98.4 101.4 103.8
+#> [1] 101 100 102
 ```
 
 mitu argumenti igale funktsioonile:
@@ -1595,13 +1577,13 @@ args <- list(norm = c(3, mean = 0, sd = 1),
 
 invoke_map(functions, args)
 #> [[1]]
-#> [1]  1.044  0.653 -0.179
+#> [1] 2.199 0.689 0.873
 #> 
 #> [[2]]
-#> [1]  7.08 45.50
+#> [1] 27.06  4.05
 #> 
 #> [[3]]
-#> [1] -63.1
+#> [1] -30.7
 ```
 
 
@@ -1668,14 +1650,15 @@ nest() teeb uue df-i, kus on 1. veerg grupeeriva muutuja tasemetega, millele jä
 library(gapminder)
 (nested_gapminder <- gapminder %>% group_by(country) %>% nest())
 #> # A tibble: 142 x 2
-#>   country     data             
-#>   <fct>       <list>           
-#> 1 Afghanistan <tibble [12 × 5]>
-#> 2 Albania     <tibble [12 × 5]>
-#> 3 Algeria     <tibble [12 × 5]>
-#> 4 Angola      <tibble [12 × 5]>
-#> 5 Argentina   <tibble [12 × 5]>
-#> 6 Australia   <tibble [12 × 5]>
+#> # Groups:   country [142]
+#>   country               data
+#>   <fct>       <list<df[,5]>>
+#> 1 Afghanistan       [12 × 5]
+#> 2 Albania           [12 × 5]
+#> 3 Algeria           [12 × 5]
+#> 4 Angola            [12 × 5]
+#> 5 Argentina         [12 × 5]
+#> 6 Australia         [12 × 5]
 #> # … with 136 more rows
 ```
 
