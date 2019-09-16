@@ -988,7 +988,9 @@ Kui tahad, map() anda funktsiooni lisaargumentidega, siis need eraldatakse komad
 Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta `map_dbl()`. 
 
 ```{r}
-list1 %>% map_dbl(log) %>% round()
+1:10 %>%
+  map(rnorm, n = 10) %>%
+  map_dbl(mean)
 ```
 
 map()-l on kokku 8 versiooni erinevate väljunditega.
