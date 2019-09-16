@@ -983,11 +983,6 @@ Järgnevad meetodid töötavad nii listidel, data frame-del kui vektoritel. Seda
 
 purrr::map() perekonna funktsioonid töötavad nii lihtsate vektorite kui listide peal. Need funktsioonid rakendavad kasutaja poolt ette antud funktsiooni järjest igale vektori elemendile. map() vajab 2 argumenti: vektor ja funktsioon, mida selle vektori elementidele rakendada. map() võtab sisse listi (vektori, data frame) ja väljastab listi (vektori, data frame). Seega saab seda hästi pipe-s rakendada.
 
-```{r}
-list1 <- list(1, 2, 3, 4, 5)
-list1 %>% map(log) %>% map(round)
-```
-
 Kui tahad, map() anda funktsiooni lisaargumentidega, siis need eraldatakse komadega `map(list1, round, digits = 2)`.
 
 Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta `map_dbl()`. 
