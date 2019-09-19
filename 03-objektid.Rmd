@@ -871,6 +871,18 @@ class(fruits)
 
 ## NA-d
 
+Loe üles NA-d, 0-d, inf-id ja unikaalsed väärtused.
+```{r}
+library(funModeling)
+diabetes <- read_delim("data/diabetes.csv", 
+    ";", escape_double = FALSE, trim_ws = TRUE)
+
+diabetes %>% status() %>% 
+  mutate_if(is.numeric, round, 2) %>% 
+  kableExtra::kable()
+```
+
+
 ```{r, dev = 'png'}
 diabetes <- read.table(file = "data/diabetes.csv", sep = ";", dec = ",", header = TRUE)
 str(diabetes)
