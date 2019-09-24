@@ -517,15 +517,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.1745 0.9913 0.1837 0.0817 0.1163
+#> [1] 0.262 0.182 0.954 0.235 0.126
 #> 
 #> [[2]]
-#>        a      b
-#> 1 0.1745  0.684
-#> 2 0.9913  0.677
-#> 3 0.1837  0.363
-#> 4 0.0817  0.568
-#> 5 0.1163 -0.653
+#>       a      b
+#> 1 0.262  1.650
+#> 2 0.182 -0.253
+#> 3 0.954 -0.519
+#> 4 0.235 -0.304
+#> 5 0.126  1.343
 #> 
 #> [[3]]
 #> 
@@ -1227,6 +1227,246 @@ class(fruits)
 
 ## NA-d
 
+Loe üles NA-d, 0-d, inf-id ja unikaalsed väärtused.
+
+```r
+library(funModeling)
+diabetes <- read_delim("data/diabetes.csv", 
+    ";", escape_double = FALSE, trim_ws = TRUE)
+
+diabetes %>% status() %>% 
+  mutate_if(is.numeric, round, 2) %>% 
+  kableExtra::kable()
+```
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> variable </th>
+   <th style="text-align:right;"> q_zeros </th>
+   <th style="text-align:right;"> p_zeros </th>
+   <th style="text-align:right;"> q_na </th>
+   <th style="text-align:right;"> p_na </th>
+   <th style="text-align:right;"> q_inf </th>
+   <th style="text-align:right;"> p_inf </th>
+   <th style="text-align:left;"> type </th>
+   <th style="text-align:right;"> unique </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> id </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 403 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> chol </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 154 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> stab.glu </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 116 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hdl </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 77 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ratio </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 69 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> glyhb </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 0.03 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 239 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> location </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> character </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gender </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> character </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> height </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 22 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> weight </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 140 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> frame </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 0.03 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> character </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bp.1s </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 71 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bp.1d </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 57 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bp.2s </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 262 </td>
+   <td style="text-align:right;"> 0.65 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 48 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bp.2d </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 262 </td>
+   <td style="text-align:right;"> 0.65 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 36 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> waist </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 30 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hip </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.00 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 32 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> time.ppn </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 0.01 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> numeric </td>
+   <td style="text-align:right;"> 60 </td>
+  </tr>
+</tbody>
+</table>
+
+
 
 ```r
 diabetes <- read.table(file = "data/diabetes.csv", sep = ";", dec = ",", header = TRUE)
@@ -1254,7 +1494,7 @@ str(diabetes)
 VIM::aggr(diabetes, prop = FALSE, numbers = TRUE)
 ```
 
-<img src="03-objektid_files/figure-html/unnamed-chunk-68-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-objektid_files/figure-html/unnamed-chunk-69-1.png" width="70%" style="display: block; margin: auto;" />
 Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.
 
 Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?
@@ -1315,7 +1555,7 @@ Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda su
 VIM::matrixplot(diabetes) 
 ```
 
-<img src="03-objektid_files/figure-html/unnamed-chunk-72-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="03-objektid_files/figure-html/unnamed-chunk-73-1.png" width="70%" style="display: block; margin: auto;" />
 
 
 ### Kuidas rekodeerida NA-d näiteks 0-ks:
@@ -1407,7 +1647,7 @@ Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta 
 1:10 %>%
   map(rnorm, n = 10) %>%
   map_dbl(mean)
-#>  [1] 1.03 2.16 3.22 4.15 4.45 6.28 6.94 7.87 8.92 9.98
+#>  [1] 1.38 1.47 2.78 3.93 5.24 5.38 7.27 8.08 8.74 9.31
 ```
 
 map()-l on kokku 8 versiooni erinevate väljunditega.
@@ -1442,13 +1682,13 @@ params <- list(
 )
 params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
 #> $norm1
-#> [1]  0.1823 -1.3502 -0.1663 -0.0349  0.1323
+#> [1]  0.4523 -0.2606 -0.0438 -1.1830  1.0481
 #> 
 #> $norm2
-#> [1]  2.3007  0.0116 -0.2482  0.8321  0.7228
+#> [1]  1.3880  0.0682  1.9240 -1.3301 -0.9385
 #> 
 #> $norm3
-#> [1] 2.839 0.284 3.086 3.097 3.836
+#> [1] 2.07 2.32 1.92 1.41 2.28
 ```
 
 `enframe()` konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value). 
@@ -1500,13 +1740,13 @@ parameters <- data.frame(
 )
 parameters %>% pmap(runif)
 #> [[1]]
-#> [1] 0.656
+#> [1] 0.556
 #> 
 #> [[2]]
-#> [1] 5.79 5.28
+#> [1] 5.11 5.84
 #> 
 #> [[3]]
-#> [1] 10.8 10.6 10.7
+#> [1] 11.0 11.0 10.4
 ```
 
 See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.
@@ -1543,13 +1783,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- list(c(5, 2, 3), 2, 3)
 invoke_map(functions, n)
 #> [[1]]
-#> [1]  2.923558  4.117592  4.320870 -0.000297  4.029793
+#> [1]  4.816  3.296  0.517  6.192 -0.547
 #> 
 #> [[2]]
-#> [1] 0.808 3.531
+#> [1] 0.719 0.244
 #> 
 #> [[3]]
-#> [1]  0.6346  1.0732 -0.0523
+#> [1]  3.539 -8.917  0.638
 ```
 
 anname sisse esimese argumendi (100) igasse funktsiooni
@@ -1559,13 +1799,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- c(5, 2, 3)
 invoke_map(functions, n, 100)
 #> [[1]]
-#> [1] 101 101 100 102 100
+#> [1] 100.2 100.2 100.3 102.7  98.4
 #> 
 #> [[2]]
-#> [1] 1.6e+43 4.1e+43
+#> [1] 2.03e+44 2.58e+43
 #> 
 #> [[3]]
-#> [1] 101 100 102
+#> [1] 102.4  99.5 101.1
 ```
 
 mitu argumenti igale funktsioonile:
@@ -1577,13 +1817,13 @@ args <- list(norm = c(3, mean = 0, sd = 1),
 
 invoke_map(functions, args)
 #> [[1]]
-#> [1] 2.199 0.689 0.873
+#> [1] -0.668  0.120 -0.229
 #> 
 #> [[2]]
-#> [1] 27.06  4.05
+#> [1] 190.423   0.176
 #> 
 #> [[3]]
-#> [1] -30.7
+#> [1] -29617
 ```
 
 

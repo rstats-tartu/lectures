@@ -24,7 +24,7 @@
 <meta name="author" content="Ülo Maiväli &amp; Taavi Päll" />
 
 
-<meta name="date" content="2019-09-16" />
+<meta name="date" content="2019-09-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -462,25 +465,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;       V9     V8     V5    V2     V6</span>
-<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.945  0.598  0.493  0.535 0.151 </span>
-<span class="co">#&gt; 2 0.0422 0.427  0.474  0.758 0.355 </span>
-<span class="co">#&gt; 3 0.202  0.629  0.128  0.250 0.351 </span>
-<span class="co">#&gt; 4 0.0988 0.482  0.0417 0.289 0.0444</span>
-<span class="co">#&gt; 5 0.717  0.0310 0.335  0.353 0.296 </span>
-<span class="co">#&gt; 6 0.733  0.321  0.0454 0.951 0.461 </span>
+<span class="co">#&gt;      V9     V8     V5    V2     V6</span>
+<span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.547 0.271  0.0870 0.165 0.383 </span>
+<span class="co">#&gt; 2 0.926 0.384  0.928  0.323 0.528 </span>
+<span class="co">#&gt; 3 0.578 0.404  0.470  0.411 0.0406</span>
+<span class="co">#&gt; 4 0.877 0.860  0.963  0.957 0.0681</span>
+<span class="co">#&gt; 5 0.199 0.370  0.729  0.977 0.478 </span>
+<span class="co">#&gt; 6 0.917 0.0103 0.492  0.157 0.951 </span>
 <span class="co">#&gt; # … with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;       V9     V8     V7     V6</span>
-<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.945  0.598  0.361  0.151 </span>
-<span class="co">#&gt; 2 0.0422 0.427  0.251  0.355 </span>
-<span class="co">#&gt; 3 0.202  0.629  0.0570 0.351 </span>
-<span class="co">#&gt; 4 0.0988 0.482  0.0520 0.0444</span>
-<span class="co">#&gt; 5 0.717  0.0310 0.357  0.296 </span>
-<span class="co">#&gt; 6 0.733  0.321  0.599  0.461 </span>
+<span class="co">#&gt;      V9     V8     V7     V6</span>
+<span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.547 0.271  0.860  0.383 </span>
+<span class="co">#&gt; 2 0.926 0.384  0.0150 0.528 </span>
+<span class="co">#&gt; 3 0.578 0.404  0.726  0.0406</span>
+<span class="co">#&gt; 4 0.877 0.860  0.794  0.0681</span>
+<span class="co">#&gt; 5 0.199 0.370  0.439  0.478 </span>
+<span class="co">#&gt; 6 0.917 0.0103 0.147  0.951 </span>
 <span class="co">#&gt; # … with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
@@ -730,23 +733,23 @@ a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">
             <span class="dt">indeks=</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;E&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">each=</span> <span class="dv">3</span>, <span class="dt">times=</span><span class="dv">5</span>))
 <span class="kw">head</span>(a)
 <span class="co">#&gt; # A tibble: 6 x 3</span>
-<span class="co">#&gt;    gene  value indeks</span>
-<span class="co">#&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt; </span>
-<span class="co">#&gt; 1     1  0.804 E     </span>
-<span class="co">#&gt; 2     1  0.301 E     </span>
-<span class="co">#&gt; 3     1  0.324 E     </span>
-<span class="co">#&gt; 4     1 -0.517 C     </span>
-<span class="co">#&gt; 5     1 -0.437 C     </span>
-<span class="co">#&gt; 6     1 -0.193 C</span></code></pre></div>
+<span class="co">#&gt;    gene    value indeks</span>
+<span class="co">#&gt;   &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt; </span>
+<span class="co">#&gt; 1     1 -0.473   E     </span>
+<span class="co">#&gt; 2     1 -0.00177 E     </span>
+<span class="co">#&gt; 3     1 -1.48    E     </span>
+<span class="co">#&gt; 4     1 -1.79    C     </span>
+<span class="co">#&gt; 5     1  0.185   C     </span>
+<span class="co">#&gt; 6     1 -0.925   C</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p =</span> <span class="kw">t.test</span>(value<span class="op">~</span>indeks)<span class="op">$</span>p.value)
 <span class="co">#&gt; # A tibble: 5 x 2</span>
-<span class="co">#&gt;    gene      p</span>
-<span class="co">#&gt;   &lt;int&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1 0.0171</span>
-<span class="co">#&gt; 2     2 0.195 </span>
-<span class="co">#&gt; 3     3 0.818 </span>
-<span class="co">#&gt; 4     4 0.403 </span>
-<span class="co">#&gt; 5     5 0.222</span></code></pre></div>
+<span class="co">#&gt;    gene       p</span>
+<span class="co">#&gt;   &lt;int&gt;   &lt;dbl&gt;</span>
+<span class="co">#&gt; 1     1 0.805  </span>
+<span class="co">#&gt; 2     2 0.00775</span>
+<span class="co">#&gt; 3     3 0.116  </span>
+<span class="co">#&gt; 4     4 0.964  </span>
+<span class="co">#&gt; 5     5 0.776</span></code></pre></div>
 </div>
 <div id="grupiviisiline-filtreerimine" class="section level4">
 <h4><span class="header-section-number">14.2.5.4</span> Grupiviisiline filtreerimine</h4>
@@ -1031,11 +1034,13 @@ gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat,
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
