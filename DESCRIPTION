@@ -32,7 +32,8 @@ Imports:
     survey, 
     estimability,
     Publish,
-    funModeling
+    funModeling,
+    kableExtra
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking,
