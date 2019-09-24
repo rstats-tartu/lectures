@@ -465,25 +465,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;      V9    V8    V5     V2     V6</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.802 0.372 0.941 0.932  0.744 </span>
-<span class="co">#&gt; 2 0.395 0.473 0.455 0.463  0.932 </span>
-<span class="co">#&gt; 3 0.245 0.506 0.588 0.0763 0.129 </span>
-<span class="co">#&gt; 4 0.594 0.275 0.185 0.462  0.101 </span>
-<span class="co">#&gt; 5 0.185 0.875 0.778 0.363  0.128 </span>
-<span class="co">#&gt; 6 0.166 0.618 0.290 0.186  0.0852</span>
+<span class="co">#&gt;       V9     V8    V5    V2      V6</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.0821 0.500  0.215 0.641 0.541  </span>
+<span class="co">#&gt; 2 0.495  0.962  0.666 0.613 0.487  </span>
+<span class="co">#&gt; 3 0.708  0.754  0.408 0.439 0.535  </span>
+<span class="co">#&gt; 4 0.881  0.912  0.746 0.570 0.00243</span>
+<span class="co">#&gt; 5 0.726  0.0311 0.991 0.860 0.299  </span>
+<span class="co">#&gt; 6 0.326  0.655  0.349 0.769 0.370  </span>
 <span class="co">#&gt; # … with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt;      V9    V8    V7     V6</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.802 0.372 0.590 0.744 </span>
-<span class="co">#&gt; 2 0.395 0.473 0.510 0.932 </span>
-<span class="co">#&gt; 3 0.245 0.506 0.697 0.129 </span>
-<span class="co">#&gt; 4 0.594 0.275 0.912 0.101 </span>
-<span class="co">#&gt; 5 0.185 0.875 0.355 0.128 </span>
-<span class="co">#&gt; 6 0.166 0.618 0.725 0.0852</span>
+<span class="co">#&gt;       V9     V8      V7      V6</span>
+<span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.0821 0.500  0.299   0.541  </span>
+<span class="co">#&gt; 2 0.495  0.962  0.361   0.487  </span>
+<span class="co">#&gt; 3 0.708  0.754  0.286   0.535  </span>
+<span class="co">#&gt; 4 0.881  0.912  0.670   0.00243</span>
+<span class="co">#&gt; 5 0.726  0.0311 0.00303 0.299  </span>
+<span class="co">#&gt; 6 0.326  0.655  0.395   0.370  </span>
 <span class="co">#&gt; # … with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
@@ -733,23 +733,23 @@ a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">
             <span class="dt">indeks=</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;E&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">each=</span> <span class="dv">3</span>, <span class="dt">times=</span><span class="dv">5</span>))
 <span class="kw">head</span>(a)
 <span class="co">#&gt; # A tibble: 6 x 3</span>
-<span class="co">#&gt;    gene  value indeks</span>
-<span class="co">#&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt; </span>
-<span class="co">#&gt; 1     1 -1.06  E     </span>
-<span class="co">#&gt; 2     1 -1.53  E     </span>
-<span class="co">#&gt; 3     1  0.111 E     </span>
-<span class="co">#&gt; 4     1  0.612 C     </span>
-<span class="co">#&gt; 5     1 -0.216 C     </span>
-<span class="co">#&gt; 6     1  0.848 C</span></code></pre></div>
+<span class="co">#&gt;    gene   value indeks</span>
+<span class="co">#&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; </span>
+<span class="co">#&gt; 1     1 -0.338  E     </span>
+<span class="co">#&gt; 2     1 -0.545  E     </span>
+<span class="co">#&gt; 3     1 -0.514  E     </span>
+<span class="co">#&gt; 4     1  0.0745 C     </span>
+<span class="co">#&gt; 5     1 -1.40   C     </span>
+<span class="co">#&gt; 6     1  0.0226 C</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p =</span> <span class="kw">t.test</span>(value<span class="op">~</span>indeks)<span class="op">$</span>p.value)
 <span class="co">#&gt; # A tibble: 5 x 2</span>
 <span class="co">#&gt;    gene     p</span>
 <span class="co">#&gt;   &lt;int&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1 0.112</span>
-<span class="co">#&gt; 2     2 0.963</span>
-<span class="co">#&gt; 3     3 0.184</span>
-<span class="co">#&gt; 4     4 0.570</span>
-<span class="co">#&gt; 5     5 0.161</span></code></pre></div>
+<span class="co">#&gt; 1     1 0.954</span>
+<span class="co">#&gt; 2     2 0.420</span>
+<span class="co">#&gt; 3     3 0.975</span>
+<span class="co">#&gt; 4     4 0.107</span>
+<span class="co">#&gt; 5     5 0.568</span></code></pre></div>
 </div>
 <div id="grupiviisiline-filtreerimine" class="section level4">
 <h4><span class="header-section-number">14.2.5.4</span> Grupiviisiline filtreerimine</h4>

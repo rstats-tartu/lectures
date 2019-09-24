@@ -1039,10 +1039,8 @@ graph_cors &lt;-<span class="st"> </span>tidy_cors <span class="op">%&gt;%</span
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggraph</span>(graph_cors) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_edge_link</span>(<span class="kw">aes</span>(<span class="dt">edge_alpha =</span> <span class="kw">abs</span>(r), <span class="dt">edge_width =</span> <span class="kw">abs</span>(r), <span class="dt">color =</span> r)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">edge_alpha =</span> <span class="st">&quot;none&quot;</span>, <span class="dt">edge_width =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_edge_colour_gradientn</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">colors =</span> <span class="kw">c</span>( <span class="st">&quot;dodgerblue2&quot;</span>, <span class="st">&quot;firebrick2&quot;</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_node_point</span>(<span class="dt">color =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">size =</span> <span class="dv">5</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_graph</span>() </code></pre></div>
+<span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">repel =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-147-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti – vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).</p>
 </div>
@@ -1051,11 +1049,9 @@ graph_cors &lt;-<span class="st"> </span>tidy_cors <span class="op">%&gt;%</span
 <h2><span class="header-section-number">12.13</span> Biplot ja peakomponentanalüüs</h2>
 <p>Kui teil on andmetes rohkem dimensioone, kui te jõuate plottida, siis peakomponentanalüüs (PCA) on üks võimalus multidimensionaalseid andmeid kahedimensionaalsena joonistada. PCA on lineaarne meetod, mis püüab omavahel korrelleeritud muutujad aesendada uute muutujatega, mis oleks võimalikult vähe korrelleeritud. PCA joonise teljed (peakomponent 1 ja peakomponent 2) on valitud nii, et need oleks üksteisega võimalikult vähe korreleeritud ja samas säiliks võimalikult suur osa andmete algsest multidimensionaalsest varieeruvusest. Eesmärk on saavutada 2D (või 3D) muster, mis oleks võimalikult lähedane algse multi-D mustriga. Seega, PCA projitseerib multidimensionaalse andmemustri 2D pinnale viisil, mis püüab säilitada maksimaalse osa algsest andmete varieeruvusest. PCA teeb seda, kasutades lineaarset additiivset mudelit.</p>
 <p>See analüüs on mõistlik ainult siis, kui andmed varieeruvad kõige rohkem suunas, mis on ka teaduslikult oluline (ei ole juhuslik müra) ja muutujate vahel ei ole mittelineaarseid interaktsioone (muutujad on sõltumatud). Te ei tea kunagi ette, kas ja millal PCAst võib kasu olla reaalsete mustrite leidmisel – seega tuleks PCA tõlgendamisega olla pigem ettevaatlik, sest inimaju on suuteline mustreid nägema ka seal, kus neid ei ole. Lisaks, isegi kui PCAs ilmuv muster on ehtne, on PCA dimensioone sageli palju raskem teaduslikult tõlgendada kui originaalseid muutujaid.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ir.species &lt;-<span class="st"> </span>iris[, <span class="dv">5</span>]
-ir.pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">center=</span>T, <span class="dt">scale =</span> <span class="ot">TRUE</span>) 
-<span class="co">#library(devtools)</span>
-<span class="co">#install_github(&quot;ggbiplot&quot;, &quot;vqv&quot;)</span>
-<span class="kw">library</span>(ggbiplot)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggbiplot)
+ir.species &lt;-<span class="st"> </span>iris[, <span class="dv">5</span>]
+ir.pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>) 
 g &lt;-<span class="st"> </span><span class="kw">ggbiplot</span>(ir.pca, <span class="dt">obs.scale =</span> <span class="dv">1</span>, <span class="dt">var.scale =</span> <span class="dv">1</span>, 
               <span class="dt">groups =</span> iris<span class="op">$</span>Species, <span class="dt">ellipse =</span> <span class="ot">TRUE</span>, 
               <span class="dt">circle =</span> <span class="ot">TRUE</span>)
@@ -1070,7 +1066,8 @@ g &lt;-<span class="st"> </span>g <span class="op">+</span><span class="st"> </s
 ts &lt;-<span class="st"> </span><span class="kw">tsne</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">perplexity =</span> <span class="dv">10</span>)
 ts &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(ts)<span class="co">#output is a table of 2D t-sne coordinates</span>
 ism1 &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(iris, ts)
-<span class="kw">ggplot</span>(ism1, <span class="kw">aes</span>(<span class="dt">x=</span>V1, <span class="dt">y=</span>V2, <span class="dt">color=</span>(Species)))<span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
+<span class="kw">ggplot</span>(ism1, <span class="kw">aes</span>(<span class="dt">x =</span> V1, <span class="dt">y =</span> V2, <span class="dt">color =</span> (Species))) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
 <p><img src="06-graphics_files/figure-html/unnamed-chunk-148-1.svg" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
