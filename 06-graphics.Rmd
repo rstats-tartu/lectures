@@ -13,7 +13,7 @@ Kuigi "ggplot2" ja tema sateliit-raamatukogud on meie põhilised huviobjekid, al
 Ehki me piirdume vaid väga lihtsate näidetega tasub teada, et baasgraafikas saab teha ka komplekseid visualiseeringuid: http://shinyapps.org/apps/RGraphCompendium/index.php
 
 Laadime peatükis edaspidi vajalikud libraryd:
-```{r}
+```{r grlibs}
 library(tidyverse)
 library(ggthemes)
 library(ggrepel)
@@ -191,7 +191,7 @@ Lisakihtides saab dikteerida,
 
 
 Kõigepealt suuname oma andmed `ggplot()` funktsiooni:
-```{r}
+```{r grggplot}
 ggplot(iris)
 ```
 
@@ -397,7 +397,7 @@ p + geom_point() +
 Kõigepealt tooda komponentgraafikud ggplot() abil ja tee nendest graafilised objektid.
 Näiteks nii: 
 
-```{r}
+```{r grmitu}
 library(tidyverse)
 i1 <- ggplot(data= iris, aes(x=Sepal.Length)) + geom_histogram()
 i2 <- ggplot(data= iris, aes(x=Sepal.Length)) + geom_density()
@@ -524,7 +524,7 @@ p + theme(axis.title = element_blank())
 
 ## Graafiku pealkiri, alapeakiri ja allkiri
 
-```{r}
+```{r grpealk}
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + 
   geom_point() + 
   labs(
@@ -815,7 +815,7 @@ Seda plotti kasuta a) kui iga muutja kohta on üks andmepunkt või b) kui soovid
 
 Kõigepealt plotime, mitu korda esinevad *diamonds* tabelis erinevate faktormuutuja *clarity* tasemetega teemandid (*clarity* igale tasemele vastab üks number -- selle *clarity*-ga teemantite arv). 
 
-```{r}
+```{r grkurat}
 dd <- diamonds %>% 
   group_by(clarity) %>% 
   summarise(number_of_diamonds = n())
@@ -1631,7 +1631,7 @@ Pilt on küll detailides erinev, aga suures plaanis üsna sarnane eelmisega.
 
 Kuidas võrrelda kahte jaotust? Kõige lihtsam on joonistada bihistogramm, mis töötab ühtlasi t testi ekslploratoorse analoogina (ei anna ühte numbrit, aga selle eest annab palju parema ülevaate kui t test, kuidas kahe grupi valimid -- kuigi mitte tingimata nende taga olevad populatsioonid -- tegelikult erinevad).
 
-```{r}
+```{r grqq}
 library(Hmisc)
 histbackback(iris$Sepal.Length, iris$Sepal.Width)
 ```
@@ -1746,7 +1746,7 @@ qqPlot(m1)
 Heat map asendab tabelis numbrid värvidega, muutes nii keerulised tabelid kiiremini haaratavateks. Samas, inimese aju ei ole kuigi edukas värvitoone pidevate muutujate numbrilisteks väärtusteks tagasi konverteerima, mis tähendab, et heat map võimaldab lugejal kiiresti haarata mustreid andmetes, aga ei võimalda teha täpseid võrdlusi tabeli üksikute lahtrite vahel. 
 
 Kõigepealt lihtne heat map, kus irise tabeli numbrilistes veergudes on asendatud arvud värvitoonidega, aga tabeli üldine kuju ei muutu: 
-```{r}
+```{r grheatm}
 library(pheatmap)
 pheatmap(iris[1:4], fontsize_row = 3, cluster_cols = FALSE, cluster_rows = FALSE)
 ```
@@ -1793,7 +1793,7 @@ mosaic(~Species + cluster, data= iris_x, shade=T, legend=FALSE)
 Heat map on ka hea viis visualiseerida korrelatsioonimaatrikseid.
 
 Kõigepealt tavaline scatterplot maatriks.
-```{r}
+```{r grcorr}
 plot(iris[1:4], col=iris$Species)
 ```
 
@@ -1867,7 +1867,7 @@ Kui teil on andmetes rohkem dimensioone, kui te jõuate plottida, siis peakompon
 
 See analüüs on mõistlik ainult siis, kui andmed varieeruvad kõige rohkem suunas, mis on ka teaduslikult oluline (ei ole juhuslik müra) ja muutujate vahel ei ole mittelineaarseid interaktsioone (muutujad on sõltumatud). Te ei tea kunagi ette, kas ja millal PCAst võib kasu olla reaalsete mustrite leidmisel -- seega tuleks PCA tõlgendamisega olla pigem ettevaatlik, sest inimaju on suuteline mustreid nägema ka seal, kus neid ei ole. Lisaks, isegi kui PCAs ilmuv muster on ehtne, on PCA dimensioone sageli palju raskem teaduslikult tõlgendada kui originaalseid muutujaid.
 
-```{r}
+```{r grbb}
 ir.species <- iris[, 5]
 ir.pca <- prcomp(iris[,1:4], center=T, scale = TRUE) 
 #library(devtools)
