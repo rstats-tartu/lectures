@@ -517,15 +517,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.262 0.182 0.954 0.235 0.126
+#> [1] 0.378 0.244 0.619 0.438 0.185
 #> 
 #> [[2]]
 #>       a      b
-#> 1 0.262  1.650
-#> 2 0.182 -0.253
-#> 3 0.954 -0.519
-#> 4 0.235 -0.304
-#> 5 0.126  1.343
+#> 1 0.378  1.342
+#> 2 0.244 -0.448
+#> 3 0.619  0.070
+#> 4 0.438 -0.117
+#> 5 0.185  1.741
 #> 
 #> [[3]]
 #> 
@@ -1647,7 +1647,8 @@ Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta 
 1:10 %>%
   map(rnorm, n = 10) %>%
   map_dbl(mean)
-#>  [1] 1.38 1.47 2.78 3.93 5.24 5.38 7.27 8.08 8.74 9.31
+#>  [1]  0.477  2.253  2.869  3.741  5.041  6.231  6.643
+#>  [8]  8.123  8.951 10.087
 ```
 
 map()-l on kokku 8 versiooni erinevate väljunditega.
@@ -1682,13 +1683,13 @@ params <- list(
 )
 params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
 #> $norm1
-#> [1]  0.4523 -0.2606 -0.0438 -1.1830  1.0481
+#> [1]  0.527 -0.450  1.470  0.224  1.139
 #> 
 #> $norm2
-#> [1]  1.3880  0.0682  1.9240 -1.3301 -0.9385
+#> [1] 2.393 1.124 1.551 0.404 1.223
 #> 
 #> $norm3
-#> [1] 2.07 2.32 1.92 1.41 2.28
+#> [1] 1.169 0.373 1.168 2.962 2.348
 ```
 
 `enframe()` konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value). 
@@ -1740,13 +1741,13 @@ parameters <- data.frame(
 )
 parameters %>% pmap(runif)
 #> [[1]]
-#> [1] 0.556
+#> [1] 0.416
 #> 
 #> [[2]]
-#> [1] 5.11 5.84
+#> [1] 5.43 5.53
 #> 
 #> [[3]]
-#> [1] 11.0 11.0 10.4
+#> [1] 10.7 10.3 10.7
 ```
 
 See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.
@@ -1783,13 +1784,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- list(c(5, 2, 3), 2, 3)
 invoke_map(functions, n)
 #> [[1]]
-#> [1]  4.816  3.296  0.517  6.192 -0.547
+#> [1] 2.252 0.464 6.906 2.484 4.596
 #> 
 #> [[2]]
-#> [1] 0.719 0.244
+#> [1] 0.139 2.264
 #> 
 #> [[3]]
-#> [1]  3.539 -8.917  0.638
+#> [1]   4.23 -10.31   2.31
 ```
 
 anname sisse esimese argumendi (100) igasse funktsiooni
@@ -1799,13 +1800,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- c(5, 2, 3)
 invoke_map(functions, n, 100)
 #> [[1]]
-#> [1] 100.2 100.2 100.3 102.7  98.4
+#> [1] 101.5  98.5 100.6  98.9  99.5
 #> 
 #> [[2]]
-#> [1] 2.03e+44 2.58e+43
+#> [1] 8.47e+42 7.52e+42
 #> 
 #> [[3]]
-#> [1] 102.4  99.5 101.1
+#> [1] 101 100 100
 ```
 
 mitu argumenti igale funktsioonile:
@@ -1817,13 +1818,13 @@ args <- list(norm = c(3, mean = 0, sd = 1),
 
 invoke_map(functions, args)
 #> [[1]]
-#> [1] -0.668  0.120 -0.229
+#> [1]  0.255  0.187 -0.494
 #> 
 #> [[2]]
-#> [1] 190.423   0.176
+#> [1] 14.4 48.5
 #> 
 #> [[3]]
-#> [1] -29617
+#> [1] 39.1
 ```
 
 
