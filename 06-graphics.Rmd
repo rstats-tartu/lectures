@@ -1849,14 +1849,12 @@ ggraph(graph_cors) +
 Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.
 
 Kenam (ja informatiivsem) versioon eelmisest on
-```{r warning=FALSE, message=FALSE}
+```{r}
 ggraph(graph_cors) +
   geom_edge_link(aes(edge_alpha = abs(r), edge_width = abs(r), color = r)) +
   guides(edge_alpha = "none", edge_width = "none") +
-  scale_edge_colour_gradientn(limits = c(-1, 1), colors = c( "dodgerblue2", "firebrick2")) +
   geom_node_point(color = "white", size = 5) +
-  geom_node_text(aes(label = name), repel = TRUE) +
-  theme_graph() 
+  geom_node_text(aes(label = name), repel = TRUE)
 ```
 
 Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti -- vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).
@@ -1868,11 +1866,9 @@ Kui teil on andmetes rohkem dimensioone, kui te jõuate plottida, siis peakompon
 See analüüs on mõistlik ainult siis, kui andmed varieeruvad kõige rohkem suunas, mis on ka teaduslikult oluline (ei ole juhuslik müra) ja muutujate vahel ei ole mittelineaarseid interaktsioone (muutujad on sõltumatud). Te ei tea kunagi ette, kas ja millal PCAst võib kasu olla reaalsete mustrite leidmisel -- seega tuleks PCA tõlgendamisega olla pigem ettevaatlik, sest inimaju on suuteline mustreid nägema ka seal, kus neid ei ole. Lisaks, isegi kui PCAs ilmuv muster on ehtne, on PCA dimensioone sageli palju raskem teaduslikult tõlgendada kui originaalseid muutujaid.
 
 ```{r grbb}
-ir.species <- iris[, 5]
-ir.pca <- prcomp(iris[,1:4], center=T, scale = TRUE) 
-#library(devtools)
-#install_github("ggbiplot", "vqv")
 library(ggbiplot)
+ir.species <- iris[, 5]
+ir.pca <- prcomp(iris[,1:4], center = TRUE, scale = TRUE) 
 g <- ggbiplot(ir.pca, obs.scale = 1, var.scale = 1, 
               groups = iris$Species, ellipse = TRUE, 
               circle = TRUE)
@@ -1895,7 +1891,8 @@ library(tsne)
 ts <- tsne(iris[1:4], perplexity = 10)
 ts <- as_tibble(ts)#output is a table of 2D t-sne coordinates
 ism1 <- bind_cols(iris, ts)
-ggplot(ism1, aes(x=V1, y=V2, color=(Species)))+ geom_point()
+ggplot(ism1, aes(x = V1, y = V2, color = (Species))) + 
+  geom_point()
 ```
 
 # Üldised jooniste printsiibid
