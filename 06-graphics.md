@@ -62,7 +62,7 @@ Antud juhul on meil igast liigist mõõdetud 50 isendit.
 plot(iris$Species)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-4-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-3-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kui te annate ette ühe pideva muutuja:
 
@@ -70,7 +70,7 @@ Kui te annate ette ühe pideva muutuja:
 plot(iris$Sepal.Length)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-5-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-4-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nüüd on tulemuseks graafik, kus on näha mõõtmisete rea (ehk tabeli) iga järgmise liikme (tabeli rea) väärtus. 
 Siin on meil kokku 150 mõõtmist muutujale `Sepal.Length`.
@@ -82,7 +82,7 @@ Alternatiiv sellele vaatele on `stripchart()`
 stripchart(iris$Sepal.Length)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-6-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-5-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Enam lihtsamaks üks joonis ei lähe!
 
@@ -93,7 +93,7 @@ Mis juhtub, kui me x-teljele paneme faktortunnuse ja y-teljele pideva tunnuse?
 plot(iris$Species, iris$Sepal.Length)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-7-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-6-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Vastuseks on boxplot. Sama graafiku saame ka nii: 
 
@@ -109,7 +109,7 @@ Aga vastupidi?
 plot(iris$Sepal.Length, iris$Species)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-9-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-8-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Pole paha, see on üsna informatiivne scatterplot.
 
@@ -119,7 +119,7 @@ Järgmiseks kahe pideva muutuja scatterplot, kus me veel lisaks värvime punktid
 plot(iris$Sepal.Length, iris$Sepal.Width, col = iris$Species)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-10-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-9-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Ja lõpuks tõmbame läbi punktide punase regressioonijoone: 
 
@@ -129,7 +129,7 @@ model <- lm(iris$Sepal.Width ~ iris$Sepal.Length)
 abline(model, col = "red", lwd = 2)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-11-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-10-1.svg" width="70%" style="display: block; margin: auto;" />
 
 "lwd" parameeter reguleerib joone laiust. 
 `lm()` on funktsioon, mis fitib sirge vähimruutude meetodil.
@@ -140,7 +140,7 @@ Mis juhtub, kui me anname `plot()` funktsioonile sisse kogu irise tibble?
 plot(iris, col = iris$Species)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-12-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-11-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Juhhei, tulemus on paariviisiline graafik kõigist muutujate kombinatsioonidest.
 
@@ -150,7 +150,7 @@ Ainus  mitte-plot verb, mida baasgraafikas vajame, on `hist()`, mis joonistab hi
 hist(iris$Sepal.Length)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-13-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-12-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Histogrammi tegemiseks jagatakse andmepunktid nende väärtuste järgi bin-idesse ja plotitakse igasse bin-i sattunud andmepunktide arv. 
 Näiteks esimeses bin-is on "Sepal.Length" muutuja väärtused, mis jäävad 4 ja 4.5 cm vahele ja selliseid väärtusi on kokku viis. 
@@ -161,7 +161,7 @@ Bini laiust saab muuta kahel viisil, andes ette bin-ide piirid või arvu:
 hist(iris$Sepal.Length, breaks = seq(4, 9, by = 0.25))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-14-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-13-1.svg" width="70%" style="display: block; margin: auto;" />
 
 või
 
@@ -169,7 +169,7 @@ või
 hist(iris$Sepal.Length, breaks = 15)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-15-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-14-1.svg" width="70%" style="display: block; margin: auto;" />
 
 See viimane on kiire viis bin-i laiust reguleerida, aga arvestage, et sõltuvalt andmetest ei pruugi "breaks = 15" tähendada, et teie histogrammil on 15 bin-i.
 
@@ -190,7 +190,7 @@ abline(v = median(iris$Sepal.Length), col = "blue", lwd = 2)
 abline(h = 0.3, col = "cyan", lwd = 2)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-16-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-15-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ## ggplot2
 
@@ -247,7 +247,7 @@ Kõigepealt suuname oma andmed `ggplot()` funktsiooni:
 ggplot(iris)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-17-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/grggplot-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Saime tühja ploti. ggplot() loob vaid koordinaatsüsteemi, millele saab kihte lisada. 
 Erinevalt baasgraafikast, ggplot-i puhul ainult andmetest ei piisa, et graafik valmis joonistataks.
@@ -262,7 +262,7 @@ p <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width))
 p
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-18-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-16-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Graafik on ikka tühi sest me pole ggplotile öelnud, millist visualiseeringut me tahame. 
 Teeme seda nüüd ja lisame andmepunktid kasutades `geom_point`-i ja lineaarse regressioonijoone kasutades `geom_smooth` funktsiooni koos argumendiga `method = lm`.
@@ -273,7 +273,7 @@ p <- p + geom_point() + geom_smooth(method = lm)
 p
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-19-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-17-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Veelkord, me lisasime kaks kihti: esimene kiht `geom_point()` visualiseerib andmepunktid ja teine `geom_smooth(method = "lm")` joonistab regressioonisirge koos usaldusintervalliga (standardviga).
 
@@ -292,7 +292,7 @@ Lisame graafikule p horisontaaljoone y = 20:
 p + geom_hline(yintercept = 20)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-20-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-18-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Vertikaalseid sirgeid saab lisada `geom_vline()` abil, näiteks vertikaalne sirge asukohas x = 3:
 
@@ -301,7 +301,7 @@ Vertikaalseid sirgeid saab lisada `geom_vline()` abil, näiteks vertikaalne sirg
 p + geom_vline(xintercept = 3)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-21-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-19-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Segmendid ja nooled 
 
@@ -316,7 +316,7 @@ p + geom_segment(aes(x = 4, y = 15, xend = 4, yend = 27))
 p + geom_segment(aes(x = 2, y = 15, xend = 3, yend = 15))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-22-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-22-2.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-20-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-20-2.svg" width="70%" style="display: block; margin: auto;" />
 
 Saab joonistada ka **nooli**, kasutades arumenti "arrow" funktsioonis `geom_segment()`
 
@@ -326,7 +326,7 @@ p + geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
                  arrow = arrow(length = unit(0.5, "cm")))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-23-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-21-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ### Joongraafikud
@@ -345,7 +345,7 @@ ggplot(data = meals, aes(x = time, y = bill, group = sex)) +
   geom_point(color = "blue", size = 3)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-24-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-22-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Järgneval graafikul muudame joonetüüpi automaatselt muutuja sex taseme järgi:
 
@@ -357,7 +357,7 @@ ggplot(meals, aes(x = time, y = bill, group = sex)) +
   theme(legend.position = "top")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-25-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-23-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Muuda jooni käsitsi:
 
@@ -379,7 +379,7 @@ ggplot(meals, aes(x = time, y = bill, group = sex)) +
   theme(legend.position = "top")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-26-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-24-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ### Punktide tähistamise trikid
@@ -391,7 +391,7 @@ ggplot(iris) +
   geom_point(aes(x = Sepal.Length, y = Sepal.Width, size = Petal.Length, color = Species))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-27-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-25-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kui me kasutame color argumenti `aes()`-st väljaspool, siis värvime kõik punktid sama värvi.
 
@@ -400,7 +400,7 @@ ggplot(iris) +
   geom_point(aes(x = Sepal.Length, y = Sepal.Width, size = Petal.Length), color = "red")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-28-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-26-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Kasulik trikk on kasutada mitut andmesetti sama ploti tegemiseks. 
@@ -444,7 +444,7 @@ ggplot(mpg, aes(displ, hwy)) +
   geom_point(size = 3, shape = 1, data = best_in_class) 
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-30-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-28-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Lõpuks toome graafikul eraldi välja nende parimate autode mudelite nimed. 
 Selleks kasutame "ggrepel" raamatukogu funktsiooni `geom_label_repel()`.
@@ -456,7 +456,7 @@ ggplot(mpg, aes(displ, hwy)) +
   geom_label_repel(aes(label = model), data = best_in_class, cex = 2)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-31-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-29-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ## _Facet_ -- pisigraafik
 
@@ -474,7 +474,7 @@ p <- ggplot(mpg, aes(displ, hwy))
 p + geom_point(aes(colour = class))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-32-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-30-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -483,7 +483,7 @@ p + geom_point() +
   facet_wrap(~ class)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-33-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-31-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -491,7 +491,7 @@ p + geom_point() +
   facet_wrap(~ class, nrow = 2)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-34-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-32-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kui me tahame kahe muutuja kõigi kombinatsioonide vastu paneele, siis kasuta `facet_grid()` funktsiooni.
 
@@ -500,7 +500,7 @@ p + geom_point() +
   facet_grid(drv ~ cyl)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-35-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-33-1.svg" width="70%" style="display: block; margin: auto;" />
 
 - "drv" -- drive - 4(-wheel), f(orward), r(ear).
 - "cyl" -- cylinders - 4, 5, 6, or 8.
@@ -513,7 +513,7 @@ p + geom_point() +
   facet_grid(. ~ drv)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-36-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-34-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -521,7 +521,7 @@ p + geom_point() +
   facet_grid(drv ~ .)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-37-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-35-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ## Mitu graafikut paneelidena ühel joonisel
 
@@ -543,7 +543,7 @@ library(gridExtra)
 grid.arrange(i2, i1, nrow = 1) # ncol = 2 also works
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-39-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-36-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ## Teljed
 ### Telgede ulatus
@@ -573,7 +573,7 @@ ggplot(cars, aes(x = speed, y = dist)) +
   ggtitle("Lineaarsed andmed ja teljed")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-40-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-37-1.svg" width="70%" style="display: block; margin: auto;" />
 
 2. Logaritmi andmed `aes()`-s.
 
@@ -584,7 +584,7 @@ ggplot(cars, aes(x = log2(speed), y = log2(dist))) +
   ggtitle("Andmed ja teljed on logaritmitud")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-41-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-38-1.svg" width="70%" style="display: block; margin: auto;" />
 
 3. Andmed on logaritmitud, aga teljed mitte.
 
@@ -596,7 +596,7 @@ ggplot(cars, aes(x = speed, y = dist)) +
   ggtitle("Andmed on logaritmitud, aga teljed mitte")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-42-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-39-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ### Pöörame graafikut 90 kraadi
@@ -609,7 +609,7 @@ ggplot(iris, mapping = aes(x = Species, y = Sepal.Length)) +
   coord_flip()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-43-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-40-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -624,7 +624,7 @@ ggplot(mpg, aes(displ, hwy)) +
   ggtitle("y-telje markeeringud\n15 kuni 40, viieste vahedega")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-44-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-41-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Muudame x-telje markeeringute nurka muutes `theme()` funktsiooni argumenti "axis.text.x":
 
@@ -634,7 +634,7 @@ ggplot(mpg, aes(displ, hwy)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-45-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-42-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Eemaldame telgede markeeringud, ka läbi `theme()` funktsiooni:
 
@@ -644,7 +644,7 @@ ggplot(mpg, aes(displ, hwy)) +
   theme(axis.text = element_blank())
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-46-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-43-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Muudame teljemarkeeringute järjekorda
 
@@ -654,7 +654,7 @@ p
 p + scale_x_discrete(breaks=c("versicolor", "setosa"))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-47-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-47-2.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-44-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-44-2.svg" width="70%" style="display: block; margin: auto;" />
 
 Muuda teljemarkeeringuid ja kustuta telje nimi.
 
@@ -663,7 +663,7 @@ Muuda teljemarkeeringuid ja kustuta telje nimi.
 p + scale_x_discrete(labels=c("setosa" = "sp 1", "versicolor" = "sp2"), name=NULL)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-48-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-45-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -679,7 +679,7 @@ p + labs(
      )
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-49-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-46-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Eemaldame telgede nimed:
 
@@ -687,7 +687,7 @@ Eemaldame telgede nimed:
 p + theme(axis.title = element_blank())
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-50-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-47-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ## Graafiku pealkiri, alapeakiri ja allkiri
@@ -703,7 +703,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
       )
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-51-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/grpealk-1.svg" width="70%" style="display: block; margin: auto;" />
 
 `ggtitle()`  annab graafikule pealkirja
 
@@ -772,7 +772,7 @@ ggplot(mpg, aes(displ, hwy)) +
   scale_colour_brewer(palette = "Set1")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-56-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-52-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ### Värviskaalad pidevatele muutujatele
@@ -802,7 +802,7 @@ ggplot(faithfuld) +
   scale_fill_distiller(palette = "Spectral")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-58-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-54-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ### Värviskaalad faktormuutujatele 
@@ -881,7 +881,7 @@ p + scale_fill_brewer()
 p + scale_fill_brewer(direction = -1) + theme_dark()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-62-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-62-2.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-62-3.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-62-4.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-62-5.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-62-6.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-58-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-58-2.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-58-3.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-58-4.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-58-5.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-58-6.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Väga lahedad värviskaalad, mis eriti hästi sobivad diskreetsetele muutujatele, on wesanderson paketis. Enamus skaalasid on küll ainult 3-5 värviga. Sealt saab siiski ekstrapoleerida rohkematele värvidele (?wes_palette; ?wes_palettes).
@@ -957,7 +957,7 @@ my_data %>%
   geom_abline(slope = 1, intercept = 0, linetype = 2, colour = "red")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-65-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-61-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Now we will prepare the difference data:
 
@@ -1027,7 +1027,7 @@ dd %>%
   theme_bw()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-68-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/grkurat-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Graafiku loetavuse huvides on mõistlik Y- telg sorteerida väärtuste järgi.
 
@@ -1091,7 +1091,7 @@ ggplot(data = iris1, aes(x = Mean, y = Species)) +
        y = NULL) 
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-71-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-66-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Alternatiivne graafiku kuju (muudetud on ainult geom_point size ja shape parameetreid):
@@ -1114,7 +1114,7 @@ ggplot(data = iris1, aes(x = Mean, y = Species)) +
        y = NULL) 
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-72-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-67-1.svg" width="70%" style="display: block; margin: auto;" />
 
 CI-d saab arvutada ka käsitsi.
 Kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame CI arvutamiseks kasutada järgmisi heuristikuid:
@@ -1135,7 +1135,7 @@ Kuna CI sõltub SEM-ist, sõltub see muidugi ka N-st, aga mitte lineaarselt, vai
 See tähendab, et uuringu usaldusväärsuse tõstmine, tõstes N-i kipub olema progressiivselt kulukas protsess.
 Analoogiana võib siin tuua sportliku vormi tõstmine, kus trennis käimisega alustades on suhteliselt lihtne tõsta oma sooritust näiteks 20% võrra, aga peale aastast usinat rassimist tuleb juba teha väga tõsine pingutus, et saavutada veel 1% tõusu.
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-74-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-69-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nagu näha jooniselt, on meil tegu progresiivselt kallineva ülesandega: mida rohkem tahame usalduspiire kitsamaks muuta **suhteliselt** (mis on sama, mis öelda, et me tahame tõsta katse tundlikust), seda suurema tõusu peame tagama kogutud andmete hulgas **absoluutarvuna**. 
 
@@ -1155,7 +1155,7 @@ ggplot(iris, aes(x=Species, y=Sepal.Length)) +
   theme_tufte()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-75-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-70-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Siin on meil lausa 50 andmepunkti iga Irise liigi kohta ja graafik on ikkagi täitsa hästi loetav. 
 
@@ -1177,7 +1177,7 @@ p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), geom="pointrange", 
 #p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), geom="errorbar", color="red", width=0.2, size=1) + stat_summary(fun.y=mean, geom="point", size=3, color="red")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-76-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-76-2.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-71-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-71-2.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Muuda punktide värvi nii:
@@ -1202,13 +1202,13 @@ Kui teil on palju andmepunkte (>50) ning soovite uurida nende jaotust (ja/või v
 stripchart(iris$Sepal.Length, method = "jitter")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-77-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-72-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
 2. jaga andmestik x-teljel võrdse laiusega vahemikesse (binnidesse)
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-78-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-73-1.svg" width="70%" style="display: block; margin: auto;" />
 
 3. loe kokku, mitu andmepunkti sattus igasse binni. Näiteks on meil viimases binnis (7.5 ... 8) kuus anmdepunkti
 4. ploti iga bin tulpdiagrammina (y- teljel on tüüpiliselt andmepunktide arv)
@@ -1218,7 +1218,7 @@ stripchart(iris$Sepal.Length, method = "jitter")
 ggplot(iris, aes(x=Sepal.Length)) + geom_histogram(breaks= seq(4, 8, by=0.5), color="white")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-79-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-74-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Tavaliselt on mõistlik määrata histogrammi binnide laius ja asukoht `breaks` argumeniga. On olemas ka alternatiivsed argumendid `bins`, mis annab binnide arvu, ja `binwidth`, mis annab binni laiuse, aga ohutum on kasutada `breaks`-i. Vt ka geom_boxplot() funktsiooni helpi.
 
@@ -1232,7 +1232,7 @@ ggplot(a1, aes(a)) +
   geom_histogram(breaks= seq(0,1, by=0.05), color= "navyblue", fill=NA)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-80-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-75-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Pane tähele, et tulemus on küllaltki erinev ja et `breaks` argument töötab korrektselt. Nagu järgnev koodijupp näitab, on meil on 6 väärtust alla 0.05 (1. bin) ja 8 väärtust üle 0.95 (20. bin), mis on korrektselt kajastatud ainult `breaks` argumentdiga histogrammil.
 
@@ -1255,7 +1255,7 @@ g4 <- ggplot(iris, aes(Sepal.Length)) + geom_histogram(bins = 50)
 grid.arrange(g1, g2, g3, g4, nrow = 2)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-82-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-77-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Seega on tasub joonistada samadest andmetest mitu erineva binnilaiusega histogrammi, et oma andmeid vaadata mitme nurga alt.
 
@@ -1276,7 +1276,7 @@ ggplot(data = iris, aes(x = Sepal.Length, fill = Species)) +
   theme_tufte()          # for clean look overall
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-83-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-78-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Teine võimalus on näidata kõiki koos ühel paneelil kasutades histogrammi asemel sageduspolügoni. See töötab täpselt nagu histogramm, ainult et tulpade asemel joonistatakse binnitippude vahele jooned. Neid on lihtsam samale paneelile üksteise otsa laduda.
 
@@ -1285,7 +1285,7 @@ Teine võimalus on näidata kõiki koos ühel paneelil kasutades histogrammi ase
 ggplot(iris, aes(Sepal.Length, color=Species)) + geom_freqpoly(breaks= seq(4, 8, by=0.5)) + theme_tufte()+ labs(title="Frequency plot")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-84-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-79-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Selle "histogrammi" binne saab ja tuleb manipuleerida täpselt samamoodi nagu geom_histogrammis.
 
@@ -1297,7 +1297,7 @@ ggplot(iris, aes(Species, Sepal.Length)) + geom_violin(aes(color=Species))+
   geom_jitter(size=0.2, width=0.1) + labs(title="Violin plot", x=NULL)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-85-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-80-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ## Tihedusplot
 
@@ -1308,10 +1308,10 @@ Hea alternatiiv histogrammile on joonistada silutud andmejaotus ehk tihedusplot.
 ggplot(iris, aes(Sepal.Length, fill=Species)) + geom_density(alpha=0.5)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-86-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-81-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Adjust parameeter reguleerib funktsiooni silumise määra.
-<img src="06-graphics_files/figure-html/unnamed-chunk-87-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-82-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Veel üks võimalus jaotusi kõrvuti vaadata on joyplot, mis paneb samale paneelile kasvõi sada tihedusjaotust. Näiteid vaata ka aadressilt https://cran.r-project.org/web/packages/ggridges/vignettes/gallery.html
 
@@ -1340,7 +1340,7 @@ ggplot(sch, aes(x = score1, y = school, group = school, fill = ..x..)) +
   theme_ridges() 
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-89-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-89-2.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-84-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-84-2.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -1353,7 +1353,7 @@ ggplot(mpg, aes(x=hwy, y=manufacturer, color=drv, point_color=drv, fill=drv)) +
   theme_ridges(center = TRUE)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-90-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-85-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ## Boxplot
 
@@ -1376,7 +1376,7 @@ ggplot(iris, aes(Species, Sepal.Length, color = Species)) +
   geom_jitter(width = 0.1, size=0.1, color="black")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-91-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-86-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Boxplotile saab lisada ka aritmeetilise keskmise (järgnevas punase täpina), aga pea meeles, et boxploti põhiline kasu tuleb sellest, et see ei eelda sümmeetrilist andmejaotust. Seega on mediaani lisamine üldiselt parem lahendus.
 
@@ -1386,9 +1386,9 @@ ggplot(iris, aes(Species, Sepal.Length, color = Species)) +
   geom_boxplot()+ stat_summary(fun.y=mean,col='red', geom='point', size=2)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-92-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-87-1.svg" width="70%" style="display: block; margin: auto;" />
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-93-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-88-1.svg" width="70%" style="display: block; margin: auto;" />
 
 See pilt näitab, et kui jaotus on mitme tipuga, siis võib boxplotist olla rohkem kahju kui kasu. 
 
@@ -1407,7 +1407,7 @@ ggplot(recent, aes(date, unemploy)) + geom_line()
 ggplot(recent, aes(date, unemploy)) + geom_step()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-94-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-94-2.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-89-1.svg" width="70%" style="display: block; margin: auto;" /><img src="06-graphics_files/figure-html/unnamed-chunk-89-2.svg" width="70%" style="display: block; margin: auto;" />
 
 Astmeline graafik on eriti hea olukorras, kus astmete vahel y-dimensioonis muutust ei toimu -- näiteks piimapaki hinna dünaamika poes.
 
@@ -1421,7 +1421,7 @@ m <- ggplot(economics, aes(unemploy/pop, psavert))
 m + geom_path(aes(colour = as.numeric(date)))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-95-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-90-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Tulpdiagramm juhib lugeja tähelepanu väikestele teravatele muutustele. Kui see on see, millele sa tahad tähelepanu juhtida, siis kasuta seda.
@@ -1432,7 +1432,7 @@ p2 <- ggplot(economics, aes(date, unemploy)) + geom_bar(stat="identity")
 grid.arrange(p1, p2, nrow = 2)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-96-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-91-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Et mürarikkaid andmeid siluda kasutame liikuva keskmise meetodit. Siin asendame iga andmepunkti selle andmepunkti ja tema k lähima naabri keskmisega. k on tavaliselt paaritu arv ja mida suurem k, seda silutum tuleb tulemus. 
 
@@ -1445,7 +1445,7 @@ ggplot(economics, aes(date, rollmean)) + geom_line()
 #> (geom_path).
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-97-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-92-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kui on oht, et ebahuvitavad tsüklid ja trendid varjutavad veel mingeid mustreid, mis meile võiks huvi pakkuda, võib proovida lahutada aegrea komponentideks kasutades seasonaalset lahutamist (Seasonal decomposition). R::stl() kasutab selleks loess meetodit lahutades aegrea kolmeks komponendiks. 1) trendikomponent püüab keskmise taseme muutusi ajas. 2) seasonaalne komponent lahutab muutused aastaaegade lõikes (konstantse amplituudiga tsüklilisus aegrea piires) ja 3) irregulaarne komponent on see, mis üle jääb. 
 aegrea osadeks lahutamine võib olla additiivne või mulitlikatiivne. Additiivses mudelis
@@ -1468,7 +1468,7 @@ require(graphics)
 plot(stl(co2, "per"))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-98-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-93-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Pane tähele graafiku paremas servas asuvaid halle kaste, mis annavad mõõtkava erinevate paneelide võrdlemiseks. Siit näeme, et "remainder" paneeli andmete kõikumise vahemik on väga palju väiksem kui ülemisel paneelil, kus on plotitud täisandmed.
 
@@ -1480,7 +1480,7 @@ plot(stl(log(co2), s.window = "per", t.window = 199))
 # t.window -- the span (in lags) of the loess window for trend extraction, which should be odd.
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-99-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-94-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ## Scatter plot
 
@@ -1499,7 +1499,7 @@ m <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
 m + geom_density_2d()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-100-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-95-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kui punkte on liiga palju, et välja trükkida, kasuta geom = "polygon" varianti.
 
@@ -1508,7 +1508,7 @@ Kui punkte on liiga palju, et välja trükkida, kasuta geom = "polygon" varianti
 m + stat_density_2d(aes(fill = ..level..), geom = "polygon")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-101-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-96-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Nüüd plotime 3 iriseliigi õielehe pikkuse seose tolmuka pikkusega, ja lisame igale liigile mittelineaarse mudelennustuse koos 95% usaldusintervalliga. Mudel püüab ennustada keskmist õielehe pikkust igal tolmuka pikkusel, ja 95% CI kehtib ennustusele keskmisest, mitte üksikute isendite õielehtede pikkustele. 
@@ -1519,7 +1519,7 @@ ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
   geom_smooth()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-102-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-97-1.svg" width="70%" style="display: block; margin: auto;" />
 
 See mudeldamine tehti loess meetodiga, mis kujutab endast lokaalselt kaalutud polünoomset regressiooni. Loessi põhimõte on, et arvuti fitib palju lokaalseid lineaarseid osamudeleid, mis on kaalutud selles mõttes, et andmepunktidel, mis on vastavale osamudelile lähemal, on mudeli fittimisel suurem kaal. Nendest osamudelitest silutakse siis kokku lõplik mudel, mida joonisel näete.
 
@@ -1535,7 +1535,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
   theme_classic()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-103-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-98-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Me võime `geom_smooth()`-i anda erineva andmeseti kui `ggplot()` põhifunktsiooni. 
 Nii joonistame me regressioonisirge ainult nendele andmetele.
@@ -1548,7 +1548,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
   theme_bw()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-104-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-99-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Alljärgnevalt näiteks moodus kuidas öelda, et me soovime regressioonijoont näidata ainult iiriseliikide virginica või versicolor andmetele.
 
@@ -1563,7 +1563,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
   geom_smooth(data = smooth_data, method = "lm")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-105-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-100-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Järgnev kood võimaldab eksplitsiitselt kasutada fititud regressioonikoefitsiente, kasutades regeressioonijoone määramiseks koordinaatteljestikus x-telje lõikumispunkti ja sirge tõusu. Lineaarse mudeli fittimist õpime peatükis ....
 Kasuta `geom_abline()`.
@@ -1586,7 +1586,7 @@ p + geom_abline(intercept = coefs[1],
                  size = 1.5)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-106-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-101-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Kaalutud lineaarne mudel
 
@@ -1614,7 +1614,7 @@ ggplot(midwest_subset, aes(percwhite, percbelowpoverty)) +
        title = "Vaesusriski seos rassiga")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-108-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-103-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kaalumine mitte ainult ei muutnud sirge asukohta, vaid vähendas ka ebakindlust sirge tõusu osas.
 
@@ -1651,7 +1651,7 @@ ggplot(diamonds) +
   theme(legend.position="none")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-110-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-105-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Pane tähele, et y-teljel on arv, mitu korda esineb tabelis iga cut. See arv ei ole tabelis muutuja. geom_bar, geom_hist, geom_dens arvutavad plotile uued y väärtused --- nad jagavad andmed binidesse ja loevad üles, mitu andmepunkti sattus igasse bini.
 
@@ -1673,7 +1673,7 @@ ggplot(diamonds) +
   geom_bar(aes(x = cut, fill = clarity))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-112-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-107-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Kui me tahame, et cut-i ja clarity kombinatsioonid oleks kastidena ükteise sees, pigem kui üksteise otsa kuhjatud, siis kasutame position = "identity" argumenti. 
 
@@ -1683,7 +1683,7 @@ ggplot(diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(alpha = 0.7, position = "identity") 
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-113-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-108-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ka see graafik pole väga lihtne lugeda. Parem viime clarity klassid üksteise kõrvale
 
@@ -1693,7 +1693,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "dodge")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-114-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-109-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Eelnev on hea viis kuidas võrrelda clarity tasemete esinemis-sagedusi ühe cut-i taseme piires.
 
@@ -1705,7 +1705,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "fill")
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-115-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-110-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Ja lõpetuseks, kui teile miskipärast ei meeldi Cleveland plot ja te tahate plottida tulpdiagrammi nii, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage `geom_col()`
 
@@ -1746,7 +1746,7 @@ ggplot(pred_matrix, aes(x = Petal.Length)) +
   geom_line(aes(y = pred))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-118-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-113-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nüüd lisame irise tabelisse residuaalid mugavusfunktsiooni add_residual() abil (tekib tulp "resid"). Residuaal on lihtsalt andmepunkti Sepal.Length väärtus miinus mudeli ennustus.
 
@@ -1757,7 +1757,7 @@ iris1 <- add_residuals(iris1, m1)
 ggplot(iris1, aes(resid)) + geom_density()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-119-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-114-1.svg" width="70%" style="display: block; margin: auto;" />
 
 See plot näitab, et residuaalid on enam vähem 0-i ümber koondunud, aga negatiivseid residuaale paistab veidi enam olevat. 
 
@@ -1769,17 +1769,17 @@ ggplot(iris1, aes(Petal.Length, resid, color=Species)) +
   geom_point() 
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-120-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-115-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
 See võimaldab otsustada, kas mudel ennustab võrdselt hästi erinevatel predikrori (Petal.Length) väärtustel. Antud mudelis ei näe me süstemaatilisi erinevusi residuaalides üle õielehtede pikkuste vahemiku. 
 
 Proovime sama lihtsa lineaarse mudeliga $Sepal.Length = intercept + b * Petal.Length$.
-<img src="06-graphics_files/figure-html/unnamed-chunk-121-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-116-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-122-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-117-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Siit näeme, et I. setosa puhul on residuaalid pigem >0 ja et see mudel töötab paremini I. versicolor ja I. virginica puhul. 
 
@@ -1795,7 +1795,7 @@ ggplot(iris1, aes(Petal.Length, st_resid, color=Species)) +
   geom_point()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-123-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-118-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standardhälbega.
 
@@ -1853,7 +1853,7 @@ ggplot(df_summary2, aes(x = d10 + wt, y = d10 - wt)) +
   theme_tufte()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-122-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). 
 
@@ -1908,7 +1908,7 @@ plot <- ggplot(df, aes(ES, -log10(p))) +
 plot
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-124-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -1918,7 +1918,7 @@ plot + geom_label_repel(data=d, aes(label=gene), cex=2)
 #alternative: geom_text_repel(data=d, aes(label=gene), cex=2)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-130-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-125-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Sellel pildil markeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse (üks ühik log2 skaalal; ühekordne ES võrdub sellel skaalal nulliga). Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub horisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu "päris" efektiga. Seevastu inimesed, kes teavad, teavad ka seda, et p väärtuste ühekaupa tõlgendamine ei ole sageli mõistlik. 
@@ -1948,7 +1948,7 @@ Seega ei ole meil ES-i ja p väärtuse vahel selget suhet, kus suurtel efektidel
 
 Hea küll, joonistame oma vulkaani uuesti p väärtuste põhjal, mis seekord on arvutatud eeldusel, et mõlema grupi (d10 ja wt) varieeruvused on geeni kaupa võrdsed. See tähendab, et kui ES-i arvutamisel on valimi suurus 3 (kolme katse ja kolme kontrolli keskmine), siis sd arvutamisel, mis omakorda läheb p väärtuse arvutamise valemisse, on valimi suurus mõlemale grupile 6.
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-131-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-126-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Pilt on küll detailides erinev, aga suures plaanis üsna sarnane eelmisega.
 
@@ -1962,7 +1962,7 @@ library(Hmisc)
 histbackback(iris$Sepal.Length, iris$Sepal.Width)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-132-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/grqq-1.svg" width="70%" style="display: block; margin: auto;" />
 
 See bihistogramm, mis küll veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi, näitab, et kahe grupi keskmised on selgelt erinevad (ülekate peaaegu puudub), aga et ka jaotused ise erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).
 
@@ -1981,7 +1981,7 @@ qqPlot(rnorm(100), distribution = "lnorm")
 #> [1] 50 20
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-133-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-127-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 
@@ -1994,7 +1994,7 @@ qqPlot(rnorm(100, 3, 1), main = "normal vs normal") #default on vrdls normaaljao
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-134-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-128-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -2005,7 +2005,7 @@ qqPlot(rlnorm(100), main = "log normal vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-135-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-129-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -2017,7 +2017,7 @@ qqPlot(rt(100, df=2), main = "students t vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-136-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-130-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -2028,7 +2028,7 @@ qqPlot(c(rnorm(50), rnorm(50, 4,1)), main = "two peaked normal vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-137-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-131-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -2039,7 +2039,7 @@ qqPlot(runif(100), main = "uniform vs normal") #default on vrdls normaaljaotuseg
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-138-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-132-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -2050,7 +2050,7 @@ qqPlot(rchisq(100, df=2), main = "chi square vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-139-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-133-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 ```r
@@ -2061,7 +2061,7 @@ qqPlot(rbeta(100, 2, 2), main = "beta vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-134-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
@@ -2070,7 +2070,7 @@ Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 #> [1] 75 42
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-141-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-135-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nagu näha, beta jaotus, mis on normaaljaotusest palju laiem, on qq-plotil sellest halvasti eristatav. Erinevus on väga madalatel ja väga kõrgetel kvantiilidel (jaotuste otstes).
 
@@ -2085,7 +2085,7 @@ qqPlot(y, main = "exponential vs normal")
 par(mfrow=c(1,1))
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-142-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-136-1.svg" width="70%" style="display: block; margin: auto;" />
 
 QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide tolmukate pikkuste ja tolmukate laiuste jaotusi (vt ka peatüki algusest bihistogrammi). Selle meetodi oluline eelis on, et võrreldavad jaotused võivad olla erineva suurusega (N-ga). Siin kasutame base::R qqplot() funktsiooni.
 
@@ -2094,7 +2094,7 @@ QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide t
 qqplot(iris$Sepal.Length, iris$Sepal.Width)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-143-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-137-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka pikkus > 7.5 ja tolmuka laius > 3.6.
 
@@ -2107,7 +2107,7 @@ qqPlot(m1)
 #> [1] 107 123
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-144-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-138-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 
@@ -2123,7 +2123,7 @@ library(pheatmap)
 pheatmap(iris[1:4], fontsize_row = 3, cluster_cols = FALSE, cluster_rows = FALSE)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/grheatm-1.svg" width="70%" style="display: block; margin: auto;" />
 
 
 Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifitseerimist. Seega lisanduvad heat mapile ka dendrogrammid.
@@ -2133,7 +2133,7 @@ Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed
 pheatmap(iris[1:4], fontsize_row = 5)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-139-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest. Kõigepealt jagab dendrogramm vaatlused paaridesse, misjärel hakkab järk-järgult lähimaid paare klastritesse ühendama kuni lõpuks kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks -- seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest. 
 
@@ -2146,7 +2146,7 @@ NB! k-means klustrid on arvutatud hoopis teisel viisil kui eelmisel joonisel ole
 a <- pheatmap(iris[1:4], kmeans_k = 3)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-147-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-140-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Lisame klastrid irise tabelisse ja vaatame, kui hästi klastrid tabavad kolme irise liiki:
 
@@ -2167,7 +2167,7 @@ Ja sama graafiliselt:
 ggplot(iris, aes(factor(cluster), Species)) + geom_count()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-149-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-142-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikkusi on lihtsam võrrelda kui pindalasid eelmisel graafikul):
 
@@ -2178,7 +2178,7 @@ iris_x$cluster <- as.factor(iris_x$cluster)
 mosaic(~Species + cluster, data= iris_x, shade=T, legend=FALSE)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-150-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-143-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Korrelatsioonimaatriksid heat mapina
 
@@ -2190,7 +2190,7 @@ Kõigepealt tavaline scatterplot maatriks.
 plot(iris[1:4], col=iris$Species)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-151-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/grcorr-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime mustrite parema nägemise huvides ka andmetulbad ümber (order=TRUE), seekord kasutades selleks peakomponent analüüsi (PCA).
 
@@ -2200,7 +2200,7 @@ corrgram(iris[1:4], order = TRUE, lower.panel=corrgram::panel.shade,
          upper.panel=panel.cor, diag.panel=panel.density)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-152-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-144-1.svg" width="70%" style="display: block; margin: auto;" />
 
 ### Paraleelkoordinaatgraafik
 
@@ -2216,7 +2216,7 @@ legend(x = 1.75, y = -.25, cex = 1,
     fill = unique(iris$Species), horiz = TRUE)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-153-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-145-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teistest eristada.
 
@@ -2248,7 +2248,7 @@ ggraph(graph_cors) +
   theme_graph()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-154-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-146-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.
 
@@ -2264,7 +2264,7 @@ ggraph(graph_cors) +
   theme_graph() 
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-155-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-147-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti -- vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).
 
@@ -2288,7 +2288,7 @@ g <- g + scale_color_discrete(name = '') + theme_tufte()
 print(g)
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-156-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/grbb-1.svg" width="70%" style="display: block; margin: auto;" />
 
 Seega taandasime 4D andmestiku 2D-sse, säilitades seejuurse suure osa algsest andmete varieeruvusest (esimene pekomponent sisaldab 73% algsest varieeruvusest ja 2. peakomponent 23%). Punkidena on näidatud irise isendid, mis on värvitud liigi järgi, ja lisaks on antud vektorid, mis näitavad, millised algsetest muutujatest korreleeruvad millise peakomponendiga. Siit näeme, et Petal.Length, Petal.Width ja Sepal.Width-i varieeruvus kajastub valdavas enamuses PC1 teljel (vektorid on PC1 teljega enam-vähem paralleelsed) ja et Sepal-Width muutuja varieeruvus kajastub suures osas PC2 teljel. 
 
@@ -2308,7 +2308,7 @@ ism1 <- bind_cols(iris, ts)
 ggplot(ism1, aes(x=V1, y=V2, color=(Species)))+ geom_point()
 ```
 
-<img src="06-graphics_files/figure-html/unnamed-chunk-157-1.svg" width="70%" style="display: block; margin: auto;" />
+<img src="06-graphics_files/figure-html/unnamed-chunk-148-1.svg" width="70%" style="display: block; margin: auto;" />
 
 # Üldised jooniste printsiibid
 
