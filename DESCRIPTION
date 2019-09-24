@@ -31,7 +31,8 @@ Imports:
     gapminder,
     survey, 
     estimability,
-    Publish
+    Publish,
+    funModeling
 Remotes: 
     rstudio/bookdown, 
     rmcelreath/rethinking,
