@@ -26,4 +26,3 @@ knitr::opts_chunk$set(
   fig.show = "hold"
 )
 
-old <- ggplot2::theme_set(ggthemes::theme_tufte())
