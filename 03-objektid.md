@@ -517,15 +517,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.0386 0.3212 0.8714 0.7857 0.9634
+#> [1] 0.4946 0.0472 0.8471 0.0643 0.8421
 #> 
 #> [[2]]
-#>        a       b
-#> 1 0.0386  0.3562
-#> 2 0.3212 -0.0724
-#> 3 0.8714 -0.1794
-#> 4 0.7857  1.2404
-#> 5 0.9634  1.4206
+#>        a      b
+#> 1 0.4946 0.1194
+#> 2 0.0472 1.0976
+#> 3 0.8471 0.0277
+#> 4 0.0643 1.7949
+#> 5 0.8421 0.5724
 #> 
 #> [[3]]
 #> 
@@ -796,11 +796,11 @@ skimr::skim(iris)
 #>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3
 #>  Sepal.Length       0      150 150 5.84 0.83 4.3 5.1
 #>   Sepal.Width       0      150 150 3.06 0.44 2   2.8
-#>   p50 p75 p100     hist
-#>  4.35 5.1  6.9 ▇▁▁▂▅▅▃▁
-#>  1.3  1.8  2.5 ▇▁▁▅▃▃▂▂
-#>  5.8  6.4  7.9 ▂▇▅▇▆▅▂▂
-#>  3    3.3  4.4 ▁▂▅▇▃▂▁▁
+#>   p50 p75 p100
+#>  4.35 5.1  6.9
+#>  1.3  1.8  2.5
+#>  5.8  6.4  7.9
+#>  3    3.3  4.4
 ```
 
 BaasR kasutab `summary(df)` vormi.
@@ -1314,7 +1314,7 @@ VIM::aggr(diabetes, prop = FALSE, numbers = TRUE)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-objektid_files/figure-latex/unnamed-chunk-69-1} \end{center}
+\begin{center}\includegraphics{03-objektid_files/figure-latex/unnamed-chunk-69-1} \end{center}
 Siit on näha, et kui me viskame välja 2 tulpa ja seejärel kõik read, mis sisaldavad NA-sid, kaotame me umbes 20 rida 380-st, mis ei ole suur kaotus.
 
 Kui palju ridu, milles on 0 NA-d? Mitu % kõikidest ridadest?
@@ -1377,7 +1377,7 @@ VIM::matrixplot(diabetes)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{03-objektid_files/figure-latex/unnamed-chunk-73-1} \end{center}
+\begin{center}\includegraphics{03-objektid_files/figure-latex/unnamed-chunk-73-1} \end{center}
 
 
 ### Kuidas rekodeerida NA-d näiteks 0-ks:
@@ -1469,8 +1469,8 @@ Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta 
 1:10 %>%
   map(rnorm, n = 10) %>%
   map_dbl(mean)
-#>  [1]  0.681  2.045  2.931  4.469  4.620  5.889  7.036
-#>  [8]  7.667  9.155 10.242
+#>  [1]  1.27  2.08  3.43  3.97  5.22  5.69  7.06  8.12
+#>  [9]  9.00 10.16
 ```
 
 map()-l on kokku 8 versiooni erinevate väljunditega.
@@ -1505,13 +1505,13 @@ params <- list(
 )
 params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
 #> $norm1
-#> [1]  1.942  0.321  1.075 -0.109  0.474
+#> [1]  0.0731 -2.4229 -0.4865  1.9211 -0.4199
 #> 
 #> $norm2
-#> [1] -0.541  0.579 -0.778  0.727 -1.199
+#> [1] 2.458 1.885 0.912 1.702 0.710
 #> 
 #> $norm3
-#> [1] 2.83 3.43 3.40 1.96 1.20
+#> [1] 2.549 1.718 3.815 0.892 1.520
 ```
 
 `enframe()` konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value). 
@@ -1563,13 +1563,13 @@ parameters <- data.frame(
 )
 parameters %>% pmap(runif)
 #> [[1]]
-#> [1] 0.407
+#> [1] 0.619
 #> 
 #> [[2]]
-#> [1] 5.97 5.23
+#> [1] 5.73 5.21
 #> 
 #> [[3]]
-#> [1] 10.1 10.6 10.5
+#> [1] 10.9 10.5 10.5
 ```
 
 See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.
@@ -1606,13 +1606,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- list(c(5, 2, 3), 2, 3)
 invoke_map(functions, n)
 #> [[1]]
-#> [1]  1.931  7.583  2.730 -0.223  6.650
+#> [1]  0.856  2.915 -1.559  6.140  2.703
 #> 
 #> [[2]]
-#> [1] 0.210 0.439
+#> [1] 0.0625 1.2218
 #> 
 #> [[3]]
-#> [1]  1.338 -5.890 -0.329
+#> [1] -0.608 -2.302 -1.759
 ```
 
 anname sisse esimese argumendi (100) igasse funktsiooni
@@ -1622,13 +1622,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- c(5, 2, 3)
 invoke_map(functions, n, 100)
 #> [[1]]
-#> [1] 99.5 99.3 99.1 98.6 99.7
+#> [1]  99.5  99.0 100.9  98.6 101.4
 #> 
 #> [[2]]
-#> [1] 2.38e+43 2.16e+43
+#> [1] 4.17e+43 7.35e+42
 #> 
 #> [[3]]
-#> [1]  89.6  99.1 100.6
+#> [1]  99.6 102.1  99.1
 ```
 
 mitu argumenti igale funktsioonile:
@@ -1640,13 +1640,13 @@ args <- list(norm = c(3, mean = 0, sd = 1),
 
 invoke_map(functions, args)
 #> [[1]]
-#> [1] -0.559  0.273 -1.411
+#> [1] -0.304 -0.367 -0.245
 #> 
 #> [[2]]
-#> [1] 6.65 4.61
+#> [1] 2.90 8.25
 #> 
 #> [[3]]
-#> [1] 43
+#> [1] -78.5
 ```
 
 

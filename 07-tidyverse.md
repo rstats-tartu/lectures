@@ -233,25 +233,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>       V9    V8    V5     V2    V6
-#>    <dbl> <dbl> <dbl>  <dbl> <dbl>
-#> 1 0.131  0.579 0.496 0.478  0.203
-#> 2 0.0573 0.458 0.419 0.749  0.785
-#> 3 0.959  0.597 0.216 0.0135 0.124
-#> 4 0.806  0.112 0.425 0.267  0.746
-#> 5 0.597  0.303 0.910 0.807  0.604
-#> 6 0.306  0.180 0.501 0.479  0.663
+#>       V9     V8      V5    V2    V6
+#>    <dbl>  <dbl>   <dbl> <dbl> <dbl>
+#> 1 0.661  0.587  0.219   0.956 0.425
+#> 2 0.521  0.0938 0.00779 0.645 0.496
+#> 3 0.726  0.200  0.958   0.918 0.214
+#> 4 0.309  0.0771 0.993   0.709 0.506
+#> 5 0.0454 0.407  0.0509  0.652 0.911
+#> 6 0.889  0.424  0.864   0.808 0.525
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>       V9    V8    V7    V6
-#>    <dbl> <dbl> <dbl> <dbl>
-#> 1 0.131  0.579 0.126 0.203
-#> 2 0.0573 0.458 0.220 0.785
-#> 3 0.959  0.597 0.471 0.124
-#> 4 0.806  0.112 0.657 0.746
-#> 5 0.597  0.303 0.566 0.604
-#> 6 0.306  0.180 0.180 0.663
+#>       V9     V8     V7    V6
+#>    <dbl>  <dbl>  <dbl> <dbl>
+#> 1 0.661  0.587  0.444  0.425
+#> 2 0.521  0.0938 0.823  0.496
+#> 3 0.726  0.200  0.0439 0.214
+#> 4 0.309  0.0771 0.891  0.506
+#> 5 0.0454 0.407  0.874  0.911
+#> 6 0.889  0.424  0.519  0.525
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -602,14 +602,14 @@ a <- tibble(gene= rep(1:5, each=6),
             indeks= rep(c("E", "C"), each= 3, times=5))
 head(a)
 #> # A tibble: 6 x 3
-#>    gene   value indeks
-#>   <int>   <dbl> <chr> 
-#> 1     1  0.244  E     
-#> 2     1  0.425  E     
-#> 3     1 -0.978  E     
-#> 4     1  1.92   C     
-#> 5     1 -1.31   C     
-#> 6     1 -0.0857 C
+#>    gene  value indeks
+#>   <int>  <dbl> <chr> 
+#> 1     1  0.305 E     
+#> 2     1  0.338 E     
+#> 3     1 -1.20  E     
+#> 4     1 -1.69  C     
+#> 5     1 -1.26  C     
+#> 6     1 -0.206 C
 ```
 
 
@@ -618,11 +618,11 @@ a %>% group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 #> # A tibble: 5 x 2
 #>    gene     p
 #>   <int> <dbl>
-#> 1     1 0.806
-#> 2     2 0.580
-#> 3     3 0.647
-#> 4     4 0.758
-#> 5     5 0.692
+#> 1     1 0.270
+#> 2     2 0.735
+#> 3     3 0.670
+#> 4     4 0.108
+#> 5     5 0.677
 ```
 
 
@@ -970,7 +970,7 @@ p
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-49-1} \end{center}
+\begin{center}\includegraphics{07-tidyverse_files/figure-latex/unnamed-chunk-49-1} \end{center}
 
 
 ### `fct_relevel()` tõstab joonisel osad tasemed teistest ettepoole 
@@ -984,7 +984,7 @@ p + aes(tvhours, fct_relevel(relig, "None", "Don't know"))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-50-1} \end{center}
+\begin{center}\includegraphics{07-tidyverse_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 ### Joontega plotil saab `fct_reorder2()` abil assotseerida y väärtused suurimate x väärtustega
 
@@ -1003,7 +1003,7 @@ ggplot(gsscat_sum, aes(age, N, colour = fct_reorder2(marital, age, N))) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-51-1} \end{center}
+\begin{center}\includegraphics{07-tidyverse_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 ### Tulpdiagrammide korral kasuta `fct_infreq()`
 
@@ -1016,4 +1016,4 @@ mutate(gss_cat, marital = fct_infreq(marital) %>% fct_rev()) %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{07-tidyverse_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics{07-tidyverse_files/figure-latex/unnamed-chunk-52-1} \end{center}

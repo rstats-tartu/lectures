@@ -64,7 +64,7 @@ plot(iris$Species)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-3-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 Kui te annate ette ühe pideva muutuja:
 
@@ -74,7 +74,7 @@ plot(iris$Sepal.Length)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 Nüüd on tulemuseks graafik, kus on näha mõõtmisete rea (ehk tabeli) iga järgmise liikme (tabeli rea) väärtus. 
 Siin on meil kokku 150 mõõtmist muutujale `Sepal.Length`.
@@ -88,7 +88,7 @@ stripchart(iris$Sepal.Length)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 Enam lihtsamaks üks joonis ei lähe!
 
@@ -101,7 +101,7 @@ plot(iris$Species, iris$Sepal.Length)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 Vastuseks on boxplot. Sama graafiku saame ka nii: 
 
@@ -119,7 +119,7 @@ plot(iris$Sepal.Length, iris$Species)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Pole paha, see on üsna informatiivne scatterplot.
 
@@ -131,7 +131,7 @@ plot(iris$Sepal.Length, iris$Sepal.Width, col = iris$Species)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 Ja lõpuks tõmbame läbi punktide punase regressioonijoone: 
 
@@ -143,7 +143,7 @@ abline(model, col = "red", lwd = 2)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 "lwd" parameeter reguleerib joone laiust. 
 `lm()` on funktsioon, mis fitib sirge vähimruutude meetodil.
@@ -156,7 +156,7 @@ plot(iris, col = iris$Species)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 Juhhei, tulemus on paariviisiline graafik kõigist muutujate kombinatsioonidest.
 
@@ -168,7 +168,7 @@ hist(iris$Sepal.Length)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 Histogrammi tegemiseks jagatakse andmepunktid nende väärtuste järgi bin-idesse ja plotitakse igasse bin-i sattunud andmepunktide arv. 
 Näiteks esimeses bin-is on "Sepal.Length" muutuja väärtused, mis jäävad 4 ja 4.5 cm vahele ja selliseid väärtusi on kokku viis. 
@@ -181,7 +181,7 @@ hist(iris$Sepal.Length, breaks = seq(4, 9, by = 0.25))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 või
 
@@ -191,7 +191,7 @@ hist(iris$Sepal.Length, breaks = 15)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 See viimane on kiire viis bin-i laiust reguleerida, aga arvestage, et sõltuvalt andmetest ei pruugi "breaks = 15" tähendada, et teie histogrammil on 15 bin-i.
 
@@ -214,7 +214,7 @@ abline(h = 0.3, col = "cyan", lwd = 2)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 ## ggplot2
 
@@ -273,7 +273,7 @@ ggplot(iris)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/grggplot-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/grggplot-1} \end{center}
 
 Saime tühja ploti. ggplot() loob vaid koordinaatsüsteemi, millele saab kihte lisada. 
 Erinevalt baasgraafikast, ggplot-i puhul ainult andmetest ei piisa, et graafik valmis joonistataks.
@@ -290,7 +290,7 @@ p
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 Graafik on ikka tühi sest me pole ggplotile öelnud, millist visualiseeringut me tahame. 
 Teeme seda nüüd ja lisame andmepunktid kasutades `geom_point`-i ja lineaarse regressioonijoone kasutades `geom_smooth` funktsiooni koos argumendiga `method = lm`.
@@ -303,7 +303,7 @@ p
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 Veelkord, me lisasime kaks kihti: esimene kiht `geom_point()` visualiseerib andmepunktid ja teine `geom_smooth(method = "lm")` joonistab regressioonisirge koos usaldusintervalliga (standardviga).
 
@@ -324,7 +324,7 @@ p + geom_hline(yintercept = 20)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 Vertikaalseid sirgeid saab lisada `geom_vline()` abil, näiteks vertikaalne sirge asukohas x = 3:
 
@@ -335,7 +335,7 @@ p + geom_vline(xintercept = 3)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 ### Segmendid ja nooled 
 
@@ -352,7 +352,7 @@ p + geom_segment(aes(x = 2, y = 15, xend = 3, yend = 15))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-20-1} \includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-20-2} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-20-1} \includegraphics{06-graphics_files/figure-latex/unnamed-chunk-20-2} \end{center}
 
 Saab joonistada ka **nooli**, kasutades arumenti "arrow" funktsioonis `geom_segment()`
 
@@ -364,7 +364,7 @@ p + geom_segment(aes(x = 5, y = 30, xend = 3.5, yend = 25),
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 
 ### Joongraafikud
@@ -385,7 +385,7 @@ ggplot(data = meals, aes(x = time, y = bill, group = sex)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 Järgneval graafikul muudame joonetüüpi automaatselt muutuja sex taseme järgi:
 
@@ -399,7 +399,7 @@ ggplot(meals, aes(x = time, y = bill, group = sex)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-23-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 Muuda jooni käsitsi:
 
@@ -423,7 +423,7 @@ ggplot(meals, aes(x = time, y = bill, group = sex)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 
 ### Punktide tähistamise trikid
@@ -437,7 +437,7 @@ ggplot(iris) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-25-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 Kui me kasutame color argumenti `aes()`-st väljaspool, siis värvime kõik punktid sama värvi.
 
@@ -448,7 +448,7 @@ ggplot(iris) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 
 Kasulik trikk on kasutada mitut andmesetti sama ploti tegemiseks. 
@@ -494,7 +494,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 Lõpuks toome graafikul eraldi välja nende parimate autode mudelite nimed. 
 Selleks kasutame "ggrepel" raamatukogu funktsiooni `geom_label_repel()`.
@@ -508,7 +508,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-29-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 ## _Facet_ -- pisigraafik
 
@@ -528,7 +528,7 @@ p + geom_point(aes(colour = class))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 
 
@@ -539,7 +539,7 @@ p + geom_point() +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-31-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 
 ```r
@@ -549,7 +549,7 @@ p + geom_point() +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-32-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-32-1} \end{center}
 
 Kui me tahame kahe muutuja kõigi kombinatsioonide vastu paneele, siis kasuta `facet_grid()` funktsiooni.
 
@@ -560,7 +560,7 @@ p + geom_point() +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
 - "drv" -- drive - 4(-wheel), f(orward), r(ear).
 - "cyl" -- cylinders - 4, 5, 6, or 8.
@@ -575,7 +575,7 @@ p + geom_point() +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 
 ```r
@@ -585,7 +585,7 @@ p + geom_point() +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-35-1} \end{center}
 
 ## Mitu graafikut paneelidena ühel joonisel
 
@@ -609,7 +609,7 @@ grid.arrange(i2, i1, nrow = 1) # ncol = 2 also works
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 ## Teljed
 ### Telgede ulatus
@@ -641,7 +641,7 @@ ggplot(cars, aes(x = speed, y = dist)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-37-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 2. Logaritmi andmed `aes()`-s.
 
@@ -654,7 +654,7 @@ ggplot(cars, aes(x = log2(speed), y = log2(dist))) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-38-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-38-1} \end{center}
 
 3. Andmed on logaritmitud, aga teljed mitte.
 
@@ -668,7 +668,7 @@ ggplot(cars, aes(x = speed, y = dist)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-39-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 
 ### Pöörame graafikut 90 kraadi
@@ -683,7 +683,7 @@ ggplot(iris, mapping = aes(x = Species, y = Sepal.Length)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-40-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
 
 
@@ -700,7 +700,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-41-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-41-1} \end{center}
 
 Muudame x-telje markeeringute nurka muutes `theme()` funktsiooni argumenti "axis.text.x":
 
@@ -712,7 +712,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-42-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
 Eemaldame telgede markeeringud, ka läbi `theme()` funktsiooni:
 
@@ -724,7 +724,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-43-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 Muudame teljemarkeeringute järjekorda
 
@@ -736,7 +736,7 @@ p + scale_x_discrete(breaks=c("versicolor", "setosa"))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-44-1} \includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-44-2} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-44-1} \includegraphics{06-graphics_files/figure-latex/unnamed-chunk-44-2} \end{center}
 
 Muuda teljemarkeeringuid ja kustuta telje nimi.
 
@@ -747,7 +747,7 @@ p + scale_x_discrete(labels=c("setosa" = "sp 1", "versicolor" = "sp2"), name=NUL
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-45-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 
 
@@ -765,7 +765,7 @@ p + labs(
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-46-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-46-1} \end{center}
 
 Eemaldame telgede nimed:
 
@@ -775,7 +775,7 @@ p + theme(axis.title = element_blank())
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 
 ## Graafiku pealkiri, alapeakiri ja allkiri
@@ -793,7 +793,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/grpealk-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/grpealk-1} \end{center}
 
 `ggtitle()`  annab graafikule pealkirja
 
@@ -864,7 +864,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 
 ### Värviskaalad pidevatele muutujatele
@@ -896,7 +896,7 @@ ggplot(faithfuld) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 
 ### Värviskaalad faktormuutujatele 
@@ -977,7 +977,7 @@ p + scale_fill_brewer(direction = -1) + theme_dark()
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-58-1} \includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-58-2} \includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-58-3} \includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-58-4} \includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-58-5} \includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-58-6} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-58-1} \includegraphics{06-graphics_files/figure-latex/unnamed-chunk-58-2} \includegraphics{06-graphics_files/figure-latex/unnamed-chunk-58-3} \includegraphics{06-graphics_files/figure-latex/unnamed-chunk-58-4} \includegraphics{06-graphics_files/figure-latex/unnamed-chunk-58-5} \includegraphics{06-graphics_files/figure-latex/unnamed-chunk-58-6} \end{center}
 
 
 Väga lahedad värviskaalad, mis eriti hästi sobivad diskreetsetele muutujatele, on wesanderson paketis. Enamus skaalasid on küll ainult 3-5 värviga. Sealt saab siiski ekstrapoleerida rohkematele värvidele (?wes_palette; ?wes_palettes).
@@ -1055,7 +1055,7 @@ my_data %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-61-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-61-1} \end{center}
 
 Now we will prepare the difference data:
 
@@ -1127,7 +1127,7 @@ dd %>%
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/grkurat-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/grkurat-1} \end{center}
 
 Graafiku loetavuse huvides on mõistlik Y- telg sorteerida väärtuste järgi.
 
@@ -1193,7 +1193,7 @@ ggplot(data = iris1, aes(x = Mean, y = Species)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-66-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-66-1} \end{center}
 
 
 Alternatiivne graafiku kuju (muudetud on ainult geom_point size ja shape parameetreid):
@@ -1218,7 +1218,7 @@ ggplot(data = iris1, aes(x = Mean, y = Species)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-67-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-67-1} \end{center}
 
 CI-d saab arvutada ka käsitsi.
 Kui valimi suurus on piisav ja normaaljaotus pole meie andmetest liiga kaugel, siis saame CI arvutamiseks kasutada järgmisi heuristikuid:
@@ -1250,7 +1250,7 @@ See tähendab, et uuringu usaldusväärsuse tõstmine, tõstes N-i kipub olema p
 Analoogiana võib siin tuua sportliku vormi tõstmine, kus trennis käimisega alustades on suhteliselt lihtne tõsta oma sooritust näiteks 20% võrra, aga peale aastast usinat rassimist tuleb juba teha väga tõsine pingutus, et saavutada veel 1% tõusu.
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-69-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-69-1} \end{center}
 
 Nagu näha jooniselt, on meil tegu progresiivselt kallineva ülesandega: mida rohkem tahame usalduspiire kitsamaks muuta **suhteliselt** (mis on sama, mis öelda, et me tahame tõsta katse tundlikust), seda suurema tõusu peame tagama kogutud andmete hulgas **absoluutarvuna**. 
 
@@ -1272,7 +1272,7 @@ ggplot(iris, aes(x=Species, y=Sepal.Length)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-70-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-70-1} \end{center}
 
 Siin on meil lausa 50 andmepunkti iga Irise liigi kohta ja graafik on ikkagi täitsa hästi loetav. 
 
@@ -1296,7 +1296,7 @@ p + stat_summary(fun.data=mean_sdl, fun.args = list(mult=1), geom="pointrange", 
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-71-1} \includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-71-2} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-71-1} \includegraphics{06-graphics_files/figure-latex/unnamed-chunk-71-2} \end{center}
 
 
 Muuda punktide värvi nii:
@@ -1323,14 +1323,14 @@ stripchart(iris$Sepal.Length, method = "jitter")
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-72-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-72-1} \end{center}
 
 
 
 2. jaga andmestik x-teljel võrdse laiusega vahemikesse (binnidesse)
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-73-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-73-1} \end{center}
 
 3. loe kokku, mitu andmepunkti sattus igasse binni. Näiteks on meil viimases binnis (7.5 ... 8) kuus anmdepunkti
 4. ploti iga bin tulpdiagrammina (y- teljel on tüüpiliselt andmepunktide arv)
@@ -1342,7 +1342,7 @@ ggplot(iris, aes(x=Sepal.Length)) + geom_histogram(breaks= seq(4, 8, by=0.5), co
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-74-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-74-1} \end{center}
 
 Tavaliselt on mõistlik määrata histogrammi binnide laius ja asukoht `breaks` argumeniga. On olemas ka alternatiivsed argumendid `bins`, mis annab binnide arvu, ja `binwidth`, mis annab binni laiuse, aga ohutum on kasutada `breaks`-i. Vt ka geom_boxplot() funktsiooni helpi.
 
@@ -1358,7 +1358,7 @@ ggplot(a1, aes(a)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-75-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-75-1} \end{center}
 
 Pane tähele, et tulemus on küllaltki erinev ja et `breaks` argument töötab korrektselt. Nagu järgnev koodijupp näitab, on meil on 6 väärtust alla 0.05 (1. bin) ja 8 väärtust üle 0.95 (20. bin), mis on korrektselt kajastatud ainult `breaks` argumentdiga histogrammil.
 
@@ -1383,7 +1383,7 @@ grid.arrange(g1, g2, g3, g4, nrow = 2)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-77-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-77-1} \end{center}
 
 Seega on tasub joonistada samadest andmetest mitu erineva binnilaiusega histogrammi, et oma andmeid vaadata mitme nurga alt.
 
@@ -1406,7 +1406,7 @@ ggplot(data = iris, aes(x = Sepal.Length, fill = Species)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-78-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-78-1} \end{center}
 
 Teine võimalus on näidata kõiki koos ühel paneelil kasutades histogrammi asemel sageduspolügoni. See töötab täpselt nagu histogramm, ainult et tulpade asemel joonistatakse binnitippude vahele jooned. Neid on lihtsam samale paneelile üksteise otsa laduda.
 
@@ -1417,7 +1417,7 @@ ggplot(iris, aes(Sepal.Length, color=Species)) + geom_freqpoly(breaks= seq(4, 8,
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-79-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-79-1} \end{center}
 
 Selle "histogrammi" binne saab ja tuleb manipuleerida täpselt samamoodi nagu geom_histogrammis.
 
@@ -1431,7 +1431,7 @@ ggplot(iris, aes(Species, Sepal.Length)) + geom_violin(aes(color=Species))+
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-80-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-80-1} \end{center}
 
 ## Tihedusplot
 
@@ -1444,11 +1444,11 @@ ggplot(iris, aes(Sepal.Length, fill=Species)) + geom_density(alpha=0.5)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-81-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-81-1} \end{center}
 
 Adjust parameeter reguleerib funktsiooni silumise määra.
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-82-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-82-1} \end{center}
 
 Veel üks võimalus jaotusi kõrvuti vaadata on joyplot, mis paneb samale paneelile kasvõi sada tihedusjaotust. Näiteid vaata ka aadressilt https://cran.r-project.org/web/packages/ggridges/vignettes/gallery.html
 
@@ -1479,7 +1479,7 @@ ggplot(sch, aes(x = score1, y = school, group = school, fill = ..x..)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-84-1} \includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-84-2} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-84-1} \includegraphics{06-graphics_files/figure-latex/unnamed-chunk-84-2} \end{center}
 
 
 ```r
@@ -1494,7 +1494,7 @@ ggplot(mpg, aes(x=hwy, y=manufacturer, color=drv, point_color=drv, fill=drv)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-85-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-85-1} \end{center}
 
 ## Boxplot
 
@@ -1519,7 +1519,7 @@ ggplot(iris, aes(Species, Sepal.Length, color = Species)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-86-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-86-1} \end{center}
 
 Boxplotile saab lisada ka aritmeetilise keskmise (järgnevas punase täpina), aga pea meeles, et boxploti põhiline kasu tuleb sellest, et see ei eelda sümmeetrilist andmejaotust. Seega on mediaani lisamine üldiselt parem lahendus.
 
@@ -1531,10 +1531,10 @@ ggplot(iris, aes(Species, Sepal.Length, color = Species)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-87-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-87-1} \end{center}
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-88-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-88-1} \end{center}
 
 See pilt näitab, et kui jaotus on mitme tipuga, siis võib boxplotist olla rohkem kahju kui kasu. 
 
@@ -1555,7 +1555,7 @@ ggplot(recent, aes(date, unemploy)) + geom_step()
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-89-1} \includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-89-2} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-89-1} \includegraphics{06-graphics_files/figure-latex/unnamed-chunk-89-2} \end{center}
 
 Astmeline graafik on eriti hea olukorras, kus astmete vahel y-dimensioonis muutust ei toimu -- näiteks piimapaki hinna dünaamika poes.
 
@@ -1571,7 +1571,7 @@ m + geom_path(aes(colour = as.numeric(date)))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-90-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-90-1} \end{center}
 
 
 Tulpdiagramm juhib lugeja tähelepanu väikestele teravatele muutustele. Kui see on see, millele sa tahad tähelepanu juhtida, siis kasuta seda.
@@ -1584,7 +1584,7 @@ grid.arrange(p1, p2, nrow = 2)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-91-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-91-1} \end{center}
 
 Et mürarikkaid andmeid siluda kasutame liikuva keskmise meetodit. Siin asendame iga andmepunkti selle andmepunkti ja tema k lähima naabri keskmisega. k on tavaliselt paaritu arv ja mida suurem k, seda silutum tuleb tulemus. 
 
@@ -1599,7 +1599,7 @@ ggplot(economics, aes(date, rollmean)) + geom_line()
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-92-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-92-1} \end{center}
 
 Kui on oht, et ebahuvitavad tsüklid ja trendid varjutavad veel mingeid mustreid, mis meile võiks huvi pakkuda, võib proovida lahutada aegrea komponentideks kasutades seasonaalset lahutamist (Seasonal decomposition). R::stl() kasutab selleks loess meetodit lahutades aegrea kolmeks komponendiks. 1) trendikomponent püüab keskmise taseme muutusi ajas. 2) seasonaalne komponent lahutab muutused aastaaegade lõikes (konstantse amplituudiga tsüklilisus aegrea piires) ja 3) irregulaarne komponent on see, mis üle jääb. 
 aegrea osadeks lahutamine võib olla additiivne või mulitlikatiivne. Additiivses mudelis
@@ -1624,7 +1624,7 @@ plot(stl(co2, "per"))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-93-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-93-1} \end{center}
 
 Pane tähele graafiku paremas servas asuvaid halle kaste, mis annavad mõõtkava erinevate paneelide võrdlemiseks. Siit näeme, et "remainder" paneeli andmete kõikumise vahemik on väga palju väiksem kui ülemisel paneelil, kus on plotitud täisandmed.
 
@@ -1638,7 +1638,7 @@ plot(stl(log(co2), s.window = "per", t.window = 199))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-94-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-94-1} \end{center}
 
 ## Scatter plot
 
@@ -1659,7 +1659,7 @@ m + geom_density_2d()
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-95-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-95-1} \end{center}
 
 Kui punkte on liiga palju, et välja trükkida, kasuta geom = "polygon" varianti.
 
@@ -1670,7 +1670,7 @@ m + stat_density_2d(aes(fill = ..level..), geom = "polygon")
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-96-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-96-1} \end{center}
 
 
 Nüüd plotime 3 iriseliigi õielehe pikkuse seose tolmuka pikkusega, ja lisame igale liigile mittelineaarse mudelennustuse koos 95% usaldusintervalliga. Mudel püüab ennustada keskmist õielehe pikkust igal tolmuka pikkusel, ja 95% CI kehtib ennustusele keskmisest, mitte üksikute isendite õielehtede pikkustele. 
@@ -1683,7 +1683,7 @@ ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-97-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-97-1} \end{center}
 
 See mudeldamine tehti loess meetodiga, mis kujutab endast lokaalselt kaalutud polünoomset regressiooni. Loessi põhimõte on, et arvuti fitib palju lokaalseid lineaarseid osamudeleid, mis on kaalutud selles mõttes, et andmepunktidel, mis on vastavale osamudelile lähemal, on mudeli fittimisel suurem kaal. Nendest osamudelitest silutakse siis kokku lõplik mudel, mida joonisel näete.
 
@@ -1701,7 +1701,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-98-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-98-1} \end{center}
 
 Me võime `geom_smooth()`-i anda erineva andmeseti kui `ggplot()` põhifunktsiooni. 
 Nii joonistame me regressioonisirge ainult nendele andmetele.
@@ -1716,7 +1716,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-99-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-99-1} \end{center}
 
 Alljärgnevalt näiteks moodus kuidas öelda, et me soovime regressioonijoont näidata ainult iiriseliikide virginica või versicolor andmetele.
 
@@ -1733,7 +1733,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-100-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-100-1} \end{center}
 
 Järgnev kood võimaldab eksplitsiitselt kasutada fititud regressioonikoefitsiente, kasutades regeressioonijoone määramiseks koordinaatteljestikus x-telje lõikumispunkti ja sirge tõusu. Lineaarse mudeli fittimist õpime peatükis ....
 Kasuta `geom_abline()`.
@@ -1758,7 +1758,7 @@ p + geom_abline(intercept = coefs[1],
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-101-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-101-1} \end{center}
 
 ### Kaalutud lineaarne mudel
 
@@ -1788,7 +1788,7 @@ ggplot(midwest_subset, aes(percwhite, percbelowpoverty)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-103-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-103-1} \end{center}
 
 Kaalumine mitte ainult ei muutnud sirge asukohta, vaid vähendas ka ebakindlust sirge tõusu osas.
 
@@ -1827,7 +1827,7 @@ ggplot(diamonds) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-105-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-105-1} \end{center}
 
 Pane tähele, et y-teljel on arv, mitu korda esineb tabelis iga cut. See arv ei ole tabelis muutuja. geom_bar, geom_hist, geom_dens arvutavad plotile uued y väärtused --- nad jagavad andmed binidesse ja loevad üles, mitu andmepunkti sattus igasse bini.
 
@@ -1851,7 +1851,7 @@ ggplot(diamonds) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-107-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-107-1} \end{center}
 
 Kui me tahame, et cut-i ja clarity kombinatsioonid oleks kastidena ükteise sees, pigem kui üksteise otsa kuhjatud, siis kasutame position = "identity" argumenti. 
 
@@ -1863,7 +1863,7 @@ ggplot(diamonds, aes(x = cut, fill = clarity)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-108-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-108-1} \end{center}
 
 ka see graafik pole väga lihtne lugeda. Parem viime clarity klassid üksteise kõrvale
 
@@ -1875,7 +1875,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-109-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-109-1} \end{center}
 
 Eelnev on hea viis kuidas võrrelda clarity tasemete esinemis-sagedusi ühe cut-i taseme piires.
 
@@ -1889,7 +1889,7 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-110-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-110-1} \end{center}
 
 Ja lõpetuseks, kui teile miskipärast ei meeldi Cleveland plot ja te tahate plottida tulpdiagrammi nii, et tulba kõrgus vastaks tabeli ühes lahtris olevale numbrile, mitte faktortunnuse esinemiste arvule tabelis, siis kasutage `geom_col()`
 
@@ -1932,7 +1932,7 @@ ggplot(pred_matrix, aes(x = Petal.Length)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-113-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-113-1} \end{center}
 
 Nüüd lisame irise tabelisse residuaalid mugavusfunktsiooni add_residual() abil (tekib tulp "resid"). Residuaal on lihtsalt andmepunkti Sepal.Length väärtus miinus mudeli ennustus.
 
@@ -1945,7 +1945,7 @@ ggplot(iris1, aes(resid)) + geom_density()
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-114-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-114-1} \end{center}
 
 See plot näitab, et residuaalid on enam vähem 0-i ümber koondunud, aga negatiivseid residuaale paistab veidi enam olevat. 
 
@@ -1959,7 +1959,7 @@ ggplot(iris1, aes(Petal.Length, resid, color=Species)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-115-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-115-1} \end{center}
 
 
 
@@ -1967,11 +1967,11 @@ See võimaldab otsustada, kas mudel ennustab võrdselt hästi erinevatel predikr
 
 Proovime sama lihtsa lineaarse mudeliga $Sepal.Length = intercept + b * Petal.Length$.
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-116-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-116-1} \end{center}
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-117-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-117-1} \end{center}
 
 Siit näeme, et I. setosa puhul on residuaalid pigem >0 ja et see mudel töötab paremini I. versicolor ja I. virginica puhul. 
 
@@ -1989,7 +1989,7 @@ ggplot(iris1, aes(Petal.Length, st_resid, color=Species)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-118-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-118-1} \end{center}
 
 Nüüd näeme I. virginica isendit, mille koha pealt mudel ülehindab 3 standardhälbega.
 
@@ -2049,7 +2049,7 @@ ggplot(df_summary2, aes(x = d10 + wt, y = d10 - wt)) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-122-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-122-1} \end{center}
 
 Meil näha on ilusti tsentreeritud keskmised 3st mõõtmisest kahele tingimusele, kus iga punkt vastab ühele valule. x telg annab suhtelised valgukogused log2 skaalas (selles skaalas on originaalandmed) ja y telg annab efekti suuruse (tingimus 1 miinus tingimus 2). 
 
@@ -2106,7 +2106,7 @@ plot
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-124-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-124-1} \end{center}
 
 
 ```r
@@ -2118,7 +2118,7 @@ plot + geom_label_repel(data=d, aes(label=gene), cex=2)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-125-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-125-1} \end{center}
 
 
 Sellel pildil markeerib horisontaalne punktiirjoon p = 0.05 ja vertikaalsed punktiirid 2-kordse efektisuuruse (üks ühik log2 skaalal; ühekordne ES võrdub sellel skaalal nulliga). Inimesed, kes paremini ei tea, kipuvad vulkaaniplotti tõlgendama nii: kui punkt (loe: valk) asub horisontaalsest joonest kõrgemal ja ei asu kahe vertikaalse joone vahel, siis on tegu "päris" efektiga. Seevastu inimesed, kes teavad, teavad ka seda, et p väärtuste ühekaupa tõlgendamine ei ole sageli mõistlik. 
@@ -2149,7 +2149,7 @@ Seega ei ole meil ES-i ja p väärtuse vahel selget suhet, kus suurtel efektidel
 Hea küll, joonistame oma vulkaani uuesti p väärtuste põhjal, mis seekord on arvutatud eeldusel, et mõlema grupi (d10 ja wt) varieeruvused on geeni kaupa võrdsed. See tähendab, et kui ES-i arvutamisel on valimi suurus 3 (kolme katse ja kolme kontrolli keskmine), siis sd arvutamisel, mis omakorda läheb p väärtuse arvutamise valemisse, on valimi suurus mõlemale grupile 6.
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-126-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-126-1} \end{center}
 
 Pilt on küll detailides erinev, aga suures plaanis üsna sarnane eelmisega.
 
@@ -2165,7 +2165,7 @@ histbackback(iris$Sepal.Length, iris$Sepal.Width)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/grqq-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/grqq-1} \end{center}
 
 See bihistogramm, mis küll veidi jaburalt võrdleb 3 Irise liigi tolmukate pikkusi ja laiusi, näitab, et kahe grupi keskmised on selgelt erinevad (ülekate peaaegu puudub), aga et ka jaotused ise erinevad omajagu (tolmukate laiuste jaotus on kitsam ja teravam).
 
@@ -2186,7 +2186,7 @@ qqPlot(rnorm(100), distribution = "lnorm")
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-127-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-127-1} \end{center}
 
 Proovime erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 
@@ -2201,7 +2201,7 @@ par(mfrow=c(1,1))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-128-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-128-1} \end{center}
 
 
 ```r
@@ -2214,7 +2214,7 @@ par(mfrow=c(1,1))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-129-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-129-1} \end{center}
 
 
 
@@ -2228,7 +2228,7 @@ par(mfrow=c(1,1))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-130-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-130-1} \end{center}
 
 
 ```r
@@ -2241,7 +2241,7 @@ par(mfrow=c(1,1))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-131-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-131-1} \end{center}
 
 
 ```r
@@ -2254,7 +2254,7 @@ par(mfrow=c(1,1))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-132-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-132-1} \end{center}
 
 
 ```r
@@ -2267,7 +2267,7 @@ par(mfrow=c(1,1))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-133-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-133-1} \end{center}
 
 
 ```r
@@ -2280,7 +2280,7 @@ par(mfrow=c(1,1))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-134-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-134-1} \end{center}
 
 
 Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
@@ -2291,7 +2291,7 @@ Proovime veel erinevaid jaotusi normaaljaotuse vastu. Kõigepealt jaotused:
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-135-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-135-1} \end{center}
 
 Nagu näha, beta jaotus, mis on normaaljaotusest palju laiem, on qq-plotil sellest halvasti eristatav. Erinevus on väga madalatel ja väga kõrgetel kvantiilidel (jaotuste otstes).
 
@@ -2308,7 +2308,7 @@ par(mfrow=c(1,1))
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-136-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-136-1} \end{center}
 
 QQ-plotiga saab võrrelda ka kahte empiirilist jaotust, näiteks Irise liikide tolmukate pikkuste ja tolmukate laiuste jaotusi (vt ka peatüki algusest bihistogrammi). Selle meetodi oluline eelis on, et võrreldavad jaotused võivad olla erineva suurusega (N-ga). Siin kasutame base::R qqplot() funktsiooni.
 
@@ -2319,7 +2319,7 @@ qqplot(iris$Sepal.Length, iris$Sepal.Width)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-137-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-137-1} \end{center}
 
 Nagu näha, erinevad jaotused põhiliselt kõrgemates kvantiilides, kus tolmuka pikkus > 7.5 ja tolmuka laius > 3.6.
 
@@ -2334,7 +2334,7 @@ qqPlot(m1)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-138-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-138-1} \end{center}
 
 
 
@@ -2352,7 +2352,7 @@ pheatmap(iris[1:4], fontsize_row = 3, cluster_cols = FALSE, cluster_rows = FALSE
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/grheatm-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/grheatm-1} \end{center}
 
 
 Et andmetes leiduvad mustrid paremini välja paistaksid, tasub heat mapil andmed ümber paigutada kasutades näiteks hierarhilist klassifitseerimist. Seega lisanduvad heat mapile ka dendrogrammid.
@@ -2364,7 +2364,7 @@ pheatmap(iris[1:4], fontsize_row = 5)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-139-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-139-1} \end{center}
 
 Irise tabel on nüüd mõlemas dimensioonis sorteeritud hierarhilise klasterdamise läbi, mida omakorda kajastab 2 dendrogrammi (üks kummagis tabeli dimensioonis). Dendrogramm mõõdab erinevust/sarnasust. Dendrogrammi lugemist tuleb alustada selle harunenud otstest. Kõigepealt jagab dendrogramm vaatlused paaridesse, misjärel hakkab järk-järgult lähimaid paare klastritesse ühendama kuni lõpuks kõik vaatlused on ühendatud ainsasse klastrisse. Dendrogrammi harude pikkused markeerivad selle kriteerium-statistiku väärtust, mille järgi dendrogramm koostati (siin on palju võimalusi, aga kõige levinum on eukleidiline kaugus). Igal juhul, mida pikem haru, seda suuremat erinevust see kajastab. Me võime igal tasemel tõmmata läbi dendrogrammi joone ja saada just nii palju klastreid, kui palju harunemisi jääb sellest joonest ülespoole. Dendrogrammi harud võivad vabalt pöörelda oma vartel, ilma et see dendrogrammi topograafiat muudaks -- seega on joonisel olev dendrogrammi kuju lihtsalt üks juhuslikult fikseeritud olek paljudest. 
 
@@ -2379,7 +2379,7 @@ a <- pheatmap(iris[1:4], kmeans_k = 3)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-140-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-140-1} \end{center}
 
 Lisame klastrid irise tabelisse ja vaatame, kui hästi klastrid tabavad kolme irise liiki:
 
@@ -2402,7 +2402,7 @@ ggplot(iris, aes(factor(cluster), Species)) + geom_count()
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-142-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-142-1} \end{center}
 
 Või alternatiivina esitatuna tulpade pikkustena mosaiikgraafikul (tulpade pikkusi on lihtsam võrrelda kui pindalasid eelmisel graafikul):
 
@@ -2415,7 +2415,7 @@ mosaic(~Species + cluster, data= iris_x, shade=T, legend=FALSE)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-143-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-143-1} \end{center}
 
 ### Korrelatsioonimaatriksid heat mapina
 
@@ -2429,7 +2429,7 @@ plot(iris[1:4], col=iris$Species)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/grcorr-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/grcorr-1} \end{center}
 
 Seejärel korrogramm, kus diagonaalist allpool tähistavad värvid korrelatsioone ja diagonaalist ülalpool on samad korrelatsioonid numbritega. Me sorteerime mustrite parema nägemise huvides ka andmetulbad ümber (order=TRUE), seekord kasutades selleks peakomponent analüüsi (PCA).
 
@@ -2441,7 +2441,7 @@ corrgram(iris[1:4], order = TRUE, lower.panel=corrgram::panel.shade,
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-144-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-144-1} \end{center}
 
 ### Paraleelkoordinaatgraafik
 
@@ -2459,7 +2459,7 @@ legend(x = 1.75, y = -.25, cex = 1,
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-145-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-145-1} \end{center}
 
 Siit näeme, kuidas Petal length ja Petal width on parim viis, et setosat teistest eristada.
 
@@ -2493,7 +2493,7 @@ ggraph(graph_cors) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-146-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-146-1} \end{center}
 
 Siin on tabeli mtcars kõik korrelatsioonid, mis on suuremad kui absoluutväärtus 0.6-st.
 
@@ -2509,7 +2509,7 @@ ggraph(graph_cors) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-147-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-147-1} \end{center}
 
 Nipp! Kui teile ei meeldi võrgustiku üldine kuju, jooksutage koodi uuesti -- vähegi keerulisemad võrgud tulevad iga kord ise kujuga (säilitades siiski sõlmede ja servade kontaktid).
 
@@ -2533,7 +2533,7 @@ print(g)
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/grbb-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/grbb-1} \end{center}
 
 Seega taandasime 4D andmestiku 2D-sse, säilitades seejuurse suure osa algsest andmete varieeruvusest (esimene pekomponent sisaldab 73% algsest varieeruvusest ja 2. peakomponent 23%). Punkidena on näidatud irise isendid, mis on värvitud liigi järgi, ja lisaks on antud vektorid, mis näitavad, millised algsetest muutujatest korreleeruvad millise peakomponendiga. Siit näeme, et Petal.Length, Petal.Width ja Sepal.Width-i varieeruvus kajastub valdavas enamuses PC1 teljel (vektorid on PC1 teljega enam-vähem paralleelsed) ja et Sepal-Width muutuja varieeruvus kajastub suures osas PC2 teljel. 
 
@@ -2556,7 +2556,7 @@ ggplot(ism1, aes(x = V1, y = V2, color = (Species))) +
 
 
 
-\begin{center}\includegraphics[width=0.7\linewidth]{06-graphics_files/figure-latex/unnamed-chunk-148-1} \end{center}
+\begin{center}\includegraphics{06-graphics_files/figure-latex/unnamed-chunk-148-1} \end{center}
 
 # Üldised jooniste printsiibid
 

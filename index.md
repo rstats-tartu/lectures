@@ -2,7 +2,7 @@
 --- 
 title: "Reprodutseeritav andmeanalüüs kasutades R keelt"
 author: "Ülo Maiväli & Taavi Päll"
-date: "2019-09-24"
+date: "2019-09-25"
 knit: "bookdown::render_book"
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
