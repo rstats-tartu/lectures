@@ -19,10 +19,9 @@ knitr::opts_chunk$set(
   message = FALSE,
   comment = "#>",
   collapse = TRUE,
-  out.width = "70%",
   fig.align = 'center',
-  fig.width = 6,
-  fig.asp = 0.7,  # 1 / phi
   fig.show = "hold"
 )
 
+library(skimr)
+skim_with(numeric = list(hist = NULL), ts = list(line_graph = NULL))
