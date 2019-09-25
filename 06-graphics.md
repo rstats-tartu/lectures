@@ -799,7 +799,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 
 ### Täpitähed jms graafikutel
 
-R-s on sümbolid tavapäraselt UTF-8 kodeeringus. Mitte-inglise tähestikku kuuluvaid sümboleid saab lisada, andes ette nende kodeeringu, millele eelneb backslash. Näiteks "h\U00E4sti" annab joonisel "hästi". Täisnimekirja UTF-8 kodeeringutest leiab https://www.fileformat.info/info/charset/UTF-8/list.htm
+R-s on sümbolid tavapäraselt UTF-8 kodeeringus. Mitte-inglise tähestikku kuuluvaid sümboleid saab lisada, andes ette nende kodeeringu, millele eelneb backslash. Täisnimekirja UTF-8 kodeeringutest leiab https://www.fileformat.info/info/charset/UTF-8/list.htm
 
 
 ## Graafiku legend

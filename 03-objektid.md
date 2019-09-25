@@ -517,15 +517,15 @@ grandma <- "your grandma on bongos"
 happy_list <- list(a, ab, model, grandma)
 happy_list
 #> [[1]]
-#> [1] 0.4946 0.0472 0.8471 0.0643 0.8421
+#> [1] 0.8904 0.0833 0.0699 0.3242 0.6959
 #> 
 #> [[2]]
-#>        a      b
-#> 1 0.4946 0.1194
-#> 2 0.0472 1.0976
-#> 3 0.8471 0.0277
-#> 4 0.0643 1.7949
-#> 5 0.8421 0.5724
+#>        a       b
+#> 1 0.8904  0.0513
+#> 2 0.0833 -0.0790
+#> 3 0.0699  0.7334
+#> 4 0.3242  1.4441
+#> 5 0.6959  0.4122
 #> 
 #> [[3]]
 #> 
@@ -784,13 +784,13 @@ skimr::skim(iris)
 #>  n obs: 150 
 #>  n variables: 5 
 #> 
-#> -- Variable type:factor -------------------------------
+#> -- Variable type:factor --------------------------------------------------------
 #>  variable missing complete   n n_unique
 #>   Species       0      150 150        3
 #>                        top_counts ordered
 #>  set: 50, ver: 50, vir: 50, NA: 0   FALSE
 #> 
-#> -- Variable type:numeric ------------------------------
+#> -- Variable type:numeric -------------------------------------------------------
 #>      variable missing complete   n mean   sd  p0 p25
 #>  Petal.Length       0      150 150 3.76 1.77 1   1.6
 #>   Petal.Width       0      150 150 1.2  0.76 0.1 0.3
@@ -1149,7 +1149,7 @@ Kuhu see fail läks? See läks meie projekti juurkataloogi kausta "data/", juurk
 
 ```r
 getwd()
-#> [1] "/home/travis/build/rstats-tartu/lectures"
+#> [1] "/Users/ulomaivali/Dropbox/loengud/R course/2017- R course/loengu-rmd-konspektid"
 ```
 
 Andmete sisselugemine töökataloogist:
@@ -1373,6 +1373,9 @@ Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda su
 
 ```r
 VIM::matrixplot(diabetes) 
+#> 
+#> Click in a column to sort by the corresponding variable.
+#> To regain use of the VIM GUI and the R console, click outside the plot region.
 ```
 
 
@@ -1469,8 +1472,8 @@ Kui sa ei taha väljundina listi, vaid lihtsat numbrilist vektorit, siis kasuta 
 1:10 %>%
   map(rnorm, n = 10) %>%
   map_dbl(mean)
-#>  [1]  1.27  2.08  3.43  3.97  5.22  5.69  7.06  8.12
-#>  [9]  9.00 10.16
+#>  [1]  1.05  2.10  3.11  3.83  4.93  5.62  7.09  7.81
+#>  [9]  8.83 10.27
 ```
 
 map()-l on kokku 8 versiooni erinevate väljunditega.
@@ -1505,13 +1508,13 @@ params <- list(
 )
 params %>% map(~rnorm(5, mean = pluck(.x, 1), sd = pluck(.x, 2)))
 #> $norm1
-#> [1]  0.0731 -2.4229 -0.4865  1.9211 -0.4199
+#> [1] -0.501 -1.293 -0.750  1.314  0.827
 #> 
 #> $norm2
-#> [1] 2.458 1.885 0.912 1.702 0.710
+#> [1]  1.9188  3.0938  1.4370  0.0903 -0.6402
 #> 
 #> $norm3
-#> [1] 2.549 1.718 3.815 0.892 1.520
+#> [1] 2.676 1.785 1.819 3.002 0.544
 ```
 
 `enframe()` konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value). 
@@ -1563,13 +1566,13 @@ parameters <- data.frame(
 )
 parameters %>% pmap(runif)
 #> [[1]]
-#> [1] 0.619
+#> [1] 0.722
 #> 
 #> [[2]]
-#> [1] 5.73 5.21
+#> [1] 5.46 5.00
 #> 
 #> [[3]]
-#> [1] 10.9 10.5 10.5
+#> [1] 11.0 10.1 10.5
 ```
 
 See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.
@@ -1606,13 +1609,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- list(c(5, 2, 3), 2, 3)
 invoke_map(functions, n)
 #> [[1]]
-#> [1]  0.856  2.915 -1.559  6.140  2.703
+#> [1]  5.59  1.28 -2.64 -2.08  1.34
 #> 
 #> [[2]]
-#> [1] 0.0625 1.2218
+#> [1] 0.588 4.051
 #> 
 #> [[3]]
-#> [1] -0.608 -2.302 -1.759
+#> [1] -0.0491 -0.6352  3.5326
 ```
 
 anname sisse esimese argumendi (100) igasse funktsiooni
@@ -1622,13 +1625,13 @@ functions <- list(rnorm, rlnorm, rcauchy)
 n <- c(5, 2, 3)
 invoke_map(functions, n, 100)
 #> [[1]]
-#> [1]  99.5  99.0 100.9  98.6 101.4
+#> [1] 100.1 101.0 100.8  98.7 101.0
 #> 
 #> [[2]]
-#> [1] 4.17e+43 7.35e+42
+#> [1] 7.71e+42 1.10e+43
 #> 
 #> [[3]]
-#> [1]  99.6 102.1  99.1
+#> [1]  96.7 100.0 113.4
 ```
 
 mitu argumenti igale funktsioonile:
@@ -1640,13 +1643,13 @@ args <- list(norm = c(3, mean = 0, sd = 1),
 
 invoke_map(functions, args)
 #> [[1]]
-#> [1] -0.304 -0.367 -0.245
+#> [1] -1.011  0.403  0.577
 #> 
 #> [[2]]
-#> [1] 2.90 8.25
+#> [1] 4.20 1.39
 #> 
 #> [[3]]
-#> [1] -78.5
+#> [1] -1819
 ```
 
 

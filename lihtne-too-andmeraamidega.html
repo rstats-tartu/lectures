@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7 Lihtne töö Andmeraamidega | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7 Lihtne töö Andmeraamidega | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -40,9 +40,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -309,13 +306,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="co">#&gt;  n obs: 150 </span>
 <span class="co">#&gt;  n variables: 5 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:factor ───────────────────────────────</span>
+<span class="co">#&gt; ── Variable type:factor ────────────────────────────────────────────────────────</span>
 <span class="co">#&gt;  variable missing complete   n n_unique</span>
 <span class="co">#&gt;   Species       0      150 150        3</span>
 <span class="co">#&gt;                        top_counts ordered</span>
 <span class="co">#&gt;  set: 50, ver: 50, vir: 50, NA: 0   FALSE</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ── Variable type:numeric ──────────────────────────────</span>
+<span class="co">#&gt; ── Variable type:numeric ───────────────────────────────────────────────────────</span>
 <span class="co">#&gt;      variable missing complete   n mean   sd  p0 p25</span>
 <span class="co">#&gt;  Petal.Length       0      150 150 3.76 1.77 1   1.6</span>
 <span class="co">#&gt;   Petal.Width       0      150 150 1.2  0.76 0.1 0.3</span>
@@ -592,7 +589,7 @@ fruits &lt;-<span class="st"> </span><span class="kw">tibble</span>(shop, apples
 <span class="kw">write_csv</span>(fruits, <span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
 <p>Kuhu see fail läks? See läks meie projekti juurkataloogi kausta “data/”, juurkataloogi asukoha oma arvuti kõvakettal leiame käsuga:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getwd</span>()
-<span class="co">#&gt; [1] &quot;/home/travis/build/rstats-tartu/lectures&quot;</span></code></pre></div>
+<span class="co">#&gt; [1] &quot;/Users/ulomaivali/Dropbox/loengud/R course/2017- R course/loengu-rmd-konspektid&quot;</span></code></pre></div>
 <p>Andmete sisselugemine töökataloogist:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;data/fruits.csv&quot;</span>)</code></pre></div>
 <p>Andmeraamide sisselugemiseks on kaks paralleelset süsteemi: baas-R-i read.table() ja selle mugavusfunktsioonid (read.csv(), read.csv2() jne) ning readr paketti, mis laaditakse koos tidyversiga, funktsioon read_delim() ja selle mugavusfunktsioonid (read_csv jne). Tavaliselt soovitame eelistada alakriipsuga variante (<a href="http://r4ds.had.co.nz/data-import.html" class="uri">http://r4ds.had.co.nz/data-import.html</a>).</p>
@@ -1293,7 +1290,10 @@ VIM<span class="op">::</span><span class="kw">aggr</span>(diabetes, <span class=
 <span class="co">#&gt; [1]  TRUE FALSE FALSE FALSE</span></code></pre></div>
 <p>Pane tähele, et string “NA” ei ole sama asi, mis loogiline konstant NA.</p>
 <p>Ploti NAd punasega igale tabeli reale ja tulbale mida tumedam halli toon seda suurem number selle tulba kontekstis:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">VIM<span class="op">::</span><span class="kw">matrixplot</span>(diabetes) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">VIM<span class="op">::</span><span class="kw">matrixplot</span>(diabetes) 
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Click in a column to sort by the corresponding variable.</span>
+<span class="co">#&gt; To regain use of the VIM GUI and the R console, click outside the plot region.</span></code></pre></div>
 <p><img src="03-objektid_files/figure-html/unnamed-chunk-73-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="kuidas-rekodeerida-na-d-naiteks-0-ks" class="section level3">
@@ -1357,13 +1357,11 @@ df_with_fewer_cols &lt;-<span class="st"> </span><span class="kw">subset</span>(
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

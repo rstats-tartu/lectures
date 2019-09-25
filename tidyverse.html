@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>14 Tidyverse | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
   <meta property="og:title" content="14 Tidyverse | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -40,9 +40,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -296,17 +293,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Laadime tidyverse metapaketi raamatukogud:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
 <p>Nagu näha laaditakse tidyverse raamatukoguga 8 paketti:</p>
-<p>✔ ggplot2 ✔ purrr<br />
-✔ tibble ✔ dplyr<br />
-✔ tidyr ✔ stringr<br />
-✔ readr ✔ forcats</p>
 <ul>
+<li>ggplot2</li>
+<li>purrr</li>
+<li>tibble</li>
+<li>dplyr</li>
+<li>tidyr</li>
+<li>stringr</li>
+<li>readr</li>
+<li><p>forcats</p></li>
 <li>tibble pakett sisaldab tidyverse-spetsiifilise andmeraami (data_frame) loomiseks ja manipuleerimiseks vajalike funktsioone. Erinevalt baas R-i andmeraamist (data.frame) iseloomustab tibble-t vaikimisi prindifunktsioon, kus vaikimisi näidataksegi ainult tabeli peast 10 esimest rida. Oluliseks erinevuseks on ka <strong>list tulpade toetus</strong> (data.frame tulbad saavad olla ainult vektorid). List tulbad võimaldavad andmeraami paigutada kõige erinevamaid objekte: näiteks vektoreid, andmeraame, lineaarseid mudeleid ja valgeid puudleid. Lisaks ei ole tibble tabelitel veerunimesid ja veidraid tulbanimesid ei muudeta vaikimisi/automaatselt.</li>
 <li>tidyr pakett sisaldab eelkõige funktsioone tibble-de kuju muutmiseks laiast formaadist pikka ja tagasi.</li>
 <li>readr paketi funktsioonid vastutavad andmete impordi eest tekstipõhistest failidest lähtuvalt tidyverse reeglitest ja asendavad vastavad baas R-i funktsioonid.</li>
 <li>purrr pakett sisaldab funktsioone töötamaks listidega ja asendavad baas R-i apply perekonna funktsioone.</li>
 <li>dplyr pakett sisaldab põhilisi andmetöötlusverbe.</li>
-<li>stringr ja forcats paketid sisaldavad vastavalt tekstipõhiste ja kategooriliste andmetega töötamise funktsioone.</li>
+<li><p>stringr ja forcats paketid sisaldavad vastavalt tekstipõhiste ja kategooriliste andmetega töötamise funktsioone.</p></li>
 </ul>
 <div id="tidy-tabeli-struktuur" class="section level2">
 <h2><span class="header-section-number">14.1</span> Tidy tabeli struktuur</h2>
@@ -465,25 +466,25 @@ dat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span cl
 dat &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(dat[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">10</span>)])
 <span class="kw">select</span>(dat, V9<span class="op">:</span>V6)
 <span class="co">#&gt; # A tibble: 10 x 5</span>
-<span class="co">#&gt;       V9    V8     V5     V2    V6</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.0296 0.367 0.622  0.492  0.858</span>
-<span class="co">#&gt; 2 0.898  0.358 0.840  0.0103 0.212</span>
-<span class="co">#&gt; 3 0.962  0.589 0.297  0.715  0.167</span>
-<span class="co">#&gt; 4 0.247  0.778 0.0358 0.795  0.205</span>
-<span class="co">#&gt; 5 0.689  0.812 0.758  0.401  0.756</span>
-<span class="co">#&gt; 6 0.658  0.524 0.724  0.167  0.390</span>
+<span class="co">#&gt;       V9    V8    V5     V2    V6</span>
+<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 0.149  0.166 0.878 0.776  0.634</span>
+<span class="co">#&gt; 2 0.172  0.167 0.660 0.245  0.245</span>
+<span class="co">#&gt; 3 0.0158 0.637 0.235 0.0986 0.709</span>
+<span class="co">#&gt; 4 0.205  0.777 0.602 0.585  0.316</span>
+<span class="co">#&gt; 5 0.645  0.460 0.652 0.260  0.444</span>
+<span class="co">#&gt; 6 0.492  0.796 0.740 0.0179 0.925</span>
 <span class="co">#&gt; # … with 4 more rows</span>
 <span class="kw">select</span>(dat, <span class="kw">num_range</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">6</span>))
 <span class="co">#&gt; # A tibble: 10 x 4</span>
 <span class="co">#&gt;       V9    V8    V7    V6</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 0.0296 0.367 0.943 0.858</span>
-<span class="co">#&gt; 2 0.898  0.358 0.542 0.212</span>
-<span class="co">#&gt; 3 0.962  0.589 0.662 0.167</span>
-<span class="co">#&gt; 4 0.247  0.778 0.187 0.205</span>
-<span class="co">#&gt; 5 0.689  0.812 0.161 0.756</span>
-<span class="co">#&gt; 6 0.658  0.524 0.220 0.390</span>
+<span class="co">#&gt; 1 0.149  0.166 0.774 0.634</span>
+<span class="co">#&gt; 2 0.172  0.167 0.289 0.245</span>
+<span class="co">#&gt; 3 0.0158 0.637 0.767 0.709</span>
+<span class="co">#&gt; 4 0.205  0.777 0.991 0.316</span>
+<span class="co">#&gt; 5 0.645  0.460 0.314 0.444</span>
+<span class="co">#&gt; 6 0.492  0.796 0.350 0.925</span>
 <span class="co">#&gt; # … with 4 more rows</span>
 
 <span class="co"># Drop variables with -</span>
@@ -735,21 +736,21 @@ a &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">
 <span class="co">#&gt; # A tibble: 6 x 3</span>
 <span class="co">#&gt;    gene   value indeks</span>
 <span class="co">#&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; </span>
-<span class="co">#&gt; 1     1  0.437  E     </span>
-<span class="co">#&gt; 2     1 -1.01   E     </span>
-<span class="co">#&gt; 3     1  1.31   E     </span>
-<span class="co">#&gt; 4     1 -0.156  C     </span>
-<span class="co">#&gt; 5     1  0.0385 C     </span>
-<span class="co">#&gt; 6     1 -0.670  C</span></code></pre></div>
+<span class="co">#&gt; 1     1 -0.485  E     </span>
+<span class="co">#&gt; 2     1 -0.863  E     </span>
+<span class="co">#&gt; 3     1  0.404  E     </span>
+<span class="co">#&gt; 4     1  2.56   C     </span>
+<span class="co">#&gt; 5     1 -0.0510 C     </span>
+<span class="co">#&gt; 6     1 -0.918  C</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p =</span> <span class="kw">t.test</span>(value<span class="op">~</span>indeks)<span class="op">$</span>p.value)
 <span class="co">#&gt; # A tibble: 5 x 2</span>
 <span class="co">#&gt;    gene     p</span>
 <span class="co">#&gt;   &lt;int&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1 0.537</span>
-<span class="co">#&gt; 2     2 0.446</span>
-<span class="co">#&gt; 3     3 0.821</span>
-<span class="co">#&gt; 4     4 0.651</span>
-<span class="co">#&gt; 5     5 0.136</span></code></pre></div>
+<span class="co">#&gt; 1     1 0.512</span>
+<span class="co">#&gt; 2     2 0.865</span>
+<span class="co">#&gt; 3     3 0.646</span>
+<span class="co">#&gt; 4     4 0.607</span>
+<span class="co">#&gt; 5     5 0.457</span></code></pre></div>
 </div>
 <div id="grupiviisiline-filtreerimine" class="section level4">
 <h4><span class="header-section-number">14.2.5.4</span> Grupiviisiline filtreerimine</h4>
@@ -1034,13 +1035,11 @@ gsscat_sum &lt;-<span class="st"> </span><span class="kw">filter</span>(gss_cat,
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

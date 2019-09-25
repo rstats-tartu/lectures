@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8 map() - kordame sama operatsiooni igale listi liikmele | Reprodutseeritav andmeanalüüs kasutades R keelt</title>
   <meta name="description" content="Praktilise kursuse ‘Reprodutseeritav andmeanalüüs R keeles’ materjalid." />
-  <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8 map() - kordame sama operatsiooni igale listi liikmele | Reprodutseeritav andmeanalüüs kasutades R keelt" />
   <meta property="og:type" content="book" />
@@ -40,9 +40,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -299,7 +296,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">map</span>(rnorm, <span class="dt">n =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">map_dbl</span>(mean)
-<span class="co">#&gt;  [1] 1.32 2.22 2.94 3.54 5.53 6.42 6.47 8.05 9.13 9.67</span></code></pre></div>
+<span class="co">#&gt;  [1]  0.873  2.408  3.029  4.393  4.647  6.449  6.968</span>
+<span class="co">#&gt;  [8]  7.740  9.335 10.322</span></code></pre></div>
 <p>map()-l on kokku 8 versiooni erinevate väljunditega.</p>
 <ul>
 <li><p>map() - list</p></li>
@@ -321,13 +319,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 )
 params <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="kw">pluck</span>(.x, <span class="dv">1</span>), <span class="dt">sd =</span> <span class="kw">pluck</span>(.x, <span class="dv">2</span>)))
 <span class="co">#&gt; $norm1</span>
-<span class="co">#&gt; [1]  0.7947 -0.4425  0.0852  1.3328 -1.8867</span>
+<span class="co">#&gt; [1] -0.317 -0.809 -1.149  0.153 -1.379</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $norm2</span>
-<span class="co">#&gt; [1]  0.745  2.761  1.207  3.582 -0.162</span>
+<span class="co">#&gt; [1]  0.108  1.100  0.345  0.486 -1.047</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $norm3</span>
-<span class="co">#&gt; [1] 2.69 2.34 1.80 4.50 1.97</span></code></pre></div>
+<span class="co">#&gt; [1] 1.782 1.324 2.605 1.486 0.906</span></code></pre></div>
 <p><code>enframe()</code> konverteerib nimedega vektori df-ks, millel on 2 veergu (name, value).</p>
 <div id="map2" class="section level3">
 <h3><span class="header-section-number">8.0.1</span> map2()</h3>
@@ -361,13 +359,13 @@ digits &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="d
 )
 parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pmap</span>(runif)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] 0.44</span>
+<span class="co">#&gt; [1] 0.595</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 5.18 5.32</span>
+<span class="co">#&gt; [1] 5.29 5.78</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] 10.7 10.2 10.7</span></code></pre></div>
+<span class="co">#&gt; [1] 10.2 10.1 10.3</span></code></pre></div>
 <p>See töötab sest runif() võtab 3 argumenti ja df-l parameters on 3 veergu.</p>
 <p>Järgmine funktsioon rakendub suvalisele df-le rea kaupa ja arvutab igale reale näit sd. Aga selleks transponeerime read veergudeks ja rakendame tavalist map()-i.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmap &lt;-<span class="st"> </span><span class="cf">function</span> (.x, .f, ...) {
@@ -391,25 +389,25 @@ parameters <span class="op">%&gt;%</span><span class="st"> </span><span class="k
 n &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">3</span>)
 <span class="kw">invoke_map</span>(functions, n)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1]  4.40  8.07  4.75  1.27 -1.30</span>
+<span class="co">#&gt; [1] 1.914 2.232 6.047 4.555 0.926</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 1.30 1.74</span>
+<span class="co">#&gt; [1] 0.8859 0.0926</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] -0.225 -1.594  2.608</span></code></pre></div>
+<span class="co">#&gt; [1]  -1.04 -10.11  -3.21</span></code></pre></div>
 <p>anname sisse esimese argumendi (100) igasse funktsiooni</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">functions &lt;-<span class="st"> </span><span class="kw">list</span>(rnorm, rlnorm, rcauchy)
 n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>)
 <span class="kw">invoke_map</span>(functions, n, <span class="dv">100</span>)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1]  99.4  98.4 101.0 102.5  99.7</span>
+<span class="co">#&gt; [1]  97.4 100.0  99.4 100.3  99.7</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 4.77e+43 3.01e+44</span>
+<span class="co">#&gt; [1] 1.56e+43 2.05e+44</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] 101.4  99.6 100.4</span></code></pre></div>
+<span class="co">#&gt; [1] 100.3  99.5  99.1</span></code></pre></div>
 <p>mitu argumenti igale funktsioonile:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">args &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">norm =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>), 
              <span class="dt">lnorm =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dt">meanlog =</span> <span class="dv">1</span>, <span class="dt">sdlog =</span> <span class="dv">2</span>),
@@ -417,13 +415,13 @@ n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</sp
 
 <span class="kw">invoke_map</span>(functions, args)
 <span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1]  1.002 -0.163 -0.554</span>
+<span class="co">#&gt; [1] 0.123 1.480 0.394</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; [1] 0.807 0.577</span>
+<span class="co">#&gt; [1] 2.037 0.152</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
-<span class="co">#&gt; [1] -8.5</span></code></pre></div>
+<span class="co">#&gt; [1] -49.4</span></code></pre></div>
 <div id="map-shortcuts" class="section level4">
 <h4><span class="header-section-number">8.0.3.1</span> map shortcuts</h4>
 <p><code>pluck()</code> võtab listist välja elemendi (vektori, data frame jms) nii nagu see on (mitte listina).</p>
@@ -523,13 +521,11 @@ models1<span class="op">$</span>models[[<span class="dv">1</span>]]</code></pre>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

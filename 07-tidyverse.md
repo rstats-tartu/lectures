@@ -16,10 +16,15 @@ library(tidyverse)
 
 Nagu näha laaditakse tidyverse raamatukoguga 8 paketti:
 
-✔ ggplot2 ✔ purrr    
-✔ tibble ✔ dplyr   
-✔ tidyr ✔ stringr   
-✔ readr ✔ forcats
++ ggplot2
++ purrr
++ tibble
++ dplyr
++ tidyr
++ stringr
++ readr
++ forcats
+
 
 - tibble pakett sisaldab tidyverse-spetsiifilise andmeraami (data_frame) loomiseks ja manipuleerimiseks vajalike funktsioone. Erinevalt baas R-i andmeraamist (data.frame) iseloomustab tibble-t vaikimisi prindifunktsioon, kus vaikimisi näidataksegi ainult tabeli peast 10 esimest rida. Oluliseks erinevuseks on ka **list tulpade toetus** (data.frame tulbad saavad olla ainult vektorid). List tulbad võimaldavad andmeraami paigutada kõige erinevamaid objekte: näiteks vektoreid, andmeraame, lineaarseid mudeleid ja valgeid puudleid. Lisaks ei ole tibble tabelitel veerunimesid ja veidraid tulbanimesid ei muudeta vaikimisi/automaatselt.
 - tidyr pakett sisaldab eelkõige funktsioone tibble-de kuju muutmiseks laiast formaadist pikka ja tagasi.
@@ -233,25 +238,25 @@ dat <- as.data.frame(matrix(runif(100), nrow = 10))
 dat <- tbl_df(dat[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)])
 select(dat, V9:V6)
 #> # A tibble: 10 x 5
-#>       V9     V8      V5    V2    V6
-#>    <dbl>  <dbl>   <dbl> <dbl> <dbl>
-#> 1 0.661  0.587  0.219   0.956 0.425
-#> 2 0.521  0.0938 0.00779 0.645 0.496
-#> 3 0.726  0.200  0.958   0.918 0.214
-#> 4 0.309  0.0771 0.993   0.709 0.506
-#> 5 0.0454 0.407  0.0509  0.652 0.911
-#> 6 0.889  0.424  0.864   0.808 0.525
+#>      V9    V8    V5     V2     V6
+#>   <dbl> <dbl> <dbl>  <dbl>  <dbl>
+#> 1 0.492 0.495 0.167 0.0974 0.430 
+#> 2 0.658 0.691 0.776 0.896  0.150 
+#> 3 0.665 0.320 0.126 0.163  0.119 
+#> 4 0.613 0.865 0.933 0.253  0.0728
+#> 5 0.193 0.542 0.255 0.554  0.0989
+#> 6 0.593 0.330 0.169 0.0989 0.391 
 #> # ... with 4 more rows
 select(dat, num_range("V", 9:6))
 #> # A tibble: 10 x 4
-#>       V9     V8     V7    V6
-#>    <dbl>  <dbl>  <dbl> <dbl>
-#> 1 0.661  0.587  0.444  0.425
-#> 2 0.521  0.0938 0.823  0.496
-#> 3 0.726  0.200  0.0439 0.214
-#> 4 0.309  0.0771 0.891  0.506
-#> 5 0.0454 0.407  0.874  0.911
-#> 6 0.889  0.424  0.519  0.525
+#>      V9    V8     V7     V6
+#>   <dbl> <dbl>  <dbl>  <dbl>
+#> 1 0.492 0.495 0.936  0.430 
+#> 2 0.658 0.691 0.212  0.150 
+#> 3 0.665 0.320 0.0853 0.119 
+#> 4 0.613 0.865 0.677  0.0728
+#> 5 0.193 0.542 0.473  0.0989
+#> 6 0.593 0.330 0.875  0.391 
 #> # ... with 4 more rows
 
 # Drop variables with -
@@ -604,12 +609,12 @@ head(a)
 #> # A tibble: 6 x 3
 #>    gene  value indeks
 #>   <int>  <dbl> <chr> 
-#> 1     1  0.305 E     
-#> 2     1  0.338 E     
-#> 3     1 -1.20  E     
-#> 4     1 -1.69  C     
-#> 5     1 -1.26  C     
-#> 6     1 -0.206 C
+#> 1     1 -0.961 E     
+#> 2     1  1.70  E     
+#> 3     1  2.09  E     
+#> 4     1  0.773 C     
+#> 5     1  1.58  C     
+#> 6     1 -0.799 C
 ```
 
 
@@ -618,11 +623,11 @@ a %>% group_by(gene) %>% summarise(p = t.test(value~indeks)$p.value)
 #> # A tibble: 5 x 2
 #>    gene     p
 #>   <int> <dbl>
-#> 1     1 0.270
-#> 2     2 0.735
-#> 3     3 0.670
-#> 4     4 0.108
-#> 5     5 0.677
+#> 1     1 0.740
+#> 2     2 0.698
+#> 3     3 0.730
+#> 4     4 0.610
+#> 5     5 0.260
 ```
 
 
