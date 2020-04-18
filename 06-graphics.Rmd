@@ -22,6 +22,7 @@ library(ggridges)
 library(viridis)
 library(zoo)
 library(graphics)
+library(ComplexHeatmap)
 ```
 
 ## Baasgraafika
@@ -538,7 +539,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 
 ### Täpitähed jms graafikutel
 
-R-s on sümbolid tavapäraselt UTF-8 kodeeringus. Mitte-inglise tähestikku kuuluvaid sümboleid saab lisada, andes ette nende kodeeringu, millele eelneb backslash. Näiteks "h\U00E4sti" annab joonisel "hästi". Täisnimekirja UTF-8 kodeeringutest leiab https://www.fileformat.info/info/charset/UTF-8/list.htm
+R-s on sümbolid tavapäraselt UTF-8 kodeeringus. Mitte-inglise tähestikku kuuluvaid sümboleid saab lisada, andes ette nende kodeeringu, millele eelneb backslash. Täisnimekirja UTF-8 kodeeringutest leiab https://www.fileformat.info/info/charset/UTF-8/list.htm
 
 
 ## Graafiku legend
@@ -1392,6 +1393,47 @@ Ja lõpetuseks, kui teile miskipärast ei meeldi Cleveland plot ja te tahate plo
 df <- tibble(a=c(2.3, 4, 5.2), b=c("A", "B", "C"))
 ggplot(df, aes(b, a)) + geom_col()
 ```
+
+## Upset plot
+
+Eesmärk on näidata hulkade ühisosa e kattuvust. Tavaliselt tehakse seda Venni diagraamiga. Meie kasutame paketti ComplexHeatmap, mis võtab andmed sisse listina või andmeraamina. Listist saab konverteerida andmeraamiks list_to_matrix() abil.
+
+```{r}
+lt = list(set1 = c("a", "b", "c"),
+          set2 = c("b", "c", "d", "e"))
+lt1 <- list_to_matrix(lt)
+```
+
+make_comb_mat() teeb kombinatsioonimaatriksi ja arvutab kombinatsioonide arvud. 
+
+```{r}
+set.seed(123)
+lt = list(a = sample(letters, 5),
+          b = sample(letters, 10),
+          c = sample(letters, 15))
+m1 = make_comb_mat(lt)
+m1
+```
+
+Kombinatsioonide arvu saab piirata filtreerides kombinatsioonide suuruse järgi. `m1 = make_comb_mat(lt, min_set_size = 6)` min_set_size 6 elementi, või
+`m2 = make_comb_mat(lt, top_n_sets = 2)` top_n_sets annab 2 hulka, millel on kõige rohkem elemente.
+
+```{r}
+set_size(m1)
+```
+
+```{r}
+comb_size(m1)
+```
+
+```{r}
+UpSet(m1)
+```
+
+```{r}
+UpSet(t(m1))
+```
+
 
 ## Residuaalide plot
 
